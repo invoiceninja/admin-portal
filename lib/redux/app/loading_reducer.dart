@@ -1,5 +1,5 @@
 import 'package:redux/redux.dart';
-import '../../redux/product/product_actions.dart';
+import 'package:invoiceninja/redux/product/product_actions.dart';
 
 final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, ProductsLoadedAction>(_setLoaded),

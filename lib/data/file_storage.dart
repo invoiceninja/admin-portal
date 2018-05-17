@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import '../data/models/models.dart';
+import 'package:invoiceninja/data/models/models.dart';
 //import 'package:built_redux_sample/models/serializers.dart';
 
 /// Loads and saves a List of Products using a text file stored on the device.

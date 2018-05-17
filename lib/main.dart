@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'redux/app/app_state.dart';
-import 'ui/dashboard.dart';
-import 'ui/client/client_list.dart';
-import 'ui/product/product_home.dart';
+import 'package:invoiceninja/ui/dashboard_screen.dart';
+import 'package:invoiceninja/ui/client/client_list.dart';
+import 'package:invoiceninja/ui/product/product_screen.dart';
+import 'package:invoiceninja/ui/app/login_screen.dart';
 import 'routes.dart';
 import 'redux/product/product_actions.dart';
 import 'redux/product/product_middleware.dart';
@@ -39,6 +40,13 @@ class InvoiceNinjaApp extends StatelessWidget {
         theme: new ThemeData.dark(),
         title: 'Invoice Ninja',
         routes: {
+          NinjaRoutes.login: (context) {
+            return StoreBuilder<AppState>(
+              builder: (context, store) {
+                return LoginScreen();
+              },
+            );
+          },
           NinjaRoutes.dashboard: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {

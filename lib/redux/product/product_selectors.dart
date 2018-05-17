@@ -1,6 +1,6 @@
-import '../../data/models/models.dart';
-import '../../redux/app/app_state.dart';
-import '../../utils/optional.dart';
+import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/utils/optional.dart';
 
 
 bool isLoadingSelector(AppState state) => state.isLoading;

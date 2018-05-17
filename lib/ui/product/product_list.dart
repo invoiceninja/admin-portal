@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../ui/app/app_loading.dart';
-import '../../ui/product/product_details_vm.dart';
-import '../../data/models/models.dart';
-import '../../ui/app/loading_indicator.dart';
-import '../../ui/product/product_item.dart';
-import '../../keys.dart';
+import 'package:invoiceninja/ui/app/app_loading.dart';
+import 'package:invoiceninja/ui/product/product_details_vm.dart';
+import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/loading_indicator.dart';
+import 'package:invoiceninja/ui/product/product_item.dart';
+import 'package:invoiceninja/keys.dart';
 
 class ProductList extends StatelessWidget {
   final List<ProductEntity> products;

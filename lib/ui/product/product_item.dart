@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../data/models/models.dart';
-import '../../keys.dart';
+import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/keys.dart';
 
 class ProductItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;

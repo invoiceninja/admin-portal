@@ -6,6 +6,7 @@ class NinjaKeys {
   static Key snackbarAction(String id) => Key('__snackbar_action_${id}__');
 
   static final dashboard = const Key('__dashboard__');
+  static final loginScreen = const Key('__login_screen__');
   static final clientList = const Key('__client_list__');
   static final productHome = const Key('__product_home__');
 

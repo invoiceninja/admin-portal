@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../data/models/models.dart';
+import 'package:invoiceninja/data/models/models.dart';
 
 /// A class that is meant to represent a Web Service you would call to fetch
 /// and persist Products to and from the cloud.
