@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import '../../data/models/models.dart';
 import '../../keys.dart';
-import '../../ui/product/product_list_pm.dart';
+import '../../ui/product/product_list_vm.dart';
 
 class ProductHome extends StatelessWidget {
   ProductHome() : super(key: NinjaKeys.productHome);

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../ui/app/app_loading.dart';
-import '../../ui/product/product_details_pm.dart';
+import '../../ui/product/product_details_vm.dart';
 import '../../data/models/models.dart';
 import '../../ui/app/loading_indicator.dart';
 import '../../ui/product/product_item.dart';
