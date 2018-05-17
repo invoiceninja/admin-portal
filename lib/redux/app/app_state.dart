@@ -1,23 +1,39 @@
 import 'package:meta/meta.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 @immutable
 class AppState {
   final bool isLoading;
+  final AuthState auth;
   final List<ProductEntity> products;
 
   AppState(
       {this.isLoading = false,
+        AuthState auth,
         this.products = const []});
+
 
   factory AppState.loading() => AppState(isLoading: true);
 
+  /*
+  static AppState rehydrationJSON(dynamic json) => new AppState(
+      auth: new AuthState.fromJSON(json['auth'])
+  );
+
+  Map<String, dynamic> toJson() => {
+    'auth': auth.toJSON()
+  };
+  */
+
   AppState copyWith({
     bool isLoading,
+    AuthState auth,
     List<ProductEntity> products,
   }) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
+      auth: auth ?? this.auth,
       products: products ?? this.products,
     );
   }
@@ -25,6 +41,7 @@ class AppState {
   @override
   int get hashCode =>
       products.hashCode ^
+      auth.hashCode ^
       isLoading.hashCode;
 
   @override
@@ -33,6 +50,7 @@ class AppState {
           other is AppState &&
               runtimeType == other.runtimeType &&
               products == other.products &&
+              auth == other.auth &&
               isLoading == other.isLoading;
 
   @override
