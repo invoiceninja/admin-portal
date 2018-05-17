@@ -3,9 +3,9 @@
 // in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/keys.dart';
-import 'package:invoiceninja/ui/product/product_list_pm.dart';
+import '../../data/models/models.dart';
+import '../../keys.dart';
+import '../../ui/product/product_list_pm.dart';
 
 class ProductHome extends StatelessWidget {
   ProductHome() : super(key: NinjaKeys.productHome);

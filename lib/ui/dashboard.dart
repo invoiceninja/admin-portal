@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/keys.dart';
-import 'package:invoiceninja/ui/app/sidebar.dart';
+import '../keys.dart';
+import '../ui/app/sidebar.dart';
 
 class Dashboard extends StatelessWidget {
   Dashboard() : super(key: NinjaKeys.dashboard);

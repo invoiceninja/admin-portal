@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:invoiceninja/data/models/entities.dart';
+import '../../data/models/entities.dart';
 
 /// A class that Loads and Persists products. The data layer of the app.
 ///

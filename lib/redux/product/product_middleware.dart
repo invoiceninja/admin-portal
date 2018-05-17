@@ -1,11 +1,11 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/data/repositories/repositories.dart';
-import 'package:invoiceninja/data/repositories/product_repository.dart';
-import 'package:invoiceninja/data/file_storage.dart';
-import 'package:invoiceninja/redux/product/product_selectors.dart';
+import '../../redux/product/product_actions.dart';
+import '../../redux/app/app_state.dart';
+import '../../data/repositories/repositories.dart';
+import '../../data/repositories/product_repository.dart';
+import '../../data/file_storage.dart';
+import '../../redux/product/product_selectors.dart';
 
 List<Middleware<AppState>> createStoreProductsMiddleware([
   ProductsRepository repository = const ProductsRepositoryFlutter(

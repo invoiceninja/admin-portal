@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/product/product_list.dart';
-import 'package:invoiceninja/redux/product/product_selectors.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
+import '../../redux/product/product_actions.dart';
+import '../../data/models/models.dart';
+import '../../ui/product/product_list.dart';
+import '../../redux/product/product_selectors.dart';
+import '../../redux/app/app_state.dart';
 
 class FilteredProducts extends StatelessWidget {
   FilteredProducts({Key key}) : super(key: key);

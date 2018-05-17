@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:core';
-
 import 'package:meta/meta.dart';
-import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/data/repositories/repositories.dart';
-import 'package:invoiceninja/data/file_storage.dart';
-import 'package:invoiceninja/data/web_client.dart';
+
+import '../../data/models/entities.dart';
+import '../../data/repositories/repositories.dart';
+import '../../data/file_storage.dart';
+import '../../data/web_client.dart';
 
 /// A class that glues together our local file storage and web client. It has a
 /// clear responsibility: Load Products and Persist products.

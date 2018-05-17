@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:invoiceninja/containers/edit_product.dart';
-import 'package:invoiceninja/data/models/models.dart';
+//import '../../containers/edit_product.dart';
+import '../../data/models/models.dart';
 
 class DetailsScreen extends StatelessWidget {
   final ProductEntity product;

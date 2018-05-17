@@ -1,4 +1,4 @@
-import 'package:invoiceninja/data/models/models.dart';
+import '../../data/models/models.dart';
 
 class LoadProductsAction {}
 

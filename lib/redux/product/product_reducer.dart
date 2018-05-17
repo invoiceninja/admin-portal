@@ -1,7 +1,7 @@
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/product/product_selectors.dart';
+import '../../redux/product/product_actions.dart';
+import '../../data/models/models.dart';
+import '../../redux/product/product_selectors.dart';
 
 final productsReducer = combineReducers<List<ProductEntity>>([
   /*

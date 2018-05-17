@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/routes.dart';
-import 'package:invoiceninja/ui/dashboard.dart';
-import 'package:invoiceninja/ui/client/client_list.dart';
-import 'package:invoiceninja/ui/product/product_home.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/redux/product/product_middleware.dart';
-import 'package:invoiceninja/redux/app/app_reducer.dart';
+import 'redux/app/app_state.dart';
+import 'ui/dashboard.dart';
+import 'ui/client/client_list.dart';
+import 'ui/product/product_home.dart';
+import 'routes.dart';
+import 'redux/product/product_actions.dart';
+import 'redux/product/product_middleware.dart';
+import 'redux/app/app_reducer.dart';
 
 void main() {
 

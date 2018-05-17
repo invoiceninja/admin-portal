@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:invoiceninja/data/models/models.dart';
+import '../../data/models/models.dart';
 
 @immutable
 class AppState {

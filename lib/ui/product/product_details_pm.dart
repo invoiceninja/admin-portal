@@ -6,11 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/product/product_details.dart';
-import 'package:invoiceninja/redux/product/product_selectors.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
+import '../../redux/product/product_actions.dart';
+import '../../data/models/models.dart';
+import '../../ui/product/product_details.dart';
+import '../../redux/product/product_selectors.dart';
+import '../../redux/app/app_state.dart';
 
 class ProductDetails extends StatelessWidget {
   final int id;
