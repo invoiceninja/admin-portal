@@ -40,6 +40,7 @@ class InvoiceNinjaApp extends StatelessWidget {
         theme: new ThemeData.dark(),
         title: 'Invoice Ninja',
         routes: {
+          /*
           NinjaRoutes.login: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {
@@ -47,6 +48,7 @@ class InvoiceNinjaApp extends StatelessWidget {
               },
             );
           },
+          */
           NinjaRoutes.dashboard: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {

@@ -42,14 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 //contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 //autofocus: false,
+                /*
                 validator: (val) =>
                     val.isEmpty ? 'Please enter your email.' : null,
+                */
                 onSaved: (val) => _username = val,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Password'),
+                /*
                 validator: (val) =>
                     val.isEmpty ? 'Please enter your password.' : null,
+                */
                 onSaved: (val) => _password = val,
                 obscureText: true,
               ),
