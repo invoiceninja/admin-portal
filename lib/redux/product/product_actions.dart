@@ -2,7 +2,16 @@ import 'package:invoiceninja/data/models/models.dart';
 
 class LoadProductsAction {}
 
-class ProductsNotLoadedAction {}
+class ProductsNotLoadedAction {
+  final dynamic error;
+
+  ProductsNotLoadedAction(this.error);
+
+  @override
+  String toString() {
+    return 'ProductsNotLoadedAction{products: $error}';
+  }
+}
 
 class ProductsLoadedAction {
   final List<ProductEntity> products;

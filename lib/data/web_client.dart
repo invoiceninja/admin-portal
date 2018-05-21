@@ -13,20 +13,16 @@ class WebClient {
   const WebClient();
 
   /// Mock that "fetches" some Products from a "web service" after a short delay
-  Future<List<ProductEntity>> fetchProducts() async {
-
-    print('Web Client: fetchProducts...');
-
-    var url = "";
+  Future<List<dynamic>> fetchData(String url, String token) async {
 
     final response = await http.Client().get(
       url,
-      headers: {'X-Ninja-Token': ""},
+      headers: {'X-Ninja-Token': token},
     );
 
-    return ProductResponse
+    return BaseResponse
         .fromJson(json.decode(response.body))
-        .products
+        .data
         .toList();
   }
 

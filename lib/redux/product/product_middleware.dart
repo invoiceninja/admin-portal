@@ -6,9 +6,10 @@ import 'package:invoiceninja/data/repositories/repositories.dart';
 import 'package:invoiceninja/data/repositories/product_repository.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/redux/product/product_selectors.dart';
+import 'package:invoiceninja/data/models/entities.dart';
 
 List<Middleware<AppState>> createStoreProductsMiddleware([
-  ProductsRepository repository = const ProductsRepositoryFlutter(
+  BaseRepository repository = const ProductsRepositoryFlutter(
     fileStorage: const FileStorage(
       '__invoiceninja__',
       getApplicationDocumentsDirectory,
@@ -24,7 +25,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   ];
 }
 
-Middleware<AppState> _createSaveProducts(ProductsRepository repository) {
+Middleware<AppState> _createSaveProducts(BaseRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
 
@@ -36,14 +37,12 @@ Middleware<AppState> _createSaveProducts(ProductsRepository repository) {
   };
 }
 
-Middleware<AppState> _createLoadProducts(ProductsRepository repository) {
+Middleware<AppState> _createLoadProducts(BaseRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     print('Product Middleware: createLoadProducts...');
 
-    //repository.loadProducts();
-
-    repository.loadProducts().then(
+    repository.loadData(store.state.auth).then(
       (products) {
         store.dispatch(
           ProductsLoadedAction(
@@ -52,7 +51,7 @@ Middleware<AppState> _createLoadProducts(ProductsRepository repository) {
           ),
         );
       },
-    ).catchError((_) => store.dispatch(ProductsNotLoadedAction()));
+    ).catchError((error) => store.dispatch(ProductsNotLoadedAction(error)));
 
     next(action);
   };

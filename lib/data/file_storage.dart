@@ -16,7 +16,7 @@ class FileStorage {
       );
 
   /// LoadProducts
-  Future<List<ProductEntity>> loadProducts() async {
+  Future<List<dynamic>> loadData() async {
     final file = await _getLocalFile();
     final contents = await file.readAsString();
 
@@ -29,7 +29,7 @@ class FileStorage {
      */
   }
 
-  Future<File> saveProducts(List<ProductEntity> products) async {
+  Future<File> saveData(List<dynamic> products) async {
     final file = await _getLocalFile();
 
     /*

@@ -18,7 +18,7 @@ AppState appReducer(AppState state, action) {
 
   return AppState(
     isLoading: loadingReducer(state.isLoading, action),
-    auth: authReducer(state.auth, action),
     products: productsReducer(state.products, action),
+    auth: authReducer(state.auth, action),
   );
 }

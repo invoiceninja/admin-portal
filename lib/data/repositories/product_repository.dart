@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 import 'package:meta/meta.dart';
 
+import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/repositories/repositories.dart';
 import 'package:invoiceninja/data/file_storage.dart';
@@ -9,7 +10,7 @@ import 'package:invoiceninja/data/web_client.dart';
 
 /// A class that glues together our local file storage and web client. It has a
 /// clear responsibility: Load Products and Persist products.
-class ProductsRepositoryFlutter implements ProductsRepository {
+class ProductsRepositoryFlutter implements BaseRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
 
@@ -21,29 +22,35 @@ class ProductsRepositoryFlutter implements ProductsRepository {
   /// Loads products first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the Products from a Web Client.
   @override
-  Future<List<ProductEntity>> loadProducts() async {
-
+  Future<List<dynamic>> loadData(AuthState auth) async {
     print('ProductRepo: loadProducts...');
 
+    final products = await webClient.fetchData(
+        auth.url + '/products', auth.token);
+
+    //fileStorage.saveProducts(products);
+
+    return products.map((product) => ProductEntity.fromJson(product)).toList();
+
+    /*
     try {
-      return await fileStorage.loadProducts();
-    } catch (e) {
-      final products = await webClient.fetchProducts();
+      return await fileStorage.loadData();
+    } catch (exception) {
+      final products = await webClient.fetchData(
+          auth.url + '/products', auth.token);
 
-      print('ProductRepo: result');
-      print(products);
-
-      fileStorage.saveProducts(products);
+      //fileStorage.saveProducts(products);
 
       return products;
     }
+    */
   }
 
   // Persists products to local disk and the web
   @override
-  Future saveProducts(List<ProductEntity> products) {
+  Future saveData(List<dynamic> products) {
     return Future.wait<dynamic>([
-      fileStorage.saveProducts(products),
+      fileStorage.saveData(products),
       webClient.postProducts(products),
     ]);
   }

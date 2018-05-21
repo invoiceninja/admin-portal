@@ -6,6 +6,9 @@ import 'package:invoiceninja/data/models/models.dart';
 class AuthState {
 
   // properties
+  final String url;
+  final String secret;
+  final String token;
   final bool isAuthenticated;
   final bool isAuthenticating;
   final User user;
@@ -13,6 +16,9 @@ class AuthState {
 
   // constructor with default
   AuthState({
+    this.url,
+    this.secret,
+    this.token,
     this.isAuthenticated = false,
     this.isAuthenticating = false,
     this.user,
@@ -21,12 +27,18 @@ class AuthState {
 
   // allows to modify AuthState parameters while cloning previous ones
   AuthState copyWith({
+    String url,
+    String secret,
+    String token,
     bool isAuthenticated,
     bool isAuthenticating,
     String error,
     User user
   }) {
     return new AuthState(
+      url: url ?? this.url,
+      token: token ?? this.token,
+      secret: secret ?? this.secret,
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
       isAuthenticating: isAuthenticating ?? this.isAuthenticating,
       error: error ?? this.error,
@@ -35,6 +47,9 @@ class AuthState {
   }
 
   factory AuthState.fromJSON(Map<String, dynamic> json) => new AuthState(
+    url: json['url'],
+    token: json['token'],
+    secret: json['secret'],
     isAuthenticated: json['isAuthenticated'],
     isAuthenticating: json['isAuthenticating'],
     error: json['error'],
@@ -42,6 +57,9 @@ class AuthState {
   );
 
   Map<String, dynamic> toJSON() => <String, dynamic>{
+    'url': this.url,
+    'token': this.token,
+    'secret': this.secret,
     'isAuthenticated': this.isAuthenticated,
     'isAuthenticating': this.isAuthenticating,
     'user': this.user == null ? null : this.user.toJSON(),
@@ -51,6 +69,7 @@ class AuthState {
   @override
   String toString() {
     return '''{
+                url: $url,
                 isAuthenticated: $isAuthenticated,
                 isAuthenticating: $isAuthenticating,
                 user: $user,

@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
+import 'package:invoiceninja/data/models/models.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,6 +15,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String _username;
   String _password;
+  String _url;
+  String _token;
+  String _secret;
 
   void _submit() {
     final form = _formKey.currentState;
@@ -27,8 +31,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, dynamic>(
         converter: (Store<AppState> store) {
-      return (BuildContext context, String username, String password) =>
-          store.dispatch(login(context, username, password));
+      return (BuildContext context, String url, String token) {
+        store.dispatch(UserLoginRequest(url, token));
+        //store.dispatch(UserLoginSuccess(User(token, 1)));
+        Navigator.of(context).pushNamed('/dashboard');
+      };
     }, builder: (BuildContext context, loginAction) {
       return Scaffold(
         body: Form(
@@ -38,25 +45,40 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 40.0),
             children: [
               TextFormField(
+                decoration: InputDecoration(labelText: 'URL'),
+                validator: (val) =>
+                    val.isEmpty ? 'Please enter your URL.' : null,
+                onSaved: (val) => _url = val,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Token'),
+                validator: (val) =>
+                    val.isEmpty ? 'Please enter your token.' : null,
+                onSaved: (val) => _token = val,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 40.0, bottom: 20.0),
+                child: Text(
+                    'Note: this will be changed to email/password in the future'),
+              ),
+              /*
+              TextFormField(
                 decoration: InputDecoration(labelText: 'Email'),
                 keyboardType: TextInputType.emailAddress,
                 //contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 //autofocus: false,
-                /*
                 validator: (val) =>
                     val.isEmpty ? 'Please enter your email.' : null,
-                */
                 onSaved: (val) => _username = val,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Password'),
-                /*
                 validator: (val) =>
                     val.isEmpty ? 'Please enter your password.' : null,
-                */
                 onSaved: (val) => _password = val,
                 obscureText: true,
               ),
+              */
               Padding(
                 padding: EdgeInsets.only(top: 20.0),
                 child: Material(
@@ -68,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 42.0,
                     onPressed: () {
                       _submit();
-                      loginAction(context, _username, _password);
+                      loginAction(context, _url, _token);
                       //Navigator.of(context).pushNamed(HomeScreen.tag);
                     },
                     color: Colors.lightBlueAccent,

@@ -27,8 +27,6 @@ class ProductList extends StatelessWidget {
   }
 
   ListView _buildListView() {
-    print('_buildListView');
-    print(products);
     return ListView.builder(
       key: NinjaKeys.productList,
       itemCount: products.length,

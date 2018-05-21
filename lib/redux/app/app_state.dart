@@ -10,8 +10,9 @@ class AppState {
 
   AppState(
       {this.isLoading = false,
-        AuthState auth,
-        this.products = const []});
+        this.products = const [],
+        AuthState auth}):
+        auth = auth ?? new AuthState();
 
 
   factory AppState.loading() => AppState(isLoading: true);
@@ -55,6 +56,6 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading}';
+    return 'AppState{isLoading: $isLoading, url: ${auth.url}, token ${auth.token}}';
   }
 }

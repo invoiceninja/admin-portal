@@ -4,21 +4,24 @@ import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 Reducer<AuthState> authReducer = combineReducers([
-  new TypedReducer<AuthState, UserLoginRequest>(userLoginRequestReducer),
-  new TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
-  new TypedReducer<AuthState, UserLoginFailure>(userLoginFailureReducer),
-  new TypedReducer<AuthState, UserLogout>(userLogoutReducer),
+  TypedReducer<AuthState, UserLoginRequest>(userLoginRequestReducer),
+  TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
+  TypedReducer<AuthState, UserLoginFailure>(userLoginFailureReducer),
+  TypedReducer<AuthState, UserLogout>(userLogoutReducer),
 ]);
 
 AuthState userLoginRequestReducer(AuthState auth, UserLoginRequest action) {
-  return new AuthState().copyWith(
+  return AuthState().copyWith(
+    url: action.url,
+    token: action.token,
+    secret: action.secret,
     isAuthenticated: false,
     isAuthenticating: true,
   );
 }
 
 AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
-  return new AuthState().copyWith(
+  return AuthState().copyWith(
       isAuthenticated: true,
       isAuthenticating: false,
       user: action.user
@@ -26,7 +29,7 @@ AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
 }
 
 AuthState userLoginFailureReducer(AuthState auth, UserLoginFailure action) {
-  return new AuthState().copyWith(
+  return AuthState().copyWith(
       isAuthenticated: false,
       isAuthenticating: false,
       error: action.error
@@ -34,5 +37,5 @@ AuthState userLoginFailureReducer(AuthState auth, UserLoginFailure action) {
 }
 
 AuthState userLogoutReducer(AuthState auth, UserLogout action) {
-  return new AuthState();
+  return AuthState();
 }

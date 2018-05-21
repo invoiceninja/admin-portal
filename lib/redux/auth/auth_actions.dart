@@ -3,7 +3,16 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
-class UserLoginRequest {}
+class UserLoginRequest {
+  final String email;
+  final String password;
+  final String url;
+  final String secret;
+  final String token;
+
+  //UserLoginRequest(this.email, this.password, this.url, this.secret);
+  UserLoginRequest(this.url, this.token);
+}
 
 class UserLoginSuccess {
   final User user;
@@ -19,21 +28,21 @@ class UserLoginFailure {
 
 class UserLogout {}
 
-final Function login = (BuildContext context, String username, String password) {
+/*
+final Function login = (BuildContext context, String url, String token) {
   return (Store<AppState> store) {
-    store.dispatch(new UserLoginRequest());
-    if (username == 'asd' && password == 'asd') {
-      store.dispatch(new UserLoginSuccess(new User('placeholder_token', 'placeholder_id')));
-      Navigator.of(context).pushNamedAndRemoveUntil('/main', (_) => false);
-    } else {
-      store.dispatch(new UserLoginFailure('Username or password were incorrect.'));
-    }
+    store.dispatch(new UserLoginRequest(url, token));
+    store.dispatch(new UserLoginSuccess(new User(token, 1)));
+    Navigator.of(context).pushNamed('/dashboard');
   };
 };
+*/
 
+/*
 final Function logout = (BuildContext context) {
   return (Store<AppState> store) {
     store.dispatch(new UserLogout());
     Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
   };
 };
+*/

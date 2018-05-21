@@ -10,6 +10,7 @@ import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_middleware.dart';
 import 'package:invoiceninja/redux/app/app_reducer.dart';
+import 'package:redux_logging/redux_logging.dart';
 
 void main() {
 
@@ -25,7 +26,11 @@ class InvoiceNinjaApp extends StatelessWidget {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.loading(),
-    middleware: createStoreProductsMiddleware(),
+      middleware: []
+        ..addAll(createStoreProductsMiddleware())
+        ..addAll([
+          LoggingMiddleware.printer(),
+        ])
   );
 
   @override
@@ -40,7 +45,6 @@ class InvoiceNinjaApp extends StatelessWidget {
         theme: new ThemeData.dark(),
         title: 'Invoice Ninja',
         routes: {
-          /*
           NinjaRoutes.login: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {
@@ -48,7 +52,6 @@ class InvoiceNinjaApp extends StatelessWidget {
               },
             );
           },
-          */
           NinjaRoutes.dashboard: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {

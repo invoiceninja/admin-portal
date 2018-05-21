@@ -2,7 +2,7 @@ export 'package:invoiceninja/data/models/entities.dart';
 
 class User {
   final String token;
-  final String id;
+  final int id;
 
   User(this.token, this.id);
 

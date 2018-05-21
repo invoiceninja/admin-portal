@@ -6,16 +6,12 @@ part of 'entities.dart';
 // Generator: JsonSerializableGenerator
 // **************************************************************************
 
-ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
-    new ProductResponse((json['data'] as List)
-        ?.map((e) => e == null
-            ? null
-            : new ProductEntity.fromJson(e as Map<String, dynamic>))
-        ?.toList());
+BaseResponse _$BaseResponseFromJson(Map<String, dynamic> json) =>
+    new BaseResponse(json['data'] as List);
 
-abstract class _$ProductResponseSerializerMixin {
-  List<ProductEntity> get products;
-  Map<String, dynamic> toJson() => <String, dynamic>{'data': products};
+abstract class _$BaseResponseSerializerMixin {
+  List<dynamic> get data;
+  Map<String, dynamic> toJson() => <String, dynamic>{'data': data};
 }
 
 ProductEntity _$ProductEntityFromJson(Map<String, dynamic> json) =>

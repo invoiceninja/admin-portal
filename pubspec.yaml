@@ -9,7 +9,7 @@ dependencies:
   cupertino_icons: ^0.1.0
   json_annotation: ^0.2.3
   path_provider: "^0.4.0"
-
+  redux_logging: "^0.3.0"
 
 dev_dependencies:
   flutter_test:
