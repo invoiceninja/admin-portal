@@ -70,7 +70,7 @@ class InvoiceNinjaApp extends StatelessWidget {
             return StoreBuilder<AppState>(
               onInit: (store) => store.dispatch(LoadProductsAction()),
               builder: (context, store) {
-                return ProductHome();
+                return ProductScreen();
               },
             );
           },

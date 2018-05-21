@@ -7,8 +7,8 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/ui/product/product_list_vm.dart';
 
-class ProductHome extends StatelessWidget {
-  ProductHome() : super(key: NinjaKeys.productHome);
+class ProductScreen extends StatelessWidget {
+  ProductScreen() : super(key: NinjaKeys.productHome);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ProductHome extends StatelessWidget {
           //ExtraActionsContainer(),
         ],
       ),
-      body: FilteredProducts(),
+      body: ProductListVM(),
       /*
       floatingActionButton: FloatingActionButton(
         key: ArchSampleKeys.addProductFab,

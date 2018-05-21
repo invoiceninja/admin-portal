@@ -8,8 +8,8 @@ import 'package:invoiceninja/ui/product/product_list.dart';
 import 'package:invoiceninja/redux/product/product_selectors.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 
-class FilteredProducts extends StatelessWidget {
-  FilteredProducts({Key key}) : super(key: key);
+class ProductListVM extends StatelessWidget {
+  ProductListVM({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

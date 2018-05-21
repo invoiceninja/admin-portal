@@ -32,7 +32,7 @@ class ProductItem extends StatelessWidget {
         */
         trailing: Text(product.cost.toStringAsFixed(2)),
         title: Hero(
-          tag: product.productKey + '__heroTag',
+          tag: product.id.toString() + '__heroTag',
           child: Container(
             width: MediaQuery.of(context).size.width,
             child: Text(
