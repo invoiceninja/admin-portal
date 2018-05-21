@@ -31,6 +31,15 @@ class ProductItem extends StatelessWidget {
         ),
         */
         trailing: Text(product.cost.toStringAsFixed(2)),
+        title: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Text(
+            product.productKey,
+            key: NinjaKeys.productItemProductKey(product.id),
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
+        /*
         title: Hero(
           tag: product.id.toString() + '__heroTag',
           child: Container(
@@ -42,9 +51,8 @@ class ProductItem extends StatelessWidget {
             ),
           ),
         ),
-        subtitle: Text(
-          product.notes
-        ),
+        */
+        subtitle: Text(product.notes),
       ),
     );
   }

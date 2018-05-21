@@ -9,6 +9,7 @@ import 'package:invoiceninja/ui/auth/login_screen.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_middleware.dart';
+import 'package:invoiceninja/redux/auth/auth_middleware.dart';
 import 'package:invoiceninja/redux/app/app_reducer.dart';
 import 'package:redux_logging/redux_logging.dart';
 
@@ -27,6 +28,7 @@ class InvoiceNinjaApp extends StatelessWidget {
     appReducer,
     initialState: AppState.loading(),
       middleware: []
+        ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreProductsMiddleware())
         ..addAll([
           LoggingMiddleware.printer(),

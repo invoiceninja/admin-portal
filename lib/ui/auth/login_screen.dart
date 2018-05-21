@@ -1,23 +1,30 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
+
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String _username;
+  String _email;
   String _password;
   String _url;
   String _token;
   String _secret;
+
+  final _urlTextController = TextEditingController();
+  final _tokenTextController = TextEditingController();
 
   void _submit() {
     final form = _formKey.currentState;
@@ -25,6 +32,18 @@ class _LoginScreenState extends State<LoginScreen> {
     if (form.validate()) {
       form.save();
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPrefs();
+  }
+
+  _loadPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _urlTextController.text = prefs.getString('url');
+    _tokenTextController.text = prefs.getString('token');
   }
 
   @override
@@ -45,12 +64,14 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 40.0),
             children: [
               TextFormField(
+                controller: _urlTextController,
                 decoration: InputDecoration(labelText: 'URL'),
                 validator: (val) =>
                     val.isEmpty ? 'Please enter your URL.' : null,
                 onSaved: (val) => _url = val,
               ),
               TextFormField(
+                controller: _tokenTextController,
                 decoration: InputDecoration(labelText: 'Token'),
                 validator: (val) =>
                     val.isEmpty ? 'Please enter your token.' : null,
@@ -69,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 //autofocus: false,
                 validator: (val) =>
                     val.isEmpty ? 'Please enter your email.' : null,
-                onSaved: (val) => _username = val,
+                onSaved: (val) => _email = val,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Password'),
