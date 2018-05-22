@@ -44,7 +44,10 @@ class InvoiceNinjaApp extends StatelessWidget {
       // Widgets will find and use this value as the `Store`.
       store: store,
       child: new MaterialApp(
-        theme: new ThemeData.dark(),
+        theme: ThemeData(
+            brightness: Brightness.dark,
+            accentColor: Colors.lightBlueAccent,
+        ),
         title: 'Invoice Ninja',
         routes: {
           AppRoutes.login: (context) {
