@@ -23,11 +23,35 @@ abstract class _$BaseItemResponseSerializerMixin {
 }
 
 DashboardEntity _$DashboardEntityFromJson(Map<String, dynamic> json) =>
-    new DashboardEntity((json['paidToDate'] as num)?.toDouble());
+    new DashboardEntity(
+        (json['paidToDate'] as num)?.toDouble(),
+        json['paidToDateCurrency'] as int,
+        (json['balances'] as num)?.toDouble(),
+        json['balancesCurrency'] as int,
+        (json['averageInvoice'] as num)?.toDouble(),
+        json['averageInvoiceCurrency'] as int,
+        json['invoicesSent'] as int,
+        json['activeClients'] as int);
 
 abstract class _$DashboardEntitySerializerMixin {
   double get paidToDate;
-  Map<String, dynamic> toJson() => <String, dynamic>{'paidToDate': paidToDate};
+  int get paidToDateCurrency;
+  double get balances;
+  int get balancesCurrency;
+  double get averageInvoice;
+  int get averageInvoiceCurrency;
+  int get invoicesSent;
+  int get activeClients;
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'paidToDate': paidToDate,
+        'paidToDateCurrency': paidToDateCurrency,
+        'balances': balances,
+        'balancesCurrency': balancesCurrency,
+        'averageInvoice': averageInvoice,
+        'averageInvoiceCurrency': averageInvoiceCurrency,
+        'invoicesSent': invoicesSent,
+        'activeClients': activeClients
+      };
 }
 
 ProductEntity _$ProductEntityFromJson(Map<String, dynamic> json) =>

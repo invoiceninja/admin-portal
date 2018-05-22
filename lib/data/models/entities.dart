@@ -35,8 +35,24 @@ class BaseItemResponse extends Object with _$BaseItemResponseSerializerMixin {
 class DashboardEntity extends Object with _$DashboardEntitySerializerMixin {
 
   double paidToDate;
+  int paidToDateCurrency;
+  double balances;
+  int balancesCurrency;
+  double averageInvoice;
+  int averageInvoiceCurrency;
+  int invoicesSent;
+  int activeClients;
 
-  DashboardEntity([this.paidToDate]);
+  DashboardEntity([
+    this.paidToDate,
+    this.paidToDateCurrency,
+    this.balances,
+    this.balancesCurrency,
+    this.averageInvoice,
+    this.averageInvoiceCurrency,
+    this.invoicesSent,
+    this.activeClients,
+  ]);
 
   factory DashboardEntity.fromJson(Map<String, dynamic> json) => _$DashboardEntityFromJson(json);
 }

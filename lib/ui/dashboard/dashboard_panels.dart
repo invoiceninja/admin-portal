@@ -15,15 +15,45 @@ class DashboardPanels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('building...');
-    return AppLoading(builder: (context, loading) {
-      return loading
-          ? LoadingIndicator(key: NinjaKeys.productsLoading)
-          : _buildPanels();
-    });
+    return ListView(
+        padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
+        children: <Widget>[
+          DashboardPanel(
+              'Total Revenue', Icons.credit_card, this.dashboard.paidToDate),
+          DashboardPanel(
+              'Average Invoice', Icons.email, this.dashboard.averageInvoice),
+          DashboardPanel(
+              'Outstanding', Icons.schedule, this.dashboard.balances),
+          DashboardPanel(
+              'Invoices Sent', Icons.send, this.dashboard.invoicesSent, false),
+          DashboardPanel(
+              'Active Clients', Icons.people, this.dashboard.activeClients, false),
+        ]
+    );
   }
+}
 
-  Text _buildPanels() {
-    return Text('Paid to Date: ' + dashboard.paidToDate.toString());
+class DashboardPanel extends StatelessWidget {
+  DashboardPanel(this.title, this.icon, this.amount, [this.isMoney = true]);
+
+  final String title;
+  final IconData icon;
+  final num amount;
+  final bool isMoney;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            leading: Icon(this.icon),
+            title: Text(this.title),
+            trailing: Text(this.amount.toStringAsFixed(this.isMoney ? 2 : 0)),
+          ),
+        ],
+      ),
+    );
   }
 }
