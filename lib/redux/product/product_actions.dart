@@ -9,7 +9,7 @@ class ProductsNotLoadedAction {
 
   @override
   String toString() {
-    return 'ProductsNotLoadedAction{products: $error}';
+    return 'ProductsNotLoadedAction{error: $error}';
   }
 }
 

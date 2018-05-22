@@ -9,17 +9,17 @@ class DashboardNotLoadedAction {
 
   @override
   String toString() {
-    return 'DashboardNotLoadedAction{products: $error}';
+    return 'DashboardNotLoadedAction{error: $error}';
   }
 }
 
 class DashboardLoadedAction {
-  final List<ProductEntity> products;
+  final DashboardEntity data;
 
-  DashboardLoadedAction(this.products);
+  DashboardLoadedAction(this.data);
 
   @override
   String toString() {
-    return 'DashboardLoadedAction{products: $products}';
+    return 'DashboardLoadedAction{data: $data}';
   }
 }

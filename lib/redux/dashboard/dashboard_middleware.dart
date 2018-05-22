@@ -23,30 +23,11 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
   ];
 }
 
-Middleware<AppState> _createSaveDashboard(BaseRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
-    next(action);
-
-    /*
-    repository.saveDashboard(
-      productsSelector(store.state).map((product) => product.toEntity()).toList(),
-    );
-    */
-  };
-}
-
 Middleware<AppState> _createLoadDashboard(BaseRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    repository.loadItems(store.state.auth).then(
-          (data) {
-        store.dispatch(
-          DashboardLoadedAction(
-            //products.map(ProductEntity.fromEntity).toList(),
-            data,
-          ),
-        );
-      },
+    repository.loadItem(store.state.auth).then(
+            (data) => store.dispatch(DashboardLoadedAction(data))
     ).catchError((error) => store.dispatch(DashboardNotLoadedAction(error)));
 
     next(action);

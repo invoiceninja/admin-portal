@@ -23,7 +23,7 @@ class DashboardRepositoryFlutter implements BaseRepository {
   /// error, it attempts to load the Dashboard from a Web Client.
   @override
   Future<dynamic> loadItem(AuthState auth) async {
-    print('ProductRepo: loadDashboard...');
+    print('DashboardRepo: loadDashboard...');
 
     final data = await webClient.fetchItem(
         auth.url + '/dashboard', auth.token);
@@ -31,7 +31,8 @@ class DashboardRepositoryFlutter implements BaseRepository {
     //fileStorage.saveDashboard(products);
     print('== LOAD DASHBOARD ==');
     print(data);
-    return data.map((data) => ProductEntity.fromJson(data)).toList();
+
+    return DashboardEntity.fromJson(data);
 
     /*
     try {
@@ -48,7 +49,7 @@ class DashboardRepositoryFlutter implements BaseRepository {
   }
 
   @override
-  Future<List<dynamic>> loadItems(dynamic product) {
+  Future<List<dynamic>> loadList(dynamic product) {
     return Future.wait<dynamic>([]);
   }
 

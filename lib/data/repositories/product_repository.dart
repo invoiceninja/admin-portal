@@ -22,7 +22,7 @@ class ProductsRepositoryFlutter implements BaseRepository {
   /// Loads products first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the Products from a Web Client.
   @override
-  Future<List<dynamic>> loadItems(AuthState auth) async {
+  Future<List<dynamic>> loadList(AuthState auth) async {
     print('ProductRepo: loadProducts...');
 
     final products = await webClient.fetchList(

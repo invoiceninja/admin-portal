@@ -30,6 +30,18 @@ class BaseItemResponse extends Object with _$BaseItemResponseSerializerMixin {
   factory BaseItemResponse.fromJson(Map<String, dynamic> json) => _$BaseItemResponseFromJson(json);
 }
 
+
+@JsonSerializable()
+class DashboardEntity extends Object with _$DashboardEntitySerializerMixin {
+
+  double paidToDate;
+
+  DashboardEntity(this.paidToDate);
+
+  factory DashboardEntity.fromJson(Map<String, dynamic> json) => _$DashboardEntityFromJson(json);
+}
+
+
 @JsonSerializable()
 class ProductEntity extends Object with _$ProductEntitySerializerMixin {
 

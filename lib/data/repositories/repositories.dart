@@ -14,7 +14,7 @@ import 'package:invoiceninja/data/models/entities.dart';
 /// web or Flutter.
 abstract class BaseRepository {
 
-  Future<List<dynamic>> loadItems(AuthState auth);
+  Future<List<dynamic>> loadList(AuthState auth);
 
   Future<dynamic> loadItem(AuthState auth);
 
