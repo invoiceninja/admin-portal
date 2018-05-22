@@ -36,7 +36,7 @@ class Sidebar extends StatelessWidget {
             leading: new Icon(Icons.language),
             title: new Text('Products'),
             onTap: () {
-              Navigator.of(context).popAndPushNamed(AppRoutes.productScreen);
+              Navigator.of(context).popAndPushNamed(AppRoutes.products);
             },
           ),
           /*
