@@ -17,7 +17,6 @@ class AppState {
         dashboard = dashboard ?? new DashboardEntity(),
         auth = auth ?? new AuthState();
 
-
   factory AppState.loading() => AppState(isLoading: true);
 
   /*

@@ -11,7 +11,7 @@ class UserLoginRequest {
   final String token;
 
   //UserLoginRequest(this.email, this.password, this.url, this.secret);
-  UserLoginRequest(this.url, this.token);
+  UserLoginRequest(this.url, this.token, [this.email, this.password, this.secret]);
 }
 
 class UserLoginSuccess {

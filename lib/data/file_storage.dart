@@ -21,12 +21,15 @@ class FileStorage {
     final contents = await file.readAsString();
 
     print('LOADING PRODUCTS FROM FILE...');
+
     /*
     return serializers
         .deserializeWith(AppState.serializer, json.decode(contents))
         .products
         .toList();
      */
+
+    return null;
   }
 
   Future<File> saveData(List<dynamic> products) async {
@@ -42,6 +45,8 @@ class FileStorage {
       ),
     );
     */
+
+    return null;
   }
 
   Future<File> _getLocalFile() async {
