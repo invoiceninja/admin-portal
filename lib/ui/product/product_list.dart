@@ -21,7 +21,7 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppLoading(builder: (context, loading) {
       return loading
-          ? LoadingIndicator(key: NinjaKeys.productsLoading)
+          ? LoadingIndicator()
           : _buildListView();
     });
   }

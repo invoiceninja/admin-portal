@@ -15,6 +15,14 @@ class DashboardPanels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return AppLoading(builder: (context, loading) {
+      return loading
+          ? LoadingIndicator()
+          : _buildPanels();
+    });
+  }
+
+  ListView _buildPanels() {
     return ListView(
         padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
         children: <Widget>[

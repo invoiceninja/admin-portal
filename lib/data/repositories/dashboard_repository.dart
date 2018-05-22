@@ -23,7 +23,6 @@ class DashboardRepositoryFlutter implements BaseRepository {
   /// error, it attempts to load the Dashboard from a Web Client.
   @override
   Future<dynamic> loadItem(AuthState auth) async {
-    print('DashboardRepo: loadDashboard...');
 
     final data = await webClient.fetchItem(
         auth.url + '/dashboard', auth.token);
