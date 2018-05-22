@@ -47,28 +47,28 @@ class InvoiceNinjaApp extends StatelessWidget {
         theme: new ThemeData.dark(),
         title: 'Invoice Ninja',
         routes: {
-          NinjaRoutes.login: (context) {
+          AppRoutes.login: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {
                 return LoginScreen();
               },
             );
           },
-          NinjaRoutes.dashboard: (context) {
+          AppRoutes.dashboard: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {
                 return Dashboard();
               },
             );
           },
-          NinjaRoutes.clientList: (context) {
+          AppRoutes.clientScreen: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {
                 return ClientList();
               },
             );
           },
-          NinjaRoutes.productList: (context) {
+          AppRoutes.productScreen: (context) {
             return StoreBuilder<AppState>(
               onInit: (store) => store.dispatch(LoadProductsAction()),
               builder: (context, store) {

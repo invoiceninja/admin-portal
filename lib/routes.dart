@@ -1,6 +1,6 @@
-class NinjaRoutes {
+class AppRoutes {
   static final login = "/";
   static final dashboard = "/dashboard";
-  static final clientList = "/clientList";
-  static final productList = "/productList";
+  static final clientScreen = "/clientScreen";
+  static final productScreen = "/productScreen";
 }

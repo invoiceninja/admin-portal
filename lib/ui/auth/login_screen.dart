@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
-
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -63,6 +62,10 @@ class _LoginScreenState extends State<LoginScreen> {
             shrinkWrap: true,
             padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 40.0),
             children: [
+              Padding(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: new Image.asset('assets/images/logo.png', width: 100.0, height: 100.0),
+              ),
               TextFormField(
                 controller: _urlTextController,
                 decoration: InputDecoration(labelText: 'URL'),
@@ -71,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onSaved: (val) => _url = val,
               ),
               TextFormField(
+                obscureText: true,
                 controller: _tokenTextController,
                 decoration: InputDecoration(labelText: 'Token'),
                 validator: (val) =>
@@ -80,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 40.0, bottom: 20.0),
                 child: Text(
-                    'Note: this will be changed to email/password in the future'),
+                    'Note: this will be changed to email/password in the future.'),
               ),
               /*
               TextFormField(
@@ -116,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     color: Colors.lightBlueAccent,
                     child:
-                        Text('Log In', style: TextStyle(color: Colors.white)),
+                        Text('LOGIN', style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ),

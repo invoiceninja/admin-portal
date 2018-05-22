@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja/routes.dart';
 
 class Sidebar extends StatelessWidget {
   @override
@@ -18,8 +19,7 @@ class Sidebar extends StatelessWidget {
             leading: new Icon(Icons.dashboard),
             title: new Text('Dashboard'),
             onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed('/');
+              Navigator.of(context).popAndPushNamed(AppRoutes.dashboard);
             },
           ),
           /*
@@ -28,7 +28,7 @@ class Sidebar extends StatelessWidget {
             title: new Text('Clients'),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).pushNamed('/clientList');
+              Navigator.of(context).pushNamed(AppRoutes.clientScreen);
             },
           ),
           */
@@ -36,8 +36,7 @@ class Sidebar extends StatelessWidget {
             leading: new Icon(Icons.language),
             title: new Text('Products'),
             onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed('/productList');
+              Navigator.of(context).popAndPushNamed(AppRoutes.productScreen);
             },
           ),
           /*
@@ -47,6 +46,13 @@ class Sidebar extends StatelessWidget {
             onTap: () {},
           ),
           */
+          new ListTile(
+            leading: new Icon(Icons.power_settings_new),
+            title: new Text('Log Out'),
+            onTap: () {
+              Navigator.of(context).popAndPushNamed(AppRoutes.login);
+            },
+          ),
         ],
       ),
     );
