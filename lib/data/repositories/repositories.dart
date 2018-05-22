@@ -13,10 +13,10 @@ import 'package:invoiceninja/data/models/entities.dart';
 /// inject the correct implementation depending on the environment, such as
 /// web or Flutter.
 abstract class BaseRepository {
-  /// Loads products first from File storage. If they don't exist or encounter an
-  /// error, it attempts to load the Todos from a Web Client.
-  Future<List<dynamic>> loadData(AuthState auth);
 
-  // Persists products to local disk and the web
+  Future<List<dynamic>> loadItems(AuthState auth);
+
+  Future<dynamic> loadItem(AuthState auth);
+
   Future saveData(List<dynamic> data);
 }

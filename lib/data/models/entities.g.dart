@@ -6,11 +6,19 @@ part of 'entities.dart';
 // Generator: JsonSerializableGenerator
 // **************************************************************************
 
-BaseResponse _$BaseResponseFromJson(Map<String, dynamic> json) =>
-    new BaseResponse(json['data'] as List);
+BaseListResponse _$BaseListResponseFromJson(Map<String, dynamic> json) =>
+    new BaseListResponse(json['data'] as List);
 
-abstract class _$BaseResponseSerializerMixin {
+abstract class _$BaseListResponseSerializerMixin {
   List<dynamic> get data;
+  Map<String, dynamic> toJson() => <String, dynamic>{'data': data};
+}
+
+BaseItemResponse _$BaseItemResponseFromJson(Map<String, dynamic> json) =>
+    new BaseItemResponse(json['data']);
+
+abstract class _$BaseItemResponseSerializerMixin {
+  dynamic get data;
   Map<String, dynamic> toJson() => <String, dynamic>{'data': data};
 }
 

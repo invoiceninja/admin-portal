@@ -9,28 +9,29 @@ import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
 /// A class that glues together our local file storage and web client. It has a
-/// clear responsibility: Load Products and Persist products.
-class ProductsRepositoryFlutter implements BaseRepository {
+/// clear responsibility: Load Dashboard and Persist products.
+class DashboardRepositoryFlutter implements BaseRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
 
-  const ProductsRepositoryFlutter({
+  const DashboardRepositoryFlutter({
     @required this.fileStorage,
     this.webClient = const WebClient(),
   });
 
   /// Loads products first from File storage. If they don't exist or encounter an
-  /// error, it attempts to load the Products from a Web Client.
+  /// error, it attempts to load the Dashboard from a Web Client.
   @override
-  Future<List<dynamic>> loadItems(AuthState auth) async {
-    print('ProductRepo: loadProducts...');
+  Future<dynamic> loadItem(AuthState auth) async {
+    print('ProductRepo: loadDashboard...');
 
-    final products = await webClient.fetchList(
-        auth.url + '/products', auth.token);
+    final data = await webClient.fetchItem(
+        auth.url + '/dashboard', auth.token);
 
-    //fileStorage.saveProducts(products);
-
-    return products.map((product) => ProductEntity.fromJson(product)).toList();
+    //fileStorage.saveDashboard(products);
+    print('== LOAD DASHBOARD ==');
+    print(data);
+    return data.map((data) => ProductEntity.fromJson(data)).toList();
 
     /*
     try {
@@ -39,7 +40,7 @@ class ProductsRepositoryFlutter implements BaseRepository {
       final products = await webClient.fetchData(
           auth.url + '/products', auth.token);
 
-      //fileStorage.saveProducts(products);
+      //fileStorage.saveDashboard(products);
 
       return products;
     }
@@ -47,15 +48,13 @@ class ProductsRepositoryFlutter implements BaseRepository {
   }
 
   @override
-  Future loadItem(dynamic product) {
+  Future<List<dynamic>> loadItems(dynamic product) {
     return Future.wait<dynamic>([]);
   }
 
+  // Persists products to local disk and the web
   @override
   Future saveData(List<dynamic> products) {
-    return Future.wait<dynamic>([
-      fileStorage.saveData(products),
-      webClient.postProducts(products),
-    ]);
+    return Future.wait<dynamic>([]);
   }
 }

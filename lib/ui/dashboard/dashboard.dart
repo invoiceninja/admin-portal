@@ -7,20 +7,27 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Dashboard'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dashboard'),
       ),
-      drawer: new Sidebar(),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            new Text(
-              'DASHBOARD',
+      drawer: Sidebar(),
+      body: Column(
+        children: <Widget>[
+          Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const ListTile(
+                  leading: const Icon(Icons.album),
+                  title: const Text('The Enchanted Nightingale'),
+                  subtitle: const Text(
+                      'Music by Julie Gable. Lyrics by Sidney Stein.'),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

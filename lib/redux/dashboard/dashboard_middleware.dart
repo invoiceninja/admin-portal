@@ -1,55 +1,53 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
+import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/repositories/repositories.dart';
-import 'package:invoiceninja/data/repositories/product_repository.dart';
+import 'package:invoiceninja/data/repositories/dashboard_repository.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/redux/product/product_selectors.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 
-List<Middleware<AppState>> createStoreProductsMiddleware([
-  BaseRepository repository = const ProductsRepositoryFlutter(
+List<Middleware<AppState>> createStoreDashboardMiddleware([
+  BaseRepository repository = const DashboardRepositoryFlutter(
     fileStorage: const FileStorage(
       '__invoiceninja__',
       getApplicationDocumentsDirectory,
     ),
   ),
 ]) {
-  final loadProducts = _createLoadProducts(repository);
-  final saveProducts = _createSaveProducts(repository);
+  final loadDashboard = _createLoadDashboard(repository);
 
   return [
-    TypedMiddleware<AppState, LoadProductsAction>(loadProducts),
-    //TypedMiddleware<AppState, ProductsLoadedAction>(saveProducts),
+    TypedMiddleware<AppState, LoadDashboardAction>(loadDashboard),
   ];
 }
 
-Middleware<AppState> _createSaveProducts(BaseRepository repository) {
+Middleware<AppState> _createSaveDashboard(BaseRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
 
     /*
-    repository.saveProducts(
+    repository.saveDashboard(
       productsSelector(store.state).map((product) => product.toEntity()).toList(),
     );
     */
   };
 }
 
-Middleware<AppState> _createLoadProducts(BaseRepository repository) {
+Middleware<AppState> _createLoadDashboard(BaseRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     repository.loadItems(store.state.auth).then(
-      (products) {
+          (data) {
         store.dispatch(
-          ProductsLoadedAction(
+          DashboardLoadedAction(
             //products.map(ProductEntity.fromEntity).toList(),
-            products,
+            data,
           ),
         );
       },
-    ).catchError((error) => store.dispatch(ProductsNotLoadedAction(error)));
+    ).catchError((error) => store.dispatch(DashboardNotLoadedAction(error)));
 
     next(action);
   };

@@ -3,18 +3,31 @@ import 'package:json_annotation/json_annotation.dart';
 part 'entities.g.dart';
 
 @JsonSerializable()
-class BaseResponse extends Object with _$BaseResponseSerializerMixin {
+class BaseListResponse extends Object with _$BaseListResponseSerializerMixin {
   //final String message;
 
   @JsonKey(name: "data")
   final List<dynamic> data;
 
-  BaseResponse(
-      //this.message,
+  BaseListResponse(
       this.data,
       );
 
-  factory BaseResponse.fromJson(Map<String, dynamic> json) => _$BaseResponseFromJson(json);
+  factory BaseListResponse.fromJson(Map<String, dynamic> json) => _$BaseListResponseFromJson(json);
+}
+
+@JsonSerializable()
+class BaseItemResponse extends Object with _$BaseItemResponseSerializerMixin {
+  //final String message;
+
+  @JsonKey(name: "data")
+  final dynamic data;
+
+  BaseItemResponse(
+      this.data,
+      );
+
+  factory BaseItemResponse.fromJson(Map<String, dynamic> json) => _$BaseItemResponseFromJson(json);
 }
 
 @JsonSerializable()

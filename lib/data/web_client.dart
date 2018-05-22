@@ -12,15 +12,23 @@ class WebClient {
 
   const WebClient();
 
-  /// Mock that "fetches" some Products from a "web service" after a short delay
-  Future<List<dynamic>> fetchData(String url, String token) async {
-
-    final response = await http.Client().get(
+  Future<http.Response> sendRequest(String url, String token) {
+    return http.Client().get(
       url,
       headers: {'X-Ninja-Token': token},
     );
+  }
 
-    return BaseResponse
+  Future<dynamic> fetchItem(String url, String token) async {
+    final http.Response response = await sendRequest(url, token);
+    return BaseItemResponse
+        .fromJson(json.decode(response.body))
+        .data;
+  }
+
+  Future<List<dynamic>> fetchList(String url, String token) async {
+    final http.Response response = await sendRequest(url, token);
+    return BaseListResponse
         .fromJson(json.decode(response.body))
         .data
         .toList();
