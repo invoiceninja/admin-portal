@@ -50,7 +50,9 @@ class DashboardPanel extends StatelessWidget {
           ListTile(
             leading: Icon(this.icon),
             title: Text(this.title),
-            trailing: Text(this.amount.toStringAsFixed(this.isMoney ? 2 : 0)),
+            trailing: Text(this.isMoney ?
+              "\$" + this.amount.toStringAsFixed(2) :
+              this.amount.toString()),
           ),
         ],
       ),
