@@ -29,8 +29,6 @@ class DashboardRepositoryFlutter implements BaseRepository {
         auth.url + '/dashboard', auth.token);
 
     //fileStorage.saveDashboard(products);
-    print('== LOAD DASHBOARD ==');
-    print(data);
 
     return DashboardEntity.fromJson(data);
 
