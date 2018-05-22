@@ -36,7 +36,7 @@ class DashboardEntity extends Object with _$DashboardEntitySerializerMixin {
 
   double paidToDate;
 
-  DashboardEntity(this.paidToDate);
+  DashboardEntity([this.paidToDate]);
 
   factory DashboardEntity.fromJson(Map<String, dynamic> json) => _$DashboardEntityFromJson(json);
 }

@@ -6,12 +6,15 @@ import 'package:invoiceninja/redux/auth/auth_state.dart';
 class AppState {
   final bool isLoading;
   final AuthState auth;
+  final DashboardEntity dashboard;
   final List<ProductEntity> products;
 
   AppState(
       {this.isLoading = false,
         this.products = const [],
-        AuthState auth}):
+        DashboardEntity dashboard,
+        AuthState auth}) :
+        dashboard = dashboard ?? new DashboardEntity(),
         auth = auth ?? new AuthState();
 
 
@@ -31,17 +34,20 @@ class AppState {
     bool isLoading,
     AuthState auth,
     List<ProductEntity> products,
+    DashboardEntity dashboard,
   }) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
       auth: auth ?? this.auth,
       products: products ?? this.products,
+      dashboard: dashboard ?? this.dashboard,
     );
   }
 
   @override
   int get hashCode =>
       products.hashCode ^
+      dashboard.hashCode ^
       auth.hashCode ^
       isLoading.hashCode;
 
@@ -50,6 +56,7 @@ class AppState {
       identical(this, other) ||
           other is AppState &&
               runtimeType == other.runtimeType &&
+              dashboard == other.dashboard &&
               products == other.products &&
               auth == other.auth &&
               isLoading == other.isLoading;
