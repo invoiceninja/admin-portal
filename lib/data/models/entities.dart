@@ -32,16 +32,31 @@ class BaseItemResponse extends Object with _$BaseItemResponseSerializerMixin {
 
 
 @JsonSerializable()
+class CompanyEntity extends Object with _$CompanyEntitySerializerMixin {
+
+  final int id;
+  String name;
+
+  @JsonKey(name: 'account_key')
+  String companyKey;
+
+  CompanyEntity(this.id);
+
+  factory CompanyEntity.fromJson(Map<String, dynamic> json) => _$CompanyEntityFromJson(json);
+}
+
+
+@JsonSerializable()
 class DashboardEntity extends Object with _$DashboardEntitySerializerMixin {
 
-  double paidToDate;
-  int paidToDateCurrency;
-  double balances;
-  int balancesCurrency;
-  double averageInvoice;
-  int averageInvoiceCurrency;
-  int invoicesSent;
-  int activeClients;
+  final double paidToDate;
+  final int paidToDateCurrency;
+  final double balances;
+  final int balancesCurrency;
+  final double averageInvoice;
+  final int averageInvoiceCurrency;
+  final int invoicesSent;
+  final int activeClients;
 
   DashboardEntity([
     this.paidToDate,

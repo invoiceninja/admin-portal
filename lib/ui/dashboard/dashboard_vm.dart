@@ -6,6 +6,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 
 class DashboardVM extends StatelessWidget {
   DashboardVM({Key key}) : super(key: key);
@@ -34,7 +35,7 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      dashboard: store.state.dashboard,
+      dashboard: store.state.dashboard().data,
       loading: store.state.isLoading,
     );
   }

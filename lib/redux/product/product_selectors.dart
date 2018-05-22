@@ -8,7 +8,8 @@ bool isLoadingSelector(AppState state) => state.isLoading;
 enum VisibilityFilter {all, active, completed}
 //VisibilityFilter activeFilterSelector(AppState state) => state.activeFilter;
 
-List<ProductEntity> productsSelector(AppState state) => state.products;
+List<ProductEntity> productsSelector(AppState state) =>
+    state.product().list.map((id) => state.product().map[id]);
 
 List<ProductEntity> filteredProductsSelector(
     List<ProductEntity> products,

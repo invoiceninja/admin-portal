@@ -22,6 +22,19 @@ abstract class _$BaseItemResponseSerializerMixin {
   Map<String, dynamic> toJson() => <String, dynamic>{'data': data};
 }
 
+CompanyEntity _$CompanyEntityFromJson(Map<String, dynamic> json) =>
+    new CompanyEntity(json['id'] as int)
+      ..name = json['name'] as String
+      ..companyKey = json['account_key'] as String;
+
+abstract class _$CompanyEntitySerializerMixin {
+  int get id;
+  String get name;
+  String get companyKey;
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{'id': id, 'name': name, 'account_key': companyKey};
+}
+
 DashboardEntity _$DashboardEntityFromJson(Map<String, dynamic> json) =>
     new DashboardEntity(
         (json['paidToDate'] as num)?.toDouble(),

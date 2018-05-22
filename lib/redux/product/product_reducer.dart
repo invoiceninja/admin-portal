@@ -2,8 +2,9 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/product/product_selectors.dart';
+import 'package:invoiceninja/redux/product/product_state.dart';
 
-final productsReducer = combineReducers<List<ProductEntity>>([
+final productsReducer = combineReducers<ProductState>([
   /*
   TypedReducer<List<Product>, AddProductAction>(_addProduct),
   TypedReducer<List<Product>, DeleteProductAction>(_deleteProduct),
@@ -11,8 +12,8 @@ final productsReducer = combineReducers<List<ProductEntity>>([
   TypedReducer<List<Product>, ClearCompletedAction>(_clearCompleted),
   TypedReducer<List<Product>, ToggleAllAction>(_toggleAll),
   */
-  TypedReducer<List<ProductEntity>, ProductsLoadedAction>(_setLoadedProducts),
-  TypedReducer<List<ProductEntity>, ProductsNotLoadedAction>(_setNoProducts),
+  TypedReducer<ProductState, ProductsLoadedAction>(_setLoadedProducts),
+  TypedReducer<ProductState, ProductsNotLoadedAction>(_setNoProducts),
 ]);
 
 /*
@@ -41,10 +42,13 @@ List<ProductEntity> _toggleAll(List<ProductEntity> products, ToggleAllAction act
 }
 */
 
-List<ProductEntity> _setLoadedProducts(List<ProductEntity> products, ProductsLoadedAction action) {
-  return action.products;
+ProductState _setLoadedProducts(ProductState productState, ProductsLoadedAction action) {
+  return ProductState().copyWith(
+    map: action.products,
+    list: action.products,
+  );
 }
 
-List<ProductEntity> _setNoProducts(List<ProductEntity> products, ProductsNotLoadedAction action) {
+ProductState _setNoProducts(ProductState productState, ProductsNotLoadedAction action) {
   return [];
 }

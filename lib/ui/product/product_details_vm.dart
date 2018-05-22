@@ -20,7 +20,7 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
-      ignoreChange: (state) => productSelector(state.products, id).isNotPresent,
+      //ignoreChange: (state) => productSelector(state.product().list, id).isNotPresent,
       converter: (Store<AppState> store) {
         return _ViewModel.from(store, id);
       },
