@@ -1,7 +1,5 @@
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/utils/optional.dart';
-
 
 bool isLoadingSelector(AppState state) => state.isLoading;
 
@@ -29,6 +27,7 @@ List<ProductEntity> filteredProductsSelector(
   }).toList();
 }
 
+/*
 Optional<ProductEntity> productSelector(List<ProductEntity> products, int id) {
   try {
     return Optional.of(products.firstWhere((product) => product.id == id));
@@ -36,3 +35,4 @@ Optional<ProductEntity> productSelector(List<ProductEntity> products, int id) {
     return Optional.absent();
   }
 }
+*/
