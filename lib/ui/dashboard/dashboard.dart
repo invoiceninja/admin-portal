@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/keys.dart';
-import 'package:invoiceninja/ui/app/custom_drawer.dart';
+import 'package:invoiceninja/ui/app/custom_drawer_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_vm.dart';
 
 class Dashboard extends StatelessWidget {
@@ -12,7 +12,7 @@ class Dashboard extends StatelessWidget {
       appBar: AppBar(
         title: Text('Dashboard'),
       ),
-      drawer: CustomDrawer(),
+      drawer: CustomDrawerVM(),
       body: DashboardVM(),
     );
   }

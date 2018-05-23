@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/routes.dart';
 
 class CustomDrawer extends StatelessWidget {
+  final String companyName;
+
+  CustomDrawer({
+    Key key,
+    @required this.companyName,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -16,19 +23,7 @@ class CustomDrawer extends StatelessWidget {
                     child: Text('Logo'),
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text('Test'),
-                    ),
-                    MaterialButton(
-                      onPressed: () {
-
-                      },
-                      child: Text('Change'),
-                    )
-                  ],
-                )
+                Text(this.companyName),
               ],
             )),
             color: Colors.white10,
