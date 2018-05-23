@@ -107,6 +107,8 @@ class AppState {
       case 5:
         return this.company5;
     }
+
+    return this.company1;
   }
 
   ProductState product() {

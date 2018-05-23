@@ -7,6 +7,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list.dart';
 import 'package:invoiceninja/redux/product/product_selectors.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/product/product_state.dart';
 
 class ProductListVM extends StatelessWidget {
   ProductListVM({Key key}) : super(key: key);
@@ -26,7 +27,7 @@ class ProductListVM extends StatelessWidget {
 }
 
 class _ViewModel {
-  final List<ProductEntity> products;
+  final ProductState products;
   final bool loading;
   final Function(ProductEntity, bool) onCheckboxChanged;
 
@@ -38,10 +39,13 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
+      products: store.state.product(),
+      /*
       products: filteredProductsSelector(
         productsSelector(store.state),
         //activeFilterSelector(store.state),
       ),
+      */
       loading: store.state.isLoading,
       onCheckboxChanged: (product, complete) {
         /*

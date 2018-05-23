@@ -6,9 +6,10 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/loading_indicator.dart';
 import 'package:invoiceninja/ui/product/product_item.dart';
 import 'package:invoiceninja/keys.dart';
+import 'package:invoiceninja/redux/product/product_state.dart';
 
 class ProductList extends StatelessWidget {
-  final List<ProductEntity> products;
+  final ProductState products;
   final Function(ProductEntity, bool) onCheckboxChanged;
 
   ProductList({
@@ -29,9 +30,9 @@ class ProductList extends StatelessWidget {
   ListView _buildListView() {
     return ListView.builder(
       key: NinjaKeys.productList,
-      itemCount: products.length,
+      itemCount: products.list.length,
       itemBuilder: (BuildContext context, int index) {
-        final product = products[index];
+        final product = products.map[products.list[index]];
 
         return ProductItem(
           product: product,

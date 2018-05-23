@@ -43,12 +43,15 @@ List<ProductEntity> _toggleAll(List<ProductEntity> products, ToggleAllAction act
 */
 
 ProductState _setLoadedProducts(ProductState productState, ProductsLoadedAction action) {
-  return ProductState().copyWith(
-    map: action.products,
-    list: action.products,
+  return productState.copyWith(
+    map: Map.fromIterable(action.products,
+        key: (item) => item.id,
+        value: (item) => item
+    ),
+    list: action.products.map((product) => product.id).toList(),
   );
 }
 
 ProductState _setNoProducts(ProductState productState, ProductsNotLoadedAction action) {
-  return [];
+  return productState;
 }
