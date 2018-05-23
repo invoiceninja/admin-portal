@@ -18,7 +18,7 @@ class CustomDrawerVM extends StatelessWidget {
       builder: (context, vm) {
         return CustomDrawer(
           companies: vm.companies,
-          selectedCompanyName: vm.selectedCompanyName,
+          selectedCompany: vm.selectedCompany,
           selectedCompanyIndex: vm.selectedCompanyIndex,
           onCompanyChanged: vm.onCompanyChanged,
         );
@@ -29,13 +29,13 @@ class CustomDrawerVM extends StatelessWidget {
 
 class _ViewModel {
   final List<CompanyEntity> companies;
-  final String selectedCompanyName;
+  final CompanyEntity selectedCompany;
   final String selectedCompanyIndex;
   final Function(String) onCompanyChanged;
 
   _ViewModel({
     @required this.companies,
-    @required this.selectedCompanyName,
+    @required this.selectedCompany,
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
 });
@@ -43,7 +43,7 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       companies: companiesSelector(store.state),
-      selectedCompanyName: store.state.selectedCompany().name,
+      selectedCompany: store.state.selectedCompany(),
       selectedCompanyIndex: store.state.selectedCompanyIndex.toString(),
       onCompanyChanged: (String companyId) {
         store.dispatch(SelectCompany(int.parse(companyId)));

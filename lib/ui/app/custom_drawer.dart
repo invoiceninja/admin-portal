@@ -4,14 +4,14 @@ import 'package:invoiceninja/data/models/entities.dart';
 
 class CustomDrawer extends StatelessWidget {
   final List<CompanyEntity> companies;
-  final String selectedCompanyName;
+  final CompanyEntity selectedCompany;
   final String selectedCompanyIndex;
   final Function(String) onCompanyChanged;
 
   CustomDrawer({
     Key key,
     @required this.companies,
-    @required this.selectedCompanyName,
+    @required this.selectedCompany,
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
   }) : super(key: key);
@@ -20,7 +20,7 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final _singleCompany = Align(
       alignment: FractionalOffset.bottomLeft,
-      child: Text(selectedCompanyName),
+      child: Text(selectedCompany.name),
     );
 
     final _multipleCompanies = Align(
@@ -35,7 +35,6 @@ class CustomDrawer extends StatelessWidget {
           )
         ).toList(),
         onChanged: (value) {
-          print('on change: ' + value);
           this.onCompanyChanged(value);
         },
       ),
@@ -50,8 +49,11 @@ class CustomDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
-                    child: Text('Logo'),
+                    child: new Image.network(this.selectedCompany.logoUrl )
                   ),
+                ),
+                SizedBox(
+                  height: 14.0,
                 ),
                 this.companies.length > 1 ? _multipleCompanies : _singleCompany,
               ],
