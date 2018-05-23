@@ -19,6 +19,7 @@ class CustomDrawerVM extends StatelessWidget {
           companyName: vm.companyName,
           hasMultipleCompanies: vm.hasMultipleCompanies,
           companies: vm.companies,
+          selectedCompanyId: vm.selectedCompanyId,
         );
       },
     );
@@ -29,11 +30,13 @@ class _ViewModel {
   final String companyName;
   final bool hasMultipleCompanies;
   final List<CompanyEntity> companies;
+  final String selectedCompanyId;
 
   _ViewModel({
     @required this.companyName,
     @required this.hasMultipleCompanies,
     @required this.companies,
+    @required this.selectedCompanyId,
 });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -41,6 +44,7 @@ class _ViewModel {
       companyName: store.state.selectedCompany().name,
       hasMultipleCompanies: store.state.companyState2.company.token != null,
       companies: companiesSelector(store.state),
+      selectedCompanyId: store.state.selectedCompanyId.toString(),
     );
   }
 }

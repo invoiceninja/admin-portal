@@ -6,12 +6,14 @@ class CustomDrawer extends StatelessWidget {
   final String companyName;
   final bool hasMultipleCompanies;
   final List<CompanyEntity> companies;
+  final String selectedCompanyId;
 
   CustomDrawer({
     Key key,
     @required this.companyName,
     @required this.hasMultipleCompanies,
     @required this.companies,
+    @required this.selectedCompanyId,
   }) : super(key: key);
 
   @override
@@ -24,14 +26,15 @@ class CustomDrawer extends StatelessWidget {
     final _multipleCompanies = Align(
       alignment: FractionalOffset.bottomLeft,
       child: new DropdownButton<String>(
+        value: this.selectedCompanyId,
         items: this.companies.map((CompanyEntity company) =>
           DropdownMenuItem<String>(
-            value: company.id.toString(),
-            child: Text(company.id.toString()),
+            value: (this.companies.indexOf(company) + 1).toString(),
+            child: Text(company.name),
           )
         ).toList(),
-        onChanged: (_) {
-
+        onChanged: (value) {
+          print('on change: ' + value);
         },
       ),
       /*
