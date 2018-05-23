@@ -7,6 +7,7 @@ class CustomDrawer extends StatelessWidget {
   final bool hasMultipleCompanies;
   final List<CompanyEntity> companies;
   final String selectedCompanyId;
+  final Function(String) onCompanyChanged;
 
   CustomDrawer({
     Key key,
@@ -14,6 +15,7 @@ class CustomDrawer extends StatelessWidget {
     @required this.hasMultipleCompanies,
     @required this.companies,
     @required this.selectedCompanyId,
+    @required this.onCompanyChanged,
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class CustomDrawer extends StatelessWidget {
     final _multipleCompanies = Align(
       alignment: FractionalOffset.bottomLeft,
       child: new DropdownButton<String>(
+        isDense: true,
         value: this.selectedCompanyId,
         items: this.companies.map((CompanyEntity company) =>
           DropdownMenuItem<String>(
@@ -35,17 +38,9 @@ class CustomDrawer extends StatelessWidget {
         ).toList(),
         onChanged: (value) {
           print('on change: ' + value);
+          this.onCompanyChanged(value);
         },
       ),
-      /*
-      child: DropdownButton(
-        items: this.companies.map((CompanyEntity company) {
-          return DropdownMenuItem(
-            child: Text(company.name),
-          );
-        }),
-      ),
-      */
     );
 
     return Drawer(

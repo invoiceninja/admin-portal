@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/ui/app/custom_drawer.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/company/company_selectors.dart';
+import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
 class CustomDrawerVM extends StatelessWidget {
@@ -20,6 +21,7 @@ class CustomDrawerVM extends StatelessWidget {
           hasMultipleCompanies: vm.hasMultipleCompanies,
           companies: vm.companies,
           selectedCompanyId: vm.selectedCompanyId,
+          onCompanyChanged: vm.onCompanyChanged,
         );
       },
     );
@@ -31,12 +33,14 @@ class _ViewModel {
   final bool hasMultipleCompanies;
   final List<CompanyEntity> companies;
   final String selectedCompanyId;
+  final Function(String) onCompanyChanged;
 
   _ViewModel({
     @required this.companyName,
     @required this.hasMultipleCompanies,
     @required this.companies,
     @required this.selectedCompanyId,
+    @required this.onCompanyChanged,
 });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -45,6 +49,9 @@ class _ViewModel {
       hasMultipleCompanies: store.state.companyState2.company.token != null,
       companies: companiesSelector(store.state),
       selectedCompanyId: store.state.selectedCompanyId.toString(),
+      onCompanyChanged: (String companyId) {
+        store.dispatch(SelectCompany(int.parse(companyId)));
+      },
     );
   }
 }
