@@ -13,8 +13,6 @@ Reducer<AuthState> authReducer = combineReducers([
 AuthState userLoginRequestReducer(AuthState auth, UserLoginRequest action) {
   return AuthState().copyWith(
     url: action.url,
-    token: action.token,
-    secret: action.secret,
     isAuthenticated: false,
     isAuthenticating: true,
   );

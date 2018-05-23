@@ -19,11 +19,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email;
   String _password;
   String _url;
-  String _token;
-  String _secret;
 
+  final _emailTextController = TextEditingController();
   final _urlTextController = TextEditingController();
-  final _tokenTextController = TextEditingController();
 
   void _submit() {
     final form = _formKey.currentState;
@@ -42,17 +40,17 @@ class _LoginScreenState extends State<LoginScreen> {
   _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _urlTextController.text = prefs.getString('url');
-    _tokenTextController.text = prefs.getString('token');
+    _emailTextController.text = prefs.getString('email');
   }
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, dynamic>(
         converter: (Store<AppState> store) {
-      return (BuildContext context, String url, String token) {
-        store.dispatch(UserLoginRequest(url, token));
+      return (BuildContext context, String email, String password, String url) {
+        store.dispatch(UserLoginRequest(email, password, url));
         //store.dispatch(UserLoginSuccess(User(token, 1)));
-        Navigator.of(context).pushNamed('/dashboard');
+        //Navigator.of(context).pushNamed('/dashboard');
       };
     }, builder: (BuildContext context, loginAction) {
       return Scaffold(
@@ -67,43 +65,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: new Image.asset('assets/images/logo.png', width: 100.0, height: 100.0),
               ),
               TextFormField(
+                controller: _emailTextController,
+                decoration: InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (val) =>
+                val.isEmpty ? 'Please enter your email.' : null,
+                onSaved: (val) => _email = val,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Password'),
+                validator: (val) =>
+                val.isEmpty ? 'Please enter your password.' : null,
+                onSaved: (val) => _password = val,
+                obscureText: true,
+              ),
+              TextFormField(
                 controller: _urlTextController,
                 decoration: InputDecoration(labelText: 'URL'),
                 validator: (val) =>
                     val.isEmpty ? 'Please enter your URL.' : null,
                 onSaved: (val) => _url = val,
               ),
-              TextFormField(
-                obscureText: true,
-                controller: _tokenTextController,
-                decoration: InputDecoration(labelText: 'Token'),
-                validator: (val) =>
-                    val.isEmpty ? 'Please enter your token.' : null,
-                onSaved: (val) => _token = val,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 40.0, bottom: 20.0),
-                child: Text(
-                    'Note: this will be changed to email/password in the future.'),
-              ),
-              /*
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
-                keyboardType: TextInputType.emailAddress,
-                //contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                //autofocus: false,
-                validator: (val) =>
-                    val.isEmpty ? 'Please enter your email.' : null,
-                onSaved: (val) => _email = val,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Password'),
-                validator: (val) =>
-                    val.isEmpty ? 'Please enter your password.' : null,
-                onSaved: (val) => _password = val,
-                obscureText: true,
-              ),
-              */
               Padding(
                 padding: EdgeInsets.only(top: 20.0),
                 child: Material(
@@ -115,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 42.0,
                     onPressed: () {
                       _submit();
-                      loginAction(context, _url, _token);
+                      loginAction(context, _email, _password, _url);
                       //Navigator.of(context).pushNamed(HomeScreen.tag);
                     },
                     color: Colors.lightBlueAccent,

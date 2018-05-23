@@ -5,8 +5,6 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/repositories/repositories.dart';
 import 'package:invoiceninja/data/repositories/product_repository.dart';
 import 'package:invoiceninja/data/file_storage.dart';
-import 'package:invoiceninja/redux/product/product_selectors.dart';
-import 'package:invoiceninja/data/models/entities.dart';
 
 List<Middleware<AppState>> createStoreProductsMiddleware([
   BaseRepository repository = const ProductsRepositoryFlutter(

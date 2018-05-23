@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -12,31 +13,50 @@ class WebClient {
 
   const WebClient();
 
-  Future<http.Response> sendRequest(String url, String token) {
+  Future<http.Response> sendGetRequest(String url, String token) {
     return http.Client().get(
       url,
-      headers: {'X-Ninja-Token': token},
+      headers: {
+        'X-Ninja-Token': token,
+      },
     );
   }
 
+  Future<http.Response> sendPostRequest(String url, String token, dynamic data) {
+    return http.Client().post(
+      url,
+      body: data,
+      headers: {
+        'X-Ninja-Token': token,
+      },
+    );
+  }
+
+
   Future<dynamic> fetchItem(String url, String token) async {
-    final http.Response response = await sendRequest(url, token);
+    final http.Response response = await sendGetRequest(url, token);
     return BaseItemResponse
         .fromJson(json.decode(response.body))
         .data;
   }
 
   Future<List<dynamic>> fetchList(String url, String token) async {
-    final http.Response response = await sendRequest(url, token);
+    final http.Response response = await sendGetRequest(url, token);
     return BaseListResponse
         .fromJson(json.decode(response.body))
         .data
         .toList();
   }
 
-  /// Mock that returns true or false for success or failure. In this case,
-  /// it will "Always Succeed"
-  Future<bool> postProducts(List<ProductEntity> products) async {
-    return Future.value(true);
+
+  Future<dynamic> postList(String url, String token, var data) async {
+    final http.Response response = await sendPostRequest(url, token, data);
+
+    print(response.body);
+
+    return BaseListResponse
+        .fromJson(json.decode(response.body))
+        .data
+        .toList();
   }
 }

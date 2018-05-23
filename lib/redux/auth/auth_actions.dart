@@ -7,11 +7,8 @@ class UserLoginRequest {
   final String email;
   final String password;
   final String url;
-  final String secret;
-  final String token;
 
-  //UserLoginRequest(this.email, this.password, this.url, this.secret);
-  UserLoginRequest(this.url, this.token, [this.email, this.password, this.secret]);
+  UserLoginRequest(this.email, this.password, [this.url]);
 }
 
 class UserLoginSuccess {
@@ -27,6 +24,7 @@ class UserLoginFailure {
 }
 
 class UserLogout {}
+
 
 /*
 final Function login = (BuildContext context, String url, String token) {
