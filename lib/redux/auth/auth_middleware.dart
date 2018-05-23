@@ -9,6 +9,7 @@ import 'package:invoiceninja/data/repositories/auth_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/routes.dart';
+import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepositoryFlutter repository = const AuthRepositoryFlutter(
@@ -19,11 +20,9 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   ),
 ]) {
   final loginRequest = _createLoginRequest(repository);
-  //final loginSuccess = _createLoginSuccess();
 
   return [
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
-    //TypedMiddleware<AppState, UserLoginSuccess>(loginSuccess),
   ];
 }
 
@@ -51,6 +50,9 @@ Middleware<AppState> _createLoginRequest(AuthRepositoryFlutter repository) {
 
           store.dispatch(SelectCompany(1));
           store.dispatch(UserLoginSuccess());
+
+          store.dispatch(UserLoginSuccess());
+          store.dispatch(LoadDashboardAction());
 
           Navigator.of(action.context).pushNamed(AppRoutes.dashboard);
         }

@@ -40,6 +40,12 @@ class CompanyEntity extends Object with _$CompanyEntitySerializerMixin {
   @JsonKey(name: 'account_key')
   String companyKey;
 
+  String token;
+  String plan;
+
+  @JsonKey(name: 'logo_url')
+  String logoUrl;
+
   CompanyEntity(this.id);
 
   factory CompanyEntity.fromJson(Map<String, dynamic> json) => _$CompanyEntityFromJson(json);
@@ -59,14 +65,14 @@ class DashboardEntity extends Object with _$DashboardEntitySerializerMixin {
   final int activeClients;
 
   DashboardEntity([
-    this.paidToDate,
-    this.paidToDateCurrency,
-    this.balances,
-    this.balancesCurrency,
-    this.averageInvoice,
-    this.averageInvoiceCurrency,
-    this.invoicesSent,
-    this.activeClients,
+    this.paidToDate = 0.0,
+    this.paidToDateCurrency = 1,
+    this.balances = 0.0,
+    this.balancesCurrency = 1,
+    this.averageInvoice = 0.0,
+    this.averageInvoiceCurrency = 1,
+    this.invoicesSent = 0,
+    this.activeClients = 0,
   ]);
 
   factory DashboardEntity.fromJson(Map<String, dynamic> json) => _$DashboardEntityFromJson(json);

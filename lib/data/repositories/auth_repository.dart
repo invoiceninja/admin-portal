@@ -4,7 +4,6 @@ import 'package:meta/meta.dart';
 
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/data/repositories/repositories.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 

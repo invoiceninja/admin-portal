@@ -4,13 +4,12 @@ import 'package:meta/meta.dart';
 
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/data/repositories/repositories.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
 /// A class that glues together our local file storage and web client. It has a
 /// clear responsibility: Load Products and Persist products.
-class ProductsRepositoryFlutter implements BaseRepository {
+class ProductsRepositoryFlutter {
   final FileStorage fileStorage;
   final WebClient webClient;
 
@@ -19,13 +18,10 @@ class ProductsRepositoryFlutter implements BaseRepository {
     this.webClient = const WebClient(),
   });
 
-  /// Loads products first from File storage. If they don't exist or encounter an
-  /// error, it attempts to load the Products from a Web Client.
-  @override
-  Future<List<dynamic>> loadList(AuthState auth) async {
+  Future<List<dynamic>> loadList(CompanyEntity company, AuthState auth) async {
 
     final products = await webClient.fetchList(
-        auth.url + '/products', auth.token);
+        auth.url + '/products', company.token);
 
     //fileStorage.saveProducts(products);
 
@@ -45,12 +41,6 @@ class ProductsRepositoryFlutter implements BaseRepository {
     */
   }
 
-  @override
-  Future loadItem(dynamic product) {
-    return Future.wait<dynamic>([]);
-  }
-
-  @override
   Future saveData(List<dynamic> products) {
     return Future.wait<dynamic>([
       fileStorage.saveData(products),

@@ -14,25 +14,6 @@ class Dashboard extends StatelessWidget {
       ),
       drawer: Sidebar(),
       body: DashboardVM(),
-      /*
-      body: Column(
-        children: <Widget>[
-          Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const ListTile(
-                  leading: const Icon(Icons.album),
-                  title: const Text('The Enchanted Nightingale'),
-                  subtitle: const Text(
-                      'Music by Julie Gable. Lyrics by Sidney Stein.'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    */
     );
   }
 }

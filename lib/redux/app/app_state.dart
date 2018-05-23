@@ -94,7 +94,7 @@ class AppState {
     return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyId: ${selectedCompanyId}, company1: ${company1.company.name}, company2: ${company2.company.name}';
   }
 
-  CompanyState selectedCompany() {
+  CompanyState selectedCompanyState() {
     switch (this.selectedCompanyId) {
       case 1:
         return this.company1;
@@ -111,11 +111,15 @@ class AppState {
     return this.company1;
   }
 
+  CompanyEntity selectedCompany() {
+    return this.selectedCompanyState().company;
+  }
+
   ProductState product() {
-    return this.selectedCompany().productState;
+    return this.selectedCompanyState().productState;
   }
 
   DashboardState dashboard() {
-    return this.selectedCompany().dashboardState;
+    return this.selectedCompanyState().dashboardState;
   }
 }
