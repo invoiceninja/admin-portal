@@ -31,8 +31,12 @@ class AuthRepositoryFlutter {
     print('== LOGN RESPONSE ==');
     print(data);
 
-    return data.toList();
-    //return products.map((product) => ProductEntity.fromJson(product)).toList();
+    // TODO remove handle on server
+    for (int i=1; i<data.length; i++) {
+      data[i].id = i;
+    }
+
+    return data.map((company) => CompanyEntity.fromJson(company)).toList();
 
     /*
     try {

@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
-import 'package:invoiceninja/redux/app/company_state.dart';
+import 'package:invoiceninja/redux/company/company_state.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 
@@ -18,7 +18,7 @@ class AppState {
 
   AppState(
       {this.isLoading = false,
-        this.selectedCompanyId = 1,
+        this.selectedCompanyId = 0,
         AuthState auth,
         CompanyState company1,
         CompanyState company2,
@@ -91,7 +91,7 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyId: ${selectedCompanyId}';
+    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyId: ${selectedCompanyId}, company1: ${company1.company.name}, company2: ${company2.company.name}';
   }
 
   CompanyState selectedCompany() {
@@ -112,10 +112,10 @@ class AppState {
   }
 
   ProductState product() {
-    return this.selectedCompany().product;
+    return this.selectedCompany().productState;
   }
 
   DashboardState dashboard() {
-    return this.selectedCompany().dashboard;
+    return this.selectedCompany().dashboardState;
   }
 }

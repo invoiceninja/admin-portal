@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -6,6 +7,8 @@ import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/repositories/auth_repository.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:invoiceninja/redux/company/company_actions.dart';
+import 'package:invoiceninja/routes.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepositoryFlutter repository = const AuthRepositoryFlutter(
@@ -16,33 +19,54 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   ),
 ]) {
   final loginRequest = _createLoginRequest(repository);
+  //final loginSuccess = _createLoginSuccess();
 
   return [
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
+    //TypedMiddleware<AppState, UserLoginSuccess>(loginSuccess),
   ];
 }
 
-_saveAuth(action) async {
+_saveAuthLocal(action) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('email', action.email);
   prefs.setString('url', action.url);
+
+  if (action.password == 'password') {
+    prefs.setString('password', action.password);
+  }
 }
 
 Middleware<AppState> _createLoginRequest(AuthRepositoryFlutter repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print('SAVE AUTH...');
-    _saveAuth(action);
 
-    repository.login(action.email, action.password, action.url);
-
-    /*
     repository.login(action.email, action.password, action.url).then(
         (data) {
+          _saveAuthLocal(action);
+
+          for (int i=0; i<data.length; i++) {
+            store.dispatch(SelectCompany(i+1));
+            store.dispatch(LoadCompanySuccess(data[i]));
+          }
+
+          store.dispatch(SelectCompany(1));
+          store.dispatch(UserLoginSuccess());
+
+          Navigator.of(action.context).pushNamed(AppRoutes.dashboard);
         }
-        //(data) => store.dispatch(UserLoginSuccess(data))
     ).catchError((error) => store.dispatch(UserLoginFailure(error)));
-    */
 
     next(action);
   };
 }
+
+
+/*
+Middleware<AppState> _createLoginSuccess() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+
+
+    next(action);
+  };
+}
+*/

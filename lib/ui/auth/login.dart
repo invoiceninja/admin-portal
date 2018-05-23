@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _url;
 
   final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
   final _urlTextController = TextEditingController();
 
   void _submit() {
@@ -41,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _urlTextController.text = prefs.getString('url');
     _emailTextController.text = prefs.getString('email');
+    _passwordTextController.text = prefs.getString('password');
   }
 
   @override
@@ -48,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return StoreConnector<AppState, dynamic>(
         converter: (Store<AppState> store) {
       return (BuildContext context, String email, String password, String url) {
-        store.dispatch(UserLoginRequest(email, password, url));
+        store.dispatch(UserLoginRequest(context, email, password, url));
         //store.dispatch(UserLoginSuccess(User(token, 1)));
         //Navigator.of(context).pushNamed('/dashboard');
       };
@@ -73,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onSaved: (val) => _email = val,
               ),
               TextFormField(
+                controller: _passwordTextController,
                 decoration: InputDecoration(labelText: 'Password'),
                 validator: (val) =>
                 val.isEmpty ? 'Please enter your password.' : null,

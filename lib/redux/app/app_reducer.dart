@@ -1,9 +1,11 @@
+import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/app/loading_reducer.dart';
 import 'package:invoiceninja/redux/auth/auth_reducer.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja/redux/product/product_reducer.dart';
-import 'package:invoiceninja/redux/app/company_reducer.dart';
+import 'package:invoiceninja/redux/company/company_reducer.dart';
+import 'package:invoiceninja/redux/company/company_actions.dart';
 
 // We create the State reducer by combining many smaller reducers into one!
 AppState appReducer(AppState state, action) {
@@ -19,6 +21,7 @@ AppState appReducer(AppState state, action) {
   */
 
   return AppState(
+    selectedCompanyId: selectedCompanyIdReducer(state.selectedCompanyId, action),
     isLoading: loadingReducer(state.isLoading, action),
     auth: authReducer(state.auth, action),
     company1: state.selectedCompanyId == 1
@@ -32,4 +35,12 @@ AppState appReducer(AppState state, action) {
     company5: state.selectedCompanyId == 5
         ? companyReducer(state.company5, action) : state.company5,
   );
+}
+
+Reducer<int> selectedCompanyIdReducer = combineReducers([
+  TypedReducer<int, SelectCompany>(selectCompanyReducer),
+]);
+
+int selectCompanyReducer(int selectedCompanyId, SelectCompany action) {
+  return action.companyId;
 }

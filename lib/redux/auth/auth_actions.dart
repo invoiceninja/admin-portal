@@ -4,18 +4,15 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
 class UserLoginRequest {
+  final dynamic context;
   final String email;
   final String password;
   final String url;
 
-  UserLoginRequest(this.email, this.password, [this.url]);
+  UserLoginRequest(this.context, this.email, this.password, [this.url]);
 }
 
-class UserLoginSuccess {
-  final User user;
-
-  UserLoginSuccess(this.user);
-}
+class UserLoginSuccess {}
 
 class UserLoginFailure {
   final String error;
