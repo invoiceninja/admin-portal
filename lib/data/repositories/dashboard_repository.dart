@@ -18,7 +18,7 @@ class DashboardRepositoryFlutter {
     this.webClient = const WebClient(),
   });
 
-  Future<dynamic> loadItem(CompanyEntity company, AuthState auth) async {
+  Future<DashboardEntity> loadItem(CompanyEntity company, AuthState auth) async {
 
     final data = await webClient.fetchItem(
         auth.url + '/dashboard', company.token);

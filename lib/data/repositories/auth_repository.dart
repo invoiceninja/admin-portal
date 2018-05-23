@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:core';
+import 'dart:convert';
 import 'package:meta/meta.dart';
 
 import 'package:invoiceninja/redux/auth/auth_state.dart';
@@ -20,7 +21,7 @@ class AuthRepositoryFlutter {
 
   /// Loads products first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the Products from a Web Client.
-  Future<List<dynamic>> login(String email, String password, String url) async {
+  Future<List<CompanyEntity>> login(String email, String password, String url) async {
 
     final data = await webClient.postList(url + '/login', '', {
       'api_secret': 'secret',

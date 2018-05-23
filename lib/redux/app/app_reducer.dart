@@ -24,16 +24,16 @@ AppState appReducer(AppState state, action) {
     selectedCompanyId: selectedCompanyIdReducer(state.selectedCompanyId, action),
     isLoading: loadingReducer(state.isLoading, action),
     auth: authReducer(state.auth, action),
-    company1: state.selectedCompanyId == 1
-        ? companyReducer(state.company1, action) : state.company1,
-    company2: state.selectedCompanyId == 2
-        ? companyReducer(state.company2, action) : state.company2,
-    company3: state.selectedCompanyId == 3
-        ? companyReducer(state.company3, action) : state.company3,
-    company4: state.selectedCompanyId == 4
-        ? companyReducer(state.company4, action) : state.company4,
-    company5: state.selectedCompanyId == 5
-        ? companyReducer(state.company5, action) : state.company5,
+    companyState1: state.selectedCompanyId == 1
+        ? companyReducer(state.companyState1, action) : state.companyState1,
+    companyState2: state.selectedCompanyId == 2
+        ? companyReducer(state.companyState2, action) : state.companyState2,
+    companyState3: state.selectedCompanyId == 3
+        ? companyReducer(state.companyState3, action) : state.companyState3,
+    companyState4: state.selectedCompanyId == 4
+        ? companyReducer(state.companyState4, action) : state.companyState4,
+    companyState5: state.selectedCompanyId == 5
+        ? companyReducer(state.companyState5, action) : state.companyState5,
   );
 }
 

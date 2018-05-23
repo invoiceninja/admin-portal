@@ -10,27 +10,27 @@ class AppState {
   final bool isLoading;
   final AuthState auth;
   final int selectedCompanyId;
-  final CompanyState company1;
-  final CompanyState company2;
-  final CompanyState company3;
-  final CompanyState company4;
-  final CompanyState company5;
+  final CompanyState companyState1;
+  final CompanyState companyState2;
+  final CompanyState companyState3;
+  final CompanyState companyState4;
+  final CompanyState companyState5;
 
   AppState(
       {this.isLoading = false,
         this.selectedCompanyId = 0,
         AuthState auth,
-        CompanyState company1,
-        CompanyState company2,
-        CompanyState company3,
-        CompanyState company4,
-        CompanyState company5,}) :
+        CompanyState companyState1,
+        CompanyState companyState2,
+        CompanyState companyState3,
+        CompanyState companyState4,
+        CompanyState companyState5,}) :
         auth = auth ?? AuthState(),
-        company1 = company1 ?? CompanyState(),
-        company2 = company2 ?? CompanyState(),
-        company3 = company3 ?? CompanyState(),
-        company4 = company4 ?? CompanyState(),
-        company5 = company5 ?? CompanyState();
+        companyState1 = companyState1 ?? CompanyState(),
+        companyState2 = companyState2 ?? CompanyState(),
+        companyState3 = companyState3 ?? CompanyState(),
+        companyState4 = companyState4 ?? CompanyState(),
+        companyState5 = companyState5 ?? CompanyState();
 
   factory AppState.loading() => AppState(isLoading: true);
 
@@ -47,21 +47,21 @@ class AppState {
     String selectedCompany,
     bool isLoading,
     AuthState auth,
-    CompanyState company1,
-    CompanyState company2,
-    CompanyState company3,
-    CompanyState company4,
-    CompanyState company5,
+    CompanyState companyState1,
+    CompanyState companyState2,
+    CompanyState companyState3,
+    CompanyState companyState4,
+    CompanyState companyState5,
   }) {
     return AppState(
       selectedCompanyId : selectedCompany ?? this.selectedCompanyId,
       isLoading: isLoading ?? this.isLoading,
       auth: auth ?? this.auth,
-      company1: company1 ?? this.company1,
-      company2: company2 ?? this.company2,
-      company3: company3 ?? this.company3,
-      company4: company4 ?? this.company4,
-      company5: company5 ?? this.company5,
+      companyState1: companyState1 ?? this.companyState1,
+      companyState2: companyState2 ?? this.companyState2,
+      companyState3: companyState3 ?? this.companyState3,
+      companyState4: companyState4 ?? this.companyState4,
+      companyState5: companyState5 ?? this.companyState5,
     );
   }
 
@@ -70,11 +70,11 @@ class AppState {
       selectedCompanyId.hashCode ^
       isLoading.hashCode ^
       auth.hashCode ^
-      company1.hashCode ^
-      company2.hashCode ^
-      company3.hashCode ^
-      company4.hashCode ^
-      company5.hashCode;
+      companyState1.hashCode ^
+      companyState2.hashCode ^
+      companyState3.hashCode ^
+      companyState4.hashCode ^
+      companyState5.hashCode;
 
   @override
   bool operator == (Object other) =>
@@ -82,33 +82,33 @@ class AppState {
           other is AppState &&
               runtimeType == other.runtimeType &&
               selectedCompanyId == other.selectedCompanyId &&
-              company1 == other.company1 &&
-              company2 == other.company2 &&
-              company3 == other.company3 &&
-              company4 == other.company4 &&
-              company5 == other.company5 &&
+              companyState1 == other.companyState1 &&
+              companyState2 == other.companyState2 &&
+              companyState3 == other.companyState3 &&
+              companyState4 == other.companyState4 &&
+              companyState5 == other.companyState5 &&
               auth == other.auth;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyId: ${selectedCompanyId}, company1: ${company1.company.name}, company2: ${company2.company.name}';
+    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyId: ${selectedCompanyId}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
   }
 
   CompanyState selectedCompanyState() {
     switch (this.selectedCompanyId) {
       case 1:
-        return this.company1;
+        return this.companyState1;
       case 2:
-        return this.company2;
+        return this.companyState2;
       case 3:
-        return this.company3;
+        return this.companyState3;
       case 4:
-        return this.company4;
+        return this.companyState4;
       case 5:
-        return this.company5;
+        return this.companyState5;
     }
 
-    return this.company1;
+    return this.companyState1;
   }
 
   CompanyEntity selectedCompany() {

@@ -50,7 +50,6 @@ Middleware<AppState> _createLoginRequest(AuthRepositoryFlutter repository) {
 
           store.dispatch(SelectCompany(1));
           store.dispatch(UserLoginSuccess());
-          //store.dispatch(LoadDashboardAction());
 
           Navigator.of(action.context).pushNamed(AppRoutes.dashboard);
         }
@@ -59,14 +58,3 @@ Middleware<AppState> _createLoginRequest(AuthRepositoryFlutter repository) {
     next(action);
   };
 }
-
-
-/*
-Middleware<AppState> _createLoginSuccess() {
-  return (Store<AppState> store, action, NextDispatcher next) {
-
-
-    next(action);
-  };
-}
-*/

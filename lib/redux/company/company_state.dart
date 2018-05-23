@@ -5,7 +5,7 @@ import 'package:invoiceninja/data/models/entities.dart';
 
 @immutable
 class CompanyState {
-  CompanyEntity company;
+  final CompanyEntity company;
   final ProductState productState;
   final DashboardState dashboardState;
 

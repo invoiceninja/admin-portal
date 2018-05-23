@@ -18,7 +18,7 @@ class ProductsRepositoryFlutter {
     this.webClient = const WebClient(),
   });
 
-  Future<List<dynamic>> loadList(CompanyEntity company, AuthState auth) async {
+  Future<List<ProductEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
     final products = await webClient.fetchList(
         auth.url + '/products', company.token);

@@ -49,6 +49,8 @@ class CompanyEntity extends Object with _$CompanyEntitySerializerMixin {
   CompanyEntity(this.id);
 
   factory CompanyEntity.fromJson(Map<String, dynamic> json) => _$CompanyEntityFromJson(json);
+
+  bool isBlank() => this.token == null;
 }
 
 
