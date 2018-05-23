@@ -49,11 +49,11 @@ class CustomDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
-                    child: new Image.network(this.selectedCompany.logoUrl )
+                    child: Image.network(this.selectedCompany.logoUrl)
                   ),
                 ),
                 SizedBox(
-                  height: 14.0,
+                  height: 18.0,
                 ),
                 this.companies.length > 1 ? _multipleCompanies : _singleCompany,
               ],
