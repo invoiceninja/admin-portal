@@ -20,6 +20,7 @@ AuthState userLoginRequestReducer(AuthState auth, UserLoginRequest action) {
 
 AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
   return AuthState().copyWith(
+      url: auth.url,
       isAuthenticated: true,
       isAuthenticating: false,
   );
@@ -27,6 +28,7 @@ AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
 
 AuthState userLoginFailureReducer(AuthState auth, UserLoginFailure action) {
   return AuthState().copyWith(
+      url: auth.url,
       isAuthenticated: false,
       isAuthenticating: false,
       error: action.error
@@ -34,5 +36,7 @@ AuthState userLoginFailureReducer(AuthState auth, UserLoginFailure action) {
 }
 
 AuthState userLogoutReducer(AuthState auth, UserLogout action) {
-  return AuthState();
+  return AuthState().copyWith(
+    url: auth.url,
+  );
 }

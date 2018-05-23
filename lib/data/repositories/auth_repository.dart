@@ -22,7 +22,9 @@ class AuthRepositoryFlutter {
   /// error, it attempts to load the Products from a Web Client.
   Future<List<dynamic>> login(String email, String password, String url) async {
 
-    final data = await webClient.postList(url + '/login?api_secret=secret', '', {
+    final data = await webClient.postList(url + '/login', '', {
+      'api_secret': 'secret',
+      'token_name': 'mobile-app',
       'email': email,
       'password': password,
     });

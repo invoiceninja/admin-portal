@@ -24,8 +24,11 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 
 Middleware<AppState> _createLoadDashboard(DashboardRepositoryFlutter repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    print('== LOAD DASHBOARD ==');
+    print(store.state.selectedCompany());
+    print(store.state.auth);
 
-    repository.loadItem(store.state.selectedCompanyState().company, store.state.auth).then(
+    repository.loadItem(store.state.selectedCompany(), store.state.auth).then(
             (data) => store.dispatch(DashboardLoadedAction(data))
     ).catchError((error) => store.dispatch(DashboardNotLoadedAction(error)));
 
