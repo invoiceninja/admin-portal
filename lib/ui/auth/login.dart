@@ -51,8 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
         converter: (Store<AppState> store) {
       return (BuildContext context, String email, String password, String url) {
         store.dispatch(UserLoginRequest(context, email, password, url));
-        //store.dispatch(UserLoginSuccess(User(token, 1)));
-        //Navigator.of(context).pushNamed('/dashboard');
       };
     }, builder: (BuildContext context, loginAction) {
       return Scaffold(
@@ -92,7 +90,6 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 20.0),
                 child: Material(
-                  //borderRadius: BorderRadius.circular(30.0),
                   shadowColor: Colors.lightBlueAccent.shade100,
                   elevation: 5.0,
                   child: MaterialButton(

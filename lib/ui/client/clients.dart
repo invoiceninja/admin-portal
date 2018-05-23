@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/keys.dart';
-import 'package:invoiceninja/ui/app/sidebar.dart';
+import 'package:invoiceninja/ui/app/custom_drawer.dart';
 
 class ClientList extends StatelessWidget {
   ClientList() : super(key: NinjaKeys.clientList);
@@ -11,7 +11,7 @@ class ClientList extends StatelessWidget {
       appBar: new AppBar(
         title: new Text('Clients'),
       ),
-      drawer: new Sidebar(),
+      drawer: new CustomDrawer(),
       body: new Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,

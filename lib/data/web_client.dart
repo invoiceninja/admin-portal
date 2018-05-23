@@ -52,7 +52,7 @@ class WebClient {
   Future<dynamic> postList(String url, String token, var data) async {
     final http.Response response = await sendPostRequest(url, token, data);
 
-    print(response.body);
+    //print(response.body);
 
     return BaseListResponse
         .fromJson(json.decode(response.body))

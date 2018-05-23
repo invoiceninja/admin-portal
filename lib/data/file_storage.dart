@@ -20,8 +20,6 @@ class FileStorage {
     final file = await _getLocalFile();
     final contents = await file.readAsString();
 
-    print('LOADING PRODUCTS FROM FILE...');
-
     /*
     return serializers
         .deserializeWith(AppState.serializer, json.decode(contents))

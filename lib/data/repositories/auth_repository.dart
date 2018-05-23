@@ -29,14 +29,6 @@ class AuthRepositoryFlutter {
       'password': password,
     });
 
-    print('== LOGN RESPONSE ==');
-    print(data);
-
-    // TODO remove handle on server
-    for (int i=1; i<data.length; i++) {
-      data[i].id = i;
-    }
-
     return data.map((company) => CompanyEntity.fromJson(company)).toList();
 
     /*

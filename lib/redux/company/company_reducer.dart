@@ -21,9 +21,5 @@ Reducer<CompanyEntity> companyEntityReducer = combineReducers([
 ]);
 
 CompanyEntity loadCompanySuccessReducer(CompanyEntity company, LoadCompanySuccess action) {
-  print('loadCompanySuccessReducer');
-  print(company);
-  print(action.company);
-
   return action.company;
 }
