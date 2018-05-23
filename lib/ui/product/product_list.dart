@@ -9,19 +9,19 @@ import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 
 class ProductList extends StatelessWidget {
-  final ProductState products;
+  final ProductState productState;
   final Function(ProductEntity, bool) onCheckboxChanged;
 
   ProductList({
     Key key,
-    @required this.products,
+    @required this.productState,
     @required this.onCheckboxChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AppLoading(builder: (context, loading) {
-      return loading
+    return AppLoading(builder: (context, isLoading) {
+      return isLoading && this.productState.lastUpdated == 0
           ? LoadingIndicator()
           : _buildListView();
     });
@@ -30,9 +30,9 @@ class ProductList extends StatelessWidget {
   ListView _buildListView() {
     return ListView.builder(
       key: NinjaKeys.productList,
-      itemCount: products.list.length,
+      itemCount: productState.list.length,
       itemBuilder: (BuildContext context, int index) {
-        final product = products.map[products.list[index]];
+        final product = productState.map[productState.list[index]];
 
         return ProductItem(
           product: product,

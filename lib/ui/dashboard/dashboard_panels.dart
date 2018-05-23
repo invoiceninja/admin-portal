@@ -4,19 +4,20 @@ import 'package:invoiceninja/ui/app/app_loading.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/loading_indicator.dart';
 import 'package:invoiceninja/keys.dart';
+import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 
 class DashboardPanels extends StatelessWidget {
-  final DashboardEntity dashboard;
+  final DashboardState dashboardState;
 
   DashboardPanels({
     Key key,
-    @required this.dashboard,
+    @required this.dashboardState,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppLoading(builder: (context, loading) {
-      return loading
+      return loading && dashboardState.lastUpdated == 0
           ? LoadingIndicator()
           : _buildPanels();
     });
@@ -27,15 +28,15 @@ class DashboardPanels extends StatelessWidget {
         padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
         children: <Widget>[
           DashboardPanel(
-              'Total Revenue', Icons.credit_card, this.dashboard.paidToDate),
+              'Total Revenue', Icons.credit_card, this.dashboardState.data.paidToDate),
           DashboardPanel(
-              'Average Invoice', Icons.email, this.dashboard.averageInvoice),
+              'Average Invoice', Icons.email, this.dashboardState.data.averageInvoice),
           DashboardPanel(
-              'Outstanding', Icons.schedule, this.dashboard.balances),
+              'Outstanding', Icons.schedule, this.dashboardState.data.balances),
           DashboardPanel(
-              'Invoices Sent', Icons.send, this.dashboard.invoicesSent, false),
+              'Invoices Sent', Icons.send, this.dashboardState.data.invoicesSent, false),
           DashboardPanel(
-              'Active Clients', Icons.people, this.dashboard.activeClients, false),
+              'Active Clients', Icons.people, this.dashboardState.data.activeClients, false),
         ]
     );
   }

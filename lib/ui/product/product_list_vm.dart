@@ -18,7 +18,7 @@ class ProductListVM extends StatelessWidget {
       converter: _ViewModel.fromStore,
       builder: (context, vm) {
         return ProductList(
-          products: vm.products,
+          productState: vm.productState,
           onCheckboxChanged: vm.onCheckboxChanged,
         );
       },
@@ -27,19 +27,19 @@ class ProductListVM extends StatelessWidget {
 }
 
 class _ViewModel {
-  final ProductState products;
+  final ProductState productState;
   final bool loading;
   final Function(ProductEntity, bool) onCheckboxChanged;
 
   _ViewModel({
-    @required this.products,
+    @required this.productState,
     @required this.loading,
     @required this.onCheckboxChanged,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      products: store.state.product(),
+      productState: store.state.product(),
       /*
       products: filteredProductsSelector(
         productsSelector(store.state),

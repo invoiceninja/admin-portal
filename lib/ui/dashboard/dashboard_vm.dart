@@ -17,7 +17,7 @@ class DashboardVM extends StatelessWidget {
       converter: _ViewModel.fromStore,
       builder: (context, vm) {
         return DashboardPanels(
-          dashboard: vm.dashboard,
+          dashboardState: vm.dashboardState,
         );
       },
     );
@@ -25,18 +25,18 @@ class DashboardVM extends StatelessWidget {
 }
 
 class _ViewModel {
-  final DashboardEntity dashboard;
-  final bool loading;
+  final DashboardState dashboardState;
+  final bool isLoading;
 
   _ViewModel({
-    @required this.dashboard,
-    @required this.loading,
+    @required this.dashboardState,
+    @required this.isLoading,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      dashboard: store.state.dashboard().data,
-      loading: store.state.isLoading,
+      dashboardState: store.state.dashboard(),
+      isLoading: store.state.isLoading,
     );
   }
 }
