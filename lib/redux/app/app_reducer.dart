@@ -21,18 +21,18 @@ AppState appReducer(AppState state, action) {
   */
 
   return AppState(
-    selectedCompanyId: selectedCompanyIdReducer(state.selectedCompanyId, action),
+    selectedCompanyIndex: selectedCompanyIdReducer(state.selectedCompanyIndex, action),
     isLoading: loadingReducer(state.isLoading, action),
     auth: authReducer(state.auth, action),
-    companyState1: state.selectedCompanyId == 1
+    companyState1: state.selectedCompanyIndex == 1
         ? companyReducer(state.companyState1, action) : state.companyState1,
-    companyState2: state.selectedCompanyId == 2
+    companyState2: state.selectedCompanyIndex == 2
         ? companyReducer(state.companyState2, action) : state.companyState2,
-    companyState3: state.selectedCompanyId == 3
+    companyState3: state.selectedCompanyIndex == 3
         ? companyReducer(state.companyState3, action) : state.companyState3,
-    companyState4: state.selectedCompanyId == 4
+    companyState4: state.selectedCompanyIndex == 4
         ? companyReducer(state.companyState4, action) : state.companyState4,
-    companyState5: state.selectedCompanyId == 5
+    companyState5: state.selectedCompanyIndex == 5
         ? companyReducer(state.companyState5, action) : state.companyState5,
   );
 }

@@ -3,18 +3,16 @@ import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final String companyName;
-  final bool hasMultipleCompanies;
   final List<CompanyEntity> companies;
-  final String selectedCompanyId;
+  final String selectedCompanyName;
+  final String selectedCompanyIndex;
   final Function(String) onCompanyChanged;
 
   CustomDrawer({
     Key key,
-    @required this.companyName,
-    @required this.hasMultipleCompanies,
     @required this.companies,
-    @required this.selectedCompanyId,
+    @required this.selectedCompanyName,
+    @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
   }) : super(key: key);
 
@@ -22,14 +20,14 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final _singleCompany = Align(
       alignment: FractionalOffset.bottomLeft,
-      child: Text(companyName),
+      child: Text(selectedCompanyName),
     );
 
     final _multipleCompanies = Align(
       alignment: FractionalOffset.bottomLeft,
       child: new DropdownButton<String>(
         isDense: true,
-        value: this.selectedCompanyId,
+        value: this.selectedCompanyIndex,
         items: this.companies.map((CompanyEntity company) =>
           DropdownMenuItem<String>(
             value: (this.companies.indexOf(company) + 1).toString(),

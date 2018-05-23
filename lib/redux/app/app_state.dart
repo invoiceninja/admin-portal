@@ -9,7 +9,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 class AppState {
   final bool isLoading;
   final AuthState auth;
-  final int selectedCompanyId;
+  final int selectedCompanyIndex;
   final CompanyState companyState1;
   final CompanyState companyState2;
   final CompanyState companyState3;
@@ -18,7 +18,7 @@ class AppState {
 
   AppState(
       {this.isLoading = false,
-        this.selectedCompanyId = 0,
+        this.selectedCompanyIndex = 0,
         AuthState auth,
         CompanyState companyState1,
         CompanyState companyState2,
@@ -44,9 +44,9 @@ class AppState {
   */
 
   AppState copyWith({
-    String selectedCompany,
     bool isLoading,
     AuthState auth,
+    int selectedCompanyIndex,
     CompanyState companyState1,
     CompanyState companyState2,
     CompanyState companyState3,
@@ -54,9 +54,9 @@ class AppState {
     CompanyState companyState5,
   }) {
     return AppState(
-      selectedCompanyId : selectedCompany ?? this.selectedCompanyId,
       isLoading: isLoading ?? this.isLoading,
       auth: auth ?? this.auth,
+      selectedCompanyIndex : selectedCompanyIndex ?? this.selectedCompanyIndex,
       companyState1: companyState1 ?? this.companyState1,
       companyState2: companyState2 ?? this.companyState2,
       companyState3: companyState3 ?? this.companyState3,
@@ -67,7 +67,7 @@ class AppState {
 
   @override
   int get hashCode =>
-      selectedCompanyId.hashCode ^
+      selectedCompanyIndex.hashCode ^
       isLoading.hashCode ^
       auth.hashCode ^
       companyState1.hashCode ^
@@ -81,7 +81,7 @@ class AppState {
       identical(this, other) ||
           other is AppState &&
               runtimeType == other.runtimeType &&
-              selectedCompanyId == other.selectedCompanyId &&
+              selectedCompanyIndex == other.selectedCompanyIndex &&
               companyState1 == other.companyState1 &&
               companyState2 == other.companyState2 &&
               companyState3 == other.companyState3 &&
@@ -91,11 +91,11 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyId: ${selectedCompanyId}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
+    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyId: ${selectedCompanyIndex}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
   }
 
   CompanyState selectedCompanyState() {
-    switch (this.selectedCompanyId) {
+    switch (this.selectedCompanyIndex) {
       case 1:
         return this.companyState1;
       case 2:

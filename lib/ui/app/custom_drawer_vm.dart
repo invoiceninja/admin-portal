@@ -17,10 +17,9 @@ class CustomDrawerVM extends StatelessWidget {
       converter: _ViewModel.fromStore,
       builder: (context, vm) {
         return CustomDrawer(
-          companyName: vm.companyName,
-          hasMultipleCompanies: vm.hasMultipleCompanies,
           companies: vm.companies,
-          selectedCompanyId: vm.selectedCompanyId,
+          selectedCompanyName: vm.selectedCompanyName,
+          selectedCompanyIndex: vm.selectedCompanyIndex,
           onCompanyChanged: vm.onCompanyChanged,
         );
       },
@@ -29,26 +28,23 @@ class CustomDrawerVM extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String companyName;
-  final bool hasMultipleCompanies;
   final List<CompanyEntity> companies;
-  final String selectedCompanyId;
+  final String selectedCompanyName;
+  final String selectedCompanyIndex;
   final Function(String) onCompanyChanged;
 
   _ViewModel({
-    @required this.companyName,
-    @required this.hasMultipleCompanies,
     @required this.companies,
-    @required this.selectedCompanyId,
+    @required this.selectedCompanyName,
+    @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
 });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      companyName: store.state.selectedCompany().name,
-      hasMultipleCompanies: store.state.companyState2.company.token != null,
       companies: companiesSelector(store.state),
-      selectedCompanyId: store.state.selectedCompanyId.toString(),
+      selectedCompanyName: store.state.selectedCompany().name,
+      selectedCompanyIndex: store.state.selectedCompanyIndex.toString(),
       onCompanyChanged: (String companyId) {
         store.dispatch(SelectCompany(int.parse(companyId)));
       },
