@@ -49,8 +49,12 @@ class InvoiceNinjaApp extends StatelessWidget {
       store: store,
       child: new MaterialApp(
         theme: ThemeData(
-            brightness: Brightness.dark,
-            accentColor: Colors.lightBlueAccent,
+            //brightness: Brightness.dark,
+            //accentColor: Colors.lightBlueAccent,
+        ).copyWith(
+          primaryColor: const Color(0xFF117cc1),
+          primaryColorDark: const Color(0x005090),
+          primaryColorLight: const Color(0x005090),
         ),
         title: 'Invoice Ninja',
         routes: {
