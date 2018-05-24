@@ -21,8 +21,11 @@ AuthState userLoginLoadedReducer(AuthState auth, UserLoginLoaded action) {
 }
 
 AuthState userLoginRequestReducer(AuthState auth, UserLoginRequest action) {
-  return auth.copyWith(
-    isAuthenticating: true,
+  return AuthState().copyWith(
+    isInitialized: true,
+    url: action.url,
+    email: action.email,
+    password: action.password,
   );
 }
 
@@ -31,7 +34,6 @@ AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
     isAuthenticated: true,
     isAuthenticating: false,
     password: '',
-    error: '',
   );
 }
 
