@@ -7,8 +7,6 @@ import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
-/// A class that glues together our local file storage and web client. It has a
-/// clear responsibility: Load Products and Persist products.
 class ProductsRepositoryFlutter {
   final FileStorage fileStorage;
   final WebClient webClient;
