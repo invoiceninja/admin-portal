@@ -27,7 +27,6 @@ class AuthState {
     bool isAuthenticated,
     bool isAuthenticating,
     String error,
-    User user
   }) {
     return new AuthState(
       url: url ?? this.url,
