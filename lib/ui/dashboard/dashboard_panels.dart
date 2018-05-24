@@ -53,6 +53,7 @@ class DashboardPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 2.0,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
