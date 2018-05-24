@@ -25,18 +25,20 @@ class CustomDrawer extends StatelessWidget {
 
     final _multipleCompanies = Align(
       alignment: FractionalOffset.bottomLeft,
-      child: new DropdownButton<String>(
-        isDense: true,
-        value: this.selectedCompanyIndex,
-        items: this.companies.map((CompanyEntity company) =>
-          DropdownMenuItem<String>(
-            value: (this.companies.indexOf(company) + 1).toString(),
-            child: Text(company.name),
-          )
-        ).toList(),
-        onChanged: (value) {
-          this.onCompanyChanged(value);
-        },
+      child: new DropdownButtonHideUnderline(
+        child: new DropdownButton<String>(
+          isDense: true,
+          value: this.selectedCompanyIndex,
+          items: this.companies.map((CompanyEntity company) =>
+            DropdownMenuItem<String>(
+              value: (this.companies.indexOf(company) + 1).toString(),
+              child: Text(company.name),
+            )
+          ).toList(),
+          onChanged: (value) {
+            this.onCompanyChanged(value);
+          },
+        ),
       ),
     );
 
