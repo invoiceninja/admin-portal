@@ -48,7 +48,7 @@ class _ViewModel {
 
   factory _ViewModel.from(Store<AppState> store, int id) {
     //final product = productSelector(productsSelector(store.state), id).value;
-    final product = store.state.product().map[id];
+    final product = store.state.productState().map[id];
 
     return _ViewModel(
       product: product,

@@ -115,11 +115,11 @@ class AppState {
     return this.selectedCompanyState().company;
   }
 
-  ProductState product() {
+  ProductState productState() {
     return this.selectedCompanyState().productState;
   }
 
-  DashboardState dashboard() {
+  DashboardState dashboardState() {
     return this.selectedCompanyState().dashboardState;
   }
 }

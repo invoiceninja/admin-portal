@@ -39,7 +39,7 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      productState: store.state.product(),
+      productState: store.state.productState(),
       /*
       products: filteredProductsSelector(
         productsSelector(store.state),

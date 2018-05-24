@@ -7,7 +7,7 @@ enum VisibilityFilter {all, active, completed}
 //VisibilityFilter activeFilterSelector(AppState state) => state.activeFilter;
 
 List<ProductEntity> productsSelector(AppState state) =>
-    state.product().list.map((id) => state.product().map[id]);
+    state.productState().list.map((id) => state.productState().map[id]);
 
 List<ProductEntity> filteredProductsSelector(
     List<ProductEntity> products,

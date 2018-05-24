@@ -35,7 +35,7 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      dashboardState: store.state.dashboard(),
+      dashboardState: store.state.dashboardState(),
       isLoading: store.state.isLoading,
     );
   }
