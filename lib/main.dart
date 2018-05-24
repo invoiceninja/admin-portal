@@ -3,13 +3,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:invoiceninja/routes.dart';
-import 'package:invoiceninja/ui/auth/login.dart';
+import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard.dart';
 import 'package:invoiceninja/ui/client/clients.dart';
 import 'package:invoiceninja/ui/product/products.dart';
 import 'package:invoiceninja/redux/app/app_reducer.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_middleware.dart';
+import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
@@ -63,8 +64,9 @@ class InvoiceNinjaApp extends StatelessWidget {
         routes: {
           AppRoutes.login: (context) {
             return StoreBuilder<AppState>(
+              onInit: (store) => store.dispatch(LoadUserLogin()),
               builder: (context, store) {
-                return LoginScreen();
+                return LoginVM();
               },
             );
           },

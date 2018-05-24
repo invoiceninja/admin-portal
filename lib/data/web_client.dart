@@ -37,7 +37,7 @@ class WebClient {
     final http.Response response = await sendGetRequest(url, token);
     final result = BaseItemResponse.fromJson(json.decode(response.body));
 
-    if (result.error.message != null) {
+    if (result.error != null && result.error.message != null) {
       throw(result.error.message);
     } else {
       return result.data;
@@ -49,7 +49,7 @@ class WebClient {
     final http.Response response = await sendGetRequest(url, token);
     final result = BaseListResponse.fromJson(json.decode(response.body));
 
-    if (result.error.message != null) {
+    if (result.error != null && result.error.message != null) {
       throw(result.error.message);
     } else {
       return result.data.toList();
@@ -60,7 +60,7 @@ class WebClient {
     final http.Response response = await sendPostRequest(url, token, data);
     final result = BaseListResponse.fromJson(json.decode(response.body));
 
-    if (result.error.message != null) {
+    if (result.error != null && result.error.message != null) {
       throw(result.error.message);
     } else {
       return result.data.toList();

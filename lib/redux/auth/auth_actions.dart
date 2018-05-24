@@ -3,6 +3,16 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
+class LoadUserLogin {}
+
+class UserLoginLoaded {
+  final String email;
+  final String password;
+  final String url;
+
+  UserLoginLoaded(this.email, this.password, this.url);
+}
+
 class UserLoginRequest {
   final BuildContext context;
   final String email;
@@ -22,22 +32,3 @@ class UserLoginFailure {
 
 class UserLogout {}
 
-
-/*
-final Function login = (BuildContext context, String url, String token) {
-  return (Store<AppState> store) {
-    store.dispatch(new UserLoginRequest(url, token));
-    store.dispatch(new UserLoginSuccess(new User(token, 1)));
-    Navigator.of(context).pushNamed('/dashboard');
-  };
-};
-*/
-
-/*
-final Function logout = (BuildContext context) {
-  return (Store<AppState> store) {
-    store.dispatch(new UserLogout());
-    Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
-  };
-};
-*/

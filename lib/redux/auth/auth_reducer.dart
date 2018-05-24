@@ -4,35 +4,37 @@ import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 Reducer<AuthState> authReducer = combineReducers([
+  TypedReducer<AuthState, UserLoginLoaded>(userLoginLoadedReducer),
   TypedReducer<AuthState, UserLoginRequest>(userLoginRequestReducer),
   TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
   TypedReducer<AuthState, UserLoginFailure>(userLoginFailureReducer),
   TypedReducer<AuthState, UserLogout>(userLogoutReducer),
 ]);
 
-AuthState userLoginRequestReducer(AuthState auth, UserLoginRequest action) {
+AuthState userLoginLoadedReducer(AuthState auth, UserLoginLoaded action) {
   return AuthState().copyWith(
     url: action.url,
-    isAuthenticated: false,
+    email: action.email,
+    password: action.password,
+  );
+}
+
+AuthState userLoginRequestReducer(AuthState auth, UserLoginRequest action) {
+  return auth.copyWith(
     isAuthenticating: true,
   );
 }
 
 AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
-  return AuthState().copyWith(
-      url: auth.url,
-      isAuthenticated: true,
-      isAuthenticating: false,
+  return auth.copyWith(
+    isAuthenticated: true,
+    isAuthenticating: false,
   );
 }
 
 AuthState userLoginFailureReducer(AuthState auth, UserLoginFailure action) {
-  return AuthState().copyWith(
-      url: auth.url,
-      isAuthenticated: false,
-      isAuthenticating: false,
-      error: action.error
-  );
+  return auth.copyWith(
+      isAuthenticated: false, isAuthenticating: false, error: action.error);
 }
 
 AuthState userLogoutReducer(AuthState auth, UserLogout action) {

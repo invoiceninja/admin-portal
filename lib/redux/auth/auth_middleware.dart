@@ -20,9 +20,11 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
     ),
   ),
 ]) {
+  final loginInit = _createLoginInit();
   final loginRequest = _createLoginRequest(repository);
 
   return [
+    TypedMiddleware<AppState, LoadUserLogin>(loginInit),
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
   ];
 }
@@ -35,6 +37,26 @@ _saveAuthLocal(action) async {
   if (action.password == 'password') {
     prefs.setString('password', action.password);
   }
+}
+
+_loadAuthLocal(Store<AppState> store) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  String email = prefs.getString('email');
+  String password = prefs.getString('password');
+  String url = prefs.getString('url');
+
+  store.dispatch(UserLoginLoaded(email, password, url));
+}
+
+
+Middleware<AppState> _createLoginInit() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+
+    _loadAuthLocal(store);
+    
+    next(action);
+  };
 }
 
 Middleware<AppState> _createLoginRequest(AuthRepository repository) {
@@ -55,14 +77,8 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
           Navigator.of(action.context).pushNamed(AppRoutes.dashboard);
         }
     ).catchError((error) {
+      print(error);
       store.dispatch(UserLoginFailure(null));
-
-      final snackBar = new SnackBar(
-        duration: Duration(seconds: 3),
-        content: new Text('Error: ' + error.toString()),
-      );
-
-      Scaffold.of(action.context).showSnackBar(snackBar);
     });
 
     next(action);
