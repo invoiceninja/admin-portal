@@ -29,6 +29,7 @@ AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
   return auth.copyWith(
     isAuthenticated: true,
     isAuthenticating: false,
+    password: '',
   );
 }
 
