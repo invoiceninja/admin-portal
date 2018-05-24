@@ -21,7 +21,7 @@ AppState appReducer(AppState state, action) {
   */
 
   return AppState(
-    selectedCompanyIndex: selectedCompanyIdReducer(state.selectedCompanyIndex, action),
+    selectedCompanyIndex: selectedCompanyIndexReducer(state.selectedCompanyIndex, action),
     isLoading: loadingReducer(state.isLoading, action),
     auth: authReducer(state.auth, action),
     companyState1: state.selectedCompanyIndex == 1
@@ -37,10 +37,10 @@ AppState appReducer(AppState state, action) {
   );
 }
 
-Reducer<int> selectedCompanyIdReducer = combineReducers([
+Reducer<int> selectedCompanyIndexReducer = combineReducers([
   TypedReducer<int, SelectCompany>(selectCompanyReducer),
 ]);
 
-int selectCompanyReducer(int selectedCompanyId, SelectCompany action) {
-  return action.companyId;
+int selectCompanyReducer(int selectedCompanyIndex, SelectCompany action) {
+  return action.companyIndex;
 }

@@ -1,9 +1,9 @@
 import 'package:invoiceninja/data/models/models.dart';
 
 class SelectCompany {
-  final int companyId;
+  final int companyIndex;
 
-  SelectCompany(this.companyId);
+  SelectCompany(this.companyIndex);
 }
 
 class LoadCompanySuccess {

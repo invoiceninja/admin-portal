@@ -45,8 +45,8 @@ class _ViewModel {
       companies: companiesSelector(store.state),
       selectedCompany: store.state.selectedCompany(),
       selectedCompanyIndex: store.state.selectedCompanyIndex.toString(),
-      onCompanyChanged: (String companyId) {
-        store.dispatch(SelectCompany(int.parse(companyId)));
+      onCompanyChanged: (String companyIndex) {
+        store.dispatch(SelectCompany(int.parse(companyIndex)));
       },
     );
   }

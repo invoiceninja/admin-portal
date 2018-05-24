@@ -91,7 +91,7 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyId: ${selectedCompanyIndex}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
+    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyIndex: ${selectedCompanyIndex}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
   }
 
   CompanyState selectedCompanyState() {

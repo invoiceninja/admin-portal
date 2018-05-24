@@ -40,6 +40,7 @@ class WebClient {
         .data;
   }
 
+
   Future<List<dynamic>> fetchList(String url, String token) async {
     final http.Response response = await sendGetRequest(url, token);
     return BaseListResponse
@@ -51,9 +52,6 @@ class WebClient {
 
   Future<List<dynamic>> postList(String url, String token, var data) async {
     final http.Response response = await sendPostRequest(url, token, data);
-
-    //print(response.body);
-
     return BaseListResponse
         .fromJson(json.decode(response.body))
         .data
