@@ -9,6 +9,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatelessWidget {
+  bool isInitialized;
   String email;
   String password;
   String url;
@@ -16,6 +17,7 @@ class Login extends StatelessWidget {
 
   Login({
     Key key,
+    @required this.isInitialized,
     @required this.email,
     @required this.password,
     @required this.url,
@@ -29,6 +31,10 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (! this.isInitialized) {
+      return Container();
+    }
+
     return ListView(
       shrinkWrap: true,
       padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 40.0),
@@ -40,21 +46,24 @@ class Login extends StatelessWidget {
         ),
         TextFormField(
           key: _emailKey,
-          controller: TextEditingController(text: this.email ?? ''),
+          initialValue: this.email,
+          //controller: TextEditingController(text: this.email ?? ''),
           decoration: InputDecoration(labelText: 'Email'),
           keyboardType: TextInputType.emailAddress,
           validator: (val) => val.isEmpty ? 'Please enter your email.' : null,
         ),
         TextFormField(
           key: _passwordKey,
-          controller: TextEditingController(text: this.password ?? ''),
+          initialValue: this.password,
+          //controller: TextEditingController(text: this.password ?? ''),
           decoration: InputDecoration(labelText: 'Password'),
           validator: (val) => val.isEmpty ? 'Please enter your password.' : null,
           obscureText: true,
         ),
         TextFormField(
           key: _urlKey,
-          controller: TextEditingController(text: this.url ?? ''),
+          initialValue: this.url,
+          //controller: TextEditingController(text: this.url ?? ''),
           decoration: InputDecoration(labelText: 'URL'),
           validator: (val) => val.isEmpty ? 'Please enter your URL.' : null,
           keyboardType: TextInputType.url,

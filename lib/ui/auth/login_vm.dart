@@ -18,6 +18,7 @@ class LoginVM extends StatelessWidget {
         converter: _ViewModel.fromStore,
         builder: (context, vm) {
           return Login(
+            isInitialized: vm.isInitialized,
             email: vm.email,
             password: vm.password,
             url: vm.url,
@@ -30,12 +31,14 @@ class LoginVM extends StatelessWidget {
 }
 
 class _ViewModel {
+  bool isInitialized;
   String email;
   String password;
   String url;
   final Function(BuildContext, String, String, String) onLoginClicked;
 
   _ViewModel({
+    @required this.isInitialized,
     @required this.email,
     @required this.password,
     @required this.url,
@@ -44,6 +47,7 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
+        isInitialized: store.state.auth.isInitialized,
       email: store.state.auth.email ?? '',
       url: store.state.auth.url ?? '',
       password: store.state.auth.password ?? '',

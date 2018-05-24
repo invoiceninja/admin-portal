@@ -39,7 +39,7 @@ _saveAuthLocal(action) async {
   }
 }
 
-_loadAuthLocal(Store<AppState> store) async {
+_loadAuthLocal(Store<AppState> store, action) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   String email = prefs.getString('email');
@@ -53,7 +53,7 @@ _loadAuthLocal(Store<AppState> store) async {
 Middleware<AppState> _createLoginInit() {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    _loadAuthLocal(store);
+    _loadAuthLocal(store, action);
     
     next(action);
   };

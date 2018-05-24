@@ -13,6 +13,7 @@ Reducer<AuthState> authReducer = combineReducers([
 
 AuthState userLoginLoadedReducer(AuthState auth, UserLoginLoaded action) {
   return AuthState().copyWith(
+    isInitialized: true,
     url: action.url,
     email: action.email,
     password: action.password,
@@ -40,6 +41,7 @@ AuthState userLoginFailureReducer(AuthState auth, UserLoginFailure action) {
 
 AuthState userLogoutReducer(AuthState auth, UserLogout action) {
   return AuthState().copyWith(
+    isInitialized: true,
     url: auth.url,
   );
 }
