@@ -77,8 +77,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
           Navigator.of(action.context).pushNamed(AppRoutes.dashboard);
         }
     ).catchError((error) {
-      print(error);
-      store.dispatch(UserLoginFailure(null));
+      store.dispatch(UserLoginFailure(error));
     });
 
     next(action);

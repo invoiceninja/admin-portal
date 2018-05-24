@@ -31,6 +31,7 @@ AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
     isAuthenticated: true,
     isAuthenticating: false,
     password: '',
+    error: '',
   );
 }
 

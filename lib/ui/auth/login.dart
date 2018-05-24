@@ -45,6 +45,7 @@ class Login extends StatelessWidget {
           validator: (val) => val.isEmpty ? 'Please enter your password.' : null,
           obscureText: true,
         ),
+        authState.error == null ? Container() : Text(authState.error),
         TextFormField(
           key: _urlKey,
           initialValue: authState.url,
