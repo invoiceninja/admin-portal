@@ -4,7 +4,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
 class UserLoginRequest {
-  final dynamic context;
+  final BuildContext context;
   final String email;
   final String password;
   final String url;

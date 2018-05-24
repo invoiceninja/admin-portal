@@ -35,26 +35,35 @@ class WebClient {
 
   Future<dynamic> fetchItem(String url, String token) async {
     final http.Response response = await sendGetRequest(url, token);
-    return BaseItemResponse
-        .fromJson(json.decode(response.body))
-        .data;
+    final result = BaseItemResponse.fromJson(json.decode(response.body));
+
+    if (result.error.message != null) {
+      throw(result.error.message);
+    } else {
+      return result.data;
+    }
   }
 
 
   Future<List<dynamic>> fetchList(String url, String token) async {
     final http.Response response = await sendGetRequest(url, token);
-    return BaseListResponse
-        .fromJson(json.decode(response.body))
-        .data
-        .toList();
-  }
+    final result = BaseListResponse.fromJson(json.decode(response.body));
 
+    if (result.error.message != null) {
+      throw(result.error.message);
+    } else {
+      return result.data.toList();
+    }
+  }
 
   Future<List<dynamic>> postList(String url, String token, var data) async {
     final http.Response response = await sendPostRequest(url, token, data);
-    return BaseListResponse
-        .fromJson(json.decode(response.body))
-        .data
-        .toList();
+    final result = BaseListResponse.fromJson(json.decode(response.body));
+
+    if (result.error.message != null) {
+      throw(result.error.message);
+    } else {
+      return result.data.toList();
+    }
   }
 }

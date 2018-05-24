@@ -6,20 +6,42 @@ part of 'entities.dart';
 // Generator: JsonSerializableGenerator
 // **************************************************************************
 
+ErrorResponse _$ErrorResponseFromJson(Map<String, dynamic> json) =>
+    new ErrorResponse(json['message'] as String);
+
+abstract class _$ErrorResponseSerializerMixin {
+  String get message;
+  Map<String, dynamic> toJson() => <String, dynamic>{'message': message};
+}
+
 BaseListResponse _$BaseListResponseFromJson(Map<String, dynamic> json) =>
-    new BaseListResponse(json['data'] as List);
+    new BaseListResponse(
+        json['data'] as List,
+        json['error'] == null
+            ? null
+            : new ErrorResponse.fromJson(
+                json['error'] as Map<String, dynamic>));
 
 abstract class _$BaseListResponseSerializerMixin {
   List<dynamic> get data;
-  Map<String, dynamic> toJson() => <String, dynamic>{'data': data};
+  ErrorResponse get error;
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{'data': data, 'error': error};
 }
 
 BaseItemResponse _$BaseItemResponseFromJson(Map<String, dynamic> json) =>
-    new BaseItemResponse(json['data']);
+    new BaseItemResponse(
+        json['data'],
+        json['error'] == null
+            ? null
+            : new ErrorResponse.fromJson(
+                json['error'] as Map<String, dynamic>));
 
 abstract class _$BaseItemResponseSerializerMixin {
   dynamic get data;
-  Map<String, dynamic> toJson() => <String, dynamic>{'data': data};
+  ErrorResponse get error;
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{'data': data, 'error': error};
 }
 
 CompanyEntity _$CompanyEntityFromJson(Map<String, dynamic> json) =>

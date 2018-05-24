@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
@@ -53,8 +54,18 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
 
           Navigator.of(action.context).pushNamed(AppRoutes.dashboard);
         }
-    ).catchError((error) => store.dispatch(UserLoginFailure(error)));
+    ).catchError((error) {
+      store.dispatch(UserLoginFailure(null));
+
+      final snackBar = new SnackBar(
+        duration: Duration(seconds: 3),
+        content: new Text('Error: ' + error.toString()),
+      );
+
+      Scaffold.of(action.context).showSnackBar(snackBar);
+    });
 
     next(action);
   };
 }
+
