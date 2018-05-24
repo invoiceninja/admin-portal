@@ -58,7 +58,13 @@ class WebClient {
 
   Future<List<dynamic>> postList(String url, String token, var data) async {
     final http.Response response = await sendPostRequest(url, token, data);
-    final result = BaseListResponse.fromJson(json.decode(response.body));
+    var result;
+
+    try {
+      result = BaseListResponse.fromJson(json.decode(response.body));
+    } catch (exception) {
+      throw('An error occurred');
+    }
 
     if (result.error != null && result.error.message != null) {
       throw(result.error.message);

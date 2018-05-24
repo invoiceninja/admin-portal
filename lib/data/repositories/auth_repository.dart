@@ -24,8 +24,6 @@ class AuthRepository {
       'token_name': 'mobile-app',
       'email': email,
       'password': password,
-    }).catchError((error) {
-      throw ('An error occurred');
     });
 
     return data.map((company) => CompanyEntity.fromJson(company)).toList();
