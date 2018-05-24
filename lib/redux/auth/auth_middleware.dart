@@ -12,7 +12,7 @@ import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
-  AuthRepositoryFlutter repository = const AuthRepositoryFlutter(
+  AuthRepository repository = const AuthRepository(
     fileStorage: const FileStorage(
       '__invoiceninja__',
       getApplicationDocumentsDirectory,
@@ -36,7 +36,7 @@ _saveAuthLocal(action) async {
   }
 }
 
-Middleware<AppState> _createLoginRequest(AuthRepositoryFlutter repository) {
+Middleware<AppState> _createLoginRequest(AuthRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     repository.login(action.email, action.password, action.url).then(

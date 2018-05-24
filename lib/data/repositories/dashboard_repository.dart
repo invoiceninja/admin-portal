@@ -7,11 +7,11 @@ import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
-class DashboardRepositoryFlutter {
+class DashboardRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
 
-  const DashboardRepositoryFlutter({
+  const DashboardRepository({
     @required this.fileStorage,
     this.webClient = const WebClient(),
   });

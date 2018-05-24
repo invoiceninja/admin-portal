@@ -8,11 +8,11 @@ import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
-class AuthRepositoryFlutter {
+class AuthRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
 
-  const AuthRepositoryFlutter({
+  const AuthRepository({
     @required this.fileStorage,
     this.webClient = const WebClient(),
   });

@@ -6,7 +6,7 @@ import 'package:invoiceninja/data/repositories/product_repository.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 
 List<Middleware<AppState>> createStoreProductsMiddleware([
-  ProductsRepositoryFlutter repository = const ProductsRepositoryFlutter(
+  ProductsRepository repository = const ProductsRepository(
     fileStorage: const FileStorage(
       '__invoiceninja__',
       getApplicationDocumentsDirectory,
@@ -22,7 +22,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   ];
 }
 
-Middleware<AppState> _createSaveProducts(ProductsRepositoryFlutter repository) {
+Middleware<AppState> _createSaveProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
 
@@ -34,7 +34,7 @@ Middleware<AppState> _createSaveProducts(ProductsRepositoryFlutter repository) {
   };
 }
 
-Middleware<AppState> _createLoadProducts(ProductsRepositoryFlutter repository) {
+Middleware<AppState> _createLoadProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     repository.loadList(store.state.selectedCompany(), store.state.auth).then(

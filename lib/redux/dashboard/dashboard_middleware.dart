@@ -8,7 +8,7 @@ import 'package:invoiceninja/redux/product/product_selectors.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 
 List<Middleware<AppState>> createStoreDashboardMiddleware([
-  DashboardRepositoryFlutter repository = const DashboardRepositoryFlutter(
+  DashboardRepository repository = const DashboardRepository(
     fileStorage: const FileStorage(
       '__invoiceninja__',
       getApplicationDocumentsDirectory,
@@ -22,7 +22,7 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
   ];
 }
 
-Middleware<AppState> _createLoadDashboard(DashboardRepositoryFlutter repository) {
+Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     repository.loadItem(store.state.selectedCompany(), store.state.auth).then(
