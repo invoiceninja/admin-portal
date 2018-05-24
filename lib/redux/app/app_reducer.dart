@@ -23,7 +23,7 @@ AppState appReducer(AppState state, action) {
   return AppState(
     selectedCompanyIndex: selectedCompanyIndexReducer(state.selectedCompanyIndex, action),
     isLoading: loadingReducer(state.isLoading, action),
-    auth: authReducer(state.auth, action),
+    auth: authReducer(state.authState, action),
     companyState1: state.selectedCompanyIndex == 1
         ? companyReducer(state.companyState1, action) : state.companyState1,
     companyState2: state.selectedCompanyIndex == 2

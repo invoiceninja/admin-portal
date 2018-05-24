@@ -8,7 +8,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 @immutable
 class AppState {
   final bool isLoading;
-  final AuthState auth;
+  final AuthState authState;
   final int selectedCompanyIndex;
   final CompanyState companyState1;
   final CompanyState companyState2;
@@ -25,7 +25,7 @@ class AppState {
         CompanyState companyState3,
         CompanyState companyState4,
         CompanyState companyState5,}) :
-        auth = auth ?? AuthState(),
+        authState = auth ?? AuthState(),
         companyState1 = companyState1 ?? CompanyState(),
         companyState2 = companyState2 ?? CompanyState(),
         companyState3 = companyState3 ?? CompanyState(),
@@ -55,7 +55,7 @@ class AppState {
   }) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
-      auth: auth ?? this.auth,
+      auth: auth ?? this.authState,
       selectedCompanyIndex : selectedCompanyIndex ?? this.selectedCompanyIndex,
       companyState1: companyState1 ?? this.companyState1,
       companyState2: companyState2 ?? this.companyState2,
@@ -69,7 +69,7 @@ class AppState {
   int get hashCode =>
       selectedCompanyIndex.hashCode ^
       isLoading.hashCode ^
-      auth.hashCode ^
+      authState.hashCode ^
       companyState1.hashCode ^
       companyState2.hashCode ^
       companyState3.hashCode ^
@@ -87,11 +87,11 @@ class AppState {
               companyState3 == other.companyState3 &&
               companyState4 == other.companyState4 &&
               companyState5 == other.companyState5 &&
-              auth == other.auth;
+              authState == other.authState;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, url: ${auth.url}, companyIndex: ${selectedCompanyIndex}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
+    return 'AppState{isLoading: $isLoading, url: ${authState.url}, companyIndex: ${selectedCompanyIndex}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
   }
 
   CompanyState selectedCompanyState() {

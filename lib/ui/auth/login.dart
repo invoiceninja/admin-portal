@@ -1,26 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/auth/auth_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 class Login extends StatelessWidget {
-  bool isInitialized;
-  String email;
-  String password;
-  String url;
+  AuthState authState;
   final Function(BuildContext, String, String, String) onLoginClicked;
 
   Login({
     Key key,
-    @required this.isInitialized,
-    @required this.email,
-    @required this.password,
-    @required this.url,
+    @required this.authState,
     @required this.onLoginClicked,
   }) : super(key: key);
 
@@ -31,7 +18,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (! this.isInitialized) {
+    if (! authState.isInitialized) {
       return Container();
     }
 
@@ -46,24 +33,21 @@ class Login extends StatelessWidget {
         ),
         TextFormField(
           key: _emailKey,
-          initialValue: this.email,
-          //controller: TextEditingController(text: this.email ?? ''),
+          initialValue: authState.email,
           decoration: InputDecoration(labelText: 'Email'),
           keyboardType: TextInputType.emailAddress,
           validator: (val) => val.isEmpty ? 'Please enter your email.' : null,
         ),
         TextFormField(
           key: _passwordKey,
-          initialValue: this.password,
-          //controller: TextEditingController(text: this.password ?? ''),
+          initialValue: authState.password,
           decoration: InputDecoration(labelText: 'Password'),
           validator: (val) => val.isEmpty ? 'Please enter your password.' : null,
           obscureText: true,
         ),
         TextFormField(
           key: _urlKey,
-          initialValue: this.url,
-          //controller: TextEditingController(text: this.url ?? ''),
+          initialValue: authState.url,
           decoration: InputDecoration(labelText: 'URL'),
           validator: (val) => val.isEmpty ? 'Please enter your URL.' : null,
           keyboardType: TextInputType.url,

@@ -25,7 +25,7 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    repository.loadItem(store.state.selectedCompany(), store.state.auth).then(
+    repository.loadItem(store.state.selectedCompany(), store.state.authState).then(
             (data) => store.dispatch(DashboardLoadedAction(data))
     ).catchError((error) => store.dispatch(DashboardNotLoadedAction(error)));
 

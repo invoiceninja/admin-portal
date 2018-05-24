@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/ui/auth/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 class LoginVM extends StatelessWidget {
   LoginVM({Key key}) : super(key: key);
@@ -18,10 +18,7 @@ class LoginVM extends StatelessWidget {
         converter: _ViewModel.fromStore,
         builder: (context, vm) {
           return Login(
-            isInitialized: vm.isInitialized,
-            email: vm.email,
-            password: vm.password,
-            url: vm.url,
+            authState: vm.authState,
             onLoginClicked: vm.onLoginClicked,
           );
         },
@@ -31,26 +28,17 @@ class LoginVM extends StatelessWidget {
 }
 
 class _ViewModel {
-  bool isInitialized;
-  String email;
-  String password;
-  String url;
+  AuthState authState;
   final Function(BuildContext, String, String, String) onLoginClicked;
 
   _ViewModel({
-    @required this.isInitialized,
-    @required this.email,
-    @required this.password,
-    @required this.url,
+    @required this.authState,
     @required this.onLoginClicked,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-        isInitialized: store.state.auth.isInitialized,
-      email: store.state.auth.email ?? '',
-      url: store.state.auth.url ?? '',
-      password: store.state.auth.password ?? '',
+      authState: store.state.authState,
         onLoginClicked: (BuildContext context, String email, String password, String url) {
           store.dispatch(UserLoginRequest(context, email, password, url));
         }

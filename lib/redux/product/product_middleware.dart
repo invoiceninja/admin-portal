@@ -37,7 +37,7 @@ Middleware<AppState> _createSaveProducts(ProductsRepository repository) {
 Middleware<AppState> _createLoadProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    repository.loadList(store.state.selectedCompany(), store.state.auth).then(
+    repository.loadList(store.state.selectedCompany(), store.state.authState).then(
             (data) => store.dispatch(ProductsLoadedAction(data))
     ).catchError((error) => store.dispatch(ProductsNotLoadedAction(error)));
 
