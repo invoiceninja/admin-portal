@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 class Login extends StatelessWidget {
+  bool isLoading;
   AuthState authState;
   final Function(BuildContext, String, String, String) onLoginClicked;
 
   Login({
     Key key,
+    @required this.isLoading,
     @required this.authState,
     @required this.onLoginClicked,
   }) : super(key: key);
@@ -44,60 +46,75 @@ class Login extends StatelessWidget {
                 TextFormField(
                   key: _emailKey,
                   initialValue: authState.email,
+                  autocorrect: false,
                   decoration: InputDecoration(labelText: 'Email'),
                   keyboardType: TextInputType.emailAddress,
-                  validator: (val) => val.isEmpty ? 'Please enter your email.' : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Please enter your email.' : null,
                 ),
                 TextFormField(
                   key: _passwordKey,
                   initialValue: authState.password,
+                  autocorrect: false,
                   decoration: InputDecoration(labelText: 'Password'),
                   validator: (val) =>
-                  val.isEmpty ? 'Please enter your password.' : null,
+                      val.isEmpty ? 'Please enter your password.' : null,
                   obscureText: true,
                 ),
                 TextFormField(
                   key: _urlKey,
                   initialValue: authState.url,
+                  autocorrect: false,
                   decoration: InputDecoration(labelText: 'URL'),
-                  validator: (val) => val.isEmpty ? 'Please enter your URL.' : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Please enter your URL.' : null,
                   keyboardType: TextInputType.url,
                 ),
-                authState.error == null ? Container() :
-                Container(
-                  padding: EdgeInsets.only(top: 20.0, bottom: 10.0),
-                  child: Center(
-                    child: Text(
-                      authState.error,
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
+                authState.error == null
+                    ? Container()
+                    : Container(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 10.0),
+                        child: Center(
+                          child: Text(
+                            authState.error,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
         ),
         Padding(
           padding: EdgeInsets.only(top: 20.0),
-          child: Material(
-            shadowColor: Colors.lightBlueAccent.shade100,
-            elevation: 5.0,
-            child: MaterialButton(
-              minWidth: 200.0,
-              height: 42.0,
-              onPressed: () {
-                this.onLoginClicked(
-                    context,
-                    _emailKey.currentState.value,
-                    _passwordKey.currentState.value,
-                    _urlKey.currentState.value);
-              },
-              color: Colors.lightBlueAccent,
-              child: Text('LOGIN', style: TextStyle(color: Colors.white)),
-            ),
+          child: RaisedButton(
+            child: this.isLoading ? SizedBox(
+              width: 100.0,
+              child: new Center(
+                child: new SizedBox(
+                  height: 16.0,
+                  width: 16.0,
+                  child: new CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    strokeWidth: 2.0,
+                  ),
+                ),
+              ),
+            ) : Text('LOGIN'),
+            padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+            color: Colors.lightBlueAccent,
+            textColor: Colors.white,
+            elevation: 4.0,
+            onPressed: () {
+              this.onLoginClicked(
+                  context,
+                  _emailKey.currentState.value,
+                  _passwordKey.currentState.value,
+                  _urlKey.currentState.value);
+            },
           ),
         ),
       ],

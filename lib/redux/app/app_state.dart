@@ -32,8 +32,6 @@ class AppState {
         companyState4 = companyState4 ?? CompanyState(),
         companyState5 = companyState5 ?? CompanyState();
 
-  factory AppState.loading() => AppState(isLoading: true);
-
   /*
   static AppState rehydrationJSON(dynamic json) => new AppState(
       auth: new AuthState.fromJSON(json['auth'])
@@ -91,7 +89,7 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{error: ${authState.error}}';
+    return 'AppState{error: isLoading: ${isLoading}, error: ${authState.error}}';
     //return 'AppState{isLoading: $isLoading, url: ${authState.url}, companyIndex: ${selectedCompanyIndex}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
   }
 

@@ -30,7 +30,7 @@ class InvoiceNinjaApp extends StatelessWidget {
 
   final store = Store<AppState>(
     appReducer,
-    initialState: AppState.loading(),
+    initialState: AppState(),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDashboardMiddleware())
