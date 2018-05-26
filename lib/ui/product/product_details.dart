@@ -6,13 +6,13 @@ import 'package:invoiceninja/data/models/models.dart';
 class DetailsScreen extends StatelessWidget {
   final ProductEntity product;
   final Function onDelete;
-  final Function(bool) toggleCompleted;
+  final Function(ProductEntity) onSaveClicked;
 
   DetailsScreen({
     Key key,
     @required this.product,
     @required this.onDelete,
-    @required this.toggleCompleted,
+    @required this.onSaveClicked,
   }) : super(key: key);
 
   @override
@@ -25,12 +25,10 @@ class DetailsScreen extends StatelessWidget {
         actions: [
           /*
           IconButton(
-            tooltip: localizations.deleteProduct,
-            key: ArchSampleKeys.deleteProductButton,
+            //tooltip: localizations.deleteProduct,
+            //key: ArchSampleKeys.deleteProductButton,
             icon: Icon(Icons.delete),
             onPressed: () {
-              onDelete();
-              Navigator.pop(context, product);
             },
           )
           */
@@ -40,40 +38,53 @@ class DetailsScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
+            Card(
+              elevation: 2.0,
+              margin: EdgeInsets.all(0.0),
+              child: Form(
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextField(
-                        controller: TextEditingController(text: product.productKey),
+                      TextFormField(
+                        autocorrect: false,
+                        initialValue: product.productKey,
                         decoration: InputDecoration(
                           //border: InputBorder.none,
                           labelText: 'Product',
                         ),
                       ),
-                      TextField(
-                        controller: TextEditingController(text: product.notes),
+                      TextFormField(
+                        initialValue: product.notes,
                         maxLines: 4,
                         decoration: InputDecoration(
-                          //border: InputBorder.none,
                           labelText: 'Notes',
                         ),
                       ),
-                      TextField(
-                        controller: TextEditingController(text: product.cost.toStringAsFixed(2)),
+                      TextFormField(
+                        initialValue: product.cost.toStringAsFixed(2),
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                        //border: InputBorder.none,
-                        labelText: 'Cost',
-                      ),
+                          //border: InputBorder.none,
+                          labelText: 'Cost',
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
+            ),
+            RaisedButton(
+              child: Text('SAVE'),
+              padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+              color: Colors.lightBlueAccent,
+              textColor: Colors.white,
+              elevation: 4.0,
+              onPressed: () {
+                ProductEntity product = ProductEntity(this.product.id)
+                  ..productKey = 'test';
+                this.onSaveClicked(product);
+              }
             ),
           ],
         ),

@@ -23,3 +23,9 @@ class ProductsLoadedAction {
     return 'ProductsLoadedAction{products: $products}';
   }
 }
+
+class UpdateProductAction {
+  final ProductEntity product;
+
+  UpdateProductAction(this.product);
+}

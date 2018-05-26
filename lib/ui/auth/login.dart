@@ -43,7 +43,7 @@ class Login extends StatelessWidget {
           child: Form(
             key: _formKey,
             child: Container(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 children: <Widget>[
                   TextFormField(

@@ -28,7 +28,7 @@ class ProductDetails extends StatelessWidget {
         return DetailsScreen(
           product: vm.product,
           onDelete: vm.onDelete,
-          toggleCompleted: vm.toggleCompleted,
+          onSaveClicked: vm.onSaveClicked,
         );
       },
     );
@@ -38,12 +38,12 @@ class ProductDetails extends StatelessWidget {
 class _ViewModel {
   final ProductEntity product;
   final Function onDelete;
-  final Function(bool) toggleCompleted;
+  final Function(ProductEntity) onSaveClicked;
 
   _ViewModel({
     @required this.product,
     @required this.onDelete,
-    @required this.toggleCompleted,
+    @required this.onSaveClicked,
   });
 
   factory _ViewModel.from(Store<AppState> store, int id) {
@@ -53,13 +53,8 @@ class _ViewModel {
     return _ViewModel(
       product: product,
       onDelete: () => false, //store.dispatch(DeleteProductAction(product.id)),
-      toggleCompleted: (isComplete) {
-        /*
-        store.dispatch(UpdateProductAction(
-          product.id,
-          product.copyWith(complete: isComplete),
-        ));
-        */
+      onSaveClicked: (ProductEntity product) {
+        store.dispatch(UpdateProductAction(product));
       },
     );
   }
