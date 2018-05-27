@@ -9,14 +9,14 @@ final dashboardReducer = combineReducers<DashboardState>([
 ]);
 
 DashboardState _setLoadedDashboards(DashboardState dashboardState, DashboardLoadedAction action) {
-  return DashboardState().copyWith(
-      lastUpdated: DateTime.now().millisecondsSinceEpoch,
-      data: action.data
+  return dashboardState.rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..data = action.data.toBuilder()
   );
 }
 
 DashboardState _setNoDashboards(DashboardState dashboardState, DashboardNotLoadedAction action) {
-  return DashboardState().copyWith(
-      data: null,
+  return dashboardState.rebuild((b) => b
+      ..data = null
   );
 }

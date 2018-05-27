@@ -9,10 +9,11 @@ import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 
 CompanyState companyReducer(CompanyState state, action) {
-  return CompanyState (
-    company: companyEntityReducer(state.company, action),
-    dashboardState: dashboardReducer(state.dashboardState, action),
-    productState: productsReducer(state.productState, action),
+
+  return state.rebuild((b) => b
+      ..company = companyEntityReducer(state.company, action).toBuilder()
+      ..dashboardState = dashboardReducer(state.dashboardState, action).toBuilder()
+      ..productState = productsReducer(state.productState, action) .toBuilder()
   );
 }
 

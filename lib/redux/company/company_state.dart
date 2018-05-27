@@ -2,52 +2,25 @@ import 'package:meta/meta.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-@immutable
-class CompanyState {
-  CompanyEntity company;
-  ProductState productState;
-  DashboardState dashboardState;
+part 'company_state.g.dart';
 
-  CompanyState(
-      {CompanyEntity company,
-        ProductState productState,
-      DashboardState dashboardState}) :
-        company = company ?? CompanyEntity(),
-        productState = productState ?? ProductState(),
-        dashboardState = dashboardState ?? DashboardState();
+abstract class CompanyState implements Built<CompanyState, CompanyStateBuilder> {
+  @nullable
+  CompanyEntity get company;
+  ProductState get productState;
+  DashboardState get dashboardState;
 
-  //factory AppState.loading() => AppState(isLoading: true);
-
-  CompanyState copyWith({
-    CompanyEntity company,
-    ProductState productState,
-    DashboardState dashboardState,
-  }) {
-    return CompanyState(
-      company: company ?? this.company,
-      productState: productState ?? this.productState,
-      dashboardState: dashboardState ?? this.dashboardState,
+  factory CompanyState() {
+    return _$CompanyState._(
+      productState: ProductState(),
+      dashboardState: DashboardState(),
     );
   }
 
-  @override
-  int get hashCode =>
-      company.hashCode ^
-      productState.hashCode ^
-      dashboardState.hashCode;
-
-  @override
-  bool operator == (Object other) =>
-      identical(this, other) ||
-          other is CompanyState &&
-              runtimeType == other.runtimeType &&
-              company == other.company &&
-              dashboardState == other.dashboardState &&
-              productState == other.productState;
-
-  @override
-  String toString() {
-    return 'CompanyState{}';
-  }
+  CompanyState._();
+  //factory CompanyState([updates(CompanyStateBuilder b)]) = _$CompanyState;
+  static Serializer<CompanyState> get serializer => _$companyStateSerializer;
 }

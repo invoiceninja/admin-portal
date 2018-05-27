@@ -28,8 +28,6 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'logo_url')
   String get logoUrl;
 
-  bool isBlank() => this.token == '';
-
   factory CompanyEntity() {
     return _$CompanyEntity._(
       name: '',

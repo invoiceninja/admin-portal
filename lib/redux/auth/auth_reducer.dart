@@ -11,40 +11,39 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, UserLogout>(userLogoutReducer),
 ]);
 
-AuthState userLoginLoadedReducer(AuthState auth, UserLoginLoaded action) {
-  return AuthState().copyWith(
-    isInitialized: true,
-    url: action.url,
-    email: action.email,
-    password: action.password,
+AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
+  return authState.rebuild((b) => b
+    ..isInitialized = true
+    ..url = action.url
+    ..email = action.email
+    ..password = action.password);
+}
+
+AuthState userLoginRequestReducer(
+    AuthState authState, UserLoginRequest action) {
+  return authState.rebuild((b) => b
+    ..url = action.url
+    ..email = action.email
+    ..password = action.password);
+}
+
+AuthState userLoginSuccessReducer(
+    AuthState authState, UserLoginSuccess action) {
+  return authState.rebuild((b) => b
+      ..isAuthenticated = true
+    ..password = ''
   );
 }
 
-AuthState userLoginRequestReducer(AuthState auth, UserLoginRequest action) {
-  return AuthState().copyWith(
-    isInitialized: true,
-    url: action.url,
-    email: action.email,
-    password: action.password,
+AuthState userLoginFailureReducer(
+    AuthState authState, UserLoginFailure action) {
+  return authState.rebuild((b) => b
+      ..error = action.error
   );
 }
 
-AuthState userLoginSuccessReducer(AuthState auth, UserLoginSuccess action) {
-  return auth.copyWith(
-    isAuthenticated: true,
-    isAuthenticating: false,
-    password: '',
-  );
-}
-
-AuthState userLoginFailureReducer(AuthState auth, UserLoginFailure action) {
-  return auth.copyWith(
-      isAuthenticated: false, isAuthenticating: false, error: action.error);
-}
-
-AuthState userLogoutReducer(AuthState auth, UserLogout action) {
-  return AuthState().copyWith(
-    isInitialized: true,
-    url: auth.url,
+AuthState userLogoutReducer(AuthState authState, UserLogout action) {
+  return authState.rebuild((b) => b
+      ..isAuthenticated = false
   );
 }

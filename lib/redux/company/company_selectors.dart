@@ -4,19 +4,19 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 List<CompanyEntity> companiesSelector(AppState state) {
   List<CompanyEntity> list = [];
 
-  if (! state.companyState1.company.isBlank()) {
+  if (state.companyState1.company != null) {
     list.add(state.companyState1.company);
   }
-  if (! state.companyState2.company.isBlank()) {
+  if (state.companyState2.company != null) {
     list.add(state.companyState2.company);
   }
-  if (! state.companyState3.company.isBlank()) {
+  if (state.companyState3.company != null) {
     list.add(state.companyState3.company);
   }
-  if (! state.companyState4.company.isBlank()) {
+  if (state.companyState4.company != null) {
     list.add(state.companyState4.company);
   }
-  if (! state.companyState5.company.isBlank()) {
+  if (state.companyState5.company != null) {
     list.add(state.companyState5.company);
   }
 

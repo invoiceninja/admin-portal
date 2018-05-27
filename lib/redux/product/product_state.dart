@@ -1,57 +1,31 @@
 import 'package:meta/meta.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:built_collection/built_collection.dart';
 
-@immutable
-class ProductState {
-  final bool isLoading;
-  final int lastUpdated;
-  final Map<int, ProductEntity> map;
-  final List<int> list;
+part 'product_state.g.dart';
 
-  ProductState(
-      {this.isLoading = false,
-        this.lastUpdated = 0,
-        Map<int, ProductEntity> map,
-        List<int> list}) :
-        map = map ?? Map<int, ProductEntity>(),
-        list = list ?? List<int>();
+abstract class ProductState implements Built<ProductState, ProductStateBuilder> {
 
-  //factory AppState.loading() => AppState(isLoading: true);
+  bool get isLoading;
+  int get lastUpdated;
 
-  ProductState copyWith({
-    bool isLoading,
-    int lastUpdated,
-    Map<int, ProductEntity> map,
-    List<int> list,
-  }) {
-    return ProductState(
-      isLoading: isLoading ?? this.isLoading,
-      lastUpdated: lastUpdated ?? this.lastUpdated,
-      map: map ?? this.map,
-      list: list ?? this.list,
+  BuiltMap<int, ProductEntity> get map;
+  BuiltList<int> get list;
+
+  factory ProductState() {
+    return _$ProductState._(
+      isLoading: false,
+      lastUpdated: 0,
+      map: BuiltMap<int, ProductEntity>(),
+      list: BuiltList<int>(),
     );
   }
 
-  @override
-  int get hashCode =>
-      list.hashCode ^
-      map.hashCode ^
-      lastUpdated.hashCode ^
-      isLoading.hashCode;
 
-  @override
-  bool operator == (Object other) =>
-      identical(this, other) ||
-          other is ProductState &&
-              runtimeType == other.runtimeType &&
-              map == other.map &&
-              list == other.list &&
-              lastUpdated == other.lastUpdated &&
-              isLoading == other.isLoading;
-
-  @override
-  String toString() {
-    return 'ProductState {isLoading: $isLoading}';
-  }
+  ProductState._();
+  //factory ProductState([updates(ProductStateBuilder b)]) = _$ProductState;
+  static Serializer<ProductState> get serializer => _$productStateSerializer;
 }

@@ -43,16 +43,29 @@ List<ProductEntity> _toggleAll(List<ProductEntity> products, ToggleAllAction act
 */
 
 ProductState _setLoadedProducts(ProductState productState, ProductsLoadedAction action) {
+  return productState.rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+    /*
+      ..map = Map.fromIterable(action.products,
+          key: (item) => item.id,
+          value: (item) => item
+      )
+      ..list = action.products.map((product) => product.id).toList()
+      */
+  );
+
+  /*
   return ProductState().copyWith(
-    lastUpdated: DateTime.now().millisecondsSinceEpoch,
+    lastUpdated: ,
     map: Map.fromIterable(action.products,
         key: (item) => item.id,
         value: (item) => item
     ),
     list: action.products.map((product) => product.id).toList(),
   );
+  */
 }
 
 ProductState _setNoProducts(ProductState productState, ProductsNotLoadedAction action) {
-  return ProductState();
+  return productState;
 }

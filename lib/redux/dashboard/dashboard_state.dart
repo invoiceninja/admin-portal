@@ -1,50 +1,28 @@
 import 'package:meta/meta.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-@immutable
-class DashboardState {
-  bool isLoading;
-  int lastUpdated;
-  DashboardEntity data;
+part 'dashboard_state.g.dart';
 
-  DashboardState(
-      {this.isLoading = false,
-        this.lastUpdated = 0,
-        DashboardEntity data}) :
-        data = data ?? DashboardEntity();
+abstract class DashboardState implements Built<DashboardState, DashboardStateBuilder> {
 
-  //factory AppState.loading() => AppState(isLoading: true);
+  bool get isLoading;
+  int get lastUpdated;
 
-  DashboardState copyWith({
-    bool isLoading,
-    int lastUpdated,
-    DashboardEntity data,
-  }) {
-    return DashboardState(
-      isLoading: isLoading ?? this.isLoading,
-      lastUpdated: lastUpdated ?? this.lastUpdated,
-      data: data ?? this.data,
+  @nullable
+  DashboardEntity get data;
+
+  factory DashboardState() {
+    return _$DashboardState._(
+      isLoading: false,
+      lastUpdated: 0,
+      data: null,
     );
   }
 
-  @override
-  int get hashCode =>
-      data.hashCode ^
-      lastUpdated.hashCode ^
-      isLoading.hashCode;
-
-  @override
-  bool operator == (Object other) =>
-      identical(this, other) ||
-          other is DashboardState &&
-              runtimeType == other.runtimeType &&
-              data == other.data &&
-              lastUpdated == other.lastUpdated &&
-              isLoading == other.isLoading;
-
-  @override
-  String toString() {
-    return 'DashboardState {isLoading: $isLoading}';
-  }
+  DashboardState._();
+  //factory DashboardState([updates(DashboardStateBuilder b)]) = _$DashboardState;
+  static Serializer<DashboardState> get serializer => _$dashboardStateSerializer;
 }

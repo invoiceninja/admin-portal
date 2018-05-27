@@ -1,7 +1,39 @@
 import 'package:meta/meta.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
 import 'package:invoiceninja/data/models/models.dart';
 
+part 'auth_state.g.dart';
+
+abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
+
+  String get email;
+  String get password;
+  String get url;
+  bool get isInitialized;
+  bool get isAuthenticated;
+  String get error;
+
+  factory AuthState() {
+    return _$AuthState._(
+      email: '',
+      password: '',
+      url: '',
+      isAuthenticated: false,
+      isInitialized: false,
+      error: '',
+    );
+  }
+
+  AuthState._();
+  //factory AuthState([updates(AuthStateBuilder b)]) = _$AuthState;
+  static Serializer<AuthState> get serializer => _$authStateSerializer;
+}
+
+
+/*
 @immutable
 class AuthState {
 
@@ -80,3 +112,4 @@ class AuthState {
             }''';
   }
 }
+*/
