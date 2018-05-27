@@ -1,6 +1,9 @@
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja/data/models/models.dart';
+
 
 final productsReducer = combineReducers<ProductState>([
   /*
@@ -43,6 +46,11 @@ List<ProductEntity> _toggleAll(List<ProductEntity> products, ToggleAllAction act
 ProductState _setLoadedProducts(ProductState productState, ProductsLoadedAction action) {
   return productState.rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map = BuiltMap<int, ProductEntity>(Map.fromIterable(action.products,
+          key: (item) => item.id,
+          value: (item) => item,
+      )).toBuilder()
+      ..list = BuiltList<int>(action.products.map((product) => product.id).toList()).toBuilder(),
     /*
       ..map = Map.fromIterable(action.products,
           key: (item) => item.id,
