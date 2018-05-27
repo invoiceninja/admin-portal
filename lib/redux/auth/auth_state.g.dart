@@ -40,10 +40,13 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
       'isAuthenticated',
       serializers.serialize(object.isAuthenticated,
           specifiedType: const FullType(bool)),
-      'error',
-      serializers.serialize(object.error,
-          specifiedType: const FullType(String)),
     ];
+    if (object.error != null) {
+      result
+        ..add('error')
+        ..add(serializers.serialize(object.error,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -123,7 +126,6 @@ class _$AuthState extends AuthState {
       throw new BuiltValueNullFieldError('AuthState', 'isInitialized');
     if (isAuthenticated == null)
       throw new BuiltValueNullFieldError('AuthState', 'isAuthenticated');
-    if (error == null) throw new BuiltValueNullFieldError('AuthState', 'error');
   }
 
   @override

@@ -10,6 +10,8 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   String get url;
   bool get isInitialized;
   bool get isAuthenticated;
+
+  @nullable
   String get error;
 
   factory AuthState() {
@@ -19,7 +21,6 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       url: '',
       isAuthenticated: false,
       isInitialized: false,
-      error: '',
     );
   }
 
