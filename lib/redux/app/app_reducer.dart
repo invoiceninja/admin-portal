@@ -12,6 +12,7 @@ AppState appReducer(AppState state, action) {
     ..selectedCompanyIndex = selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..isLoading = loadingReducer(state.isLoading, action)
     ..authState = authReducer(state.authState, action).toBuilder()
+
     ..companyState1 = state.selectedCompanyIndex == 1
         ? companyReducer(state.companyState1, action).toBuilder() : state.companyState1.toBuilder()
     ..companyState2 = state.selectedCompanyIndex == 2
