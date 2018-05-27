@@ -6,13 +6,13 @@ import 'package:invoiceninja/keys.dart';
 class ProductItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final ValueChanged<bool> onCheckboxChanged;
+  //final ValueChanged<bool> onCheckboxChanged;
   final ProductEntity product;
 
   ProductItem({
     @required this.onDismissed,
     @required this.onTap,
-    @required this.onCheckboxChanged,
+    //@required this.onCheckboxChanged,
     @required this.product,
   });
 

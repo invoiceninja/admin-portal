@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/app_loading.dart';
-import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/loading_indicator.dart';
 import 'package:invoiceninja/ui/product/product_item.dart';
@@ -10,12 +9,12 @@ import 'package:invoiceninja/redux/product/product_state.dart';
 
 class ProductList extends StatelessWidget {
   final ProductState productState;
-  final Function(ProductEntity, bool) onCheckboxChanged;
+  final Function(BuildContext, ProductEntity) onProductTap;
 
   ProductList({
     Key key,
     @required this.productState,
-    @required this.onCheckboxChanged,
+    @required this.onProductTap,
   }) : super(key: key);
 
   @override
@@ -39,35 +38,9 @@ class ProductList extends StatelessWidget {
           onDismissed: (direction) {
             //_removeProduct(context, product);
           },
-          onTap: () => _onProductTap(context, product),
-          onCheckboxChanged: (complete) {
-            onCheckboxChanged(product, complete);
-          },
+          onTap: () => onProductTap(context, product),
         );
       },
     );
-  }
-
-  void _onProductTap(BuildContext context, ProductEntity product) {
-    Navigator
-        .of(context)
-        .push(MaterialPageRoute(
-      builder: (_) => ProductDetails(id: product.id),
-    ))
-        .then((removedProduct) {
-      if (removedProduct != null) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-            key: NinjaKeys.snackbar,
-            duration: Duration(seconds: 2),
-            backgroundColor: Theme.of(context).backgroundColor,
-            content: Text('Text'),
-            action: SnackBarAction(
-              label: 'Label',
-              onPressed: () {
-                print('Client pressed..');
-              },
-            )));
-      }
-    });
   }
 }

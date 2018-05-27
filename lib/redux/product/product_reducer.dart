@@ -15,6 +15,7 @@ final productsReducer = combineReducers<ProductState>([
   */
   TypedReducer<ProductState, ProductsLoadedAction>(_setLoadedProducts),
   TypedReducer<ProductState, ProductsNotLoadedAction>(_setNoProducts),
+  TypedReducer<ProductState, SelectProductAction>(_selectProduct),
 ]);
 
 /*
@@ -74,4 +75,10 @@ ProductState _setLoadedProducts(ProductState productState, ProductsLoadedAction 
 
 ProductState _setNoProducts(ProductState productState, ProductsNotLoadedAction action) {
   return productState;
+}
+
+ProductState _selectProduct(ProductState productState, SelectProductAction action) {
+  return productState.rebuild((b) => b
+      ..editing = action.product.toBuilder()
+  );
 }

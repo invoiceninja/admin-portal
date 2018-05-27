@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -6,6 +7,9 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
+import 'package:invoiceninja/redux/product/product_actions.dart';
+import 'package:invoiceninja/ui/product/product_details_vm.dart';
+
 
 class ProductListVM extends StatelessWidget {
   ProductListVM({Key key}) : super(key: key);
@@ -17,7 +21,7 @@ class ProductListVM extends StatelessWidget {
       builder: (context, vm) {
         return ProductList(
           productState: vm.productState,
-          onCheckboxChanged: vm.onCheckboxChanged,
+          onProductTap: vm.onProductTap,
         );
       },
     );
@@ -27,12 +31,12 @@ class ProductListVM extends StatelessWidget {
 class _ViewModel {
   final ProductState productState;
   final bool loading;
-  final Function(ProductEntity, bool) onCheckboxChanged;
+  final Function(BuildContext, ProductEntity) onProductTap;
 
   _ViewModel({
     @required this.productState,
     @required this.loading,
-    @required this.onCheckboxChanged,
+    @required this.onProductTap,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -45,13 +49,9 @@ class _ViewModel {
       ),
       */
       loading: store.state.isLoading,
-      onCheckboxChanged: (product, complete) {
-        /*
-        store.dispatch(UpdateProductAction(
-          product.id,
-          product.copyWith(complete: !product.complete),
-        ));
-        */
+      onProductTap: (context, product) {
+        store.dispatch(SelectProductAction(product));
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetails(id: product.id)));
       },
     );
   }

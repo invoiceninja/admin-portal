@@ -13,6 +13,12 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
   BuiltMap<int, ProductEntity> get map;
   BuiltList<int> get list;
 
+  @nullable
+  ProductEntity get editing;
+
+  @nullable
+  String get editingFor;
+
   factory ProductState() {
     return _$ProductState._(
       isLoading: false,

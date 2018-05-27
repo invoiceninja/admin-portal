@@ -42,6 +42,18 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(int)])),
     ];
+    if (object.editing != null) {
+      result
+        ..add('editing')
+        ..add(serializers.serialize(object.editing,
+            specifiedType: const FullType(ProductEntity)));
+    }
+    if (object.editingFor != null) {
+      result
+        ..add('editingFor')
+        ..add(serializers.serialize(object.editingFor,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -78,6 +90,14 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
                       const FullType(BuiltList, const [const FullType(int)]))
               as BuiltList);
           break;
+        case 'editing':
+          result.editing.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ProductEntity)) as ProductEntity);
+          break;
+        case 'editingFor':
+          result.editingFor = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -94,11 +114,21 @@ class _$ProductState extends ProductState {
   final BuiltMap<int, ProductEntity> map;
   @override
   final BuiltList<int> list;
+  @override
+  final ProductEntity editing;
+  @override
+  final String editingFor;
 
   factory _$ProductState([void updates(ProductStateBuilder b)]) =>
       (new ProductStateBuilder()..update(updates)).build();
 
-  _$ProductState._({this.isLoading, this.lastUpdated, this.map, this.list})
+  _$ProductState._(
+      {this.isLoading,
+      this.lastUpdated,
+      this.map,
+      this.list,
+      this.editing,
+      this.editingFor})
       : super._() {
     if (isLoading == null)
       throw new BuiltValueNullFieldError('ProductState', 'isLoading');
@@ -123,15 +153,21 @@ class _$ProductState extends ProductState {
     return isLoading == other.isLoading &&
         lastUpdated == other.lastUpdated &&
         map == other.map &&
-        list == other.list;
+        list == other.list &&
+        editing == other.editing &&
+        editingFor == other.editingFor;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, isLoading.hashCode), lastUpdated.hashCode),
-            map.hashCode),
-        list.hashCode));
+        $jc(
+            $jc(
+                $jc($jc($jc(0, isLoading.hashCode), lastUpdated.hashCode),
+                    map.hashCode),
+                list.hashCode),
+            editing.hashCode),
+        editingFor.hashCode));
   }
 
   @override
@@ -140,7 +176,9 @@ class _$ProductState extends ProductState {
           ..add('isLoading', isLoading)
           ..add('lastUpdated', lastUpdated)
           ..add('map', map)
-          ..add('list', list))
+          ..add('list', list)
+          ..add('editing', editing)
+          ..add('editingFor', editingFor))
         .toString();
   }
 }
@@ -166,6 +204,15 @@ class ProductStateBuilder
   ListBuilder<int> get list => _$this._list ??= new ListBuilder<int>();
   set list(ListBuilder<int> list) => _$this._list = list;
 
+  ProductEntityBuilder _editing;
+  ProductEntityBuilder get editing =>
+      _$this._editing ??= new ProductEntityBuilder();
+  set editing(ProductEntityBuilder editing) => _$this._editing = editing;
+
+  String _editingFor;
+  String get editingFor => _$this._editingFor;
+  set editingFor(String editingFor) => _$this._editingFor = editingFor;
+
   ProductStateBuilder();
 
   ProductStateBuilder get _$this {
@@ -174,6 +221,8 @@ class ProductStateBuilder
       _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
+      _editing = _$v.editing?.toBuilder();
+      _editingFor = _$v.editingFor;
       _$v = null;
     }
     return this;
@@ -199,7 +248,9 @@ class ProductStateBuilder
               isLoading: isLoading,
               lastUpdated: lastUpdated,
               map: map.build(),
-              list: list.build());
+              list: list.build(),
+              editing: _editing?.build(),
+              editingFor: editingFor);
     } catch (_) {
       String _$failedField;
       try {
@@ -207,6 +258,8 @@ class ProductStateBuilder
         map.build();
         _$failedField = 'list';
         list.build();
+        _$failedField = 'editing';
+        _editing?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ProductState', _$failedField, e.toString());

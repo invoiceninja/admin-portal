@@ -25,6 +25,14 @@ class ProductsLoadedAction {
   }
 }
 
+class SelectProductAction {
+  final ProductEntity product;
+
+  SelectProductAction(this.product);
+}
+
+
+
 class UpdateProductAction {
   final ProductEntity product;
 
