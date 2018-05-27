@@ -10,7 +10,6 @@ import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_details.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:built_value/built_value.dart';
 
 
 class ProductDetails extends StatelessWidget {
@@ -27,6 +26,7 @@ class ProductDetails extends StatelessWidget {
       },
       builder: (context, vm) {
         return DetailsScreen(
+          isLoading: vm.isLoading,
           product: vm.product,
           onDelete: vm.onDelete,
           onSaveClicked: vm.onSaveClicked,
@@ -40,11 +40,13 @@ class _ViewModel {
   final ProductEntity product;
   final Function onDelete;
   final Function(ProductEntity) onSaveClicked;
+  final bool isLoading;
 
   _ViewModel({
     @required this.product,
     @required this.onDelete,
     @required this.onSaveClicked,
+    @required this.isLoading,
   });
 
   factory _ViewModel.from(Store<AppState> store, int id) {
@@ -52,6 +54,7 @@ class _ViewModel {
     final product = store.state.productState().map[id];
 
     return _ViewModel(
+      isLoading: store.state.isLoading,
       product: product,
       onDelete: () => false, //store.dispatch(DeleteProductAction(product.id)),
       onSaveClicked: (ProductEntity product) {

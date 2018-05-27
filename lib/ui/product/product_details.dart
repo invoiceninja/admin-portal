@@ -2,11 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //import 'package:invoiceninja/containers/edit_product.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/progress_button.dart';
 
 class DetailsScreen extends StatelessWidget {
   final ProductEntity product;
   final Function onDelete;
   final Function(ProductEntity) onSaveClicked;
+  final bool isLoading;
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -15,6 +17,7 @@ class DetailsScreen extends StatelessWidget {
     @required this.product,
     @required this.onDelete,
     @required this.onSaveClicked,
+    @required this.isLoading,
   }) : super(key: key);
 
   @override
@@ -84,23 +87,17 @@ class DetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 20.0),
-              child: RaisedButton(
-                child: Text('SAVE'),
-                padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                color: const Color(0xFF005090), //Theme.of(context).primaryColorDark,
-                textColor: Colors.white,
-                elevation: 4.0,
-                onPressed: () {
-                  _formKey.currentState.save();
-                  this.onSaveClicked(product.rebuild((b) => b
-                      ..productKey = _productKey.trim()
-                      ..notes = _notes.trim()
-                      ..cost = _cost
-                  ));
-                }
-              ),
+            ProgressButton(
+              label: 'SAVE',
+              isLoading: this.isLoading,
+              onPressed: () {
+                _formKey.currentState.save();
+                this.onSaveClicked(product.rebuild((b) => b
+                  ..productKey = _productKey.trim()
+                  ..notes = _notes.trim()
+                  ..cost = _cost
+                ));
+              },
             ),
           ],
         ),

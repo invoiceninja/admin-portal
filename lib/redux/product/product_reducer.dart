@@ -3,7 +3,6 @@ import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:built_value/built_value.dart';
 
 final productsReducer = combineReducers<ProductState>([
   /*

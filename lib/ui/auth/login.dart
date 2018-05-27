@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
+import 'package:invoiceninja/ui/app/progress_button.dart';
 
 class Login extends StatelessWidget {
   final bool isLoading;
@@ -92,38 +93,17 @@ class Login extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 20.0),
-          child: this.isLoading ? SizedBox(
-            width: 100.0,
-            child: Center(
-              child: SizedBox(
-                height: 42.0,
-                width: 42.0,
-                child: CircularProgressIndicator(
-                  //valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  //strokeWidth: 2.0,
-                ),
-              ),
-            ),
-          ) : RaisedButton(
-            child: Text('LOGIN'),
-            padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-            color: Colors.lightBlueAccent,
-            textColor: Colors.white,
-            elevation: 4.0,
-            onPressed: () {
-              if (! _formKey.currentState.validate()) {
-                return;
-              }
+        ProgressButton(
+          label: 'LOGIN',
+          isLoading: this.isLoading,
+          onPressed: () {
+            if (!_formKey.currentState.validate()) {
+              return;
+            }
 
-              this.onLoginClicked(
-                  context,
-                  _emailKey.currentState.value,
-                  _passwordKey.currentState.value,
-                  _urlKey.currentState.value);
-            },
-          ),
+            this.onLoginClicked(context, _emailKey.currentState.value,
+                _passwordKey.currentState.value, _urlKey.currentState.value);
+          },
         ),
       ],
     );
