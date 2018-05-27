@@ -4,9 +4,22 @@ import 'package:built_value/serializer.dart';
 
 part 'entities.g.dart';
 
+abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> {
+
+  String get message;
+
+  ErrorMessage._();
+  factory ErrorMessage([updates(ErrorMessageBuilder b)]) = _$ErrorMessage;
+  static Serializer<ErrorMessage> get serializer => _$errorMessageSerializer;
+}
+
+
 abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilder> {
 
   BuiltList<CompanyEntity> get data;
+
+  @nullable
+  ErrorMessage get error;
 
   LoginResponse._();
   factory LoginResponse([updates(LoginResponseBuilder b)]) = _$LoginResponse;

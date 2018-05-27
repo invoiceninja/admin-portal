@@ -39,10 +39,8 @@ class WebClient {
     final jsonResponse = json.decode(response.body);
 
     /*
-    if (result.error != null && result.error.message != null) {
-      throw(result.error.message);
-    } else {
-      return result.data.toList();
+    if (jsonResponse.error != null && jsonResponse.error.message != null) {
+      throw(jsonResponse.error.message);
     }
     */
 

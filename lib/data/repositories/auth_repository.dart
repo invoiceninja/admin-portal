@@ -27,21 +27,10 @@ class AuthRepository {
     LoginResponse loginResponse = serializers.deserializeWith(
         LoginResponse.serializer, response);
 
-    return loginResponse.data.toBuiltList();
-
-    //return data.map((company) => CompanyEntity.fromJson(company)).toList();
-
-    /*
-    try {
-      return await fileStorage.loadData();
-    } catch (exception) {
-      final products = await webClient.fetchData(
-          auth.url + '/products', auth.token);
-
-      //fileStorage.saveProducts(products);
-
-      return products;
+    if (loginResponse.error != null) {
+      throw (loginResponse.error.message);
     }
-    */
-  }
+
+    return loginResponse.data.toBuiltList();
+ }
 }

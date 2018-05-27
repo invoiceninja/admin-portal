@@ -14,6 +14,8 @@ part of 'entities.dart';
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
 
+Serializer<ErrorMessage> _$errorMessageSerializer =
+    new _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
     new _$LoginResponseSerializer();
 Serializer<CompanyEntity> _$companyEntitySerializer =
@@ -26,6 +28,46 @@ Serializer<ProductResponse> _$productResponseSerializer =
     new _$ProductResponseSerializer();
 Serializer<ProductEntity> _$productEntitySerializer =
     new _$ProductEntitySerializer();
+
+class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
+  @override
+  final Iterable<Type> types = const [ErrorMessage, _$ErrorMessage];
+  @override
+  final String wireName = 'ErrorMessage';
+
+  @override
+  Iterable serialize(Serializers serializers, ErrorMessage object,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = <Object>[
+      'message',
+      serializers.serialize(object.message,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ErrorMessage deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = new ErrorMessageBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'message':
+          result.message = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
 
 class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
   @override
@@ -42,6 +84,12 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(CompanyEntity)])),
     ];
+    if (object.error != null) {
+      result
+        ..add('error')
+        ..add(serializers.serialize(object.error,
+            specifiedType: const FullType(ErrorMessage)));
+    }
 
     return result;
   }
@@ -62,6 +110,10 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CompanyEntity)]))
               as BuiltList);
+          break;
+        case 'error':
+          result.error.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ErrorMessage)) as ErrorMessage);
           break;
       }
     }
@@ -368,14 +420,92 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
   }
 }
 
+class _$ErrorMessage extends ErrorMessage {
+  @override
+  final String message;
+
+  factory _$ErrorMessage([void updates(ErrorMessageBuilder b)]) =>
+      (new ErrorMessageBuilder()..update(updates)).build();
+
+  _$ErrorMessage._({this.message}) : super._() {
+    if (message == null)
+      throw new BuiltValueNullFieldError('ErrorMessage', 'message');
+  }
+
+  @override
+  ErrorMessage rebuild(void updates(ErrorMessageBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ErrorMessageBuilder toBuilder() => new ErrorMessageBuilder()..replace(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    if (identical(other, this)) return true;
+    if (other is! ErrorMessage) return false;
+    return message == other.message;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, message.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ErrorMessage')
+          ..add('message', message))
+        .toString();
+  }
+}
+
+class ErrorMessageBuilder
+    implements Builder<ErrorMessage, ErrorMessageBuilder> {
+  _$ErrorMessage _$v;
+
+  String _message;
+  String get message => _$this._message;
+  set message(String message) => _$this._message = message;
+
+  ErrorMessageBuilder();
+
+  ErrorMessageBuilder get _$this {
+    if (_$v != null) {
+      _message = _$v.message;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ErrorMessage other) {
+    if (other == null) throw new ArgumentError.notNull('other');
+    _$v = other as _$ErrorMessage;
+  }
+
+  @override
+  void update(void updates(ErrorMessageBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ErrorMessage build() {
+    final _$result = _$v ?? new _$ErrorMessage._(message: message);
+    replace(_$result);
+    return _$result;
+  }
+}
+
 class _$LoginResponse extends LoginResponse {
   @override
   final BuiltList<CompanyEntity> data;
+  @override
+  final ErrorMessage error;
 
   factory _$LoginResponse([void updates(LoginResponseBuilder b)]) =>
       (new LoginResponseBuilder()..update(updates)).build();
 
-  _$LoginResponse._({this.data}) : super._() {
+  _$LoginResponse._({this.data, this.error}) : super._() {
     if (data == null)
       throw new BuiltValueNullFieldError('LoginResponse', 'data');
   }
@@ -391,17 +521,19 @@ class _$LoginResponse extends LoginResponse {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! LoginResponse) return false;
-    return data == other.data;
+    return data == other.data && error == other.error;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return $jf($jc($jc(0, data.hashCode), error.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('LoginResponse')..add('data', data))
+    return (newBuiltValueToStringHelper('LoginResponse')
+          ..add('data', data)
+          ..add('error', error))
         .toString();
   }
 }
@@ -415,11 +547,16 @@ class LoginResponseBuilder
       _$this._data ??= new ListBuilder<CompanyEntity>();
   set data(ListBuilder<CompanyEntity> data) => _$this._data = data;
 
+  ErrorMessageBuilder _error;
+  ErrorMessageBuilder get error => _$this._error ??= new ErrorMessageBuilder();
+  set error(ErrorMessageBuilder error) => _$this._error = error;
+
   LoginResponseBuilder();
 
   LoginResponseBuilder get _$this {
     if (_$v != null) {
       _data = _$v.data?.toBuilder();
+      _error = _$v.error?.toBuilder();
       _$v = null;
     }
     return this;
@@ -440,12 +577,15 @@ class LoginResponseBuilder
   _$LoginResponse build() {
     _$LoginResponse _$result;
     try {
-      _$result = _$v ?? new _$LoginResponse._(data: data.build());
+      _$result = _$v ??
+          new _$LoginResponse._(data: data.build(), error: _error?.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
+        _$failedField = 'error';
+        _error?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'LoginResponse', _$failedField, e.toString());
