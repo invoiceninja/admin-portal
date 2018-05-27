@@ -48,6 +48,7 @@ class DetailsScreen extends StatelessWidget {
                     children: [
                       TextFormField(
                         autocorrect: false,
+                        //onSaved: (value) => product.toBuilder((b) => b.)
                         initialValue: product.productKey,
                         decoration: InputDecoration(
                           //border: InputBorder.none,
@@ -83,11 +84,9 @@ class DetailsScreen extends StatelessWidget {
                 textColor: Colors.white,
                 elevation: 4.0,
                 onPressed: () {
-                  /*
-                  ProductEntity product = ProductEntity(this.product.id)
-                    ..productKey = 'test';
+                  //ProductEntity product = ProductEntity(this.product.id)
+                  //  ..productKey = 'test';
                   this.onSaveClicked(product);
-                  */
                 }
               ),
             ),

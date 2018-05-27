@@ -3,20 +3,46 @@ import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
-
+import 'package:built_value/built_value.dart';
 
 final productsReducer = combineReducers<ProductState>([
   /*
   TypedReducer<List<Product>, AddProductAction>(_addProduct),
   TypedReducer<List<Product>, DeleteProductAction>(_deleteProduct),
-  TypedReducer<List<Product>, UpdateProductAction>(_updateProduct),
   TypedReducer<List<Product>, ClearCompletedAction>(_clearCompleted),
   TypedReducer<List<Product>, ToggleAllAction>(_toggleAll),
   */
+  TypedReducer<ProductState, UpdateProductAction>(_updateProduct),
   TypedReducer<ProductState, ProductsLoadedAction>(_setLoadedProducts),
   TypedReducer<ProductState, ProductsNotLoadedAction>(_setNoProducts),
   TypedReducer<ProductState, SelectProductAction>(_selectProduct),
 ]);
+
+ProductState _updateProduct(
+    ProductState productState, UpdateProductAction action) {
+
+
+  var builder = productState.map.toBuilder();
+  builder[action.product.id] = action.product;
+
+  return productState;
+  /*
+  return products
+      .map((product) =>
+          product.id == action.id ? action.updatedProduct : product)
+      .toList();
+      */
+}
+
+ProductState _setNoProducts(
+    ProductState productState, ProductsNotLoadedAction action) {
+  return productState;
+}
+
+ProductState _selectProduct(
+    ProductState productState, SelectProductAction action) {
+  return productState.rebuild((b) => b..editing = action.product.toBuilder());
+}
 
 /*
 List<ProductEntity> _addProduct(List<ProductEntity> products, AddProductAction action) {
@@ -27,10 +53,6 @@ List<ProductEntity> _deleteProduct(List<ProductEntity> products, DeleteProductAc
   return products.where((product) => product.id != action.id).toList();
 }
 
-List<ProductEntity> _updateProduct(List<ProductEntity> products, UpdateProductAction action) {
-  return products
-      .map((product) => product.id == action.id ? action.updatedProduct : product)
-      .toList();
 }
 
 List<ProductEntity> _clearCompleted(List<Product> products, ClearCompletedAction action) {
@@ -44,14 +66,19 @@ List<ProductEntity> _toggleAll(List<ProductEntity> products, ToggleAllAction act
 }
 */
 
-ProductState _setLoadedProducts(ProductState productState, ProductsLoadedAction action) {
-  return productState.rebuild((b) => b
+ProductState _setLoadedProducts(
+    ProductState productState, ProductsLoadedAction action) {
+  return productState.rebuild(
+    (b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-      ..map = BuiltMap<int, ProductEntity>(Map.fromIterable(action.products,
-          key: (item) => item.id,
-          value: (item) => item,
+      ..map = BuiltMap<int, ProductEntity>(Map.fromIterable(
+        action.products,
+        key: (item) => item.id,
+        value: (item) => item,
       )).toBuilder()
-      ..list = BuiltList<int>(action.products.map((product) => product.id).toList()).toBuilder(),
+      ..list =
+          BuiltList<int>(action.products.map((product) => product.id).toList())
+              .toBuilder(),
     /*
       ..map = Map.fromIterable(action.products,
           key: (item) => item.id,
@@ -71,14 +98,4 @@ ProductState _setLoadedProducts(ProductState productState, ProductsLoadedAction 
     list: action.products.map((product) => product.id).toList(),
   );
   */
-}
-
-ProductState _setNoProducts(ProductState productState, ProductsNotLoadedAction action) {
-  return productState;
-}
-
-ProductState _selectProduct(ProductState productState, SelectProductAction action) {
-  return productState.rebuild((b) => b
-      ..editing = action.product.toBuilder()
-  );
 }
