@@ -49,8 +49,8 @@ class InvoiceNinjaApp extends StatelessWidget {
       child: new MaterialApp(
         theme: ThemeData().copyWith(
           primaryColor: const Color(0xFF117cc1),
-          primaryColorDark: const Color(0x005090),
-          primaryColorLight: const Color(0x005090),
+          primaryColorDark: const Color(0xFF005090),
+          primaryColorLight: const Color(0xFF005090),
         ),
         /*
         theme: ThemeData(

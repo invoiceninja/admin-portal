@@ -31,10 +31,20 @@ class SelectProductAction {
   SelectProductAction(this.product);
 }
 
-
-
-class UpdateProductAction {
+class SaveProductRequest {
   final ProductEntity product;
 
-  UpdateProductAction(this.product);
+  SaveProductRequest(this.product);
+}
+
+class SaveProductSuccess {
+  final ProductEntity product;
+
+  SaveProductSuccess(this.product);
+}
+
+class SaveProductFailure {
+  final String error;
+
+  SaveProductFailure (this.error);
 }

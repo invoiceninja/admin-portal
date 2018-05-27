@@ -12,14 +12,14 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<List<Product>, ClearCompletedAction>(_clearCompleted),
   TypedReducer<List<Product>, ToggleAllAction>(_toggleAll),
   */
-  TypedReducer<ProductState, UpdateProductAction>(_updateProduct),
+  TypedReducer<ProductState, SaveProductSuccess>(_updateProduct),
   TypedReducer<ProductState, ProductsLoadedAction>(_setLoadedProducts),
   TypedReducer<ProductState, ProductsNotLoadedAction>(_setNoProducts),
   TypedReducer<ProductState, SelectProductAction>(_selectProduct),
 ]);
 
 ProductState _updateProduct(
-    ProductState productState, UpdateProductAction action) {
+    ProductState productState, SaveProductSuccess action) {
 
   return productState.rebuild((b) => b
       ..map[action.product.id] = action.product
@@ -72,23 +72,5 @@ ProductState _setLoadedProducts(
       ..list =
           BuiltList<int>(action.products.map((product) => product.id).toList())
               .toBuilder(),
-    /*
-      ..map = Map.fromIterable(action.products,
-          key: (item) => item.id,
-          value: (item) => item
-      )
-      ..list = action.products.map((product) => product.id).toList()
-      */
   );
-
-  /*
-  return ProductState().copyWith(
-    lastUpdated: ,
-    map: Map.fromIterable(action.products,
-        key: (item) => item.id,
-        value: (item) => item
-    ),
-    list: action.products.map((product) => product.id).toList(),
-  );
-  */
 }

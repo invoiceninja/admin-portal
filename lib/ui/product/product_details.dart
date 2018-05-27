@@ -89,7 +89,7 @@ class DetailsScreen extends StatelessWidget {
               child: RaisedButton(
                 child: Text('SAVE'),
                 padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                color: Colors.lightBlueAccent,
+                color: const Color(0xFF005090), //Theme.of(context).primaryColorDark,
                 textColor: Colors.white,
                 elevation: 4.0,
                 onPressed: () {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:core';
+import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:invoiceninja/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
@@ -23,31 +24,24 @@ class ProductsRepository {
     final response = await webClient.get(
         auth.url + '/products', company.token);
 
-    //fileStorage.saveProducts(products);
+    ProductResponse productResponse = serializers.deserializeWith(
+        ProductResponse.serializer, response);
+
+    return productResponse.data;
+  }
+
+  Future saveData(CompanyEntity company, AuthState auth, ProductEntity product) async {
+
+    var data = serializers.serializeWith(ProductEntity.serializer, product);
+    final response = await webClient.post(
+        auth.url + '/products', company.token, json.encode(data));
+
+    print('== SAVE RESPONSE: POST');
+    print(response);
 
     ProductResponse productResponse = serializers.deserializeWith(
         ProductResponse.serializer, response);
 
     return productResponse.data;
-
-    /*
-    try {
-      return await fileStorage.loadData();
-    } catch (exception) {
-      final products = await webClient.fetchData(
-          auth.url + '/products', auth.token);
-
-      //fileStorage.saveProducts(products);
-
-      return products;
-    }
-    */
-  }
-
-  Future saveData(List<dynamic> products) {
-    return Future.wait<dynamic>([
-      fileStorage.saveData(products),
-      //webClient.postProducts(products),
-    ]);
   }
 }

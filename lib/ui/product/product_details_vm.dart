@@ -55,7 +55,7 @@ class _ViewModel {
       product: product,
       onDelete: () => false, //store.dispatch(DeleteProductAction(product.id)),
       onSaveClicked: (ProductEntity product) {
-        store.dispatch(UpdateProductAction(product));
+        store.dispatch(SaveProductRequest(product));
       },
     );
   }

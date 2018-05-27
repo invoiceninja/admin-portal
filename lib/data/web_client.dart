@@ -36,7 +36,14 @@ class WebClient {
       },
     );
 
-    final jsonResponse = json.decode(response.body);
+    try {
+      final jsonResponse = json.decode(response.body);
+
+      return jsonResponse;
+    } catch (exception) {
+      print(response.body);
+      throw('An error occurred');
+    }
 
     /*
     if (jsonResponse.error != null && jsonResponse.error.message != null) {
@@ -44,6 +51,5 @@ class WebClient {
     }
     */
 
-    return jsonResponse;
   }
 }
