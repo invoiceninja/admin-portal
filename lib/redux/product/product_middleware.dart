@@ -14,7 +14,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   ),
 ]) {
   final loadProducts = _createLoadProducts(repository);
-  final saveProducts = _createSaveProducts(repository);
+  //final saveProducts = _createSaveProducts(repository);
 
   return [
     TypedMiddleware<AppState, LoadProductsAction>(loadProducts),
@@ -22,17 +22,17 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   ];
 }
 
+/*
 Middleware<AppState> _createSaveProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
 
-    /*
     repository.saveProducts(
       productsSelector(store.state).map((product) => product.toEntity()).toList(),
     );
-    */
   };
 }
+*/
 
 Middleware<AppState> _createLoadProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {

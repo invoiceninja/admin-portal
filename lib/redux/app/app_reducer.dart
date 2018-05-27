@@ -2,8 +2,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/app/loading_reducer.dart';
 import 'package:invoiceninja/redux/auth/auth_reducer.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_reducer.dart';
-import 'package:invoiceninja/redux/product/product_reducer.dart';
 import 'package:invoiceninja/redux/company/company_reducer.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 class Login extends StatelessWidget {
-  bool isLoading;
-  AuthState authState;
+  final bool isLoading;
+  final AuthState authState;
   final Function(BuildContext, String, String, String) onLoginClicked;
 
   Login({

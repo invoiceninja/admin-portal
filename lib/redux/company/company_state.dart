@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja/data/models/entities.dart';

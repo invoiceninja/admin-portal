@@ -11,7 +11,7 @@ class NinjaKeys {
   static final productHome = const Key('__product_home__');
 
   static final productList = const Key('__product_list__');
-  static final productItem = (int id) => Key('ProductItem__${id}');
+  static final productItem = (int id) => Key('ProductItem__$id');
   static final productItemCheckbox = (int id) => Key('ProductItem__${id}__Checkbox');
   static final productItemProductKey = (int id) => Key('ProductItem__${id}__ProductKey');
 

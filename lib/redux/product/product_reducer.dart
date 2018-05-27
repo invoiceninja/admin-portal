@@ -1,7 +1,5 @@
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/product/product_selectors.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 
 final productsReducer = combineReducers<ProductState>([

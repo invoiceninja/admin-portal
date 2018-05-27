@@ -1,6 +1,4 @@
-import 'package:meta/meta.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 

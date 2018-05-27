@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/app_loading.dart';
-import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/loading_indicator.dart';
-import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 
 class DashboardPanels extends StatelessWidget {
