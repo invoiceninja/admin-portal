@@ -38,18 +38,29 @@ class WebClient {
 
     try {
       final jsonResponse = json.decode(response.body);
-
       return jsonResponse;
     } catch (exception) {
       print(response.body);
       throw('An error occurred');
     }
+  }
 
-    /*
-    if (jsonResponse.error != null && jsonResponse.error.message != null) {
-      throw(jsonResponse.error.message);
+  Future<dynamic> put(String url, String token, dynamic data) async {
+    final http.Response response = await http.Client().put(
+      url,
+      body: data,
+      headers: {
+        'X-Ninja-Token': token,
+        'Content-Type': 'application/json',
+      },
+    );
+
+    try {
+      final jsonResponse = json.decode(response.body);
+      return jsonResponse;
+    } catch (exception) {
+      print(response.body);
+      throw('An error occurred');
     }
-    */
-
   }
 }

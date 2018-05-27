@@ -32,9 +32,12 @@ class ProductsRepository {
 
   Future saveData(CompanyEntity company, AuthState auth, ProductEntity product) async {
 
+    print(auth.url + '/products/' + product.id.toString());
+    print(company.token);
+
     var data = serializers.serializeWith(ProductEntity.serializer, product);
-    final response = await webClient.post(
-        auth.url + '/products', company.token, json.encode(data));
+    final response = await webClient.put(
+        auth.url + '/products/' + product.id.toString(), company.token, json.encode(data));
 
     print('== SAVE RESPONSE: POST');
     print(response);
