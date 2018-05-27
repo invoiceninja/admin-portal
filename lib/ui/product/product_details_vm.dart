@@ -10,6 +10,8 @@ import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_details.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:built_value/built_value.dart';
+
 
 class ProductDetails extends StatelessWidget {
   final int id;

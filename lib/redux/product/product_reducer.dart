@@ -21,17 +21,10 @@ final productsReducer = combineReducers<ProductState>([
 ProductState _updateProduct(
     ProductState productState, UpdateProductAction action) {
 
-
-  var builder = productState.map.toBuilder();
-  builder[action.product.id] = action.product;
-
-  return productState;
-  /*
-  return products
-      .map((product) =>
-          product.id == action.id ? action.updatedProduct : product)
-      .toList();
-      */
+  return productState.rebuild((b) => b
+      ..map[action.product.id] = action.product
+      ..editing = action.product.toBuilder()
+  );
 }
 
 ProductState _setNoProducts(

@@ -8,6 +8,8 @@ class DetailsScreen extends StatelessWidget {
   final Function onDelete;
   final Function(ProductEntity) onSaveClicked;
 
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   DetailsScreen({
     Key key,
     @required this.product,
@@ -18,6 +20,10 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final localizations = ArchSampleLocalizations.of(context);
+
+    String _productKey;
+    String _notes;
+    double _cost;
 
     return Scaffold(
       appBar: AppBar(
@@ -42,13 +48,14 @@ class DetailsScreen extends StatelessWidget {
               elevation: 2.0,
               margin: EdgeInsets.all(0.0),
               child: Form(
+                key: _formKey,
                 child: Container(
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       TextFormField(
                         autocorrect: false,
-                        //onSaved: (value) => product.toBuilder((b) => b.)
+                        onSaved: (value) => _productKey = value,
                         initialValue: product.productKey,
                         decoration: InputDecoration(
                           //border: InputBorder.none,
@@ -57,6 +64,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         initialValue: product.notes,
+                        onSaved: (value) => _notes = value,
                         maxLines: 4,
                         decoration: InputDecoration(
                           labelText: 'Notes',
@@ -64,6 +72,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         initialValue: product.cost.toStringAsFixed(2),
+                        onSaved: (value) => _cost = double.parse(value),
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           //border: InputBorder.none,
@@ -84,9 +93,12 @@ class DetailsScreen extends StatelessWidget {
                 textColor: Colors.white,
                 elevation: 4.0,
                 onPressed: () {
-                  //ProductEntity product = ProductEntity(this.product.id)
-                  //  ..productKey = 'test';
-                  this.onSaveClicked(product);
+                  _formKey.currentState.save();
+                  this.onSaveClicked(product.rebuild((b) => b
+                      ..productKey = _productKey.trim()
+                      ..notes = _notes.trim()
+                      ..cost = _cost
+                  ));
                 }
               ),
             ),
