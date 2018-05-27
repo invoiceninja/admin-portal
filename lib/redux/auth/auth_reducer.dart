@@ -14,9 +14,9 @@ Reducer<AuthState> authReducer = combineReducers([
 AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
   return authState.rebuild((b) => b
     ..isInitialized = true
-    ..url = action.url
-    ..email = action.email
-    ..password = action.password);
+    ..url = action.url ?? ''
+    ..email = action.email ?? ''
+    ..password = action.password ?? '');
 }
 
 AuthState userLoginRequestReducer(

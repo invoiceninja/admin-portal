@@ -74,19 +74,22 @@ class DetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            RaisedButton(
-              child: Text('SAVE'),
-              padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-              color: Colors.lightBlueAccent,
-              textColor: Colors.white,
-              elevation: 4.0,
-              onPressed: () {
-                /*
-                ProductEntity product = ProductEntity(this.product.id)
-                  ..productKey = 'test';
-                this.onSaveClicked(product);
-                */
-              }
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: RaisedButton(
+                child: Text('SAVE'),
+                padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                color: Colors.lightBlueAccent,
+                textColor: Colors.white,
+                elevation: 4.0,
+                onPressed: () {
+                  /*
+                  ProductEntity product = ProductEntity(this.product.id)
+                    ..productKey = 'test';
+                  this.onSaveClicked(product);
+                  */
+                }
+              ),
             ),
           ],
         ),
