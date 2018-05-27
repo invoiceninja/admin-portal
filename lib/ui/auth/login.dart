@@ -94,20 +94,20 @@ class Login extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(top: 20.0),
-          child: RaisedButton(
-            child: this.isLoading ? SizedBox(
-              width: 100.0,
-              child: new Center(
-                child: new SizedBox(
-                  height: 16.0,
-                  width: 16.0,
-                  child: new CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    strokeWidth: 2.0,
-                  ),
+          child: this.isLoading ? SizedBox(
+            width: 100.0,
+            child: Center(
+              child: SizedBox(
+                height: 42.0,
+                width: 42.0,
+                child: CircularProgressIndicator(
+                  //valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  //strokeWidth: 2.0,
                 ),
               ),
-            ) : Text('LOGIN'),
+            ),
+          ) : RaisedButton(
+            child: Text('LOGIN'),
             padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
             color: Colors.lightBlueAccent,
             textColor: Colors.white,
