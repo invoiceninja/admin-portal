@@ -81,9 +81,11 @@ class DetailsScreen extends StatelessWidget {
               textColor: Colors.white,
               elevation: 4.0,
               onPressed: () {
+                /*
                 ProductEntity product = ProductEntity(this.product.id)
                   ..productKey = 'test';
                 this.onSaveClicked(product);
+                */
               }
             ),
           ],

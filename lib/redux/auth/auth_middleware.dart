@@ -76,10 +76,12 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
 
           Navigator.of(action.context).popAndPushNamed(AppRoutes.dashboard);
         }
-    ).catchError((error) {
+    );
+    /*
+    .catchError((error) {
       store.dispatch(UserLoginFailure(error));
     });
-
+    */
     next(action);
   };
 }

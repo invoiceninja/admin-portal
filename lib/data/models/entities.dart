@@ -1,135 +1,129 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
 part 'entities.g.dart';
 
+abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilder> {
 
-@JsonSerializable()
-class ErrorResponse extends Object with _$ErrorResponseSerializerMixin {
+  BuiltList<CompanyEntity> get data;
 
-  final String message;
+  LoginResponse._();
+  factory LoginResponse([updates(LoginResponseBuilder b)]) = _$LoginResponse;
+  static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
+}
 
-  ErrorResponse(
-      this.message,
-      );
+abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {
 
-  factory ErrorResponse.fromJson(Map<String, dynamic> json) => _$ErrorResponseFromJson(json);
+  String get name;
+
+  //@BuiltValueField(wireName: 'account_key')
+  //String get companyKey;
+
+  String get token;
+
+  @nullable
+  String get plan;
+
+  @BuiltValueField(wireName: 'logo_url')
+  String get logoUrl;
+
+  bool isBlank() => this.token == '';
+
+  factory CompanyEntity() {
+    return _$CompanyEntity._(
+      name: '',
+      token: '',
+      logoUrl: '',
+    );
+  }
+
+  CompanyEntity._();
+  //factory CompanyEntity([updates(CompanyEntityBuilder b)]) = _$CompanyEntity;
+  static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 
 
-@JsonSerializable()
-class BaseListResponse extends Object with _$BaseListResponseSerializerMixin {
+abstract class DashboardResponse implements Built<DashboardResponse, DashboardResponseBuilder> {
 
-  @JsonKey(name: "data")
-  final List<dynamic> data;
-  final ErrorResponse error;
+  DashboardEntity get data;
 
-  BaseListResponse(
-      this.data,
-      this.error,
-      );
-
-  factory BaseListResponse.fromJson(Map<String, dynamic> json) => _$BaseListResponseFromJson(json);
-}
-
-@JsonSerializable()
-class BaseItemResponse extends Object with _$BaseItemResponseSerializerMixin {
-  //final String message;
-
-  @JsonKey(name: "data")
-  final dynamic data;
-  final ErrorResponse error;
-
-  BaseItemResponse(
-      this.data,
-      this.error,
-      );
-
-  factory BaseItemResponse.fromJson(Map<String, dynamic> json) => _$BaseItemResponseFromJson(json);
+  DashboardResponse._();
+  factory DashboardResponse([updates(DashboardResponseBuilder b)]) = _$DashboardResponse;
+  static Serializer<DashboardResponse> get serializer => _$dashboardResponseSerializer;
 }
 
 
-@JsonSerializable()
-class CompanyEntity extends Object with _$CompanyEntitySerializerMixin {
+abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntityBuilder> {
+  double get paidToDate;
+  int get paidToDateCurrency;
+  double get balances;
+  int get balancesCurrency;
+  double get averageInvoice;
+  int get averageInvoiceCurrency;
+  int get invoicesSent;
+  int get activeClients;
 
-  final int id;
-  String name;
 
-  @JsonKey(name: 'account_key')
-  String companyKey;
+  factory DashboardEntity() {
+    return _$DashboardEntity._(
+      paidToDate: 0.0,
+      paidToDateCurrency: 1,
+      balances: 0.0,
+      balancesCurrency: 1,
+      averageInvoice: 0.0,
+      averageInvoiceCurrency: 1,
+      invoicesSent: 0,
+      activeClients: 0,
+    );
+  }
 
-  String token;
-  String plan;
 
-  @JsonKey(name: 'logo_url')
-  String logoUrl;
+  DashboardEntity._();
+  //factory DashboardEntity([updates(DashboardEntityBuilder b)]) = _$DashboardEntity;
+  static Serializer<DashboardEntity> get serializer => _$dashboardEntitySerializer;
+}
 
-  CompanyEntity(this.id);
+abstract class ProductResponse implements Built<ProductResponse, ProductResponseBuilder> {
 
-  factory CompanyEntity.fromJson(Map<String, dynamic> json) => _$CompanyEntityFromJson(json);
+  BuiltList<ProductEntity> get data;
 
-  bool isBlank() => this.token == null;
+  ProductResponse._();
+  factory ProductResponse([updates(ProductResponseBuilder b)]) = _$ProductResponse;
+  static Serializer<ProductResponse> get serializer => _$productResponseSerializer;
 }
 
 
-@JsonSerializable()
-class DashboardEntity extends Object with _$DashboardEntitySerializerMixin {
+abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilder> {
 
-  final double paidToDate;
-  final int paidToDateCurrency;
-  final double balances;
-  final int balancesCurrency;
-  final double averageInvoice;
-  final int averageInvoiceCurrency;
-  final int invoicesSent;
-  final int activeClients;
+  int get id;
 
-  DashboardEntity([
-    this.paidToDate = 0.0,
-    this.paidToDateCurrency = 1,
-    this.balances = 0.0,
-    this.balancesCurrency = 1,
-    this.averageInvoice = 0.0,
-    this.averageInvoiceCurrency = 1,
-    this.invoicesSent = 0,
-    this.activeClients = 0,
-  ]);
+  @BuiltValueField(wireName: 'product_key')
+  String get productKey;
+  String get notes;
+  double get cost;
 
-  factory DashboardEntity.fromJson(Map<String, dynamic> json) => _$DashboardEntityFromJson(json);
-}
+  //@JsonKey(name: 'tax_name1')
+  //String taxName1;
+  //@JsonKey(name: 'tax_rate1')
+  //double taxRate1;
+  //@JsonKey(name: 'tax_name2')
+  //String taxName2;
+  //@JsonKey(name: 'tax_rate2')
+  //double taxRate2;
+  //@JsonKey(name: 'updated_at')
+  //int updatedAt;
+  //@JsonKey(name: 'archived_at')
+  //int archivedAt;
+  //@JsonKey(name: 'custom_value1')
+  //String customValue1;
+  //@JsonKey(name: 'custom_value2')
+  //String customValue2;
+  //@JsonKey(name: 'is_deleted')
+  //bool isDeleted;
 
 
-@JsonSerializable()
-class ProductEntity extends Object with _$ProductEntitySerializerMixin {
-
-  final int id;
-
-  @JsonKey(name: 'product_key')
-  String productKey;
-  String notes;
-  double cost;
-
-  /*
-  @JsonKey(name: 'tax_name1')
-  String taxName1;
-  @JsonKey(name: 'tax_rate1')
-  double taxRate1;
-  @JsonKey(name: 'tax_name2')
-  String taxName2;
-  @JsonKey(name: 'tax_rate2')
-  double taxRate2;
-  @JsonKey(name: 'updated_at')
-  int updatedAt;
-  @JsonKey(name: 'archived_at')
-  int archivedAt;
-  @JsonKey(name: 'custom_value1')
-  String customValue1;
-  @JsonKey(name: 'custom_value2')
-  String customValue2;
-  @JsonKey(name: 'is_deleted')
-  bool isDeleted;
-  */
-
-  ProductEntity(this.id);
-
-  factory ProductEntity.fromJson(Map<String, dynamic> json) => _$ProductEntityFromJson(json);
+  ProductEntity._();
+  factory ProductEntity([updates(ProductEntityBuilder b)]) = _$ProductEntity;
+  static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

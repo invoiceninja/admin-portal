@@ -1,4 +1,5 @@
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:built_collection/built_collection.dart';
 
 class LoadProductsAction {}
 
@@ -14,7 +15,7 @@ class ProductsNotLoadedAction {
 }
 
 class ProductsLoadedAction {
-  final List<ProductEntity> products;
+  final BuiltList<ProductEntity> products;
 
   ProductsLoadedAction(this.products);
 

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:core';
 import 'package:meta/meta.dart';
+import 'package:invoiceninja/data/models/serializers.dart';
+import 'package:built_collection/built_collection.dart';
 
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/data/models/entities.dart';
@@ -16,14 +18,17 @@ class ProductsRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<List<ProductEntity>> loadList(CompanyEntity company, AuthState auth) async {
+  Future<BuiltList<ProductEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final products = await webClient.fetchList(
+    final response = await webClient.get(
         auth.url + '/products', company.token);
 
     //fileStorage.saveProducts(products);
 
-    return products.map((product) => ProductEntity.fromJson(product)).toList();
+    ProductResponse productResponse = serializers.deserializeWith(
+        ProductResponse.serializer, response);
+
+    return productResponse.data;
 
     /*
     try {

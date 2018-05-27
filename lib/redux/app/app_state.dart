@@ -7,14 +7,14 @@ import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 
 @immutable
 class AppState {
-  final bool isLoading;
-  final AuthState authState;
-  final int selectedCompanyIndex;
-  final CompanyState companyState1;
-  final CompanyState companyState2;
-  final CompanyState companyState3;
-  final CompanyState companyState4;
-  final CompanyState companyState5;
+  bool isLoading;
+  AuthState authState;
+  int selectedCompanyIndex;
+  CompanyState companyState1;
+  CompanyState companyState2;
+  CompanyState companyState3;
+  CompanyState companyState4;
+  CompanyState companyState5;
 
   AppState(
       {this.isLoading = false,
@@ -89,7 +89,7 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{error: isLoading: ${isLoading}, error: ${authState.error}}';
+    return 'AppState{error: isLoading: ${isLoading}, selectedCompanyIndex: ${selectedCompanyIndex} error: ${authState.error}}';
     //return 'AppState{isLoading: $isLoading, url: ${authState.url}, companyIndex: ${selectedCompanyIndex}, company1: ${companyState1.company.name}, company2: ${companyState2.company.name}';
   }
 

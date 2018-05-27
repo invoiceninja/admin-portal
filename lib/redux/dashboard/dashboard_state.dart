@@ -4,9 +4,9 @@ import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 @immutable
 class DashboardState {
-  final bool isLoading;
-  final int lastUpdated;
-  final DashboardEntity data;
+  bool isLoading;
+  int lastUpdated;
+  DashboardEntity data;
 
   DashboardState(
       {this.isLoading = false,

@@ -24,6 +24,10 @@ class DashboardPanels extends StatelessWidget {
   }
 
   ListView _buildPanels() {
+    if (this.dashboardState.data == null) {
+      return ListView();
+    }
+
     return ListView(
         padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
         children: <Widget>[

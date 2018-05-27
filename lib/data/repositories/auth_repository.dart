@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:core';
-import 'dart:convert';
 import 'package:meta/meta.dart';
-
-import 'package:invoiceninja/redux/auth/auth_state.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja/data/models/serializers.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
@@ -17,16 +16,20 @@ class AuthRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<List<CompanyEntity>> login(String email, String password, String url) async {
-
-    final data = await webClient.postList(url + '/login', '', {
+  Future<BuiltList<CompanyEntity>> login(String email, String password, String url) async {
+    final response = await webClient.post(url + '/login', '', {
       'api_secret': 'secret',
       'token_name': 'mobile-app',
       'email': email,
       'password': password,
     });
 
-    return data.map((company) => CompanyEntity.fromJson(company)).toList();
+    LoginResponse loginResponse = serializers.deserializeWith(
+        LoginResponse.serializer, response);
+
+    return loginResponse.data.toBuiltList();
+
+    //return data.map((company) => CompanyEntity.fromJson(company)).toList();
 
     /*
     try {

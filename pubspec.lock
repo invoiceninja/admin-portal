@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.31.2-alpha.2"
+  analyzer_plugin:
+    dependency: transitive
+    description:
+      name: analyzer_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1-alpha.0"
   args:
     dependency: transitive
     description:
@@ -58,19 +65,26 @@ packages:
     source: hosted
     version: "0.8.9"
   built_collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: built_collection
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
   built_value:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.4"
+    version: "5.4.5"
+  built_value_generator:
+    dependency: "direct dev"
+    description:
+      name: built_value_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.4.5"
   charcode:
     dependency: transitive
     description:
@@ -214,20 +228,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1"
-  json_annotation:
-    dependency: "direct main"
-    description:
-      name: json_annotation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.4"
-  json_serializable:
-    dependency: "direct dev"
-    description:
-      name: json_serializable
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.2"
   kernel:
     dependency: transitive
     description:

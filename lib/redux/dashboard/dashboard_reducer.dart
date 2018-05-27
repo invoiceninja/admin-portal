@@ -17,6 +17,6 @@ DashboardState _setLoadedDashboards(DashboardState dashboardState, DashboardLoad
 
 DashboardState _setNoDashboards(DashboardState dashboardState, DashboardNotLoadedAction action) {
   return DashboardState().copyWith(
-      data: DashboardEntity()
+      data: null,
   );
 }

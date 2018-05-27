@@ -1,8 +1,7 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:core';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:invoiceninja/data/models/models.dart';
 
 /// A class that is meant to represent a Web Service you would call to fetch
 /// and persist Products to and from the cloud.
@@ -13,63 +12,40 @@ class WebClient {
 
   const WebClient();
 
-  Future<http.Response> sendGetRequest(String url, String token) {
-    return http.Client().get(
+  Future<dynamic> get(String url, String token) async {
+    final http.Response response = await http.Client().get(
       url,
       headers: {
         'X-Ninja-Token': token,
       },
     );
+
+    final jsonResponse = json.decode(response.body);
+
+    print(jsonResponse);
+
+    return jsonResponse;
   }
 
-  Future<http.Response> sendPostRequest(String url, String token, dynamic data) {
-    return http.Client().post(
+  Future<dynamic> post(String url, String token, dynamic data) async {
+    final http.Response response = await http.Client().post(
       url,
       body: data,
       headers: {
         'X-Ninja-Token': token,
       },
     );
-  }
 
+    final jsonResponse = json.decode(response.body);
 
-  Future<dynamic> fetchItem(String url, String token) async {
-    final http.Response response = await sendGetRequest(url, token);
-    final result = BaseItemResponse.fromJson(json.decode(response.body));
-
-    if (result.error != null && result.error.message != null) {
-      throw(result.error.message);
-    } else {
-      return result.data;
-    }
-  }
-
-
-  Future<List<dynamic>> fetchList(String url, String token) async {
-    final http.Response response = await sendGetRequest(url, token);
-    final result = BaseListResponse.fromJson(json.decode(response.body));
-
+    /*
     if (result.error != null && result.error.message != null) {
       throw(result.error.message);
     } else {
       return result.data.toList();
     }
-  }
+    */
 
-  Future<List<dynamic>> postList(String url, String token, var data) async {
-    final http.Response response = await sendPostRequest(url, token, data);
-    var result;
-
-    try {
-      result = BaseListResponse.fromJson(json.decode(response.body));
-    } catch (exception) {
-      throw('An error occurred');
-    }
-
-    if (result.error != null && result.error.message != null) {
-      throw(result.error.message);
-    } else {
-      return result.data.toList();
-    }
+    return jsonResponse;
   }
 }
