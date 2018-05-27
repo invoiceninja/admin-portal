@@ -47,7 +47,7 @@ class _ViewModel {
           if (store.state.isLoading) {
             return;
           }
-          store.dispatch(UserLoginRequest(context, email.trim(), password.trim(), url.trim()));
+          store.dispatch(UserLoginRequest(email.trim(), password.trim(), url.trim(), context));
         }
     );
   }

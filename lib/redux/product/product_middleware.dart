@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
@@ -26,10 +27,22 @@ Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     repository.saveData(store.state.selectedCompany(), store.state.authState, action.product).then(
-        (product) => store.dispatch(SaveProductSuccess(product))
-    ).catchError((error) {
+        (product) {
+          store.dispatch(SaveProductSuccess(product));
+          Scaffold.of(action.context).showSnackBar(
+              SnackBar(
+                  content: new Text('Successfully updated product'),
+                  duration: Duration(seconds: 3)
+              )
+          );
+        }
+    );
+    /*
+        .catchError((error) {
       store.dispatch(SaveProductFailure(error));
     });
+    */
+
 
     /*
     repository.login(action.email, action.password, action.url).then(

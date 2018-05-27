@@ -39,7 +39,7 @@ class ProductDetails extends StatelessWidget {
 class _ViewModel {
   final ProductEntity product;
   final Function onDelete;
-  final Function(ProductEntity) onSaveClicked;
+  final Function(ProductEntity, BuildContext) onSaveClicked;
   final bool isLoading;
 
   _ViewModel({
@@ -57,8 +57,8 @@ class _ViewModel {
       isLoading: store.state.isLoading,
       product: product,
       onDelete: () => false, //store.dispatch(DeleteProductAction(product.id)),
-      onSaveClicked: (ProductEntity product) {
-        store.dispatch(SaveProductRequest(product));
+      onSaveClicked: (ProductEntity product, BuildContext context) {
+        store.dispatch(SaveProductRequest(product, context));
       },
     );
   }

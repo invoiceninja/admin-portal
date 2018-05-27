@@ -1,13 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:invoiceninja/containers/edit_product.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
 
 class DetailsScreen extends StatelessWidget {
   final ProductEntity product;
   final Function onDelete;
-  final Function(ProductEntity) onSaveClicked;
+  final Function(ProductEntity, BuildContext) onSaveClicked;
   final bool isLoading;
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -87,19 +86,23 @@ class DetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            ProgressButton(
-              label: 'SAVE',
-              isLoading: this.isLoading,
-              onPressed: () {
-                _formKey.currentState.save();
-                this.onSaveClicked(product.rebuild((b) => b
-                  ..productKey = _productKey.trim()
-                  ..notes = _notes.trim()
-                  ..cost = _cost
-                ));
-              },
+            new Builder(
+              builder: (BuildContext context) {
+                return ProgressButton(
+                  label: 'SAVE',
+                  isLoading: this.isLoading,
+                  onPressed: () {
+                    _formKey.currentState.save();
+                    this.onSaveClicked(product.rebuild((b) => b
+                      ..productKey = _productKey.trim()
+                      ..notes = _notes.trim()
+                      ..cost = _cost
+                    ), context);
+                  },
+                );
+              }
             ),
-          ],
+          ]
         ),
       ),
       /*

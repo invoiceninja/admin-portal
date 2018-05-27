@@ -1,5 +1,6 @@
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
 
 class LoadProductsAction {}
 
@@ -32,9 +33,10 @@ class SelectProductAction {
 }
 
 class SaveProductRequest {
+  final BuildContext context;
   final ProductEntity product;
 
-  SaveProductRequest(this.product);
+  SaveProductRequest(this.product, this.context);
 }
 
 class SaveProductSuccess {
