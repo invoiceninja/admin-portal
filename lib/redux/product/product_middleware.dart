@@ -25,7 +25,11 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    repository.saveData(store.state.selectedCompany(), store.state.authState, action.product);
+    repository.saveData(store.state.selectedCompany(), store.state.authState, action.product).then(
+        (product) => store.dispatch(SaveProductSuccess(product))
+    ).catchError((error) {
+      store.dispatch(SaveProductFailure(error));
+    });
 
     /*
     repository.login(action.email, action.password, action.url).then(

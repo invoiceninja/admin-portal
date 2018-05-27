@@ -21,7 +21,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ErrorMessage.serializer)
       ..add(LoginResponse.serializer)
       ..add(ProductEntity.serializer)
-      ..add(ProductResponse.serializer)
+      ..add(ProductItemResponse.serializer)
+      ..add(ProductListResponse.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CompanyEntity)]),
           () => new ListBuilder<CompanyEntity>())
