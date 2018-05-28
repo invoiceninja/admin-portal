@@ -28,19 +28,21 @@ class ProductList extends StatelessWidget {
 
   ListView _buildListView() {
     return ListView.builder(
-      key: NinjaKeys.productList,
-      itemCount: productState.list.length,
-      itemBuilder: (BuildContext context, int index) {
-        final product = productState.map[productState.list[index]];
+        key: NinjaKeys.productList,
+        itemCount: productState.list.length,
+        itemBuilder: (BuildContext context, int index) {
+          final product = productState.map[productState.list[index]];
 
-        return ProductItem(
-          product: product,
-          onDismissed: (direction) {
-            //_removeProduct(context, product);
-          },
-          onTap: () => onProductTap(context, product),
-        );
-      },
-    );
+          return Column(children: <Widget>[
+            ProductItem(
+              product: product,
+              onDismissed: (direction) {
+                //_removeProduct(context, product);
+              },
+              onTap: () => onProductTap(context, product),
+            ),
+            Divider(),
+          ]);
+        });
   }
 }
