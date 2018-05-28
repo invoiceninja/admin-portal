@@ -98,7 +98,10 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(Icons.power_settings_new),
             title: Text(AppLocalization.of(context).logOut),
             onTap: () {
-              Navigator.of(context).popAndPushNamed(AppRoutes.login);
+              while(Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
+              Navigator.of(context).pushNamed(AppRoutes.login);
             },
           ),
         ],
