@@ -1,3 +1,4 @@
+import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -16,7 +17,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text(AppLocalization.of(context).products),
         actions: [
           //FilterSelector(visible: activeTab == AppTab.products),
           //ExtraActionsContainer(),

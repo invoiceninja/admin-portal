@@ -7,7 +7,7 @@ import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard.dart';
 import 'package:invoiceninja/ui/client/clients.dart';
-import 'package:invoiceninja/ui/product/products.dart';
+import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/redux/app/app_reducer.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_middleware.dart';
