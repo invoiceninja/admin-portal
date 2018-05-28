@@ -101,7 +101,7 @@ class CustomDrawer extends StatelessWidget {
               while(Navigator.of(context).canPop()) {
                 Navigator.of(context).pop();
               }
-              Navigator.of(context).pushNamed(AppRoutes.login);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.login);
             },
           ),
         ],
