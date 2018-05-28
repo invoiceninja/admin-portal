@@ -1,4 +1,4 @@
-//import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -51,7 +51,7 @@ class InvoiceNinjaApp extends StatelessWidget {
       child: new MaterialApp(
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
-            //GlobalMaterialLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
           ],
         theme: ThemeData().copyWith(
           primaryColor: const Color(0xFF117cc1),
