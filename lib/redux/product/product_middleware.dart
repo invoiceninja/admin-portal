@@ -28,15 +28,23 @@ Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
 
     repository.saveData(store.state.selectedCompany(), store.state.authState, action.product).then(
         (product) {
+          var message;
           if (action.product.id == 0) {
+            message = 'Successfully created product';
             store.dispatch(AddProductSuccess(product));
           } else {
+            message = 'Successfully updated product';
             store.dispatch(SaveProductSuccess(product));
           }
 
           Scaffold.of(action.context).showSnackBar(
               SnackBar(
-                  content: new Text('Successfully updated product'),
+                  content: Row(
+                    children: <Widget>[
+                      Icon(Icons.check_circle),
+                      Text(message)
+                    ],
+                  ),
                   duration: Duration(seconds: 3)
               )
           );

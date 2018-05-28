@@ -50,8 +50,7 @@ class _ViewModel {
   });
 
   factory _ViewModel.from(Store<AppState> store, int id) {
-    //final product = productSelector(productsSelector(store.state), id).value;
-    final product = store.state.productState().map[id] ?? ProductEntity();
+    final product = store.state.productState().editing;
 
     return _ViewModel(
       isLoading: store.state.isLoading,
