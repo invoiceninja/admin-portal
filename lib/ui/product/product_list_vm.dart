@@ -51,7 +51,7 @@ class _ViewModel {
       loading: store.state.isLoading,
       onProductTap: (context, product) {
         store.dispatch(SelectProductAction(product));
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetails(id: product.id)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsVM(id: product.id)));
       },
     );
   }

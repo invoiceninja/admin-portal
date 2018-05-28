@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
 
-class DetailsScreen extends StatelessWidget {
+class ProductDetails extends StatelessWidget {
   final ProductEntity product;
   final Function onDelete;
   final Function(ProductEntity, BuildContext) onSaveClicked;
@@ -11,7 +11,7 @@ class DetailsScreen extends StatelessWidget {
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  DetailsScreen({
+  ProductDetails({
     Key key,
     @required this.product,
     @required this.onDelete,

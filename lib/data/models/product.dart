@@ -51,7 +51,16 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
   //bool isDeleted;
 
 
+  factory ProductEntity() {
+    return _$ProductEntity._(
+      id: 0,
+      productKey: '',
+      notes: '',
+      cost: 0.0,
+    );
+  }
+
   ProductEntity._();
-  factory ProductEntity([updates(ProductEntityBuilder b)]) = _$ProductEntity;
+  //factory ProductEntity([updates(ProductEntityBuilder b)]) = _$ProductEntity;
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

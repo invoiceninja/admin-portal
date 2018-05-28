@@ -12,10 +12,10 @@ import 'package:invoiceninja/ui/product/product_details.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 
 
-class ProductDetails extends StatelessWidget {
+class ProductDetailsVM extends StatelessWidget {
   final int id;
 
-  ProductDetails({Key key, @required this.id}) : super(key: key);
+  ProductDetailsVM({Key key, @required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class ProductDetails extends StatelessWidget {
         return _ViewModel.from(store, id);
       },
       builder: (context, vm) {
-        return DetailsScreen(
+        return ProductDetails(
           isLoading: vm.isLoading,
           product: vm.product,
           onDelete: vm.onDelete,
@@ -51,7 +51,7 @@ class _ViewModel {
 
   factory _ViewModel.from(Store<AppState> store, int id) {
     //final product = productSelector(productsSelector(store.state), id).value;
-    final product = store.state.productState().map[id];
+    final product = store.state.productState().map[id] ?? ProductEntity();
 
     return _ViewModel(
       isLoading: store.state.isLoading,

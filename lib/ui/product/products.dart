@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/ui/product/product_list_vm.dart';
+import 'package:invoiceninja/ui/product/product_details_vm.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen() : super(key: NinjaKeys.productHome);
@@ -16,16 +17,14 @@ class ProductScreen extends StatelessWidget {
         ],
       ),
       body: ProductListVM(),
-      /*
       floatingActionButton: FloatingActionButton(
-        key: ArchSampleKeys.addProductFab,
+        //key: ArchSampleKeys.addProductFab,
         onPressed: () {
-          Navigator.pushNamed(context, ArchSampleRoutes.addProduct);
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsVM(id: 0)));
         },
         child: Icon(Icons.add),
-        tooltip: ArchSampleLocalizations.of(context).addProduct,
+        //tooltip: ArchSampleLocalizations.of(context).addProduct,
       ),
-      */
     );
   }
 }
