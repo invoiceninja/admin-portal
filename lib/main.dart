@@ -1,3 +1,4 @@
+//import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -15,6 +16,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_middleware.dart';
+import 'package:invoiceninja/utils/localization.dart';
 
 
 void main() {
@@ -47,6 +49,10 @@ class InvoiceNinjaApp extends StatelessWidget {
       // Widgets will find and use this value as the `Store`.
       store: store,
       child: new MaterialApp(
+          localizationsDelegates: [
+            const AppLocalizationsDelegate(),
+            //GlobalMaterialLocalizations.delegate,
+          ],
         theme: ThemeData().copyWith(
           primaryColor: const Color(0xFF117cc1),
           primaryColorDark: const Color(0xFF005090),

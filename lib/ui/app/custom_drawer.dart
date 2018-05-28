@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/utils/localization.dart';
 
 class CustomDrawer extends StatelessWidget {
   final List<CompanyEntity> companies;
@@ -64,7 +65,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.dashboard),
-            title: Text('Dashboard'),
+            title: Text(AppLocalization.of(context).dashboard),
             onTap: () {
               Navigator.of(context).popAndPushNamed(AppRoutes.dashboard);
             },
@@ -72,7 +73,7 @@ class CustomDrawer extends StatelessWidget {
           /*
           ListTile(
             leading: Icon(Icons.people),
-            title: Text('Clients'),
+            title: Text(AppLocalization.of(context).clients),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(AppRoutes.clientScreen);
@@ -81,7 +82,7 @@ class CustomDrawer extends StatelessWidget {
           */
           ListTile(
             leading: Icon(Icons.language),
-            title: Text('Products'),
+            title: Text(AppLocalization.of(context).products),
             onTap: () {
               Navigator.of(context).popAndPushNamed(AppRoutes.products);
             },
@@ -89,13 +90,13 @@ class CustomDrawer extends StatelessWidget {
           /*
           ListTile(
             leading: Icon(Icons.email),
-            title: Text('Invoices'),
+            title: Text(''),
             onTap: () {},
           ),
           */
           ListTile(
             leading: Icon(Icons.power_settings_new),
-            title: Text('Log Out'),
+            title: Text(AppLocalization.of(context).logOut),
             onTap: () {
               Navigator.of(context).popAndPushNamed(AppRoutes.login);
             },

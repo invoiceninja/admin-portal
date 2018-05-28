@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/ui/app/custom_drawer_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja/utils/localization.dart';
 
 class Dashboard extends StatelessWidget {
   Dashboard() : super(key: NinjaKeys.dashboard);
@@ -10,7 +11,7 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: Text(AppLocalization.of(context).dashboard),
       ),
       drawer: CustomDrawerVM(),
       body: DashboardVM(),

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
+import 'package:invoiceninja/utils/localization.dart';
 
 class ProductDetails extends StatelessWidget {
   final ProductEntity product;
@@ -31,7 +32,7 @@ class ProductDetails extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.id > 0 ? product.productKey : 'New Product'), // Text(localizations.productDetails),
+        title: Text(product.id > 0 ? product.productKey : AppLocalization.of(context).newProduct), // Text(localizations.productDetails),
         actions: [
           /*
           IconButton(
@@ -63,7 +64,7 @@ class ProductDetails extends StatelessWidget {
                         initialValue: product.productKey,
                         decoration: InputDecoration(
                           //border: InputBorder.none,
-                          labelText: 'Product',
+                          labelText: AppLocalization.of(context).product,
                         ),
                       ),
                       TextFormField(
@@ -71,7 +72,7 @@ class ProductDetails extends StatelessWidget {
                         onSaved: (value) => _notes = value,
                         maxLines: 4,
                         decoration: InputDecoration(
-                          labelText: 'Notes',
+                          labelText: AppLocalization.of(context).notes,
                         ),
                       ),
                       TextFormField(
@@ -80,7 +81,7 @@ class ProductDetails extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           //border: InputBorder.none,
-                          labelText: 'Cost',
+                          labelText: AppLocalization.of(context).cost,
                         ),
                       ),
                     ],
@@ -91,7 +92,7 @@ class ProductDetails extends StatelessWidget {
             new Builder(
               builder: (BuildContext context) {
                 return ProgressButton(
-                  label: 'SAVE',
+                  label: AppLocalization.of(context).cost.toUpperCase(),
                   isLoading: this.isLoading,
                   isDirty: this.isDirty,
                   onPressed: () {
