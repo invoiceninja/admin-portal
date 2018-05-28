@@ -34,15 +34,7 @@ class AppLocalization {
   String get cost => _localizedValues[locale.languageCode]['cost'];
   String get clients => _localizedValues[locale.languageCode]['clients'];
   String get save => _localizedValues[locale.languageCode]['save'];
-  /*
-  String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
-  String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
-  String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
-  String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
-  String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
-  String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
-  String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
-  */
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
