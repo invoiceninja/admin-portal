@@ -1,3 +1,4 @@
+import 'package:invoiceninja/utils/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
@@ -30,10 +31,10 @@ Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
         (product) {
           var message;
           if (action.product.id == 0) {
-            message = 'Successfully created product';
+            message = AppLocalization.of(action.context).successfullyCreatedProduct;
             store.dispatch(AddProductSuccess(product));
           } else {
-            message = 'Successfully updated product';
+            message = AppLocalization.of(action.context).successfullyUpdatedProduct;
             store.dispatch(SaveProductSuccess(product));
           }
 

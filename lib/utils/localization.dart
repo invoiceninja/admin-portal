@@ -22,6 +22,9 @@ class AppLocalization {
       'cost': 'Cost',
       'clients': 'Clients',
       'save': 'Save',
+      'an_error_occurred': 'An error occurred',
+      'successfully_created_product': 'Successfully created product',
+      'successfully_updated_product': 'Successfully updated product',
     },
   };
 
@@ -34,6 +37,8 @@ class AppLocalization {
   String get cost => _localizedValues[locale.languageCode]['cost'];
   String get clients => _localizedValues[locale.languageCode]['clients'];
   String get save => _localizedValues[locale.languageCode]['save'];
+  String get successfullyCreatedProduct => _localizedValues[locale.languageCode]['successfully_created_product'];
+  String get successfullyUpdatedProduct => _localizedValues[locale.languageCode]['successfully_updated_product'];
 
 }
 

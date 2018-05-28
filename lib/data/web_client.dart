@@ -3,11 +3,6 @@ import 'dart:core';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-/// A class that is meant to represent a Web Service you would call to fetch
-/// and persist Products to and from the cloud.
-///
-/// Since we're trying to keep this example simple, it doesn't communicate with
-/// a real server but simply emulates the functionality.
 class WebClient {
 
   const WebClient();
