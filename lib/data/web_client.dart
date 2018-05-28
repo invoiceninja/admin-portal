@@ -33,6 +33,7 @@ class WebClient {
       body: data,
       headers: {
         'X-Ninja-Token': token,
+        'Content-Type': 'application/json',
       },
     );
 

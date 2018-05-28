@@ -28,7 +28,12 @@ Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
 
     repository.saveData(store.state.selectedCompany(), store.state.authState, action.product).then(
         (product) {
-          store.dispatch(SaveProductSuccess(product));
+          if (action.product.id == 0) {
+            store.dispatch(AddProductSuccess(product));
+          } else {
+            store.dispatch(SaveProductSuccess(product));
+          }
+
           Scaffold.of(action.context).showSnackBar(
               SnackBar(
                   content: new Text('Successfully updated product'),

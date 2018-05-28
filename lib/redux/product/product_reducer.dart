@@ -12,14 +12,23 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<List<Product>, ToggleAllAction>(_toggleAll),
   */
   TypedReducer<ProductState, SaveProductSuccess>(_updateProduct),
+  TypedReducer<ProductState, AddProductSuccess>(_addProduct),
   TypedReducer<ProductState, ProductsLoadedAction>(_setLoadedProducts),
   TypedReducer<ProductState, ProductsNotLoadedAction>(_setNoProducts),
   TypedReducer<ProductState, SelectProductAction>(_selectProduct),
 ]);
 
+ProductState _addProduct(
+    ProductState productState, AddProductSuccess action) {
+  return productState.rebuild((b) => b
+    ..map[action.product.id] = action.product
+    ..list.add(action.product.id)
+    ..editing.replace(action.product)
+  );
+}
+
 ProductState _updateProduct(
     ProductState productState, SaveProductSuccess action) {
-
   return productState.rebuild((b) => b
       ..map[action.product.id] = action.product
       ..editing.replace(action.product)

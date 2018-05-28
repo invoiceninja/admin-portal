@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:core';
+import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/serializers.dart';
@@ -17,12 +18,15 @@ class AuthRepository {
   });
 
   Future<BuiltList<CompanyEntity>> login(String email, String password, String url) async {
-    final response = await webClient.post(url + '/login', '', {
+
+    final credentials = {
       'api_secret': 'secret',
       'token_name': 'mobile-app',
       'email': email,
       'password': password,
-    });
+    };
+
+    final response = await webClient.post(url + '/login', '', json.encode(credentials));
 
     LoginResponse loginResponse = serializers.deserializeWith(
         LoginResponse.serializer, response);

@@ -19,6 +19,7 @@ final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, SaveProductRequest>(_setLoading),
   TypedReducer<bool, SaveProductFailure>(_setLoaded),
   TypedReducer<bool, SaveProductSuccess>(_setLoaded),
+  TypedReducer<bool, AddProductSuccess>(_setLoaded),
 ]);
 
 bool _setLoading(bool state, action) {
@@ -28,4 +29,5 @@ bool _setLoading(bool state, action) {
 bool _setLoaded(bool state, action) {
   return false;
 }
+
 

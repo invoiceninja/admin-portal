@@ -29,7 +29,7 @@ class ProductDetails extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.productKey), // Text(localizations.productDetails),
+        title: Text(product.id > 0 ? product.productKey : 'New Product'), // Text(localizations.productDetails),
         actions: [
           /*
           IconButton(
@@ -73,7 +73,7 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
                       TextFormField(
-                        initialValue: product.cost.toStringAsFixed(2),
+                        initialValue: product.cost > 0 ? product.cost.toStringAsFixed(2) : null,
                         onSaved: (value) => _cost = double.parse(value),
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(

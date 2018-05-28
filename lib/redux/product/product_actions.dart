@@ -45,6 +45,12 @@ class SaveProductSuccess {
   SaveProductSuccess(this.product);
 }
 
+class AddProductSuccess {
+  final ProductEntity product;
+
+  AddProductSuccess(this.product);
+}
+
 class SaveProductFailure {
   final String error;
 
