@@ -67,7 +67,7 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(Icons.dashboard),
             title: Text(AppLocalization.of(context).dashboard),
             onTap: () {
-              Navigator.of(context).popAndPushNamed(AppRoutes.dashboard);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
             },
           ),
           /*
@@ -84,7 +84,7 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(Icons.language),
             title: Text(AppLocalization.of(context).products),
             onTap: () {
-              Navigator.of(context).popAndPushNamed(AppRoutes.products);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.products);
             },
           ),
           /*
