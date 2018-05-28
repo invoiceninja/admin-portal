@@ -92,7 +92,7 @@ class ProductDetails extends StatelessWidget {
             new Builder(
               builder: (BuildContext context) {
                 return ProgressButton(
-                  label: AppLocalization.of(context).cost.toUpperCase(),
+                  label: AppLocalization.of(context).save.toUpperCase(),
                   isLoading: this.isLoading,
                   isDirty: this.isDirty,
                   onPressed: () {
