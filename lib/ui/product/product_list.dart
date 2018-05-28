@@ -41,7 +41,9 @@ class ProductList extends StatelessWidget {
               },
               onTap: () => onProductTap(context, product),
             ),
-            Divider(),
+            Divider(
+              height: 1.0,
+            ),
           ]);
         });
   }

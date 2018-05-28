@@ -27,6 +27,7 @@ class ProductDetailsVM extends StatelessWidget {
       builder: (context, vm) {
         return ProductDetails(
           isLoading: vm.isLoading,
+          isDirty: vm.isDirty,
           product: vm.product,
           onDelete: vm.onDelete,
           onSaveClicked: vm.onSaveClicked,
@@ -41,12 +42,14 @@ class _ViewModel {
   final Function onDelete;
   final Function(ProductEntity, BuildContext) onSaveClicked;
   final bool isLoading;
+  final bool isDirty;
 
   _ViewModel({
     @required this.product,
     @required this.onDelete,
     @required this.onSaveClicked,
     @required this.isLoading,
+    @required this.isDirty,
   });
 
   factory _ViewModel.from(Store<AppState> store, int id) {
@@ -54,6 +57,7 @@ class _ViewModel {
 
     return _ViewModel(
       isLoading: store.state.isLoading,
+      isDirty: product.id == 0,
       product: product,
       onDelete: () => false, //store.dispatch(DeleteProductAction(product.id)),
       onSaveClicked: (ProductEntity product, BuildContext context) {

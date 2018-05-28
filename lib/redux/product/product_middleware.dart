@@ -42,7 +42,10 @@ Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
                   content: Row(
                     children: <Widget>[
                       Icon(Icons.check_circle),
-                      Text(message)
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0),
+                        child: Text(message),
+                      )
                     ],
                   ),
                   duration: Duration(seconds: 3)

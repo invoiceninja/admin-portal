@@ -4,11 +4,13 @@ import 'package:invoiceninja/ui/app/progress_button.dart';
 
 class Login extends StatelessWidget {
   final bool isLoading;
+  final bool isDirty;
   final AuthState authState;
   final Function(BuildContext, String, String, String) onLoginClicked;
 
   Login({
     Key key,
+    @required this.isDirty,
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginClicked,
@@ -96,6 +98,7 @@ class Login extends StatelessWidget {
         ProgressButton(
           label: 'LOGIN',
           isLoading: this.isLoading,
+          isDirty: this.isDirty,
           onPressed: () {
             if (!_formKey.currentState.validate()) {
               return;

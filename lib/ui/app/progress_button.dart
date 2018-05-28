@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ProgressButton extends StatelessWidget {
   final String label;
   final bool isLoading;
+  final bool isDirty;
   final Function onPressed;
 
   ProgressButton({
@@ -10,10 +11,17 @@ class ProgressButton extends StatelessWidget {
     @required this.label,
     @required this.isLoading,
     @required this.onPressed,
+    @required this.isDirty,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    /*
+    if (! isDirty) {
+      return Container();
+    }
+    */
+
     return Padding(
       padding: EdgeInsets.only(top: 20.0),
       child: this.isLoading

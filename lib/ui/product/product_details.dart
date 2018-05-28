@@ -8,6 +8,7 @@ class ProductDetails extends StatelessWidget {
   final Function onDelete;
   final Function(ProductEntity, BuildContext) onSaveClicked;
   final bool isLoading;
+  final bool isDirty;
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -17,6 +18,7 @@ class ProductDetails extends StatelessWidget {
     @required this.onDelete,
     @required this.onSaveClicked,
     @required this.isLoading,
+    @required this.isDirty,
   }) : super(key: key);
 
   @override
@@ -74,7 +76,7 @@ class ProductDetails extends StatelessWidget {
                       ),
                       TextFormField(
                         initialValue: product.cost > 0 ? product.cost.toStringAsFixed(2) : null,
-                        onSaved: (value) => _cost = double.parse(value),
+                        onSaved: (value) => _cost = double.tryParse(value) ?? 0.0,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           //border: InputBorder.none,
@@ -91,6 +93,7 @@ class ProductDetails extends StatelessWidget {
                 return ProgressButton(
                   label: 'SAVE',
                   isLoading: this.isLoading,
+                  isDirty: this.isDirty,
                   onPressed: () {
                     _formKey.currentState.save();
                     this.onSaveClicked(product.rebuild((b) => b
