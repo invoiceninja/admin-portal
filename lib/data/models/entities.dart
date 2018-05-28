@@ -38,6 +38,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @nullable
   String get plan;
 
+  @nullable
   @BuiltValueField(wireName: 'logo_url')
   String get logoUrl;
 

@@ -133,14 +133,17 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'token',
       serializers.serialize(object.token,
           specifiedType: const FullType(String)),
-      'logo_url',
-      serializers.serialize(object.logoUrl,
-          specifiedType: const FullType(String)),
     ];
     if (object.plan != null) {
       result
         ..add('plan')
         ..add(serializers.serialize(object.plan,
+            specifiedType: const FullType(String)));
+    }
+    if (object.logoUrl != null) {
+      result
+        ..add('logo_url')
+        ..add(serializers.serialize(object.logoUrl,
             specifiedType: const FullType(String)));
     }
 
@@ -509,8 +512,6 @@ class _$CompanyEntity extends CompanyEntity {
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
     if (token == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'token');
-    if (logoUrl == null)
-      throw new BuiltValueNullFieldError('CompanyEntity', 'logoUrl');
   }
 
   @override
