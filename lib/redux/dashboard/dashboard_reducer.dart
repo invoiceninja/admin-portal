@@ -10,7 +10,7 @@ final dashboardReducer = combineReducers<DashboardState>([
 DashboardState _setLoadedDashboards(DashboardState dashboardState, DashboardLoadedAction action) {
   return dashboardState.rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-      ..data = action.data.toBuilder()
+      ..data.replace(action.data)
   );
 }
 

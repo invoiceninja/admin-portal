@@ -8,9 +8,9 @@ import 'package:invoiceninja/redux/company/company_actions.dart';
 CompanyState companyReducer(CompanyState state, action) {
 
   return state.rebuild((b) => b
-      ..company = companyEntityReducer(state.company, action).toBuilder()
-      ..dashboardState = dashboardReducer(state.dashboardState, action).toBuilder()
-      ..productState = productsReducer(state.productState, action) .toBuilder()
+      ..company.replace(companyEntityReducer(state.company, action))
+      ..dashboardState.replace(dashboardReducer(state.dashboardState, action))
+      ..productState.replace(productsReducer(state.productState, action))
   );
 }
 

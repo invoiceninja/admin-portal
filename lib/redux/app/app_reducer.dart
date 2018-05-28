@@ -11,18 +11,17 @@ AppState appReducer(AppState state, action) {
   return state.rebuild((b) => b
     ..selectedCompanyIndex = selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..isLoading = loadingReducer(state.isLoading, action)
-    ..authState = authReducer(state.authState, action).toBuilder()
-
-    ..companyState1 = state.selectedCompanyIndex == 1
-        ? companyReducer(state.companyState1, action).toBuilder() : state.companyState1.toBuilder()
-    ..companyState2 = state.selectedCompanyIndex == 2
-        ? companyReducer(state.companyState2, action).toBuilder() : state.companyState2.toBuilder()
-    ..companyState3 = state.selectedCompanyIndex == 3
-        ? companyReducer(state.companyState3, action).toBuilder() : state.companyState3.toBuilder()
-    ..companyState4 = state.selectedCompanyIndex == 4
-        ? companyReducer(state.companyState4, action).toBuilder() : state.companyState4.toBuilder()
-    ..companyState5 = state.selectedCompanyIndex == 5
-        ? companyReducer(state.companyState5, action).toBuilder() : state.companyState5.toBuilder()
+    ..authState.replace(authReducer(state.authState, action))
+    ..companyState1.replace(state.selectedCompanyIndex == 1
+        ? companyReducer(state.companyState1, action) : state.companyState1)
+    ..companyState2.replace(state.selectedCompanyIndex == 2
+        ? companyReducer(state.companyState2, action) : state.companyState2)
+    ..companyState3.replace(state.selectedCompanyIndex == 3
+        ? companyReducer(state.companyState3, action) : state.companyState3)
+    ..companyState4.replace(state.selectedCompanyIndex == 4
+        ? companyReducer(state.companyState4, action) : state.companyState4)
+    ..companyState5.replace(state.selectedCompanyIndex == 5
+        ? companyReducer(state.companyState5, action) : state.companyState5)
   );
 }
 

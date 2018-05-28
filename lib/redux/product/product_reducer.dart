@@ -22,7 +22,7 @@ ProductState _updateProduct(
 
   return productState.rebuild((b) => b
       ..map[action.product.id] = action.product
-      ..editing = action.product.toBuilder()
+      ..editing.replace(action.product)
   );
 }
 
@@ -33,7 +33,7 @@ ProductState _setNoProducts(
 
 ProductState _selectProduct(
     ProductState productState, SelectProductAction action) {
-  return productState.rebuild((b) => b..editing = action.product.toBuilder());
+  return productState.rebuild((b) => b..editing.replace(action.product));
 }
 
 /*
@@ -63,13 +63,12 @@ ProductState _setLoadedProducts(
   return productState.rebuild(
     (b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-      ..map = BuiltMap<int, ProductEntity>(Map.fromIterable(
+      ..map.addAll(Map.fromIterable(
         action.products,
         key: (item) => item.id,
         value: (item) => item,
-      )).toBuilder()
-      ..list =
-          BuiltList<int>(action.products.map((product) => product.id).toList())
-              .toBuilder(),
+      ))
+      ..list.replace(action.products.map(
+              (product) => product.id).toList())
   );
 }
