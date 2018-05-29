@@ -1,8 +1,14 @@
+import 'dart:async';
+
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 
-class LoadProductsAction {}
+class LoadProductsAction {
+  final Completer completer;
+
+  LoadProductsAction([this.completer]);
+}
 
 class ProductsNotLoadedAction {
   final dynamic error;

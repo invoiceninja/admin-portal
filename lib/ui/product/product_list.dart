@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/loading_indicator.dart';
@@ -15,26 +17,29 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return viewModel.isLoading ? LoadingIndicator() : _buildListView();
+    return viewModel.isLoading ? LoadingIndicator() : _buildListView(context);
   }
 
-  ListView _buildListView() {
-    return ListView.builder(
-        key: NinjaKeys.productList,
-        itemCount: viewModel.productState.list.length,
-        itemBuilder: (BuildContext context, int index) {
-          final product = viewModel.productState.map[viewModel.productState.list[index]];
+  Widget _buildListView(BuildContext context) {
 
-          return Column(children: <Widget>[
-            ProductItem(
-              product: product,
-              onDismissed: (DismissDirection direction) => viewModel.onDismissed(context, product, direction),
-              onTap: () => viewModel.onProductTap(context, product),
-            ),
-            Divider(
-              height: 1.0,
-            ),
-          ]);
-        });
+    return RefreshIndicator(
+      onRefresh: () => viewModel.onRefreshed(context),
+      child: ListView.builder(
+          key: NinjaKeys.productList,
+          itemCount: viewModel.productState.list.length,
+          itemBuilder: (BuildContext context, int index) {
+            final product = viewModel.productState.map[viewModel.productState.list[index]];
+            return Column(children: <Widget>[
+              ProductItem(
+                product: product,
+                onDismissed: (DismissDirection direction) => viewModel.onDismissed(context, product, direction),
+                onTap: () => viewModel.onProductTap(context, product),
+              ),
+              Divider(
+                height: 1.0,
+              ),
+            ]);
+          }),
+    );
   }
 }

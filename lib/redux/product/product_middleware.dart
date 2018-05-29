@@ -32,27 +32,25 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 
 Middleware<AppState> _archiveProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
-    repository.saveData(store.state.selectedCompany(), store.state.authState, action.product, 'archive').then(
-            (product) {
-
-              store.dispatch(ArchiveProductSuccess());
-          Scaffold.of(action.context).showSnackBar(
-              SnackBar(
-                  content: Row(
-                    children: <Widget>[
-                      Icon(Icons.check_circle),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.0),
-                        child: Text(AppLocalization.of(action.context).successfullyArchivedProduct),
-                      )
-                    ],
-                  ),
-                  duration: Duration(seconds: 3)
+    repository
+        .saveData(store.state.selectedCompany(), store.state.authState,
+            action.product, 'archive')
+        .then((product) {
+      store.dispatch(ArchiveProductSuccess());
+      Scaffold.of(action.context).showSnackBar(SnackBar(
+          content: Row(
+            children: <Widget>[
+              Icon(Icons.check_circle),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Text(AppLocalization
+                    .of(action.context)
+                    .successfullyArchivedProduct),
               )
-          );
-        }
-    ).catchError((error) {
+            ],
+          ),
+          duration: Duration(seconds: 3)));
+    }).catchError((error) {
       print(error);
       store.dispatch(ArchiveProductFailure());
     });
@@ -63,49 +61,43 @@ Middleware<AppState> _archiveProduct(ProductsRepository repository) {
 
 Middleware<AppState> _deleteProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
     next(action);
   };
 }
 
 Middleware<AppState> _restoreProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
     next(action);
   };
 }
 
-
 Middleware<AppState> _saveProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    repository
+        .saveData(store.state.selectedCompany(), store.state.authState,
+            action.product)
+        .then((product) {
+      var message;
+      if (action.product.id == null) {
+        message = AppLocalization.of(action.context).successfullyCreatedProduct;
+        store.dispatch(AddProductSuccess(product));
+      } else {
+        message = AppLocalization.of(action.context).successfullyUpdatedProduct;
+        store.dispatch(SaveProductSuccess(product));
+      }
 
-    repository.saveData(store.state.selectedCompany(), store.state.authState, action.product).then(
-        (product) {
-          var message;
-          if (action.product.id == null) {
-            message = AppLocalization.of(action.context).successfullyCreatedProduct;
-            store.dispatch(AddProductSuccess(product));
-          } else {
-            message = AppLocalization.of(action.context).successfullyUpdatedProduct;
-            store.dispatch(SaveProductSuccess(product));
-          }
-
-          Scaffold.of(action.context).showSnackBar(
-              SnackBar(
-                  content: Row(
-                    children: <Widget>[
-                      Icon(Icons.check_circle),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.0),
-                        child: Text(message),
-                      )
-                    ],
-                  ),
-                  duration: Duration(seconds: 3)
+      Scaffold.of(action.context).showSnackBar(SnackBar(
+          content: Row(
+            children: <Widget>[
+              Icon(Icons.check_circle),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Text(message),
               )
-          );
-        }
-    ).catchError((error) {
+            ],
+          ),
+          duration: Duration(seconds: 3)));
+    }).catchError((error) {
       print(error);
       store.dispatch(SaveProductFailure(error));
     });
@@ -116,10 +108,14 @@ Middleware<AppState> _saveProduct(ProductsRepository repository) {
 
 Middleware<AppState> _loadProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
-    repository.loadList(store.state.selectedCompany(), store.state.authState).then(
-            (data) => store.dispatch(ProductsLoadedAction(data))
-    ).catchError((error) => store.dispatch(ProductsNotLoadedAction(error)));
+    repository
+        .loadList(store.state.selectedCompany(), store.state.authState)
+        .then((data) {
+      store.dispatch(ProductsLoadedAction(data));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((error) => store.dispatch(ProductsNotLoadedAction(error)));
 
     next(action);
   };

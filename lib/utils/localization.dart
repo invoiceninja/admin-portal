@@ -15,6 +15,7 @@ class AppLocalization {
     'en': {
       'log_out': 'Log Out',
       'dashboard': 'Dashboard',
+      'refresh_complete': 'Refresh complete',
       'please_enter_your_email': 'Please enter your email',
       'please_enter_your_password': 'Please enter your password',
       'please_enter_your_url': 'Please enter your URL',
@@ -37,6 +38,7 @@ class AppLocalization {
 
   String get logOut => _localizedValues[locale.languageCode]['log_out'];
   String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
+  String get refreshComplete => _localizedValues[locale.languageCode]['refresh_complete'];
   String get pleaseEnterYourEmail => _localizedValues[locale.languageCode]['please_enter_your_email'];
   String get pleaseEnterYourPassword => _localizedValues[locale.languageCode]['please_enter_your_password'];
   String get pleaseEnterYourUrl => _localizedValues[locale.languageCode]['please_enter_your_urll'];
