@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:invoiceninja/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -51,7 +53,11 @@ class _ViewModel {
           if (store.state.isLoading) {
             return;
           }
-          store.dispatch(UserLoginRequest(email.trim(), password.trim(), url.trim(), context));
+          final Completer<Null> completer = new Completer<Null>();
+          store.dispatch(UserLoginRequest(completer, email.trim(), password.trim(), url.trim()));
+          completer.future.then((_) {
+            Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
+          });
         }
     );
   }

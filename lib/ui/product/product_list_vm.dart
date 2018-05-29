@@ -75,10 +75,11 @@ class ProductListVM {
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ProductEntity product,
             DismissDirection direction) {
+          final Completer<Null> completer = new Completer<Null>();
           if (direction == DismissDirection.endToStart) {
-            store.dispatch(ArchiveProductRequest(context, product.id));
+            store.dispatch(ArchiveProductRequest(completer, product.id));
           } else if (direction == DismissDirection.startToEnd) {
-            store.dispatch(DeleteProductRequest(context, product.id));
+            store.dispatch(DeleteProductRequest(completer, product.id));
           }
         });
   }

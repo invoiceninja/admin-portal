@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/material.dart';
 
 class LoadProductsAction {
   final Completer completer;
@@ -39,10 +38,10 @@ class SelectProductAction {
 }
 
 class SaveProductRequest {
-  final BuildContext context;
+  final Completer completer;
   final ProductEntity product;
 
-  SaveProductRequest(this.context, this.product);
+  SaveProductRequest(this.completer, this.product);
 }
 
 class SaveProductSuccess {
@@ -52,28 +51,28 @@ class SaveProductSuccess {
 }
 
 class ArchiveProductRequest {
-  final BuildContext context;
+  final Completer completer;
   final int productId;
 
-  ArchiveProductRequest(this.context, this.productId);
+  ArchiveProductRequest(this.completer, this.productId);
 }
 class ArchiveProductSuccess {}
 class ArchiveProductFailure {}
 
 class DeleteProductRequest {
-  final BuildContext context;
+  final Completer completer;
   final int productId;
 
-  DeleteProductRequest(this.context, this.productId);
+  DeleteProductRequest(this.completer, this.productId);
 }
 class DeleteProductSuccess {}
 class DeleteProductFailure {}
 
 class RestoreProductRequest {
-  final BuildContext context;
+  final Completer completer;
   final int productId;
 
-  RestoreProductRequest(this.context, this.productId);
+  RestoreProductRequest(this.completer, this.productId);
 }
 class RestoreProductSuccess {}
 class RestoreProductFailure {}

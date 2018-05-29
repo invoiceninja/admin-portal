@@ -1,5 +1,3 @@
-import 'package:invoiceninja/utils/localization.dart';
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
@@ -37,19 +35,6 @@ Middleware<AppState> _archiveProduct(ProductsRepository repository) {
             action.product, 'archive')
         .then((product) {
       store.dispatch(ArchiveProductSuccess());
-      Scaffold.of(action.context).showSnackBar(SnackBar(
-          content: Row(
-            children: <Widget>[
-              Icon(Icons.check_circle),
-              Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(AppLocalization
-                    .of(action.context)
-                    .successfullyArchivedProduct),
-              )
-            ],
-          ),
-          duration: Duration(seconds: 3)));
     }).catchError((error) {
       print(error);
       store.dispatch(ArchiveProductFailure());
@@ -77,26 +62,12 @@ Middleware<AppState> _saveProduct(ProductsRepository repository) {
         .saveData(store.state.selectedCompany(), store.state.authState,
             action.product)
         .then((product) {
-      var message;
       if (action.product.id == null) {
-        message = AppLocalization.of(action.context).successfullyCreatedProduct;
         store.dispatch(AddProductSuccess(product));
       } else {
-        message = AppLocalization.of(action.context).successfullyUpdatedProduct;
         store.dispatch(SaveProductSuccess(product));
       }
-
-      Scaffold.of(action.context).showSnackBar(SnackBar(
-          content: Row(
-            children: <Widget>[
-              Icon(Icons.check_circle),
-              Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(message),
-              )
-            ],
-          ),
-          duration: Duration(seconds: 3)));
+      action.completer.complete(null);
     }).catchError((error) {
       print(error);
       store.dispatch(SaveProductFailure(error));

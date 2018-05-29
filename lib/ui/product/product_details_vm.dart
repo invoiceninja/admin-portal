@@ -1,16 +1,14 @@
-// Copyright 2018 The Flutter Architecture Sample Authors. All rights reserved.
-// Use of this source code is governed by the MIT license that can be found
-// in the LICENSE file.
-
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_details.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
-
+import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
 class ProductDetailsBuilder extends StatelessWidget {
   ProductDetailsBuilder({Key key}) : super(key: key);
@@ -55,7 +53,17 @@ class ProductDetailsVM {
       product: product,
       onDelete: () => false,
       onSaveClicked: (ProductEntity product, BuildContext context) {
-        store.dispatch(SaveProductRequest(context, product));
+        final Completer<Null> completer = new Completer<Null>();
+        store.dispatch(SaveProductRequest(completer, product));
+        return completer.future.then((_) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+                message: product.id == null
+                    ? AppLocalization.of(context).successfullyCreatedProduct
+                    : AppLocalization.of(context).successfullyUpdatedProduct,
+              ),
+              duration: Duration(seconds: 3)));
+        });
       },
     );
   }

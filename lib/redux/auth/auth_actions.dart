@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
 class LoadUserLogin {}
 
@@ -11,12 +11,12 @@ class UserLoginLoaded {
 }
 
 class UserLoginRequest {
-  final BuildContext context;
+  final Completer completer;
   final String email;
   final String password;
   final String url;
 
-  UserLoginRequest(this.email, this.password, this.url, this.context);
+  UserLoginRequest(this.completer, this.email, this.password, this.url);
 }
 
 class UserLoginSuccess {}

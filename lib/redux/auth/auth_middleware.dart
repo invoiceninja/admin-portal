@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -8,7 +6,6 @@ import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/repositories/auth_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
-import 'package:invoiceninja/routes.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepository repository = const AuthRepository(
@@ -72,7 +69,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
           store.dispatch(SelectCompany(1));
           store.dispatch(UserLoginSuccess());
 
-          Navigator.of(action.context).pushReplacementNamed(AppRoutes.dashboard);
+          action.completer.complete(null);
         }
     ).catchError((error) {
       store.dispatch(UserLoginFailure(error));
