@@ -33,7 +33,7 @@ class ProductScreen extends StatelessWidget {
             //key: ArchSampleKeys.addProductFab,
             onPressed: () {
               store.dispatch(SelectProductAction(ProductEntity()));
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder(id: 0)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
             },
             child: Icon(Icons.add),
             //tooltip: ArchSampleLocalizations.of(context).addProduct,

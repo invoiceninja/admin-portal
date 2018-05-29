@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -16,7 +15,6 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final localizations = ArchSampleLocalizations.of(context);
 
     String _productKey;
     String _notes;

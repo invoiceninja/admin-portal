@@ -1,8 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja/data/models/models.dart';
 
 final productsReducer = combineReducers<ProductState>([
   /*

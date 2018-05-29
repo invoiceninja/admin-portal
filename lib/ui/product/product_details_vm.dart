@@ -13,9 +13,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 
 
 class ProductDetailsBuilder extends StatelessWidget {
-  final int id;
-
-  ProductDetailsBuilder({Key key, @required this.id}) : super(key: key);
+  ProductDetailsBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

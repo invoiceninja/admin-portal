@@ -51,7 +51,7 @@ class ProductListVM {
       isLoading: store.state.productState().lastUpdated == 0,
       onProductTap: (context, product) {
         store.dispatch(SelectProductAction(product));
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder(id: product.id)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
       },
     );
   }
