@@ -2,24 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
+import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ProductDetails extends StatelessWidget {
-  final ProductEntity product;
-  final Function onDelete;
-  final Function(ProductEntity, BuildContext) onSaveClicked;
-  final bool isLoading;
-  final bool isDirty;
-
+  final ProductDetailsVM viewModel;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ProductDetails({
     Key key,
-    @required this.product,
-    @required this.onDelete,
-    @required this.onSaveClicked,
-    @required this.isLoading,
-    @required this.isDirty,
+    @required this.viewModel,
   }) : super(key: key);
 
   @override
@@ -32,7 +24,7 @@ class ProductDetails extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.id > 0 ? product.productKey : AppLocalization.of(context).newProduct), // Text(localizations.productDetails),
+        title: Text(viewModel.product.id > 0 ? viewModel.product.productKey : AppLocalization.of(context).newProduct), // Text(localizations.productDetails),
         actions: [
           /*
           IconButton(
@@ -61,14 +53,14 @@ class ProductDetails extends StatelessWidget {
                       TextFormField(
                         autocorrect: false,
                         onSaved: (value) => _productKey = value,
-                        initialValue: product.productKey,
+                        initialValue: viewModel.product.productKey,
                         decoration: InputDecoration(
                           //border: InputBorder.none,
                           labelText: AppLocalization.of(context).product,
                         ),
                       ),
                       TextFormField(
-                        initialValue: product.notes,
+                        initialValue: viewModel.product.notes,
                         onSaved: (value) => _notes = value,
                         maxLines: 4,
                         decoration: InputDecoration(
@@ -76,7 +68,7 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
                       TextFormField(
-                        initialValue: product.cost > 0 ? product.cost.toStringAsFixed(2) : null,
+                        initialValue: viewModel.product.cost > 0 ? viewModel.product.cost.toStringAsFixed(2) : null,
                         onSaved: (value) => _cost = double.tryParse(value) ?? 0.0,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
@@ -93,11 +85,11 @@ class ProductDetails extends StatelessWidget {
               builder: (BuildContext context) {
                 return ProgressButton(
                   label: AppLocalization.of(context).save.toUpperCase(),
-                  isLoading: this.isLoading,
-                  isDirty: this.isDirty,
+                  isLoading: viewModel.isLoading,
+                  isDirty: viewModel.isDirty,
                   onPressed: () {
                     _formKey.currentState.save();
-                    this.onSaveClicked(product.rebuild((b) => b
+                    viewModel.onSaveClicked(viewModel.product.rebuild((b) => b
                       ..productKey = _productKey.trim()
                       ..notes = _notes.trim()
                       ..cost = _cost

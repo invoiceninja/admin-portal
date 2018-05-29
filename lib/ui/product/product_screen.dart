@@ -10,6 +10,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/custom_drawer_vm.dart';
 
+
 class ProductScreen extends StatelessWidget {
   ProductScreen() : super(key: NinjaKeys.productHome);
 
@@ -24,7 +25,7 @@ class ProductScreen extends StatelessWidget {
         ],
       ),
       drawer: CustomDrawerVM(),
-      body: ProductListVM(),
+      body: ProductListBuilder(),
       floatingActionButton: StoreConnector(
         converter: (Store<AppState> store) => store,
         builder: (context, store) {
@@ -32,7 +33,7 @@ class ProductScreen extends StatelessWidget {
             //key: ArchSampleKeys.addProductFab,
             onPressed: () {
               store.dispatch(SelectProductAction(ProductEntity()));
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsVM(id: 0)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder(id: 0)));
             },
             child: Icon(Icons.add),
             //tooltip: ArchSampleLocalizations.of(context).addProduct,

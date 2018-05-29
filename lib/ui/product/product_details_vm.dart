@@ -12,39 +12,35 @@ import 'package:invoiceninja/ui/product/product_details.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 
 
-class ProductDetailsVM extends StatelessWidget {
+class ProductDetailsBuilder extends StatelessWidget {
   final int id;
 
-  ProductDetailsVM({Key key, @required this.id}) : super(key: key);
+  ProductDetailsBuilder({Key key, @required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
+    return StoreConnector<AppState, ProductDetailsVM>(
       //ignoreChange: (state) => productSelector(state.product().list, id).isNotPresent,
       converter: (Store<AppState> store) {
-        return _ViewModel.from(store, id);
+        return ProductDetailsVM.from(store);
       },
       builder: (context, vm) {
         return ProductDetails(
-          isLoading: vm.isLoading,
-          isDirty: vm.isDirty,
-          product: vm.product,
-          onDelete: vm.onDelete,
-          onSaveClicked: vm.onSaveClicked,
+          viewModel: vm,
         );
       },
     );
   }
 }
 
-class _ViewModel {
+class ProductDetailsVM {
   final ProductEntity product;
   final Function onDelete;
   final Function(ProductEntity, BuildContext) onSaveClicked;
   final bool isLoading;
   final bool isDirty;
 
-  _ViewModel({
+  ProductDetailsVM({
     @required this.product,
     @required this.onDelete,
     @required this.onSaveClicked,
@@ -52,14 +48,14 @@ class _ViewModel {
     @required this.isDirty,
   });
 
-  factory _ViewModel.from(Store<AppState> store, int id) {
+  factory ProductDetailsVM.from(Store<AppState> store) {
     final product = store.state.productState().editing;
 
-    return _ViewModel(
+    return ProductDetailsVM(
       isLoading: store.state.isLoading,
       isDirty: product.id == 0,
       product: product,
-      onDelete: () => false, //store.dispatch(DeleteProductAction(product.id)),
+      onDelete: () => false,
       onSaveClicked: (ProductEntity product, BuildContext context) {
         store.dispatch(SaveProductRequest(product, context));
       },

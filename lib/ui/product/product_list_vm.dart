@@ -11,36 +11,36 @@ import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/product/product_details_vm.dart';
 
 
-class ProductListVM extends StatelessWidget {
-  ProductListVM({Key key}) : super(key: key);
+class ProductListBuilder extends StatelessWidget {
+  ProductListBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      converter: _ViewModel.fromStore,
+    return StoreConnector<AppState, ProductListVM>(
+      converter: ProductListVM.fromStore,
       builder: (context, vm) {
         return ProductList(
-          productState: vm.productState,
-          onProductTap: vm.onProductTap,
+          viewModel: vm,
         );
       },
     );
   }
 }
 
-class _ViewModel {
+class ProductListVM {
   final ProductState productState;
-  final bool loading;
+  final bool isLoading;
   final Function(BuildContext, ProductEntity) onProductTap;
 
-  _ViewModel({
+  ProductListVM({
     @required this.productState,
-    @required this.loading,
+    @required this.isLoading,
     @required this.onProductTap,
   });
 
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
+  static ProductListVM fromStore(Store<AppState> store) {
+    print('VM: Last Update ' + store.state.productState().lastUpdated.toString());
+    return ProductListVM(
       productState: store.state.productState(),
       /*
       products: filteredProductsSelector(
@@ -48,10 +48,10 @@ class _ViewModel {
         //activeFilterSelector(store.state),
       ),
       */
-      loading: store.state.isLoading,
+      isLoading: store.state.productState().lastUpdated == 0,
       onProductTap: (context, product) {
         store.dispatch(SelectProductAction(product));
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsVM(id: product.id)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder(id: product.id)));
       },
     );
   }
