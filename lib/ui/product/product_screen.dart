@@ -10,7 +10,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 
-
 class ProductScreen extends StatelessWidget {
   ProductScreen() : super(key: NinjaKeys.productHome);
 
@@ -34,7 +33,8 @@ class ProductScreen extends StatelessWidget {
             //key: ArchSampleKeys.addProductFab,
             onPressed: () {
               store.dispatch(SelectProductAction(ProductEntity()));
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
             },
             child: Icon(Icons.add),
             //tooltip: ArchSampleLocalizations.of(context).addProduct,
