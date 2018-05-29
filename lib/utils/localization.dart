@@ -52,10 +52,6 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
 
   @override
   Future<AppLocalization> load(Locale locale) {
-    print('locale');
-    print(locale);
-    // Returning a SynchronousFuture here because an async "load" operation
-    // isn't needed to produce an instance of AppLocalizations.
     return new SynchronousFuture<AppLocalization>(new AppLocalization(locale));
   }
 
