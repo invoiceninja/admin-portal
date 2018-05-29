@@ -8,7 +8,7 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, UserLoginRequest>(userLoginRequestReducer),
   TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
   TypedReducer<AuthState, UserLoginFailure>(userLoginFailureReducer),
-  TypedReducer<AuthState, UserLogout>(userLogoutReducer),
+  //TypedReducer<AuthState, UserLogout>(userLogoutReducer),
 ]);
 
 AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
@@ -42,8 +42,8 @@ AuthState userLoginFailureReducer(
   );
 }
 
+/*
 AuthState userLogoutReducer(AuthState authState, UserLogout action) {
-  return AuthState().rebuild((b) => b
-      ..isInitialized = true,
-  );
+  return AuthState();
 }
+*/

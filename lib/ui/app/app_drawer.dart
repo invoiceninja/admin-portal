@@ -15,6 +15,10 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (viewModel.selectedCompany == null) {
+      return Container();
+    }
+
     final _singleCompany = Align(
       alignment: FractionalOffset.bottomLeft,
       child: Text(viewModel.selectedCompany.name),
@@ -94,10 +98,7 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(FontAwesomeIcons.powerOff),
             title: Text(AppLocalization.of(context).logOut),
             onTap: () {
-              while(Navigator.of(context).canPop()) {
-                Navigator.of(context).pop();
-              }
-              Navigator.of(context).pushReplacementNamed(AppRoutes.login);
+              viewModel.onLogoutTapped(context);
             },
           ),
         ],
