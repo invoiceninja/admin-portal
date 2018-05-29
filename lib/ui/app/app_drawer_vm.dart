@@ -2,19 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/ui/app/custom_drawer.dart';
+import 'package:invoiceninja/ui/app/app_drawer.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/company/company_selectors.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
-class CustomDrawerVM extends StatelessWidget {
-  CustomDrawerVM({Key key}) : super(key: key);
+class AppDrawerBuilder extends StatelessWidget {
+  AppDrawerBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      converter: _ViewModel.fromStore,
+    return StoreConnector<AppState, AppDrawerVM>(
+      converter: AppDrawerVM.fromStore,
       builder: (context, vm) {
         return CustomDrawer(
           companies: vm.companies,
@@ -27,21 +27,21 @@ class CustomDrawerVM extends StatelessWidget {
   }
 }
 
-class _ViewModel {
+class AppDrawerVM {
   final List<CompanyEntity> companies;
   final CompanyEntity selectedCompany;
   final String selectedCompanyIndex;
   final Function(String) onCompanyChanged;
 
-  _ViewModel({
+  AppDrawerVM({
     @required this.companies,
     @required this.selectedCompany,
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
 });
 
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
+  static AppDrawerVM fromStore(Store<AppState> store) {
+    return AppDrawerVM(
       companies: companiesSelector(store.state),
       selectedCompany: store.state.selectedCompany(),
       selectedCompanyIndex: store.state.selectedCompanyIndex.toString(),

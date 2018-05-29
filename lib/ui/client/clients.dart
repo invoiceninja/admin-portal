@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/keys.dart';
-import 'package:invoiceninja/ui/app/custom_drawer_vm.dart';
+import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientList extends StatelessWidget {
@@ -12,7 +12,7 @@ class ClientList extends StatelessWidget {
       appBar: new AppBar(
         title: new Text(AppLocalization.of(context).clients),
       ),
-      drawer: new CustomDrawerVM(),
+      drawer: new AppDrawerBuilder(),
       body: new Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,

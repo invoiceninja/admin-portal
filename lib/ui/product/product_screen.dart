@@ -8,7 +8,7 @@ import 'package:invoiceninja/ui/product/product_list_vm.dart';
 import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/ui/app/custom_drawer_vm.dart';
+import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 
 
 class ProductScreen extends StatelessWidget {
@@ -24,7 +24,7 @@ class ProductScreen extends StatelessWidget {
           //ExtraActionsContainer(),
         ],
       ),
-      drawer: CustomDrawerVM(),
+      drawer: AppDrawerBuilder(),
       body: ProductListBuilder(),
       floatingActionButton: StoreConnector(
         converter: (Store<AppState> store) => store,
