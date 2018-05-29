@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomDrawer extends StatelessWidget {
   final List<CompanyEntity> companies;
@@ -64,7 +65,7 @@ class CustomDrawer extends StatelessWidget {
             color: Colors.white10,
           ),
           ListTile(
-            leading: Icon(Icons.dashboard),
+            leading: Icon(FontAwesomeIcons.tachometerAlt),
             title: Text(AppLocalization.of(context).dashboard),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
@@ -81,7 +82,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           */
           ListTile(
-            leading: Icon(Icons.language),
+            leading: Icon(FontAwesomeIcons.cube),
             title: Text(AppLocalization.of(context).products),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(AppRoutes.products);
@@ -95,7 +96,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           */
           ListTile(
-            leading: Icon(Icons.power_settings_new),
+            leading: Icon(FontAwesomeIcons.powerOff),
             title: Text(AppLocalization.of(context).logOut),
             onTap: () {
               while(Navigator.of(context).canPop()) {

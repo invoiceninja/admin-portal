@@ -35,7 +35,7 @@ class ProductItem extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: Text(
             product.productKey,
-            key: NinjaKeys.productItemProductKey(product.id),
+            //key: NinjaKeys.productItemProductKey(product.id),
             style: Theme.of(context).textTheme.title,
           ),
         ),
