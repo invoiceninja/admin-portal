@@ -15,13 +15,8 @@ class AppDrawerBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, AppDrawerVM>(
       converter: AppDrawerVM.fromStore,
-      builder: (context, vm) {
-        return CustomDrawer(
-          companies: vm.companies,
-          selectedCompany: vm.selectedCompany,
-          selectedCompanyIndex: vm.selectedCompanyIndex,
-          onCompanyChanged: vm.onCompanyChanged,
-        );
+      builder: (context, viewModel) {
+        return CustomDrawer(viewModel: viewModel);
       },
     );
   }

@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final List<CompanyEntity> companies;
-  final CompanyEntity selectedCompany;
-  final String selectedCompanyIndex;
-  final Function(String) onCompanyChanged;
+  final AppDrawerVM viewModel;
 
   CustomDrawer({
     Key key,
-    @required this.companies,
-    @required this.selectedCompany,
-    @required this.selectedCompanyIndex,
-    @required this.onCompanyChanged,
+    @required this.viewModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _singleCompany = Align(
       alignment: FractionalOffset.bottomLeft,
-      child: Text(selectedCompany.name),
+      child: Text(viewModel.selectedCompany.name),
     );
 
     final _multipleCompanies = Align(
@@ -30,15 +25,15 @@ class CustomDrawer extends StatelessWidget {
       child: new DropdownButtonHideUnderline(
         child: new DropdownButton<String>(
           isDense: true,
-          value: this.selectedCompanyIndex,
-          items: this.companies.map((CompanyEntity company) =>
+          value: viewModel.selectedCompanyIndex,
+          items: viewModel.companies.map((CompanyEntity company) =>
             DropdownMenuItem<String>(
-              value: (this.companies.indexOf(company) + 1).toString(),
+              value: (viewModel.companies.indexOf(company) + 1).toString(),
               child: Text(company.name),
             )
           ).toList(),
           onChanged: (value) {
-            this.onCompanyChanged(value);
+            viewModel.onCompanyChanged(value);
           },
         ),
       ),
@@ -53,13 +48,13 @@ class CustomDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
-                    child: this.selectedCompany.logoUrl != null ? Image.network(this.selectedCompany.logoUrl) : null
+                    child: viewModel.selectedCompany.logoUrl != null ? Image.network(viewModel.selectedCompany.logoUrl) : null
                   ),
                 ),
                 SizedBox(
                   height: 18.0,
                 ),
-                this.companies.length > 1 ? _multipleCompanies : _singleCompany,
+                viewModel.companies.length > 1 ? _multipleCompanies : _singleCompany,
               ],
             )),
             color: Colors.white10,

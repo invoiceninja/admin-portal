@@ -43,7 +43,7 @@ AuthState userLoginFailureReducer(
 }
 
 AuthState userLogoutReducer(AuthState authState, UserLogout action) {
-  return authState.rebuild((b) => b
-      ..isAuthenticated = false
+  return AuthState().rebuild((b) => b
+      ..isInitialized = true,
   );
 }
