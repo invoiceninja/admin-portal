@@ -35,12 +35,12 @@ class ProductsRepository {
     var data = serializers.serializeWith(ProductEntity.serializer, product);
     var response;
 
-    if (product.id > 0) {
-      response = await webClient.put(
-          auth.url + '/products/' + product.id.toString(), company.token, json.encode(data));
-    } else {
+    if (product.id == null) {
       response = await webClient.post(
           auth.url + '/products', company.token, json.encode(data));
+    } else {
+      response = await webClient.put(
+          auth.url + '/products/' + product.id.toString(), company.token, json.encode(data));
     }
 
     ProductItemResponse productResponse = serializers.deserializeWith(

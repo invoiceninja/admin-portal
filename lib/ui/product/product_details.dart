@@ -22,7 +22,7 @@ class ProductDetails extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(viewModel.product.id > 0 ? viewModel.product.productKey : AppLocalization.of(context).newProduct), // Text(localizations.productDetails),
+        title: Text(viewModel.product.id == null ? AppLocalization.of(context).newProduct : viewModel.product.productKey), // Text(localizations.productDetails),
         actions: [
           /*
           IconButton(
@@ -66,7 +66,7 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
                       TextFormField(
-                        initialValue: viewModel.product.cost > 0 ? viewModel.product.cost.toStringAsFixed(2) : null,
+                        initialValue: viewModel.product.cost == null ? null : viewModel.product.cost.toStringAsFixed(2),
                         onSaved: (value) => _cost = double.tryParse(value) ?? 0.0,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(

@@ -28,11 +28,13 @@ abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilde
 
 abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {
 
+  @nullable
   String get name;
 
   //@BuiltValueField(wireName: 'account_key')
   //String get companyKey;
 
+  @nullable
   String get token;
 
   @nullable
@@ -42,16 +44,8 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'logo_url')
   String get logoUrl;
 
-  factory CompanyEntity() {
-    return _$CompanyEntity._(
-      name: '',
-      token: '',
-      logoUrl: '',
-    );
-  }
-
   CompanyEntity._();
-  //factory CompanyEntity([updates(CompanyEntityBuilder b)]) = _$CompanyEntity;
+  factory CompanyEntity([updates(CompanyEntityBuilder b)]) = _$CompanyEntity;
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 
@@ -67,31 +61,32 @@ abstract class DashboardResponse implements Built<DashboardResponse, DashboardRe
 
 
 abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntityBuilder> {
+
+  @nullable
   double get paidToDate;
+
+  @nullable
   int get paidToDateCurrency;
+
+  @nullable
   double get balances;
+
+  @nullable
   int get balancesCurrency;
+
+  @nullable
   double get averageInvoice;
+
+  @nullable
   int get averageInvoiceCurrency;
+
+  @nullable
   int get invoicesSent;
+
+  @nullable
   int get activeClients;
 
-
-  factory DashboardEntity() {
-    return _$DashboardEntity._(
-      paidToDate: 0.0,
-      paidToDateCurrency: 1,
-      balances: 0.0,
-      balancesCurrency: 1,
-      averageInvoice: 0.0,
-      averageInvoiceCurrency: 1,
-      invoicesSent: 0,
-      activeClients: 0,
-    );
-  }
-
-
   DashboardEntity._();
-  //factory DashboardEntity([updates(DashboardEntityBuilder b)]) = _$DashboardEntity;
+  factory DashboardEntity([updates(DashboardEntityBuilder b)]) = _$DashboardEntity;
   static Serializer<DashboardEntity> get serializer => _$dashboardEntitySerializer;
 }

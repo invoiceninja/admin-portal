@@ -24,11 +24,17 @@ abstract class ProductItemResponse implements Built<ProductItemResponse, Product
 
 abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilder> {
 
+  @nullable
   int get id;
 
+  @nullable
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
+
+  @nullable
   String get notes;
+
+  @nullable
   double get cost;
 
   //@JsonKey(name: 'tax_name1')
@@ -50,17 +56,7 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
   //@JsonKey(name: 'is_deleted')
   //bool isDeleted;
 
-
-  factory ProductEntity() {
-    return _$ProductEntity._(
-      id: 0,
-      productKey: '',
-      notes: '',
-      cost: 0.0,
-    );
-  }
-
   ProductEntity._();
-  //factory ProductEntity([updates(ProductEntityBuilder b)]) = _$ProductEntity;
+  factory ProductEntity([updates(ProductEntityBuilder b)]) = _$ProductEntity;
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

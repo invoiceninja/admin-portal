@@ -121,18 +121,31 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
   @override
   Iterable serialize(Serializers serializers, ProductEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
-      'product_key',
-      serializers.serialize(object.productKey,
-          specifiedType: const FullType(String)),
-      'notes',
-      serializers.serialize(object.notes,
-          specifiedType: const FullType(String)),
-      'cost',
-      serializers.serialize(object.cost, specifiedType: const FullType(double)),
-    ];
+    final result = <Object>[];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
+    if (object.productKey != null) {
+      result
+        ..add('product_key')
+        ..add(serializers.serialize(object.productKey,
+            specifiedType: const FullType(String)));
+    }
+    if (object.notes != null) {
+      result
+        ..add('notes')
+        ..add(serializers.serialize(object.notes,
+            specifiedType: const FullType(String)));
+    }
+    if (object.cost != null) {
+      result
+        ..add('cost')
+        ..add(serializers.serialize(object.cost,
+            specifiedType: const FullType(double)));
+    }
 
     return result;
   }
@@ -366,15 +379,7 @@ class _$ProductEntity extends ProductEntity {
       (new ProductEntityBuilder()..update(updates)).build();
 
   _$ProductEntity._({this.id, this.productKey, this.notes, this.cost})
-      : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('ProductEntity', 'id');
-    if (productKey == null)
-      throw new BuiltValueNullFieldError('ProductEntity', 'productKey');
-    if (notes == null)
-      throw new BuiltValueNullFieldError('ProductEntity', 'notes');
-    if (cost == null)
-      throw new BuiltValueNullFieldError('ProductEntity', 'cost');
-  }
+      : super._();
 
   @override
   ProductEntity rebuild(void updates(ProductEntityBuilder b)) =>

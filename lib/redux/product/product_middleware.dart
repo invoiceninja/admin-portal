@@ -30,7 +30,7 @@ Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
     repository.saveData(store.state.selectedCompany(), store.state.authState, action.product).then(
         (product) {
           var message;
-          if (action.product.id == 0) {
+          if (action.product.id == null) {
             message = AppLocalization.of(action.context).successfullyCreatedProduct;
             store.dispatch(AddProductSuccess(product));
           } else {

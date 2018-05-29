@@ -51,7 +51,7 @@ class ProductDetailsVM {
 
     return ProductDetailsVM(
       isLoading: store.state.isLoading,
-      isDirty: product.id == 0,
+      isDirty: product.id == null,
       product: product,
       onDelete: () => false,
       onSaveClicked: (ProductEntity product, BuildContext context) {
