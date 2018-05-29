@@ -91,7 +91,7 @@ class InvoiceNinjaApp extends StatelessWidget {
           },
           AppRoutes.products: (context) {
             return StoreBuilder<AppState>(
-              onInit: (store) => store.dispatch(LoadProductsAction()),
+              onInit: (store) => store.state.productState().isStale() ? store.dispatch(LoadProductsAction()) : null,
               builder: (context, store) {
                 return ProductScreen();
               },

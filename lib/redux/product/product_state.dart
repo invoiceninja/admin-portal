@@ -1,3 +1,4 @@
+import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -28,6 +29,9 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
     );
   }
 
+  bool isStale() {
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+  }
 
   ProductState._();
   //factory ProductState([updates(ProductStateBuilder b)]) = _$ProductState;
