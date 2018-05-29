@@ -25,11 +25,19 @@ class AppLocalization {
       'an_error_occurred': 'An error occurred',
       'successfully_created_product': 'Successfully created product',
       'successfully_updated_product': 'Successfully updated product',
+      'please_enter_your_email': 'Please enter your email',
+      'please_enter_your_password': 'Please enter your password',
+      'please_enter_your_url': 'Please enter your URL',
+      'please_enter_a_product_key': 'Please enter a product key',
     },
   };
 
   String get logOut => _localizedValues[locale.languageCode]['log_out'];
   String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
+  String get pleaseEnterYourEmail => _localizedValues[locale.languageCode]['please_enter_your_email'];
+  String get pleaseEnterYourPassword => _localizedValues[locale.languageCode]['please_enter_your_password'];
+  String get pleaseEnterYourUrl => _localizedValues[locale.languageCode]['please_enter_your_urll'];
+  String get pleaseEnterAProductKey => _localizedValues[locale.languageCode]['please_enter_a_product_key'];
   String get newProduct => _localizedValues[locale.languageCode]['new_product'];
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];

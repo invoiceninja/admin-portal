@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
+import 'package:invoiceninja/utils/localization.dart';
 
 class Login extends StatelessWidget {
   final bool isLoading;
@@ -55,16 +56,18 @@ class Login extends StatelessWidget {
                     autocorrect: false,
                     decoration: InputDecoration(labelText: 'Email'),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (val) =>
-                        val.isEmpty ? 'Please enter your email.' : null,
+                    validator: (val) => val.isEmpty || val.trim().length == 0
+                        ? AppLocalization.of(context).pleaseEnterYourEmail
+                        : null,
                   ),
                   TextFormField(
                     key: _passwordKey,
                     initialValue: authState.password,
                     autocorrect: false,
                     decoration: InputDecoration(labelText: 'Password'),
-                    validator: (val) =>
-                        val.isEmpty ? 'Please enter your password.' : null,
+                    validator: (val) => val.isEmpty || val.trim().length == 0
+                        ? AppLocalization.of(context).pleaseEnterYourPassword
+                        : null,
                     obscureText: true,
                   ),
                   TextFormField(
@@ -72,8 +75,9 @@ class Login extends StatelessWidget {
                     initialValue: authState.url,
                     autocorrect: false,
                     decoration: InputDecoration(labelText: 'URL'),
-                    validator: (val) =>
-                        val.isEmpty ? 'Please enter your URL.' : null,
+                    validator: (val) => val.isEmpty || val.trim().length == 0
+                        ? AppLocalization.of(context).pleaseEnterYourUrl
+                        : null,
                     keyboardType: TextInputType.url,
                   ),
                   authState.error == null

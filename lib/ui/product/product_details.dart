@@ -7,6 +7,12 @@ import 'package:invoiceninja/utils/localization.dart';
 class ProductDetails extends StatelessWidget {
   final ProductDetailsVM viewModel;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormFieldState<String>> _productKeyKey =
+  GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _notesKey =
+  GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _costKey =
+  GlobalKey<FormFieldState<String>>();
 
   ProductDetails({
     Key key,
@@ -16,13 +22,12 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    String _productKey;
-    String _notes;
-    double _cost;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(viewModel.product.id == null ? AppLocalization.of(context).newProduct : viewModel.product.productKey), // Text(localizations.productDetails),
+        title: Text(viewModel.product.id == null
+            ? AppLocalization.of(context).newProduct
+            : viewModel
+                .product.productKey), // Text(localizations.productDetails),
         actions: [
           /*
           IconButton(
@@ -37,67 +42,72 @@ class ProductDetails extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            Card(
-              elevation: 2.0,
-              margin: EdgeInsets.all(0.0),
-              child: Form(
-                key: _formKey,
-                child: Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        autocorrect: false,
-                        onSaved: (value) => _productKey = value,
-                        initialValue: viewModel.product.productKey,
-                        decoration: InputDecoration(
-                          //border: InputBorder.none,
-                          labelText: AppLocalization.of(context).product,
-                        ),
+        child: ListView(children: [
+          Card(
+            elevation: 2.0,
+            margin: EdgeInsets.all(0.0),
+            child: Form(
+              key: _formKey,
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      autocorrect: false,
+                      key: _productKeyKey,
+                      initialValue: viewModel.product.productKey,
+                      decoration: InputDecoration(
+                        //border: InputBorder.none,
+                        labelText: AppLocalization.of(context).product,
                       ),
-                      TextFormField(
-                        initialValue: viewModel.product.notes,
-                        onSaved: (value) => _notes = value,
-                        maxLines: 4,
-                        decoration: InputDecoration(
-                          labelText: AppLocalization.of(context).notes,
-                        ),
+                      validator: (val) => val.isEmpty || val.trim().length == 0
+                          ? AppLocalization.of(context).pleaseEnterAProductKey
+                          : null,
+                    ),
+                    TextFormField(
+                      initialValue: viewModel.product.notes,
+                      key: _notesKey,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        labelText: AppLocalization.of(context).notes,
                       ),
-                      TextFormField(
-                        initialValue: viewModel.product.cost == null ? null : viewModel.product.cost.toStringAsFixed(2),
-                        onSaved: (value) => _cost = double.tryParse(value) ?? 0.0,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          //border: InputBorder.none,
-                          labelText: AppLocalization.of(context).cost,
-                        ),
+                    ),
+                    TextFormField(
+                      initialValue: viewModel.product.cost == null || viewModel.product.cost == 0.0
+                          ? null
+                          : viewModel.product.cost.toStringAsFixed(2),
+                      key: _costKey,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        //border: InputBorder.none,
+                        labelText: AppLocalization.of(context).cost,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            new Builder(
-              builder: (BuildContext context) {
-                return ProgressButton(
-                  label: AppLocalization.of(context).save.toUpperCase(),
-                  isLoading: viewModel.isLoading,
-                  isDirty: viewModel.isDirty,
-                  onPressed: () {
-                    _formKey.currentState.save();
-                    viewModel.onSaveClicked(viewModel.product.rebuild((b) => b
-                      ..productKey = _productKey.trim()
-                      ..notes = _notes.trim()
-                      ..cost = _cost
-                    ), context);
-                  },
-                );
-              }
-            ),
-          ]
-        ),
+          ),
+          new Builder(builder: (BuildContext context) {
+            return ProgressButton(
+              label: AppLocalization.of(context).save.toUpperCase(),
+              isLoading: viewModel.isLoading,
+              isDirty: viewModel.isDirty,
+              onPressed: () {
+                if (!_formKey.currentState.validate()) {
+                  return;
+                }
+
+                viewModel.onSaveClicked(
+                    viewModel.product.rebuild((b) => b
+                      ..productKey = _productKeyKey.currentState.value
+                      ..notes = _notesKey.currentState.value
+                      ..cost = double.tryParse(_costKey.currentState.value) ?? 0.0),
+                    context);
+              },
+            );
+          }),
+        ]),
       ),
       /*
       floatingActionButton: FloatingActionButton(
