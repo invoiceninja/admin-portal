@@ -28,9 +28,7 @@ class ProductList extends StatelessWidget {
           return Column(children: <Widget>[
             ProductItem(
               product: product,
-              onDismissed: (direction) {
-                //_removeProduct(context, product);
-              },
+              onDismissed: (DismissDirection direction) => viewModel.onDismissed(context, product, direction),
               onTap: () => viewModel.onProductTap(context, product),
             ),
             Divider(

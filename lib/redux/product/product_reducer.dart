@@ -14,7 +14,22 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, ProductsLoadedAction>(_setLoadedProducts),
   TypedReducer<ProductState, ProductsNotLoadedAction>(_setNoProducts),
   TypedReducer<ProductState, SelectProductAction>(_selectProduct),
+  TypedReducer<ProductState, ArchiveProductSuccess>(_archiveProduct),
+  TypedReducer<ProductState, DeleteProductSuccess>(_deleteProduct),
+  TypedReducer<ProductState, RestoreProductSuccess>(_restoreProduct),
 ]);
+
+ProductState _archiveProduct(ProductState productState, ArchiveProductSuccess action) {
+  return productState;
+}
+
+ProductState _deleteProduct(ProductState productState, DeleteProductSuccess action) {
+  return productState;
+}
+
+ProductState _restoreProduct(ProductState productState, RestoreProductSuccess action) {
+  return productState;
+}
 
 ProductState _addProduct(
     ProductState productState, AddProductSuccess action) {

@@ -31,15 +31,16 @@ class ProductListVM {
   final ProductState productState;
   final bool isLoading;
   final Function(BuildContext, ProductEntity) onProductTap;
+  final Function(BuildContext, ProductEntity, DismissDirection) onDismissed;
 
   ProductListVM({
     @required this.productState,
     @required this.isLoading,
     @required this.onProductTap,
+    @required this.onDismissed,
   });
 
   static ProductListVM fromStore(Store<AppState> store) {
-    print('VM: Last Update ' + store.state.productState().lastUpdated.toString());
     return ProductListVM(
       productState: store.state.productState(),
       /*
@@ -53,6 +54,13 @@ class ProductListVM {
         store.dispatch(SelectProductAction(product));
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
       },
+      onDismissed: (BuildContext context, ProductEntity product, DismissDirection direction) {
+        if (direction == DismissDirection.endToStart) {
+          store.dispatch(ArchiveProductRequest(context, product.id));
+        } else if (direction == DismissDirection.startToEnd) {
+          store.dispatch(DeleteProductRequest(context, product.id));
+        }
+      }
     );
   }
 }

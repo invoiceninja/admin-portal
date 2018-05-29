@@ -55,7 +55,7 @@ class ProductDetailsVM {
       product: product,
       onDelete: () => false,
       onSaveClicked: (ProductEntity product, BuildContext context) {
-        store.dispatch(SaveProductRequest(product, context));
+        store.dispatch(SaveProductRequest(context, product));
       },
     );
   }

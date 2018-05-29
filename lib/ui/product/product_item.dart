@@ -39,20 +39,19 @@ class ProductItem extends StatelessWidget {
             style: Theme.of(context).textTheme.title,
           ),
         ),
-        /*
-        title: Hero(
-          tag: product.id.toString() + '__heroTag',
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              product.productKey,
-              key: NinjaKeys.productItemProductKey(product.id),
-              style: Theme.of(context).textTheme.title,
-            ),
-          ),
-        ),
-        */
         subtitle: Text(product.notes),
+      ),
+      background: new Container(
+          color: Colors.red,
+          child: const ListTile(
+              leading: const Icon(Icons.delete, color: Colors.white, size: 36.0)
+          )
+      ),
+      secondaryBackground: new Container(
+          color: Colors.orange,
+          child: const ListTile(
+              trailing: const Icon(Icons.archive, color: Colors.white, size: 36.0)
+          )
       ),
     );
   }

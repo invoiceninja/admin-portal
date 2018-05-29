@@ -15,6 +15,10 @@ class AppLocalization {
     'en': {
       'log_out': 'Log Out',
       'dashboard': 'Dashboard',
+      'please_enter_your_email': 'Please enter your email',
+      'please_enter_your_password': 'Please enter your password',
+      'please_enter_your_url': 'Please enter your URL',
+      'please_enter_a_product_key': 'Please enter a product key',
       'new_product': 'New Product',
       'product': 'Product',
       'products': 'Products',
@@ -25,10 +29,9 @@ class AppLocalization {
       'an_error_occurred': 'An error occurred',
       'successfully_created_product': 'Successfully created product',
       'successfully_updated_product': 'Successfully updated product',
-      'please_enter_your_email': 'Please enter your email',
-      'please_enter_your_password': 'Please enter your password',
-      'please_enter_your_url': 'Please enter your URL',
-      'please_enter_a_product_key': 'Please enter a product key',
+      'successfully_archived_product': 'Successfully archived product',
+      'successfully_deleted_product': 'Successfully deleted product',
+      'successfully_restored_product': 'Successfully restored product',
     },
   };
 
@@ -47,6 +50,10 @@ class AppLocalization {
   String get save => _localizedValues[locale.languageCode]['save'];
   String get successfullyCreatedProduct => _localizedValues[locale.languageCode]['successfully_created_product'];
   String get successfullyUpdatedProduct => _localizedValues[locale.languageCode]['successfully_updated_product'];
+  String get successfullyArchivedProduct => _localizedValues[locale.languageCode]['successfully_archived_product'];
+  String get successfullyDeletedProduct=> _localizedValues[locale.languageCode]['successfully_deleted_product'];
+  String get successfullyRestoredProduct => _localizedValues[locale.languageCode]['successfully_restored_product'];
+
 
 }
 

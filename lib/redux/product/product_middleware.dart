@@ -15,16 +15,68 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
     ),
   ),
 ]) {
-  final loadProducts = _createLoadProducts(repository);
-  final saveProduct = _createSaveProduct(repository);
+  final loadProducts = _loadProducts(repository);
+  final saveProduct = _saveProduct(repository);
+  final archiveProduct = _archiveProduct(repository);
+  final deleteProduct = _deleteProduct(repository);
+  final restoreProduct = _restoreProduct(repository);
 
   return [
     TypedMiddleware<AppState, LoadProductsAction>(loadProducts),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
+    TypedMiddleware<AppState, ArchiveProductRequest>(archiveProduct),
+    TypedMiddleware<AppState, DeleteProductRequest>(deleteProduct),
+    TypedMiddleware<AppState, RestoreProductRequest>(restoreProduct),
   ];
 }
 
-Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
+Middleware<AppState> _archiveProduct(ProductsRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+
+    repository.saveData(store.state.selectedCompany(), store.state.authState, action.product, 'archive').then(
+            (product) {
+
+              store.dispatch(ArchiveProductSuccess());
+          Scaffold.of(action.context).showSnackBar(
+              SnackBar(
+                  content: Row(
+                    children: <Widget>[
+                      Icon(Icons.check_circle),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0),
+                        child: Text(AppLocalization.of(action.context).successfullyArchivedProduct),
+                      )
+                    ],
+                  ),
+                  duration: Duration(seconds: 3)
+              )
+          );
+        }
+    ).catchError((error) {
+      print(error);
+      store.dispatch(ArchiveProductFailure());
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _deleteProduct(ProductsRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _restoreProduct(ProductsRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+
+    next(action);
+  };
+}
+
+
+Middleware<AppState> _saveProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     repository.saveData(store.state.selectedCompany(), store.state.authState, action.product).then(
@@ -53,40 +105,16 @@ Middleware<AppState> _createSaveProduct(ProductsRepository repository) {
               )
           );
         }
-    );
-    /*
-        .catchError((error) {
+    ).catchError((error) {
+      print(error);
       store.dispatch(SaveProductFailure(error));
     });
-    */
-
-
-    /*
-    repository.login(action.email, action.password, action.url).then(
-            (data) {
-          _saveAuthLocal(action);
-
-          for (int i=0; i<data.length; i++) {
-            store.dispatch(SelectCompany(i+1));
-            store.dispatch(LoadCompanySuccess(data[i]));
-          }
-
-          store.dispatch(SelectCompany(1));
-          store.dispatch(UserLoginSuccess());
-
-          Navigator.of(action.context).popAndPushNamed(AppRoutes.dashboard);
-        }
-    ).catchError((error) {
-      store.dispatch(UserLoginFailure(error));
-    });
-    */
 
     next(action);
-
   };
 }
 
-Middleware<AppState> _createLoadProducts(ProductsRepository repository) {
+Middleware<AppState> _loadProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     repository.loadList(store.state.selectedCompany(), store.state.authState).then(

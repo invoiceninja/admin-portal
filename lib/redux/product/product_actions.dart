@@ -36,7 +36,7 @@ class SaveProductRequest {
   final BuildContext context;
   final ProductEntity product;
 
-  SaveProductRequest(this.product, this.context);
+  SaveProductRequest(this.context, this.product);
 }
 
 class SaveProductSuccess {
@@ -44,6 +44,33 @@ class SaveProductSuccess {
 
   SaveProductSuccess(this.product);
 }
+
+class ArchiveProductRequest {
+  final BuildContext context;
+  final int productId;
+
+  ArchiveProductRequest(this.context, this.productId);
+}
+class ArchiveProductSuccess {}
+class ArchiveProductFailure {}
+
+class DeleteProductRequest {
+  final BuildContext context;
+  final int productId;
+
+  DeleteProductRequest(this.context, this.productId);
+}
+class DeleteProductSuccess {}
+class DeleteProductFailure {}
+
+class RestoreProductRequest {
+  final BuildContext context;
+  final int productId;
+
+  RestoreProductRequest(this.context, this.productId);
+}
+class RestoreProductSuccess {}
+class RestoreProductFailure {}
 
 class AddProductSuccess {
   final ProductEntity product;
