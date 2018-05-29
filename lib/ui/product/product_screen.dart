@@ -30,6 +30,7 @@ class ProductScreen extends StatelessWidget {
         converter: (Store<AppState> store) => store,
         builder: (context, store) {
           return FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
             //key: ArchSampleKeys.addProductFab,
             onPressed: () {
               store.dispatch(SelectProductAction(ProductEntity()));
