@@ -14,9 +14,12 @@ import 'package:invoiceninja/ui/app/action_popup_menu.dart';
 class ProductScreen extends StatelessWidget {
   ProductScreen() : super(key: NinjaKeys.productHome);
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(AppLocalization.of(context).products),
         actions: [
@@ -25,18 +28,18 @@ class ProductScreen extends StatelessWidget {
             onPressed: () {},
           ),
           ActionMenuButton(
-            onSelected: (ActionMenuChoice choice) {
-              switch (choice.action) {
-                case ActionMenuButtonType.sort:
-                  break;
-                case ActionMenuButtonType.filter:
-                  break;
-              }
-            },
+            scaffoldKey: _scaffoldKey,
+            sortFields: [
+              SortField(ProductFields.productKey, AppLocalization.of((context)).product),
+              SortField(ProductFields.cost, AppLocalization.of((context)).cost),
+            ],
             actions: [
               ActionMenuChoice(ActionMenuButtonType.sort),
-              ActionMenuChoice(ActionMenuButtonType.filter)
+              ActionMenuChoice(ActionMenuButtonType.filter),
             ],
+            onSelected: (ActionMenuChoice choice) {
+
+            },
           )
           //FilterSelector(visible: activeTab == AppTab.products),
           //ExtraActionsContainer(),

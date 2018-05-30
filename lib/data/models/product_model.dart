@@ -22,6 +22,15 @@ abstract class ProductItemResponse implements Built<ProductItemResponse, Product
   static Serializer<ProductItemResponse> get serializer => _$productItemResponseSerializer;
 }
 
+class ProductFields {
+  static String productKey = 'productKey';
+  static String notes = 'notes';
+  static String cost = 'cost';
+  static String updatedAt = 'updatedAt';
+  static String archivedAt = 'archivedAt';
+  static String isDeleted = 'isDeleted';
+}
+
 abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilder> {
 
   @nullable
