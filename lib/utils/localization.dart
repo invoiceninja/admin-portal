@@ -15,7 +15,7 @@ class AppLocalization {
     'en': {
       'log_out': 'Log Out',
       'dashboard': 'Dashboard',
-      'refresh_complete': 'Refresh complete',
+      'refresh_complete': 'Refresh Complete',
       'please_enter_your_email': 'Please enter your email',
       'please_enter_your_password': 'Please enter your password',
       'please_enter_your_url': 'Please enter your URL',

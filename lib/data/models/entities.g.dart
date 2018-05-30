@@ -127,13 +127,19 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
   Iterable serialize(Serializers serializers, CompanyEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'token',
-      serializers.serialize(object.token,
-          specifiedType: const FullType(String)),
-    ];
+    final result = <Object>[];
+    if (object.name != null) {
+      result
+        ..add('name')
+        ..add(serializers.serialize(object.name,
+            specifiedType: const FullType(String)));
+    }
+    if (object.token != null) {
+      result
+        ..add('token')
+        ..add(serializers.serialize(object.token,
+            specifiedType: const FullType(String)));
+    }
     if (object.plan != null) {
       result
         ..add('plan')
@@ -236,32 +242,55 @@ class _$DashboardEntitySerializer
   @override
   Iterable serialize(Serializers serializers, DashboardEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[
-      'paidToDate',
-      serializers.serialize(object.paidToDate,
-          specifiedType: const FullType(double)),
-      'paidToDateCurrency',
-      serializers.serialize(object.paidToDateCurrency,
-          specifiedType: const FullType(int)),
-      'balances',
-      serializers.serialize(object.balances,
-          specifiedType: const FullType(double)),
-      'balancesCurrency',
-      serializers.serialize(object.balancesCurrency,
-          specifiedType: const FullType(int)),
-      'averageInvoice',
-      serializers.serialize(object.averageInvoice,
-          specifiedType: const FullType(double)),
-      'averageInvoiceCurrency',
-      serializers.serialize(object.averageInvoiceCurrency,
-          specifiedType: const FullType(int)),
-      'invoicesSent',
-      serializers.serialize(object.invoicesSent,
-          specifiedType: const FullType(int)),
-      'activeClients',
-      serializers.serialize(object.activeClients,
-          specifiedType: const FullType(int)),
-    ];
+    final result = <Object>[];
+    if (object.paidToDate != null) {
+      result
+        ..add('paidToDate')
+        ..add(serializers.serialize(object.paidToDate,
+            specifiedType: const FullType(double)));
+    }
+    if (object.paidToDateCurrency != null) {
+      result
+        ..add('paidToDateCurrency')
+        ..add(serializers.serialize(object.paidToDateCurrency,
+            specifiedType: const FullType(int)));
+    }
+    if (object.balances != null) {
+      result
+        ..add('balances')
+        ..add(serializers.serialize(object.balances,
+            specifiedType: const FullType(double)));
+    }
+    if (object.balancesCurrency != null) {
+      result
+        ..add('balancesCurrency')
+        ..add(serializers.serialize(object.balancesCurrency,
+            specifiedType: const FullType(int)));
+    }
+    if (object.averageInvoice != null) {
+      result
+        ..add('averageInvoice')
+        ..add(serializers.serialize(object.averageInvoice,
+            specifiedType: const FullType(double)));
+    }
+    if (object.averageInvoiceCurrency != null) {
+      result
+        ..add('averageInvoiceCurrency')
+        ..add(serializers.serialize(object.averageInvoiceCurrency,
+            specifiedType: const FullType(int)));
+    }
+    if (object.invoicesSent != null) {
+      result
+        ..add('invoicesSent')
+        ..add(serializers.serialize(object.invoicesSent,
+            specifiedType: const FullType(int)));
+    }
+    if (object.activeClients != null) {
+      result
+        ..add('activeClients')
+        ..add(serializers.serialize(object.activeClients,
+            specifiedType: const FullType(int)));
+    }
 
     return result;
   }
@@ -507,12 +536,7 @@ class _$CompanyEntity extends CompanyEntity {
       (new CompanyEntityBuilder()..update(updates)).build();
 
   _$CompanyEntity._({this.name, this.token, this.plan, this.logoUrl})
-      : super._() {
-    if (name == null)
-      throw new BuiltValueNullFieldError('CompanyEntity', 'name');
-    if (token == null)
-      throw new BuiltValueNullFieldError('CompanyEntity', 'token');
-  }
+      : super._();
 
   @override
   CompanyEntity rebuild(void updates(CompanyEntityBuilder b)) =>
@@ -723,26 +747,7 @@ class _$DashboardEntity extends DashboardEntity {
       this.averageInvoiceCurrency,
       this.invoicesSent,
       this.activeClients})
-      : super._() {
-    if (paidToDate == null)
-      throw new BuiltValueNullFieldError('DashboardEntity', 'paidToDate');
-    if (paidToDateCurrency == null)
-      throw new BuiltValueNullFieldError(
-          'DashboardEntity', 'paidToDateCurrency');
-    if (balances == null)
-      throw new BuiltValueNullFieldError('DashboardEntity', 'balances');
-    if (balancesCurrency == null)
-      throw new BuiltValueNullFieldError('DashboardEntity', 'balancesCurrency');
-    if (averageInvoice == null)
-      throw new BuiltValueNullFieldError('DashboardEntity', 'averageInvoice');
-    if (averageInvoiceCurrency == null)
-      throw new BuiltValueNullFieldError(
-          'DashboardEntity', 'averageInvoiceCurrency');
-    if (invoicesSent == null)
-      throw new BuiltValueNullFieldError('DashboardEntity', 'invoicesSent');
-    if (activeClients == null)
-      throw new BuiltValueNullFieldError('DashboardEntity', 'activeClients');
-  }
+      : super._();
 
   @override
   DashboardEntity rebuild(void updates(DashboardEntityBuilder b)) =>

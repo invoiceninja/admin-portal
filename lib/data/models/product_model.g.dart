@@ -146,6 +146,24 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add(serializers.serialize(object.cost,
             specifiedType: const FullType(double)));
     }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.isDeleted != null) {
+      result
+        ..add('is_deleted')
+        ..add(serializers.serialize(object.isDeleted,
+            specifiedType: const FullType(bool)));
+    }
 
     return result;
   }
@@ -176,6 +194,18 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         case 'cost':
           result.cost = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'is_deleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -374,11 +404,24 @@ class _$ProductEntity extends ProductEntity {
   final String notes;
   @override
   final double cost;
+  @override
+  final int updatedAt;
+  @override
+  final int archivedAt;
+  @override
+  final bool isDeleted;
 
   factory _$ProductEntity([void updates(ProductEntityBuilder b)]) =>
       (new ProductEntityBuilder()..update(updates)).build();
 
-  _$ProductEntity._({this.id, this.productKey, this.notes, this.cost})
+  _$ProductEntity._(
+      {this.id,
+      this.productKey,
+      this.notes,
+      this.cost,
+      this.updatedAt,
+      this.archivedAt,
+      this.isDeleted})
       : super._();
 
   @override
@@ -395,14 +438,24 @@ class _$ProductEntity extends ProductEntity {
     return id == other.id &&
         productKey == other.productKey &&
         notes == other.notes &&
-        cost == other.cost;
+        cost == other.cost &&
+        updatedAt == other.updatedAt &&
+        archivedAt == other.archivedAt &&
+        isDeleted == other.isDeleted;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, id.hashCode), productKey.hashCode), notes.hashCode),
-        cost.hashCode));
+        $jc(
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), productKey.hashCode),
+                        notes.hashCode),
+                    cost.hashCode),
+                updatedAt.hashCode),
+            archivedAt.hashCode),
+        isDeleted.hashCode));
   }
 
   @override
@@ -411,7 +464,10 @@ class _$ProductEntity extends ProductEntity {
           ..add('id', id)
           ..add('productKey', productKey)
           ..add('notes', notes)
-          ..add('cost', cost))
+          ..add('cost', cost)
+          ..add('updatedAt', updatedAt)
+          ..add('archivedAt', archivedAt)
+          ..add('isDeleted', isDeleted))
         .toString();
   }
 }
@@ -436,6 +492,18 @@ class ProductEntityBuilder
   double get cost => _$this._cost;
   set cost(double cost) => _$this._cost = cost;
 
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+
+  int _archivedAt;
+  int get archivedAt => _$this._archivedAt;
+  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+
+  bool _isDeleted;
+  bool get isDeleted => _$this._isDeleted;
+  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
   ProductEntityBuilder();
 
   ProductEntityBuilder get _$this {
@@ -444,6 +512,9 @@ class ProductEntityBuilder
       _productKey = _$v.productKey;
       _notes = _$v.notes;
       _cost = _$v.cost;
+      _updatedAt = _$v.updatedAt;
+      _archivedAt = _$v.archivedAt;
+      _isDeleted = _$v.isDeleted;
       _$v = null;
     }
     return this;
@@ -464,7 +535,13 @@ class ProductEntityBuilder
   _$ProductEntity build() {
     final _$result = _$v ??
         new _$ProductEntity._(
-            id: id, productKey: productKey, notes: notes, cost: cost);
+            id: id,
+            productKey: productKey,
+            notes: notes,
+            cost: cost,
+            updatedAt: updatedAt,
+            archivedAt: archivedAt,
+            isDeleted: isDeleted);
     replace(_$result);
     return _$result;
   }

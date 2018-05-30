@@ -37,6 +37,18 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
   @nullable
   double get cost;
 
+  @nullable
+  @BuiltValueField(wireName: 'updated_at')
+  int get updatedAt;
+
+  @nullable
+  @BuiltValueField(wireName: 'archived_at')
+  int get archivedAt;
+
+  @nullable
+  @BuiltValueField(wireName: 'is_deleted')
+  bool get isDeleted;
+
   //@JsonKey(name: 'tax_name1')
   //String taxName1;
   //@JsonKey(name: 'tax_rate1')
@@ -45,16 +57,10 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
   //String taxName2;
   //@JsonKey(name: 'tax_rate2')
   //double taxRate2;
-  //@JsonKey(name: 'updated_at')
-  //int updatedAt;
-  //@JsonKey(name: 'archived_at')
-  //int archivedAt;
   //@JsonKey(name: 'custom_value1')
   //String customValue1;
   //@JsonKey(name: 'custom_value2')
   //String customValue2;
-  //@JsonKey(name: 'is_deleted')
-  //bool isDeleted;
 
   ProductEntity._();
   factory ProductEntity([updates(ProductEntityBuilder b)]) = _$ProductEntity;
