@@ -1,5 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/entity_ui_state.dart';
 
 part 'ui_state.g.dart';
@@ -10,7 +11,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   factory UIState() {
     return _$UIState._(
-      productUIState: EntityUIState(),
+      productUIState: EntityUIState(ProductFields.productKey),
     );
   }
 

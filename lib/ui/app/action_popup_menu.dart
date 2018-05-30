@@ -24,12 +24,39 @@ class ActionMenuButton extends StatelessWidget {
   final List<ActionMenuChoice> actions;
   final List<SortField> sortFields;
   final Function onSelected;
+  final Function(String) onSelectedSort;
 
-  ActionMenuButton(
-      {this.actions, this.onSelected, this.scaffoldKey, this.sortFields});
+  ActionMenuButton({
+    this.actions,
+    this.onSelected,
+    this.scaffoldKey,
+    this.sortFields,
+    this.onSelectedSort});
 
   @override
   Widget build(BuildContext context) {
+    _showSortScreen() {
+      scaffoldKey.currentState.showBottomSheet((context) {
+        return Container(
+          color: Colors.grey[200],
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: sortFields.map((sortField) {
+                return RadioListTile(
+                  dense: true,
+                  title: Text(sortField.label),
+                  groupValue: ActionMenuButtonType.sort,
+                  onChanged: (value) {
+                    print('value changed: ' + value);
+                    this.onSelectedSort(value);
+                  },
+                  value: sortField.field,
+                );
+              }).toList()),
+        );
+      });
+    }
+
     return PopupMenuButton<ActionMenuChoice>(
       itemBuilder: (BuildContext context) {
         return actions.map((ActionMenuChoice choice) {
@@ -59,24 +86,7 @@ class ActionMenuButton extends StatelessWidget {
       onSelected: (ActionMenuChoice choice) {
         switch (choice.action) {
           case ActionMenuButtonType.sort:
-            scaffoldKey.currentState.showBottomSheet((context) {
-              return Container(
-                color: Colors.grey[200],
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: sortFields.map((sortField) {
-                      return RadioListTile(
-                        dense: true,
-                        title: Text(sortField.label),
-                        groupValue: ActionMenuButtonType.sort,
-                        onChanged: (value) {
-                          print('value changed: ' + value);
-                        },
-                        value: sortField.field,
-                      );
-                    }).toList()),
-              );
-            });
+            _showSortScreen();
             break;
           case ActionMenuButtonType.filter:
             break;

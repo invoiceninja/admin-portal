@@ -7,7 +7,13 @@ abstract class EntityUIState implements Built<EntityUIState, EntityUIStateBuilde
 
   String get sortField;
 
+  factory EntityUIState(sortField) {
+    return _$EntityUIState._(
+      sortField: sortField,
+    );
+  }
+
   EntityUIState._();
-  factory EntityUIState([updates(EntityUIStateBuilder b)]) = _$EntityUIState;
+  //factory EntityUIState([updates(EntityUIStateBuilder b)]) = _$EntityUIState;
   static Serializer<EntityUIState> get serializer => _$entityUIStateSerializer;
 }

@@ -29,6 +29,9 @@ class ProductScreen extends StatelessWidget {
           ),
           ActionMenuButton(
             scaffoldKey: _scaffoldKey,
+            onSelectedSort: (value) {
+              print('sort by: ' + value);
+            },
             sortFields: [
               SortField(ProductFields.productKey, AppLocalization.of((context)).product),
               SortField(ProductFields.cost, AppLocalization.of((context)).cost),
