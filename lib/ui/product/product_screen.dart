@@ -9,6 +9,7 @@ import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja/ui/app/action_popup_menu.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen() : super(key: NinjaKeys.productHome);
@@ -19,6 +20,24 @@ class ProductScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(AppLocalization.of(context).products),
         actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {},
+          ),
+          ActionMenuButton(
+            onSelected: (ActionMenuChoice choice) {
+              switch (choice.action) {
+                case ActionMenuButtonType.sort:
+                  break;
+                case ActionMenuButtonType.filter:
+                  break;
+              }
+            },
+            actions: [
+              ActionMenuChoice(ActionMenuButtonType.sort),
+              ActionMenuChoice(ActionMenuButtonType.filter)
+            ],
+          )
           //FilterSelector(visible: activeTab == AppTab.products),
           //ExtraActionsContainer(),
         ],

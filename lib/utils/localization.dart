@@ -14,6 +14,9 @@ class AppLocalization {
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'log_out': 'Log Out',
+      'filter': 'Filter',
+      'sort': 'Sort',
+      'search': 'Search',
       'dashboard': 'Dashboard',
       'refresh_complete': 'Refresh Complete',
       'please_enter_your_email': 'Please enter your email',
@@ -37,6 +40,9 @@ class AppLocalization {
   };
 
   String get logOut => _localizedValues[locale.languageCode]['log_out'];
+  String get filter => _localizedValues[locale.languageCode]['filter'];
+  String get sort => _localizedValues[locale.languageCode]['sort'];
+  String get search => _localizedValues[locale.languageCode]['search'];
   String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
   String get refreshComplete => _localizedValues[locale.languageCode]['refresh_complete'];
   String get pleaseEnterYourEmail => _localizedValues[locale.languageCode]['please_enter_your_email'];
