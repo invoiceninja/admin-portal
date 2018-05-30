@@ -1,3 +1,4 @@
+import 'package:invoiceninja/redux/app/ui_reducer.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -26,6 +27,7 @@ AppState appReducer(AppState state, action) {
         ? companyReducer(state.companyState4, action) : state.companyState4)
     ..companyState5.replace(state.selectedCompanyIndex == 5
         ? companyReducer(state.companyState5, action) : state.companyState5)
+      ..uiState.replace(uiReducer(state.uiState, action))
   );
 }
 

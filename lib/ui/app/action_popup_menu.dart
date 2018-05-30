@@ -66,9 +66,12 @@ class ActionMenuButton extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: sortFields.map((sortField) {
                       return RadioListTile(
+                        dense: true,
                         title: Text(sortField.label),
-                        groupValue: 'sort',
-                        onChanged: (String) {},
+                        groupValue: ActionMenuButtonType.sort,
+                        onChanged: (value) {
+                          print('value changed: ' + value);
+                        },
                         value: sortField.field,
                       );
                     }).toList()),

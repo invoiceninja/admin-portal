@@ -50,6 +50,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'companyState5',
       serializers.serialize(object.companyState5,
           specifiedType: const FullType(CompanyState)),
+      'uiState',
+      serializers.serialize(object.uiState,
+          specifiedType: const FullType(UIState)),
     ];
 
     return result;
@@ -98,6 +101,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.companyState5.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyState)) as CompanyState);
           break;
+        case 'uiState':
+          result.uiState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UIState)) as UIState);
+          break;
       }
     }
 
@@ -122,6 +129,8 @@ class _$AppState extends AppState {
   final CompanyState companyState4;
   @override
   final CompanyState companyState5;
+  @override
+  final UIState uiState;
 
   factory _$AppState([void updates(AppStateBuilder b)]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -134,7 +143,8 @@ class _$AppState extends AppState {
       this.companyState2,
       this.companyState3,
       this.companyState4,
-      this.companyState5})
+      this.companyState5,
+      this.uiState})
       : super._() {
     if (isLoading == null)
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
@@ -152,6 +162,8 @@ class _$AppState extends AppState {
       throw new BuiltValueNullFieldError('AppState', 'companyState4');
     if (companyState5 == null)
       throw new BuiltValueNullFieldError('AppState', 'companyState5');
+    if (uiState == null)
+      throw new BuiltValueNullFieldError('AppState', 'uiState');
   }
 
   @override
@@ -172,7 +184,8 @@ class _$AppState extends AppState {
         companyState2 == other.companyState2 &&
         companyState3 == other.companyState3 &&
         companyState4 == other.companyState4 &&
-        companyState5 == other.companyState5;
+        companyState5 == other.companyState5 &&
+        uiState == other.uiState;
   }
 
   @override
@@ -182,13 +195,17 @@ class _$AppState extends AppState {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, isLoading.hashCode), authState.hashCode),
-                            selectedCompanyIndex.hashCode),
-                        companyState1.hashCode),
-                    companyState2.hashCode),
-                companyState3.hashCode),
-            companyState4.hashCode),
-        companyState5.hashCode));
+                        $jc(
+                            $jc(
+                                $jc($jc(0, isLoading.hashCode),
+                                    authState.hashCode),
+                                selectedCompanyIndex.hashCode),
+                            companyState1.hashCode),
+                        companyState2.hashCode),
+                    companyState3.hashCode),
+                companyState4.hashCode),
+            companyState5.hashCode),
+        uiState.hashCode));
   }
 
   @override
@@ -201,7 +218,8 @@ class _$AppState extends AppState {
           ..add('companyState2', companyState2)
           ..add('companyState3', companyState3)
           ..add('companyState4', companyState4)
-          ..add('companyState5', companyState5))
+          ..add('companyState5', companyState5)
+          ..add('uiState', uiState))
         .toString();
   }
 }
@@ -253,6 +271,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set companyState5(CompanyStateBuilder companyState5) =>
       _$this._companyState5 = companyState5;
 
+  UIStateBuilder _uiState;
+  UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
+  set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -265,6 +287,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _companyState3 = _$v.companyState3?.toBuilder();
       _companyState4 = _$v.companyState4?.toBuilder();
       _companyState5 = _$v.companyState5?.toBuilder();
+      _uiState = _$v.uiState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -294,7 +317,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               companyState2: companyState2.build(),
               companyState3: companyState3.build(),
               companyState4: companyState4.build(),
-              companyState5: companyState5.build());
+              companyState5: companyState5.build(),
+              uiState: uiState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -311,6 +335,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         companyState4.build();
         _$failedField = 'companyState5';
         companyState5.build();
+        _$failedField = 'uiState';
+        uiState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

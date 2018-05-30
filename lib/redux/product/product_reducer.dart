@@ -1,6 +1,17 @@
+import 'package:invoiceninja/redux/app/entity_ui_state.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
+
+final productUIReducer = combineReducers<EntityUIState>([
+  TypedReducer<EntityUIState, SortProducts>(_sortProducts),
+]);
+
+EntityUIState _sortProducts(EntityUIState productUIState, SortProducts action) {
+  return productUIState.rebuild((b) => b
+      ..sortField = action.field
+  );
+}
 
 final productsReducer = combineReducers<ProductState>([
   /*

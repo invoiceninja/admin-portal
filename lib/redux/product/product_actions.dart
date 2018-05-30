@@ -11,7 +11,6 @@ class LoadProductsAction {
 
 class ProductsNotLoadedAction {
   final dynamic error;
-
   ProductsNotLoadedAction(this.error);
 
   @override
@@ -22,7 +21,6 @@ class ProductsNotLoadedAction {
 
 class ProductsLoadedAction {
   final BuiltList<ProductEntity> products;
-
   ProductsLoadedAction(this.products);
 
   @override
@@ -33,14 +31,12 @@ class ProductsLoadedAction {
 
 class SelectProductAction {
   final ProductEntity product;
-
   SelectProductAction(this.product);
 }
 
 class SaveProductRequest {
   final Completer completer;
   final ProductEntity product;
-
   SaveProductRequest(this.completer, this.product);
 }
 
@@ -71,7 +67,6 @@ class DeleteProductFailure {}
 class RestoreProductRequest {
   final Completer completer;
   final int productId;
-
   RestoreProductRequest(this.completer, this.productId);
 }
 class RestoreProductSuccess {}
@@ -79,12 +74,15 @@ class RestoreProductFailure {}
 
 class AddProductSuccess {
   final ProductEntity product;
-
   AddProductSuccess(this.product);
 }
 
 class SaveProductFailure {
   final String error;
-
   SaveProductFailure (this.error);
+}
+
+class SortProducts {
+  final String field;
+  SortProducts(this.field);
 }
