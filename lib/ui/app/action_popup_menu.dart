@@ -22,16 +22,19 @@ class ActionMenuChoice {
 class ActionMenuButton extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final List<ActionMenuChoice> actions;
-  final List<SortField> sortFields;
   final Function onSelected;
+
+  final List<SortField> sortFields;
   final Function(String) onSelectedSort;
+  final String selectedSort;
 
   ActionMenuButton({
     this.actions,
     this.onSelected,
     this.scaffoldKey,
     this.sortFields,
-    this.onSelectedSort});
+    this.onSelectedSort,
+    this.selectedSort});
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +45,12 @@ class ActionMenuButton extends StatelessWidget {
           child: Column(
               mainAxisSize: MainAxisSize.min,
               children: sortFields.map((sortField) {
+                print('field: ' + sortField.field );
+                print('match: ' + (sortField.field == selectedSort ? 'yes' : 'no'));
                 return RadioListTile(
                   dense: true,
                   title: Text(sortField.label),
-                  groupValue: ActionMenuButtonType.sort,
+                  groupValue: selectedSort,
                   onChanged: (value) {
                     print('value changed: ' + value);
                     this.onSelectedSort(value);

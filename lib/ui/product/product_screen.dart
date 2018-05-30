@@ -27,24 +27,29 @@ class ProductScreen extends StatelessWidget {
             icon: Icon(Icons.search),
             onPressed: () {},
           ),
-          ActionMenuButton(
-            scaffoldKey: _scaffoldKey,
-            onSelectedSort: (value) {
-              print('sort by: ' + value);
+          StoreConnector(
+            converter: (Store<AppState> store) => store,
+            builder: (context, store) {
+              return ActionMenuButton(
+                scaffoldKey: _scaffoldKey,
+                onSelectedSort: (value) {
+                  store.dispatch(SortProducts(value));
+                },
+                selectedSort: store.state.productUIState().sortField,
+                sortFields: [
+                  SortField(ProductFields.productKey,
+                      AppLocalization.of((context)).product),
+                  SortField(
+                      ProductFields.cost, AppLocalization.of((context)).cost),
+                ],
+                actions: [
+                  ActionMenuChoice(ActionMenuButtonType.sort),
+                  ActionMenuChoice(ActionMenuButtonType.filter),
+                ],
+                onSelected: (ActionMenuChoice choice) {},
+              );
             },
-            sortFields: [
-              SortField(ProductFields.productKey, AppLocalization.of((context)).product),
-              SortField(ProductFields.cost, AppLocalization.of((context)).cost),
-            ],
-            actions: [
-              ActionMenuChoice(ActionMenuButtonType.sort),
-              ActionMenuChoice(ActionMenuButtonType.filter),
-            ],
-            onSelected: (ActionMenuChoice choice) {
-
-            },
-          )
-          //FilterSelector(visible: activeTab == AppTab.products),
+          ), //FilterSelector(visible: activeTab == AppTab.products),
           //ExtraActionsContainer(),
         ],
       ),
