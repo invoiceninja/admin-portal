@@ -24,9 +24,10 @@ class ProductList extends StatelessWidget {
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.builder(
           key: NinjaKeys.productList,
-          itemCount: viewModel.products.length,
+          itemCount: viewModel.productList.length,
           itemBuilder: (BuildContext context, index) {
-            var product = viewModel.products[index];
+            var productId = viewModel.productList[index];
+            var product = viewModel.productMap[productId];
             return Column(children: <Widget>[
               ProductItem(
                 product: product,

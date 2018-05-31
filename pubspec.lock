@@ -184,6 +184,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.0-alpha.12"
+  func:
+    dependency: transitive
+    description:
+      name: func
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   glob:
     dependency: transitive
     description:
@@ -268,6 +275,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.2+1"
+  memoize:
+    dependency: "direct main"
+    description:
+      name: memoize
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.0"
   meta:
     dependency: transitive
     description:

@@ -1,3 +1,4 @@
+import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -12,20 +13,22 @@ enum VisibilityFilter {all, active, completed}
 List<ProductEntity> productsSelector(AppState state) =>
     state.productState().list.map((id) => state.productState().map[id]);
 
-List<ProductEntity> filteredProductsSelector(
-    ProductState productState,
+var memoizedProductList = memo2((BuiltMap<int, ProductEntity> productMap, EntityUIState productUIState) => filteredProductsSelector(productMap, productUIState));
+
+List<int> filteredProductsSelector(
+    BuiltMap<int, ProductEntity> productMap,
     EntityUIState productUIState) {
 
-  var list = productState.list.toList();
+  print('== SORTING LIST ===');
+  var list = productMap.keys.toList(growable: false);
 
   list.sort((productAId, productBId) {
-    var productA = productState.map[productAId];
-    var productB = productState.map[productBId];
+    var productA = productMap[productAId];
+    var productB = productMap[productBId];
     return productA.compareTo(productB, productUIState.sortField, productUIState.sortAscending);
   });
 
-  print('== SORTING LIST');
-  return list.map((id) => productState.map[id]).toList();
+  return list;
 }
 
 /*

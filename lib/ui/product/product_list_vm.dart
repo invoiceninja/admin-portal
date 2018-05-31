@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/product/product_selectors.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:flutter/material.dart';
@@ -31,14 +32,16 @@ class ProductListBuilder extends StatelessWidget {
 }
 
 class ProductListVM {
-  final List<ProductEntity> products;
+  final List<int> productList;
+  final BuiltMap<int, ProductEntity> productMap;
   final bool isLoading;
   final Function(BuildContext, ProductEntity) onProductTap;
   final Function(BuildContext, ProductEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
 
   ProductListVM({
-    @required this.products,
+    @required this.productList,
+    @required this.productMap,
     @required this.isLoading,
     @required this.onProductTap,
     @required this.onDismissed,
@@ -59,7 +62,8 @@ class ProductListVM {
     }
 
     return ProductListVM(
-        products: filteredProductsSelector(store.state.productState(), store.state.productUIState()),
+        productList: memoizedProductList(store.state.productState().map, store.state.productUIState()),
+        productMap: store.state.productState().map,
         isLoading: store.state.productState().lastUpdated == 0,
         onProductTap: (context, product) {
           store.dispatch(SelectProductAction(product));
