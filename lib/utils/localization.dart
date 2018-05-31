@@ -17,6 +17,9 @@ class AppLocalization {
       'filter': 'Filter',
       'sort': 'Sort',
       'search': 'Search',
+      'active': 'Active',
+      'archived': 'Archived',
+      'deleted': 'Deleted',
       'dashboard': 'Dashboard',
       'refresh_complete': 'Refresh Complete',
       'please_enter_your_email': 'Please enter your email',
@@ -46,6 +49,9 @@ class AppLocalization {
   String get filter => _localizedValues[locale.languageCode]['filter'];
   String get sort => _localizedValues[locale.languageCode]['sort'];
   String get search => _localizedValues[locale.languageCode]['search'];
+  String get active => _localizedValues[locale.languageCode]['active'];
+  String get archived => _localizedValues[locale.languageCode]['archived'];
+  String get deleted => _localizedValues[locale.languageCode]['deleted'];
   String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
   String get refreshComplete => _localizedValues[locale.languageCode]['refresh_complete'];
   String get pleaseEnterYourEmail => _localizedValues[locale.languageCode]['please_enter_your_email'];
