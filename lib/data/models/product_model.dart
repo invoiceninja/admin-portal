@@ -71,6 +71,23 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
   //@JsonKey(name: 'custom_value2')
   //String customValue2;
 
+  int compareTo(ProductEntity product, String sortField, bool sortAscending) {
+    int response = 0;
+    ProductEntity productA = sortAscending ? this : product;
+    ProductEntity productB = sortAscending ? product: this;
+
+    switch (sortField) {
+      case ProductFields.cost:
+        response = productA.cost.compareTo(productB.cost);
+    }
+
+    if (response == 0) {
+      return productA.productKey.compareTo(productB.productKey);
+    } else {
+      return response;
+    }
+  }
+
   ProductEntity._();
   factory ProductEntity([updates(ProductEntityBuilder b)]) = _$ProductEntity;
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;

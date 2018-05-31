@@ -21,14 +21,7 @@ List<ProductEntity> filteredProductsSelector(
   list.sort((productAId, productBId) {
     var productA = productState.map[productAId];
     var productB = productState.map[productBId];
-    var sortField = productUIState.sortField;
-
-    switch (sortField) {
-      case ProductFields.productKey:
-        return productA.productKey.compareTo(productB.productKey);
-      case ProductFields.cost:
-        return productA.cost.compareTo(productB.cost);
-    }
+    return productA.compareTo(productB, productUIState.sortField, productUIState.sortAscending);
   });
 
   print('== SORTING LIST');
