@@ -23,6 +23,8 @@ class AppLocalization {
       'please_enter_your_password': 'Please enter your password',
       'please_enter_your_url': 'Please enter your URL',
       'please_enter_a_product_key': 'Please enter a product key',
+      'ascending': 'Ascending',
+      'descending': 'Descending',
       'new_product': 'New Product',
       'product': 'Product',
       'products': 'Products',
@@ -50,6 +52,8 @@ class AppLocalization {
   String get pleaseEnterYourPassword => _localizedValues[locale.languageCode]['please_enter_your_password'];
   String get pleaseEnterYourUrl => _localizedValues[locale.languageCode]['please_enter_your_urll'];
   String get pleaseEnterAProductKey => _localizedValues[locale.languageCode]['please_enter_a_product_key'];
+  String get ascending => _localizedValues[locale.languageCode]['ascending'];
+  String get descending => _localizedValues[locale.languageCode]['descending'];
   String get newProduct => _localizedValues[locale.languageCode]['new_product'];
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];

@@ -11,7 +11,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/product/product_state.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/product/product_details_vm.dart';
 

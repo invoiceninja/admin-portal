@@ -1,9 +1,7 @@
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/app/entity_ui_state.dart';
-import 'package:invoiceninja/redux/product/product_state.dart';
 
 
 //List<ProductEntity> productsSelector(AppState state) =>

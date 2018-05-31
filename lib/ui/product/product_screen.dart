@@ -9,7 +9,6 @@ import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
-import 'package:invoiceninja/ui/app/action_popup_menu.dart';
 import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -48,8 +47,9 @@ class ProductScreen extends StatelessWidget {
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         scaffoldKey: _scaffoldKey,
-        selectedSort: StoreProvider.of<AppState>(context).state.productUIState().sortField,
-        onSelectedSort: (value) {
+        selectedSortField: StoreProvider.of<AppState>(context).state.productUIState().sortField,
+        selectedSortAscending: StoreProvider.of<AppState>(context).state.productUIState().sortAscending,
+        onSelectedSortField: (value) {
           StoreProvider.of<AppState>(context).dispatch(SortProducts(value));
         },
         sortFields: [

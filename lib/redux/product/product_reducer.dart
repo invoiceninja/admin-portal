@@ -1,5 +1,4 @@
 import 'package:invoiceninja/redux/app/entity_ui_state.dart';
-import 'package:invoiceninja/ui/app/action_popup_menu.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
@@ -10,6 +9,7 @@ final productUIReducer = combineReducers<EntityUIState>([
 
 EntityUIState _sortProducts(EntityUIState productUIState, SortProducts action) {
   return productUIState.rebuild((b) => b
+      ..sortAscending = b.sortField != action.field || ! b.sortAscending
       ..sortField = action.field
   );
 }
