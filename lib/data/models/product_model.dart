@@ -23,12 +23,12 @@ abstract class ProductItemResponse implements Built<ProductItemResponse, Product
 }
 
 class ProductFields {
-  static String productKey = 'productKey';
-  static String notes = 'notes';
-  static String cost = 'cost';
-  static String updatedAt = 'updatedAt';
-  static String archivedAt = 'archivedAt';
-  static String isDeleted = 'isDeleted';
+  static const String productKey = 'productKey';
+  static const String notes = 'notes';
+  static const String cost = 'cost';
+  static const String updatedAt = 'updatedAt';
+  static const String archivedAt = 'archivedAt';
+  static const String isDeleted = 'isDeleted';
 }
 
 abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilder> {

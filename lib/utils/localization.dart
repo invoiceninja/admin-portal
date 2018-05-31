@@ -26,6 +26,7 @@ class AppLocalization {
       'new_product': 'New Product',
       'product': 'Product',
       'products': 'Products',
+      'productKey': 'Product Key',
       'notes': 'Notes',
       'cost': 'Cost',
       'clients': 'Clients',
@@ -52,6 +53,7 @@ class AppLocalization {
   String get newProduct => _localizedValues[locale.languageCode]['new_product'];
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
+  String get productKey => _localizedValues[locale.languageCode]['product_key'];
   String get notes => _localizedValues[locale.languageCode]['notes'];
   String get cost => _localizedValues[locale.languageCode]['cost'];
   String get clients => _localizedValues[locale.languageCode]['clients'];
@@ -62,7 +64,9 @@ class AppLocalization {
   String get successfullyDeletedProduct=> _localizedValues[locale.languageCode]['successfully_deleted_product'];
   String get successfullyRestoredProduct => _localizedValues[locale.languageCode]['successfully_restored_product'];
 
-
+  String lookup(String key) {
+    return _localizedValues[locale.languageCode][key] ?? 'Missing: ' + key;
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

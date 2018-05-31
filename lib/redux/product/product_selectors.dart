@@ -1,5 +1,8 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/app/entity_ui_state.dart';
+import 'package:invoiceninja/redux/product/product_state.dart';
 
 bool isLoadingSelector(AppState state) => state.isLoading;
 
@@ -10,21 +13,26 @@ List<ProductEntity> productsSelector(AppState state) =>
     state.productState().list.map((id) => state.productState().map[id]);
 
 List<ProductEntity> filteredProductsSelector(
-    List<ProductEntity> products,
-    //VisibilityFilter activeFilter,
-    ) {
-  return products.where((product) {
-    return true;
-    /*
-    if (activeFilter == VisibilityFilter.all) {
-      return true;
-    } else if (activeFilter == VisibilityFilter.active) {
-      return !product.complete;
-    } else if (activeFilter == VisibilityFilter.completed) {
-      return product.complete;
+    ProductState productState,
+    EntityUIState productUIState) {
+
+  var list = productState.list.toList();
+
+  list.sort((productAId, productBId) {
+    var productA = productState.map[productAId];
+    var productB = productState.map[productBId];
+    var sortField = productUIState.sortField;
+
+    switch (sortField) {
+      case ProductFields.productKey:
+        return productA.productKey.compareTo(productB.productKey);
+      case ProductFields.cost:
+        return productA.cost.compareTo(productB.cost);
     }
-    */
-  }).toList();
+  });
+
+  print('== SORTING LIST');
+  return list.map((id) => productState.map[id]).toList();
 }
 
 /*

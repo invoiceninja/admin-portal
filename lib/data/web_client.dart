@@ -31,8 +31,6 @@ class WebClient {
         'Content-Type': 'application/json',
       },
     );
-    print('== pOST ==');
-    print(data);
     try {
       final jsonResponse = json.decode(response.body);
       return jsonResponse;

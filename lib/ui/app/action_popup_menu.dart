@@ -6,12 +6,6 @@ enum ActionMenuButtonType {
   sort,
 }
 
-class SortField {
-  final String field;
-  final String label;
-  SortField(this.field, this.label);
-}
-
 class ActionMenuChoice {
   const ActionMenuChoice(this.action, {this.label, this.icon});
   final String label;
@@ -24,8 +18,8 @@ class ActionMenuButton extends StatelessWidget {
   final List<ActionMenuChoice> actions;
   final Function onSelected;
 
-  final List<SortField> sortFields;
-  final Function(String) onSelectedSort;
+  final List<String> sortFields;
+  final Function(String, Function) onSelectedSort;
   final String selectedSort;
 
   ActionMenuButton({
@@ -38,26 +32,48 @@ class ActionMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _showSortScreen() {
+    print('=== BUILD ===');
+
+    showSortScreen() {
       scaffoldKey.currentState.showBottomSheet((context) {
         return Container(
           color: Colors.grey[200],
           child: Column(
               mainAxisSize: MainAxisSize.min,
               children: sortFields.map((sortField) {
-                print('field: ' + sortField.field );
-                print('match: ' + (sortField.field == selectedSort ? 'yes' : 'no'));
                 return RadioListTile(
                   dense: true,
-                  title: Text(sortField.label),
+                  title: Text(AppLocalization.of((context)).lookup(sortField)),
                   groupValue: selectedSort,
                   onChanged: (value) {
-                    print('value changed: ' + value);
-                    this.onSelectedSort(value);
+                    this.onSelectedSort(value, showSortScreen);
                   },
-                  value: sortField.field,
+                  value: sortField,
                 );
               }).toList()),
+        );
+      });
+    }
+
+    showFIlterScree() {
+      scaffoldKey.currentState.showBottomSheet((context) {
+        bool _active = false;
+
+        return Container(
+          color: Colors.grey[200],
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CheckboxListTile(
+                  value: true,
+                  title: Text('Active'),
+                  selected: _active,
+                  onChanged: (checked) {
+                    _active = ! checked;
+                  },
+                ),
+              ]
+          ),
         );
       });
     }
@@ -91,9 +107,10 @@ class ActionMenuButton extends StatelessWidget {
       onSelected: (ActionMenuChoice choice) {
         switch (choice.action) {
           case ActionMenuButtonType.sort:
-            _showSortScreen();
+            showSortScreen();
             break;
           case ActionMenuButtonType.filter:
+            showFIlterScree();
             break;
         }
       },

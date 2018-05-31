@@ -30,6 +30,17 @@ class _$EntityUIStateSerializer implements StructuredSerializer<EntityUIState> {
       'sortField',
       serializers.serialize(object.sortField,
           specifiedType: const FullType(String)),
+      'sortAscending',
+      serializers.serialize(object.sortAscending,
+          specifiedType: const FullType(bool)),
+      'stateFilterIds',
+      serializers.serialize(object.stateFilterIds,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(int)])),
+      'statusFilterIds',
+      serializers.serialize(object.statusFilterIds,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(int)])),
     ];
 
     return result;
@@ -50,6 +61,22 @@ class _$EntityUIStateSerializer implements StructuredSerializer<EntityUIState> {
           result.sortField = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'sortAscending':
+          result.sortAscending = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'stateFilterIds':
+          result.stateFilterIds.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(int)]))
+              as BuiltList);
+          break;
+        case 'statusFilterIds':
+          result.statusFilterIds.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(int)]))
+              as BuiltList);
+          break;
       }
     }
 
@@ -60,13 +87,30 @@ class _$EntityUIStateSerializer implements StructuredSerializer<EntityUIState> {
 class _$EntityUIState extends EntityUIState {
   @override
   final String sortField;
+  @override
+  final bool sortAscending;
+  @override
+  final BuiltList<int> stateFilterIds;
+  @override
+  final BuiltList<int> statusFilterIds;
 
   factory _$EntityUIState([void updates(EntityUIStateBuilder b)]) =>
       (new EntityUIStateBuilder()..update(updates)).build();
 
-  _$EntityUIState._({this.sortField}) : super._() {
+  _$EntityUIState._(
+      {this.sortField,
+      this.sortAscending,
+      this.stateFilterIds,
+      this.statusFilterIds})
+      : super._() {
     if (sortField == null)
       throw new BuiltValueNullFieldError('EntityUIState', 'sortField');
+    if (sortAscending == null)
+      throw new BuiltValueNullFieldError('EntityUIState', 'sortAscending');
+    if (stateFilterIds == null)
+      throw new BuiltValueNullFieldError('EntityUIState', 'stateFilterIds');
+    if (statusFilterIds == null)
+      throw new BuiltValueNullFieldError('EntityUIState', 'statusFilterIds');
   }
 
   @override
@@ -80,18 +124,27 @@ class _$EntityUIState extends EntityUIState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! EntityUIState) return false;
-    return sortField == other.sortField;
+    return sortField == other.sortField &&
+        sortAscending == other.sortAscending &&
+        stateFilterIds == other.stateFilterIds &&
+        statusFilterIds == other.statusFilterIds;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, sortField.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, sortField.hashCode), sortAscending.hashCode),
+            stateFilterIds.hashCode),
+        statusFilterIds.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('EntityUIState')
-          ..add('sortField', sortField))
+          ..add('sortField', sortField)
+          ..add('sortAscending', sortAscending)
+          ..add('stateFilterIds', stateFilterIds)
+          ..add('statusFilterIds', statusFilterIds))
         .toString();
   }
 }
@@ -104,11 +157,31 @@ class EntityUIStateBuilder
   String get sortField => _$this._sortField;
   set sortField(String sortField) => _$this._sortField = sortField;
 
+  bool _sortAscending;
+  bool get sortAscending => _$this._sortAscending;
+  set sortAscending(bool sortAscending) =>
+      _$this._sortAscending = sortAscending;
+
+  ListBuilder<int> _stateFilterIds;
+  ListBuilder<int> get stateFilterIds =>
+      _$this._stateFilterIds ??= new ListBuilder<int>();
+  set stateFilterIds(ListBuilder<int> stateFilterIds) =>
+      _$this._stateFilterIds = stateFilterIds;
+
+  ListBuilder<int> _statusFilterIds;
+  ListBuilder<int> get statusFilterIds =>
+      _$this._statusFilterIds ??= new ListBuilder<int>();
+  set statusFilterIds(ListBuilder<int> statusFilterIds) =>
+      _$this._statusFilterIds = statusFilterIds;
+
   EntityUIStateBuilder();
 
   EntityUIStateBuilder get _$this {
     if (_$v != null) {
       _sortField = _$v.sortField;
+      _sortAscending = _$v.sortAscending;
+      _stateFilterIds = _$v.stateFilterIds?.toBuilder();
+      _statusFilterIds = _$v.statusFilterIds?.toBuilder();
       _$v = null;
     }
     return this;
@@ -127,7 +200,27 @@ class EntityUIStateBuilder
 
   @override
   _$EntityUIState build() {
-    final _$result = _$v ?? new _$EntityUIState._(sortField: sortField);
+    _$EntityUIState _$result;
+    try {
+      _$result = _$v ??
+          new _$EntityUIState._(
+              sortField: sortField,
+              sortAscending: sortAscending,
+              stateFilterIds: stateFilterIds.build(),
+              statusFilterIds: statusFilterIds.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'stateFilterIds';
+        stateFilterIds.build();
+        _$failedField = 'statusFilterIds';
+        statusFilterIds.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'EntityUIState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
