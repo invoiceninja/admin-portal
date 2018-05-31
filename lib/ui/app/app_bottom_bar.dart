@@ -9,6 +9,8 @@ class AppBottomBar extends StatelessWidget {
   final String selectedSortField;
   final bool selectedSortAscending;
 
+  PersistentBottomSheetController _sortController;
+
   AppBottomBar({
       this.scaffoldKey,
       this.sortFields,
@@ -19,7 +21,12 @@ class AppBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _showSortSheet = () {
-      scaffoldKey.currentState.showBottomSheet((context) {
+      if (_sortController != null) {
+        _sortController.close();
+        return;
+      }
+
+      _sortController = scaffoldKey.currentState.showBottomSheet((context) {
         return Container(
           color: Colors.grey[200],
           child: Column(
@@ -42,6 +49,10 @@ class AppBottomBar extends StatelessWidget {
                 );
               }).toList()),
         );
+      });
+
+      _sortController.closed.whenComplete(() {
+        _sortController = null;
       });
     };
 
