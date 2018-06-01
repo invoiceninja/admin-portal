@@ -6,7 +6,6 @@ import 'package:redux_logging/redux_logging.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard.dart';
-import 'package:invoiceninja/ui/client/clients.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/redux/app/app_reducer.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -20,7 +19,6 @@ import 'package:invoiceninja/utils/localization.dart';
 
 
 void main() {
-
   final store = Store<AppState>(
       appReducer,
       initialState: AppState(),
@@ -36,20 +34,21 @@ void main() {
   runApp(new InvoiceNinjaApp(store: store));
 }
 
-class InvoiceNinjaApp extends StatelessWidget {
+class InvoiceNinjaApp extends StatefulWidget  {
 
   final Store<AppState> store;
 
   InvoiceNinjaApp({Key key, this.store}) : super(key: key);
 
   @override
+  _InvoiceNinjaAppState createState() => new _InvoiceNinjaAppState();
+}
+
+class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
+  @override
   Widget build(BuildContext context) {
-    // The StoreProvider should wrap your MaterialApp or WidgetsApp. This will
-    // ensure all routes have access to the store.
     return new StoreProvider<AppState>(
-      // Pass the store to the StoreProvider. Any ancestor `StoreConnector`
-      // Widgets will find and use this value as the `Store`.
-      store: store,
+      store: widget.store,
       child: new MaterialApp(
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
@@ -85,6 +84,7 @@ class InvoiceNinjaApp extends StatelessWidget {
               },
             );
           },
+          /*
           AppRoutes.clients: (context) {
             return StoreBuilder<AppState>(
               builder: (context, store) {
@@ -92,6 +92,7 @@ class InvoiceNinjaApp extends StatelessWidget {
               },
             );
           },
+          */
           AppRoutes.products: (context) {
             return StoreBuilder<AppState>(
               onInit: (store) => store.state.productState().isStale() ? store.dispatch(LoadProductsAction()) : null,
