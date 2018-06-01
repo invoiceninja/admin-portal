@@ -21,16 +21,9 @@ import 'package:invoiceninja/utils/localization.dart';
 
 void main() {
 
-  final store = new Store<AppState>(null);
-
-  runApp(new InvoiceNinjaApp());
-}
-
-class InvoiceNinjaApp extends StatelessWidget {
-
   final store = Store<AppState>(
-    appReducer,
-    initialState: AppState(),
+      appReducer,
+      initialState: AppState(),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDashboardMiddleware())
@@ -39,6 +32,15 @@ class InvoiceNinjaApp extends StatelessWidget {
           LoggingMiddleware.printer(),
         ])
   );
+
+  runApp(new InvoiceNinjaApp(store: store));
+}
+
+class InvoiceNinjaApp extends StatelessWidget {
+
+  final Store<AppState> store;
+
+  InvoiceNinjaApp({Key key, this.store}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class InvoiceNinjaApp extends StatelessWidget {
       // Widgets will find and use this value as the `Store`.
       store: store,
       child: new MaterialApp(
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,

@@ -47,6 +47,14 @@ class AppBottomBar extends StatelessWidget {
           color: Colors.grey[200],
           child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Column(
+              children: EntityState.values.map<Widget>((state) {
+                /*
+                return CheckboxListTile(
+                  //title: Text(AppLocalization.of(context).lookup(state)),
+                );
+                */
+              }),
+              /*
               children: <Widget>[
                 CheckboxListTile(
                   value: true,
@@ -76,6 +84,7 @@ class AppBottomBar extends StatelessWidget {
                   },
                 ),
               ],
+                */
             ),
             /*
             Column(

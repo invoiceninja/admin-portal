@@ -31,7 +31,7 @@ class AppLocalization {
       'new_product': 'New Product',
       'product': 'Product',
       'products': 'Products',
-      'productKey': 'Product Key',
+      'productKey': 'Product',
       'notes': 'Notes',
       'cost': 'Cost',
       'clients': 'Clients',
