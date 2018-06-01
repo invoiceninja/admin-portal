@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja/data/models/models.dart';
 
-enum EntityState {
-  active,
-  archived,
-  deleted,
-}
 
 class AppBottomBar extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -48,43 +44,13 @@ class AppBottomBar extends StatelessWidget {
           child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Column(
               children: EntityState.values.map<Widget>((state) {
-                /*
                 return CheckboxListTile(
-                  //title: Text(AppLocalization.of(context).lookup(state)),
+                  title: Text(AppLocalization.of(context).lookup(state.toString())),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  value: true,
+                  dense: true,
                 );
-                */
-              }),
-              /*
-              children: <Widget>[
-                CheckboxListTile(
-                  value: true,
-                  dense: true,
-                  title: Text(AppLocalization.of((context)).active),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  onChanged: (value) {
-
-                  },
-                ),
-                CheckboxListTile(
-                  value: true,
-                  dense: true,
-                  title: Text(AppLocalization.of((context)).archived),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  onChanged: (value) {
-
-                  },
-                ),
-                CheckboxListTile(
-                  value: true,
-                  dense: true,
-                  title: Text(AppLocalization.of((context)).deleted),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  onChanged: (value) {
-
-                  },
-                ),
-              ],
-                */
+              }).toList(),
             ),
             /*
             Column(

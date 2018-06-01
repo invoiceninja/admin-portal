@@ -4,6 +4,20 @@ import 'package:built_value/serializer.dart';
 
 part 'entities.g.dart';
 
+class EntityState extends EnumClass {
+  static Serializer<EntityState> get serializer => _$entityStateSerializer;
+
+  static const EntityState active = _$active;
+  static const EntityState archived = _$archived;
+  static const EntityState deleted = _$deleted;
+
+  const EntityState._(String name) : super(name);
+
+  static BuiltSet<EntityState> get values => _$values;
+  static EntityState valueOf(String name) => _$valueOf(name);
+}
+
+
 abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> {
 
   String get message;

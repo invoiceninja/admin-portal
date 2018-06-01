@@ -14,6 +14,31 @@ part of 'entities.dart';
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
 
+const EntityState _$active = const EntityState._('active');
+const EntityState _$archived = const EntityState._('archived');
+const EntityState _$deleted = const EntityState._('deleted');
+
+EntityState _$valueOf(String name) {
+  switch (name) {
+    case 'active':
+      return _$active;
+    case 'archived':
+      return _$archived;
+    case 'deleted':
+      return _$deleted;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<EntityState> _$values =
+    new BuiltSet<EntityState>(const <EntityState>[
+  _$active,
+  _$archived,
+  _$deleted,
+]);
+
+Serializer<EntityState> _$entityStateSerializer = new _$EntityStateSerializer();
 Serializer<ErrorMessage> _$errorMessageSerializer =
     new _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
@@ -24,6 +49,23 @@ Serializer<DashboardResponse> _$dashboardResponseSerializer =
     new _$DashboardResponseSerializer();
 Serializer<DashboardEntity> _$dashboardEntitySerializer =
     new _$DashboardEntitySerializer();
+
+class _$EntityStateSerializer implements PrimitiveSerializer<EntityState> {
+  @override
+  final Iterable<Type> types = const <Type>[EntityState];
+  @override
+  final String wireName = 'EntityState';
+
+  @override
+  Object serialize(Serializers serializers, EntityState object,
+          {FullType specifiedType: FullType.unspecified}) =>
+      object.name;
+
+  @override
+  EntityState deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType: FullType.unspecified}) =>
+      EntityState.valueOf(serialized as String);
+}
 
 class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
   @override
