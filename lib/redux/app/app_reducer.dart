@@ -1,4 +1,4 @@
-import 'package:invoiceninja/redux/app/ui_reducer.dart';
+import 'package:invoiceninja/redux/ui/ui_reducer.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';

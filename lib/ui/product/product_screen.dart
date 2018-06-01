@@ -47,8 +47,8 @@ class ProductScreen extends StatelessWidget {
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         scaffoldKey: _scaffoldKey,
-        selectedSortField: StoreProvider.of<AppState>(context).state.productUIState().sortField,
-        selectedSortAscending: StoreProvider.of<AppState>(context).state.productUIState().sortAscending,
+        selectedSortField: StoreProvider.of<AppState>(context).state.productListState().sortField,
+        selectedSortAscending: StoreProvider.of<AppState>(context).state.productListState().sortAscending,
         onSelectedSortField: (value) {
           StoreProvider.of<AppState>(context).dispatch(SortProducts(value));
         },

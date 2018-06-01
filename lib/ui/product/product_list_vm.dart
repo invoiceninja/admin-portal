@@ -61,7 +61,7 @@ class ProductListVM {
     }
 
     return ProductListVM(
-        productList: memoizedProductList(store.state.productState().map, store.state.productUIState()),
+        productList: memoizedProductList(store.state.productState().map, store.state.productListState()),
         productMap: store.state.productState().map,
         isLoading: store.state.productState().lastUpdated == 0,
         onProductTap: (context, product) {

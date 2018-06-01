@@ -1,7 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/entity_ui_state.dart';
+import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 
 part 'ui_state.g.dart';
 

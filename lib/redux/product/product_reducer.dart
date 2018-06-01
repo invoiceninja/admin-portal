@@ -1,18 +1,26 @@
-import 'package:invoiceninja/redux/app/entity_ui_state.dart';
+import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 
-final productUIReducer = combineReducers<EntityUIState>([
-  TypedReducer<EntityUIState, SortProducts>(_sortProducts),
+EntityUIState productUIReducer(EntityUIState state, action) {
+  return state.rebuild((b) => b
+    ..listUIState.replace(productListReducer(state.listUIState, action))
+  );
+}
+
+final productListReducer = combineReducers<ListUIState>([
+  TypedReducer<ListUIState, SortProducts>(_sortProducts),
 ]);
 
-EntityUIState _sortProducts(EntityUIState productUIState, SortProducts action) {
-  return productUIState.rebuild((b) => b
+ListUIState _sortProducts(ListUIState productListState, SortProducts action) {
+  return productListState.rebuild((b) => b
       ..sortAscending = b.sortField != action.field || ! b.sortAscending
       ..sortField = action.field
   );
 }
+
 
 final productsReducer = combineReducers<ProductState>([
   /*

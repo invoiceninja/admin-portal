@@ -2,7 +2,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_logging/redux_logging.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard.dart';
@@ -27,7 +26,7 @@ void main() {
         ..addAll(createStoreDashboardMiddleware())
         ..addAll(createStoreProductsMiddleware())
         ..addAll([
-          LoggingMiddleware.printer(),
+          //LoggingMiddleware.printer(),
         ])
   );
 

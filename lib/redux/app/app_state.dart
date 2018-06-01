@@ -1,6 +1,7 @@
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/ui_state.dart';
-import 'package:invoiceninja/redux/app/entity_ui_state.dart';
+import 'package:invoiceninja/redux/ui/ui_state.dart';
+import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/redux/company/company_state.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
@@ -56,20 +57,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return this.companyState1;
   }
 
-  CompanyEntity selectedCompany() {
-    return this.selectedCompanyState().company;
-  }
+  CompanyEntity selectedCompany() => this.selectedCompanyState().company;
+  DashboardState dashboardState() => this.selectedCompanyState().dashboardState;
 
-  DashboardState dashboardState() {
-    return this.selectedCompanyState().dashboardState;
-  }
-
-  ProductState productState() {
-    return this.selectedCompanyState().productState;
-  }
-
-  EntityUIState productUIState() {
-    return this.uiState.productUIState;
-  }
-
+  ProductState productState() => this.selectedCompanyState().productState;
+  EntityUIState productUIState() => this.uiState.productUIState;
+  ListUIState productListState() => this.uiState.productUIState.listUIState;
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'entity_ui_state.dart';
+part of 'list_ui_state.dart';
 
 // **************************************************************************
 // Generator: BuiltValueGenerator
@@ -14,17 +14,16 @@ part of 'entity_ui_state.dart';
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
 
-Serializer<EntityUIState> _$entityUIStateSerializer =
-    new _$EntityUIStateSerializer();
+Serializer<ListUIState> _$listUIStateSerializer = new _$ListUIStateSerializer();
 
-class _$EntityUIStateSerializer implements StructuredSerializer<EntityUIState> {
+class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
   @override
-  final Iterable<Type> types = const [EntityUIState, _$EntityUIState];
+  final Iterable<Type> types = const [ListUIState, _$ListUIState];
   @override
-  final String wireName = 'EntityUIState';
+  final String wireName = 'ListUIState';
 
   @override
-  Iterable serialize(Serializers serializers, EntityUIState object,
+  Iterable serialize(Serializers serializers, ListUIState object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
       'sortField',
@@ -47,9 +46,9 @@ class _$EntityUIStateSerializer implements StructuredSerializer<EntityUIState> {
   }
 
   @override
-  EntityUIState deserialize(Serializers serializers, Iterable serialized,
+  ListUIState deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = new EntityUIStateBuilder();
+    final result = new ListUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -84,7 +83,7 @@ class _$EntityUIStateSerializer implements StructuredSerializer<EntityUIState> {
   }
 }
 
-class _$EntityUIState extends EntityUIState {
+class _$ListUIState extends ListUIState {
   @override
   final String sortField;
   @override
@@ -94,36 +93,36 @@ class _$EntityUIState extends EntityUIState {
   @override
   final BuiltList<int> statusFilterIds;
 
-  factory _$EntityUIState([void updates(EntityUIStateBuilder b)]) =>
-      (new EntityUIStateBuilder()..update(updates)).build();
+  factory _$ListUIState([void updates(ListUIStateBuilder b)]) =>
+      (new ListUIStateBuilder()..update(updates)).build();
 
-  _$EntityUIState._(
+  _$ListUIState._(
       {this.sortField,
       this.sortAscending,
       this.stateFilterIds,
       this.statusFilterIds})
       : super._() {
     if (sortField == null)
-      throw new BuiltValueNullFieldError('EntityUIState', 'sortField');
+      throw new BuiltValueNullFieldError('ListUIState', 'sortField');
     if (sortAscending == null)
-      throw new BuiltValueNullFieldError('EntityUIState', 'sortAscending');
+      throw new BuiltValueNullFieldError('ListUIState', 'sortAscending');
     if (stateFilterIds == null)
-      throw new BuiltValueNullFieldError('EntityUIState', 'stateFilterIds');
+      throw new BuiltValueNullFieldError('ListUIState', 'stateFilterIds');
     if (statusFilterIds == null)
-      throw new BuiltValueNullFieldError('EntityUIState', 'statusFilterIds');
+      throw new BuiltValueNullFieldError('ListUIState', 'statusFilterIds');
   }
 
   @override
-  EntityUIState rebuild(void updates(EntityUIStateBuilder b)) =>
+  ListUIState rebuild(void updates(ListUIStateBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  EntityUIStateBuilder toBuilder() => new EntityUIStateBuilder()..replace(this);
+  ListUIStateBuilder toBuilder() => new ListUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! EntityUIState) return false;
+    if (other is! ListUIState) return false;
     return sortField == other.sortField &&
         sortAscending == other.sortAscending &&
         stateFilterIds == other.stateFilterIds &&
@@ -140,7 +139,7 @@ class _$EntityUIState extends EntityUIState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('EntityUIState')
+    return (newBuiltValueToStringHelper('ListUIState')
           ..add('sortField', sortField)
           ..add('sortAscending', sortAscending)
           ..add('stateFilterIds', stateFilterIds)
@@ -149,9 +148,8 @@ class _$EntityUIState extends EntityUIState {
   }
 }
 
-class EntityUIStateBuilder
-    implements Builder<EntityUIState, EntityUIStateBuilder> {
-  _$EntityUIState _$v;
+class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
+  _$ListUIState _$v;
 
   String _sortField;
   String get sortField => _$this._sortField;
@@ -174,9 +172,9 @@ class EntityUIStateBuilder
   set statusFilterIds(ListBuilder<int> statusFilterIds) =>
       _$this._statusFilterIds = statusFilterIds;
 
-  EntityUIStateBuilder();
+  ListUIStateBuilder();
 
-  EntityUIStateBuilder get _$this {
+  ListUIStateBuilder get _$this {
     if (_$v != null) {
       _sortField = _$v.sortField;
       _sortAscending = _$v.sortAscending;
@@ -188,22 +186,22 @@ class EntityUIStateBuilder
   }
 
   @override
-  void replace(EntityUIState other) {
+  void replace(ListUIState other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$EntityUIState;
+    _$v = other as _$ListUIState;
   }
 
   @override
-  void update(void updates(EntityUIStateBuilder b)) {
+  void update(void updates(ListUIStateBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$EntityUIState build() {
-    _$EntityUIState _$result;
+  _$ListUIState build() {
+    _$ListUIState _$result;
     try {
       _$result = _$v ??
-          new _$EntityUIState._(
+          new _$ListUIState._(
               sortField: sortField,
               sortAscending: sortAscending,
               stateFilterIds: stateFilterIds.build(),
@@ -217,7 +215,7 @@ class EntityUIStateBuilder
         statusFilterIds.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'EntityUIState', _$failedField, e.toString());
+            'ListUIState', _$failedField, e.toString());
       }
       rethrow;
     }
