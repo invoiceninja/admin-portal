@@ -18,11 +18,8 @@ List<int> visibleProductsSelector(
     BuiltList<int> productList,
     ListUIState productListState) {
 
-  print('visibleProductsSelector...');
-
   var list = productList.where((productId) {
     var product = productMap[productId];
-    print('filter: ' + product.productKey + ': ' + product.matchesStates(productListState.stateFilters).toString());
     return product.matchesStates(productListState.stateFilters);
   }).toList();
 
