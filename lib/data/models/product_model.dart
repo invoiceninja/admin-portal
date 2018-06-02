@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/data/models/entities.dart';
 
 part 'product_model.g.dart';
 
@@ -86,6 +87,32 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
     } else {
       return response;
     }
+  }
+
+  bool matchesStates(BuiltList<EntityState> states) {
+    if (states.length == 0) {
+      return true;
+    }
+
+    if (states.contains(EntityState.active)) {
+      if (this.archivedAt == null) {
+        return true;
+      }
+    }
+
+    if (states.contains(EntityState.archived)) {
+      if (this.archivedAt != null && ! this.isDeleted) {
+        return true;
+      }
+    }
+
+    if (states.contains(EntityState.deleted)) {
+      if (this.archivedAt != null && this.isDeleted) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   ProductEntity._();

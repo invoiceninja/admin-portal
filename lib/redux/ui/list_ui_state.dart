@@ -16,7 +16,9 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
     return _$ListUIState._(
       sortField: sortField,
       sortAscending: true,
-      stateFilters: BuiltList<EntityState>(),
+      stateFilters: BuiltList<EntityState>([
+        EntityState.active,
+      ]),
       statusFilters: BuiltList<int>(),
     );
   }
