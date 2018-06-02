@@ -86,3 +86,9 @@ class SortProducts {
   final String field;
   SortProducts(this.field);
 }
+
+class FilterProductsByState {
+  final EntityState state;
+
+  FilterProductsByState(this.state);
+}

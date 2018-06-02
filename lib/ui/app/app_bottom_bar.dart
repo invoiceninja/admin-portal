@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -10,10 +11,10 @@ class AppBottomBar extends StatefulWidget {
   final String selectedSortField;
   final bool selectedSortAscending;
 
-  final List<int> selectStatusIds;
-  final List<int> selectStateIds;
-  final Function(List<int>) onSelectedStatusIds;
-  final Function(List<int>) onSelectedStateIds;
+  final BuiltList<int> selectedStatuses;
+  final BuiltList<EntityState> selectedStates;
+  final Function(List<int>) onSelectedStatus;
+  final Function(EntityState, bool) onSelectedState;
 
   AppBottomBar(
       {this.scaffoldKey,
@@ -21,10 +22,10 @@ class AppBottomBar extends StatefulWidget {
         this.onSelectedSortField,
         this.selectedSortField,
         this.selectedSortAscending,
-        this.selectStateIds,
-        this.selectStatusIds,
-        this.onSelectedStateIds,
-        this.onSelectedStatusIds});
+        this.selectedStates,
+        this.selectedStatuses,
+        this.onSelectedState,
+        this.onSelectedStatus});
 
   @override
   _AppBottomBarState createState() => new _AppBottomBarState();
@@ -51,10 +52,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 return CheckboxListTile(
                   title: Text(AppLocalization.of(context).lookup(state.toString())),
                   controlAffinity: ListTileControlAffinity.leading,
-                  value: true,
+                  value: widget.selectedStates.contains(state),
                   dense: true,
                   onChanged: (value) {
-
+                    widget.onSelectedState(state, value);
                   },
                 );
               }).toList(),

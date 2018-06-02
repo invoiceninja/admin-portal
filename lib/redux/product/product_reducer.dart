@@ -12,7 +12,20 @@ EntityUIState productUIReducer(EntityUIState state, action) {
 
 final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortProducts>(_sortProducts),
+  TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
 ]);
+
+ListUIState _filterProductsByState(ListUIState productListState, FilterProductsByState action) {
+  if (productListState.stateFilters.contains(action.state)) {
+    return productListState.rebuild((b) => b
+        ..stateFilters.remove(action.state)
+    );
+  } else {
+    return productListState.rebuild((b) => b
+        ..stateFilters.add(action.state)
+    );
+  }
+}
 
 ListUIState _sortProducts(ListUIState productListState, SortProducts action) {
   return productListState.rebuild((b) => b

@@ -56,6 +56,10 @@ class ProductScreen extends StatelessWidget {
           ProductFields.productKey,
           ProductFields.cost,
         ],
+        selectedStates: StoreProvider.of<AppState>(context).state.productListState().stateFilters,
+        onSelectedState: (EntityState state, value) {
+          StoreProvider.of<AppState>(context).dispatch(FilterProductsByState(state));
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: StoreConnector(

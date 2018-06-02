@@ -32,12 +32,12 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
       'sortAscending',
       serializers.serialize(object.sortAscending,
           specifiedType: const FullType(bool)),
-      'stateFilterIds',
-      serializers.serialize(object.stateFilterIds,
+      'stateFilters',
+      serializers.serialize(object.stateFilters,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(int)])),
-      'statusFilterIds',
-      serializers.serialize(object.statusFilterIds,
+              const FullType(BuiltList, const [const FullType(EntityState)])),
+      'statusFilters',
+      serializers.serialize(object.statusFilters,
           specifiedType:
               const FullType(BuiltList, const [const FullType(int)])),
     ];
@@ -64,14 +64,14 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           result.sortAscending = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'stateFilterIds':
-          result.stateFilterIds.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(int)]))
+        case 'stateFilters':
+          result.stateFilters.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(EntityState)]))
               as BuiltList);
           break;
-        case 'statusFilterIds':
-          result.statusFilterIds.replace(serializers.deserialize(value,
+        case 'statusFilters':
+          result.statusFilters.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
               as BuiltList);
@@ -89,9 +89,9 @@ class _$ListUIState extends ListUIState {
   @override
   final bool sortAscending;
   @override
-  final BuiltList<int> stateFilterIds;
+  final BuiltList<EntityState> stateFilters;
   @override
-  final BuiltList<int> statusFilterIds;
+  final BuiltList<int> statusFilters;
 
   factory _$ListUIState([void updates(ListUIStateBuilder b)]) =>
       (new ListUIStateBuilder()..update(updates)).build();
@@ -99,17 +99,17 @@ class _$ListUIState extends ListUIState {
   _$ListUIState._(
       {this.sortField,
       this.sortAscending,
-      this.stateFilterIds,
-      this.statusFilterIds})
+      this.stateFilters,
+      this.statusFilters})
       : super._() {
     if (sortField == null)
       throw new BuiltValueNullFieldError('ListUIState', 'sortField');
     if (sortAscending == null)
       throw new BuiltValueNullFieldError('ListUIState', 'sortAscending');
-    if (stateFilterIds == null)
-      throw new BuiltValueNullFieldError('ListUIState', 'stateFilterIds');
-    if (statusFilterIds == null)
-      throw new BuiltValueNullFieldError('ListUIState', 'statusFilterIds');
+    if (stateFilters == null)
+      throw new BuiltValueNullFieldError('ListUIState', 'stateFilters');
+    if (statusFilters == null)
+      throw new BuiltValueNullFieldError('ListUIState', 'statusFilters');
   }
 
   @override
@@ -125,16 +125,16 @@ class _$ListUIState extends ListUIState {
     if (other is! ListUIState) return false;
     return sortField == other.sortField &&
         sortAscending == other.sortAscending &&
-        stateFilterIds == other.stateFilterIds &&
-        statusFilterIds == other.statusFilterIds;
+        stateFilters == other.stateFilters &&
+        statusFilters == other.statusFilters;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
         $jc($jc($jc(0, sortField.hashCode), sortAscending.hashCode),
-            stateFilterIds.hashCode),
-        statusFilterIds.hashCode));
+            stateFilters.hashCode),
+        statusFilters.hashCode));
   }
 
   @override
@@ -142,8 +142,8 @@ class _$ListUIState extends ListUIState {
     return (newBuiltValueToStringHelper('ListUIState')
           ..add('sortField', sortField)
           ..add('sortAscending', sortAscending)
-          ..add('stateFilterIds', stateFilterIds)
-          ..add('statusFilterIds', statusFilterIds))
+          ..add('stateFilters', stateFilters)
+          ..add('statusFilters', statusFilters))
         .toString();
   }
 }
@@ -160,17 +160,17 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   set sortAscending(bool sortAscending) =>
       _$this._sortAscending = sortAscending;
 
-  ListBuilder<int> _stateFilterIds;
-  ListBuilder<int> get stateFilterIds =>
-      _$this._stateFilterIds ??= new ListBuilder<int>();
-  set stateFilterIds(ListBuilder<int> stateFilterIds) =>
-      _$this._stateFilterIds = stateFilterIds;
+  ListBuilder<EntityState> _stateFilters;
+  ListBuilder<EntityState> get stateFilters =>
+      _$this._stateFilters ??= new ListBuilder<EntityState>();
+  set stateFilters(ListBuilder<EntityState> stateFilters) =>
+      _$this._stateFilters = stateFilters;
 
-  ListBuilder<int> _statusFilterIds;
-  ListBuilder<int> get statusFilterIds =>
-      _$this._statusFilterIds ??= new ListBuilder<int>();
-  set statusFilterIds(ListBuilder<int> statusFilterIds) =>
-      _$this._statusFilterIds = statusFilterIds;
+  ListBuilder<int> _statusFilters;
+  ListBuilder<int> get statusFilters =>
+      _$this._statusFilters ??= new ListBuilder<int>();
+  set statusFilters(ListBuilder<int> statusFilters) =>
+      _$this._statusFilters = statusFilters;
 
   ListUIStateBuilder();
 
@@ -178,8 +178,8 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
     if (_$v != null) {
       _sortField = _$v.sortField;
       _sortAscending = _$v.sortAscending;
-      _stateFilterIds = _$v.stateFilterIds?.toBuilder();
-      _statusFilterIds = _$v.statusFilterIds?.toBuilder();
+      _stateFilters = _$v.stateFilters?.toBuilder();
+      _statusFilters = _$v.statusFilters?.toBuilder();
       _$v = null;
     }
     return this;
@@ -204,15 +204,15 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
           new _$ListUIState._(
               sortField: sortField,
               sortAscending: sortAscending,
-              stateFilterIds: stateFilterIds.build(),
-              statusFilterIds: statusFilterIds.build());
+              stateFilters: stateFilters.build(),
+              statusFilters: statusFilters.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'stateFilterIds';
-        stateFilterIds.build();
-        _$failedField = 'statusFilterIds';
-        statusFilterIds.build();
+        _$failedField = 'stateFilters';
+        stateFilters.build();
+        _$failedField = 'statusFilters';
+        statusFilters.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ListUIState', _$failedField, e.toString());

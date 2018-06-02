@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/data/models/models.dart';
 
 part 'list_ui_state.g.dart';
 
@@ -8,15 +9,15 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
   String get sortField;
   bool get sortAscending;
-  BuiltList<int> get stateFilterIds;
-  BuiltList<int> get statusFilterIds;
+  BuiltList<EntityState> get stateFilters;
+  BuiltList<int> get statusFilters;
 
   factory ListUIState(sortField) {
     return _$ListUIState._(
       sortField: sortField,
       sortAscending: true,
-      stateFilterIds: BuiltList<int>(),
-      statusFilterIds: BuiltList<int>(),
+      stateFilters: BuiltList<EntityState>(),
+      statusFilters: BuiltList<int>(),
     );
   }
 
