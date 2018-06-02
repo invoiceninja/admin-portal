@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
-
-class AppBottomBar extends StatelessWidget {
+class AppBottomBar extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   final List<String> sortFields;
@@ -16,19 +15,24 @@ class AppBottomBar extends StatelessWidget {
   final Function(List<int>) onSelectedStatusIds;
   final Function(List<int>) onSelectedStateIds;
 
-  PersistentBottomSheetController _sortController;
-  PersistentBottomSheetController _filterController;
-
   AppBottomBar(
       {this.scaffoldKey,
-      this.sortFields,
-      this.onSelectedSortField,
-      this.selectedSortField,
-      this.selectedSortAscending,
-      this.selectStateIds,
-      this.selectStatusIds,
-      this.onSelectedStateIds,
-      this.onSelectedStatusIds});
+        this.sortFields,
+        this.onSelectedSortField,
+        this.selectedSortField,
+        this.selectedSortAscending,
+        this.selectStateIds,
+        this.selectStatusIds,
+        this.onSelectedStateIds,
+        this.onSelectedStatusIds});
+
+  @override
+  _AppBottomBarState createState() => new _AppBottomBarState();
+}
+
+class _AppBottomBarState extends State<AppBottomBar> {
+  PersistentBottomSheetController _sortController;
+  PersistentBottomSheetController _filterController;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,7 @@ class AppBottomBar extends StatelessWidget {
         return;
       }
 
-      _filterController = scaffoldKey.currentState.showBottomSheet((context) {
+      _filterController = widget.scaffoldKey.currentState.showBottomSheet((context) {
         return Container(
           color: Colors.grey[200],
           child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -86,23 +90,23 @@ class AppBottomBar extends StatelessWidget {
         return;
       }
 
-      _sortController = scaffoldKey.currentState.showBottomSheet((context) {
+      _sortController = widget.scaffoldKey.currentState.showBottomSheet((context) {
         return Container(
           color: Colors.grey[200],
           child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: sortFields.map((sortField) {
+              children: widget.sortFields.map((sortField) {
                 return RadioListTile(
                   dense: true,
                   title: Text(AppLocalization.of(context).lookup(sortField)),
-                  subtitle: sortField == this.selectedSortField
-                      ? Text(selectedSortAscending
-                          ? AppLocalization.of(context).ascending
-                          : AppLocalization.of(context).descending)
+                  subtitle: sortField == widget.selectedSortField
+                      ? Text(widget.selectedSortAscending
+                      ? AppLocalization.of(context).ascending
+                      : AppLocalization.of(context).descending)
                       : null,
-                  groupValue: selectedSortField,
+                  groupValue: widget.selectedSortField,
                   onChanged: (value) {
-                    this.onSelectedSortField(value);
+                    widget.onSelectedSortField(value);
                   },
                   value: sortField,
                 );
