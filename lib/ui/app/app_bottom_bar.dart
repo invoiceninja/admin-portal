@@ -49,6 +49,9 @@ class AppBottomBar extends StatelessWidget {
                   controlAffinity: ListTileControlAffinity.leading,
                   value: true,
                   dense: true,
+                  onChanged: (value) {
+
+                  },
                 );
               }).toList(),
             ),
