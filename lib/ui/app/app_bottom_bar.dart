@@ -62,7 +62,7 @@ class AppBottomBar extends StatelessWidget {
                   return CheckboxListTile(
                     dense: true,
                     title:
-                        Text(AppLocalization.of((context)).lookup(sortField)),
+                        Text(AppLocalization.of(context).lookup(sortField)),
                     groupValue: selectedSortField,
                     onChanged: (value) {
                       this.onSelectedSortField(value);
@@ -94,11 +94,11 @@ class AppBottomBar extends StatelessWidget {
               children: sortFields.map((sortField) {
                 return RadioListTile(
                   dense: true,
-                  title: Text(AppLocalization.of((context)).lookup(sortField)),
+                  title: Text(AppLocalization.of(context).lookup(sortField)),
                   subtitle: sortField == this.selectedSortField
                       ? Text(selectedSortAscending
-                          ? AppLocalization.of((context)).ascending
-                          : AppLocalization.of((context)).descending)
+                          ? AppLocalization.of(context).ascending
+                          : AppLocalization.of(context).descending)
                       : null,
                   groupValue: selectedSortField,
                   onChanged: (value) {
@@ -120,12 +120,12 @@ class AppBottomBar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           IconButton(
-            tooltip: AppLocalization.of((context)).sort,
+            tooltip: AppLocalization.of(context).sort,
             icon: Icon(Icons.sort_by_alpha),
             onPressed: _showSortSheet,
           ),
           IconButton(
-            tooltip: AppLocalization.of((context)).filter,
+            tooltip: AppLocalization.of(context).filter,
             icon: Icon(Icons.filter_list),
             onPressed: _showFilterSheet,
           ),
