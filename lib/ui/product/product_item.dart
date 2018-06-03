@@ -40,18 +40,18 @@ class ProductItem extends StatelessWidget {
             product.isDeleted
                 ? Chip(
                     label: Text(AppLocalization.of(context).deleted,
-                        style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                        style: TextStyle(color: Colors.white, fontSize: 11.0)),
                     backgroundColor: Colors.red,
                   )
                 : product.isArchived()
                     ? Chip(
                         label: Text(AppLocalization.of(context).archived,
-                            style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                            style: TextStyle(color: Colors.white, fontSize: 11.0)),
                         backgroundColor: Colors.orange,
                       )
                     : Container(),
-            //SizedBox(width: 12.0),
-            //Text(product.cost.toStringAsFixed(2)),
+            SizedBox(width: 12.0),
+            Text(product.cost.toStringAsFixed(2)),
           ],
         ),
         title: Container(
