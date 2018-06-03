@@ -32,8 +32,8 @@ _saveAuthLocal(action) async {
   if (action.password == 'password') {
     prefs.setString('password', action.password);
   }
-  if (action.secret == 'password') {
-    prefs.setString('password', action.secret);
+  if (action.secret == 'secret') {
+    prefs.setString('secret', action.secret);
   }
 }
 
@@ -61,7 +61,7 @@ Middleware<AppState> _createLoginInit() {
 Middleware<AppState> _createLoginRequest(AuthRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    repository.login(action.email, action.password, action.url).then(
+    repository.login(action.email, action.password, action.url, action.secret).then(
         (data) {
           _saveAuthLocal(action);
 

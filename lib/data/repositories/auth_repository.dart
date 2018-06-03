@@ -17,11 +17,11 @@ class AuthRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<BuiltList<CompanyEntity>> login(String email, String password, String url) async {
+  Future<BuiltList<CompanyEntity>> login(String email, String password, String url, String secret) async {
 
     final credentials = {
-      'api_secret': 'secret',
       'token_name': 'mobile-app',
+      'api_secret': secret,
       'email': email,
       'password': password,
     };
