@@ -76,19 +76,31 @@ class ProductListVM {
         onDismissed: (BuildContext context, ProductEntity product,
             DismissDirection direction) {
           final Completer<Null> completer = new Completer<Null>();
+          var message = '';
           if (direction == DismissDirection.endToStart) {
             if (product.isArchived()) {
               store.dispatch(RestoreProductRequest(completer, product.id));
+              message = AppLocalization.of(context).successfullyRestoredProduct;
             } else {
               store.dispatch(ArchiveProductRequest(completer, product.id));
+              message = AppLocalization.of(context).successfullyArchivedProduct;
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (product.isArchived() || product.isDeleted) {
               store.dispatch(RestoreProductRequest(completer, product.id));
+              message = AppLocalization.of(context).successfullyRestoredProduct;
             } else {
               store.dispatch(DeleteProductRequest(completer, product.id));
+              message = AppLocalization.of(context).successfullyDeletedProduct;
             }
           }
+          return completer.future.then((_) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: message,
+                ),
+                duration: Duration(seconds: 3)));
+          });
         });
   }
 }

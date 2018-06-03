@@ -29,7 +29,8 @@ class ProductDetails extends StatelessWidget {
             ? AppLocalization.of(context).newProduct
             : viewModel
                 .product.productKey), // Text(localizations.productDetails),
-        actions: viewModel.product.id == null ? [] : [ActionMenuButton(
+        actions: viewModel.product.id == null ? [] : [
+          ActionMenuButton(
             entity: viewModel.product,
             onSelected: viewModel.onActionSelected,
           )],

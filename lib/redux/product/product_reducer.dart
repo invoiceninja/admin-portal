@@ -62,68 +62,79 @@ final productsReducer = combineReducers<ProductState>([
 ]);
 
 ProductState _archiveProductRequest(ProductState productState, ArchiveProductRequest action) {
-  var product = productState.map[action.productId];
+  var product = productState.map[action.productId].rebuild((b) => b
+    ..archivedAt = DateTime.now().millisecondsSinceEpoch
+  );
+
   return productState.rebuild((b) => b
-    ..map[action.productId] = product.rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    )
+    ..map[action.productId] = product
+    ..editing.replace(product)
   );
 }
 
 ProductState _archiveProductSuccess(ProductState productState, ArchiveProductSuccess action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
+    ..editing.replace(action.product)
   );
 }
 
 ProductState _archiveProductFailure(ProductState productState, ArchiveProductFailure action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
+    ..editing.replace(action.product)
   );
 }
 
 ProductState _deleteProductRequest(ProductState productState, DeleteProductRequest action) {
-  var product = productState.map[action.productId];
+  var product = productState.map[action.productId].rebuild((b) => b
+    ..archivedAt = DateTime.now().millisecondsSinceEpoch
+    ..isDeleted = true
+  );
+
   return productState.rebuild((b) => b
-    ..map[action.productId] = product.rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true
-    )
+    ..map[action.productId] = product
+    ..editing.replace(product)
   );
 }
 
 ProductState _deleteProductSuccess(ProductState productState, DeleteProductSuccess action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
+    ..editing.replace(action.product)
   );
 }
 
 ProductState _deleteProductFailure(ProductState productState, DeleteProductFailure action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
+    ..editing.replace(action.product)
   );
 }
 
 
 ProductState _restoreProductRequest(ProductState productState, RestoreProductRequest action) {
-  var product = productState.map[action.productId];
+  var product = productState.map[action.productId].rebuild((b) => b
+    ..archivedAt = null
+    ..isDeleted = false
+  );
   return productState.rebuild((b) => b
-    ..map[action.productId] = product.rebuild((b) => b
-      ..archivedAt = null
-      ..isDeleted = false
-    )
+    ..map[action.productId] = product
+    ..editing.replace(product)
   );
 }
 
 ProductState _restoreProductSuccess(ProductState productState, RestoreProductSuccess action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
+    ..editing.replace(action.product)
   );
 }
 
 ProductState _restoreProductFailure(ProductState productState, RestoreProductFailure action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
+    ..editing.replace(action.product)
   );
 }
 
@@ -152,7 +163,8 @@ ProductState _setNoProducts(
 
 ProductState _selectProduct(
     ProductState productState, SelectProductAction action) {
-  return productState.rebuild((b) => b..editing.replace(action.product));
+  return productState.rebuild((b) => b
+    ..editing.replace(action.product));
 }
 
 /*

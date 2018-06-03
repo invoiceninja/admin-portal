@@ -20,6 +20,18 @@ final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, SaveProductFailure>(_setLoaded),
   TypedReducer<bool, SaveProductSuccess>(_setLoaded),
   TypedReducer<bool, AddProductSuccess>(_setLoaded),
+
+  TypedReducer<bool, ArchiveProductRequest>(_setLoading),
+  TypedReducer<bool, ArchiveProductSuccess>(_setLoaded),
+  TypedReducer<bool, ArchiveProductFailure>(_setLoaded),
+
+  TypedReducer<bool, DeleteProductRequest>(_setLoading),
+  TypedReducer<bool, DeleteProductSuccess>(_setLoaded),
+  TypedReducer<bool, DeleteProductFailure>(_setLoaded),
+
+  TypedReducer<bool, RestoreProductRequest>(_setLoading),
+  TypedReducer<bool, RestoreProductSuccess>(_setLoaded),
+  TypedReducer<bool, RestoreProductFailure>(_setLoaded),
 ]);
 
 bool _setLoading(bool state, action) {
