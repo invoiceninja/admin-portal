@@ -73,15 +73,9 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             return Dashboard();
           },
           AppRoutes.products: (context) {
-            if (StoreProvider
-                .of<AppState>(context)
-                .state
-                .productState()
-                .isStale()) {
-              StoreProvider
+            StoreProvider
                   .of<AppState>(context)
                   .dispatch(LoadProductsAction());
-            }
             return ProductScreen();
           },
         },

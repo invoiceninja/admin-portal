@@ -5,9 +5,12 @@ import 'package:built_collection/built_collection.dart';
 
 class LoadProductsAction {
   final Completer completer;
+  final bool force;
 
-  LoadProductsAction([this.completer]);
+  LoadProductsAction([this.completer, this.force = false]);
 }
+
+class LoadProductsRequest {}
 
 class ProductsNotLoadedAction {
   final dynamic error;

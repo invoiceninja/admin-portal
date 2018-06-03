@@ -103,15 +103,19 @@ Middleware<AppState> _saveProduct(ProductsRepository repository) {
 
 Middleware<AppState> _loadProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository
-        .loadList(store.state.selectedCompany(), store.state.authState)
-        .then((data) {
-      store.dispatch(ProductsLoadedAction(data));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
-    }).catchError((error) => store.dispatch(ProductsNotLoadedAction(error)));
+    if (action.force || store.state.productState().isStale()) {
+      store.dispatch(LoadProductsRequest());
+      repository
+          .loadList(store.state.selectedCompany(), store.state.authState)
+          .then((data) {
+        store.dispatch(ProductsLoadedAction(data));
+        if (action.completer != null) {
+          action.completer.complete(null);
+        }
+      }).catchError((error) => store.dispatch(ProductsNotLoadedAction(error)));
+    }
 
     next(action);
   };
 }
+

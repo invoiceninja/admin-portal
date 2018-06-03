@@ -46,6 +46,7 @@ class AppDrawerVM {
       selectedCompanyIndex: store.state.selectedCompanyIndex.toString(),
       onCompanyChanged: (String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
+
       },
       onLogoutTapped: (BuildContext context) {
         while(Navigator.of(context).canPop()) {
