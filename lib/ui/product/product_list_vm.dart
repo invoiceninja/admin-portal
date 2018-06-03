@@ -51,6 +51,8 @@ class ProductListVM {
     Future<Null> _handleRefresh(BuildContext context) {
       final Completer<Null> completer = new Completer<Null>();
       store.dispatch(LoadProductsAction(completer));
+      return completer.future;
+      /*
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
             content: SnackBarRow(
@@ -58,6 +60,7 @@ class ProductListVM {
             ),
             duration: Duration(seconds: 3)));
       });
+      */
     }
 
     return ProductListVM(
