@@ -63,12 +63,22 @@ class ProductItem extends StatelessWidget {
         ),
         subtitle: Text(product.notes),
       ),
-      background: new Container(
+      background: product.isDeleted ? Container(
+          color: Colors.blue,
+          child: const ListTile(
+              leading:
+              const Icon(Icons.restore, color: Colors.white, size: 36.0)),
+      ) : Container(
           color: Colors.red,
           child: const ListTile(
               leading:
                   const Icon(Icons.delete, color: Colors.white, size: 36.0))),
-      secondaryBackground: new Container(
+      secondaryBackground: product.isArchived() || product.isDeleted ? Container(
+        color: Colors.blue,
+        child: const ListTile(
+            trailing:
+            const Icon(Icons.restore, color: Colors.white, size: 36.0)),
+      ) : Container(
           color: Colors.orange,
           child: const ListTile(
               trailing:

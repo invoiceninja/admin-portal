@@ -76,9 +76,17 @@ class ProductListVM {
             DismissDirection direction) {
           final Completer<Null> completer = new Completer<Null>();
           if (direction == DismissDirection.endToStart) {
-            store.dispatch(ArchiveProductRequest(completer, product.id));
+            if (product.isArchived()) {
+              store.dispatch(RestoreProductRequest(completer, product.id));
+            } else {
+              store.dispatch(ArchiveProductRequest(completer, product.id));
+            }
           } else if (direction == DismissDirection.startToEnd) {
-            store.dispatch(DeleteProductRequest(completer, product.id));
+            if (product.isArchived() || product.isDeleted) {
+              store.dispatch(RestoreProductRequest(completer, product.id));
+            } else {
+              store.dispatch(DeleteProductRequest(completer, product.id));
+            }
           }
         });
   }
