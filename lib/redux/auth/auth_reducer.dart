@@ -15,6 +15,7 @@ AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
   return authState.rebuild((b) => b
     ..isInitialized = true
     ..url = action.url ?? ''
+    ..secret = action.secret ?? ''
     ..email = action.email ?? ''
     ..password = action.password ?? '');
 }
@@ -23,6 +24,7 @@ AuthState userLoginRequestReducer(
     AuthState authState, UserLoginRequest action) {
   return authState.rebuild((b) => b
     ..url = action.url
+    ..secret = action.secret
     ..email = action.email
     ..password = action.password);
 }
@@ -32,6 +34,7 @@ AuthState userLoginSuccessReducer(
   return authState.rebuild((b) => b
       ..isAuthenticated = true
     ..password = ''
+    ..secret = ''
   );
 }
 

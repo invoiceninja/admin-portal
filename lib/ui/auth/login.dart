@@ -7,7 +7,7 @@ class Login extends StatelessWidget {
   final bool isLoading;
   final bool isDirty;
   final AuthState authState;
-  final Function(BuildContext, String, String, String) onLoginClicked;
+  final Function(BuildContext, String, String, String, String) onLoginClicked;
 
   Login({
     Key key,
@@ -24,6 +24,8 @@ class Login extends StatelessWidget {
   static final GlobalKey<FormFieldState<String>> _passwordKey =
       GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _urlKey =
+      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _secretKey =
       GlobalKey<FormFieldState<String>>();
 
   @override
@@ -54,7 +56,7 @@ class Login extends StatelessWidget {
                     key: _emailKey,
                     initialValue: authState.email,
                     autocorrect: false,
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration: InputDecoration(labelText: AppLocalization.of(context).email),
                     keyboardType: TextInputType.emailAddress,
                     validator: (val) => val.isEmpty || val.trim().length == 0
                         ? AppLocalization.of(context).pleaseEnterYourEmail
@@ -64,7 +66,7 @@ class Login extends StatelessWidget {
                     key: _passwordKey,
                     initialValue: authState.password,
                     autocorrect: false,
-                    decoration: InputDecoration(labelText: 'Password'),
+                    decoration: InputDecoration(labelText: AppLocalization.of(context).password),
                     validator: (val) => val.isEmpty || val.trim().length == 0
                         ? AppLocalization.of(context).pleaseEnterYourPassword
                         : null,
@@ -74,11 +76,23 @@ class Login extends StatelessWidget {
                     key: _urlKey,
                     initialValue: authState.url,
                     autocorrect: false,
-                    decoration: InputDecoration(labelText: 'URL'),
+                    decoration: InputDecoration(labelText: AppLocalization.of(context).url),
                     validator: (val) => val.isEmpty || val.trim().length == 0
                         ? AppLocalization.of(context).pleaseEnterYourUrl
                         : null,
                     keyboardType: TextInputType.url,
+                  ),
+                  TextFormField(
+                    key: _secretKey,
+                    initialValue: authState.secret,
+                    autocorrect: false,
+                    decoration: InputDecoration(labelText: AppLocalization.of(context).secret),
+                    /*
+                    validator: (val) => val.isEmpty || val.trim().length == 0
+                        ? AppLocalization.of(context).pleaseEnterYourPassword
+                        : null,
+                        */
+                    obscureText: true,
                   ),
                   authState.error == null
                       ? Container()
@@ -108,8 +122,11 @@ class Login extends StatelessWidget {
               return;
             }
 
-            this.onLoginClicked(context, _emailKey.currentState.value,
-                _passwordKey.currentState.value, _urlKey.currentState.value);
+            this.onLoginClicked(context,
+                _emailKey.currentState.value,
+                _passwordKey.currentState.value,
+                _urlKey.currentState.value,
+                _secretKey.currentState.value);
           },
         ),
       ],

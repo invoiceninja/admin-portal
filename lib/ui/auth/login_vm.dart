@@ -35,7 +35,7 @@ class _ViewModel {
   bool isLoading;
   bool isDirty;
   AuthState authState;
-  final Function(BuildContext, String, String, String) onLoginClicked;
+  final Function(BuildContext, String, String, String, String) onLoginClicked;
 
   _ViewModel({
     @required this.isLoading,
@@ -49,12 +49,12 @@ class _ViewModel {
       isDirty: ! store.state.authState.isAuthenticated,
       isLoading: store.state.isLoading,
       authState: store.state.authState,
-        onLoginClicked: (BuildContext context, String email, String password, String url) {
+        onLoginClicked: (BuildContext context, String email, String password, String url, String secret) {
           if (store.state.isLoading) {
             return;
           }
           final Completer<Null> completer = new Completer<Null>();
-          store.dispatch(UserLoginRequest(completer, email.trim(), password.trim(), url.trim()));
+          store.dispatch(UserLoginRequest(completer, email.trim(), password.trim(), url.trim(), secret.trim()));
           completer.future.then((_) {
             Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
           });

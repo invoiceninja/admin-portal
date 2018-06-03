@@ -6,8 +6,9 @@ class UserLoginLoaded {
   final String email;
   final String password;
   final String url;
+  final String secret;
 
-  UserLoginLoaded(this.email, this.password, this.url);
+  UserLoginLoaded(this.email, this.password, this.url, this.secret);
 }
 
 class UserLoginRequest {
@@ -15,8 +16,9 @@ class UserLoginRequest {
   final String email;
   final String password;
   final String url;
+  final String secret;
 
-  UserLoginRequest(this.completer, this.email, this.password, this.url);
+  UserLoginRequest(this.completer, this.email, this.password, this.url, this.secret);
 }
 
 class UserLoginSuccess {}

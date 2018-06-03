@@ -34,6 +34,9 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
           specifiedType: const FullType(String)),
       'url',
       serializers.serialize(object.url, specifiedType: const FullType(String)),
+      'secret',
+      serializers.serialize(object.secret,
+          specifiedType: const FullType(String)),
       'isInitialized',
       serializers.serialize(object.isInitialized,
           specifiedType: const FullType(bool)),
@@ -74,6 +77,10 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
           result.url = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'secret':
+          result.secret = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'isInitialized':
           result.isInitialized = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -101,6 +108,8 @@ class _$AuthState extends AuthState {
   @override
   final String url;
   @override
+  final String secret;
+  @override
   final bool isInitialized;
   @override
   final bool isAuthenticated;
@@ -114,6 +123,7 @@ class _$AuthState extends AuthState {
       {this.email,
       this.password,
       this.url,
+      this.secret,
       this.isInitialized,
       this.isAuthenticated,
       this.error})
@@ -122,6 +132,8 @@ class _$AuthState extends AuthState {
     if (password == null)
       throw new BuiltValueNullFieldError('AuthState', 'password');
     if (url == null) throw new BuiltValueNullFieldError('AuthState', 'url');
+    if (secret == null)
+      throw new BuiltValueNullFieldError('AuthState', 'secret');
     if (isInitialized == null)
       throw new BuiltValueNullFieldError('AuthState', 'isInitialized');
     if (isAuthenticated == null)
@@ -142,6 +154,7 @@ class _$AuthState extends AuthState {
     return email == other.email &&
         password == other.password &&
         url == other.url &&
+        secret == other.secret &&
         isInitialized == other.isInitialized &&
         isAuthenticated == other.isAuthenticated &&
         error == other.error;
@@ -152,8 +165,10 @@ class _$AuthState extends AuthState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, email.hashCode), password.hashCode),
-                    url.hashCode),
+                $jc(
+                    $jc($jc($jc(0, email.hashCode), password.hashCode),
+                        url.hashCode),
+                    secret.hashCode),
                 isInitialized.hashCode),
             isAuthenticated.hashCode),
         error.hashCode));
@@ -165,6 +180,7 @@ class _$AuthState extends AuthState {
           ..add('email', email)
           ..add('password', password)
           ..add('url', url)
+          ..add('secret', secret)
           ..add('isInitialized', isInitialized)
           ..add('isAuthenticated', isAuthenticated)
           ..add('error', error))
@@ -187,6 +203,10 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   String get url => _$this._url;
   set url(String url) => _$this._url = url;
 
+  String _secret;
+  String get secret => _$this._secret;
+  set secret(String secret) => _$this._secret = secret;
+
   bool _isInitialized;
   bool get isInitialized => _$this._isInitialized;
   set isInitialized(bool isInitialized) =>
@@ -208,6 +228,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
       _email = _$v.email;
       _password = _$v.password;
       _url = _$v.url;
+      _secret = _$v.secret;
       _isInitialized = _$v.isInitialized;
       _isAuthenticated = _$v.isAuthenticated;
       _error = _$v.error;
@@ -234,6 +255,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
             email: email,
             password: password,
             url: url,
+            secret: secret,
             isInitialized: isInitialized,
             isAuthenticated: isAuthenticated,
             error: error);

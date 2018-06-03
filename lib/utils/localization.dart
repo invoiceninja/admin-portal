@@ -13,6 +13,10 @@ class AppLocalization {
 
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'email': 'Email',
+      'password': 'Password',
+      'url': 'URL',
+      'secret': 'Secret',
       'log_out': 'Log Out',
       'filter': 'Filter',
       'sort': 'Sort',
@@ -45,6 +49,10 @@ class AppLocalization {
     },
   };
 
+  String get email => _localizedValues[locale.languageCode]['email'];
+  String get password => _localizedValues[locale.languageCode]['password'];
+  String get url => _localizedValues[locale.languageCode]['url'];
+  String get secret => _localizedValues[locale.languageCode]['secret'];
   String get logOut => _localizedValues[locale.languageCode]['log_out'];
   String get filter => _localizedValues[locale.languageCode]['filter'];
   String get sort => _localizedValues[locale.languageCode]['sort'];

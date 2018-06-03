@@ -32,6 +32,9 @@ _saveAuthLocal(action) async {
   if (action.password == 'password') {
     prefs.setString('password', action.password);
   }
+  if (action.secret == 'password') {
+    prefs.setString('password', action.secret);
+  }
 }
 
 _loadAuthLocal(Store<AppState> store, action) async {
@@ -40,8 +43,9 @@ _loadAuthLocal(Store<AppState> store, action) async {
   String email = prefs.getString('email');
   String password = prefs.getString('password');
   String url = prefs.getString('url');
+  String secret = prefs.getString('secret');
 
-  store.dispatch(UserLoginLoaded(email, password, url));
+  store.dispatch(UserLoginLoaded(email, password, url, secret));
 }
 
 
