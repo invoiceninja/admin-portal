@@ -25,6 +25,7 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
 
     if (store.state.isLoading) {
       next(action);
+      return;
     }
 
     repository.loadItem(store.state.selectedCompany(), store.state.authState).then(

@@ -114,10 +114,12 @@ Middleware<AppState> _loadProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     if (! store.state.productState().isStale() && ! action.force) {
       next(action);
+      return;
     }
 
     if (store.state.isLoading) {
       next(action);
+      return;
     }
 
     store.dispatch(LoadProductsRequest());
