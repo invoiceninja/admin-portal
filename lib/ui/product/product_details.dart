@@ -32,7 +32,7 @@ class ProductDetails extends StatelessWidget {
         actions: [
           ActionMenuButton(
             entity: viewModel.product,
-            onSelected: (ActionMenuChoice choice) {},
+            onSelected: viewModel.onActionSelected,
           )
         ],
       ),
@@ -97,14 +97,13 @@ class ProductDetails extends StatelessWidget {
                         return;
                       }
 
-                      viewModel.onSaveClicked(
+                      viewModel.onSaveClicked(context,
                           viewModel.product.rebuild((b) => b
                             ..productKey = _productKeyKey.currentState.value
                             ..notes = _notesKey.currentState.value
                             ..cost =
                                 double.tryParse(_costKey.currentState.value) ??
-                                    0.0),
-                          context);
+                                    0.0));
                     },
                   );
           }),

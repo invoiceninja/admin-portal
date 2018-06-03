@@ -27,7 +27,7 @@ class AppLocalization {
       'dashboard': 'Dashboard',
       'archive': 'Archive',
       'delete': 'Delete',
-      'retore': 'Restore',
+      'restore': 'Restore',
       'refresh_complete': 'Refresh Complete',
       'please_enter_your_email': 'Please enter your email',
       'please_enter_your_password': 'Please enter your password',

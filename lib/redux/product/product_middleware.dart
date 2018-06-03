@@ -37,6 +37,9 @@ Middleware<AppState> _archiveProduct(ProductsRepository repository) {
         origProduct, EntityAction.archive)
         .then((product) {
       store.dispatch(ArchiveProductSuccess(product));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
     }).catchError((error) {
       print(error);
       store.dispatch(ArchiveProductFailure(origProduct));
@@ -54,6 +57,9 @@ Middleware<AppState> _deleteProduct(ProductsRepository repository) {
         origProduct, EntityAction.delete)
         .then((product) {
       store.dispatch(DeleteProductSuccess(product));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
     }).catchError((error) {
       print(error);
       store.dispatch(DeleteProductFailure(origProduct));
@@ -71,6 +77,9 @@ Middleware<AppState> _restoreProduct(ProductsRepository repository) {
         origProduct, EntityAction.restore)
         .then((product) {
       store.dispatch(RestoreProductSuccess(product));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
     }).catchError((error) {
       print(error);
       store.dispatch(RestoreProductFailure(origProduct));
