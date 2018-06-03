@@ -25,11 +25,21 @@ class ActionMenuButton extends StatelessWidget {
     return PopupMenuButton<EntityAction>(
       itemBuilder: (BuildContext context) {
         return [
+          entity.isArchived() || entity.isDeleted ? PopupMenuItem<EntityAction>(
+            value: EntityAction.restore,
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.restore, color:  Colors.grey[600]),
+                SizedBox(width: 15.0),
+                Text(AppLocalization.of(context).restore),
+              ],
+            ),
+          ) : null,
           entity.isActive() ? PopupMenuItem<EntityAction>(
             value: EntityAction.archive,
             child: Row(
               children: <Widget>[
-                Icon(Icons.archive),
+                Icon(Icons.archive, color: Colors.grey[600]),
                 SizedBox(width: 15.0),
                 Text(AppLocalization.of(context).archive),
               ],
@@ -39,19 +49,9 @@ class ActionMenuButton extends StatelessWidget {
             value: EntityAction.delete,
             child: Row(
               children: <Widget>[
-                Icon(Icons.delete),
+                Icon(Icons.delete, color: Colors.grey[600]),
                 SizedBox(width: 15.0),
                 Text(AppLocalization.of(context).delete),
-              ],
-            ),
-          ) : null,
-          entity.isArchived() || entity.isDeleted ? PopupMenuItem<EntityAction>(
-            value: EntityAction.restore,
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.restore),
-                SizedBox(width: 15.0),
-                Text(AppLocalization.of(context).restore),
               ],
             ),
           ) : null,

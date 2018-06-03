@@ -29,12 +29,10 @@ class ProductDetails extends StatelessWidget {
             ? AppLocalization.of(context).newProduct
             : viewModel
                 .product.productKey), // Text(localizations.productDetails),
-        actions: [
-          ActionMenuButton(
+        actions: viewModel.product.id == null ? [] : [ActionMenuButton(
             entity: viewModel.product,
             onSelected: viewModel.onActionSelected,
-          )
-        ],
+          )],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
