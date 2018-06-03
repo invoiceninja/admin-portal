@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ActionMenuChoice {

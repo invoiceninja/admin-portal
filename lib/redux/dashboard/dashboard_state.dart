@@ -1,3 +1,4 @@
+import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -18,6 +19,10 @@ abstract class DashboardState implements Built<DashboardState, DashboardStateBui
       lastUpdated: 0,
       data: null,
     );
+  }
+
+  bool isStale() {
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
   DashboardState._();

@@ -1,25 +1,34 @@
+import 'dart:async';
+
 import 'package:invoiceninja/data/models/models.dart';
 
-class LoadDashboardAction {}
+class LoadDashboardAction {
+  final Completer completer;
+  final bool force;
 
-class DashboardNotLoadedAction {
+  LoadDashboardAction([this.completer, this.force = false]);
+
+}
+class LoadDashboardRequest {}
+
+class LoadDashboardFailure {
   final dynamic error;
 
-  DashboardNotLoadedAction(this.error);
+  LoadDashboardFailure(this.error);
 
   @override
   String toString() {
-    return 'DashboardNotLoadedAction{error: $error}';
+    return 'LoadDashboardFailure{error: $error}';
   }
 }
 
-class DashboardLoadedAction {
+class LoadDashboardSuccess {
   final DashboardEntity data;
 
-  DashboardLoadedAction(this.data);
+  LoadDashboardSuccess(this.data);
 
   @override
   String toString() {
-    return 'DashboardLoadedAction{data: $data}';
+    return 'DashboardEntity{data: $data}';
   }
 }

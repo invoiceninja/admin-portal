@@ -23,14 +23,20 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
+    if (! store.state.dashboardState().isStale() && ! action.force) {
+      next(action);
+      return;
+    }
+
     if (store.state.isLoading) {
       next(action);
       return;
     }
 
+    store.dispatch(LoadDashboardRequest());
     repository.loadItem(store.state.selectedCompany(), store.state.authState).then(
-            (data) => store.dispatch(DashboardLoadedAction(data))
-    ).catchError((error) => store.dispatch(DashboardNotLoadedAction(error)));
+            (data) => store.dispatch(LoadDashboardSuccess(data))
+    ).catchError((error) => store.dispatch(LoadDashboardFailure(error)));
 
     next(action);
   };
