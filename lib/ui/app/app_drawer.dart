@@ -5,10 +5,10 @@ import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CustomDrawer extends StatelessWidget {
+class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
 
-  CustomDrawer({
+  AppDrawer({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

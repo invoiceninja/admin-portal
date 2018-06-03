@@ -18,7 +18,7 @@ class AppDrawerBuilder extends StatelessWidget {
     return StoreConnector<AppState, AppDrawerVM>(
       converter: AppDrawerVM.fromStore,
       builder: (context, viewModel) {
-        return CustomDrawer(viewModel: viewModel);
+        return AppDrawer(viewModel: viewModel);
       },
     );
   }
