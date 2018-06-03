@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/ui/app/snackbar_row.dart';
+import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list.dart';
@@ -51,8 +53,6 @@ class ProductListVM {
     Future<Null> _handleRefresh(BuildContext context) {
       final Completer<Null> completer = new Completer<Null>();
       store.dispatch(LoadProductsAction(completer));
-      return completer.future;
-      /*
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
             content: SnackBarRow(
@@ -60,7 +60,6 @@ class ProductListVM {
             ),
             duration: Duration(seconds: 3)));
       });
-      */
     }
 
     return ProductListVM(

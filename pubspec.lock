@@ -141,6 +141,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.14"
+  file:
+    dependency: transitive
+    description:
+      name: file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.0"
   fixnum:
     dependency: transitive
     description:
@@ -150,6 +157,11 @@ packages:
     version: "0.10.7"
   flutter:
     dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_driver:
+    dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -166,7 +178,7 @@ packages:
     source: hosted
     version: "0.5.0"
   flutter_test:
-    dependency: "direct dev"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -254,6 +266,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1"
+  json_rpc_2:
+    dependency: transitive
+    description:
+      name: json_rpc_2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.7"
   kernel:
     dependency: transitive
     description:
@@ -511,6 +530,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.6"
+  vm_service_client:
+    dependency: transitive
+    description:
+      name: vm_service_client
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.4+1"
   watcher:
     dependency: transitive
     description:

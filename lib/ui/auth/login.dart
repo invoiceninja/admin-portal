@@ -20,7 +20,7 @@ class Login extends StatelessWidget {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   static final GlobalKey<FormFieldState<String>> _emailKey =
-      GlobalKey<FormFieldState<String>>();
+      GlobalKey<FormFieldState<String>>(debugLabel: 'email');
   static final GlobalKey<FormFieldState<String>> _passwordKey =
       GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _urlKey =
