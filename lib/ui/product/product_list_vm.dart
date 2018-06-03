@@ -18,6 +18,8 @@ class ProductListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductListVM>(
+      //distinct: true,
+      rebuildOnChange: true,
       converter: ProductListVM.fromStore,
       builder: (context, vm) {
         return ProductList(

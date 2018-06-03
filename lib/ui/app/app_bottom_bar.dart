@@ -1,7 +1,11 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -44,23 +48,27 @@ class _AppBottomBarState extends State<AppBottomBar> {
       }
 
       _filterController = widget.scaffoldKey.currentState.showBottomSheet((context) {
-        return Container(
-          color: Colors.grey[200],
-          child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            Column(
-              children: EntityState.values.map<Widget>((state) {
-                return CheckboxListTile(
-                  title: Text(AppLocalization.of(context).lookup(state.toString())),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  value: widget.selectedStates.contains(state),
-                  dense: true,
-                  onChanged: (value) {
-                    widget.onSelectedState(state, value);
-                  },
-                );
-              }).toList(),
-            ),
-            /*
+        return StoreConnector<AppState, BuiltList<EntityState>>(
+          distinct: true,
+          converter: (Store<AppState> store) => store.state.productListState().stateFilters,
+          builder: (BuildContext context, stateFilters) {
+            return Container(
+              color: Colors.grey[200],
+              child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                Column(
+                  children: EntityState.values.map<Widget>((state) {
+                    return CheckboxListTile(
+                      title: Text(AppLocalization.of(context).lookup(state.toString())),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: stateFilters.contains(state),
+                      dense: true,
+                      onChanged: (value) {
+                        widget.onSelectedState(state, value);
+                      },
+                    );
+                  }).toList(),
+                ),
+                /*
             Column(
                 mainAxisSize: MainAxisSize.min,
                 children: sortFields.map((sortField) {
@@ -76,7 +84,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   );
                 }).toList()),
                 */
-          ]),
+              ]),
+            );
+
+          },
         );
       });
 
@@ -91,27 +102,33 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _sortController = widget.scaffoldKey.currentState.showBottomSheet((context) {
-        return Container(
-          color: Colors.grey[200],
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: widget.sortFields.map((sortField) {
-                return RadioListTile(
-                  dense: true,
-                  title: Text(AppLocalization.of(context).lookup(sortField)),
-                  subtitle: sortField == widget.selectedSortField
-                      ? Text(widget.selectedSortAscending
-                      ? AppLocalization.of(context).ascending
-                      : AppLocalization.of(context).descending)
-                      : null,
-                  groupValue: widget.selectedSortField,
-                  onChanged: (value) {
-                    widget.onSelectedSortField(value);
-                  },
-                  value: sortField,
-                );
-              }).toList()),
+      _sortController  = widget.scaffoldKey.currentState.showBottomSheet((context) {
+        return StoreConnector<AppState, ListUIState>(
+          distinct: true,
+          converter: (Store<AppState> store) => store.state.productListState(),
+          builder: (BuildContext context, listUIState) {
+            return Container(
+              color: Colors.grey[200],
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: widget.sortFields.map((sortField) {
+                    return RadioListTile(
+                      dense: true,
+                      title: Text(AppLocalization.of(context).lookup(sortField)),
+                      subtitle: sortField == listUIState.sortField
+                          ? Text(listUIState.sortAscending
+                          ? AppLocalization.of(context).ascending
+                          : AppLocalization.of(context).descending)
+                          : null,
+                      groupValue: listUIState.sortField,
+                      onChanged: (value) {
+                        widget.onSelectedSortField(value);
+                      },
+                      value: sortField,
+                    );
+                  }).toList()),
+            );
+          },
         );
       });
 

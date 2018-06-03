@@ -17,6 +17,7 @@ class ProductScreen extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   //static ActionMenuButtonType _activeSheet;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +45,15 @@ class ProductScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawerBuilder(),
+      /*
+      body: StoreBuilder<AppState>(
+        rebuildOnChange: true,
+        //onInit: (store) => store.dispatch(LoadDashboardAction()),
+        builder: (context, store) {
+          return ProductListBuilder();
+        },
+      ),
+      */
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         scaffoldKey: _scaffoldKey,

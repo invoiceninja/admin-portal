@@ -23,6 +23,7 @@ class ProductList extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.builder(
+        //shrinkWrap: true,
           key: NinjaKeys.productList,
           itemCount: viewModel.productList.length,
           itemBuilder: (BuildContext context, index) {

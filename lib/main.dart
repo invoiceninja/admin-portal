@@ -93,12 +93,11 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           },
           */
           AppRoutes.products: (context) {
-            return StoreBuilder<AppState>(
-              onInit: (store) => store.state.productState().isStale() ? store.dispatch(LoadProductsAction()) : null,
-              builder: (context, store) {
-                return ProductScreen();
-              },
-            );
+            if (StoreProvider.of<AppState>(context).state.productState().isStale()) {
+              StoreProvider.of<AppState>(context).dispatch(
+                  LoadProductsAction());
+            }
+            return ProductScreen();
           },
         },
       ),

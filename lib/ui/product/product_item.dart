@@ -35,6 +35,7 @@ class ProductItem extends StatelessWidget {
         ),
         */
         trailing: Row(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             product.isDeleted
                 ? Chip(
@@ -49,16 +50,22 @@ class ProductItem extends StatelessWidget {
                         backgroundColor: Colors.orange,
                       )
                     : Container(),
-            SizedBox(width: 12.0),
-            Text(product.cost.toStringAsFixed(2)),
+            //SizedBox(width: 12.0),
+            //Text(product.cost.toStringAsFixed(2)),
           ],
         ),
         title: Container(
           width: MediaQuery.of(context).size.width,
-          child: Text(
-            product.productKey,
-            //key: NinjaKeys.productItemProductKey(product.id),
-            style: Theme.of(context).textTheme.title,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  product.productKey,
+                  //key: NinjaKeys.productItemProductKey(product.id),
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+            ],
           ),
         ),
         subtitle: Text(product.notes),
