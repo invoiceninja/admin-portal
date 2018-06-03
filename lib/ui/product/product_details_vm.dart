@@ -18,7 +18,7 @@ class ProductDetailsBuilder extends StatelessWidget {
     return StoreConnector<AppState, ProductDetailsVM>(
       //ignoreChange: (state) => productSelector(state.product().list, id).isNotPresent,
       converter: (Store<AppState> store) {
-        return ProductDetailsVM.from(store);
+        return ProductDetailsVM.fromStore(store);
       },
       builder: (context, vm) {
         return ProductDetails(
@@ -44,7 +44,7 @@ class ProductDetailsVM {
     @required this.isDirty,
   });
 
-  factory ProductDetailsVM.from(Store<AppState> store) {
+  factory ProductDetailsVM.fromStore(Store<AppState> store) {
     final product = store.state.productState().editing;
 
     return ProductDetailsVM(

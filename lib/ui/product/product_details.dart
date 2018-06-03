@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -8,11 +10,11 @@ class ProductDetails extends StatelessWidget {
   final ProductDetailsVM viewModel;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static final GlobalKey<FormFieldState<String>> _productKeyKey =
-  GlobalKey<FormFieldState<String>>();
+      GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _notesKey =
-  GlobalKey<FormFieldState<String>>();
+      GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _costKey =
-  GlobalKey<FormFieldState<String>>();
+      GlobalKey<FormFieldState<String>>();
 
   ProductDetails({
     Key key,
@@ -21,7 +23,6 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(viewModel.product.id == null
@@ -29,15 +30,10 @@ class ProductDetails extends StatelessWidget {
             : viewModel
                 .product.productKey), // Text(localizations.productDetails),
         actions: [
-          /*
-          IconButton(
-            //tooltip: localizations.deleteProduct,
-            //key: ArchSampleKeys.deleteProductButton,
-            icon: Icon(Icons.delete),
-            onPressed: () {
-            },
+          ActionMenuButton(
+            entity: viewModel.product,
+            onSelected: (ActionMenuChoice choice) {},
           )
-          */
         ],
       ),
       body: Padding(
@@ -73,7 +69,8 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                     TextFormField(
-                      initialValue: viewModel.product.cost == null || viewModel.product.cost == 0.0
+                      initialValue: viewModel.product.cost == null ||
+                              viewModel.product.cost == 0.0
                           ? null
                           : viewModel.product.cost.toStringAsFixed(2),
                       key: _costKey,
@@ -89,23 +86,27 @@ class ProductDetails extends StatelessWidget {
             ),
           ),
           new Builder(builder: (BuildContext context) {
-            return viewModel.product.isDeleted == true ? Container() : ProgressButton(
-              label: AppLocalization.of(context).save.toUpperCase(),
-              isLoading: viewModel.isLoading,
-              isDirty: viewModel.isDirty,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
+            return viewModel.product.isDeleted == true
+                ? Container()
+                : ProgressButton(
+                    label: AppLocalization.of(context).save.toUpperCase(),
+                    isLoading: viewModel.isLoading,
+                    isDirty: viewModel.isDirty,
+                    onPressed: () {
+                      if (!_formKey.currentState.validate()) {
+                        return;
+                      }
 
-                viewModel.onSaveClicked(
-                    viewModel.product.rebuild((b) => b
-                      ..productKey = _productKeyKey.currentState.value
-                      ..notes = _notesKey.currentState.value
-                      ..cost = double.tryParse(_costKey.currentState.value) ?? 0.0),
-                    context);
-              },
-            );
+                      viewModel.onSaveClicked(
+                          viewModel.product.rebuild((b) => b
+                            ..productKey = _productKeyKey.currentState.value
+                            ..notes = _notesKey.currentState.value
+                            ..cost =
+                                double.tryParse(_costKey.currentState.value) ??
+                                    0.0),
+                          context);
+                    },
+                  );
           }),
         ]),
       ),

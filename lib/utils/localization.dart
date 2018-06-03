@@ -25,6 +25,9 @@ class AppLocalization {
       'archived': 'Archived',
       'deleted': 'Deleted',
       'dashboard': 'Dashboard',
+      'archive': 'Archive',
+      'delete': 'Delete',
+      'retore': 'Restore',
       'refresh_complete': 'Refresh Complete',
       'please_enter_your_email': 'Please enter your email',
       'please_enter_your_password': 'Please enter your password',
@@ -61,6 +64,9 @@ class AppLocalization {
   String get archived => _localizedValues[locale.languageCode]['archived'];
   String get deleted => _localizedValues[locale.languageCode]['deleted'];
   String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
+  String get archive => _localizedValues[locale.languageCode]['archive'];
+  String get delete => _localizedValues[locale.languageCode]['delete'];
+  String get restore => _localizedValues[locale.languageCode]['restore'];
   String get refreshComplete => _localizedValues[locale.languageCode]['refresh_complete'];
   String get pleaseEnterYourEmail => _localizedValues[locale.languageCode]['please_enter_your_email'];
   String get pleaseEnterYourPassword => _localizedValues[locale.languageCode]['please_enter_your_password'];
