@@ -57,8 +57,8 @@ class ArchiveProductSuccess {
   ArchiveProductSuccess(this.product);
 }
 class ArchiveProductFailure {
-  final int productId;
-  ArchiveProductFailure(this.productId);
+  final ProductEntity product;
+  ArchiveProductFailure(this.product);
 }
 
 class DeleteProductRequest {
@@ -72,8 +72,8 @@ class DeleteProductSuccess {
   DeleteProductSuccess(this.product);
 }
 class DeleteProductFailure {
-  final int productId;
-  DeleteProductFailure(this.productId);
+  final ProductEntity product;
+  DeleteProductFailure(this.product);
 }
 
 class RestoreProductRequest {
@@ -86,8 +86,8 @@ class RestoreProductSuccess {
   RestoreProductSuccess(this.product);
 }
 class RestoreProductFailure {
-  final int productId;
-  RestoreProductFailure(this.productId);
+  final ProductEntity product;
+  RestoreProductFailure(this.product);
 }
 
 class AddProductSuccess {

@@ -31,15 +31,15 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 
 Middleware<AppState> _archiveProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var product = store.state.productState().map[action.productId];
+    var origProduct = store.state.productState().map[action.productId];
     repository
         .saveData(store.state.selectedCompany(), store.state.authState,
-            product, EntityAction.archive)
+        origProduct, EntityAction.archive)
         .then((product) {
       store.dispatch(ArchiveProductSuccess(product));
     }).catchError((error) {
       print(error);
-      store.dispatch(ArchiveProductFailure(action.productId));
+      store.dispatch(ArchiveProductFailure(origProduct));
     });
 
     next(action);
@@ -48,15 +48,15 @@ Middleware<AppState> _archiveProduct(ProductsRepository repository) {
 
 Middleware<AppState> _deleteProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var product = store.state.productState().map[action.productId];
+    var origProduct = store.state.productState().map[action.productId];
     repository
         .saveData(store.state.selectedCompany(), store.state.authState,
-        product, EntityAction.delete)
+        origProduct, EntityAction.delete)
         .then((product) {
       store.dispatch(DeleteProductSuccess(product));
     }).catchError((error) {
       print(error);
-      store.dispatch(DeleteProductFailure(action.productId));
+      store.dispatch(DeleteProductFailure(origProduct));
     });
 
     next(action);
@@ -65,6 +65,17 @@ Middleware<AppState> _deleteProduct(ProductsRepository repository) {
 
 Middleware<AppState> _restoreProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    var origProduct = store.state.productState().map[action.productId];
+    repository
+        .saveData(store.state.selectedCompany(), store.state.authState,
+        origProduct, EntityAction.restore)
+        .then((product) {
+      store.dispatch(RestoreProductSuccess(product));
+    }).catchError((error) {
+      print(error);
+      store.dispatch(RestoreProductFailure(origProduct));
+    });
+
     next(action);
   };
 }
