@@ -47,21 +47,48 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, ProductsLoadedAction>(_setLoadedProducts),
   TypedReducer<ProductState, ProductsNotLoadedAction>(_setNoProducts),
   TypedReducer<ProductState, SelectProductAction>(_selectProduct),
-  TypedReducer<ProductState, ArchiveProductSuccess>(_archiveProduct),
-  TypedReducer<ProductState, DeleteProductSuccess>(_deleteProduct),
-  TypedReducer<ProductState, RestoreProductSuccess>(_restoreProduct),
+
+  TypedReducer<ProductState, ArchiveProductRequest>(_archiveProductRequest),
+  TypedReducer<ProductState, ArchiveProductSuccess>(_archiveProductSuccess),
+  TypedReducer<ProductState, ArchiveProductFailure>(_archiveProductFailure),
+
+  TypedReducer<ProductState, DeleteProductSuccess>(_deleteProductSuccess),
+  TypedReducer<ProductState, RestoreProductSuccess>(_restoreProductSuccess),
 ]);
 
-ProductState _archiveProduct(ProductState productState, ArchiveProductSuccess action) {
-  return productState;
+ProductState _archiveProductRequest(ProductState productState, ArchiveProductRequest action) {
+  var product = productState.map[action.productId];
+  return productState.rebuild((b) => b
+    ..map[action.productId] = product.rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+    )
+  );
 }
 
-ProductState _deleteProduct(ProductState productState, DeleteProductSuccess action) {
-  return productState;
+ProductState _archiveProductSuccess(ProductState productState, ArchiveProductSuccess action) {
+  return productState.rebuild((b) => b
+    ..map[action.product.id] = action.product
+  );
 }
 
-ProductState _restoreProduct(ProductState productState, RestoreProductSuccess action) {
-  return productState;
+ProductState _archiveProductFailure(ProductState productState, ArchiveProductFailure action) {
+  return productState.rebuild((b) => b
+    ..map[action.productId].rebuild((c) => c
+      ..archivedAt = null
+    )
+  );
+}
+
+ProductState _deleteProductSuccess(ProductState productState, DeleteProductSuccess action) {
+  return productState.rebuild((b) => b
+    ..map[action.product.id] = action.product
+  );
+}
+
+ProductState _restoreProductSuccess(ProductState productState, RestoreProductSuccess action) {
+  return productState.rebuild((b) => b
+    ..map[action.product.id] = action.product
+  );
 }
 
 ProductState _addProduct(

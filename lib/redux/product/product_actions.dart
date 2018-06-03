@@ -52,8 +52,14 @@ class ArchiveProductRequest {
 
   ArchiveProductRequest(this.completer, this.productId);
 }
-class ArchiveProductSuccess {}
-class ArchiveProductFailure {}
+class ArchiveProductSuccess {
+  final ProductEntity product;
+  ArchiveProductSuccess(this.product);
+}
+class ArchiveProductFailure {
+  final int productId;
+  ArchiveProductFailure(this.productId);
+}
 
 class DeleteProductRequest {
   final Completer completer;
@@ -61,16 +67,28 @@ class DeleteProductRequest {
 
   DeleteProductRequest(this.completer, this.productId);
 }
-class DeleteProductSuccess {}
-class DeleteProductFailure {}
+class DeleteProductSuccess {
+  final ProductEntity product;
+  DeleteProductSuccess(this.product);
+}
+class DeleteProductFailure {
+  final int productId;
+  DeleteProductFailure(this.productId);
+}
 
 class RestoreProductRequest {
   final Completer completer;
   final int productId;
   RestoreProductRequest(this.completer, this.productId);
 }
-class RestoreProductSuccess {}
-class RestoreProductFailure {}
+class RestoreProductSuccess {
+  final ProductEntity product;
+  RestoreProductSuccess(this.product);
+}
+class RestoreProductFailure {
+  final int productId;
+  RestoreProductFailure(this.productId);
+}
 
 class AddProductSuccess {
   final ProductEntity product;

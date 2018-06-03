@@ -20,7 +20,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: NinjaKeys.productItem(product.id),
-      //onDismissed: onDismissed,
+      onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         /*

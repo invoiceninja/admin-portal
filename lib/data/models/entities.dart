@@ -18,6 +18,7 @@ class EntityState extends EnumClass {
 }
 
 
+
 abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> {
 
   String get message;

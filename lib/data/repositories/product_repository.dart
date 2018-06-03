@@ -30,7 +30,7 @@ class ProductsRepository {
     return productResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, ProductEntity product, [String action]) async {
+  Future saveData(CompanyEntity company, AuthState auth, ProductEntity product, [EntityAction action]) async {
 
     var data = serializers.serializeWith(ProductEntity.serializer, product);
     var response;
@@ -41,7 +41,7 @@ class ProductsRepository {
     } else {
       var url = auth.url + '/products/' + product.id.toString();
       if (action != null) {
-        url += '?action=' + action;
+        url += '?action=' + action.toString();
       }
       response = await webClient.put(url, company.token, json.encode(data));
     }

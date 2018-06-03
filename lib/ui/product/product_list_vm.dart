@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/product/product_selectors.dart';
-import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list.dart';

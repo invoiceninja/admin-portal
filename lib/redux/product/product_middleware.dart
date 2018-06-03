@@ -1,3 +1,4 @@
+import 'package:invoiceninja/data/models/models.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
@@ -30,14 +31,15 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 
 Middleware<AppState> _archiveProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    var product = store.state.productState().map[action.productId];
     repository
         .saveData(store.state.selectedCompany(), store.state.authState,
-            action.product, 'archive')
+            product, EntityAction.archive)
         .then((product) {
-      store.dispatch(ArchiveProductSuccess());
+      store.dispatch(ArchiveProductSuccess(product));
     }).catchError((error) {
       print(error);
-      store.dispatch(ArchiveProductFailure());
+      store.dispatch(ArchiveProductFailure(action.productId));
     });
 
     next(action);
@@ -46,6 +48,17 @@ Middleware<AppState> _archiveProduct(ProductsRepository repository) {
 
 Middleware<AppState> _deleteProduct(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    var product = store.state.productState().map[action.productId];
+    repository
+        .saveData(store.state.selectedCompany(), store.state.authState,
+        product, EntityAction.delete)
+        .then((product) {
+      store.dispatch(DeleteProductSuccess(product));
+    }).catchError((error) {
+      print(error);
+      store.dispatch(DeleteProductFailure(action.productId));
+    });
+
     next(action);
   };
 }
