@@ -59,18 +59,29 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
 
-  //@JsonKey(name: 'tax_name1')
-  //String taxName1;
-  //@JsonKey(name: 'tax_rate1')
-  //double taxRate1;
-  //@JsonKey(name: 'tax_name2')
-  //String taxName2;
-  //@JsonKey(name: 'tax_rate2')
-  //double taxRate2;
-  //@JsonKey(name: 'custom_value1')
-  //String customValue1;
-  //@JsonKey(name: 'custom_value2')
-  //String customValue2;
+  @nullable
+  @BuiltValueField(wireName: 'tax_name1')
+  String get taxName1;
+
+  @nullable
+  @BuiltValueField(wireName: 'tax_rate1')
+  double get taxRate1;
+
+  @nullable
+  @BuiltValueField(wireName: 'tax_name2')
+  String get taxName2;
+
+  @nullable
+  @BuiltValueField(wireName: 'tax_rate2')
+  double get taxRate2;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value1')
+  String get customValue1;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value2')
+  String get customValue2;
 
   int compareTo(ProductEntity product, String sortField, bool sortAscending) {
     int response = 0;

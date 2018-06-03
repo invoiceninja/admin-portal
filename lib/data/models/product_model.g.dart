@@ -164,6 +164,42 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.taxName1 != null) {
+      result
+        ..add('tax_name1')
+        ..add(serializers.serialize(object.taxName1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.taxRate1 != null) {
+      result
+        ..add('tax_rate1')
+        ..add(serializers.serialize(object.taxRate1,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxName2 != null) {
+      result
+        ..add('tax_name2')
+        ..add(serializers.serialize(object.taxName2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.taxRate2 != null) {
+      result
+        ..add('tax_rate2')
+        ..add(serializers.serialize(object.taxRate2,
+            specifiedType: const FullType(double)));
+    }
+    if (object.customValue1 != null) {
+      result
+        ..add('custom_value1')
+        ..add(serializers.serialize(object.customValue1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue2 != null) {
+      result
+        ..add('custom_value2')
+        ..add(serializers.serialize(object.customValue2,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -206,6 +242,30 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'tax_name1':
+          result.taxName1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'tax_rate1':
+          result.taxRate1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'tax_name2':
+          result.taxName2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'tax_rate2':
+          result.taxRate2 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'custom_value1':
+          result.customValue1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value2':
+          result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -410,6 +470,18 @@ class _$ProductEntity extends ProductEntity {
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final String taxName1;
+  @override
+  final double taxRate1;
+  @override
+  final String taxName2;
+  @override
+  final double taxRate2;
+  @override
+  final String customValue1;
+  @override
+  final String customValue2;
 
   factory _$ProductEntity([void updates(ProductEntityBuilder b)]) =>
       (new ProductEntityBuilder()..update(updates)).build();
@@ -421,7 +493,13 @@ class _$ProductEntity extends ProductEntity {
       this.cost,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.taxName1,
+      this.taxRate1,
+      this.taxName2,
+      this.taxRate2,
+      this.customValue1,
+      this.customValue2})
       : super._();
 
   @override
@@ -441,7 +519,13 @@ class _$ProductEntity extends ProductEntity {
         cost == other.cost &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        taxName1 == other.taxName1 &&
+        taxRate1 == other.taxRate1 &&
+        taxName2 == other.taxName2 &&
+        taxRate2 == other.taxRate2 &&
+        customValue1 == other.customValue1 &&
+        customValue2 == other.customValue2;
   }
 
   @override
@@ -450,12 +534,26 @@ class _$ProductEntity extends ProductEntity {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, id.hashCode), productKey.hashCode),
-                        notes.hashCode),
-                    cost.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, id.hashCode),
+                                                    productKey.hashCode),
+                                                notes.hashCode),
+                                            cost.hashCode),
+                                        updatedAt.hashCode),
+                                    archivedAt.hashCode),
+                                isDeleted.hashCode),
+                            taxName1.hashCode),
+                        taxRate1.hashCode),
+                    taxName2.hashCode),
+                taxRate2.hashCode),
+            customValue1.hashCode),
+        customValue2.hashCode));
   }
 
   @override
@@ -467,7 +565,13 @@ class _$ProductEntity extends ProductEntity {
           ..add('cost', cost)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('taxName1', taxName1)
+          ..add('taxRate1', taxRate1)
+          ..add('taxName2', taxName2)
+          ..add('taxRate2', taxRate2)
+          ..add('customValue1', customValue1)
+          ..add('customValue2', customValue2))
         .toString();
   }
 }
@@ -504,6 +608,30 @@ class ProductEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  String _taxName1;
+  String get taxName1 => _$this._taxName1;
+  set taxName1(String taxName1) => _$this._taxName1 = taxName1;
+
+  double _taxRate1;
+  double get taxRate1 => _$this._taxRate1;
+  set taxRate1(double taxRate1) => _$this._taxRate1 = taxRate1;
+
+  String _taxName2;
+  String get taxName2 => _$this._taxName2;
+  set taxName2(String taxName2) => _$this._taxName2 = taxName2;
+
+  double _taxRate2;
+  double get taxRate2 => _$this._taxRate2;
+  set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
+
+  String _customValue1;
+  String get customValue1 => _$this._customValue1;
+  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+
+  String _customValue2;
+  String get customValue2 => _$this._customValue2;
+  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
   ProductEntityBuilder();
 
   ProductEntityBuilder get _$this {
@@ -515,6 +643,12 @@ class ProductEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _taxName1 = _$v.taxName1;
+      _taxRate1 = _$v.taxRate1;
+      _taxName2 = _$v.taxName2;
+      _taxRate2 = _$v.taxRate2;
+      _customValue1 = _$v.customValue1;
+      _customValue2 = _$v.customValue2;
       _$v = null;
     }
     return this;
@@ -541,7 +675,13 @@ class ProductEntityBuilder
             cost: cost,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
-            isDeleted: isDeleted);
+            isDeleted: isDeleted,
+            taxName1: taxName1,
+            taxRate1: taxRate1,
+            taxName2: taxName2,
+            taxRate2: taxRate2,
+            customValue1: customValue1,
+            customValue2: customValue2);
     replace(_$result);
     return _$result;
   }
