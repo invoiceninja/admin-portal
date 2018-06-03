@@ -37,7 +37,7 @@ class AppDrawer extends StatelessWidget {
             )
           ).toList(),
           onChanged: (value) {
-            viewModel.onCompanyChanged(value);
+            viewModel.onCompanyChanged(context, value);
           },
         ),
       ),

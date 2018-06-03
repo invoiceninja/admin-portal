@@ -28,7 +28,7 @@ class AppDrawerVM {
   final List<CompanyEntity> companies;
   final CompanyEntity selectedCompany;
   final String selectedCompanyIndex;
-  final Function(String) onCompanyChanged;
+  final Function(BuildContext context, String) onCompanyChanged;
   final Function(BuildContext context) onLogoutTapped;
 
   AppDrawerVM({
@@ -44,9 +44,9 @@ class AppDrawerVM {
       companies: companiesSelector(store.state),
       selectedCompany: store.state.selectedCompany(),
       selectedCompanyIndex: store.state.selectedCompanyIndex.toString(),
-      onCompanyChanged: (String companyIndex) {
+      onCompanyChanged: (BuildContext context, String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
-
+        //Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
       },
       onLogoutTapped: (BuildContext context) {
         while(Navigator.of(context).canPop()) {
