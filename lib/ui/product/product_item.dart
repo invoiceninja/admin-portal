@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/keys.dart';
+import 'package:invoiceninja/utils/localization.dart';
 
 class ProductItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
@@ -25,12 +26,33 @@ class ProductItem extends StatelessWidget {
         onTap: onTap,
         /*
         leading: Checkbox(
-          key: NinjaKeys.productItemCheckbox(product.id),
+          //key: NinjaKeys.productItemCheckbox(product.id),
           value: true,
-          onChanged: onCheckboxChanged,
+          //onChanged: onCheckboxChanged,
+          onChanged: (value) {
+            return true;
+          },
         ),
         */
-        trailing: Text(product.cost.toStringAsFixed(2)),
+        trailing: Row(
+          children: <Widget>[
+            product.isDeleted
+                ? Chip(
+                    label: Text(AppLocalization.of(context).deleted,
+                        style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                    backgroundColor: Colors.red,
+                  )
+                : product.isArchived()
+                    ? Chip(
+                        label: Text(AppLocalization.of(context).archived,
+                            style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                        backgroundColor: Colors.orange,
+                      )
+                    : Container(),
+            SizedBox(width: 12.0),
+            Text(product.cost.toStringAsFixed(2)),
+          ],
+        ),
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Text(
@@ -44,15 +66,13 @@ class ProductItem extends StatelessWidget {
       background: new Container(
           color: Colors.red,
           child: const ListTile(
-              leading: const Icon(Icons.delete, color: Colors.white, size: 36.0)
-          )
-      ),
+              leading:
+                  const Icon(Icons.delete, color: Colors.white, size: 36.0))),
       secondaryBackground: new Container(
           color: Colors.orange,
           child: const ListTile(
-              trailing: const Icon(Icons.archive, color: Colors.white, size: 36.0)
-          )
-      ),
+              trailing:
+                  const Icon(Icons.archive, color: Colors.white, size: 36.0))),
     );
   }
 }

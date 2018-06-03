@@ -89,27 +89,29 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
     }
   }
 
+  bool isActive() {
+    return this.archivedAt == null;
+  }
+
+  bool isArchived() {
+    return this.archivedAt != null && ! isDeleted;
+  }
+
   bool matchesStates(BuiltList<EntityState> states) {
     if (states.length == 0) {
       return true;
     }
 
-    if (states.contains(EntityState.active)) {
-      if (this.archivedAt == null) {
-        return true;
-      }
+    if (states.contains(EntityState.active) && isActive()) {
+      return true;
     }
 
-    if (states.contains(EntityState.archived)) {
-      if (this.archivedAt != null && ! this.isDeleted) {
-        return true;
-      }
+    if (states.contains(EntityState.archived) && isArchived()) {
+      return true;
     }
 
-    if (states.contains(EntityState.deleted)) {
-      if (this.archivedAt != null && this.isDeleted) {
-        return true;
-      }
+    if (states.contains(EntityState.deleted) && isDeleted) {
+      return true;
     }
 
     return false;
