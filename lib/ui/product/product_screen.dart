@@ -2,7 +2,6 @@ import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/ui/product/product_list_vm.dart';
 import 'package:invoiceninja/ui/product/product_details_vm.dart';
@@ -16,7 +15,6 @@ class ProductScreen extends StatelessWidget {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   //static ActionMenuButtonType _activeSheet;
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +55,16 @@ class ProductScreen extends StatelessWidget {
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         scaffoldKey: _scaffoldKey,
-        selectedSortField: StoreProvider.of<AppState>(context).state.productListState().sortField,
-        selectedSortAscending: StoreProvider.of<AppState>(context).state.productListState().sortAscending,
+        selectedSortField: StoreProvider
+            .of<AppState>(context)
+            .state
+            .productListState()
+            .sortField,
+        selectedSortAscending: StoreProvider
+            .of<AppState>(context)
+            .state
+            .productListState()
+            .sortAscending,
         onSelectedSortField: (value) {
           StoreProvider.of<AppState>(context).dispatch(SortProducts(value));
         },
@@ -66,27 +72,31 @@ class ProductScreen extends StatelessWidget {
           ProductFields.productKey,
           ProductFields.cost,
         ],
-        selectedStates: StoreProvider.of<AppState>(context).state.productListState().stateFilters,
+        selectedStates: StoreProvider
+            .of<AppState>(context)
+            .state
+            .productListState()
+            .stateFilters,
         onSelectedState: (EntityState state, value) {
-          StoreProvider.of<AppState>(context).dispatch(FilterProductsByState(state));
+          StoreProvider
+              .of<AppState>(context)
+              .dispatch(FilterProductsByState(state));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: StoreConnector(
-        converter: (Store<AppState> store) => store,
-        builder: (context, store) {
-          return FloatingActionButton(
-            backgroundColor: Theme.of(context).primaryColor,
-            //key: ArchSampleKeys.addProductFab,
-            onPressed: () {
-              store.dispatch(SelectProductAction(ProductEntity()));
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
-            },
-            child: Icon(Icons.add),
-            tooltip: AppLocalization.of(context).newProduct,
-          );
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        //key: ArchSampleKeys.addProductFab,
+        onPressed: () {
+          StoreProvider
+              .of<AppState>(context)
+              .dispatch(SelectProductAction(ProductEntity()));
+          Navigator
+              .of(context)
+              .push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
         },
+        child: Icon(Icons.add),
+        tooltip: AppLocalization.of(context).newProduct,
       ),
     );
   }
