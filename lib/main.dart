@@ -18,8 +18,7 @@ import 'package:invoiceninja/utils/localization.dart';
 //import 'package:redux_logging/redux_logging.dart';
 
 void main() {
-  final store = Store<AppState>(
-      appReducer,
+  final store = Store<AppState>(appReducer,
       initialState: AppState(),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
@@ -27,14 +26,12 @@ void main() {
         ..addAll(createStoreProductsMiddleware())
         ..addAll([
           //LoggingMiddleware.printer(),
-        ])
-  );
+        ]));
 
   runApp(new InvoiceNinjaApp(store: store));
 }
 
-class InvoiceNinjaApp extends StatefulWidget  {
-
+class InvoiceNinjaApp extends StatefulWidget {
   final Store<AppState> store;
 
   InvoiceNinjaApp({Key key, this.store}) : super(key: key);
@@ -49,11 +46,11 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     return new StoreProvider<AppState>(
       store: widget.store,
       child: new MaterialApp(
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
-            const AppLocalizationsDelegate(),
-            GlobalMaterialLocalizations.delegate,
-          ],
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          const AppLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+        ],
         theme: ThemeData().copyWith(
           primaryColor: const Color(0xFF117cc1),
           primaryColorDark: const Color(0xFF005090),
@@ -68,34 +65,22 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         title: 'Invoice Ninja',
         routes: {
           AppRoutes.login: (context) {
-            return StoreBuilder<AppState>(
-              onInit: (store) => store.dispatch(LoadUserLogin()),
-              builder: (context, store) {
-                return LoginVM();
-              },
-            );
+            StoreProvider.of<AppState>(context).dispatch(LoadUserLogin());
+            return LoginVM();
           },
           AppRoutes.dashboard: (context) {
-            return StoreBuilder<AppState>(
-              onInit: (store) => store.dispatch(LoadDashboardAction()),
-              builder: (context, store) {
-                return Dashboard();
-              },
-            );
+            StoreProvider.of<AppState>(context).dispatch(LoadDashboardAction());
+            return Dashboard();
           },
-          /*
-          AppRoutes.clients: (context) {
-            return StoreBuilder<AppState>(
-              builder: (context, store) {
-                return ClientList();
-              },
-            );
-          },
-          */
           AppRoutes.products: (context) {
-            if (StoreProvider.of<AppState>(context).state.productState().isStale()) {
-              StoreProvider.of<AppState>(context).dispatch(
-                  LoadProductsAction());
+            if (StoreProvider
+                .of<AppState>(context)
+                .state
+                .productState()
+                .isStale()) {
+              StoreProvider
+                  .of<AppState>(context)
+                  .dispatch(LoadProductsAction());
             }
             return ProductScreen();
           },
