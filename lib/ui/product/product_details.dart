@@ -89,7 +89,7 @@ class ProductDetails extends StatelessWidget {
             ),
           ),
           new Builder(builder: (BuildContext context) {
-            return ProgressButton(
+            return viewModel.product.isDeleted ? Container() : ProgressButton(
               label: AppLocalization.of(context).save.toUpperCase(),
               isLoading: viewModel.isLoading,
               isDirty: viewModel.isDirty,
