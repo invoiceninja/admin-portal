@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
@@ -104,8 +105,7 @@ class AppDrawer extends StatelessWidget {
           AboutListTile(
             applicationName: 'Invoice Ninja',
             applicationIcon: Image.asset('assets/images/logo.png', width: 40.0, height: 40.0,),
-            applicationVersion: 'v0.0.1',
-            applicationLegalese: 'https://www.invoiceninja.com',
+            applicationVersion: kAppVersion ,
           ),
         ],
       ),
