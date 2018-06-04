@@ -4,7 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
-import 'package:invoiceninja/ui/dashboard/dashboard.dart';
+import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/redux/app/app_reducer.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -70,7 +70,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           },
           AppRoutes.dashboard: (context) {
             StoreProvider.of<AppState>(context).dispatch(LoadDashboardAction());
-            return Dashboard();
+            return DashboardScreen();
           },
           AppRoutes.products: (context) {
             StoreProvider

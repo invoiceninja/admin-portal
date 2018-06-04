@@ -25,33 +25,13 @@ class ProductScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          /*
-          ActionMenuButton(
-            onSelectedSort: (value, callback) {
-              StoreProvider.of<AppState>(context).dispatch(SortProducts(value));
-              //callback();
+            onPressed: () {
+
             },
-            actions: [
-              ActionMenuChoice(ActionMenuButtonType.sort),
-              ActionMenuChoice(ActionMenuButtonType.filter),
-            ],
-            onSelected: (ActionMenuChoice choice) {},
-          )
-          */
+          ),
         ],
       ),
       drawer: AppDrawerBuilder(),
-      /*
-      body: StoreBuilder<AppState>(
-        rebuildOnChange: true,
-        //onInit: (store) => store.dispatch(LoadDashboardAction()),
-        builder: (context, store) {
-          return ProductListBuilder();
-        },
-      ),
-      */
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         scaffoldKey: _scaffoldKey,

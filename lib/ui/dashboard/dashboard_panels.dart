@@ -29,45 +29,122 @@ class DashboardPanels extends StatelessWidget {
     return ListView(
         padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
         children: <Widget>[
-          DashboardPanel(
-              'Total Revenue', Icons.credit_card, this.dashboardState.data.paidToDate),
-          DashboardPanel(
-              'Average Invoice', Icons.email, this.dashboardState.data.averageInvoice),
-          DashboardPanel(
-              'Outstanding', Icons.schedule, this.dashboardState.data.balances),
-          DashboardPanel(
-              'Invoices Sent', Icons.send, this.dashboardState.data.invoicesSent, false),
-          DashboardPanel(
-              'Active Clients', Icons.people, this.dashboardState.data.activeClients, false),
-        ]
-    );
+          DashboardRow('Total Revenue', Icons.credit_card,
+              this.dashboardState.data.paidToDate, Color(0xFF117CC1)),
+          Row(
+            children: <Widget>[
+              DashboardColumn('Average Invoice', Icons.email,
+                  this.dashboardState.data.averageInvoice, Color(0xFF44AF69)),
+              DashboardColumn(
+                  'Outstanding', Icons.schedule, this.dashboardState.data.balances, Color(0xFFF8333C)),
+            ],
+          ),
+          DashboardRow('Invoices Sent', Icons.send,
+              this.dashboardState.data.invoicesSent, Color(0xFFFCAB10), false),
+          DashboardRow('Active Clients', Icons.people,
+              this.dashboardState.data.activeClients, Color(0xFFDBD5B5), false),
+        ]);
   }
 }
 
-class DashboardPanel extends StatelessWidget {
-  DashboardPanel(this.title, this.icon, this.amount, [this.isMoney = true]);
-
-  final String title;
+class ColorIcon extends StatelessWidget {
+  ColorIcon(this.icon, this.backgroundColor);
   final IconData icon;
-  final num amount;
-  final bool isMoney;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2.0,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: Icon(this.icon),
-            title: Text(this.title),
-            trailing: Text(this.isMoney ?
-              "\$" + this.amount.toStringAsFixed(2) :
-              this.amount.toString()),
-          ),
-        ],
+    return Container(
+      width: 52.0,
+      height: 52.0,
+      child: Icon(this.icon, color: Colors.white, size: 30.0,),
+      decoration: new BoxDecoration(
+        shape: BoxShape.circle,
+        color: this.backgroundColor,
+        //backgroundImage: new BackgroundImage(
+        //image: new AssetImage('assets/cat.jpg'),
       ),
     );
   }
 }
+
+class DashboardRow extends StatelessWidget {
+  DashboardRow(this.title, this.icon, this.amount, this.color, [this.isMoney = true]);
+
+  final String title;
+  final IconData icon;
+  final num amount;
+  final Color color;
+  final bool isMoney;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 3.0, bottom: 3.0 ),
+      child: Card(
+        elevation: 4.0,
+        child: ListTile(
+          title: Padding(
+            padding: EdgeInsets.only(top: 6.0, bottom: 6.0 ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(this.title),
+                Text(this.isMoney
+                    ? "\$" + this.amount.toStringAsFixed(2)
+                    : this.amount.toString(),
+                style: TextStyle(
+                  fontSize: 26.0,
+                  fontWeight: FontWeight.bold,
+                ),)
+              ],
+            ),
+          ),
+          trailing: ColorIcon(this.icon, this.color),
+        ),
+      ),
+    );
+  }
+}
+
+
+class DashboardColumn extends StatelessWidget {
+  DashboardColumn(this.title, this.icon, this.amount, this.color, [this.isMoney = true]);
+
+  final String title;
+  final IconData icon;
+  final num amount;
+  final Color color;
+  final bool isMoney;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(top: 3.0, bottom: 3.0 ),
+        child: Card(
+          elevation: 4.0,
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Center(child: ColorIcon(this.icon, this.color)),
+                SizedBox(height: 16.0),
+                Text(this.title),
+                Text(this.isMoney
+                    ? "\$" + this.amount.toStringAsFixed(2)
+                    : this.amount.toString(),
+                  style: TextStyle(
+                    fontSize: 26.0,
+                    fontWeight: FontWeight.bold,
+                  ),)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
