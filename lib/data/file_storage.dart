@@ -10,26 +10,26 @@ class FileStorage {
     this.getDirectory,
   );
 
-  Future<dynamic> loadData() async {
-    final file = await _getLocalFile();
-    final contents = await file.readAsString();
-
-    return contents;
-  }
-
-  Future<File> saveData(String data) async {
-    final file = await _getLocalFile();
-
-    return file.writeAsString(data);
-  }
-
   Future<File> _getLocalFile() async {
     final dir = await getDirectory();
 
     return File('${dir.path}/invoiceninja__$tag.json');
   }
 
-  Future<FileSystemEntity> clean() async {
+  Future<dynamic> load() async {
+    final file = await _getLocalFile();
+    final contents = await file.readAsString();
+
+    return contents;
+  }
+
+  Future<File> save(String data) async {
+    final file = await _getLocalFile();
+
+    return file.writeAsString(data);
+  }
+
+  Future<FileSystemEntity> delete() async {
     final file = await _getLocalFile();
 
     return file.delete();

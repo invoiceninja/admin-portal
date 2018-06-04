@@ -18,10 +18,12 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
 ]) {
   final loadState = _createLoadState(repository);
   final dataLoaded = _createDataLoaded(repository);
+  final deleteState = _createDeleteState(repository);
 
   return [
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, LoadDashboardSuccess>(dataLoaded),
+    TypedMiddleware<AppState, UserLogout>(deleteState),
   ];
 }
 
@@ -40,13 +42,21 @@ Middleware<AppState> _createLoadState(PersistenceRepository repository) {
   };
 }
 
-
 Middleware<AppState> _createDataLoaded(PersistenceRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
     if (store.state.isLoaded()) {
       repository.saveData(store.state);
     }
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _createDeleteState(PersistenceRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+
+    repository.delete();
 
     next(action);
   };

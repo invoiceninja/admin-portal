@@ -17,12 +17,16 @@ class PersistenceRepository {
   Future<File> saveData(AppState state) async {
     var data = serializers.serializeWith(AppState.serializer, state);
 
-    return await fileStorage.saveData(json.encode(data));
+    return await fileStorage.save(json.encode(data));
   }
 
   Future<AppState> loadData() async {
-    var data = await fileStorage.loadData();
+    var data = await fileStorage.load();
 
     return serializers.deserializeWith(AppState.serializer, json.decode(data));
+  }
+
+  Future<FileSystemEntity> delete() async {
+    return await fileStorage.delete();
   }
 }
