@@ -13,6 +13,11 @@ class AppLocalization {
 
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'total_revenue': 'Total Revenue',
+      'average_invoice': 'Average Invoice',
+      'outstanding': 'Outstanding',
+      'invoices_sent': 'Invoices Sent',
+      'active_clients': 'Active Clients',
       'email': 'Email',
       'password': 'Password',
       'url': 'URL',
@@ -52,6 +57,11 @@ class AppLocalization {
     },
   };
 
+  String get totalRevenue => _localizedValues[locale.languageCode]['total_revenue'];
+  String get averageInvoice => _localizedValues[locale.languageCode]['average_invoice'];
+  String get outstanding => _localizedValues[locale.languageCode]['outstanding'];
+  String get invoicesSent => _localizedValues[locale.languageCode]['invoices_sent'];
+  String get activeClients => _localizedValues[locale.languageCode]['active_clients'];
   String get email => _localizedValues[locale.languageCode]['email'];
   String get password => _localizedValues[locale.languageCode]['password'];
   String get url => _localizedValues[locale.languageCode]['url'];
