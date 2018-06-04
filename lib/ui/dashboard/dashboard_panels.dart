@@ -3,50 +3,54 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/app_loading.dart';
 import 'package:invoiceninja/ui/app/loading_indicator.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja/ui/dashboard/dashboard_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class DashboardPanels extends StatelessWidget {
-  final DashboardState dashboardState;
+  final DashboardVM viewModel;
 
   DashboardPanels({
     Key key,
-    @required this.dashboardState,
+    @required this.viewModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppLoading(builder: (context, loading) {
-      return loading && dashboardState.lastUpdated == 0
+      return loading && viewModel.dashboardState.lastUpdated == 0
           ? LoadingIndicator()
           : _buildPanels(context);
     });
   }
 
-  ListView _buildPanels(BuildContext context) {
-    if (this.dashboardState.data == null) {
+  Widget _buildPanels(BuildContext context) {
+    if (viewModel.dashboardState.data == null) {
       return ListView();
     }
 
     var localization = AppLocalization.of(context);
 
-    return ListView(
-        padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
-        children: <Widget>[
-          DashboardRow(localization.totalRevenue, Icons.show_chart,
-              this.dashboardState.data.paidToDate, Color(0xFF117CC1)),
-          Row(
-            children: <Widget>[
-              DashboardColumn(localization.averageInvoice, Icons.email,
-                  this.dashboardState.data.averageInvoice, Color(0xFF44AF69)),
-              DashboardColumn(
-                  localization.outstanding, Icons.schedule, this.dashboardState.data.balances, Color(0xFFF8333C)),
-            ],
-          ),
-          DashboardRow(localization.invoicesSent, Icons.send,
-              this.dashboardState.data.invoicesSent, Color(0xFFFCAB10), false),
-          DashboardRow(localization.activeClients, Icons.people,
-              this.dashboardState.data.activeClients, Color(0xFFDBD5B5), false),
-        ]);
+    return RefreshIndicator(
+      onRefresh: () => viewModel.onRefreshed(context),
+      child: ListView(
+          padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
+          children: <Widget>[
+            DashboardRow(localization.totalRevenue, Icons.show_chart,
+                viewModel.dashboardState.data.paidToDate, Color(0xFF117CC1)),
+            Row(
+              children: <Widget>[
+                DashboardColumn(localization.averageInvoice, Icons.email,
+                    viewModel.dashboardState.data.averageInvoice, Color(0xFF44AF69)),
+                DashboardColumn(
+                    localization.outstanding, Icons.schedule, viewModel.dashboardState.data.balances, Color(0xFFF8333C)),
+              ],
+            ),
+            DashboardRow(localization.invoicesSent, Icons.send,
+                viewModel.dashboardState.data.invoicesSent, Color(0xFFFCAB10), false),
+            DashboardRow(localization.activeClients, Icons.people,
+                viewModel.dashboardState.data.activeClients, Color(0xFFDBD5B5), false),
+          ]),
+    );
   }
 }
 

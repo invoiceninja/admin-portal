@@ -14,7 +14,7 @@ class DashboardScreen extends StatelessWidget {
         title: Text(AppLocalization.of(context).dashboard),
       ),
       drawer: AppDrawerBuilder(),
-      body: DashboardVM(),
+      body: DashboardBuilder(),
     );
   }
 }

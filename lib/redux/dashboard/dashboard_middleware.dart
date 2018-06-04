@@ -35,7 +35,12 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
 
     store.dispatch(LoadDashboardRequest());
     repository.loadItem(store.state.selectedCompany(), store.state.authState).then(
-            (data) => store.dispatch(LoadDashboardSuccess(data))
+            (data) {
+              store.dispatch(LoadDashboardSuccess(data));
+              if (action.completer != null) {
+                action.completer.complete(null);
+              }
+            }
     ).catchError((error) => store.dispatch(LoadDashboardFailure(error)));
 
     next(action);

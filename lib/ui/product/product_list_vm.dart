@@ -49,17 +49,17 @@ class ProductListVM {
   });
 
   static ProductListVM fromStore(Store<AppState> store) {
-    Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<Null> completer = new Completer<Null>();
-      store.dispatch(LoadProductsAction(completer, true));
-      return completer.future.then((_) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-            content: SnackBarRow(
-              message: AppLocalization.of(context).refreshComplete,
-            ),
-            duration: Duration(seconds: 3)));
-      });
-    }
+      Future<Null> _handleRefresh(BuildContext context) {
+        final Completer<Null> completer = new Completer<Null>();
+        store.dispatch(LoadProductsAction(completer, true));
+        return completer.future.then((_) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+                message: AppLocalization.of(context).refreshComplete,
+              ),
+              duration: Duration(seconds: 3)));
+        });
+      }
 
     return ProductListVM(
         productList: memoizedProductList(store.state.productState().map, store.state.productState().list, store.state.productListState()),
