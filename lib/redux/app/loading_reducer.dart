@@ -13,8 +13,8 @@ final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, LoadDashboardFailure>(_setLoaded),
 
   TypedReducer<bool, LoadProductsRequest>(_setLoading),
-  TypedReducer<bool, ProductsLoadedAction>(_setLoaded),
-  TypedReducer<bool, ProductsNotLoadedAction>(_setLoaded),
+  TypedReducer<bool, LoadProductsSuccess>(_setLoaded),
+  TypedReducer<bool, LoadProductsFailure>(_setLoaded),
 
   TypedReducer<bool, SaveProductRequest>(_setLoading),
   TypedReducer<bool, SaveProductFailure>(_setLoaded),

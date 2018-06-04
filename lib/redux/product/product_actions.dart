@@ -12,23 +12,23 @@ class LoadProductsAction {
 
 class LoadProductsRequest {}
 
-class ProductsNotLoadedAction {
+class LoadProductsFailure {
   final dynamic error;
-  ProductsNotLoadedAction(this.error);
+  LoadProductsFailure(this.error);
 
   @override
   String toString() {
-    return 'ProductsNotLoadedAction{error: $error}';
+    return 'LoadProductsFailure{error: $error}';
   }
 }
 
-class ProductsLoadedAction {
+class LoadProductsSuccess {
   final BuiltList<ProductEntity> products;
-  ProductsLoadedAction(this.products);
+  LoadProductsSuccess(this.products);
 
   @override
   String toString() {
-    return 'ProductsLoadedAction{products: $products}';
+    return 'LoadProductsSuccess{products: $products}';
   }
 }
 

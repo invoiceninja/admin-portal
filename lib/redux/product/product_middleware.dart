@@ -126,11 +126,11 @@ Middleware<AppState> _loadProducts(ProductsRepository repository) {
     repository
         .loadList(store.state.selectedCompany(), store.state.authState)
         .then((data) {
-      store.dispatch(ProductsLoadedAction(data));
+      store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) => store.dispatch(ProductsNotLoadedAction(error)));
+    }).catchError((error) => store.dispatch(LoadProductsFailure(error)));
 
     next(action);
   };

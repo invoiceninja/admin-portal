@@ -3,10 +3,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 
-
-//List<ProductEntity> productsSelector(AppState state) =>
-//    state.productState().list.map((id) => state.productState().map[id]);
-
 var memoizedProductList = memo3((
     BuiltMap<int, ProductEntity> productMap,
     BuiltList<int> productList,

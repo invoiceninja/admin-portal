@@ -36,16 +36,10 @@ ListUIState _sortProducts(ListUIState productListState, SortProducts action) {
 
 
 final productsReducer = combineReducers<ProductState>([
-  /*
-  TypedReducer<List<Product>, AddProductAction>(_addProduct),
-  TypedReducer<List<Product>, DeleteProductAction>(_deleteProduct),
-  TypedReducer<List<Product>, ClearCompletedAction>(_clearCompleted),
-  TypedReducer<List<Product>, ToggleAllAction>(_toggleAll),
-  */
   TypedReducer<ProductState, SaveProductSuccess>(_updateProduct),
   TypedReducer<ProductState, AddProductSuccess>(_addProduct),
-  TypedReducer<ProductState, ProductsLoadedAction>(_setLoadedProducts),
-  TypedReducer<ProductState, ProductsNotLoadedAction>(_setNoProducts),
+  TypedReducer<ProductState, LoadProductsSuccess>(_setLoadedProducts),
+  TypedReducer<ProductState, LoadProductsFailure>(_setNoProducts),
   TypedReducer<ProductState, SelectProductAction>(_selectProduct),
 
   TypedReducer<ProductState, ArchiveProductRequest>(_archiveProductRequest),
@@ -157,7 +151,7 @@ ProductState _updateProduct(
 }
 
 ProductState _setNoProducts(
-    ProductState productState, ProductsNotLoadedAction action) {
+    ProductState productState, LoadProductsFailure action) {
   return productState;
 }
 
@@ -167,30 +161,8 @@ ProductState _selectProduct(
     ..editing.replace(action.product));
 }
 
-/*
-List<ProductEntity> _addProduct(List<ProductEntity> products, AddProductAction action) {
-  return List.from(products)..add(action.product);
-}
-
-List<ProductEntity> _deleteProduct(List<ProductEntity> products, DeleteProductAction action) {
-  return products.where((product) => product.id != action.id).toList();
-}
-
-}
-
-List<ProductEntity> _clearCompleted(List<Product> products, ClearCompletedAction action) {
-  return products.where((product) => !product.complete).toList();
-}
-
-List<ProductEntity> _toggleAll(List<ProductEntity> products, ToggleAllAction action) {
-  final allComplete = allCompleteSelector(products);
-
-  return products.map((product) => product.copyWith(complete: !allComplete)).toList();
-}
-*/
-
 ProductState _setLoadedProducts(
-    ProductState productState, ProductsLoadedAction action) {
+    ProductState productState, LoadProductsSuccess action) {
   return productState.rebuild(
     (b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
