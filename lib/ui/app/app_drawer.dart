@@ -101,6 +101,12 @@ class AppDrawer extends StatelessWidget {
               viewModel.onLogoutTapped(context);
             },
           ),
+          AboutListTile(
+            applicationName: 'Invoice Ninja',
+            applicationIcon: Image.asset('assets/images/logo.png', width: 40.0, height: 40.0,),
+            applicationVersion: 'v0.0.1',
+            applicationLegalese: 'https://www.invoiceninja.com',
+          ),
         ],
       ),
     );
