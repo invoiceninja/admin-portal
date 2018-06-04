@@ -89,7 +89,7 @@ class DashboardRow extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 3.0, bottom: 3.0 ),
       child: Card(
-        elevation: 4.0,
+        elevation: 2.0,
         child: ListTile(
           title: Padding(
             padding: EdgeInsets.only(top: 6.0, bottom: 6.0 ),
@@ -130,7 +130,7 @@ class DashboardColumn extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(top: 3.0, bottom: 3.0 ),
         child: Card(
-          elevation: 4.0,
+          elevation: 2.0,
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
