@@ -57,6 +57,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return this.companyState1;
   }
 
+  bool isLoaded() {
+    return dashboardState().isLoaded()
+        && productState().isLoaded();
+  }
+
   CompanyEntity selectedCompany() => this.selectedCompanyState().company;
   DashboardState dashboardState() => this.selectedCompanyState().dashboardState;
 

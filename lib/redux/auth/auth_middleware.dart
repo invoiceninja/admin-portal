@@ -76,6 +76,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
           action.completer.complete(null);
         }
     ).catchError((error) {
+      print(error);
       store.dispatch(UserLoginFailure(error));
     });
 

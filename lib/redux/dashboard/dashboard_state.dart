@@ -25,6 +25,10 @@ abstract class DashboardState implements Built<DashboardState, DashboardStateBui
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
+  bool isLoaded() {
+    return lastUpdated != null;
+  }
+
   DashboardState._();
   //factory DashboardState([updates(DashboardStateBuilder b)]) = _$DashboardState;
   static Serializer<DashboardState> get serializer => _$dashboardStateSerializer;

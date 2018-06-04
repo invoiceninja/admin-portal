@@ -1,6 +1,7 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/redux/app/app_middleware.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
@@ -24,6 +25,7 @@ void main() {
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDashboardMiddleware())
         ..addAll(createStoreProductsMiddleware())
+        ..addAll(createStorePersistenceMiddleware())
         ..addAll([
           //LoggingMiddleware.printer(),
         ]));

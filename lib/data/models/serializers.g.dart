@@ -15,18 +15,40 @@ part of 'serializers.dart';
 // ignore_for_file: sort_constructors_first
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(AppState.serializer)
+      ..add(AuthState.serializer)
       ..add(CompanyEntity.serializer)
+      ..add(CompanyState.serializer)
       ..add(DashboardEntity.serializer)
       ..add(DashboardResponse.serializer)
+      ..add(DashboardState.serializer)
+      ..add(EntityState.serializer)
+      ..add(EntityUIState.serializer)
       ..add(ErrorMessage.serializer)
+      ..add(ListUIState.serializer)
       ..add(LoginResponse.serializer)
       ..add(ProductEntity.serializer)
       ..add(ProductItemResponse.serializer)
       ..add(ProductListResponse.serializer)
+      ..add(ProductState.serializer)
+      ..add(UIState.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CompanyEntity)]),
           () => new ListBuilder<CompanyEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(EntityState)]),
+          () => new ListBuilder<EntityState>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ProductEntity)]),
-          () => new ListBuilder<ProductEntity>()))
+          () => new ListBuilder<ProductEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(int), const FullType(ProductEntity)]),
+          () => new MapBuilder<int, ProductEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>()))
     .build();
