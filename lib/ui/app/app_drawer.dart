@@ -105,7 +105,8 @@ class AppDrawer extends StatelessWidget {
           AboutListTile(
             applicationName: 'Invoice Ninja',
             applicationIcon: Image.asset('assets/images/logo.png', width: 40.0, height: 40.0,),
-            applicationVersion: kAppVersion ,
+            applicationVersion: kAppVersion,
+            icon: Icon(FontAwesomeIcons.info),
           ),
         ],
       ),
