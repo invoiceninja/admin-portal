@@ -10,7 +10,7 @@ class FileStorage {
     this.getDirectory,
   );
 
-  Future<String> loadData() async {
+  Future<dynamic> loadData() async {
     final file = await _getLocalFile();
     final contents = await file.readAsString();
 

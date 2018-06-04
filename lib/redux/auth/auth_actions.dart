@@ -1,4 +1,15 @@
 import 'dart:async';
+import 'package:flutter/widgets.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
+
+class LoadStateRequest {
+  final BuildContext context;
+  LoadStateRequest(this.context);
+}
+class LoadStateSuccess {
+  final AppState state;
+  LoadStateSuccess(this.state);
+}
 
 class LoadUserLogin {}
 

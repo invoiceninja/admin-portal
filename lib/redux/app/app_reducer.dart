@@ -11,6 +11,8 @@ import 'package:invoiceninja/redux/company/company_actions.dart';
 AppState appReducer(AppState state, action) {
   if (action is UserLogout) {
     return AppState();
+  } else if (action is LoadStateSuccess) {
+    return action.state.rebuild((b) => b.isLoading = false);
   }
 
   return state.rebuild((b) => b

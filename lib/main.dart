@@ -67,7 +67,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         title: 'Invoice Ninja',
         routes: {
           AppRoutes.login: (context) {
-            StoreProvider.of<AppState>(context).dispatch(LoadUserLogin());
+            StoreProvider.of<AppState>(context).dispatch(LoadStateRequest(context));
             return LoginVM();
           },
           AppRoutes.dashboard: (context) {
