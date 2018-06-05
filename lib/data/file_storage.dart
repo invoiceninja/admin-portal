@@ -19,12 +19,16 @@ class FileStorage {
   Future<dynamic> load() async {
     final file = await _getLocalFile();
     final contents = await file.readAsString();
-
+    print('== LOAD ==');
+    print(contents);
     return contents;
   }
 
   Future<File> save(String data) async {
     final file = await _getLocalFile();
+
+    print('== SAVE ==');
+    print(data);
 
     return file.writeAsString(data);
   }
