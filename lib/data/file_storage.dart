@@ -34,4 +34,10 @@ class FileStorage {
 
     return file.delete();
   }
+
+  Future<bool> exisits() async {
+    final file = await _getLocalFile();
+
+    return file.exists();
+  }
 }

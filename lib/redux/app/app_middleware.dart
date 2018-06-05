@@ -39,12 +39,18 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
 Middleware<AppState> _createLoadState(PersistenceRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    repository.loadData().then((state) {
-      store.dispatch(LoadStateSuccess(state));
-      Navigator.of(action.context).pushReplacementNamed(AppRoutes.dashboard);
-    }).catchError((error) {
-      print(error);
-      store.dispatch(LoadUserLogin());
+    repository.exists().then((exists) {
+      if (exists) {
+        repository.loadData().then((state) {
+          store.dispatch(LoadStateSuccess(state));
+          Navigator.of(action.context).pushReplacementNamed(AppRoutes.dashboard);
+        }).catchError((error) {
+          print(error);
+          store.dispatch(LoadUserLogin());
+        });
+      } else {
+        store.dispatch(LoadUserLogin());
+      }
     });
 
     next(action);
