@@ -106,8 +106,6 @@ Middleware<AppState> _saveProduct(ProductsRepository repository) {
 Middleware<AppState> _loadProducts(ProductsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     
-    //store.dispatch(SearchProducts(null));
-    
     if (! store.state.productState().isStale() && ! action.force) {
       next(action);
       return;

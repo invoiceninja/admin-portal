@@ -16,21 +16,13 @@ class AppSearchButton extends StatelessWidget {
     return StoreConnector<AppState, ListUIState>(
       converter: (Store<AppState> store) =>
           store.state.productListState(),
-      //distinct: true,
+      distinct: true,
       builder: (BuildContext context, listUIState) {
-        return listUIState.search == null
-            ? IconButton(
-          icon: Icon(Icons.search),
+        return IconButton(
+          icon: Icon(listUIState.search == null ? Icons.search : Icons.close),
           tooltip: localization.search,
           onPressed: () {
-            store.dispatch(SearchProducts(''));
-          },
-        )
-            : IconButton(
-          icon: Icon(Icons.close),
-          tooltip: localization.close,
-          onPressed: () {
-            store.dispatch(SearchProducts(null));
+            store.dispatch(SearchProducts(listUIState.search == null ? '' : null));
           },
         );
       },

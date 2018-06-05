@@ -37,7 +37,6 @@ class AppSearch extends StatelessWidget {
               border: Border.all(color: Colors.grey[700], width: 1.0),
               borderRadius: BorderRadius.circular(6.0)),
           child: TextField(
-
             decoration: InputDecoration(
               prefixIcon: Padding(
                 padding: EdgeInsets.only(right: 8.0),
