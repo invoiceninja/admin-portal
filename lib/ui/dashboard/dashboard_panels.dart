@@ -91,11 +91,12 @@ class DashboardRow extends StatelessWidget {
         elevation: 2.0,
         child: ListTile(
           title: Padding(
-            padding: EdgeInsets.only(top: 6.0, bottom: 6.0 ),
+            padding: EdgeInsets.only(top: 12.0, bottom: 12.0 ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(this.title),
+                Text(this.title,
+                  style: TextStyle(color: Colors.grey[700])),
                 Text(this.isMoney
                     ? "\$" + this.amount.toStringAsFixed(2)
                     : this.amount.toString(),
@@ -137,7 +138,8 @@ class DashboardColumn extends StatelessWidget {
               children: <Widget>[
                 Center(child: ColorIcon(this.icon, this.color)),
                 SizedBox(height: 18.0),
-                Text(this.title),
+                Text(this.title,
+                    style: TextStyle(color: Colors.grey[700])),
                 Text(this.isMoney
                     ? "\$" + this.amount.toStringAsFixed(2)
                     : this.amount.toString(),
