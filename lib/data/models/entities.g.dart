@@ -14,6 +14,58 @@ part of 'entities.dart';
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
 
+const EntityType _$invoice = const EntityType._('invoice');
+const EntityType _$quote = const EntityType._('quote');
+const EntityType _$product = const EntityType._('product');
+const EntityType _$client = const EntityType._('client');
+const EntityType _$task = const EntityType._('task');
+const EntityType _$project = const EntityType._('project');
+const EntityType _$expense = const EntityType._('expense');
+const EntityType _$vendor = const EntityType._('vendor');
+const EntityType _$credit = const EntityType._('credit');
+const EntityType _$payment = const EntityType._('payment');
+
+EntityType _$typeValueOf(String name) {
+  switch (name) {
+    case 'invoice':
+      return _$invoice;
+    case 'quote':
+      return _$quote;
+    case 'product':
+      return _$product;
+    case 'client':
+      return _$client;
+    case 'task':
+      return _$task;
+    case 'project':
+      return _$project;
+    case 'expense':
+      return _$expense;
+    case 'vendor':
+      return _$vendor;
+    case 'credit':
+      return _$credit;
+    case 'payment':
+      return _$payment;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<EntityType> _$typeValues =
+    new BuiltSet<EntityType>(const <EntityType>[
+  _$invoice,
+  _$quote,
+  _$product,
+  _$client,
+  _$task,
+  _$project,
+  _$expense,
+  _$vendor,
+  _$credit,
+  _$payment,
+]);
+
 const EntityState _$active = const EntityState._('active');
 const EntityState _$archived = const EntityState._('archived');
 const EntityState _$deleted = const EntityState._('deleted');
@@ -38,6 +90,7 @@ final BuiltSet<EntityState> _$values =
   _$deleted,
 ]);
 
+Serializer<EntityType> _$entityTypeSerializer = new _$EntityTypeSerializer();
 Serializer<EntityState> _$entityStateSerializer = new _$EntityStateSerializer();
 Serializer<ErrorMessage> _$errorMessageSerializer =
     new _$ErrorMessageSerializer();
@@ -49,6 +102,23 @@ Serializer<DashboardResponse> _$dashboardResponseSerializer =
     new _$DashboardResponseSerializer();
 Serializer<DashboardEntity> _$dashboardEntitySerializer =
     new _$DashboardEntitySerializer();
+
+class _$EntityTypeSerializer implements PrimitiveSerializer<EntityType> {
+  @override
+  final Iterable<Type> types = const <Type>[EntityType];
+  @override
+  final String wireName = 'EntityType';
+
+  @override
+  Object serialize(Serializers serializers, EntityType object,
+          {FullType specifiedType: FullType.unspecified}) =>
+      object.name;
+
+  @override
+  EntityType deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType: FullType.unspecified}) =>
+      EntityType.valueOf(serialized as String);
+}
 
 class _$EntityStateSerializer implements PrimitiveSerializer<EntityState> {
   @override

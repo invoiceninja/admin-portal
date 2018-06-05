@@ -16,7 +16,13 @@ List<int> visibleProductsSelector(
 
   var list = productList.where((productId) {
     var product = productMap[productId];
-    return product.matchesStates(productListState.stateFilters);
+    if (! product.matchesStates(productListState.stateFilters)) {
+      return false;
+    }
+    if (! product.matchesSearch(productListState.search)) {
+      return false;
+    }
+    return true;
   }).toList();
 
   list.sort((productAId, productBId) {

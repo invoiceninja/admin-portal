@@ -100,6 +100,14 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
     }
   }
 
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    return productKey.contains(search) || notes.contains(search);
+  }
+
   bool isActive() {
     return this.archivedAt == null;
   }

@@ -4,6 +4,28 @@ import 'package:built_value/serializer.dart';
 
 part 'entities.g.dart';
 
+
+class EntityType extends EnumClass {
+  static Serializer<EntityType> get serializer => _$entityTypeSerializer;
+
+  static const EntityType invoice = _$invoice;
+  static const EntityType quote = _$quote;
+  static const EntityType product = _$product;
+  static const EntityType client = _$client;
+  static const EntityType task = _$task;
+  static const EntityType project = _$project;
+  static const EntityType expense = _$expense;
+  static const EntityType vendor = _$vendor;
+  static const EntityType credit = _$credit;
+  static const EntityType payment = _$payment;
+
+  const EntityType._(String name) : super(name);
+
+  static BuiltSet<EntityType> get values => _$typeValues;
+  static EntityType valueOf(String name) => _$typeValueOf(name);
+}
+
+
 class EntityState extends EnumClass {
   static Serializer<EntityState> get serializer => _$entityStateSerializer;
 

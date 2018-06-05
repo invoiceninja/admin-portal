@@ -1,4 +1,6 @@
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja/ui/app/app_search.dart';
+import 'package:invoiceninja/ui/app/app_search_button.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -22,35 +24,14 @@ class ProductScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: StoreConnector<AppState, ListUIState>(
-          //distinct: true,
-          converter: (Store<AppState> store) => store.state.productListState(),
-          builder: (BuildContext context, listUIState) {
-            return listUIState.search == null
-                ? Text(localization.products)
-                : TextFormField (
-              autofocus: true,
-            );
+        title: AppSearch(
+          entityType: EntityType.product,
+          onSearchChanged: (value) {
+            store.dispatch(SearchProducts(value));
           },
         ),
         actions: [
-          StoreConnector<AppState, ListUIState>(
-            converter: (Store<AppState> store) => store.state.productListState(),
-            builder: (BuildContext context, listUIState) {
-              return listUIState.search == null
-              ? IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  store.dispatch(SearchProducts(''));
-                },
-              ) : IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  store.dispatch(SearchProducts(null));
-                },
-              );
-            },
-          ),
+          AppSearchButton(),
         ],
       ),
       drawer: AppDrawerBuilder(),

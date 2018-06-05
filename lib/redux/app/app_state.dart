@@ -65,6 +65,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   CompanyEntity selectedCompany() => this.selectedCompanyState().company;
   DashboardState dashboardState() => this.selectedCompanyState().dashboardState;
 
+  ListUIState getListState(EntityType type) {
+    switch (type) {
+      case EntityType.product:
+        return productListState();
+      default:
+        return null;
+    }
+  }
+
   ProductState productState() => this.selectedCompanyState().productState;
   EntityUIState productUIState() => this.uiState.productUIState;
   ListUIState productListState() => this.uiState.productUIState.listUIState;

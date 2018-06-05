@@ -16,7 +16,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_middleware.dart';
 import 'package:invoiceninja/utils/localization.dart';
-//import 'package:redux_logging/redux_logging.dart';
+import 'package:redux_logging/redux_logging.dart';
 
 void main() {
   final store = Store<AppState>(appReducer,
@@ -27,7 +27,7 @@ void main() {
         ..addAll(createStoreProductsMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         ..addAll([
-          //LoggingMiddleware.printer(),
+          LoggingMiddleware.printer(),
         ]));
 
   runApp(new InvoiceNinjaApp(store: store));
@@ -43,6 +43,7 @@ class InvoiceNinjaApp extends StatefulWidget {
 }
 
 class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
+
   @override
   Widget build(BuildContext context) {
     return new StoreProvider<AppState>(
@@ -67,17 +68,16 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         title: 'Invoice Ninja',
         routes: {
           AppRoutes.login: (context) {
-            StoreProvider.of<AppState>(context).dispatch(LoadStateRequest(context));
+            widget.store.dispatch(LoadStateRequest(context));
             return LoginVM();
           },
           AppRoutes.dashboard: (context) {
-            StoreProvider.of<AppState>(context).dispatch(LoadDashboardAction());
+            widget.store.dispatch(LoadDashboardAction());
             return DashboardScreen();
           },
           AppRoutes.products: (context) {
-            StoreProvider
-                  .of<AppState>(context)
-                  .dispatch(LoadProductsAction());
+            print('== ROUTES ===');
+            widget.store.dispatch(LoadProductsAction());
             return ProductScreen();
           },
         },
