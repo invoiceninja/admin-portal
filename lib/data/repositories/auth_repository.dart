@@ -9,11 +9,9 @@ import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
 class AuthRepository {
-  final FileStorage fileStorage;
   final WebClient webClient;
 
   const AuthRepository({
-    @required this.fileStorage,
     this.webClient = const WebClient(),
   });
 

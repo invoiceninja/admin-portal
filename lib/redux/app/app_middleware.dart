@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/repositories/persistence_repository.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -12,7 +13,7 @@ import 'package:path_provider/path_provider.dart';
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository repository = const PersistenceRepository(
     fileStorage: const FileStorage(
-      'state',
+      kStateFilename,
       getApplicationDocumentsDirectory,
     ),
   ),

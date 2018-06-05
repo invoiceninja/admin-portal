@@ -8,12 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
-  AuthRepository repository = const AuthRepository(
-    fileStorage: const FileStorage(
-      '__invoiceninja__',
-      getApplicationDocumentsDirectory,
-    ),
-  ),
+  AuthRepository repository = const AuthRepository(),
 ]) {
   final loginInit = _createLoginInit();
   final loginRequest = _createLoginRequest(repository);

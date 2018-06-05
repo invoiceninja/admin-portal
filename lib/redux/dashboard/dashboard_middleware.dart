@@ -6,12 +6,7 @@ import 'package:invoiceninja/data/repositories/dashboard_repository.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 
 List<Middleware<AppState>> createStoreDashboardMiddleware([
-  DashboardRepository repository = const DashboardRepository(
-    fileStorage: const FileStorage(
-      '__invoiceninja__',
-      getApplicationDocumentsDirectory,
-    ),
-  ),
+  DashboardRepository repository = const DashboardRepository(),
 ]) {
   final loadDashboard = _createLoadDashboard(repository);
 

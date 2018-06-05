@@ -7,12 +7,7 @@ import 'package:invoiceninja/data/repositories/product_repository.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 
 List<Middleware<AppState>> createStoreProductsMiddleware([
-  ProductsRepository repository = const ProductsRepository(
-    fileStorage: const FileStorage(
-      '__invoiceninja__',
-      getApplicationDocumentsDirectory,
-    ),
-  ),
+  ProductsRepository repository = const ProductsRepository(),
 ]) {
   final loadProducts = _loadProducts(repository);
   final saveProduct = _saveProduct(repository);

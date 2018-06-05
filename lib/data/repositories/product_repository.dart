@@ -11,11 +11,9 @@ import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
 class ProductsRepository {
-  final FileStorage fileStorage;
   final WebClient webClient;
 
   const ProductsRepository({
-    @required this.fileStorage,
     this.webClient = const WebClient(),
   });
 
