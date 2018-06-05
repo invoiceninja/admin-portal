@@ -14,7 +14,6 @@ class ProductScreen extends StatelessWidget {
   ProductScreen() : super(key: NinjaKeys.productHome);
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  //static ActionMenuButtonType _activeSheet;
 
   @override
   Widget build(BuildContext context) {

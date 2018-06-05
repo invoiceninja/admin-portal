@@ -20,7 +20,7 @@ class ProductsRepository {
   Future<BuiltList<ProductEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
     final response = await webClient.get(
-        auth.url + '/products', company.token);
+        auth.url + '/products?per_page=500', company.token);
 
     ProductListResponse productResponse = serializers.deserializeWith(
         ProductListResponse.serializer, response);
