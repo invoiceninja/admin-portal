@@ -1,9 +1,7 @@
-import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/repositories/dashboard_repository.dart';
-import 'package:invoiceninja/data/file_storage.dart';
 
 List<Middleware<AppState>> createStoreDashboardMiddleware([
   DashboardRepository repository = const DashboardRepository(),

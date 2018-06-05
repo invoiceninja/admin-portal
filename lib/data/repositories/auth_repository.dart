@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:convert';
-import 'package:meta/meta.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/serializers.dart';
 import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
 class AuthRepository {

@@ -103,6 +103,12 @@ class SaveProductFailure {
   SaveProductFailure (this.error);
 }
 
+
+class SearchProducts {
+  final String search;
+  SearchProducts(this.search);
+}
+
 class SortProducts {
   final String field;
   SortProducts(this.field);

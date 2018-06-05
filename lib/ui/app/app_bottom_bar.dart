@@ -8,7 +8,6 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
 
   final List<String> sortFields;
   final Function(String) onSelectedSortField;
@@ -21,8 +20,7 @@ class AppBottomBar extends StatefulWidget {
   final Function(EntityState, bool) onSelectedState;
 
   AppBottomBar(
-      {this.scaffoldKey,
-        this.sortFields,
+      {this.sortFields,
         this.onSelectedSortField,
         this.selectedSortField,
         this.selectedSortAscending,
@@ -47,7 +45,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _filterController = widget.scaffoldKey.currentState.showBottomSheet((context) {
+      _filterController = Scaffold.of(context).showBottomSheet((context) {
         return StoreConnector<AppState, BuiltList<EntityState>>(
           distinct: true,
           converter: (Store<AppState> store) => store.state.productListState().stateFilters,
@@ -102,7 +100,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _sortController  = widget.scaffoldKey.currentState.showBottomSheet((context) {
+      _sortController  = Scaffold.of(context).showBottomSheet((context) {
         return StoreConnector<AppState, ListUIState>(
           distinct: true,
           converter: (Store<AppState> store) => store.state.productListState(),

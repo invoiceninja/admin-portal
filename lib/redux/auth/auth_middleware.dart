@@ -2,9 +2,7 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/repositories/auth_repository.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([

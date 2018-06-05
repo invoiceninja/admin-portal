@@ -1,3 +1,4 @@
+import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -9,23 +10,45 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
+import 'package:redux/redux.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen() : super(key: NinjaKeys.productHome);
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text(AppLocalization.of(context).products),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
+    var store = StoreProvider.of<AppState>(context);
+    var localization = AppLocalization.of(context);
 
+    return Scaffold(
+      appBar: AppBar(
+        title: StoreConnector<AppState, ListUIState>(
+          //distinct: true,
+          converter: (Store<AppState> store) => store.state.productListState(),
+          builder: (BuildContext context, listUIState) {
+            return listUIState.search == null
+                ? Text(localization.products)
+                : TextFormField (
+              autofocus: true,
+            );
+          },
+        ),
+        actions: [
+          StoreConnector<AppState, ListUIState>(
+            converter: (Store<AppState> store) => store.state.productListState(),
+            builder: (BuildContext context, listUIState) {
+              return listUIState.search == null
+              ? IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  store.dispatch(SearchProducts(''));
+                },
+              ) : IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  store.dispatch(SearchProducts(null));
+                },
+              );
             },
           ),
         ],
@@ -33,33 +56,18 @@ class ProductScreen extends StatelessWidget {
       drawer: AppDrawerBuilder(),
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
-        scaffoldKey: _scaffoldKey,
-        selectedSortField: StoreProvider
-            .of<AppState>(context)
-            .state
-            .productListState()
-            .sortField,
-        selectedSortAscending: StoreProvider
-            .of<AppState>(context)
-            .state
-            .productListState()
-            .sortAscending,
+        selectedSortField: store.state.productListState().sortField,
+        selectedSortAscending: store.state.productListState().sortAscending,
         onSelectedSortField: (value) {
-          StoreProvider.of<AppState>(context).dispatch(SortProducts(value));
+          store.dispatch(SortProducts(value));
         },
         sortFields: [
           ProductFields.productKey,
           ProductFields.cost,
         ],
-        selectedStates: StoreProvider
-            .of<AppState>(context)
-            .state
-            .productListState()
-            .stateFilters,
+        selectedStates: store.state.productListState().stateFilters,
         onSelectedState: (EntityState state, value) {
-          StoreProvider
-              .of<AppState>(context)
-              .dispatch(FilterProductsByState(state));
+          store.dispatch(FilterProductsByState(state));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -67,15 +75,13 @@ class ProductScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         //key: ArchSampleKeys.addProductFab,
         onPressed: () {
-          StoreProvider
-              .of<AppState>(context)
-              .dispatch(SelectProductAction(ProductEntity()));
+          store.dispatch(SelectProductAction(ProductEntity()));
           Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
         },
         child: Icon(Icons.add),
-        tooltip: AppLocalization.of(context).newProduct,
+        tooltip: localization.newProduct,
       ),
     );
   }

@@ -1,10 +1,8 @@
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/repositories/product_repository.dart';
-import 'package:invoiceninja/data/file_storage.dart';
 
 List<Middleware<AppState>> createStoreProductsMiddleware([
   ProductsRepository repository = const ProductsRepository(),
