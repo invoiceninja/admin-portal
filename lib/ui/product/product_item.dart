@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ProductItem extends StatelessWidget {
@@ -20,9 +21,10 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: productItemKey(product.id),
+    return DismissibleEntity(
+      entity: product,
       onDismissed: onDismissed,
+      onTap: onTap,
       child: ListTile(
         onTap: onTap,
         /*
@@ -40,17 +42,17 @@ class ProductItem extends StatelessWidget {
           children: <Widget>[
             product.isDeleted
                 ? Chip(
-                    label: Text(AppLocalization.of(context).deleted,
-                        style: TextStyle(color: Colors.white, fontSize: 11.0)),
-                    backgroundColor: Colors.red,
-                  )
+              label: Text(AppLocalization.of(context).deleted,
+                  style: TextStyle(color: Colors.white, fontSize: 11.0)),
+              backgroundColor: Colors.red,
+            )
                 : product.isArchived()
-                    ? Chip(
-                        label: Text(AppLocalization.of(context).archived,
-                            style: TextStyle(color: Colors.white, fontSize: 11.0)),
-                        backgroundColor: Colors.orange,
-                      )
-                    : Container(),
+                ? Chip(
+              label: Text(AppLocalization.of(context).archived,
+                  style: TextStyle(color: Colors.white, fontSize: 11.0)),
+              backgroundColor: Colors.orange,
+            )
+                : Container(),
             SizedBox(width: 12.0),
             Text(product.cost.toStringAsFixed(2)),
           ],
@@ -71,26 +73,6 @@ class ProductItem extends StatelessWidget {
         ),
         subtitle: Text(product.notes),
       ),
-      background: product.isDeleted ? Container(
-          color: Colors.blue,
-          child: const ListTile(
-              leading:
-              const Icon(Icons.restore, color: Colors.white, size: 36.0)),
-      ) : Container(
-          color: Colors.red,
-          child: const ListTile(
-              leading:
-                  const Icon(Icons.delete, color: Colors.white, size: 36.0))),
-      secondaryBackground: product.isArchived() || product.isDeleted ? Container(
-        color: Colors.blue,
-        child: const ListTile(
-            trailing:
-            const Icon(Icons.restore, color: Colors.white, size: 36.0)),
-      ) : Container(
-          color: Colors.orange,
-          child: const ListTile(
-              trailing:
-                  const Icon(Icons.archive, color: Colors.white, size: 36.0))),
     );
   }
 }
