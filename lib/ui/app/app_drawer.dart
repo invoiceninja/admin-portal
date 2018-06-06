@@ -3,9 +3,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
+import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -71,7 +72,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(FontAwesomeIcons.tachometerAlt),
             title: Text(AppLocalization.of(context).dashboard),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
+              Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
             },
           ),
           /*
@@ -89,7 +90,7 @@ class AppDrawer extends StatelessWidget {
             title: Text(AppLocalization.of(context).products),
             onTap: () {
               StoreProvider.of<AppState>(context).dispatch(SearchProducts(null));
-              Navigator.of(context).pushReplacementNamed(AppRoutes.products);
+              Navigator.of(context).pushReplacementNamed(ProductScreen.route);
             },
           ),
           /*

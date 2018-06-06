@@ -6,7 +6,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/routes.dart';
+import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -43,7 +43,7 @@ Middleware<AppState> _createLoadState(PersistenceRepository repository) {
       if (exists) {
         repository.loadData().then((state) {
           store.dispatch(LoadStateSuccess(state));
-          Navigator.of(action.context).pushReplacementNamed(AppRoutes.dashboard);
+          Navigator.of(action.context).pushReplacementNamed(DashboardScreen.route);
         }).catchError((error) {
           print(error);
           store.dispatch(LoadUserLogin());

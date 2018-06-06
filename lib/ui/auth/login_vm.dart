@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:invoiceninja/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
@@ -12,6 +12,8 @@ import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 class LoginVM extends StatelessWidget {
   LoginVM({Key key}) : super(key: key);
+
+  static final String route = '/';
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class _ViewModel {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(UserLoginRequest(completer, email.trim(), password.trim(), url.trim(), secret.trim()));
           completer.future.then((_) {
-            Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
+            Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
           });
         }
     );

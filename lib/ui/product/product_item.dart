@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ProductItem extends StatelessWidget {

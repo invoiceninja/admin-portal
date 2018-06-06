@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/loading_indicator.dart';
 import 'package:invoiceninja/ui/product/product_item.dart';
-import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/ui/product/product_list_vm.dart';
 
 class ProductList extends StatelessWidget {

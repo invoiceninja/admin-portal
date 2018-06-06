@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/routes.dart';
+import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/ui/app/app_drawer.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -52,7 +52,7 @@ class AppDrawerVM {
         while(Navigator.of(context).canPop()) {
           Navigator.of(context).pop();
         }
-        Navigator.of(context).pushReplacementNamed(AppRoutes.login);
+        Navigator.of(context).pushReplacementNamed(LoginVM.route);
         store.dispatch(UserLogout());
       }
     );

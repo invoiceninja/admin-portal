@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientList extends StatelessWidget {
+
+  static final String route = '/clients';
 
   @override
   Widget build(BuildContext context) {

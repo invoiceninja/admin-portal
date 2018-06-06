@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/app/app_middleware.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/routes.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
@@ -67,16 +66,15 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         */
         title: 'Invoice Ninja',
         routes: {
-          AppRoutes.login: (context) {
+          LoginVM.route: (context) {
             widget.store.dispatch(LoadStateRequest(context));
             return LoginVM();
           },
-          AppRoutes.dashboard: (context) {
+          DashboardScreen.route: (context) {
             widget.store.dispatch(LoadDashboardAction());
             return DashboardScreen();
           },
-          AppRoutes.products: (context) {
-            print('== LODING ROUTE ==');
+          ProductScreen.route: (context) {
             widget.store.dispatch(LoadProductsAction());
             return ProductScreen();
           },

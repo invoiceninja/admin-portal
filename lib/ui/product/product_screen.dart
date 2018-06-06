@@ -1,20 +1,19 @@
-import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja/ui/app/app_search.dart';
 import 'package:invoiceninja/ui/app/app_search_button.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/keys.dart';
 import 'package:invoiceninja/ui/product/product_list_vm.dart';
 import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
-import 'package:redux/redux.dart';
 
 class ProductScreen extends StatelessWidget {
+
+  static final String route = '/products';
 
   @override
   Widget build(BuildContext context) {
