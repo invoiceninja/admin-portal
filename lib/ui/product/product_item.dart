@@ -37,6 +37,20 @@ class ProductItem extends StatelessWidget {
           },
         ),
         */
+        title: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  product.productKey,
+                  //key: NinjaKeys.clientItemClientKey(client.id),
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+            ],
+          ),
+        ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -56,20 +70,6 @@ class ProductItem extends StatelessWidget {
             SizedBox(width: 12.0),
             Text(product.cost.toStringAsFixed(2)),
           ],
-        ),
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  product.productKey,
-                  //key: NinjaKeys.productItemProductKey(product.id),
-                  style: Theme.of(context).textTheme.title,
-                ),
-              ),
-            ],
-          ),
         ),
         subtitle: Text(product.notes),
       ),

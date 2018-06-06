@@ -43,6 +43,7 @@ class AppLocalization {
       'descending': 'Descending',
       'save': 'Save',
       'an_error_occurred': 'An error occurred',
+      'paid_to_date': 'Paid to Date',
 
       'product': 'Product',
       'products': 'Products',
@@ -96,6 +97,7 @@ class AppLocalization {
   String get ascending => _localizedValues[locale.languageCode]['ascending'];
   String get descending => _localizedValues[locale.languageCode]['descending'];
   String get save => _localizedValues[locale.languageCode]['save'];
+  String get paidToDate => _localizedValues[locale.languageCode]['paid_to_date'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
