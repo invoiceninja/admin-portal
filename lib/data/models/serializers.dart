@@ -10,6 +10,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
+import 'package:invoiceninja/redux/client/client_state.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';
 
 
@@ -21,6 +22,8 @@ part 'serializers.g.dart';
   DashboardResponse,
   ProductListResponse,
   ProductItemResponse,
+  ClientListResponse,
+  ClientItemResponse,
 ])
 final Serializers serializers =
 (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

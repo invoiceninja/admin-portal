@@ -27,12 +27,15 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
   Iterable serialize(Serializers serializers, CompanyState object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
-      'productState',
-      serializers.serialize(object.productState,
-          specifiedType: const FullType(ProductState)),
       'dashboardState',
       serializers.serialize(object.dashboardState,
           specifiedType: const FullType(DashboardState)),
+      'productState',
+      serializers.serialize(object.productState,
+          specifiedType: const FullType(ProductState)),
+      'clientState',
+      serializers.serialize(object.clientState,
+          specifiedType: const FullType(ClientState)),
     ];
     if (object.company != null) {
       result
@@ -59,13 +62,17 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
           result.company.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
           break;
+        case 'dashboardState':
+          result.dashboardState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(DashboardState)) as DashboardState);
+          break;
         case 'productState':
           result.productState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ProductState)) as ProductState);
           break;
-        case 'dashboardState':
-          result.dashboardState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(DashboardState)) as DashboardState);
+        case 'clientState':
+          result.clientState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ClientState)) as ClientState);
           break;
       }
     }
@@ -78,19 +85,24 @@ class _$CompanyState extends CompanyState {
   @override
   final CompanyEntity company;
   @override
+  final DashboardState dashboardState;
+  @override
   final ProductState productState;
   @override
-  final DashboardState dashboardState;
+  final ClientState clientState;
 
   factory _$CompanyState([void updates(CompanyStateBuilder b)]) =>
       (new CompanyStateBuilder()..update(updates)).build();
 
-  _$CompanyState._({this.company, this.productState, this.dashboardState})
+  _$CompanyState._(
+      {this.company, this.dashboardState, this.productState, this.clientState})
       : super._() {
-    if (productState == null)
-      throw new BuiltValueNullFieldError('CompanyState', 'productState');
     if (dashboardState == null)
       throw new BuiltValueNullFieldError('CompanyState', 'dashboardState');
+    if (productState == null)
+      throw new BuiltValueNullFieldError('CompanyState', 'productState');
+    if (clientState == null)
+      throw new BuiltValueNullFieldError('CompanyState', 'clientState');
   }
 
   @override
@@ -105,22 +117,26 @@ class _$CompanyState extends CompanyState {
     if (identical(other, this)) return true;
     if (other is! CompanyState) return false;
     return company == other.company &&
+        dashboardState == other.dashboardState &&
         productState == other.productState &&
-        dashboardState == other.dashboardState;
+        clientState == other.clientState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, company.hashCode), productState.hashCode),
-        dashboardState.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, company.hashCode), dashboardState.hashCode),
+            productState.hashCode),
+        clientState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyState')
           ..add('company', company)
+          ..add('dashboardState', dashboardState)
           ..add('productState', productState)
-          ..add('dashboardState', dashboardState))
+          ..add('clientState', clientState))
         .toString();
   }
 }
@@ -134,25 +150,32 @@ class CompanyStateBuilder
       _$this._company ??= new CompanyEntityBuilder();
   set company(CompanyEntityBuilder company) => _$this._company = company;
 
-  ProductStateBuilder _productState;
-  ProductStateBuilder get productState =>
-      _$this._productState ??= new ProductStateBuilder();
-  set productState(ProductStateBuilder productState) =>
-      _$this._productState = productState;
-
   DashboardStateBuilder _dashboardState;
   DashboardStateBuilder get dashboardState =>
       _$this._dashboardState ??= new DashboardStateBuilder();
   set dashboardState(DashboardStateBuilder dashboardState) =>
       _$this._dashboardState = dashboardState;
 
+  ProductStateBuilder _productState;
+  ProductStateBuilder get productState =>
+      _$this._productState ??= new ProductStateBuilder();
+  set productState(ProductStateBuilder productState) =>
+      _$this._productState = productState;
+
+  ClientStateBuilder _clientState;
+  ClientStateBuilder get clientState =>
+      _$this._clientState ??= new ClientStateBuilder();
+  set clientState(ClientStateBuilder clientState) =>
+      _$this._clientState = clientState;
+
   CompanyStateBuilder();
 
   CompanyStateBuilder get _$this {
     if (_$v != null) {
       _company = _$v.company?.toBuilder();
-      _productState = _$v.productState?.toBuilder();
       _dashboardState = _$v.dashboardState?.toBuilder();
+      _productState = _$v.productState?.toBuilder();
+      _clientState = _$v.clientState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -176,17 +199,20 @@ class CompanyStateBuilder
       _$result = _$v ??
           new _$CompanyState._(
               company: _company?.build(),
+              dashboardState: dashboardState.build(),
               productState: productState.build(),
-              dashboardState: dashboardState.build());
+              clientState: clientState.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'company';
         _company?.build();
-        _$failedField = 'productState';
-        productState.build();
         _$failedField = 'dashboardState';
         dashboardState.build();
+        _$failedField = 'productState';
+        productState.build();
+        _$failedField = 'clientState';
+        clientState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyState', _$failedField, e.toString());

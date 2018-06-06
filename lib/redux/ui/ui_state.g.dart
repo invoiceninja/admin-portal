@@ -29,6 +29,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'productUIState',
       serializers.serialize(object.productUIState,
           specifiedType: const FullType(EntityUIState)),
+      'clientUIState',
+      serializers.serialize(object.clientUIState,
+          specifiedType: const FullType(EntityUIState)),
     ];
 
     return result;
@@ -49,6 +52,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.productUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(EntityUIState)) as EntityUIState);
           break;
+        case 'clientUIState':
+          result.clientUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(EntityUIState)) as EntityUIState);
+          break;
       }
     }
 
@@ -59,13 +66,17 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
 class _$UIState extends UIState {
   @override
   final EntityUIState productUIState;
+  @override
+  final EntityUIState clientUIState;
 
   factory _$UIState([void updates(UIStateBuilder b)]) =>
       (new UIStateBuilder()..update(updates)).build();
 
-  _$UIState._({this.productUIState}) : super._() {
+  _$UIState._({this.productUIState, this.clientUIState}) : super._() {
     if (productUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'productUIState');
+    if (clientUIState == null)
+      throw new BuiltValueNullFieldError('UIState', 'clientUIState');
   }
 
   @override
@@ -79,18 +90,20 @@ class _$UIState extends UIState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! UIState) return false;
-    return productUIState == other.productUIState;
+    return productUIState == other.productUIState &&
+        clientUIState == other.clientUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, productUIState.hashCode));
+    return $jf($jc($jc(0, productUIState.hashCode), clientUIState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
-          ..add('productUIState', productUIState))
+          ..add('productUIState', productUIState)
+          ..add('clientUIState', clientUIState))
         .toString();
   }
 }
@@ -104,11 +117,18 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set productUIState(EntityUIStateBuilder productUIState) =>
       _$this._productUIState = productUIState;
 
+  EntityUIStateBuilder _clientUIState;
+  EntityUIStateBuilder get clientUIState =>
+      _$this._clientUIState ??= new EntityUIStateBuilder();
+  set clientUIState(EntityUIStateBuilder clientUIState) =>
+      _$this._clientUIState = clientUIState;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
     if (_$v != null) {
       _productUIState = _$v.productUIState?.toBuilder();
+      _clientUIState = _$v.clientUIState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -129,12 +149,17 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   _$UIState build() {
     _$UIState _$result;
     try {
-      _$result = _$v ?? new _$UIState._(productUIState: productUIState.build());
+      _$result = _$v ??
+          new _$UIState._(
+              productUIState: productUIState.build(),
+              clientUIState: clientUIState.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'productUIState';
         productUIState.build();
+        _$failedField = 'clientUIState';
+        clientUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UIState', _$failedField, e.toString());

@@ -17,6 +17,10 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(AppState.serializer)
       ..add(AuthState.serializer)
+      ..add(ClientEntity.serializer)
+      ..add(ClientItemResponse.serializer)
+      ..add(ClientListResponse.serializer)
+      ..add(ClientState.serializer)
       ..add(CompanyEntity.serializer)
       ..add(CompanyState.serializer)
       ..add(DashboardEntity.serializer)
@@ -33,6 +37,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ProductState.serializer)
       ..add(UIState.serializer)
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ClientEntity)]),
+          () => new ListBuilder<ClientEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CompanyEntity)]),
           () => new ListBuilder<CompanyEntity>())
       ..addBuilderFactory(
@@ -44,6 +51,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ProductEntity)]),
           () => new ListBuilder<ProductEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(int), const FullType(ClientEntity)]),
+          () => new MapBuilder<int, ClientEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(int), const FullType(ProductEntity)]),

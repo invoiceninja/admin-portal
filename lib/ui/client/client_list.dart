@@ -1,0 +1,43 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:invoiceninja/ui/app/loading_indicator.dart';
+import 'package:invoiceninja/ui/client/client_item.dart';
+import 'package:invoiceninja/ui/client/client_list_vm.dart';
+
+class ClientList extends StatelessWidget {
+  final ClientListVM viewModel;
+
+  ClientList({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return viewModel.isLoading ? LoadingIndicator() : _buildListView(context);
+  }
+
+  Widget _buildListView(BuildContext context) {
+
+    return RefreshIndicator(
+      onRefresh: () => viewModel.onRefreshed(context),
+      child: ListView.builder(
+        //shrinkWrap: true,
+          itemCount: viewModel.clientList.length,
+          itemBuilder: (BuildContext context, index) {
+            var clientId = viewModel.clientList[index];
+            var client = viewModel.clientMap[clientId];
+            return Column(children: <Widget>[
+              ClientItem(
+                client: client,
+                onDismissed: (DismissDirection direction) => viewModel.onDismissed(context, client, direction),
+                onTap: () => viewModel.onClientTap(context, client),
+              ),
+              Divider(
+                height: 1.0,
+              ),
+            ]);
+          }),
+    );
+  }
+}

@@ -5,6 +5,7 @@ import 'package:built_value/serializer.dart';
 part 'entities.g.dart';
 
 
+
 class EntityType extends EnumClass {
   static Serializer<EntityType> get serializer => _$entityTypeSerializer;
 
@@ -37,6 +38,49 @@ class EntityState extends EnumClass {
 
   static BuiltSet<EntityState> get values => _$values;
   static EntityState valueOf(String name) => _$valueOf(name);
+}
+
+
+abstract class BaseEntity {
+
+  @nullable
+  int get id;
+
+  @nullable
+  @BuiltValueField(wireName: 'archived_at')
+  int get archivedAt;
+
+  @nullable
+  @BuiltValueField(wireName: 'is_deleted')
+  bool get isDeleted;
+
+  bool isActive() {
+    return this.archivedAt == null;
+  }
+
+  bool isArchived() {
+    return this.archivedAt != null && ! isDeleted;
+  }
+
+  bool matchesStates(BuiltList<EntityState> states) {
+    if (states.length == 0) {
+      return true;
+    }
+
+    if (states.contains(EntityState.active) && isActive()) {
+      return true;
+    }
+
+    if (states.contains(EntityState.archived) && isArchived()) {
+      return true;
+    }
+
+    if (states.contains(EntityState.deleted) && isDeleted) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 

@@ -2,6 +2,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/app/app_middleware.dart';
+import 'package:invoiceninja/redux/client/client_actions.dart';
+import 'package:invoiceninja/redux/client/client_middleware.dart';
+import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
@@ -15,7 +18,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_middleware.dart';
 import 'package:invoiceninja/utils/localization.dart';
-//import 'package:redux_logging/redux_logging.dart';
+import 'package:redux_logging/redux_logging.dart';
 
 void main() {
   final store = Store<AppState>(appReducer,
@@ -24,9 +27,10 @@ void main() {
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDashboardMiddleware())
         ..addAll(createStoreProductsMiddleware())
+        ..addAll(createStoreClientsMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         ..addAll([
-          //LoggingMiddleware.printer(),
+          LoggingMiddleware.printer(),
         ]));
 
   runApp(new InvoiceNinjaApp(store: store));
@@ -77,6 +81,10 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           ProductScreen.route: (context) {
             widget.store.dispatch(LoadProductsAction());
             return ProductScreen();
+          },
+          ClientScreen.route: (context) {
+            widget.store.dispatch(LoadClientsAction());
+            return ClientScreen();
           },
         },
       ),

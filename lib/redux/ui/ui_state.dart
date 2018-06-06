@@ -8,10 +8,12 @@ part 'ui_state.g.dart';
 abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   EntityUIState get productUIState;
+  EntityUIState get clientUIState;
 
   factory UIState() {
     return _$UIState._(
       productUIState: EntityUIState(ProductFields.productKey),
+      clientUIState: EntityUIState(ClientFields.name),
     );
   }
 

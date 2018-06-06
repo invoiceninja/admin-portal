@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -75,16 +77,14 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
             },
           ),
-          /*
           ListTile(
-            leading: Icon(Icons.people),
+            leading: Icon(FontAwesomeIcons.users),
             title: Text(AppLocalization.of(context).clients),
             onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed(AppRoutes.clientScreen);
+              StoreProvider.of<AppState>(context).dispatch(SearchClients(null));
+              Navigator.of(context).pushReplacementNamed(ClientScreen.route);
             },
           ),
-          */
           ListTile(
             leading: Icon(FontAwesomeIcons.cube),
             title: Text(AppLocalization.of(context).products),

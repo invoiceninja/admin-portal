@@ -10,7 +10,7 @@ class ActionMenuChoice {
 }
 
 class ActionMenuButton extends StatelessWidget {
-  final ProductEntity entity;
+  final BaseEntity entity;
   //final List<ActionMenuChoice> actions;
   final Function(BuildContext, EntityAction) onSelected;
 

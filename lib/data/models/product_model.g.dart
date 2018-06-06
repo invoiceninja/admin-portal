@@ -122,12 +122,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
   Iterable serialize(Serializers serializers, ProductEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.productKey != null) {
       result
         ..add('product_key')
@@ -151,18 +145,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add('updated_at')
         ..add(serializers.serialize(object.updatedAt,
             specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.isDeleted != null) {
-      result
-        ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
     }
     if (object.taxName1 != null) {
       result
@@ -200,6 +182,24 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add(serializers.serialize(object.customValue2,
             specifiedType: const FullType(String)));
     }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.isDeleted != null) {
+      result
+        ..add('is_deleted')
+        ..add(serializers.serialize(object.isDeleted,
+            specifiedType: const FullType(bool)));
+    }
 
     return result;
   }
@@ -215,10 +215,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'product_key':
           result.productKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -234,14 +230,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
-          break;
-        case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
@@ -266,6 +254,18 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'is_deleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -457,8 +457,6 @@ class ProductItemResponseBuilder
 
 class _$ProductEntity extends ProductEntity {
   @override
-  final int id;
-  @override
   final String productKey;
   @override
   final String notes;
@@ -466,10 +464,6 @@ class _$ProductEntity extends ProductEntity {
   final double cost;
   @override
   final int updatedAt;
-  @override
-  final int archivedAt;
-  @override
-  final bool isDeleted;
   @override
   final String taxName1;
   @override
@@ -482,24 +476,30 @@ class _$ProductEntity extends ProductEntity {
   final String customValue1;
   @override
   final String customValue2;
+  @override
+  final int id;
+  @override
+  final int archivedAt;
+  @override
+  final bool isDeleted;
 
   factory _$ProductEntity([void updates(ProductEntityBuilder b)]) =>
       (new ProductEntityBuilder()..update(updates)).build();
 
   _$ProductEntity._(
-      {this.id,
-      this.productKey,
+      {this.productKey,
       this.notes,
       this.cost,
       this.updatedAt,
-      this.archivedAt,
-      this.isDeleted,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
       this.taxRate2,
       this.customValue1,
-      this.customValue2})
+      this.customValue2,
+      this.id,
+      this.archivedAt,
+      this.isDeleted})
       : super._();
 
   @override
@@ -513,19 +513,19 @@ class _$ProductEntity extends ProductEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! ProductEntity) return false;
-    return id == other.id &&
-        productKey == other.productKey &&
+    return productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
         updatedAt == other.updatedAt &&
-        archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
         taxRate2 == other.taxRate2 &&
         customValue1 == other.customValue1 &&
-        customValue2 == other.customValue2;
+        customValue2 == other.customValue2 &&
+        id == other.id &&
+        archivedAt == other.archivedAt &&
+        isDeleted == other.isDeleted;
   }
 
   @override
@@ -541,37 +541,37 @@ class _$ProductEntity extends ProductEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, id.hashCode),
-                                                    productKey.hashCode),
-                                                notes.hashCode),
-                                            cost.hashCode),
-                                        updatedAt.hashCode),
-                                    archivedAt.hashCode),
-                                isDeleted.hashCode),
-                            taxName1.hashCode),
-                        taxRate1.hashCode),
-                    taxName2.hashCode),
-                taxRate2.hashCode),
-            customValue1.hashCode),
-        customValue2.hashCode));
+                                                $jc($jc(0, productKey.hashCode),
+                                                    notes.hashCode),
+                                                cost.hashCode),
+                                            updatedAt.hashCode),
+                                        taxName1.hashCode),
+                                    taxRate1.hashCode),
+                                taxName2.hashCode),
+                            taxRate2.hashCode),
+                        customValue1.hashCode),
+                    customValue2.hashCode),
+                id.hashCode),
+            archivedAt.hashCode),
+        isDeleted.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ProductEntity')
-          ..add('id', id)
           ..add('productKey', productKey)
           ..add('notes', notes)
           ..add('cost', cost)
           ..add('updatedAt', updatedAt)
-          ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
           ..add('taxRate2', taxRate2)
           ..add('customValue1', customValue1)
-          ..add('customValue2', customValue2))
+          ..add('customValue2', customValue2)
+          ..add('id', id)
+          ..add('archivedAt', archivedAt)
+          ..add('isDeleted', isDeleted))
         .toString();
   }
 }
@@ -579,10 +579,6 @@ class _$ProductEntity extends ProductEntity {
 class ProductEntityBuilder
     implements Builder<ProductEntity, ProductEntityBuilder> {
   _$ProductEntity _$v;
-
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
 
   String _productKey;
   String get productKey => _$this._productKey;
@@ -599,14 +595,6 @@ class ProductEntityBuilder
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
-
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
-
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -632,23 +620,35 @@ class ProductEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  int _archivedAt;
+  int get archivedAt => _$this._archivedAt;
+  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+
+  bool _isDeleted;
+  bool get isDeleted => _$this._isDeleted;
+  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
   ProductEntityBuilder();
 
   ProductEntityBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
       _productKey = _$v.productKey;
       _notes = _$v.notes;
       _cost = _$v.cost;
       _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
       _taxRate2 = _$v.taxRate2;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _id = _$v.id;
+      _archivedAt = _$v.archivedAt;
+      _isDeleted = _$v.isDeleted;
       _$v = null;
     }
     return this;
@@ -669,19 +669,19 @@ class ProductEntityBuilder
   _$ProductEntity build() {
     final _$result = _$v ??
         new _$ProductEntity._(
-            id: id,
             productKey: productKey,
             notes: notes,
             cost: cost,
             updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
             taxName1: taxName1,
             taxRate1: taxRate1,
             taxName2: taxName2,
             taxRate2: taxRate2,
             customValue1: customValue1,
-            customValue2: customValue2);
+            customValue2: customValue2,
+            id: id,
+            archivedAt: archivedAt,
+            isDeleted: isDeleted);
     replace(_$result);
     return _$result;
   }

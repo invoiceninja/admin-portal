@@ -32,10 +32,7 @@ class ProductFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilder> {
-
-  @nullable
-  int get id;
+abstract class ProductEntity extends Object with BaseEntity implements Built<ProductEntity, ProductEntityBuilder> {
 
   @nullable
   @BuiltValueField(wireName: 'product_key')
@@ -50,14 +47,6 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
   @nullable
   @BuiltValueField(wireName: 'updated_at')
   int get updatedAt;
-
-  @nullable
-  @BuiltValueField(wireName: 'archived_at')
-  int get archivedAt;
-
-  @nullable
-  @BuiltValueField(wireName: 'is_deleted')
-  bool get isDeleted;
 
   @nullable
   @BuiltValueField(wireName: 'tax_name1')
@@ -106,34 +95,6 @@ abstract class ProductEntity implements Built<ProductEntity, ProductEntityBuilde
     }
 
     return productKey.contains(search) || notes.contains(search);
-  }
-
-  bool isActive() {
-    return this.archivedAt == null;
-  }
-
-  bool isArchived() {
-    return this.archivedAt != null && ! isDeleted;
-  }
-
-  bool matchesStates(BuiltList<EntityState> states) {
-    if (states.length == 0) {
-      return true;
-    }
-
-    if (states.contains(EntityState.active) && isActive()) {
-      return true;
-    }
-
-    if (states.contains(EntityState.archived) && isArchived()) {
-      return true;
-    }
-
-    if (states.contains(EntityState.deleted) && isDeleted) {
-      return true;
-    }
-
-    return false;
   }
 
   ProductEntity._();

@@ -1,4 +1,5 @@
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/client/client_state.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
@@ -59,7 +60,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool isLoaded() {
     return dashboardState().isLoaded()
-        && productState().isLoaded();
+        && productState().isLoaded()
+        && clientState().isLoaded();
   }
 
   CompanyEntity selectedCompany() => this.selectedCompanyState().company;
@@ -69,6 +71,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     switch (type) {
       case EntityType.product:
         return productListState();
+      case EntityType.client:
+        return clientListState();
       default:
         return null;
     }
@@ -77,4 +81,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ProductState productState() => this.selectedCompanyState().productState;
   EntityUIState productUIState() => this.uiState.productUIState;
   ListUIState productListState() => this.uiState.productUIState.listUIState;
+
+  ClientState clientState() => this.selectedCompanyState().clientState;
+  EntityUIState clientUIState() => this.uiState.clientUIState;
+  ListUIState clientListState() => this.uiState.clientUIState.listUIState;
 }

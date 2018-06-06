@@ -41,20 +41,29 @@ class AppLocalization {
       'please_enter_a_product_key': 'Please enter a product key',
       'ascending': 'Ascending',
       'descending': 'Descending',
-      'new_product': 'New Product',
-      'product': 'Product',
-      'products': 'Products',
-      'productKey': 'Product',
-      'notes': 'Notes',
-      'cost': 'Cost',
-      'clients': 'Clients',
       'save': 'Save',
       'an_error_occurred': 'An error occurred',
+
+      'product': 'Product',
+      'products': 'Products',
+      'new_product': 'New Product',
       'successfully_created_product': 'Successfully created product',
       'successfully_updated_product': 'Successfully updated product',
       'successfully_archived_product': 'Successfully archived product',
       'successfully_deleted_product': 'Successfully deleted product',
       'successfully_restored_product': 'Successfully restored product',
+      'productKey': 'Product',
+      'notes': 'Notes',
+      'cost': 'Cost',
+
+      'client': 'Client',
+      'clients': 'Clients',
+      'new_client': 'New Client',
+      'successfully_created_client': 'Successfully created client',
+      'successfully_updated_client': 'Successfully updated client',
+      'successfully_archived_client': 'Successfully archived client',
+      'successfully_deleted_client': 'Successfully deleted client',
+      'successfully_restored_client': 'Successfully restored client',
     },
   };
 
@@ -86,19 +95,28 @@ class AppLocalization {
   String get pleaseEnterAProductKey => _localizedValues[locale.languageCode]['please_enter_a_product_key'];
   String get ascending => _localizedValues[locale.languageCode]['ascending'];
   String get descending => _localizedValues[locale.languageCode]['descending'];
-  String get newProduct => _localizedValues[locale.languageCode]['new_product'];
+  String get save => _localizedValues[locale.languageCode]['save'];
+
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
-  String get productKey => _localizedValues[locale.languageCode]['product_key'];
-  String get notes => _localizedValues[locale.languageCode]['notes'];
-  String get cost => _localizedValues[locale.languageCode]['cost'];
-  String get clients => _localizedValues[locale.languageCode]['clients'];
-  String get save => _localizedValues[locale.languageCode]['save'];
+  String get newProduct => _localizedValues[locale.languageCode]['new_product'];
   String get successfullyCreatedProduct => _localizedValues[locale.languageCode]['successfully_created_product'];
   String get successfullyUpdatedProduct => _localizedValues[locale.languageCode]['successfully_updated_product'];
   String get successfullyArchivedProduct => _localizedValues[locale.languageCode]['successfully_archived_product'];
   String get successfullyDeletedProduct=> _localizedValues[locale.languageCode]['successfully_deleted_product'];
   String get successfullyRestoredProduct => _localizedValues[locale.languageCode]['successfully_restored_product'];
+  String get productKey => _localizedValues[locale.languageCode]['product_key'];
+  String get notes => _localizedValues[locale.languageCode]['notes'];
+  String get cost => _localizedValues[locale.languageCode]['cost'];
+
+  String get client => _localizedValues[locale.languageCode]['client'];
+  String get clients => _localizedValues[locale.languageCode]['clients'];
+  String get newClient => _localizedValues[locale.languageCode]['new_client'];
+  String get successfullyCreatedClient => _localizedValues[locale.languageCode]['successfully_created_client'];
+  String get successfullyUpdatedClient => _localizedValues[locale.languageCode]['successfully_updated_client'];
+  String get successfullyArchivedClient => _localizedValues[locale.languageCode]['successfully_archived_client'];
+  String get successfullyDeletedClient=> _localizedValues[locale.languageCode]['successfully_deleted_client'];
+  String get successfullyRestoredClient => _localizedValues[locale.languageCode]['successfully_restored_client'];
 
   String lookup(String key) {
     return _localizedValues[locale.languageCode][key] ?? 'Missing: ' + key;
