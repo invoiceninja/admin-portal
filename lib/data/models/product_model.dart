@@ -45,10 +45,6 @@ abstract class ProductEntity extends Object with BaseEntity implements Built<Pro
   double get cost;
 
   @nullable
-  @BuiltValueField(wireName: 'updated_at')
-  int get updatedAt;
-
-  @nullable
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
 

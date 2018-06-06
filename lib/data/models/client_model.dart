@@ -43,10 +43,123 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
   @BuiltValueField(wireName: 'display_name')
   String get displayName;
 
+  @nullable
+  double get balance;
 
   @nullable
-  @BuiltValueField(wireName: 'updated_at')
-  int get updatedAt;
+  @BuiltValueField(wireName: 'paid_to_date')
+  double get paidToDate;
+
+  @nullable
+  String get address1;
+
+  @nullable
+  String get address2;
+
+  @nullable
+  String get city;
+
+  @nullable
+  String get state;
+
+  @nullable
+  @BuiltValueField(wireName: 'postal_code')
+  String get postalCode;
+
+  @nullable
+  @BuiltValueField(wireName: 'country_id')
+  int get countryId;
+
+  @nullable
+  @BuiltValueField(wireName: 'work_phone')
+  String get workPhone;
+
+  @nullable
+  @BuiltValueField(wireName: 'private_notes')
+  String get privateNotes;
+
+  @nullable
+  @BuiltValueField(wireName: 'public_notes')
+  String get publicNotes;
+
+  @nullable
+  String get website;
+
+  @nullable
+  @BuiltValueField(wireName: 'industry_id')
+  int get industryId;
+
+  @nullable
+  @BuiltValueField(wireName: 'size_id')
+  int get sizeId;
+
+  @nullable
+  @BuiltValueField(wireName: 'payment_terms')
+  int get paymentTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'vat_number')
+  String get vatNumber;
+
+  @nullable
+  @BuiltValueField(wireName: 'id_number')
+  String get idNumber;
+
+  @nullable
+  @BuiltValueField(wireName: 'language_id')
+  int get languageId;
+
+  @nullable
+  @BuiltValueField(wireName: 'currency_id')
+  int get currencyId;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_number_counter')
+  int get invoiceNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'quote_number_counter')
+  int get quoteNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'task_rate')
+  double get taskRate;
+
+  @nullable
+  @BuiltValueField(wireName: 'shipping_address1')
+  String get shippingAddress1;
+
+  @nullable
+  @BuiltValueField(wireName: 'shipping_address2')
+  String get shippingAddress2;
+
+  @nullable
+  @BuiltValueField(wireName: 'shipping_city')
+  String get shippingCity;
+
+  @nullable
+  @BuiltValueField(wireName: 'shipping_state')
+  String get shippingState;
+
+  @nullable
+  @BuiltValueField(wireName: 'shipping_postal_code')
+  String get shippingPostalCode;
+
+  @nullable
+  @BuiltValueField(wireName: 'shipping_country_id')
+  int get shippingCountryId;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_tasks_in_portal')
+  bool get showTasksInPortal;
+
+  @nullable
+  @BuiltValueField(wireName: 'send_reminders')
+  bool get sendReminders;
+
+  @nullable
+  @BuiltValueField(wireName: 'credit_number_counter')
+  int get creditNumberCounter;
 
   @nullable
   @BuiltValueField(wireName: 'custom_value1')
@@ -55,6 +168,9 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
   @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
+
+  //String get last_login;
+  //String get custom_messages;
 
   int compareTo(ClientEntity client, String sortField, bool sortAscending) {
     int response = 0;

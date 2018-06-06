@@ -140,12 +140,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add(serializers.serialize(object.cost,
             specifiedType: const FullType(double)));
     }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
     if (object.taxName1 != null) {
       result
         ..add('tax_name1')
@@ -188,6 +182,12 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.archivedAt != null) {
       result
         ..add('archived_at')
@@ -227,10 +227,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           result.cost = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -257,6 +253,10 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'archived_at':
@@ -463,8 +463,6 @@ class _$ProductEntity extends ProductEntity {
   @override
   final double cost;
   @override
-  final int updatedAt;
-  @override
   final String taxName1;
   @override
   final double taxRate1;
@@ -479,6 +477,8 @@ class _$ProductEntity extends ProductEntity {
   @override
   final int id;
   @override
+  final int updatedAt;
+  @override
   final int archivedAt;
   @override
   final bool isDeleted;
@@ -490,7 +490,6 @@ class _$ProductEntity extends ProductEntity {
       {this.productKey,
       this.notes,
       this.cost,
-      this.updatedAt,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
@@ -498,6 +497,7 @@ class _$ProductEntity extends ProductEntity {
       this.customValue1,
       this.customValue2,
       this.id,
+      this.updatedAt,
       this.archivedAt,
       this.isDeleted})
       : super._();
@@ -516,7 +516,6 @@ class _$ProductEntity extends ProductEntity {
     return productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
-        updatedAt == other.updatedAt &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
@@ -524,6 +523,7 @@ class _$ProductEntity extends ProductEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         id == other.id &&
+        updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted;
   }
@@ -544,14 +544,14 @@ class _$ProductEntity extends ProductEntity {
                                                 $jc($jc(0, productKey.hashCode),
                                                     notes.hashCode),
                                                 cost.hashCode),
-                                            updatedAt.hashCode),
-                                        taxName1.hashCode),
-                                    taxRate1.hashCode),
-                                taxName2.hashCode),
-                            taxRate2.hashCode),
-                        customValue1.hashCode),
-                    customValue2.hashCode),
-                id.hashCode),
+                                            taxName1.hashCode),
+                                        taxRate1.hashCode),
+                                    taxName2.hashCode),
+                                taxRate2.hashCode),
+                            customValue1.hashCode),
+                        customValue2.hashCode),
+                    id.hashCode),
+                updatedAt.hashCode),
             archivedAt.hashCode),
         isDeleted.hashCode));
   }
@@ -562,7 +562,6 @@ class _$ProductEntity extends ProductEntity {
           ..add('productKey', productKey)
           ..add('notes', notes)
           ..add('cost', cost)
-          ..add('updatedAt', updatedAt)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
@@ -570,6 +569,7 @@ class _$ProductEntity extends ProductEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('id', id)
+          ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted))
         .toString();
@@ -591,10 +591,6 @@ class ProductEntityBuilder
   double _cost;
   double get cost => _$this._cost;
   set cost(double cost) => _$this._cost = cost;
-
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -624,6 +620,10 @@ class ProductEntityBuilder
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
 
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+
   int _archivedAt;
   int get archivedAt => _$this._archivedAt;
   set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
@@ -639,7 +639,6 @@ class ProductEntityBuilder
       _productKey = _$v.productKey;
       _notes = _$v.notes;
       _cost = _$v.cost;
-      _updatedAt = _$v.updatedAt;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
@@ -647,6 +646,7 @@ class ProductEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _id = _$v.id;
+      _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
       _$v = null;
@@ -672,7 +672,6 @@ class ProductEntityBuilder
             productKey: productKey,
             notes: notes,
             cost: cost,
-            updatedAt: updatedAt,
             taxName1: taxName1,
             taxRate1: taxRate1,
             taxName2: taxName2,
@@ -680,6 +679,7 @@ class ProductEntityBuilder
             customValue1: customValue1,
             customValue2: customValue2,
             id: id,
+            updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted);
     replace(_$result);

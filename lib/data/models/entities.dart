@@ -47,6 +47,10 @@ abstract class BaseEntity {
   int get id;
 
   @nullable
+  @BuiltValueField(wireName: 'updated_at')
+  int get updatedAt;
+
+  @nullable
   @BuiltValueField(wireName: 'archived_at')
   int get archivedAt;
 

@@ -128,10 +128,190 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.displayName,
             specifiedType: const FullType(String)));
     }
-    if (object.updatedAt != null) {
+    if (object.balance != null) {
       result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
+        ..add('balance')
+        ..add(serializers.serialize(object.balance,
+            specifiedType: const FullType(double)));
+    }
+    if (object.paidToDate != null) {
+      result
+        ..add('paid_to_date')
+        ..add(serializers.serialize(object.paidToDate,
+            specifiedType: const FullType(double)));
+    }
+    if (object.address1 != null) {
+      result
+        ..add('address1')
+        ..add(serializers.serialize(object.address1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.address2 != null) {
+      result
+        ..add('address2')
+        ..add(serializers.serialize(object.address2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.city != null) {
+      result
+        ..add('city')
+        ..add(serializers.serialize(object.city,
+            specifiedType: const FullType(String)));
+    }
+    if (object.state != null) {
+      result
+        ..add('state')
+        ..add(serializers.serialize(object.state,
+            specifiedType: const FullType(String)));
+    }
+    if (object.postalCode != null) {
+      result
+        ..add('postal_code')
+        ..add(serializers.serialize(object.postalCode,
+            specifiedType: const FullType(String)));
+    }
+    if (object.countryId != null) {
+      result
+        ..add('country_id')
+        ..add(serializers.serialize(object.countryId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.workPhone != null) {
+      result
+        ..add('work_phone')
+        ..add(serializers.serialize(object.workPhone,
+            specifiedType: const FullType(String)));
+    }
+    if (object.privateNotes != null) {
+      result
+        ..add('private_notes')
+        ..add(serializers.serialize(object.privateNotes,
+            specifiedType: const FullType(String)));
+    }
+    if (object.publicNotes != null) {
+      result
+        ..add('public_notes')
+        ..add(serializers.serialize(object.publicNotes,
+            specifiedType: const FullType(String)));
+    }
+    if (object.website != null) {
+      result
+        ..add('website')
+        ..add(serializers.serialize(object.website,
+            specifiedType: const FullType(String)));
+    }
+    if (object.industryId != null) {
+      result
+        ..add('industry_id')
+        ..add(serializers.serialize(object.industryId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.sizeId != null) {
+      result
+        ..add('size_id')
+        ..add(serializers.serialize(object.sizeId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.paymentTerms != null) {
+      result
+        ..add('payment_terms')
+        ..add(serializers.serialize(object.paymentTerms,
+            specifiedType: const FullType(int)));
+    }
+    if (object.vatNumber != null) {
+      result
+        ..add('vat_number')
+        ..add(serializers.serialize(object.vatNumber,
+            specifiedType: const FullType(String)));
+    }
+    if (object.idNumber != null) {
+      result
+        ..add('id_number')
+        ..add(serializers.serialize(object.idNumber,
+            specifiedType: const FullType(String)));
+    }
+    if (object.languageId != null) {
+      result
+        ..add('language_id')
+        ..add(serializers.serialize(object.languageId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.currencyId != null) {
+      result
+        ..add('currency_id')
+        ..add(serializers.serialize(object.currencyId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.invoiceNumberCounter != null) {
+      result
+        ..add('invoice_number_counter')
+        ..add(serializers.serialize(object.invoiceNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.quoteNumberCounter != null) {
+      result
+        ..add('quote_number_counter')
+        ..add(serializers.serialize(object.quoteNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.taskRate != null) {
+      result
+        ..add('task_rate')
+        ..add(serializers.serialize(object.taskRate,
+            specifiedType: const FullType(double)));
+    }
+    if (object.shippingAddress1 != null) {
+      result
+        ..add('shipping_address1')
+        ..add(serializers.serialize(object.shippingAddress1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.shippingAddress2 != null) {
+      result
+        ..add('shipping_address2')
+        ..add(serializers.serialize(object.shippingAddress2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.shippingCity != null) {
+      result
+        ..add('shipping_city')
+        ..add(serializers.serialize(object.shippingCity,
+            specifiedType: const FullType(String)));
+    }
+    if (object.shippingState != null) {
+      result
+        ..add('shipping_state')
+        ..add(serializers.serialize(object.shippingState,
+            specifiedType: const FullType(String)));
+    }
+    if (object.shippingPostalCode != null) {
+      result
+        ..add('shipping_postal_code')
+        ..add(serializers.serialize(object.shippingPostalCode,
+            specifiedType: const FullType(String)));
+    }
+    if (object.shippingCountryId != null) {
+      result
+        ..add('shipping_country_id')
+        ..add(serializers.serialize(object.shippingCountryId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.showTasksInPortal != null) {
+      result
+        ..add('show_tasks_in_portal')
+        ..add(serializers.serialize(object.showTasksInPortal,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.sendReminders != null) {
+      result
+        ..add('send_reminders')
+        ..add(serializers.serialize(object.sendReminders,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.creditNumberCounter != null) {
+      result
+        ..add('credit_number_counter')
+        ..add(serializers.serialize(object.creditNumberCounter,
             specifiedType: const FullType(int)));
     }
     if (object.customValue1 != null) {
@@ -150,6 +330,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
             specifiedType: const FullType(int)));
     }
     if (object.archivedAt != null) {
@@ -187,8 +373,128 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.displayName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
+        case 'balance':
+          result.balance = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'paid_to_date':
+          result.paidToDate = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'address1':
+          result.address1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'address2':
+          result.address2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'city':
+          result.city = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'state':
+          result.state = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'postal_code':
+          result.postalCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'country_id':
+          result.countryId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'work_phone':
+          result.workPhone = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'private_notes':
+          result.privateNotes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'public_notes':
+          result.publicNotes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'website':
+          result.website = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'industry_id':
+          result.industryId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'size_id':
+          result.sizeId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'payment_terms':
+          result.paymentTerms = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'vat_number':
+          result.vatNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id_number':
+          result.idNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'language_id':
+          result.languageId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'currency_id':
+          result.currencyId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'invoice_number_counter':
+          result.invoiceNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'quote_number_counter':
+          result.quoteNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'task_rate':
+          result.taskRate = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'shipping_address1':
+          result.shippingAddress1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'shipping_address2':
+          result.shippingAddress2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'shipping_city':
+          result.shippingCity = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'shipping_state':
+          result.shippingState = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'shipping_postal_code':
+          result.shippingPostalCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'shipping_country_id':
+          result.shippingCountryId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'show_tasks_in_portal':
+          result.showTasksInPortal = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'send_reminders':
+          result.sendReminders = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'credit_number_counter':
+          result.creditNumberCounter = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'custom_value1':
@@ -201,6 +507,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'archived_at':
@@ -405,13 +715,75 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String displayName;
   @override
-  final int updatedAt;
+  final double balance;
+  @override
+  final double paidToDate;
+  @override
+  final String address1;
+  @override
+  final String address2;
+  @override
+  final String city;
+  @override
+  final String state;
+  @override
+  final String postalCode;
+  @override
+  final int countryId;
+  @override
+  final String workPhone;
+  @override
+  final String privateNotes;
+  @override
+  final String publicNotes;
+  @override
+  final String website;
+  @override
+  final int industryId;
+  @override
+  final int sizeId;
+  @override
+  final int paymentTerms;
+  @override
+  final String vatNumber;
+  @override
+  final String idNumber;
+  @override
+  final int languageId;
+  @override
+  final int currencyId;
+  @override
+  final int invoiceNumberCounter;
+  @override
+  final int quoteNumberCounter;
+  @override
+  final double taskRate;
+  @override
+  final String shippingAddress1;
+  @override
+  final String shippingAddress2;
+  @override
+  final String shippingCity;
+  @override
+  final String shippingState;
+  @override
+  final String shippingPostalCode;
+  @override
+  final int shippingCountryId;
+  @override
+  final bool showTasksInPortal;
+  @override
+  final bool sendReminders;
+  @override
+  final int creditNumberCounter;
   @override
   final String customValue1;
   @override
   final String customValue2;
   @override
   final int id;
+  @override
+  final int updatedAt;
   @override
   final int archivedAt;
   @override
@@ -423,10 +795,41 @@ class _$ClientEntity extends ClientEntity {
   _$ClientEntity._(
       {this.name,
       this.displayName,
-      this.updatedAt,
+      this.balance,
+      this.paidToDate,
+      this.address1,
+      this.address2,
+      this.city,
+      this.state,
+      this.postalCode,
+      this.countryId,
+      this.workPhone,
+      this.privateNotes,
+      this.publicNotes,
+      this.website,
+      this.industryId,
+      this.sizeId,
+      this.paymentTerms,
+      this.vatNumber,
+      this.idNumber,
+      this.languageId,
+      this.currencyId,
+      this.invoiceNumberCounter,
+      this.quoteNumberCounter,
+      this.taskRate,
+      this.shippingAddress1,
+      this.shippingAddress2,
+      this.shippingCity,
+      this.shippingState,
+      this.shippingPostalCode,
+      this.shippingCountryId,
+      this.showTasksInPortal,
+      this.sendReminders,
+      this.creditNumberCounter,
       this.customValue1,
       this.customValue2,
       this.id,
+      this.updatedAt,
       this.archivedAt,
       this.isDeleted})
       : super._();
@@ -444,10 +847,41 @@ class _$ClientEntity extends ClientEntity {
     if (other is! ClientEntity) return false;
     return name == other.name &&
         displayName == other.displayName &&
-        updatedAt == other.updatedAt &&
+        balance == other.balance &&
+        paidToDate == other.paidToDate &&
+        address1 == other.address1 &&
+        address2 == other.address2 &&
+        city == other.city &&
+        state == other.state &&
+        postalCode == other.postalCode &&
+        countryId == other.countryId &&
+        workPhone == other.workPhone &&
+        privateNotes == other.privateNotes &&
+        publicNotes == other.publicNotes &&
+        website == other.website &&
+        industryId == other.industryId &&
+        sizeId == other.sizeId &&
+        paymentTerms == other.paymentTerms &&
+        vatNumber == other.vatNumber &&
+        idNumber == other.idNumber &&
+        languageId == other.languageId &&
+        currencyId == other.currencyId &&
+        invoiceNumberCounter == other.invoiceNumberCounter &&
+        quoteNumberCounter == other.quoteNumberCounter &&
+        taskRate == other.taskRate &&
+        shippingAddress1 == other.shippingAddress1 &&
+        shippingAddress2 == other.shippingAddress2 &&
+        shippingCity == other.shippingCity &&
+        shippingState == other.shippingState &&
+        shippingPostalCode == other.shippingPostalCode &&
+        shippingCountryId == other.shippingCountryId &&
+        showTasksInPortal == other.showTasksInPortal &&
+        sendReminders == other.sendReminders &&
+        creditNumberCounter == other.creditNumberCounter &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         id == other.id &&
+        updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted;
   }
@@ -459,11 +893,37 @@ class _$ClientEntity extends ClientEntity {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, name.hashCode), displayName.hashCode),
-                            updatedAt.hashCode),
-                        customValue1.hashCode),
-                    customValue2.hashCode),
-                id.hashCode),
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode),
+                                                                                currencyId.hashCode),
+                                                                            invoiceNumberCounter.hashCode),
+                                                                        quoteNumberCounter.hashCode),
+                                                                    taskRate.hashCode),
+                                                                shippingAddress1.hashCode),
+                                                            shippingAddress2.hashCode),
+                                                        shippingCity.hashCode),
+                                                    shippingState.hashCode),
+                                                shippingPostalCode.hashCode),
+                                            shippingCountryId.hashCode),
+                                        showTasksInPortal.hashCode),
+                                    sendReminders.hashCode),
+                                creditNumberCounter.hashCode),
+                            customValue1.hashCode),
+                        customValue2.hashCode),
+                    id.hashCode),
+                updatedAt.hashCode),
             archivedAt.hashCode),
         isDeleted.hashCode));
   }
@@ -473,10 +933,41 @@ class _$ClientEntity extends ClientEntity {
     return (newBuiltValueToStringHelper('ClientEntity')
           ..add('name', name)
           ..add('displayName', displayName)
-          ..add('updatedAt', updatedAt)
+          ..add('balance', balance)
+          ..add('paidToDate', paidToDate)
+          ..add('address1', address1)
+          ..add('address2', address2)
+          ..add('city', city)
+          ..add('state', state)
+          ..add('postalCode', postalCode)
+          ..add('countryId', countryId)
+          ..add('workPhone', workPhone)
+          ..add('privateNotes', privateNotes)
+          ..add('publicNotes', publicNotes)
+          ..add('website', website)
+          ..add('industryId', industryId)
+          ..add('sizeId', sizeId)
+          ..add('paymentTerms', paymentTerms)
+          ..add('vatNumber', vatNumber)
+          ..add('idNumber', idNumber)
+          ..add('languageId', languageId)
+          ..add('currencyId', currencyId)
+          ..add('invoiceNumberCounter', invoiceNumberCounter)
+          ..add('quoteNumberCounter', quoteNumberCounter)
+          ..add('taskRate', taskRate)
+          ..add('shippingAddress1', shippingAddress1)
+          ..add('shippingAddress2', shippingAddress2)
+          ..add('shippingCity', shippingCity)
+          ..add('shippingState', shippingState)
+          ..add('shippingPostalCode', shippingPostalCode)
+          ..add('shippingCountryId', shippingCountryId)
+          ..add('showTasksInPortal', showTasksInPortal)
+          ..add('sendReminders', sendReminders)
+          ..add('creditNumberCounter', creditNumberCounter)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('id', id)
+          ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted))
         .toString();
@@ -495,9 +986,139 @@ class ClientEntityBuilder
   String get displayName => _$this._displayName;
   set displayName(String displayName) => _$this._displayName = displayName;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  double _balance;
+  double get balance => _$this._balance;
+  set balance(double balance) => _$this._balance = balance;
+
+  double _paidToDate;
+  double get paidToDate => _$this._paidToDate;
+  set paidToDate(double paidToDate) => _$this._paidToDate = paidToDate;
+
+  String _address1;
+  String get address1 => _$this._address1;
+  set address1(String address1) => _$this._address1 = address1;
+
+  String _address2;
+  String get address2 => _$this._address2;
+  set address2(String address2) => _$this._address2 = address2;
+
+  String _city;
+  String get city => _$this._city;
+  set city(String city) => _$this._city = city;
+
+  String _state;
+  String get state => _$this._state;
+  set state(String state) => _$this._state = state;
+
+  String _postalCode;
+  String get postalCode => _$this._postalCode;
+  set postalCode(String postalCode) => _$this._postalCode = postalCode;
+
+  int _countryId;
+  int get countryId => _$this._countryId;
+  set countryId(int countryId) => _$this._countryId = countryId;
+
+  String _workPhone;
+  String get workPhone => _$this._workPhone;
+  set workPhone(String workPhone) => _$this._workPhone = workPhone;
+
+  String _privateNotes;
+  String get privateNotes => _$this._privateNotes;
+  set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+
+  String _publicNotes;
+  String get publicNotes => _$this._publicNotes;
+  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
+
+  String _website;
+  String get website => _$this._website;
+  set website(String website) => _$this._website = website;
+
+  int _industryId;
+  int get industryId => _$this._industryId;
+  set industryId(int industryId) => _$this._industryId = industryId;
+
+  int _sizeId;
+  int get sizeId => _$this._sizeId;
+  set sizeId(int sizeId) => _$this._sizeId = sizeId;
+
+  int _paymentTerms;
+  int get paymentTerms => _$this._paymentTerms;
+  set paymentTerms(int paymentTerms) => _$this._paymentTerms = paymentTerms;
+
+  String _vatNumber;
+  String get vatNumber => _$this._vatNumber;
+  set vatNumber(String vatNumber) => _$this._vatNumber = vatNumber;
+
+  String _idNumber;
+  String get idNumber => _$this._idNumber;
+  set idNumber(String idNumber) => _$this._idNumber = idNumber;
+
+  int _languageId;
+  int get languageId => _$this._languageId;
+  set languageId(int languageId) => _$this._languageId = languageId;
+
+  int _currencyId;
+  int get currencyId => _$this._currencyId;
+  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+
+  int _invoiceNumberCounter;
+  int get invoiceNumberCounter => _$this._invoiceNumberCounter;
+  set invoiceNumberCounter(int invoiceNumberCounter) =>
+      _$this._invoiceNumberCounter = invoiceNumberCounter;
+
+  int _quoteNumberCounter;
+  int get quoteNumberCounter => _$this._quoteNumberCounter;
+  set quoteNumberCounter(int quoteNumberCounter) =>
+      _$this._quoteNumberCounter = quoteNumberCounter;
+
+  double _taskRate;
+  double get taskRate => _$this._taskRate;
+  set taskRate(double taskRate) => _$this._taskRate = taskRate;
+
+  String _shippingAddress1;
+  String get shippingAddress1 => _$this._shippingAddress1;
+  set shippingAddress1(String shippingAddress1) =>
+      _$this._shippingAddress1 = shippingAddress1;
+
+  String _shippingAddress2;
+  String get shippingAddress2 => _$this._shippingAddress2;
+  set shippingAddress2(String shippingAddress2) =>
+      _$this._shippingAddress2 = shippingAddress2;
+
+  String _shippingCity;
+  String get shippingCity => _$this._shippingCity;
+  set shippingCity(String shippingCity) => _$this._shippingCity = shippingCity;
+
+  String _shippingState;
+  String get shippingState => _$this._shippingState;
+  set shippingState(String shippingState) =>
+      _$this._shippingState = shippingState;
+
+  String _shippingPostalCode;
+  String get shippingPostalCode => _$this._shippingPostalCode;
+  set shippingPostalCode(String shippingPostalCode) =>
+      _$this._shippingPostalCode = shippingPostalCode;
+
+  int _shippingCountryId;
+  int get shippingCountryId => _$this._shippingCountryId;
+  set shippingCountryId(int shippingCountryId) =>
+      _$this._shippingCountryId = shippingCountryId;
+
+  bool _showTasksInPortal;
+  bool get showTasksInPortal => _$this._showTasksInPortal;
+  set showTasksInPortal(bool showTasksInPortal) =>
+      _$this._showTasksInPortal = showTasksInPortal;
+
+  bool _sendReminders;
+  bool get sendReminders => _$this._sendReminders;
+  set sendReminders(bool sendReminders) =>
+      _$this._sendReminders = sendReminders;
+
+  int _creditNumberCounter;
+  int get creditNumberCounter => _$this._creditNumberCounter;
+  set creditNumberCounter(int creditNumberCounter) =>
+      _$this._creditNumberCounter = creditNumberCounter;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -510,6 +1131,10 @@ class ClientEntityBuilder
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
+
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
   int _archivedAt;
   int get archivedAt => _$this._archivedAt;
@@ -525,10 +1150,41 @@ class ClientEntityBuilder
     if (_$v != null) {
       _name = _$v.name;
       _displayName = _$v.displayName;
-      _updatedAt = _$v.updatedAt;
+      _balance = _$v.balance;
+      _paidToDate = _$v.paidToDate;
+      _address1 = _$v.address1;
+      _address2 = _$v.address2;
+      _city = _$v.city;
+      _state = _$v.state;
+      _postalCode = _$v.postalCode;
+      _countryId = _$v.countryId;
+      _workPhone = _$v.workPhone;
+      _privateNotes = _$v.privateNotes;
+      _publicNotes = _$v.publicNotes;
+      _website = _$v.website;
+      _industryId = _$v.industryId;
+      _sizeId = _$v.sizeId;
+      _paymentTerms = _$v.paymentTerms;
+      _vatNumber = _$v.vatNumber;
+      _idNumber = _$v.idNumber;
+      _languageId = _$v.languageId;
+      _currencyId = _$v.currencyId;
+      _invoiceNumberCounter = _$v.invoiceNumberCounter;
+      _quoteNumberCounter = _$v.quoteNumberCounter;
+      _taskRate = _$v.taskRate;
+      _shippingAddress1 = _$v.shippingAddress1;
+      _shippingAddress2 = _$v.shippingAddress2;
+      _shippingCity = _$v.shippingCity;
+      _shippingState = _$v.shippingState;
+      _shippingPostalCode = _$v.shippingPostalCode;
+      _shippingCountryId = _$v.shippingCountryId;
+      _showTasksInPortal = _$v.showTasksInPortal;
+      _sendReminders = _$v.sendReminders;
+      _creditNumberCounter = _$v.creditNumberCounter;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _id = _$v.id;
+      _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
       _$v = null;
@@ -553,10 +1209,41 @@ class ClientEntityBuilder
         new _$ClientEntity._(
             name: name,
             displayName: displayName,
-            updatedAt: updatedAt,
+            balance: balance,
+            paidToDate: paidToDate,
+            address1: address1,
+            address2: address2,
+            city: city,
+            state: state,
+            postalCode: postalCode,
+            countryId: countryId,
+            workPhone: workPhone,
+            privateNotes: privateNotes,
+            publicNotes: publicNotes,
+            website: website,
+            industryId: industryId,
+            sizeId: sizeId,
+            paymentTerms: paymentTerms,
+            vatNumber: vatNumber,
+            idNumber: idNumber,
+            languageId: languageId,
+            currencyId: currencyId,
+            invoiceNumberCounter: invoiceNumberCounter,
+            quoteNumberCounter: quoteNumberCounter,
+            taskRate: taskRate,
+            shippingAddress1: shippingAddress1,
+            shippingAddress2: shippingAddress2,
+            shippingCity: shippingCity,
+            shippingState: shippingState,
+            shippingPostalCode: shippingPostalCode,
+            shippingCountryId: shippingCountryId,
+            showTasksInPortal: showTasksInPortal,
+            sendReminders: sendReminders,
+            creditNumberCounter: creditNumberCounter,
             customValue1: customValue1,
             customValue2: customValue2,
             id: id,
+            updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted);
     replace(_$result);
