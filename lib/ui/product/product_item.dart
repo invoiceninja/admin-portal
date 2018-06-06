@@ -10,6 +10,8 @@ class ProductItem extends StatelessWidget {
   //final ValueChanged<bool> onCheckboxChanged;
   final ProductEntity product;
 
+  static final productItemKey = (int id) => Key('__product_item_${id}__');
+
   ProductItem({
     @required this.onDismissed,
     @required this.onTap,
@@ -20,7 +22,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: NinjaKeys.productItem(product.id),
+      key: productItemKey(product.id),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,

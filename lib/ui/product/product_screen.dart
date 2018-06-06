@@ -15,7 +15,6 @@ import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
 import 'package:redux/redux.dart';
 
 class ProductScreen extends StatelessWidget {
-  ProductScreen() : super(key: NinjaKeys.productHome);
 
   @override
   Widget build(BuildContext context) {

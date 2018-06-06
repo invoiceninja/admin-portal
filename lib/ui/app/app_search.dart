@@ -45,6 +45,7 @@ class AppSearch extends StatelessWidget {
                 border: InputBorder.none,
                 hintText: localization.search),
             autofocus: true,
+            autocorrect: false,
             onChanged: (value) => onSearchChanged(value),
           ),
         );

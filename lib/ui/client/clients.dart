@@ -4,7 +4,6 @@ import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientList extends StatelessWidget {
-  ClientList() : super(key: NinjaKeys.clientList);
 
   @override
   Widget build(BuildContext context) {

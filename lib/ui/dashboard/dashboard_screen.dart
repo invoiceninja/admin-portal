@@ -5,7 +5,6 @@ import 'package:invoiceninja/ui/dashboard/dashboard_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class DashboardScreen extends StatelessWidget {
-  DashboardScreen() : super(key: NinjaKeys.dashboard);
 
   @override
   Widget build(BuildContext context) {
