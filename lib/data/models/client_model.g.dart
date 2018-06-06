@@ -20,6 +20,8 @@ Serializer<ClientItemResponse> _$clientItemResponseSerializer =
     new _$ClientItemResponseSerializer();
 Serializer<ClientEntity> _$clientEntitySerializer =
     new _$ClientEntitySerializer();
+Serializer<ContactEntity> _$contactEntitySerializer =
+    new _$ContactEntitySerializer();
 
 class _$ClientListResponseSerializer
     implements StructuredSerializer<ClientListResponse> {
@@ -326,6 +328,13 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.customValue2,
             specifiedType: const FullType(String)));
     }
+    if (object.contacts != null) {
+      result
+        ..add('contacts')
+        ..add(serializers.serialize(object.contacts,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(ContactEntity)])));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -496,6 +505,164 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'credit_number_counter':
           result.creditNumberCounter = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'custom_value1':
+          result.customValue1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value2':
+          result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'contacts':
+          result.contacts.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ContactEntity)]))
+              as BuiltList);
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'is_deleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
+  @override
+  final Iterable<Type> types = const [ContactEntity, _$ContactEntity];
+  @override
+  final String wireName = 'ContactEntity';
+
+  @override
+  Iterable serialize(Serializers serializers, ContactEntity object,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.firstName != null) {
+      result
+        ..add('first_name')
+        ..add(serializers.serialize(object.firstName,
+            specifiedType: const FullType(String)));
+    }
+    if (object.lastName != null) {
+      result
+        ..add('last_name')
+        ..add(serializers.serialize(object.lastName,
+            specifiedType: const FullType(String)));
+    }
+    if (object.email != null) {
+      result
+        ..add('email')
+        ..add(serializers.serialize(object.email,
+            specifiedType: const FullType(String)));
+    }
+    if (object.phone != null) {
+      result
+        ..add('phone')
+        ..add(serializers.serialize(object.phone,
+            specifiedType: const FullType(String)));
+    }
+    if (object.contactKey != null) {
+      result
+        ..add('contact_key')
+        ..add(serializers.serialize(object.contactKey,
+            specifiedType: const FullType(String)));
+    }
+    if (object.isPrimary != null) {
+      result
+        ..add('is_primary')
+        ..add(serializers.serialize(object.isPrimary,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.customValue1 != null) {
+      result
+        ..add('custom_value1')
+        ..add(serializers.serialize(object.customValue1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue2 != null) {
+      result
+        ..add('custom_value2')
+        ..add(serializers.serialize(object.customValue2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.isDeleted != null) {
+      result
+        ..add('is_deleted')
+        ..add(serializers.serialize(object.isDeleted,
+            specifiedType: const FullType(bool)));
+    }
+
+    return result;
+  }
+
+  @override
+  ContactEntity deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = new ContactEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'first_name':
+          result.firstName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'last_name':
+          result.lastName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email':
+          result.email = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'phone':
+          result.phone = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'contact_key':
+          result.contactKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_primary':
+          result.isPrimary = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -781,6 +948,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String customValue2;
   @override
+  final BuiltList<ContactEntity> contacts;
+  @override
   final int id;
   @override
   final int updatedAt;
@@ -828,6 +997,7 @@ class _$ClientEntity extends ClientEntity {
       this.creditNumberCounter,
       this.customValue1,
       this.customValue2,
+      this.contacts,
       this.id,
       this.updatedAt,
       this.archivedAt,
@@ -880,6 +1050,7 @@ class _$ClientEntity extends ClientEntity {
         creditNumberCounter == other.creditNumberCounter &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        contacts == other.contacts &&
         id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -906,22 +1077,22 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode),
-                                                                                currencyId.hashCode),
-                                                                            invoiceNumberCounter.hashCode),
-                                                                        quoteNumberCounter.hashCode),
-                                                                    taskRate.hashCode),
-                                                                shippingAddress1.hashCode),
-                                                            shippingAddress2.hashCode),
-                                                        shippingCity.hashCode),
-                                                    shippingState.hashCode),
-                                                shippingPostalCode.hashCode),
-                                            shippingCountryId.hashCode),
-                                        showTasksInPortal.hashCode),
-                                    sendReminders.hashCode),
-                                creditNumberCounter.hashCode),
-                            customValue1.hashCode),
-                        customValue2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode),
+                                                                                invoiceNumberCounter.hashCode),
+                                                                            quoteNumberCounter.hashCode),
+                                                                        taskRate.hashCode),
+                                                                    shippingAddress1.hashCode),
+                                                                shippingAddress2.hashCode),
+                                                            shippingCity.hashCode),
+                                                        shippingState.hashCode),
+                                                    shippingPostalCode.hashCode),
+                                                shippingCountryId.hashCode),
+                                            showTasksInPortal.hashCode),
+                                        sendReminders.hashCode),
+                                    creditNumberCounter.hashCode),
+                                customValue1.hashCode),
+                            customValue2.hashCode),
+                        contacts.hashCode),
                     id.hashCode),
                 updatedAt.hashCode),
             archivedAt.hashCode),
@@ -966,6 +1137,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('creditNumberCounter', creditNumberCounter)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('contacts', contacts)
           ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1128,6 +1300,12 @@ class ClientEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  ListBuilder<ContactEntity> _contacts;
+  ListBuilder<ContactEntity> get contacts =>
+      _$this._contacts ??= new ListBuilder<ContactEntity>();
+  set contacts(ListBuilder<ContactEntity> contacts) =>
+      _$this._contacts = contacts;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -1183,6 +1361,7 @@ class ClientEntityBuilder
       _creditNumberCounter = _$v.creditNumberCounter;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _contacts = _$v.contacts?.toBuilder();
       _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1205,41 +1384,274 @@ class ClientEntityBuilder
 
   @override
   _$ClientEntity build() {
+    _$ClientEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$ClientEntity._(
+              name: name,
+              displayName: displayName,
+              balance: balance,
+              paidToDate: paidToDate,
+              address1: address1,
+              address2: address2,
+              city: city,
+              state: state,
+              postalCode: postalCode,
+              countryId: countryId,
+              workPhone: workPhone,
+              privateNotes: privateNotes,
+              publicNotes: publicNotes,
+              website: website,
+              industryId: industryId,
+              sizeId: sizeId,
+              paymentTerms: paymentTerms,
+              vatNumber: vatNumber,
+              idNumber: idNumber,
+              languageId: languageId,
+              currencyId: currencyId,
+              invoiceNumberCounter: invoiceNumberCounter,
+              quoteNumberCounter: quoteNumberCounter,
+              taskRate: taskRate,
+              shippingAddress1: shippingAddress1,
+              shippingAddress2: shippingAddress2,
+              shippingCity: shippingCity,
+              shippingState: shippingState,
+              shippingPostalCode: shippingPostalCode,
+              shippingCountryId: shippingCountryId,
+              showTasksInPortal: showTasksInPortal,
+              sendReminders: sendReminders,
+              creditNumberCounter: creditNumberCounter,
+              customValue1: customValue1,
+              customValue2: customValue2,
+              contacts: _contacts?.build(),
+              id: id,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'contacts';
+        _contacts?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ClientEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ContactEntity extends ContactEntity {
+  @override
+  final String firstName;
+  @override
+  final String lastName;
+  @override
+  final String email;
+  @override
+  final String phone;
+  @override
+  final String contactKey;
+  @override
+  final bool isPrimary;
+  @override
+  final String customValue1;
+  @override
+  final String customValue2;
+  @override
+  final int id;
+  @override
+  final int updatedAt;
+  @override
+  final int archivedAt;
+  @override
+  final bool isDeleted;
+
+  factory _$ContactEntity([void updates(ContactEntityBuilder b)]) =>
+      (new ContactEntityBuilder()..update(updates)).build();
+
+  _$ContactEntity._(
+      {this.firstName,
+      this.lastName,
+      this.email,
+      this.phone,
+      this.contactKey,
+      this.isPrimary,
+      this.customValue1,
+      this.customValue2,
+      this.id,
+      this.updatedAt,
+      this.archivedAt,
+      this.isDeleted})
+      : super._();
+
+  @override
+  ContactEntity rebuild(void updates(ContactEntityBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ContactEntityBuilder toBuilder() => new ContactEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    if (identical(other, this)) return true;
+    if (other is! ContactEntity) return false;
+    return firstName == other.firstName &&
+        lastName == other.lastName &&
+        email == other.email &&
+        phone == other.phone &&
+        contactKey == other.contactKey &&
+        isPrimary == other.isPrimary &&
+        customValue1 == other.customValue1 &&
+        customValue2 == other.customValue2 &&
+        id == other.id &&
+        updatedAt == other.updatedAt &&
+        archivedAt == other.archivedAt &&
+        isDeleted == other.isDeleted;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, firstName.hashCode),
+                                                lastName.hashCode),
+                                            email.hashCode),
+                                        phone.hashCode),
+                                    contactKey.hashCode),
+                                isPrimary.hashCode),
+                            customValue1.hashCode),
+                        customValue2.hashCode),
+                    id.hashCode),
+                updatedAt.hashCode),
+            archivedAt.hashCode),
+        isDeleted.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ContactEntity')
+          ..add('firstName', firstName)
+          ..add('lastName', lastName)
+          ..add('email', email)
+          ..add('phone', phone)
+          ..add('contactKey', contactKey)
+          ..add('isPrimary', isPrimary)
+          ..add('customValue1', customValue1)
+          ..add('customValue2', customValue2)
+          ..add('id', id)
+          ..add('updatedAt', updatedAt)
+          ..add('archivedAt', archivedAt)
+          ..add('isDeleted', isDeleted))
+        .toString();
+  }
+}
+
+class ContactEntityBuilder
+    implements Builder<ContactEntity, ContactEntityBuilder> {
+  _$ContactEntity _$v;
+
+  String _firstName;
+  String get firstName => _$this._firstName;
+  set firstName(String firstName) => _$this._firstName = firstName;
+
+  String _lastName;
+  String get lastName => _$this._lastName;
+  set lastName(String lastName) => _$this._lastName = lastName;
+
+  String _email;
+  String get email => _$this._email;
+  set email(String email) => _$this._email = email;
+
+  String _phone;
+  String get phone => _$this._phone;
+  set phone(String phone) => _$this._phone = phone;
+
+  String _contactKey;
+  String get contactKey => _$this._contactKey;
+  set contactKey(String contactKey) => _$this._contactKey = contactKey;
+
+  bool _isPrimary;
+  bool get isPrimary => _$this._isPrimary;
+  set isPrimary(bool isPrimary) => _$this._isPrimary = isPrimary;
+
+  String _customValue1;
+  String get customValue1 => _$this._customValue1;
+  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+
+  String _customValue2;
+  String get customValue2 => _$this._customValue2;
+  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+
+  int _archivedAt;
+  int get archivedAt => _$this._archivedAt;
+  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+
+  bool _isDeleted;
+  bool get isDeleted => _$this._isDeleted;
+  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  ContactEntityBuilder();
+
+  ContactEntityBuilder get _$this {
+    if (_$v != null) {
+      _firstName = _$v.firstName;
+      _lastName = _$v.lastName;
+      _email = _$v.email;
+      _phone = _$v.phone;
+      _contactKey = _$v.contactKey;
+      _isPrimary = _$v.isPrimary;
+      _customValue1 = _$v.customValue1;
+      _customValue2 = _$v.customValue2;
+      _id = _$v.id;
+      _updatedAt = _$v.updatedAt;
+      _archivedAt = _$v.archivedAt;
+      _isDeleted = _$v.isDeleted;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ContactEntity other) {
+    if (other == null) throw new ArgumentError.notNull('other');
+    _$v = other as _$ContactEntity;
+  }
+
+  @override
+  void update(void updates(ContactEntityBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ContactEntity build() {
     final _$result = _$v ??
-        new _$ClientEntity._(
-            name: name,
-            displayName: displayName,
-            balance: balance,
-            paidToDate: paidToDate,
-            address1: address1,
-            address2: address2,
-            city: city,
-            state: state,
-            postalCode: postalCode,
-            countryId: countryId,
-            workPhone: workPhone,
-            privateNotes: privateNotes,
-            publicNotes: publicNotes,
-            website: website,
-            industryId: industryId,
-            sizeId: sizeId,
-            paymentTerms: paymentTerms,
-            vatNumber: vatNumber,
-            idNumber: idNumber,
-            languageId: languageId,
-            currencyId: currencyId,
-            invoiceNumberCounter: invoiceNumberCounter,
-            quoteNumberCounter: quoteNumberCounter,
-            taskRate: taskRate,
-            shippingAddress1: shippingAddress1,
-            shippingAddress2: shippingAddress2,
-            shippingCity: shippingCity,
-            shippingState: shippingState,
-            shippingPostalCode: shippingPostalCode,
-            shippingCountryId: shippingCountryId,
-            showTasksInPortal: showTasksInPortal,
-            sendReminders: sendReminders,
-            creditNumberCounter: creditNumberCounter,
+        new _$ContactEntity._(
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            contactKey: contactKey,
+            isPrimary: isPrimary,
             customValue1: customValue1,
             customValue2: customValue2,
             id: id,

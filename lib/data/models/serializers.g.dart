@@ -23,6 +23,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ClientState.serializer)
       ..add(CompanyEntity.serializer)
       ..add(CompanyState.serializer)
+      ..add(ContactEntity.serializer)
       ..add(DashboardEntity.serializer)
       ..add(DashboardResponse.serializer)
       ..add(DashboardState.serializer)
@@ -42,6 +43,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CompanyEntity)]),
           () => new ListBuilder<CompanyEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ContactEntity)]),
+          () => new ListBuilder<ContactEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => new ListBuilder<EntityState>())

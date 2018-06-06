@@ -34,7 +34,6 @@ class ClientFields {
 
 abstract class ClientEntity extends Object with BaseEntity implements Built<ClientEntity, ClientEntityBuilder> {
 
-
   @nullable
   @BuiltValueField(wireName: 'name')
   String get name;
@@ -169,6 +168,9 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @nullable
+  BuiltList<ContactEntity> get contacts;
+
   //String get last_login;
   //String get custom_messages;
 
@@ -202,4 +204,43 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
   ClientEntity._();
   factory ClientEntity([updates(ClientEntityBuilder b)]) = _$ClientEntity;
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
+}
+
+
+abstract class ContactEntity extends Object with BaseEntity implements Built<ContactEntity, ContactEntityBuilder> {
+
+  @nullable
+  @BuiltValueField(wireName: 'first_name')
+  String get firstName;
+
+  @nullable
+  @BuiltValueField(wireName: 'last_name')
+  String get lastName;
+
+  @nullable
+  String get email;
+
+  @nullable
+  String get phone;
+
+  @nullable
+  @BuiltValueField(wireName: 'contact_key')
+  String get contactKey;
+
+  @nullable
+  @BuiltValueField(wireName: 'is_primary')
+  bool get isPrimary;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value1')
+  String get customValue1;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value2')
+  String get customValue2;
+
+
+  ContactEntity._();
+  factory ContactEntity([updates(ContactEntityBuilder b)]) = _$ContactEntity;
+  static Serializer<ContactEntity> get serializer => _$contactEntitySerializer;
 }
