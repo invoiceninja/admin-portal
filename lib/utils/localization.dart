@@ -47,6 +47,8 @@ class AppLocalization {
       'save': 'Save',
       'an_error_occurred': 'An error occurred',
       'paid_to_date': 'Paid to Date',
+      'overview': 'Overview',
+      'details': 'Details',
 
       'product': 'Product',
       'products': 'Products',
@@ -104,6 +106,8 @@ class AppLocalization {
   String get descending => _localizedValues[locale.languageCode]['descending'];
   String get save => _localizedValues[locale.languageCode]['save'];
   String get paidToDate => _localizedValues[locale.languageCode]['paid_to_date'];
+  String get overview => _localizedValues[locale.languageCode]['overview'];
+  String get details => _localizedValues[locale.languageCode]['details'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
