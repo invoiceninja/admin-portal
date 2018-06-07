@@ -239,6 +239,10 @@ abstract class ContactEntity extends Object with BaseEntity implements Built<Con
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  String fullName () {
+    return (firstName + ' ' + lastName).trim();
+  }
+
 
   ContactEntity._();
   factory ContactEntity([updates(ContactEntityBuilder b)]) = _$ContactEntity;

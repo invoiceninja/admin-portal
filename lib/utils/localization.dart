@@ -49,6 +49,8 @@ class AppLocalization {
       'paid_to_date': 'Paid to Date',
       'overview': 'Overview',
       'details': 'Details',
+      'phone': 'Phone',
+      'website': 'Website',
 
       'product': 'Product',
       'products': 'Products',
@@ -108,6 +110,8 @@ class AppLocalization {
   String get paidToDate => _localizedValues[locale.languageCode]['paid_to_date'];
   String get overview => _localizedValues[locale.languageCode]['overview'];
   String get details => _localizedValues[locale.languageCode]['details'];
+  String get phone => _localizedValues[locale.languageCode]['phone'];
+  String get website => _localizedValues[locale.languageCode]['website'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
