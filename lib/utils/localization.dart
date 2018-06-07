@@ -47,10 +47,13 @@ class AppLocalization {
       'save': 'Save',
       'an_error_occurred': 'An error occurred',
       'paid_to_date': 'Paid to Date',
+      'balance_due': 'Balance Due',
       'overview': 'Overview',
       'details': 'Details',
       'phone': 'Phone',
       'website': 'Website',
+      'vat_number': 'VAT Number',
+      'id_number': 'Id Number',
 
       'product': 'Product',
       'products': 'Products',
@@ -108,10 +111,13 @@ class AppLocalization {
   String get descending => _localizedValues[locale.languageCode]['descending'];
   String get save => _localizedValues[locale.languageCode]['save'];
   String get paidToDate => _localizedValues[locale.languageCode]['paid_to_date'];
+  String get balanceDue => _localizedValues[locale.languageCode]['balance_due'];
   String get overview => _localizedValues[locale.languageCode]['overview'];
   String get details => _localizedValues[locale.languageCode]['details'];
   String get phone => _localizedValues[locale.languageCode]['phone'];
   String get website => _localizedValues[locale.languageCode]['website'];
+  String get vatNumber => _localizedValues[locale.languageCode]['vat_number'];
+  String get idNumber => _localizedValues[locale.languageCode]['id_number'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];

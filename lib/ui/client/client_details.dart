@@ -37,24 +37,48 @@ class _ClientDetailsState extends State<ClientDetails>
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  _buildOverviewList() {
     var localization = AppLocalization.of(context);
     var client = widget.viewModel.client;
-    var detailListTiles = <Widget>[];
+    var listTiles = <Widget>[];
+
+    return listTiles;
+  }
+
+  _buildDetailsList() {
+    var localization = AppLocalization.of(context);
+    var client = widget.viewModel.client;
+    var listTiles = <Widget>[];
+
+    if (client.vatNumber.isNotEmpty) {
+      listTiles.add(AppListTile(
+        icon: Icons.location_city,
+        title: client.vatNumber,
+        subtitle: localization.vatNumber,
+      ));
+    }
+
+    if (client.idNumber.isNotEmpty) {
+      listTiles.add(AppListTile(
+        icon: Icons.business,
+        title: client.idNumber,
+        subtitle: localization.idNumber,
+      ));
+    }
 
     var billingAddress = formatAddress(client);
+    var shippingAddress = formatAddress(client, true);
+
     if (billingAddress.isNotEmpty) {
-      detailListTiles.add(AppListTile(
+      listTiles.add(AppListTile(
         icon: Icons.pin_drop,
         title: billingAddress,
         subtitle: localization.billingAddress,
       ));
     }
 
-    var shippingAddress = formatAddress(client, true);
     if (shippingAddress.isNotEmpty) {
-      detailListTiles.add(AppListTile(
+      listTiles.add(AppListTile(
         icon: Icons.pin_drop,
         title: shippingAddress,
         subtitle: localization.shippingAddress,
@@ -62,7 +86,7 @@ class _ClientDetailsState extends State<ClientDetails>
     }
 
     if (client.website.isNotEmpty) {
-      detailListTiles.add(AppListTile(
+      listTiles.add(AppListTile(
         icon: Icons.link,
         title: client.website,
         subtitle: localization.website,
@@ -70,19 +94,19 @@ class _ClientDetailsState extends State<ClientDetails>
     }
 
     if (client.workPhone.isNotEmpty) {
-      detailListTiles.add(AppListTile(
+      listTiles.add(AppListTile(
         icon: Icons.phone,
         title: client.workPhone,
         subtitle: localization.phone,
       ));
     }
 
-    detailListTiles.add(Divider());
+    listTiles.add(Divider());
 
     var contacts = client.contacts;
     contacts.forEach((contact) {
       if (contact.email.isNotEmpty) {
-        detailListTiles.add(AppListTile(
+        listTiles.add(AppListTile(
           icon: Icons.email,
           title: contact.fullName() + '\n' + contact.email,
           subtitle: localization.email,
@@ -90,7 +114,7 @@ class _ClientDetailsState extends State<ClientDetails>
       }
 
       if (contact.phone.isNotEmpty) {
-        detailListTiles.add(AppListTile(
+        listTiles.add(AppListTile(
           icon: Icons.phone,
           title: contact.fullName() + '\n' + contact.phone,
           subtitle: localization.phone,
@@ -98,26 +122,87 @@ class _ClientDetailsState extends State<ClientDetails>
       }
     });
 
-    Widget _details() {
-      return Padding(
-        padding: EdgeInsets.all(16.0),
-        child: ListView(
-          children: detailListTiles,
-        ),
+    return listTiles;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var localization = AppLocalization.of(context);
+
+    Widget _overview() {
+      _headerRow() {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(localization.balanceDue,
+                    style: TextStyle(color: Colors.grey[700])),
+                Text(
+                  widget.viewModel.client.balance.toStringAsFixed(2),
+                  style: TextStyle(
+                    fontSize: 26.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(localization.paidToDate,
+                    style: TextStyle(color: Colors.grey[700])),
+                Text(
+                  widget.viewModel.client.paidToDate.toStringAsFixed(2),
+                  style: TextStyle(
+                    fontSize: 26.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
+      }
+
+      return Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Card(
+              elevation: 2.0,
+              child: Padding(
+                padding: EdgeInsets.all(12.0),
+                child: _headerRow(),
+              ),
+            ),
+          ),
+          Divider(),
+          ListTile(
+            title: Text('Invoices'),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+          Divider(height: 1.0,),
+          ListTile(
+            title: Text('Payments'),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+          Divider(),
+        ],
       );
     }
 
-    Widget _overview() {
+    Widget _details() {
       return Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(12.0),
         child: ListView(
-          children: <Widget>[
-            ListTile(
-              leading: Icon(Icons.pin_drop),
-              title: Text(widget.viewModel.client.address1),
-              subtitle: Text(localization.billingAddress),
-            )
-          ],
+          children: _buildDetailsList(),
         ),
       );
     }
@@ -212,16 +297,17 @@ class _ClientDetailsState extends State<ClientDetails>
 }
 
 class AppListTile extends StatelessWidget {
-
   AppListTile({
     this.icon,
     this.title,
     this.subtitle,
+    this.dense = false,
   });
 
   final IconData icon;
   final String title;
   final String subtitle;
+  final bool dense;
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +315,8 @@ class AppListTile extends StatelessWidget {
       contentPadding: EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
       leading: Icon(icon),
       title: Text(title),
-      subtitle: Text(subtitle),
+      subtitle: subtitle == null ? Container() : Text(subtitle),
+      dense: dense,
     );
   }
 }
