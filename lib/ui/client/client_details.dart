@@ -7,6 +7,7 @@ import 'package:invoiceninja/utils/localization.dart';
 
 class ClientDetails extends StatelessWidget {
   final ClientDetailsVM viewModel;
+
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static final GlobalKey<FormFieldState<String>> _nameKey =
       GlobalKey<FormFieldState<String>>();
@@ -18,18 +19,30 @@ class ClientDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var localization = AppLocalization.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(viewModel.client.id == null
-            ? AppLocalization.of(context).newClient
-            : viewModel
-                .client.displayName), // Text(localizations.clientDetails),
+            ? localization.newClient
+            : viewModel.client.displayName), // Text(localizations.clientDetails),
         actions: viewModel.client.id == null ? [] : [
           ActionMenuButton(
             entity: viewModel.client,
             onSelected: viewModel.onActionSelected,
           )],
       ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: ListView(children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.location_city),
+            title: Text(viewModel.client.address1),
+            subtitle: Text(localization.billingAddress),
+          )
+        ],),
+      )
+      /*
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: ListView(children: [
@@ -47,32 +60,9 @@ class ClientDetails extends StatelessWidget {
                       key: _nameKey,
                       initialValue: viewModel.client.name,
                       decoration: InputDecoration(
-                        //border: InputBorder.none,
-                        labelText: AppLocalization.of(context).client,
+                        labelText: AppLocalization.of(context).name,
                       ),
                     ),
-                    /*
-                    TextFormField(
-                      initialValue: viewModel.client.notes,
-                      key: _notesKey,
-                      maxLines: 4,
-                      decoration: InputDecoration(
-                        labelText: AppLocalization.of(context).notes,
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: viewModel.client.cost == null ||
-                              viewModel.client.cost == 0.0
-                          ? null
-                          : viewModel.client.cost.toStringAsFixed(2),
-                      key: _costKey,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        //border: InputBorder.none,
-                        labelText: AppLocalization.of(context).cost,
-                      ),
-                    ),
-                    */
                   ],
                 ),
               ),
@@ -99,24 +89,7 @@ class ClientDetails extends StatelessWidget {
           }),
         ]),
       ),
-      /*
-      floatingActionButton: FloatingActionButton(
-        key: ArchSampleKeys.editClientFab,
-        tooltip: localizations.editClient,
-        child: Icon(Icons.edit),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return EditClient(
-                  client: client,
-                );
-              },
-            ),
-          );
-        },
-      ),
-      */
+     */
     );
   }
 }
