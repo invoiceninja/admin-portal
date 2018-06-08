@@ -129,43 +129,56 @@ class _ClientDetailsState extends State<ClientDetails>
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
+    var client = widget.viewModel.client;
 
     Widget _overview() {
       _headerRow() {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        return Column(
           children: <Widget>[
-            Column(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Text(localization.balanceDue,
-                    style: TextStyle(color: Colors.grey[700])),
-                Text(
-                  widget.viewModel.client.balance.toStringAsFixed(2),
-                  style: TextStyle(
-                    fontSize: 26.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(localization.paidToDate,
+                        style: TextStyle(color: Colors.grey[700])),
+                    Text(
+                      client.paidToDate.toStringAsFixed(2),
+                      style: TextStyle(
+                        fontSize: 26.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(localization.balanceDue,
+                        style: TextStyle(color: Colors.grey[700])),
+                    Text(
+                      client.balance.toStringAsFixed(2),
+                      style: TextStyle(
+                        fontSize: 26.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(localization.paidToDate,
-                    style: TextStyle(color: Colors.grey[700])),
-                Text(
-                  widget.viewModel.client.paidToDate.toStringAsFixed(2),
-                  style: TextStyle(
-                    fontSize: 26.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
+            client.privateNotes != null && client.privateNotes.isNotEmpty
+                ? Padding(
+                    padding: EdgeInsets.only(top: 12.0),
+                    child: Row(
+                      children: <Widget>[Text(client.privateNotes)],
+                    ),
+                  )
+                : null
           ],
         );
       }
@@ -182,7 +195,9 @@ class _ClientDetailsState extends State<ClientDetails>
               ),
             ),
           ),
-          Divider(height: 1.0,),
+          Divider(
+            height: 1.0,
+          ),
           Container(
             color: Colors.white,
             child: Material(
@@ -210,7 +225,9 @@ class _ClientDetailsState extends State<ClientDetails>
               ),
             ),
           ),
-          Divider(height: 1.0,),
+          Divider(
+            height: 1.0,
+          ),
         ],
       );
     }
@@ -245,6 +262,12 @@ class _ClientDetailsState extends State<ClientDetails>
         actions: widget.viewModel.client.id == null
             ? []
             : [
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    //
+                  },
+                ),
                 ActionMenuButton(
                   entity: widget.viewModel.client,
                   onSelected: widget.viewModel.onActionSelected,
@@ -257,6 +280,30 @@ class _ClientDetailsState extends State<ClientDetails>
           _overview(),
           _details(),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => SimpleDialog(
+                    //title: const Text('Set backup account'),
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(localization.invoice),
+                        leading: Icon(Icons.add_circle_outline),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: Text(localization.payment),
+                        leading: Icon(Icons.add_circle_outline),
+                        onTap: () {},
+                      ),
+                    ]),
+          );
+        },
+        child: Icon(Icons.add),
+        tooltip: localization.create,
       ),
       /*
         body:

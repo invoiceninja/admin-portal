@@ -59,7 +59,8 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         ],
         theme: ThemeData().copyWith(
           primaryColor: const Color(0xFF117cc1),
-          primaryColorDark: const Color(0xFF005090),
+          //primaryColorDark: const Color(0xFF005090),
+          primaryColorDark: const Color(0xFF0D5D91),
           primaryColorLight: const Color(0xFF5dabf4),
         ),
         /*

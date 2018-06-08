@@ -54,6 +54,7 @@ class AppLocalization {
       'website': 'Website',
       'vat_number': 'VAT Number',
       'id_number': 'Id Number',
+      'create': 'Create',
 
       'product': 'Product',
       'products': 'Products',
@@ -124,6 +125,7 @@ class AppLocalization {
   String get website => _localizedValues[locale.languageCode]['website'];
   String get vatNumber => _localizedValues[locale.languageCode]['vat_number'];
   String get idNumber => _localizedValues[locale.languageCode]['id_number'];
+  String get create => _localizedValues[locale.languageCode]['create'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];

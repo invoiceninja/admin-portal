@@ -50,7 +50,7 @@ class ClientScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColorDark,
         //key: ArchSampleKeys.addClientFab,
         onPressed: () {
           store.dispatch(SelectClientAction(ClientEntity()));
