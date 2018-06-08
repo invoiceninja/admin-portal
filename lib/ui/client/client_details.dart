@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/client/client_details_vm.dart';
@@ -181,19 +182,35 @@ class _ClientDetailsState extends State<ClientDetails>
               ),
             ),
           ),
-          Divider(),
-          ListTile(
-            title: Text('Invoices'),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {},
+          Divider(height: 1.0,),
+          Container(
+            color: Colors.white,
+            child: Material(
+              type: MaterialType.transparency,
+              child: ListTile(
+                title: Text(localization.invoices),
+                leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () {},
+              ),
+            ),
+          ),
+          Divider(
+            height: 1.0,
+          ),
+          Container(
+            color: Colors.white,
+            child: Material(
+              type: MaterialType.transparency,
+              child: ListTile(
+                title: Text(localization.payments),
+                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () {},
+              ),
+            ),
           ),
           Divider(height: 1.0,),
-          ListTile(
-            title: Text('Payments'),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {},
-          ),
-          Divider(),
         ],
       );
     }

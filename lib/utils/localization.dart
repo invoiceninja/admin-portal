@@ -75,6 +75,12 @@ class AppLocalization {
       'successfully_archived_client': 'Successfully archived client',
       'successfully_deleted_client': 'Successfully deleted client',
       'successfully_restored_client': 'Successfully restored client',
+
+      'invoice': 'Invoice',
+      'invoices': 'Invoices',
+
+      'payment': 'Payment',
+      'payments': 'Payments',
     },
   };
 
@@ -139,6 +145,13 @@ class AppLocalization {
   String get successfullyArchivedClient => _localizedValues[locale.languageCode]['successfully_archived_client'];
   String get successfullyDeletedClient=> _localizedValues[locale.languageCode]['successfully_deleted_client'];
   String get successfullyRestoredClient => _localizedValues[locale.languageCode]['successfully_restored_client'];
+
+  String get invoice => _localizedValues[locale.languageCode]['invoice'];
+  String get invoices => _localizedValues[locale.languageCode]['invoices'];
+
+  String get payment => _localizedValues[locale.languageCode]['payment'];
+  String get payments => _localizedValues[locale.languageCode]['payments'];
+
 
   String lookup(String key) {
     return _localizedValues[locale.languageCode][key] ?? 'Missing: ' + key;
