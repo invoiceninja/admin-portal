@@ -6,6 +6,8 @@ import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/client/client_details_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientDetails extends StatefulWidget {
   final ClientDetailsVM viewModel;
@@ -44,6 +46,24 @@ class _ClientDetailsState extends State<ClientDetails>
     var listTiles = <Widget>[];
 
     return listTiles;
+  }
+
+  Future<Null> _launched;
+
+  Future<Null> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false, forceWebView: false);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
+    if (snapshot.hasError) {
+      return new Text('Error: ${snapshot.error}');
+    } else {
+      return const Text('');
+    }
   }
 
   _buildDetailsList() {
@@ -91,7 +111,12 @@ class _ClientDetailsState extends State<ClientDetails>
         icon: Icons.link,
         title: client.website,
         subtitle: localization.website,
+        onTap: () => setState(() {
+          _launched = _launchInBrowser(client.website);
+        }),
       ));
+
+      listTiles.add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
     }
 
     if (client.workPhone.isNotEmpty) {
@@ -175,7 +200,14 @@ class _ClientDetailsState extends State<ClientDetails>
                 ? Padding(
                     padding: EdgeInsets.only(top: 12.0),
                     child: Row(
-                      children: <Widget>[Text(client.privateNotes)],
+                      children: <Widget>[
+                        Text(
+                            client.privateNotes,
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                        )
+                      ],
                     ),
                   )
                 : null
@@ -366,12 +398,14 @@ class AppListTile extends StatelessWidget {
     this.title,
     this.subtitle,
     this.dense = false,
+    this.onTap,
   });
 
   final IconData icon;
   final String title;
   final String subtitle;
   final bool dense;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -381,6 +415,7 @@ class AppListTile extends StatelessWidget {
       title: Text(title),
       subtitle: subtitle == null ? Container() : Text(subtitle),
       dense: dense,
+      onTap: onTap,
     );
   }
 }
