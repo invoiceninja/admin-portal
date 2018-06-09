@@ -20,9 +20,7 @@ class ClientView extends StatefulWidget {
 
 class _ClientViewState extends State<ClientView>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static final GlobalKey<FormFieldState<String>> _nameKey =
-      GlobalKey<FormFieldState<String>>();
+
   TabController _controller;
 
   @override

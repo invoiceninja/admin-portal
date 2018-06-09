@@ -4,7 +4,6 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientOverview extends StatelessWidget {
-
   ClientOverview({this.client});
 
   final ClientEntity client;
@@ -14,67 +13,52 @@ class ClientOverview extends StatelessWidget {
     var localization = AppLocalization.of(context);
 
     _headerRow() {
-      return Column(
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(localization.paidToDate,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w300,)
-                  ),
-                  SizedBox(height: 6.0,),
-                  Text(
-                    client.paidToDate.toStringAsFixed(2),
-                    style: TextStyle(
-                      fontSize: 26.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ],
+              Text(localization.paidToDate,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w300,
+                  )),
+              SizedBox(
+                height: 6.0,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(localization.balanceDue,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w300,)
-                  ),
-                  SizedBox(height: 6.0,),
-                  Text(
-                    client.balance.toStringAsFixed(2),
-                    style: TextStyle(
-                      fontSize: 26.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ],
-              ),
+              Text(
+                client.paidToDate.toStringAsFixed(2),
+                style: TextStyle(
+                  fontSize: 26.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
             ],
           ),
-          client.privateNotes != null && client.privateNotes.isNotEmpty
-              ? Padding(
-            padding: EdgeInsets.only(top: 12.0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  client.privateNotes,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(localization.balanceDue,
                   style: TextStyle(
-                    color: Colors.grey[700],
-                  ),
-                )
-              ],
-            ),
-          )
-              : null
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w300,
+                  )),
+              SizedBox(
+                height: 6.0,
+              ),
+              Text(
+                client.balance.toStringAsFixed(2),
+                style: TextStyle(
+                  fontSize: 26.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
+          ),
         ],
       );
     }
@@ -91,6 +75,21 @@ class ClientOverview extends StatelessWidget {
             ),
           ),
         ),
+        client.privateNotes != null && client.privateNotes.isNotEmpty
+            ? Padding(
+                padding: EdgeInsets.only(top: 12.0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      client.privateNotes,
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : null,
         Divider(
           height: 1.0,
         ),

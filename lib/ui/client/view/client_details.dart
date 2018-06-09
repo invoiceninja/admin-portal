@@ -41,7 +41,6 @@ class _ClientDetailsState extends State<ClientDetails> {
     var client = widget.client;
 
     _buildDetailsList() {
-      var localization = AppLocalization.of(context);
       var listTiles = <Widget>[];
 
       var contacts = client.contacts;
