@@ -6,22 +6,22 @@ import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/product/product_details.dart';
+import 'package:invoiceninja/ui/product/product_edit.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
-class ProductDetailsBuilder extends StatelessWidget {
-  ProductDetailsBuilder({Key key}) : super(key: key);
+class ProductEditBuilder extends StatelessWidget {
+  ProductEditBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ProductDetailsVM>(
+    return StoreConnector<AppState, ProductEditVM>(
       //ignoreChange: (state) => productSelector(state.product().list, id).isNotPresent,
       converter: (Store<AppState> store) {
-        return ProductDetailsVM.fromStore(store);
+        return ProductEditVM.fromStore(store);
       },
       builder: (context, vm) {
-        return ProductDetails(
+        return ProductEdit(
           viewModel: vm,
         );
       },
@@ -29,7 +29,7 @@ class ProductDetailsBuilder extends StatelessWidget {
   }
 }
 
-class ProductDetailsVM {
+class ProductEditVM {
   final ProductEntity product;
   final Function onDelete;
   final Function(BuildContext, ProductEntity) onSaveClicked;
@@ -37,7 +37,7 @@ class ProductDetailsVM {
   final bool isLoading;
   final bool isDirty;
 
-  ProductDetailsVM({
+  ProductEditVM({
     @required this.product,
     @required this.onDelete,
     @required this.onSaveClicked,
@@ -46,10 +46,10 @@ class ProductDetailsVM {
     @required this.isDirty,
   });
 
-  factory ProductDetailsVM.fromStore(Store<AppState> store) {
+  factory ProductEditVM.fromStore(Store<AppState> store) {
     final product = store.state.productState().editing;
 
-    return ProductDetailsVM(
+    return ProductEditVM(
       isLoading: store.state.isLoading,
       isDirty: product.id == null,
       product: product,

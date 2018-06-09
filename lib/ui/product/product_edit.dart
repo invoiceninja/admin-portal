@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
-import 'package:invoiceninja/ui/product/product_details_vm.dart';
+import 'package:invoiceninja/ui/product/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-class ProductDetails extends StatelessWidget {
-  final ProductDetailsVM viewModel;
+class ProductEdit extends StatelessWidget {
+  final ProductEditVM viewModel;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static final GlobalKey<FormFieldState<String>> _productKeyKey =
       GlobalKey<FormFieldState<String>>();
@@ -15,7 +15,7 @@ class ProductDetails extends StatelessWidget {
   static final GlobalKey<FormFieldState<String>> _costKey =
       GlobalKey<FormFieldState<String>>();
 
-  ProductDetails({
+  ProductEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

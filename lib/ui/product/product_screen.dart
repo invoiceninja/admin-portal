@@ -5,7 +5,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list_vm.dart';
-import 'package:invoiceninja/ui/product/product_details_vm.dart';
+import 'package:invoiceninja/ui/product/product_edit_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
@@ -57,7 +57,7 @@ class ProductScreen extends StatelessWidget {
           store.dispatch(SelectProductAction(ProductEntity()));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ProductEditBuilder()));
         },
         child: Icon(Icons.add),
         tooltip: localization.newProduct,

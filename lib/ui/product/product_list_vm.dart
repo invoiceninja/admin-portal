@@ -12,7 +12,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/ui/product/product_details_vm.dart';
+import 'package:invoiceninja/ui/product/product_edit_vm.dart';
 
 class ProductListBuilder extends StatelessWidget {
   ProductListBuilder({Key key}) : super(key: key);
@@ -69,7 +69,7 @@ class ProductListVM {
           store.dispatch(SelectProductAction(product));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ProductEditBuilder()));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ProductEntity product,
