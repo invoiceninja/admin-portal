@@ -20,17 +20,19 @@ class ClientDetails extends StatefulWidget {
 class _ClientDetailsState extends State<ClientDetails> {
   Future<Null> _launched;
 
-  Future<Null> _launchURL(String url) async {
+  Future<Null> _launchURL(BuildContext context, String url) async {
+    var localization = AppLocalization.of(context);
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
-      throw 'Could not launch $url';
+      throw '${localization.error}: ${localization.couldNotLaunch}';
     }
   }
 
   Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
+    var localization = AppLocalization.of(context);
     if (snapshot.hasError) {
-      return new Text('Error: ${snapshot.error}');
+      return new Text('${localization.error}: ${snapshot.error}');
     } else {
       return const Text('');
     }
@@ -55,7 +57,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             title: contact.fullName() + '\n' + contact.email,
             subtitle: localization.email,
             onTap: () => setState(() {
-                  _launched = _launchURL('mailto:' + contact.email);
+                  _launched = _launchURL(context, 'mailto:' + contact.email);
                 }),
           ));
         }
@@ -67,7 +69,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             subtitle: localization.phone,
             onTap: () => setState(() {
                   _launched =
-                      _launchURL('sms:' + cleanPhoneNumber(contact.phone));
+                      _launchURL(context, 'sms:' + cleanPhoneNumber(contact.phone));
                   //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
                 }),
           ));
@@ -80,7 +82,7 @@ class _ClientDetailsState extends State<ClientDetails> {
           title: client.website,
           subtitle: localization.website,
           onTap: () => setState(() {
-                _launched = _launchURL(formatURL(client.website));
+                _launched = _launchURL(context, formatURL(client.website));
               }),
         ));
       }
@@ -92,7 +94,7 @@ class _ClientDetailsState extends State<ClientDetails> {
           subtitle: localization.phone,
           onTap: () => setState(() {
                 _launched =
-                    _launchURL('sms:' + cleanPhoneNumber(client.workPhone));
+                    _launchURL(context, 'sms:' + cleanPhoneNumber(client.workPhone));
                 //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
               }),
         ));
@@ -105,11 +107,6 @@ class _ClientDetailsState extends State<ClientDetails> {
           icon: Icons.location_city,
           title: client.vatNumber,
           subtitle: localization.vatNumber,
-          onTap: () {
-            Clipboard.setData(ClipboardData(text: client.vatNumber));
-            Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text(localization.copiedToClipboard)));
-          },
         ));
       }
 
@@ -118,11 +115,6 @@ class _ClientDetailsState extends State<ClientDetails> {
           icon: Icons.business,
           title: client.idNumber,
           subtitle: localization.idNumber,
-          onTap: () {
-            Clipboard.setData(ClipboardData(text: client.idNumber));
-            Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text(localization.copiedToClipboard)));
-          },
         ));
       }
 
@@ -135,7 +127,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             title: billingAddress,
             subtitle: localization.billingAddress,
             onTap: () {
-              _launched = _launchURL(getMapURL(context) +
+              _launched = _launchURL(context, getMapURL(context) +
                   Uri.encodeFull(
                       formatAddress(object: client, delimiter: ',')));
             }));
@@ -147,7 +139,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             title: shippingAddress,
             subtitle: localization.shippingAddress,
             onTap: () {
-              _launched = _launchURL(getMapURL(context) +
+              _launched = _launchURL(context, getMapURL(context) +
                   Uri.encodeFull(formatAddress(
                       object: client, delimiter: ',', isShipping: true)));
             }));
@@ -189,6 +181,11 @@ class AppListTile extends StatelessWidget {
       subtitle: subtitle == null ? Container() : Text(subtitle),
       dense: dense,
       onTap: onTap,
+      onLongPress: () {
+        Clipboard.setData(ClipboardData(text: title));
+        Scaffold.of(context).showSnackBar(
+            SnackBar(content: Text(AppLocalization.of(context).copiedToClipboard)));
+      },
     );
   }
 }

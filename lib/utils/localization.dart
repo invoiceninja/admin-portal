@@ -56,6 +56,8 @@ class AppLocalization {
       'id_number': 'Id Number',
       'create': 'Create',
       'copied_to_clipboard': 'Copied to clipboard',
+      'error': 'Error',
+      'could_not_launch': 'Could not aunch',
 
       'product': 'Product',
       'products': 'Products',
@@ -128,6 +130,8 @@ class AppLocalization {
   String get idNumber => _localizedValues[locale.languageCode]['id_number'];
   String get create => _localizedValues[locale.languageCode]['create'];
   String get copiedToClipboard => _localizedValues[locale.languageCode]['copied_to_clipboard'];
+  String get error => _localizedValues[locale.languageCode]['error'];
+  String get couldNotLaunch => _localizedValues[locale.languageCode]['could_not_launch'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
