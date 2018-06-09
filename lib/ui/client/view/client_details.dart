@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClientDetails extends StatefulWidget {
@@ -16,10 +18,9 @@ class ClientDetails extends StatefulWidget {
 }
 
 class _ClientDetailsState extends State<ClientDetails> {
-
   Future<Null> _launched;
 
-  Future<Null> _launchInBrowser(String url) async {
+  Future<Null> _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
@@ -43,6 +44,9 @@ class _ClientDetailsState extends State<ClientDetails> {
     _buildDetailsList() {
       var listTiles = <Widget>[];
 
+      listTiles
+          .add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
+
       var contacts = client.contacts;
       contacts.forEach((contact) {
         if (contact.email.isNotEmpty) {
@@ -50,6 +54,9 @@ class _ClientDetailsState extends State<ClientDetails> {
             icon: Icons.email,
             title: contact.fullName() + '\n' + contact.email,
             subtitle: localization.email,
+            onTap: () => setState(() {
+                  _launched = _launchURL('mailto:' + contact.email);
+                }),
           ));
         }
 
@@ -58,6 +65,11 @@ class _ClientDetailsState extends State<ClientDetails> {
             icon: Icons.phone,
             title: contact.fullName() + '\n' + contact.phone,
             subtitle: localization.phone,
+            onTap: () => setState(() {
+                  _launched =
+                      _launchURL('sms:' + cleanPhoneNumber(contact.phone));
+                  //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
+                }),
           ));
         }
       });
@@ -68,11 +80,9 @@ class _ClientDetailsState extends State<ClientDetails> {
           title: client.website,
           subtitle: localization.website,
           onTap: () => setState(() {
-            _launched = _launchInBrowser(client.website);
-          }),
+                _launched = _launchURL(formatURL(client.website));
+              }),
         ));
-
-        listTiles.add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
       }
 
       if (client.workPhone.isNotEmpty) {
@@ -80,6 +90,11 @@ class _ClientDetailsState extends State<ClientDetails> {
           icon: Icons.phone,
           title: client.workPhone,
           subtitle: localization.phone,
+          onTap: () => setState(() {
+                _launched =
+                    _launchURL('sms:' + cleanPhoneNumber(client.workPhone));
+                //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
+              }),
         ));
       }
 
@@ -90,6 +105,11 @@ class _ClientDetailsState extends State<ClientDetails> {
           icon: Icons.location_city,
           title: client.vatNumber,
           subtitle: localization.vatNumber,
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: client.vatNumber));
+            Scaffold.of(context).showSnackBar(
+                SnackBar(content: Text(localization.copiedToClipboard)));
+          },
         ));
       }
 
@@ -98,26 +118,39 @@ class _ClientDetailsState extends State<ClientDetails> {
           icon: Icons.business,
           title: client.idNumber,
           subtitle: localization.idNumber,
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: client.idNumber));
+            Scaffold.of(context).showSnackBar(
+                SnackBar(content: Text(localization.copiedToClipboard)));
+          },
         ));
       }
 
-      var billingAddress = formatAddress(client);
-      var shippingAddress = formatAddress(client, true);
+      var billingAddress = formatAddress(object: client);
+      var shippingAddress = formatAddress(object: client, isShipping: true);
 
       if (billingAddress.isNotEmpty) {
         listTiles.add(AppListTile(
-          icon: Icons.pin_drop,
-          title: billingAddress,
-          subtitle: localization.billingAddress,
-        ));
+            icon: Icons.pin_drop,
+            title: billingAddress,
+            subtitle: localization.billingAddress,
+            onTap: () {
+              _launched = _launchURL(getMapURL(context) +
+                  Uri.encodeFull(
+                      formatAddress(object: client, delimiter: ',')));
+            }));
       }
 
       if (shippingAddress.isNotEmpty) {
         listTiles.add(AppListTile(
-          icon: Icons.pin_drop,
-          title: shippingAddress,
-          subtitle: localization.shippingAddress,
-        ));
+            icon: Icons.pin_drop,
+            title: shippingAddress,
+            subtitle: localization.shippingAddress,
+            onTap: () {
+              _launched = _launchURL(getMapURL(context) +
+                  Uri.encodeFull(formatAddress(
+                      object: client, delimiter: ',', isShipping: true)));
+            }));
       }
 
       return listTiles;
@@ -131,7 +164,6 @@ class _ClientDetailsState extends State<ClientDetails> {
     );
   }
 }
-
 
 class AppListTile extends StatelessWidget {
   AppListTile({
