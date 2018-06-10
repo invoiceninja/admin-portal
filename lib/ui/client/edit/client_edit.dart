@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/client/edit/client_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_details.dart';
@@ -27,7 +28,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 1);
+    _controller = new TabController(vsync: this, length: 2);
   }
 
   @override
@@ -53,28 +54,34 @@ class _ClientEditState extends State<ClientEdit>
             Tab(
               text: localization.details,
             ),
+            Tab(
+              text: localization.billingAddress,
+            ),
           ],
         ),
-        actions: widget.viewModel.client.id == null
-            ? []
-            : [
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              //
-            },
-          ),
-          ActionMenuButton(
-            entity: widget.viewModel.client,
-          )
-        ],
       ),
       body: TabBarView(
         controller: _controller,
         children: <Widget>[
           ClientEditDetails(client: widget.viewModel.client),
+          Container(),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          Expanded(
+            child: ProgressButton(
+              label: localization.save.toUpperCase(),
+              onPressed: () {
+
+              },
+              isLoading: false,
+              isDirty: false,
+            ),
+          ),
+        ],
+      )
     );
   }
 }

@@ -18,7 +18,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_middleware.dart';
 import 'package:invoiceninja/utils/localization.dart';
-import 'package:redux_logging/redux_logging.dart';
+//import 'package:redux_logging/redux_logging.dart';
 
 void main() {
   final store = Store<AppState>(appReducer,
@@ -30,7 +30,7 @@ void main() {
         ..addAll(createStoreClientsMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         ..addAll([
-          LoggingMiddleware.printer(),
+          //LoggingMiddleware.printer(),
         ]));
 
   runApp(new InvoiceNinjaApp(store: store));
