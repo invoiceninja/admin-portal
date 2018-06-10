@@ -9,7 +9,6 @@ class ClientEditBillingAddress extends EntityEditor {
 
   final ClientEntity client;
 
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static final GlobalKey<FormFieldState<String>> _address1Key =
       GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _address2Key =
@@ -24,6 +23,7 @@ class ClientEditBillingAddress extends EntityEditor {
       GlobalKey<FormFieldState<String>>();
 
   onSaveClicked(ClientEntity client) {
+    /*
     if (_formKey.currentState == null) {
       return client;
     }
@@ -31,7 +31,7 @@ class ClientEditBillingAddress extends EntityEditor {
     if (client == null || !_formKey.currentState.validate()) {
       return null;
     }
-
+    */
     return client.rebuild((b) => b
       ..address1 = _address1Key.currentState.value.trim()
       ..address2 = _address2Key.currentState.value.trim()
@@ -50,54 +50,51 @@ class ClientEditBillingAddress extends EntityEditor {
         elevation: 2.0,
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              children: <Widget>[
-                TextFormField(
-                  autocorrect: false,
-                  key: _address1Key,
-                  initialValue: client.address1,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).address1,
-                  ),
+          child: ListView(
+            children: <Widget>[
+              TextFormField(
+                autocorrect: false,
+                key: _address1Key,
+                initialValue: client.address1,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).address1,
                 ),
-                TextFormField(
-                  autocorrect: false,
-                  key: _address2Key,
-                  initialValue: client.address2,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).address2,
-                  ),
+              ),
+              TextFormField(
+                autocorrect: false,
+                key: _address2Key,
+                initialValue: client.address2,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).address2,
                 ),
-                TextFormField(
-                  autocorrect: false,
-                  key: _cityKey,
-                  initialValue: client.city,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).city,
-                  ),
+              ),
+              TextFormField(
+                autocorrect: false,
+                key: _cityKey,
+                initialValue: client.city,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).city,
                 ),
-                TextFormField(
-                  autocorrect: false,
-                  key: _stateKey,
-                  initialValue: client.state,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).state,
-                  ),
-                  keyboardType: TextInputType.url,
+              ),
+              TextFormField(
+                autocorrect: false,
+                key: _stateKey,
+                initialValue: client.state,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).state,
                 ),
-                TextFormField(
-                  autocorrect: false,
-                  key: _postalCodeKey,
-                  initialValue: client.postalCode,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).postalCode,
-                  ),
-                  keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.url,
+              ),
+              TextFormField(
+                autocorrect: false,
+                key: _postalCodeKey,
+                initialValue: client.postalCode,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).postalCode,
                 ),
-              ],
-            ),
+                keyboardType: TextInputType.phone,
+              ),
+            ],
           ),
         ),
       ),

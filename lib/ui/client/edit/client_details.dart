@@ -9,7 +9,6 @@ class ClientEditDetails extends EntityEditor {
 
   final ClientEntity client;
 
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static final GlobalKey<FormFieldState<String>> _nameKey =
       GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _idNumberKey =
@@ -22,6 +21,7 @@ class ClientEditDetails extends EntityEditor {
       GlobalKey<FormFieldState<String>>();
 
   onSaveClicked(ClientEntity client) {
+    /*
     if (_formKey.currentState == null) {
       return client;
     }
@@ -29,7 +29,7 @@ class ClientEditDetails extends EntityEditor {
     if (client == null || !_formKey.currentState.validate()) {
       return null;
     }
-
+    */
     return client.rebuild((b) => b
       ..name = _nameKey.currentState.value.trim()
       ..idNumber = _idNumberKey.currentState.value.trim()
@@ -48,54 +48,51 @@ class ClientEditDetails extends EntityEditor {
         elevation: 2.0,
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              children: <Widget>[
-                TextFormField(
-                  autocorrect: false,
-                  key: _nameKey,
-                  initialValue: client.name,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).name,
-                  ),
+          child: ListView(
+            children: <Widget>[
+              TextFormField(
+                autocorrect: false,
+                key: _nameKey,
+                initialValue: client.name,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).name,
                 ),
-                TextFormField(
-                  autocorrect: false,
-                  key: _idNumberKey,
-                  initialValue: client.idNumber,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).idNumber,
-                  ),
+              ),
+              TextFormField(
+                autocorrect: false,
+                key: _idNumberKey,
+                initialValue: client.idNumber,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).idNumber,
                 ),
-                TextFormField(
-                  autocorrect: false,
-                  key: _vatNumberKey,
-                  initialValue: client.vatNumber,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).vatNumber,
-                  ),
+              ),
+              TextFormField(
+                autocorrect: false,
+                key: _vatNumberKey,
+                initialValue: client.vatNumber,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).vatNumber,
                 ),
-                TextFormField(
-                  autocorrect: false,
-                  key: _websiteKey,
-                  initialValue: client.website,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).website,
-                  ),
-                  keyboardType: TextInputType.url,
+              ),
+              TextFormField(
+                autocorrect: false,
+                key: _websiteKey,
+                initialValue: client.website,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).website,
                 ),
-                TextFormField(
-                  autocorrect: false,
-                  key: _phoneKey,
-                  initialValue: client.workPhone,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).phone,
-                  ),
-                  keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.url,
+              ),
+              TextFormField(
+                autocorrect: false,
+                key: _phoneKey,
+                initialValue: client.workPhone,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).phone,
                 ),
-              ],
-            ),
+                keyboardType: TextInputType.phone,
+              ),
+            ],
           ),
         ),
       ),

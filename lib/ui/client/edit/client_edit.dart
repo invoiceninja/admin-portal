@@ -23,6 +23,7 @@ class ClientEdit extends StatefulWidget {
 class _ClientEditState extends State<ClientEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -73,14 +74,18 @@ class _ClientEditState extends State<ClientEdit>
             ],
           ),
         ),
-        body: TabBarView(
-          controller: _controller,
-          children: editors,
+        body: Form(
+          key: _formKey,
+          child: TabBarView(
+            controller: _controller,
+            children: editors,
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: SaveButton(
           viewModel: widget.viewModel,
           editors: editors,
+          formKey: _formKey,
         ));
   }
 }
@@ -92,8 +97,9 @@ abstract class EntityEditor extends StatelessWidget {
 class SaveButton extends StatelessWidget {
   final ClientEditVM viewModel;
   final List<EntityEditor> editors;
+  final GlobalKey<FormState> formKey;
 
-  SaveButton({this.viewModel, this.editors});
+  SaveButton({this.viewModel, this.editors, this.formKey});
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +114,10 @@ class SaveButton extends StatelessWidget {
             child: ProgressButton(
               label: localization.save.toUpperCase(),
               onPressed: () {
+                if (!formKey.currentState.validate()) {
+                  return;
+                }
+
                 editors.forEach((editor) {
                   client = editor.onSaveClicked(client);
                 });
