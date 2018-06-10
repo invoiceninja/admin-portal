@@ -90,10 +90,14 @@ class ClientOverview extends StatelessWidget {
                           color: Colors.grey[800],
                         ),
                         SizedBox(width: 10.0),
-                        Text(
-                          client.privateNotes,
-                          style: TextStyle(
-                            color: Colors.grey[800],
+                        Flexible(
+                          child: Text(
+                            client.privateNotes,
+                            maxLines: null,
+                            //keyboardType: TextInputType.multiline,
+                            style: TextStyle(
+                              color: Colors.grey[800],
+                            ),
                           ),
                         ),
                       ],
