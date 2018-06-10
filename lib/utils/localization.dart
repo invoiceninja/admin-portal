@@ -58,6 +58,8 @@ class AppLocalization {
       'copied_to_clipboard': 'Copied to clipboard',
       'error': 'Error',
       'could_not_launch': 'Could not aunch',
+      'contacts': 'Contacts',
+      'additional': 'Additional',
 
       'product': 'Product',
       'products': 'Products',

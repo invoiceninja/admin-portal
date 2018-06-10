@@ -13,7 +13,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/client_list.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
-import 'package:invoiceninja/ui/client/client_view_vm.dart';
+import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 
 class ClientListBuilder extends StatelessWidget {
   ClientListBuilder({Key key}) : super(key: key);

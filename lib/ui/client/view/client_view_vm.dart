@@ -2,11 +2,12 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/client/client_view.dart';
+import 'package:invoiceninja/ui/client/view/client_view.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
@@ -34,6 +35,7 @@ class ClientViewVM {
   final Function onDelete;
   final Function(BuildContext, ClientEntity) onSaveClicked;
   final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext) onEditClicked;
   final bool isLoading;
   final bool isDirty;
 
@@ -42,6 +44,7 @@ class ClientViewVM {
     @required this.onDelete,
     @required this.onSaveClicked,
     @required this.onActionSelected,
+    @required this.onEditClicked,
     @required this.isLoading,
     @required this.isDirty,
   });
@@ -54,6 +57,11 @@ class ClientViewVM {
       isDirty: client.id == null,
       client: client,
       onDelete: () => false,
+      onEditClicked: (BuildContext context) {
+        Navigator
+            .of(context)
+            .push(MaterialPageRoute(builder: (_) => ClientEditBuilder()));
+      },
       onSaveClicked: (BuildContext context, ClientEntity client) {
         final Completer<Null> completer = new Completer<Null>();
         store.dispatch(SaveClientRequest(completer, client));

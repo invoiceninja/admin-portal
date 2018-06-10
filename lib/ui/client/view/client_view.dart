@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja/ui/client/client_view_vm.dart';
+import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_details.dart';
 import 'package:invoiceninja/ui/client/view/client_overview.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -41,10 +41,7 @@ class _ClientViewState extends State<ClientView>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.viewModel.client.id == null
-            ? localization.newClient
-            : widget.viewModel.client
-                .displayName), // Text(localizations.clientDetails),
+        title: Text(widget.viewModel.client.displayName), // Text(localizations.clientDetails),
         bottom: TabBar(
           controller: _controller,
           //isScrollable: true,
@@ -63,7 +60,7 @@ class _ClientViewState extends State<ClientView>
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
-                    //
+                    widget.viewModel.onEditClicked(context);
                   },
                 ),
                 ActionMenuButton(
@@ -76,7 +73,7 @@ class _ClientViewState extends State<ClientView>
         controller: _controller,
         children: <Widget>[
           ClientOverview(client: widget.viewModel.client),
-          ClientDetails(client: widget.viewModel.client),
+          ClientViewDetails(client: widget.viewModel.client),
         ],
       ),
       floatingActionButton: FloatingActionButton(

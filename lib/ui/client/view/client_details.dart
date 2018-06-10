@@ -8,16 +8,16 @@ import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ClientDetails extends StatefulWidget {
-  ClientDetails({this.client});
+class ClientViewDetails extends StatefulWidget {
+  ClientViewDetails({this.client});
 
   final ClientEntity client;
 
   @override
-  _ClientDetailsState createState() => new _ClientDetailsState();
+  _ClientViewDetailsState createState() => new _ClientViewDetailsState();
 }
 
-class _ClientDetailsState extends State<ClientDetails> {
+class _ClientViewDetailsState extends State<ClientViewDetails> {
   Future<Null> _launched;
 
   Future<Null> _launchURL(BuildContext context, String url) async {
