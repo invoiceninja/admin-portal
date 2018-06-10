@@ -22,7 +22,6 @@ class ClientEdit extends StatefulWidget {
 
 class _ClientEditState extends State<ClientEdit>
     with SingleTickerProviderStateMixin {
-
   TabController _controller;
 
   @override
@@ -49,62 +48,79 @@ class _ClientEditState extends State<ClientEdit>
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(client.id == null
-            ? localization.newClient
-            : client.displayName), // Text(localizations.clientDetails),
-        bottom: TabBar(
-          controller: _controller,
-          isScrollable: true,
-          tabs: [
-            Tab(
-              text: localization.details,
-            ),
-            /*
+        appBar: AppBar(
+          title: Text(client.id == null
+              ? localization.newClient
+              : client.displayName), // Text(localizations.clientDetails),
+          bottom: TabBar(
+            controller: _controller,
+            isScrollable: true,
+            tabs: [
+              Tab(
+                text: localization.details,
+              ),
+              /*
             Tab(
               text: localization.contacts,
             ),
             */
-            Tab(
-              text: localization.billingAddress,
-            ),
-            Tab(
-              text: localization.shippingAddress,
-            ),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _controller,
-        children: editors,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-              child: ProgressButton(
-                label: localization.save.toUpperCase(),
-                onPressed: () {
-                  editors.forEach((editor) {
-                      client = editor.onSaveClicked(client);
-                  });
-                  if (client != null) {
-                    widget.viewModel.onSaveClicked(context, client);
-                  }
-                },
-                isLoading: false,
-                isDirty: false,
+              Tab(
+                text: localization.billingAddress,
               ),
-            ),
+              Tab(
+                text: localization.shippingAddress,
+              ),
+            ],
           ),
-        ],
-      )
-    );
+        ),
+        body: TabBarView(
+          controller: _controller,
+          children: editors,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: SaveButton(
+          viewModel: widget.viewModel,
+          editors: editors,
+        ));
   }
 }
 
 abstract class EntityEditor extends StatelessWidget {
   onSaveClicked(ClientEntity client);
+}
+
+class SaveButton extends StatelessWidget {
+  final ClientEditVM viewModel;
+  final List<EntityEditor> editors;
+
+  SaveButton({this.viewModel, this.editors});
+
+  @override
+  Widget build(BuildContext context) {
+    var localization = AppLocalization.of(context);
+    var client = viewModel.client;
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+            child: ProgressButton(
+              label: localization.save.toUpperCase(),
+              onPressed: () {
+                editors.forEach((editor) {
+                  client = editor.onSaveClicked(client);
+                });
+                if (client != null) {
+                  viewModel.onSaveClicked(context, client);
+                }
+              },
+              isLoading: false,
+              isDirty: false,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
