@@ -81,6 +81,12 @@ class AppLocalization {
       'successfully_archived_client': 'Successfully archived client',
       'successfully_deleted_client': 'Successfully deleted client',
       'successfully_restored_client': 'Successfully restored client',
+      'address1': 'Street',
+      'address2': 'Apt/Suite',
+      'city': 'City',
+      'state': 'State/Province',
+      'postal_code': 'Postal Code',
+      'country': 'Country',
 
       'invoice': 'Invoice',
       'invoices': 'Invoices',
@@ -134,6 +140,8 @@ class AppLocalization {
   String get copiedToClipboard => _localizedValues[locale.languageCode]['copied_to_clipboard'];
   String get error => _localizedValues[locale.languageCode]['error'];
   String get couldNotLaunch => _localizedValues[locale.languageCode]['could_not_launch'];
+  String get contacts => _localizedValues[locale.languageCode]['contacts'];
+  String get additional => _localizedValues[locale.languageCode]['additional'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
@@ -155,6 +163,12 @@ class AppLocalization {
   String get successfullyArchivedClient => _localizedValues[locale.languageCode]['successfully_archived_client'];
   String get successfullyDeletedClient=> _localizedValues[locale.languageCode]['successfully_deleted_client'];
   String get successfullyRestoredClient => _localizedValues[locale.languageCode]['successfully_restored_client'];
+  String get address1 => _localizedValues[locale.languageCode]['address1'];
+  String get address2 => _localizedValues[locale.languageCode]['address2'];
+  String get city => _localizedValues[locale.languageCode]['city'];
+  String get state => _localizedValues[locale.languageCode]['state'];
+  String get postalCode => _localizedValues[locale.languageCode]['postal_code'];
+  String get country => _localizedValues[locale.languageCode]['country'];
 
   String get invoice => _localizedValues[locale.languageCode]['invoice'];
   String get invoices => _localizedValues[locale.languageCode]['invoices'];

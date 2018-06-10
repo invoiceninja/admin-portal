@@ -28,7 +28,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 2);
+    _controller = new TabController(vsync: this, length: 4);
   }
 
   @override
@@ -55,7 +55,13 @@ class _ClientEditState extends State<ClientEdit>
               text: localization.details,
             ),
             Tab(
+              text: localization.contacts,
+            ),
+            Tab(
               text: localization.billingAddress,
+            ),
+            Tab(
+              text: localization.shippingAddress,
             ),
           ],
         ),
@@ -65,19 +71,24 @@ class _ClientEditState extends State<ClientEdit>
         children: <Widget>[
           ClientEditDetails(client: widget.viewModel.client),
           Container(),
+          Container(),
+          Container(),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Row(
         children: <Widget>[
           Expanded(
-            child: ProgressButton(
-              label: localization.save.toUpperCase(),
-              onPressed: () {
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+              child: ProgressButton(
+                label: localization.save.toUpperCase(),
+                onPressed: () {
 
-              },
-              isLoading: false,
-              isDirty: false,
+                },
+                isLoading: false,
+                isDirty: false,
+              ),
             ),
           ),
         ],
