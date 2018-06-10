@@ -91,7 +91,7 @@ class _ClientEditState extends State<ClientEdit>
                       client = editor.onSaveClicked(client);
                   });
                   if (client != null) {
-
+                    widget.viewModel.onSaveClicked(context, client);
                   }
                 },
                 isLoading: false,
