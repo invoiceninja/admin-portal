@@ -55,6 +55,7 @@ class _ClientDetailsState extends State<ClientDetails> {
           listTiles.add(AppListTile(
             icon: Icons.email,
             title: contact.fullName() + '\n' + contact.email,
+            copyValue: contact.email,
             subtitle: localization.email,
             onTap: () => setState(() {
                   _launched = _launchURL(context, 'mailto:' + contact.email);
@@ -66,6 +67,7 @@ class _ClientDetailsState extends State<ClientDetails> {
           listTiles.add(AppListTile(
             icon: Icons.phone,
             title: contact.fullName() + '\n' + contact.phone,
+            copyValue: contact.phone,
             subtitle: localization.phone,
             onTap: () => setState(() {
                   _launched =
@@ -164,6 +166,7 @@ class AppListTile extends StatelessWidget {
     this.subtitle,
     this.dense = false,
     this.onTap,
+    this.copyValue,
   });
 
   final IconData icon;
@@ -171,6 +174,7 @@ class AppListTile extends StatelessWidget {
   final String subtitle;
   final bool dense;
   final Function onTap;
+  final String copyValue;
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +186,7 @@ class AppListTile extends StatelessWidget {
       dense: dense,
       onTap: onTap,
       onLongPress: () {
-        Clipboard.setData(ClipboardData(text: title));
+        Clipboard.setData(ClipboardData(text: copyValue ?? title));
         Scaffold.of(context).showSnackBar(
             SnackBar(content: Text(AppLocalization.of(context).copiedToClipboard)));
       },
