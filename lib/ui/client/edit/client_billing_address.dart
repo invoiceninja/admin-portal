@@ -4,19 +4,24 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-class ClientEditAddress extends EntityEditor {
-  ClientEditAddress({this.client, this.isShipping = false});
+class ClientEditBillingAddress extends EntityEditor {
+  ClientEditBillingAddress(this.client);
 
   final ClientEntity client;
-  final bool isShipping;
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static final GlobalKey<FormFieldState<String>> _address1Key = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _address2Key = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _cityKey = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _stateKey = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _postalCodeKey = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _countyKey = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _address1Key =
+      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _address2Key =
+      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _cityKey =
+      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _stateKey =
+      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _postalCodeKey =
+      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _countyKey =
+      GlobalKey<FormFieldState<String>>();
 
   onSaveClicked(ClientEntity client) {
     if (_formKey.currentState == null) {
@@ -27,15 +32,12 @@ class ClientEditAddress extends EntityEditor {
       return null;
     }
 
-    if (isShipping) {
-      return client.rebuild((b) => b
-        ..shippingAddress1 = _address1Key.currentState.value
-      );
-    } else {
-      return client.rebuild((b) => b
-        ..address1 = _address1Key.currentState.value
-      );
-    }
+    return client.rebuild((b) => b
+      ..address1 = _address1Key.currentState.value.trim()
+      ..address2 = _address2Key.currentState.value.trim()
+      ..city = _cityKey.currentState.value.trim()
+      ..state = _stateKey.currentState.value.trim()
+      ..postalCode = _postalCodeKey.currentState.value.trim());
   }
 
   @override
@@ -55,7 +57,7 @@ class ClientEditAddress extends EntityEditor {
                 TextFormField(
                   autocorrect: false,
                   key: _address1Key,
-                  initialValue: isShipping ? client.shippingAddress1 : client.address1,
+                  initialValue: client.address1,
                   decoration: InputDecoration(
                     labelText: AppLocalization.of(context).address1,
                   ),
@@ -63,7 +65,7 @@ class ClientEditAddress extends EntityEditor {
                 TextFormField(
                   autocorrect: false,
                   key: _address2Key,
-                  initialValue: isShipping ? client.shippingAddress2 : client.address2,
+                  initialValue: client.address2,
                   decoration: InputDecoration(
                     labelText: AppLocalization.of(context).address2,
                   ),
@@ -71,7 +73,7 @@ class ClientEditAddress extends EntityEditor {
                 TextFormField(
                   autocorrect: false,
                   key: _cityKey,
-                  initialValue: isShipping ? client.shippingCity : client.city,
+                  initialValue: client.city,
                   decoration: InputDecoration(
                     labelText: AppLocalization.of(context).city,
                   ),
@@ -79,7 +81,7 @@ class ClientEditAddress extends EntityEditor {
                 TextFormField(
                   autocorrect: false,
                   key: _stateKey,
-                  initialValue: isShipping ? client.shippingState : client.state,
+                  initialValue: client.state,
                   decoration: InputDecoration(
                     labelText: AppLocalization.of(context).state,
                   ),
@@ -88,7 +90,7 @@ class ClientEditAddress extends EntityEditor {
                 TextFormField(
                   autocorrect: false,
                   key: _postalCodeKey,
-                  initialValue: isShipping ? client.shippingPostalCode : client.postalCode,
+                  initialValue: client.postalCode,
                   decoration: InputDecoration(
                     labelText: AppLocalization.of(context).postalCode,
                   ),
@@ -102,4 +104,3 @@ class ClientEditAddress extends EntityEditor {
     );
   }
 }
-

@@ -4,22 +4,18 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-class ClientEditDetails extends EntityEditor {
-  ClientEditDetails(this.client);
+class ClientEditShippingAddress extends EntityEditor {
+  ClientEditShippingAddress(this.client);
 
   final ClientEntity client;
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static final GlobalKey<FormFieldState<String>> _nameKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _idNumberKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _vatNumberKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _websiteKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _phoneKey =
-      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _address1Key = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _address2Key = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _cityKey = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _stateKey = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _postalCodeKey = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _countyKey = GlobalKey<FormFieldState<String>>();
 
   onSaveClicked(ClientEntity client) {
     if (_formKey.currentState == null) {
@@ -31,11 +27,12 @@ class ClientEditDetails extends EntityEditor {
     }
 
     return client.rebuild((b) => b
-      ..name = _nameKey.currentState.value.trim()
-      ..idNumber = _idNumberKey.currentState.value.trim()
-      ..vatNumber = _vatNumberKey.currentState.value.trim()
-      ..website = _websiteKey.currentState.value.trim()
-      ..workPhone = _phoneKey.currentState.value.trim());
+      ..shippingAddress1 = _address1Key.currentState.value
+      ..shippingAddress2 = _address2Key.currentState.value.trim()
+      ..shippingCity = _cityKey.currentState.value.trim()
+      ..shippingState = _stateKey.currentState.value.trim()
+      ..shippingPostalCode = _postalCodeKey.currentState.value.trim()
+    );
   }
 
   @override
@@ -54,43 +51,43 @@ class ClientEditDetails extends EntityEditor {
               children: <Widget>[
                 TextFormField(
                   autocorrect: false,
-                  key: _nameKey,
-                  initialValue: client.name,
+                  key: _address1Key,
+                  initialValue: client.shippingAddress1,
                   decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).name,
+                    labelText: AppLocalization.of(context).address1,
                   ),
                 ),
                 TextFormField(
                   autocorrect: false,
-                  key: _idNumberKey,
-                  initialValue: client.idNumber,
+                  key: _address2Key,
+                  initialValue: client.shippingAddress2,
                   decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).idNumber,
+                    labelText: AppLocalization.of(context).address2,
                   ),
                 ),
                 TextFormField(
                   autocorrect: false,
-                  key: _vatNumberKey,
-                  initialValue: client.vatNumber,
+                  key: _cityKey,
+                  initialValue: client.shippingCity,
                   decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).vatNumber,
+                    labelText: AppLocalization.of(context).city,
                   ),
                 ),
                 TextFormField(
                   autocorrect: false,
-                  key: _websiteKey,
-                  initialValue: client.website,
+                  key: _stateKey,
+                  initialValue: client.shippingState,
                   decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).website,
+                    labelText: AppLocalization.of(context).state,
                   ),
                   keyboardType: TextInputType.url,
                 ),
                 TextFormField(
                   autocorrect: false,
-                  key: _phoneKey,
-                  initialValue: client.workPhone,
+                  key: _postalCodeKey,
+                  initialValue: client.shippingPostalCode,
                   decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).phone,
+                    labelText: AppLocalization.of(context).postalCode,
                   ),
                   keyboardType: TextInputType.phone,
                 ),
@@ -102,3 +99,4 @@ class ClientEditDetails extends EntityEditor {
     );
   }
 }
+
