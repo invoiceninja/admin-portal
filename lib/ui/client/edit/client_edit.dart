@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
+import 'package:invoiceninja/ui/client/edit/client_address.dart';
 import 'package:invoiceninja/ui/client/edit/client_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
-import 'package:invoiceninja/ui/client/view/client_details.dart';
-import 'package:invoiceninja/ui/client/view/client_overview.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientEdit extends StatefulWidget {
@@ -28,7 +27,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 4);
+    _controller = new TabController(vsync: this, length: 3);
   }
 
   @override
@@ -40,13 +39,19 @@ class _ClientEditState extends State<ClientEdit>
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
+    var client = widget.viewModel.client;
+
+    List<EntityEditor> editors = [
+      ClientEditDetails(client: client),
+      ClientEditAddress(client: client),
+      ClientEditAddress(client: client, isShipping: true),
+    ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.viewModel.client.id == null
+        title: Text(client.id == null
             ? localization.newClient
-            : widget.viewModel.client
-            .displayName), // Text(localizations.clientDetails),
+            : client.displayName), // Text(localizations.clientDetails),
         bottom: TabBar(
           controller: _controller,
           isScrollable: true,
@@ -54,9 +59,11 @@ class _ClientEditState extends State<ClientEdit>
             Tab(
               text: localization.details,
             ),
+            /*
             Tab(
               text: localization.contacts,
             ),
+            */
             Tab(
               text: localization.billingAddress,
             ),
@@ -68,12 +75,7 @@ class _ClientEditState extends State<ClientEdit>
       ),
       body: TabBarView(
         controller: _controller,
-        children: <Widget>[
-          ClientEditDetails(client: widget.viewModel.client),
-          Container(),
-          Container(),
-          Container(),
-        ],
+        children: editors,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Row(
@@ -84,7 +86,12 @@ class _ClientEditState extends State<ClientEdit>
               child: ProgressButton(
                 label: localization.save.toUpperCase(),
                 onPressed: () {
+                  editors.forEach((editor) {
+                      client = editor.onSaveClicked(client);
+                  });
+                  if (client != null) {
 
+                  }
                 },
                 isLoading: false,
                 isDirty: false,
@@ -97,3 +104,6 @@ class _ClientEditState extends State<ClientEdit>
   }
 }
 
+abstract class EntityEditor extends StatelessWidget {
+  onSaveClicked(ClientEntity client);
+}

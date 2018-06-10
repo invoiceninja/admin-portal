@@ -6,7 +6,6 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/client_list_vm.dart';
-import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
