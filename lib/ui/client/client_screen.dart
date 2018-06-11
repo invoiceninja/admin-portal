@@ -35,15 +35,14 @@ class ClientScreen extends StatelessWidget {
       drawer: AppDrawerBuilder(),
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
-        selectedSortField: store.state.clientListState().sortField,
-        selectedSortAscending: store.state.clientListState().sortAscending,
+        entityType: EntityType.client,
         onSelectedSortField: (value) {
           store.dispatch(SortClients(value));
         },
         sortFields: [
           ClientFields.name,
+          ClientFields.balance,
         ],
-        selectedStates: store.state.clientListState().stateFilters,
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterClientsByState(state));
         },

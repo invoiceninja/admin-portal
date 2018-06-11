@@ -122,6 +122,7 @@ class SaveButton extends StatelessWidget {
           viewModel.onSaveClicked(context, client);
         }
       },
+      tooltip: localization.save,
       icon: Icon(
         Icons.cloud_upload,
         color: Colors.white,

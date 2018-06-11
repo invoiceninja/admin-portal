@@ -35,8 +35,7 @@ class ProductScreen extends StatelessWidget {
       drawer: AppDrawerBuilder(),
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
-        selectedSortField: store.state.productListState().sortField,
-        selectedSortAscending: store.state.productListState().sortAscending,
+        entityType: EntityType.product,
         onSelectedSortField: (value) {
           store.dispatch(SortProducts(value));
         },
@@ -44,7 +43,6 @@ class ProductScreen extends StatelessWidget {
           ProductFields.productKey,
           ProductFields.cost,
         ],
-        selectedStates: store.state.productListState().stateFilters,
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterProductsByState(state));
         },

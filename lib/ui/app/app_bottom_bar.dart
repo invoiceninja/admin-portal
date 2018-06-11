@@ -11,20 +11,15 @@ class AppBottomBar extends StatefulWidget {
 
   final List<String> sortFields;
   final Function(String) onSelectedSortField;
-  final String selectedSortField;
-  final bool selectedSortAscending;
-
+  final EntityType entityType;
   final BuiltList<int> selectedStatuses;
-  final BuiltList<EntityState> selectedStates;
   final Function(List<int>) onSelectedStatus;
   final Function(EntityState, bool) onSelectedState;
 
   AppBottomBar(
       {this.sortFields,
         this.onSelectedSortField,
-        this.selectedSortField,
-        this.selectedSortAscending,
-        this.selectedStates,
+        this.entityType,
         this.selectedStatuses,
         this.onSelectedState,
         this.onSelectedStatus});
@@ -47,8 +42,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
       _filterController = Scaffold.of(context).showBottomSheet((context) {
         return StoreConnector<AppState, BuiltList<EntityState>>(
-          distinct: true,
-          converter: (Store<AppState> store) => store.state.productListState().stateFilters,
+          //distinct: true,
+          converter: (Store<AppState> store) => store.state.getListState(widget.entityType).stateFilters,
           builder: (BuildContext context, stateFilters) {
             return Container(
               color: Colors.grey[200],
@@ -102,8 +97,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
       _sortController  = Scaffold.of(context).showBottomSheet((context) {
         return StoreConnector<AppState, ListUIState>(
-          distinct: true,
-          converter: (Store<AppState> store) => store.state.productListState(),
+          //distinct: true,
+          converter: (Store<AppState> store) => store.state.getListState(widget.entityType),
           builder: (BuildContext context, listUIState) {
             return Container(
               color: Colors.grey[200],
