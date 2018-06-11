@@ -29,10 +29,12 @@ class ClientEditBuilder extends StatelessWidget {
 }
 
 class ClientEditVM {
+  final bool isLoading;
   final ClientEntity client;
   final Function(BuildContext, ClientEntity) onSaveClicked;
 
   ClientEditVM({
+    @required this.isLoading,
     @required this.client,
     @required this.onSaveClicked,
   });
@@ -42,6 +44,7 @@ class ClientEditVM {
 
     return ClientEditVM(
         client: client,
+        isLoading: store.state.isLoading,
         onSaveClicked: (BuildContext context, ClientEntity client) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(SaveClientRequest(completer, client));

@@ -101,13 +101,29 @@ class SaveButton extends StatelessWidget {
   final List<EntityEditor> editors;
   final GlobalKey<FormState> formKey;
 
-  SaveButton({this.viewModel, this.editors, this.formKey});
+  SaveButton({
+    this.viewModel, 
+    this.editors, 
+    this.formKey,});
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
     var client = viewModel.client;
 
+    if (viewModel.isLoading) {
+      return IconButton(
+        onPressed: null,
+        icon: SizedBox(
+          //width: 28.0,
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            //strokeWidth: 2.0,
+          ),
+        ),
+      );
+    }
+    
     return IconButton(
       onPressed: () {
         if (!formKey.currentState.validate()) {
