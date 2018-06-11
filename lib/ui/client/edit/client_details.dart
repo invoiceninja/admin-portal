@@ -57,6 +57,7 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: ListView(
+            shrinkWrap: true,
             children: <Widget>[
               TextFormField(
                 autocorrect: false,

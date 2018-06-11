@@ -28,7 +28,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length:3);
+    _controller = new TabController(vsync: this, length:2);
   }
 
   @override
@@ -41,11 +41,12 @@ class _ClientEditState extends State<ClientEdit>
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
     var client = widget.viewModel.client;
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0 ? true : false;
 
     List<EntityEditor> editors = [
       ClientEditDetails(client),
       ClientEditBillingAddress(client),
-      ClientEditShippingAddress(client),
+      //ClientEditShippingAddress(client),
     ];
 
     return Scaffold(
@@ -68,9 +69,11 @@ class _ClientEditState extends State<ClientEdit>
               Tab(
                 text: localization.billingAddress,
               ),
+              /*
               Tab(
                 text: localization.shippingAddress,
               ),
+              */
             ],
           ),
         ),
@@ -82,11 +85,11 @@ class _ClientEditState extends State<ClientEdit>
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: SaveButton(
+        floatingActionButton: showFab ? SaveButton(
           viewModel: widget.viewModel,
           editors: editors,
           formKey: _formKey,
-        ));
+        ) : null);
   }
 }
 
