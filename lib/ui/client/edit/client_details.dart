@@ -47,7 +47,6 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
 
   @override
   Widget build(BuildContext context) {
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0 ? true : false;
     var localization = AppLocalization.of(context);
     var client = widget.client;
 

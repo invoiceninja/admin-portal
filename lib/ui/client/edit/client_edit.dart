@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/client/edit/client_billing_address.dart';
 import 'package:invoiceninja/ui/client/edit/client_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
-import 'package:invoiceninja/ui/client/edit/client_shipping_address.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientEdit extends StatefulWidget {
