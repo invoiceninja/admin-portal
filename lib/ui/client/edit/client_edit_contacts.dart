@@ -5,32 +5,14 @@ import 'package:invoiceninja/ui/app/keyboard_aware_padding.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-class ClientEditContacts extends EntityEditor {
-  ClientEditContacts(this.client);
+class ClientEditContacts extends StatefulWidget {
+
+  ClientEditContacts({
+    Key key,
+    @required this.client,
+  }) : super(key: key);
 
   final ClientEntity client;
-
-  static final firstNameKey = (int id) => Key('__contact_${id}_first_name__');
-  
-  static final GlobalKey<FormFieldState<String>> address1Key =
-  GlobalKey<FormFieldState<String>>();
-
-  onSaveClicked(ClientEntity client) {
-    if (address1Key.currentState == null) {
-      return client;
-    }
-
-    if (client == null) {
-      return null;
-    }
-
-    return client;
-    /*
-    return client.rebuild((b) => b
-      ..postalCode = postalCodeKey.currentState.value.trim());
-      */
-  }
-
 
   @override
   _ClientEditContactsState createState() => new _ClientEditContactsState();

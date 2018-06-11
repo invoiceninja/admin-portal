@@ -110,7 +110,7 @@ class _ProductEditState extends State<ProductEdit> {
                         return;
                       }
                       ProductEdit.formKey.currentState.save();
-                      print('onSaveClicked: _notes is ' + _notes.toString());
+
                       viewModel.onSaveClicked(context,
                           viewModel.product.rebuild((b) => b
                             ..productKey = _productKey

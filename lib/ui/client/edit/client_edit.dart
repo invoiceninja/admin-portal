@@ -6,6 +6,9 @@ import 'package:invoiceninja/ui/client/edit/client_edit_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
+import 'client_edit_billing_address.dart';
+import 'client_edit_shipping_address.dart';
+
 class ClientEdit extends StatefulWidget {
   final ClientEditVM viewModel;
 
@@ -22,6 +25,12 @@ class _ClientEditState extends State<ClientEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<ClientEditDetailsState> _detailsKey =
+      GlobalKey<ClientEditDetailsState>();
+  static final GlobalKey<ClientEditBillingAddressState> _billingAddressKey =
+      GlobalKey<ClientEditBillingAddressState>();
+  static final GlobalKey<ClientEditShippingAddressState> _shippingAddressKey =
+      GlobalKey<ClientEditShippingAddressState>();
 
   @override
   void initState() {
@@ -40,11 +49,22 @@ class _ClientEditState extends State<ClientEdit>
     var localization = AppLocalization.of(context);
     var client = widget.viewModel.client;
 
-    List<EntityEditor> editors = [
-      ClientEditDetails(client),
-      ClientEditContacts(client),
-      //ClientEditBillingAddress(client),
-      //ClientEditShippingAddress(client),
+    List<Widget> editors = [
+      ClientEditDetails(
+        client: client,
+        key: _detailsKey,
+      ),
+      //ClientEditContacts(client),
+      ClientEditBillingAddress(
+        client: client,
+        key: _billingAddressKey,
+      ),
+      /*
+      ClientEditShippingAddress(
+        client: client,
+        key: _shippingAddressKey,
+      ),
+      */
     ];
 
     return Scaffold(
@@ -57,6 +77,9 @@ class _ClientEditState extends State<ClientEdit>
             viewModel: widget.viewModel,
             editors: editors,
             formKey: _formKey,
+            detailsKey: _detailsKey,
+            billingAddressKey: _billingAddressKey,
+            shippingAddressKey: _shippingAddressKey,
           )
         ],
         bottom: TabBar(
@@ -66,17 +89,19 @@ class _ClientEditState extends State<ClientEdit>
             Tab(
               text: localization.details,
             ),
+            /*
             Tab(
               text: localization.contacts,
             ),
-            /*
+            */
             Tab(
               text: localization.billingAddress,
             ),
-              Tab(
-                text: localization.shippingAddress,
-              ),
-              */
+            /*
+            Tab(
+              text: localization.shippingAddress,
+            ),
+            */
           ],
         ),
       ),
@@ -91,19 +116,28 @@ class _ClientEditState extends State<ClientEdit>
   }
 }
 
+/*
 abstract class EntityEditor extends StatefulWidget {
   onSaveClicked(ClientEntity client);
 }
+*/
 
 class SaveButton extends StatelessWidget {
   final ClientEditVM viewModel;
-  final List<EntityEditor> editors;
+  final List<Widget> editors;
   final GlobalKey<FormState> formKey;
+  final GlobalKey<ClientEditDetailsState> detailsKey;
+  final GlobalKey<ClientEditBillingAddressState> billingAddressKey;
+  final GlobalKey<ClientEditShippingAddressState> shippingAddressKey;
 
   SaveButton({
-    this.viewModel, 
-    this.editors, 
-    this.formKey,});
+    this.viewModel,
+    this.editors,
+    this.formKey,
+    this.detailsKey,
+    this.billingAddressKey,
+    this.shippingAddressKey,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -122,18 +156,40 @@ class SaveButton extends StatelessWidget {
         ),
       );
     }
-    
+
     return IconButton(
       onPressed: () {
         if (!formKey.currentState.validate()) {
           return;
         }
-        editors.forEach((editor) {
-          client = editor.onSaveClicked(client);
-        });
-        if (client != null) {
-          viewModel.onSaveClicked(context, client);
-        }
+
+        formKey.currentState.save();
+
+        var detailsState = detailsKey.currentState;
+        var billingAddressState = billingAddressKey.currentState;
+        //var shippingAddressState = shippingAddressKey.currentState;
+
+        ClientEntity client = viewModel.client.rebuild((b) => b
+          ..name = detailsState.name
+          ..idNumber = detailsState.idNumber
+          ..vatNumber = detailsState.vatNumber
+          ..website = detailsState.website
+          ..workPhone = detailsState.phone
+          ..address1 = billingAddressState.address1
+          ..address2 = billingAddressState.address2
+          ..city = billingAddressState.city
+          ..state = billingAddressState.state
+          ..postalCode = billingAddressState.postalCode
+          /*
+          ..shippingAddress1 = shippingAddressState.shippingAddress1
+          ..shippingAddress2 = shippingAddressState.shippingAddress2
+          ..shippingCity = shippingAddressState.shippingCity
+          ..shippingState = shippingAddressState.shippingState
+          ..shippingPostalCode = shippingAddressState.shippingPostalCode
+          */
+        );
+
+        viewModel.onSaveClicked(context, client);
       },
       tooltip: localization.save,
       icon: Icon(

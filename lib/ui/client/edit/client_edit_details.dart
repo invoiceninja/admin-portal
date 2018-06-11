@@ -3,44 +3,30 @@ import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/keyboard_aware_padding.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 
-class ClientEditDetails extends EntityEditor {
-  ClientEditDetails(this.client);
+class ClientEditDetails extends StatefulWidget {
+
+  ClientEditDetails({
+    Key key,
+    @required this.client,
+  }) : super(key: key);
 
   final ClientEntity client;
-
-  static final GlobalKey<FormFieldState<String>> nameKey =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> idNumberKey =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> vatNumberKey =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> websiteKey =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> phoneKey =
-  GlobalKey<FormFieldState<String>>();
-
-
-  onSaveClicked(ClientEntity client) {
-    if (client == null) {
-      return null;
-    }
-
-    return client.rebuild((b) => b
-      ..name = nameKey.currentState.value.trim()
-      ..idNumber = idNumberKey.currentState.value.trim()
-      ..vatNumber = vatNumberKey.currentState.value.trim()
-      ..website = websiteKey.currentState.value.trim()
-      ..workPhone = phoneKey.currentState.value.trim());
-  }
-
+  
   @override
-  _ClientEditDetailsState createState() => new _ClientEditDetailsState();
+  ClientEditDetailsState createState() => new ClientEditDetailsState();
 }
 
-class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKeepAliveClientMixin{
+class ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKeepAliveClientMixin{
+
+  String name;
+  String idNumber;
+  String vatNumber;
+  String website;
+  String phone;
 
   @override
   bool get wantKeepAlive => true;
@@ -60,7 +46,7 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
             children: <Widget>[
               TextFormField(
                 autocorrect: false,
-                key: ClientEditDetails.nameKey,
+                onSaved: (value) => name = value.trim(),
                 initialValue: client.name,
                 decoration: InputDecoration(
                   labelText: localization.name,
@@ -68,7 +54,7 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditDetails.idNumberKey,
+                onSaved: (value) => idNumber = value.trim(),
                 initialValue: client.idNumber,
                 decoration: InputDecoration(
                   labelText: localization.idNumber,
@@ -76,7 +62,7 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditDetails.vatNumberKey,
+                onSaved: (value) => vatNumber = value.trim(),
                 initialValue: client.vatNumber,
                 decoration: InputDecoration(
                   labelText: localization.vatNumber,
@@ -84,7 +70,7 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditDetails.websiteKey,
+                onSaved: (value) => website = value.trim(),
                 initialValue: client.website,
                 decoration: InputDecoration(
                   labelText: localization.website,
@@ -93,7 +79,7 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditDetails.phoneKey,
+                onSaved: (value) => phone = value.trim(),
                 initialValue: client.workPhone,
                 decoration: InputDecoration(
                   labelText: localization.phone,

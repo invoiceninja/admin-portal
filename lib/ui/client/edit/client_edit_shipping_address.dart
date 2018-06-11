@@ -4,42 +4,27 @@ import 'package:invoiceninja/ui/app/keyboard_aware_padding.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-class ClientEditShippingAddress extends EntityEditor {
-  ClientEditShippingAddress(this.client);
+class ClientEditShippingAddress extends StatefulWidget {
+
+  ClientEditShippingAddress({
+    Key key,
+    @required this.client,
+  }) : super(key: key);
+
 
   final ClientEntity client;
 
-  static final GlobalKey<FormFieldState<String>> shippingAddress1Key = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> shippingAddress2Key = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> shippingCityKey = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> shippingStateKey = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> shippingPostalCodeKey = GlobalKey<FormFieldState<String>>();
-  //static final GlobalKey<FormFieldState<String>> shippingCountyKey = GlobalKey<FormFieldState<String>>();
-
-  onSaveClicked(ClientEntity client) {
-    if (shippingAddress1Key.currentState == null) {
-      return client;
-    }
-
-    if (client == null) {
-      return null;
-    }
-
-    return client.rebuild((b) => b
-      ..shippingAddress1 = shippingAddress1Key.currentState.value.trim()
-      ..shippingAddress2 = shippingAddress2Key.currentState.value.trim()
-      ..shippingCity = shippingCityKey.currentState.value.trim()
-      ..shippingState = shippingStateKey.currentState.value.trim()
-      //..shippingPostalCode = shippingPostalCodeKey.currentState.value.trim()
-    );
-  }
-
-
   @override
-  _ClientEditShippingAddressState createState() => new _ClientEditShippingAddressState();
+  ClientEditShippingAddressState createState() => new ClientEditShippingAddressState();
 }
 
-class _ClientEditShippingAddressState extends State<ClientEditShippingAddress> with AutomaticKeepAliveClientMixin{
+class ClientEditShippingAddressState extends State<ClientEditShippingAddress> with AutomaticKeepAliveClientMixin{
+
+  String shippingAddress1;
+  String shippingAddress2;
+  String shippingCity;
+  String shippingState;
+  String shippingPostalCode;
 
   @override
   bool get wantKeepAlive => true;
@@ -58,7 +43,7 @@ class _ClientEditShippingAddressState extends State<ClientEditShippingAddress> w
             children: <Widget>[
               TextFormField(
                 autocorrect: false,
-                key: ClientEditShippingAddress.shippingAddress1Key,
+                onSaved: (value) => shippingAddress1 = value.trim(),
                 initialValue: client.shippingAddress1,
                 decoration: InputDecoration(
                   labelText: localization.address1,
@@ -66,7 +51,7 @@ class _ClientEditShippingAddressState extends State<ClientEditShippingAddress> w
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditShippingAddress.shippingAddress2Key,
+                onSaved: (value) => shippingAddress2 = value.trim(),
                 initialValue: client.shippingAddress2,
                 decoration: InputDecoration(
                   labelText: localization.address2,
@@ -74,7 +59,7 @@ class _ClientEditShippingAddressState extends State<ClientEditShippingAddress> w
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditShippingAddress.shippingCityKey,
+                onSaved: (value) => shippingCity = value.trim(),
                 initialValue: client.shippingCity,
                 decoration: InputDecoration(
                   labelText: localization.city,
@@ -82,23 +67,21 @@ class _ClientEditShippingAddressState extends State<ClientEditShippingAddress> w
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditShippingAddress.shippingStateKey,
+                onSaved: (value) => shippingState = value.trim(),
                 initialValue: client.shippingState,
                 decoration: InputDecoration(
                   labelText: localization.state,
                 ),
               ),
-              /*
               TextFormField(
                 autocorrect: false,
-                key: ClientEditShippingAddress.shippingPostalCodeKey,
+                onSaved: (value) => shippingPostalCode = value.trim(),
                 initialValue: client.shippingPostalCode,
                 decoration: InputDecoration(
                   labelText: localization.postalCode,
                 ),
                 keyboardType: TextInputType.phone,
               ),
-              */
             ],
           ),
         ),

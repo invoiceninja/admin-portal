@@ -5,48 +5,26 @@ import 'package:invoiceninja/ui/app/keyboard_aware_padding.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-class ClientEditBillingAddress extends EntityEditor {
-  ClientEditBillingAddress(this.client);
+class ClientEditBillingAddress extends StatefulWidget {
+
+  ClientEditBillingAddress({
+    Key key,
+    @required this.client,
+  }) : super(key: key);
 
   final ClientEntity client;
 
-  static final GlobalKey<FormFieldState<String>> address1Key =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> address2Key =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> cityKey =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> stateKey =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> postalCodeKey =
-  GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> countyKey =
-  GlobalKey<FormFieldState<String>>();
-
-  onSaveClicked(ClientEntity client) {
-    if (address1Key.currentState == null) {
-      return client;
-    }
-
-    if (client == null) {
-      return null;
-    }
-
-    return client.rebuild((b) => b
-      ..address1 = address1Key.currentState.value.trim()
-      ..address2 = address2Key.currentState.value.trim()
-      ..city = cityKey.currentState.value.trim()
-      ..state = stateKey.currentState.value.trim()
-      ..postalCode = postalCodeKey.currentState.value.trim());
-  }
-
-
-
   @override
-  _ClientEditBillingAddressState createState() => new _ClientEditBillingAddressState();
+  ClientEditBillingAddressState createState() => new ClientEditBillingAddressState();
 }
 
-class _ClientEditBillingAddressState extends State<ClientEditBillingAddress> with AutomaticKeepAliveClientMixin{
+class ClientEditBillingAddressState extends State<ClientEditBillingAddress> with AutomaticKeepAliveClientMixin{
+
+  String address1;
+  String address2;
+  String city;
+  String state;
+  String postalCode;
 
   @override
   bool get wantKeepAlive => true;
@@ -65,7 +43,7 @@ class _ClientEditBillingAddressState extends State<ClientEditBillingAddress> wit
             children: <Widget>[
               TextFormField(
                 autocorrect: false,
-                key: ClientEditBillingAddress.address1Key,
+                onSaved: (value) => address1 = value.trim(),
                 initialValue: client.address1,
                 decoration: InputDecoration(
                   labelText: localization.address1,
@@ -73,7 +51,7 @@ class _ClientEditBillingAddressState extends State<ClientEditBillingAddress> wit
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditBillingAddress.address2Key,
+                onSaved: (value) => address2 = value.trim(),
                 initialValue: client.address2,
                 decoration: InputDecoration(
                   labelText: localization.address2,
@@ -81,7 +59,7 @@ class _ClientEditBillingAddressState extends State<ClientEditBillingAddress> wit
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditBillingAddress.cityKey,
+                onSaved: (value) => city = value.trim(),
                 initialValue: client.city,
                 decoration: InputDecoration(
                   labelText: localization.city,
@@ -89,7 +67,7 @@ class _ClientEditBillingAddressState extends State<ClientEditBillingAddress> wit
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditBillingAddress.stateKey,
+                onSaved: (value) => state = value.trim(),
                 initialValue: client.state,
                 decoration: InputDecoration(
                   labelText: localization.state,
@@ -97,7 +75,7 @@ class _ClientEditBillingAddressState extends State<ClientEditBillingAddress> wit
               ),
               TextFormField(
                 autocorrect: false,
-                key: ClientEditBillingAddress.postalCodeKey,
+                onSaved: (value) => postalCode = value.trim(),
                 initialValue: client.postalCode,
                 decoration: InputDecoration(
                   labelText: localization.postalCode,
