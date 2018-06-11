@@ -41,8 +41,6 @@ class _ClientEditState extends State<ClientEdit>
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
     var client = widget.viewModel.client;
-    final bool showFab =
-        MediaQuery.of(context).viewInsets.bottom == 0.0 ? true : false;
 
     List<EntityEditor> editors = [
       ClientEditDetails(client),
@@ -51,48 +49,48 @@ class _ClientEditState extends State<ClientEdit>
     ];
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(client.id == null
-              ? localization.newClient
-              : client.displayName), // Text(localizations.clientDetails),
-          bottom: TabBar(
-            controller: _controller,
-            isScrollable: true,
-            tabs: [
-              Tab(
-                text: localization.details,
-              ),
-              /*
+      appBar: AppBar(
+        title: Text(client.id == null
+            ? localization.newClient
+            : client.displayName), // Text(localizations.clientDetails),
+        actions: <Widget>[
+          SaveButton(
+            viewModel: widget.viewModel,
+            editors: editors,
+            formKey: _formKey,
+          )
+        ],
+        bottom: TabBar(
+          controller: _controller,
+          //isScrollable: true,
+          tabs: [
+            Tab(
+              text: localization.details,
+            ),
+            /*
             Tab(
               text: localization.contacts,
             ),
             */
-              Tab(
-                text: localization.billingAddress,
-              ),
-              /*
+            Tab(
+              text: localization.billingAddress,
+            ),
+            /*
               Tab(
                 text: localization.shippingAddress,
               ),
               */
-            ],
-          ),
+          ],
         ),
-        body: Form(
-          key: _formKey,
-          child: TabBarView(
-            controller: _controller,
-            children: editors,
-          ),
+      ),
+      body: Form(
+        key: _formKey,
+        child: TabBarView(
+          controller: _controller,
+          children: editors,
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: showFab
-            ? SaveButton(
-                viewModel: widget.viewModel,
-                editors: editors,
-                formKey: _formKey,
-              )
-            : null);
+      ),
+    );
   }
 }
 
@@ -112,29 +110,22 @@ class SaveButton extends StatelessWidget {
     var localization = AppLocalization.of(context);
     var client = viewModel.client;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-          child: ProgressButton(
-            label: localization.save.toUpperCase(),
-            onPressed: () {
-              if (!formKey.currentState.validate()) {
-                return;
-              }
-              editors.forEach((editor) {
-                client = editor.onSaveClicked(client);
-              });
-              if (client != null) {
-                viewModel.onSaveClicked(context, client);
-              }
-            },
-            isLoading: false,
-            isDirty: false,
-          ),
-        ),
-      ],
+    return IconButton(
+      onPressed: () {
+        if (!formKey.currentState.validate()) {
+          return;
+        }
+        editors.forEach((editor) {
+          client = editor.onSaveClicked(client);
+        });
+        if (client != null) {
+          viewModel.onSaveClicked(context, client);
+        }
+      },
+      icon: Icon(
+        Icons.cloud_upload,
+        color: Colors.white,
+      ),
     );
   }
 }
