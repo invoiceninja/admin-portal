@@ -28,7 +28,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 3);
+    _controller = new TabController(vsync: this, length:3);
   }
 
   @override
@@ -90,7 +90,7 @@ class _ClientEditState extends State<ClientEdit>
   }
 }
 
-abstract class EntityEditor extends StatelessWidget {
+abstract class EntityEditor extends StatefulWidget {
   onSaveClicked(ClientEntity client);
 }
 
@@ -117,7 +117,6 @@ class SaveButton extends StatelessWidget {
                 if (!formKey.currentState.validate()) {
                   return;
                 }
-
                 editors.forEach((editor) {
                   client = editor.onSaveClicked(client);
                 });
@@ -134,3 +133,5 @@ class SaveButton extends StatelessWidget {
     );
   }
 }
+
+

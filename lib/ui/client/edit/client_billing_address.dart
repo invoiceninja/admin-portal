@@ -9,40 +9,51 @@ class ClientEditBillingAddress extends EntityEditor {
 
   final ClientEntity client;
 
-  static final GlobalKey<FormFieldState<String>> _address1Key =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _address2Key =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _cityKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _stateKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _postalCodeKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _countyKey =
-      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> address1Key =
+  GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> address2Key =
+  GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> cityKey =
+  GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> stateKey =
+  GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> postalCodeKey =
+  GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> countyKey =
+  GlobalKey<FormFieldState<String>>();
 
   onSaveClicked(ClientEntity client) {
-    /*
-    if (_formKey.currentState == null) {
+    if (address1Key.currentState == null) {
       return client;
     }
 
-    if (client == null || !_formKey.currentState.validate()) {
+    if (client == null) {
       return null;
     }
-    */
+
     return client.rebuild((b) => b
-      ..address1 = _address1Key.currentState.value.trim()
-      ..address2 = _address2Key.currentState.value.trim()
-      ..city = _cityKey.currentState.value.trim()
-      ..state = _stateKey.currentState.value.trim()
-      ..postalCode = _postalCodeKey.currentState.value.trim());
+      ..address1 = address1Key.currentState.value.trim()
+      ..address2 = address2Key.currentState.value.trim()
+      ..city = cityKey.currentState.value.trim()
+      ..state = stateKey.currentState.value.trim()
+      ..postalCode = postalCodeKey.currentState.value.trim());
   }
+
+
+
+  @override
+  _ClientEditBillingAddressState createState() => new _ClientEditBillingAddressState();
+}
+
+class _ClientEditBillingAddressState extends State<ClientEditBillingAddress> with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
+    var client = widget.client;
 
     return Padding(
       padding: EdgeInsets.all(12.0),
@@ -54,43 +65,43 @@ class ClientEditBillingAddress extends EntityEditor {
             children: <Widget>[
               TextFormField(
                 autocorrect: false,
-                key: _address1Key,
+                key: ClientEditBillingAddress.address1Key,
                 initialValue: client.address1,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).address1,
+                  labelText: localization.address1,
                 ),
               ),
               TextFormField(
                 autocorrect: false,
-                key: _address2Key,
+                key: ClientEditBillingAddress.address2Key,
                 initialValue: client.address2,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).address2,
+                  labelText: localization.address2,
                 ),
               ),
               TextFormField(
                 autocorrect: false,
-                key: _cityKey,
+                key: ClientEditBillingAddress.cityKey,
                 initialValue: client.city,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).city,
+                  labelText: localization.city,
                 ),
               ),
               TextFormField(
                 autocorrect: false,
-                key: _stateKey,
+                key: ClientEditBillingAddress.stateKey,
                 initialValue: client.state,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).state,
+                  labelText: localization.state,
                 ),
                 keyboardType: TextInputType.url,
               ),
               TextFormField(
                 autocorrect: false,
-                key: _postalCodeKey,
+                key: ClientEditBillingAddress.postalCodeKey,
                 initialValue: client.postalCode,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).postalCode,
+                  labelText: localization.postalCode,
                 ),
                 keyboardType: TextInputType.phone,
               ),

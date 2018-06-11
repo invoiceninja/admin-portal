@@ -9,35 +9,45 @@ class ClientEditShippingAddress extends EntityEditor {
 
   final ClientEntity client;
 
-  static final GlobalKey<FormFieldState<String>> _address1Key = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _address2Key = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _cityKey = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _stateKey = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _postalCodeKey = GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _countyKey = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> shippingAddress1Key = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> shippingAddress2Key = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> shippingCityKey = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> shippingStateKey = GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> shippingPostalCodeKey = GlobalKey<FormFieldState<String>>();
+  //static final GlobalKey<FormFieldState<String>> shippingCountyKey = GlobalKey<FormFieldState<String>>();
 
   onSaveClicked(ClientEntity client) {
-    /*
-    if (_formKey.currentState == null) {
+    if (shippingAddress1Key.currentState == null) {
       return client;
     }
 
-    if (client == null || !_formKey.currentState.validate()) {
+    if (client == null) {
       return null;
     }
-    */
+
     return client.rebuild((b) => b
-      ..shippingAddress1 = _address1Key.currentState.value
-      ..shippingAddress2 = _address2Key.currentState.value.trim()
-      ..shippingCity = _cityKey.currentState.value.trim()
-      ..shippingState = _stateKey.currentState.value.trim()
-      ..shippingPostalCode = _postalCodeKey.currentState.value.trim()
+      ..shippingAddress1 = shippingAddress1Key.currentState.value.trim()
+      ..shippingAddress2 = shippingAddress2Key.currentState.value.trim()
+      ..shippingCity = shippingCityKey.currentState.value.trim()
+      ..shippingState = shippingStateKey.currentState.value.trim()
+      //..shippingPostalCode = shippingPostalCodeKey.currentState.value.trim()
     );
   }
+
+
+  @override
+  _ClientEditShippingAddressState createState() => new _ClientEditShippingAddressState();
+}
+
+class _ClientEditShippingAddressState extends State<ClientEditShippingAddress> with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
+    var client = widget.client;
 
     return Padding(
       padding: EdgeInsets.all(12.0),
@@ -49,46 +59,48 @@ class ClientEditShippingAddress extends EntityEditor {
             children: <Widget>[
               TextFormField(
                 autocorrect: false,
-                key: _address1Key,
+                key: ClientEditShippingAddress.shippingAddress1Key,
                 initialValue: client.shippingAddress1,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).address1,
+                  labelText: localization.address1,
                 ),
               ),
               TextFormField(
                 autocorrect: false,
-                key: _address2Key,
+                key: ClientEditShippingAddress.shippingAddress2Key,
                 initialValue: client.shippingAddress2,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).address2,
+                  labelText: localization.address2,
                 ),
               ),
               TextFormField(
                 autocorrect: false,
-                key: _cityKey,
+                key: ClientEditShippingAddress.shippingCityKey,
                 initialValue: client.shippingCity,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).city,
+                  labelText: localization.city,
                 ),
               ),
               TextFormField(
                 autocorrect: false,
-                key: _stateKey,
+                key: ClientEditShippingAddress.shippingStateKey,
                 initialValue: client.shippingState,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).state,
+                  labelText: localization.state,
                 ),
                 keyboardType: TextInputType.url,
               ),
+              /*
               TextFormField(
                 autocorrect: false,
-                key: _postalCodeKey,
+                key: ClientEditShippingAddress.shippingPostalCodeKey,
                 initialValue: client.shippingPostalCode,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).postalCode,
+                  labelText: localization.postalCode,
                 ),
                 keyboardType: TextInputType.phone,
               ),
+              */
             ],
           ),
         ),
