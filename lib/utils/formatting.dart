@@ -14,11 +14,11 @@ String formatURL(String url) {
 String formatAddress({dynamic object, bool isShipping = false, String delimiter = '\n'}) {
   var str = '';
 
-  String address1 = isShipping ? object.shippingAddress1 : object.address1;
-  String address2 = isShipping ? object.shippingAddress2 : object.address2;
-  String city = isShipping ? object.city : object.city;
-  String state = isShipping ? object.state : object.state;
-  String postalCode = isShipping ? object.postalCode : object.postalCode;
+  String address1 = (isShipping ? object.shippingAddress1 : object.address1) ?? '';
+  String address2 = (isShipping ? object.shippingAddress2 : object.address2) ?? '';
+  String city = (isShipping ? object.city : object.city) ?? '';
+  String state = (isShipping ? object.state : object.state) ?? '';
+  String postalCode = (isShipping ? object.postalCode : object.postalCode) ?? '';
 
   if (address1.isNotEmpty) {
     str += address1 + delimiter;

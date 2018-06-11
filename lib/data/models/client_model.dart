@@ -180,12 +180,10 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     ClientEntity clientA = sortAscending ? this : client;
     ClientEntity clientB = sortAscending ? client: this;
 
-    /*
     switch (sortField) {
-      case ClientFields.cost:
-        response = clientA.cost.compareTo(clientB.cost);
+      case ClientFields.balance:
+        response = clientA.balance.compareTo(clientB.balance);
     }
-    */
 
     if (response == 0) {
       return clientA.name.compareTo(clientB.name);
@@ -199,7 +197,7 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
       return true;
     }
 
-    return name.contains(search);
+    return displayName.contains(search);
   }
 
   ClientEntity._();

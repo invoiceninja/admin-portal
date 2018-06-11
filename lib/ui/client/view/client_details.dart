@@ -51,7 +51,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
 
       var contacts = client.contacts;
       contacts.forEach((contact) {
-        if (contact.email.isNotEmpty) {
+        if ((contact.email ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.email,
             title: contact.fullName() + '\n' + contact.email,
@@ -63,7 +63,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           ));
         }
 
-        if (contact.phone.isNotEmpty) {
+        if ((contact.phone ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.phone,
             title: contact.fullName() + '\n' + contact.phone,
@@ -78,7 +78,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         }
       });
 
-      if (client.website.isNotEmpty) {
+      if ((client.website ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.link,
           title: client.website,
@@ -89,7 +89,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      if (client.workPhone.isNotEmpty) {
+      if ((client.workPhone ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.phone,
           title: client.workPhone,
@@ -104,7 +104,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
 
       listTiles.add(Divider());
 
-      if (client.vatNumber.isNotEmpty) {
+      if ((client.vatNumber ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.location_city,
           title: client.vatNumber,
@@ -112,7 +112,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      if (client.idNumber.isNotEmpty) {
+      if ((client.idNumber ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.business,
           title: client.idNumber,
