@@ -6,7 +6,6 @@ import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientEditContacts extends StatefulWidget {
-
   ClientEditContacts({
     Key key,
     @required this.client,
@@ -15,11 +14,11 @@ class ClientEditContacts extends StatefulWidget {
   final ClientEntity client;
 
   @override
-  _ClientEditContactsState createState() => new _ClientEditContactsState();
+  ClientEditContactsState createState() => new ClientEditContactsState();
 }
 
-class _ClientEditContactsState extends State<ClientEditContacts> with AutomaticKeepAliveClientMixin{
-
+class ClientEditContactsState extends State<ClientEditContacts>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -29,25 +28,28 @@ class _ClientEditContactsState extends State<ClientEditContacts> with AutomaticK
     var client = widget.client;
 
     return KeyboardAwarePadding(
+      child: ListView(
+          children: client.contacts
+              .map((contact) => ContactSettings(contact))
+              .toList()),
+    );
+
+    return KeyboardAwarePadding(
       child: Card(
         elevation: 2.0,
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: ListView(
-            children: client.contacts.map((contact) => ContactSettings(contact)).toList()
-          ),
+              children: client.contacts
+                  .map((contact) => ContactSettings(contact))
+                  .toList()),
         ),
       ),
     );
   }
 }
 
-
 class ContactSettings extends StatelessWidget {
-
-  static final GlobalKey<FormFieldState<String>> firstNameKey =
-  GlobalKey<FormFieldState<String>>();
-
   ContactSettings(this.contact);
   ContactEntity contact;
 
@@ -55,27 +57,21 @@ class ContactSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
 
-    return TextFormField(
-                autocorrect: false,
-                key: ContactSettings.firstNameKey,
-                initialValue: contact.firstName,
-                decoration: InputDecoration(
-                  labelText: localization.website,
-                ),
-              );
-
     return Card(
-      child: Column(
-        children: <Widget>[
-               TextFormField(
-                autocorrect: false,
-                key: ContactSettings.firstNameKey,
-                initialValue: contact.firstName,
-                decoration: InputDecoration(
-                  labelText: localization.website,
-                ),
+      elevation: 2.0,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              autocorrect: false,
+              initialValue: contact.firstName,
+              decoration: InputDecoration(
+                labelText: localization.website,
               ),
-       ],
+            ),
+          ],
+        ),
       ),
     );
   }

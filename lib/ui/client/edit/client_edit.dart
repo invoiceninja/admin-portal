@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/client/edit/client_edit_contacts.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 import 'client_edit_billing_address.dart';
+import 'client_edit_contacts.dart';
 import 'client_edit_shipping_address.dart';
 
 class ClientEdit extends StatefulWidget {
@@ -31,6 +31,8 @@ class _ClientEditState extends State<ClientEdit>
       GlobalKey<ClientEditBillingAddressState>();
   static final GlobalKey<ClientEditShippingAddressState> _shippingAddressKey =
       GlobalKey<ClientEditShippingAddressState>();
+  static final GlobalKey<ClientEditContactsState> _contactsKey =
+      GlobalKey<ClientEditContactsState>();
 
   @override
   void initState() {
@@ -54,12 +56,15 @@ class _ClientEditState extends State<ClientEdit>
         client: client,
         key: _detailsKey,
       ),
-      //ClientEditContacts(client),
+      ClientEditContacts(
+        client: client,
+        key: _contactsKey,
+      ),
+      /*
       ClientEditBillingAddress(
         client: client,
         key: _billingAddressKey,
       ),
-      /*
       ClientEditShippingAddress(
         client: client,
         key: _shippingAddressKey,
@@ -127,6 +132,7 @@ class SaveButton extends StatelessWidget {
   final List<Widget> editors;
   final GlobalKey<FormState> formKey;
   final GlobalKey<ClientEditDetailsState> detailsKey;
+  final GlobalKey<ClientEditContactsState> contactsKey;
   final GlobalKey<ClientEditBillingAddressState> billingAddressKey;
   final GlobalKey<ClientEditShippingAddressState> shippingAddressKey;
 
@@ -135,6 +141,7 @@ class SaveButton extends StatelessWidget {
     this.editors,
     this.formKey,
     this.detailsKey,
+    this.contactsKey,
     this.billingAddressKey,
     this.shippingAddressKey,
   });

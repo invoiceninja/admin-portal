@@ -61,7 +61,8 @@ class AppLocalization {
       'could_not_launch': 'Could not aunch',
       'contacts': 'Contacts',
       'additional': 'Additional',
-
+      'first_name': 'First Name',
+      'last_name': 'Last Name',
       'product': 'Product',
       'products': 'Products',
       'new_product': 'New Product',
@@ -144,6 +145,8 @@ class AppLocalization {
   String get couldNotLaunch => _localizedValues[locale.languageCode]['could_not_launch'];
   String get contacts => _localizedValues[locale.languageCode]['contacts'];
   String get additional => _localizedValues[locale.languageCode]['additional'];
+  String get firstName => _localizedValues[locale.languageCode]['first_name'];
+  String get lastName => _localizedValues[locale.languageCode]['last_name'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
