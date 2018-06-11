@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/keyboard_aware_padding.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
@@ -48,8 +49,7 @@ class _ClientEditShippingAddressState extends State<ClientEditShippingAddress> w
     var localization = AppLocalization.of(context);
     var client = widget.client;
 
-    return Padding(
-      padding: EdgeInsets.all(12.0),
+    return KeyboardAwarePadding(
       child: Card(
         elevation: 2.0,
         child: Padding(

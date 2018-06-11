@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/keyboard_aware_padding.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
@@ -35,7 +36,6 @@ class ClientEditDetails extends EntityEditor {
       ..workPhone = phoneKey.currentState.value.trim());
   }
 
-
   @override
   _ClientEditDetailsState createState() => new _ClientEditDetailsState();
 }
@@ -47,12 +47,10 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
 
   @override
   Widget build(BuildContext context) {
-    bool isKeyboardShown = MediaQuery.of(context).viewInsets.bottom > 0;
     var localization = AppLocalization.of(context);
     var client = widget.client;
 
-    return Padding(
-      padding: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0, bottom: isKeyboardShown ? 0.0 : 12.0),
+    return KeyboardAwarePadding(
       child: Card(
         elevation: 2.0,
         child: Padding(
