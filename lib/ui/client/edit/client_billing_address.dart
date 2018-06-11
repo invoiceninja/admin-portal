@@ -94,7 +94,6 @@ class _ClientEditBillingAddressState extends State<ClientEditBillingAddress> wit
                 decoration: InputDecoration(
                   labelText: localization.state,
                 ),
-                keyboardType: TextInputType.url,
               ),
               TextFormField(
                 autocorrect: false,

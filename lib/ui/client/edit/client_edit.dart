@@ -28,7 +28,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length:2);
+    _controller = new TabController(vsync: this, length: 2);
   }
 
   @override
@@ -41,7 +41,8 @@ class _ClientEditState extends State<ClientEdit>
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
     var client = widget.viewModel.client;
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0 ? true : false;
+    final bool showFab =
+        MediaQuery.of(context).viewInsets.bottom == 0.0 ? true : false;
 
     List<EntityEditor> editors = [
       ClientEditDetails(client),
@@ -85,11 +86,13 @@ class _ClientEditState extends State<ClientEdit>
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: showFab ? SaveButton(
-          viewModel: widget.viewModel,
-          editors: editors,
-          formKey: _formKey,
-        ) : null);
+        floatingActionButton: showFab
+            ? SaveButton(
+                viewModel: widget.viewModel,
+                editors: editors,
+                formKey: _formKey,
+              )
+            : null);
   }
 }
 
@@ -110,31 +113,28 @@ class SaveButton extends StatelessWidget {
     var client = viewModel.client;
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-            child: ProgressButton(
-              label: localization.save.toUpperCase(),
-              onPressed: () {
-                if (!formKey.currentState.validate()) {
-                  return;
-                }
-                editors.forEach((editor) {
-                  client = editor.onSaveClicked(client);
-                });
-                if (client != null) {
-                  viewModel.onSaveClicked(context, client);
-                }
-              },
-              isLoading: false,
-              isDirty: false,
-            ),
+        Padding(
+          padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+          child: ProgressButton(
+            label: localization.save.toUpperCase(),
+            onPressed: () {
+              if (!formKey.currentState.validate()) {
+                return;
+              }
+              editors.forEach((editor) {
+                client = editor.onSaveClicked(client);
+              });
+              if (client != null) {
+                viewModel.onSaveClicked(context, client);
+              }
+            },
+            isLoading: false,
+            isDirty: false,
           ),
         ),
       ],
     );
   }
 }
-
-

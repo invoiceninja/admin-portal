@@ -88,7 +88,6 @@ class _ClientEditShippingAddressState extends State<ClientEditShippingAddress> w
                 decoration: InputDecoration(
                   labelText: localization.state,
                 ),
-                keyboardType: TextInputType.url,
               ),
               /*
               TextFormField(
