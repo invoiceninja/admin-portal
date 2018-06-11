@@ -47,11 +47,12 @@ class _ClientEditDetailsState extends State<ClientEditDetails> with AutomaticKee
 
   @override
   Widget build(BuildContext context) {
+    bool isKeyboardShown = MediaQuery.of(context).viewInsets.bottom > 0;
     var localization = AppLocalization.of(context);
     var client = widget.client;
 
     return Padding(
-      padding: EdgeInsets.all(12.0),
+      padding: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0, bottom: isKeyboardShown ? 0.0 : 12.0),
       child: Card(
         elevation: 2.0,
         child: Padding(

@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja/ui/client/view/client_details.dart';
-import 'package:invoiceninja/ui/client/view/client_overview.dart';
+import 'package:invoiceninja/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientView extends StatefulWidget {
