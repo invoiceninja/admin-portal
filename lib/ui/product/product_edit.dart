@@ -5,23 +5,31 @@ import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/product/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-class ProductEdit extends StatelessWidget {
+
+class ProductEdit extends StatefulWidget {
+
   final ProductEditVM viewModel;
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static final GlobalKey<FormFieldState<String>> _productKeyKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _notesKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _costKey =
-      GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   ProductEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
+
+  @override
+  _ProductEditState createState() => _ProductEditState();
+}
+
+class _ProductEditState extends State<ProductEdit> {
+  String _productKey;
+  String _notes;
+  double _cost;
+
   @override
   Widget build(BuildContext context) {
+    var viewModel = widget.viewModel;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(viewModel.product.id == null
@@ -41,14 +49,16 @@ class ProductEdit extends StatelessWidget {
             elevation: 2.0,
             margin: EdgeInsets.all(0.0),
             child: Form(
-              key: _formKey,
+              key: ProductEdit.formKey,
               child: Container(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     TextFormField(
                       autocorrect: false,
-                      key: _productKeyKey,
+                      onSaved: (value) {
+                        _productKey = value;
+                      },
                       initialValue: viewModel.product.productKey,
                       decoration: InputDecoration(
                         //border: InputBorder.none,
@@ -60,7 +70,10 @@ class ProductEdit extends StatelessWidget {
                     ),
                     TextFormField(
                       initialValue: viewModel.product.notes,
-                      key: _notesKey,
+                      onSaved: (value) {
+                        print('onSaved: setting _notes to: ' + value);
+                        _notes = value;
+                      },
                       maxLines: 4,
                       decoration: InputDecoration(
                         labelText: AppLocalization.of(context).notes,
@@ -71,7 +84,9 @@ class ProductEdit extends StatelessWidget {
                               viewModel.product.cost == 0.0
                           ? null
                           : viewModel.product.cost.toStringAsFixed(2),
-                      key: _costKey,
+                      onSaved: (value) {
+                        _cost = double.tryParse(value) ?? 0.0;
+                      },
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         //border: InputBorder.none,
@@ -91,17 +106,16 @@ class ProductEdit extends StatelessWidget {
                     isLoading: viewModel.isLoading,
                     isDirty: viewModel.isDirty,
                     onPressed: () {
-                      if (!_formKey.currentState.validate()) {
+                      if (! ProductEdit.formKey.currentState.validate()) {
                         return;
                       }
-
+                      ProductEdit.formKey.currentState.save();
+                      print('onSaveClicked: _notes is ' + _notes.toString());
                       viewModel.onSaveClicked(context,
                           viewModel.product.rebuild((b) => b
-                            ..productKey = _productKeyKey.currentState.value
-                            ..notes = _notesKey.currentState.value
-                            ..cost =
-                                double.tryParse(_costKey.currentState.value) ??
-                                    0.0));
+                            ..productKey = _productKey
+                            ..notes = _notes
+                            ..cost = _cost));
                     },
                   );
           }),

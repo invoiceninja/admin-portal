@@ -52,9 +52,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> with AutomaticK
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: ListView(
-            children: <Widget>[
-              ContactSettings(client.contacts[0]),
-            ],
+            children: client.contacts.map((contact) => ContactSettings(contact)).toList()
           ),
         ),
       ),
@@ -74,6 +72,15 @@ class ContactSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
+
+    return TextFormField(
+                autocorrect: false,
+                key: ContactSettings.firstNameKey,
+                initialValue: contact.firstName,
+                decoration: InputDecoration(
+                  labelText: localization.website,
+                ),
+              );
 
     return Card(
       child: Column(
