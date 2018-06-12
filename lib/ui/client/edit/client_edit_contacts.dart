@@ -115,7 +115,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   String _phone;
 
   ContactEntity getContact() {
-    return ContactEntity((b) => b
+    return widget.contact.rebuild((b) => b
       ..firstName = _firstName
       ..lastName = _lastName
       ..email = _email
