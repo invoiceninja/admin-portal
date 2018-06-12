@@ -108,11 +108,15 @@ class ContactEditDetails extends StatefulWidget {
 class ContactEditDetailsState extends State<ContactEditDetails> {
   String _firstName;
   String _lastName;
+  String _email;
+  String _phone;
 
   ContactEntity getContact() {
     return ContactEntity((b) => b
       ..firstName = _firstName
-      ..lastName = _lastName);
+      ..lastName = _lastName
+      ..email = _email
+      ..phone = _phone);
   }
 
   @override
@@ -166,15 +170,36 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   labelText: localization.lastName,
                 ),
               ),
+              TextFormField(
+                autocorrect: false,
+                initialValue: widget.contact.email,
+                onSaved: (value) => _email = value.trim(),
+                decoration: InputDecoration(
+                  labelText: localization.email,
+                ),
+                keyboardType: TextInputType.emailAddress,
+              ),
+              TextFormField(
+                autocorrect: false,
+                initialValue: widget.contact.phone,
+                onSaved: (value) => _phone = value.trim(),
+                decoration: InputDecoration(
+                  labelText: localization.phone,
+                ),
+                keyboardType: TextInputType.phone,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 12.0),
                     child: FlatButton(
-                      child: Text(localization.delete, style: TextStyle(
-                        color: Colors.grey[700],
-                      ),),
+                      child: Text(
+                        localization.delete,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                        ),
+                      ),
                       onPressed: _confirmDelete,
                     ),
                   )
