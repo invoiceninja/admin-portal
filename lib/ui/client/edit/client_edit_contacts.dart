@@ -19,8 +19,8 @@ class ClientEditContacts extends StatefulWidget {
 
 class ClientEditContactsState extends State<ClientEditContacts>
     with AutomaticKeepAliveClientMixin {
-  
-  Map<ContactEntity, GlobalKey<ContactEditDetailsState>> contactKeys;
+  List<ContactEntity> contacts;
+  List<GlobalKey<ContactEditDetailsState>> contactKeys;
 
   @override
   bool get wantKeepAlive => true;
@@ -28,32 +28,56 @@ class ClientEditContactsState extends State<ClientEditContacts>
   @override
   void initState() {
     super.initState();
-    contactKeys = Map.fromIterable(widget.client.contacts,
-     key: (contact) => contact,
-     value: (contact) => GlobalKey<ContactEditDetailsState>(),
-    );
+    var client = widget.client;
+    contacts = client.contacts.toList();
+    contactKeys = client.contacts
+        .map((contact) => GlobalKey<ContactEditDetailsState>())
+        .toList();
+
+    // Add initial blank contact
+    _onAddPressed();
   }
 
   List<ContactEntity> getContacts() {
     List<ContactEntity> contacts = [];
-    contactKeys.forEach((contact, contactKey) {
+    contactKeys.forEach((contactKey) {
       contacts.add(contactKey.currentState.getContact());
     });
     return contacts;
   }
 
+  _onAddPressed() {
+    print('onAddPressed..');
+    setState(() {
+      contacts.add(ContactEntity());
+      contactKeys.add(GlobalKey<ContactEditDetailsState>());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    var client = widget.client;
+
+    List<Widget> items = [];
+
+    for (var i=0; i<contacts.length; i++) {
+      var contact = contacts[i];
+      var contactKey = contactKeys[i];
+      items.add(ContactEditDetails(
+         contact: contact,         
+         key: contactKey,
+      ));
+    }
+
+    items.add(RaisedButton(
+        elevation: 4.0,
+        child: Text(localization.add),
+        onPressed: _onAddPressed,
+      ));
 
     return ListView(
-        children: client.contacts.map((contact) {
-      return ContactEditDetails(
-        contact: contact,
-        key: contactKeys[contact],
-      );
-    }).toList());
+      children: items,
+    );
   }
 }
 
@@ -73,8 +97,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   String _firstName;
 
   ContactEntity getContact() {
-    return ContactEntity((b) => b
-      ..firstName = _firstName);
+    return ContactEntity((b) => b..firstName = _firstName);
   }
 
   @override
