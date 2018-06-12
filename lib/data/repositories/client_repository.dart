@@ -30,8 +30,6 @@ class ClientsRepository {
 
     var data = serializers.serializeWith(ClientEntity.serializer, client);
     var response;
-    print('== saveDate ==');
-    print(data);
 
     if (client.id == null) {
       response = await webClient.post(

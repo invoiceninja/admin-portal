@@ -186,7 +186,7 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     }
 
     if (response == 0) {
-      return clientA.name.compareTo(clientB.name);
+      return clientA.displayName.compareTo(clientB.displayName);
     } else {
       return response;
     }

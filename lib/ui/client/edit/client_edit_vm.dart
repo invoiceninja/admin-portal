@@ -49,10 +49,17 @@ class ClientEditVM {
         onSaveClicked: (BuildContext context, ClientEntity client) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(SaveClientRequest(completer, client));
-          return completer.future.then((_) {                      
-          Navigator
-              .of(context)
-              .pushReplacement(MaterialPageRoute(builder: (_) => ClientViewBuilder()));
+          return completer.future.then((_) {
+            if (client.id == null) {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => ClientViewBuilder()));
+
+              //Navigator.of(context).pushReplacement(
+              //    MaterialPageRoute(builder: (_) => ClientViewBuilder()));
+            } else {
+              Navigator.of(context).pop();
+            }
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: client.id == null
@@ -61,7 +68,6 @@ class ClientEditVM {
                 ),
                 duration: Duration(seconds: 3)));
           });
-        }
-    );
+        });
   }
 }
