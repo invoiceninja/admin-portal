@@ -109,11 +109,14 @@ class _ClientEditState extends State<ClientEdit>
           ],
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: TabBarView(
-          controller: _controller,
-          children: editors,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formKey,
+          child: TabBarView(
+            controller: _controller,
+            children: editors,
+          ),
         ),
       ),
     );

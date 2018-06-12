@@ -67,6 +67,7 @@ class AppLocalization {
       'are_you_sure': 'Are you sure?',
       'cancel': 'Cancel',
       'ok': 'Ok',
+      'remove': 'Remove',
 
       'product': 'Product',
       'products': 'Products',
@@ -156,6 +157,7 @@ class AppLocalization {
   String get areYouSure => _localizedValues[locale.languageCode]['are_you_sure'];
   String get cancel => _localizedValues[locale.languageCode]['cancel'];
   String get ok => _localizedValues[locale.languageCode]['ok'];
+  String get remove => _localizedValues[locale.languageCode]['remove'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];

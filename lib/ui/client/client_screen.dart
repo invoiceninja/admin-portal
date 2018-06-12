@@ -50,9 +50,11 @@ class ClientScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorDark,
-        //key: ArchSampleKeys.addClientFab,
         onPressed: () {
-          store.dispatch(SelectClientAction(ClientEntity()));
+          var client = ClientEntity().rebuild((b) => b
+            ..contacts.replace([ContactEntity()])
+          );
+          store.dispatch(SelectClientAction(client));
           Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (_) => ClientEditBuilder()));

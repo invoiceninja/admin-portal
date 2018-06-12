@@ -195,7 +195,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     padding: const EdgeInsets.only(top: 12.0),
                     child: FlatButton(
                       child: Text(
-                        localization.delete,
+                        localization.remove,
                         style: TextStyle(
                           color: Colors.grey[600],
                         ),
