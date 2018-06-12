@@ -109,20 +109,16 @@ class _ClientEditState extends State<ClientEdit>
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: TabBarView(
-            controller: _controller,
-            children: editors,
-          ),
+      body: Form(
+        key: _formKey,
+        child: TabBarView(
+          controller: _controller,
+          children: editors,
         ),
       ),
     );
   }
 }
-
 
 class SaveButton extends StatelessWidget {
   final ClientEditVM viewModel;
@@ -192,8 +188,7 @@ class SaveButton extends StatelessWidget {
           ..shippingState = shippingAddressState.shippingState
           ..shippingPostalCode = shippingAddressState.shippingPostalCode
           */
-          ..contacts.replace(contactState.getContacts())
-        );
+          ..contacts.replace(contactState.getContacts()));
 
         viewModel.onSaveClicked(context, client);
       },

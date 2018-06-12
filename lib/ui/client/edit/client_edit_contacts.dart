@@ -5,6 +5,8 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
+import '../../app/form_card.dart';
+
 class ClientEditContacts extends StatefulWidget {
   ClientEditContacts({
     Key key,
@@ -146,69 +148,60 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Card(
-        elevation: 2.0,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.firstName,
-                onSaved: (value) => _firstName = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.firstName,
-                ),
+    return FormCard(
+          children: <Widget>[
+            TextFormField(
+              autocorrect: false,
+              initialValue: widget.contact.firstName,
+              onSaved: (value) => _firstName = value.trim(),
+              decoration: InputDecoration(
+                labelText: localization.firstName,
               ),
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.lastName,
-                onSaved: (value) => _lastName = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.lastName,
-                ),
+            ),
+            TextFormField(
+              autocorrect: false,
+              initialValue: widget.contact.lastName,
+              onSaved: (value) => _lastName = value.trim(),
+              decoration: InputDecoration(
+                labelText: localization.lastName,
               ),
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.email,
-                onSaved: (value) => _email = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.email,
-                ),
-                keyboardType: TextInputType.emailAddress,
+            ),
+            TextFormField(
+              autocorrect: false,
+              initialValue: widget.contact.email,
+              onSaved: (value) => _email = value.trim(),
+              decoration: InputDecoration(
+                labelText: localization.email,
               ),
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.phone,
-                onSaved: (value) => _phone = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.phone,
-                ),
-                keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextFormField(
+              autocorrect: false,
+              initialValue: widget.contact.phone,
+              onSaved: (value) => _phone = value.trim(),
+              decoration: InputDecoration(
+                labelText: localization.phone,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: FlatButton(
-                      child: Text(
-                        localization.remove,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                        ),
+              keyboardType: TextInputType.phone,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: FlatButton(
+                    child: Text(
+                      localization.remove,
+                      style: TextStyle(
+                        color: Colors.grey[600],
                       ),
-                      onPressed: _confirmDelete,
                     ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                    onPressed: _confirmDelete,
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
   }
 }
