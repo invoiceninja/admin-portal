@@ -7,6 +7,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
+import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -48,7 +49,10 @@ class ClientEditVM {
         onSaveClicked: (BuildContext context, ClientEntity client) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(SaveClientRequest(completer, client));
-          return completer.future.then((_) {
+          return completer.future.then((_) {                      
+          Navigator
+              .of(context)
+              .pushReplacement(MaterialPageRoute(builder: (_) => ClientViewBuilder()));
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: client.id == null

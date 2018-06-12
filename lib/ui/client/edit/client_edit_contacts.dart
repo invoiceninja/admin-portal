@@ -40,7 +40,9 @@ class ClientEditContactsState extends State<ClientEditContacts>
   List<ContactEntity> getContacts() {
     List<ContactEntity> contacts = [];
     contactKeys.forEach((contactKey) {
-      contacts.add(contactKey.currentState.getContact());
+      if (contactKey.currentState != null) {
+        contacts.add(contactKey.currentState.getContact());
+      }
     });
     return contacts;
   }
@@ -63,7 +65,6 @@ class ClientEditContactsState extends State<ClientEditContacts>
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-
     List<Widget> items = [];
 
     for (var i = 0; i < contacts.length; i++) {

@@ -66,7 +66,6 @@ class _ProductEditState extends State<ProductEdit> {
                 TextFormField(
                   initialValue: viewModel.product.notes,
                   onSaved: (value) {
-                    print('onSaved: setting _notes to: ' + value);
                     _notes = value;
                   },
                   maxLines: 4,

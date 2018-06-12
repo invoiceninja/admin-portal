@@ -188,7 +188,7 @@ class SaveButton extends StatelessWidget {
           ..shippingState = shippingAddressState.shippingState
           ..shippingPostalCode = shippingAddressState.shippingPostalCode
           */
-          ..contacts.replace(contactState.getContacts()));
+          ..contacts.replace(contactState?.getContacts() ?? viewModel.client.contacts));
 
         viewModel.onSaveClicked(context, client);
       },
