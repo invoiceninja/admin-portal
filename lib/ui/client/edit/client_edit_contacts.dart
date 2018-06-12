@@ -33,9 +33,6 @@ class ClientEditContactsState extends State<ClientEditContacts>
     contactKeys = client.contacts
         .map((contact) => GlobalKey<ContactEditDetailsState>())
         .toList();
-
-    // Add initial blank contact
-    _onAddPressed();
   }
 
   List<ContactEntity> getContacts() {
@@ -47,11 +44,14 @@ class ClientEditContactsState extends State<ClientEditContacts>
   }
 
   _onAddPressed() {
-    print('onAddPressed..');
     setState(() {
       contacts.add(ContactEntity());
       contactKeys.add(GlobalKey<ContactEditDetailsState>());
     });
+  }
+  
+  _onRemovePressed() {
+    
   }
 
   @override
@@ -60,20 +60,26 @@ class ClientEditContactsState extends State<ClientEditContacts>
 
     List<Widget> items = [];
 
-    for (var i=0; i<contacts.length; i++) {
+    for (var i = 0; i < contacts.length; i++) {
       var contact = contacts[i];
       var contactKey = contactKeys[i];
       items.add(ContactEditDetails(
-         contact: contact,         
-         key: contactKey,
+        contact: contact,
+        key: contactKey,
+        onRemovePressed: _onRemovePressed(),
       ));
     }
 
-    items.add(RaisedButton(
+    items.add(Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: RaisedButton(
         elevation: 4.0,
-        child: Text(localization.add),
+        color: Theme.of(context).primaryColor,
+        textColor: Theme.of(context).secondaryHeaderColor,
+        child: Text(localization.addContact.toUpperCase()),
         onPressed: _onAddPressed,
-      ));
+      ),
+    ));
 
     return ListView(
       children: items,
@@ -85,9 +91,11 @@ class ContactEditDetails extends StatefulWidget {
   ContactEditDetails({
     Key key,
     @required this.contact,
+    @required this.onRemovePressed,
   }) : super(key: key);
 
   final ContactEntity contact;
+  final Function onRemovePressed;
 
   @override
   ContactEditDetailsState createState() => ContactEditDetailsState();
@@ -106,24 +114,32 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Card(
-        elevation: 2.0,
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.firstName,
-                onSaved: (value) => _firstName = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.firstName,
-                ),
-              ),
-            ],
+      child: Stack(
+        children: [
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: widget.onRemovePressed,
           ),
-        ),
+          Card(
+            elevation: 2.0,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    autocorrect: false,
+                    initialValue: widget.contact.firstName,
+                    onSaved: (value) => _firstName = value.trim(),
+                    decoration: InputDecoration(
+                      labelText: localization.firstName,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

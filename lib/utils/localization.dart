@@ -63,7 +63,7 @@ class AppLocalization {
       'additional': 'Additional',
       'first_name': 'First Name',
       'last_name': 'Last Name',
-      'add': 'Add',
+      'add_contact': 'Add Contact',
 
       'product': 'Product',
       'products': 'Products',
@@ -149,7 +149,7 @@ class AppLocalization {
   String get additional => _localizedValues[locale.languageCode]['additional'];
   String get firstName => _localizedValues[locale.languageCode]['first_name'];
   String get lastName => _localizedValues[locale.languageCode]['last_name'];
-  String get add => _localizedValues[locale.languageCode]['add'];
+  String get addContact => _localizedValues[locale.languageCode]['add_contact'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
