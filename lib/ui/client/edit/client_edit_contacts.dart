@@ -49,9 +49,13 @@ class ClientEditContactsState extends State<ClientEditContacts>
       contactKeys.add(GlobalKey<ContactEditDetailsState>());
     });
   }
-  
-  _onRemovePressed() {
-    
+
+  _onRemovePressed(GlobalKey<ContactEditDetailsState> key) {
+    setState(() {
+      var index = contactKeys.indexOf(key);
+      contactKeys.removeAt(index);
+      contacts.removeAt(index);
+    });
   }
 
   @override
@@ -66,7 +70,7 @@ class ClientEditContactsState extends State<ClientEditContacts>
       items.add(ContactEditDetails(
         contact: contact,
         key: contactKey,
-        onRemovePressed: _onRemovePressed(),
+        onRemovePressed: (key) => _onRemovePressed(key),
       ));
     }
 
@@ -95,7 +99,7 @@ class ContactEditDetails extends StatefulWidget {
   }) : super(key: key);
 
   final ContactEntity contact;
-  final Function onRemovePressed;
+  final Function(GlobalKey<ContactEditDetailsState>) onRemovePressed;
 
   @override
   ContactEditDetailsState createState() => ContactEditDetailsState();
@@ -114,32 +118,33 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Stack(
-        children: [
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: widget.onRemovePressed,
-          ),
-          Card(
-            elevation: 2.0,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    autocorrect: false,
-                    initialValue: widget.contact.firstName,
-                    onSaved: (value) => _firstName = value.trim(),
-                    decoration: InputDecoration(
-                      labelText: localization.firstName,
-                    ),
-                  ),
-                ],
+      child: Card(
+        elevation: 2.0,
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                autocorrect: false,
+                initialValue: widget.contact.firstName,
+                onSaved: (value) => _firstName = value.trim(),
+                decoration: InputDecoration(
+                  labelText: localization.firstName,
+                ),
               ),
-            ),
-          )
-        ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  OutlineButton(
+                    child: Text(localization.delete),
+                    onPressed: () => widget.onRemovePressed(widget.key),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
