@@ -5,9 +5,9 @@ import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/product/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
+import '../app/form_card.dart';
 
 class ProductEdit extends StatefulWidget {
-
   final ProductEditVM viewModel;
   static final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -15,7 +15,6 @@ class ProductEdit extends StatefulWidget {
     Key key,
     @required this.viewModel,
   }) : super(key: key);
-
 
   @override
   _ProductEditState createState() => _ProductEditState();
@@ -36,90 +35,85 @@ class _ProductEditState extends State<ProductEdit> {
             ? AppLocalization.of(context).newProduct
             : viewModel
                 .product.productKey), // Text(localizations.productDetails),
-        actions: viewModel.product.id == null ? [] : [
-          ActionMenuButton(
-            entity: viewModel.product,
-            onSelected: viewModel.onActionSelected,
-          )],
+        actions: viewModel.product.id == null
+            ? []
+            : [
+                ActionMenuButton(
+                  entity: viewModel.product,
+                  onSelected: viewModel.onActionSelected,
+                )
+              ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: ListView(children: [
-          Card(
-            elevation: 2.0,
-            margin: EdgeInsets.all(0.0),
-            child: Form(
-              key: ProductEdit.formKey,
-              child: Container(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      autocorrect: false,
-                      onSaved: (value) {
-                        _productKey = value;
-                      },
-                      initialValue: viewModel.product.productKey,
-                      decoration: InputDecoration(
-                        //border: InputBorder.none,
-                        labelText: AppLocalization.of(context).product,
-                      ),
-                      validator: (val) => val.isEmpty || val.trim().length == 0
-                          ? AppLocalization.of(context).pleaseEnterAProductKey
-                          : null,
-                    ),
-                    TextFormField(
-                      initialValue: viewModel.product.notes,
-                      onSaved: (value) {
-                        print('onSaved: setting _notes to: ' + value);
-                        _notes = value;
-                      },
-                      maxLines: 4,
-                      decoration: InputDecoration(
-                        labelText: AppLocalization.of(context).notes,
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: viewModel.product.cost == null ||
-                              viewModel.product.cost == 0.0
-                          ? null
-                          : viewModel.product.cost.toStringAsFixed(2),
-                      onSaved: (value) {
-                        _cost = double.tryParse(value) ?? 0.0;
-                      },
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        //border: InputBorder.none,
-                        labelText: AppLocalization.of(context).cost,
-                      ),
-                    ),
-                  ],
+      body: Form(
+        child: ListView(
+          children: <Widget>[
+            FormCard(
+              children: <Widget>[
+                TextFormField(
+                  autocorrect: false,
+                  onSaved: (value) {
+                    _productKey = value;
+                  },
+                  initialValue: viewModel.product.productKey,
+                  decoration: InputDecoration(
+                    //border: InputBorder.none,
+                    labelText: AppLocalization.of(context).product,
+                  ),
+                  validator: (val) => val.isEmpty || val.trim().length == 0
+                      ? AppLocalization.of(context).pleaseEnterAProductKey
+                      : null,
                 ),
-              ),
+                TextFormField(
+                  initialValue: viewModel.product.notes,
+                  onSaved: (value) {
+                    print('onSaved: setting _notes to: ' + value);
+                    _notes = value;
+                  },
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                    labelText: AppLocalization.of(context).notes,
+                  ),
+                ),
+                TextFormField(
+                  initialValue: viewModel.product.cost == null ||
+                          viewModel.product.cost == 0.0
+                      ? null
+                      : viewModel.product.cost.toStringAsFixed(2),
+                  onSaved: (value) {
+                    _cost = double.tryParse(value) ?? 0.0;
+                  },
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    //border: InputBorder.none,
+                    labelText: AppLocalization.of(context).cost,
+                  ),
+                ),
+              ],
             ),
-          ),
-          new Builder(builder: (BuildContext context) {
-            return viewModel.product.isDeleted == true
-                ? Container()
-                : ProgressButton(
-                    label: AppLocalization.of(context).save.toUpperCase(),
-                    isLoading: viewModel.isLoading,
-                    isDirty: viewModel.isDirty,
-                    onPressed: () {
-                      if (! ProductEdit.formKey.currentState.validate()) {
-                        return;
-                      }
-                      ProductEdit.formKey.currentState.save();
+            new Builder(builder: (BuildContext context) {
+              return viewModel.product.isDeleted == true
+                  ? Container()
+                  : ProgressButton(
+                      label: AppLocalization.of(context).save.toUpperCase(),
+                      isLoading: viewModel.isLoading,
+                      isDirty: viewModel.isDirty,
+                      onPressed: () {
+                        if (!ProductEdit.formKey.currentState.validate()) {
+                          return;
+                        }
+                        ProductEdit.formKey.currentState.save();
 
-                      viewModel.onSaveClicked(context,
-                          viewModel.product.rebuild((b) => b
-                            ..productKey = _productKey
-                            ..notes = _notes
-                            ..cost = _cost));
-                    },
-                  );
-          }),
-        ]),
+                        viewModel.onSaveClicked(
+                            context,
+                            viewModel.product.rebuild((b) => b
+                              ..productKey = _productKey
+                              ..notes = _notes
+                              ..cost = _cost));
+                      },
+                    );
+            }),
+          ],
+        ),
       ),
       /*
       floatingActionButton: FloatingActionButton(

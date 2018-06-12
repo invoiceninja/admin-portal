@@ -75,7 +75,7 @@ class ClientEditContactsState extends State<ClientEditContacts>
     }
 
     items.add(Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(16.0),
       child: RaisedButton(
         elevation: 4.0,
         color: Theme.of(context).primaryColor,
@@ -151,7 +151,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       child: Card(
         elevation: 2.0,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
               TextFormField(

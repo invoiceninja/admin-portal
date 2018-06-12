@@ -39,8 +39,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress>
         Card(
           elevation: 2.0,
           child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: <Widget>[
                   TextFormField(

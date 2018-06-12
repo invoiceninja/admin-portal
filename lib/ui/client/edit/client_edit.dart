@@ -110,7 +110,7 @@ class _ClientEditState extends State<ClientEdit>
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: TabBarView(

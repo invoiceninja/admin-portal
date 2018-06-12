@@ -66,11 +66,11 @@ class ClientOverview extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(16.0),
           child: Card(
             elevation: 2.0,
             child: Padding(
-              padding: EdgeInsets.all(12.0),
+              padding: EdgeInsets.all(16.0),
               child: _headerRow(),
             ),
           ),
