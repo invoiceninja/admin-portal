@@ -125,6 +125,24 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
           child: Column(
             children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextFormField(
+                      autocorrect: false,
+                      initialValue: widget.contact.firstName,
+                      onSaved: (value) => _firstName = value.trim(),
+                      decoration: InputDecoration(
+                        labelText: localization.firstName,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () => widget.onRemovePressed(widget.key),
+                  )
+                ],
+              ),
               TextFormField(
                 autocorrect: false,
                 initialValue: widget.contact.firstName,
@@ -133,15 +151,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   labelText: localization.firstName,
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  OutlineButton(
-                    child: Text(localization.delete),
-                    onPressed: () => widget.onRemovePressed(widget.key),
-                  )
-                ],
-              )
             ],
           ),
         ),
