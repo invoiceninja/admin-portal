@@ -85,6 +85,7 @@ class _ClientEditState extends State<ClientEdit>
             detailsKey: _detailsKey,
             billingAddressKey: _billingAddressKey,
             shippingAddressKey: _shippingAddressKey,
+            contactsKey: _contactsKey,
           )
         ],
         bottom: TabBar(
@@ -119,11 +120,6 @@ class _ClientEditState extends State<ClientEdit>
   }
 }
 
-/*
-abstract class EntityEditor extends StatefulWidget {
-  onSaveClicked(ClientEntity client);
-}
-*/
 
 class SaveButton extends StatelessWidget {
   final ClientEditVM viewModel;
@@ -173,6 +169,7 @@ class SaveButton extends StatelessWidget {
         var detailsState = detailsKey.currentState;
         var billingAddressState = billingAddressKey.currentState;
         //var shippingAddressState = shippingAddressKey.currentState;
+        var contactState = contactsKey.currentState;
 
         ClientEntity client = viewModel.client.rebuild((b) => b
           ..name = detailsState.name
@@ -180,18 +177,19 @@ class SaveButton extends StatelessWidget {
           ..vatNumber = detailsState.vatNumber
           ..website = detailsState.website
           ..workPhone = detailsState.phone
+          /*
           ..address1 = billingAddressState.address1
           ..address2 = billingAddressState.address2
           ..city = billingAddressState.city
           ..state = billingAddressState.state
           ..postalCode = billingAddressState.postalCode
-          /*
           ..shippingAddress1 = shippingAddressState.shippingAddress1
           ..shippingAddress2 = shippingAddressState.shippingAddress2
           ..shippingCity = shippingAddressState.shippingCity
           ..shippingState = shippingAddressState.shippingState
           ..shippingPostalCode = shippingAddressState.shippingPostalCode
           */
+          ..contacts.replace(contactState.getContacts())
         );
 
         viewModel.onSaveClicked(context, client);

@@ -1050,7 +1050,7 @@ class _$ClientEntity extends ClientEntity {
         creditNumberCounter == other.creditNumberCounter &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        contacts == other.contacts &&
+        contacts == other.contactKeys &&
         id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&

@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -18,28 +19,63 @@ class ClientEditContacts extends StatefulWidget {
 
 class ClientEditContactsState extends State<ClientEditContacts>
     with AutomaticKeepAliveClientMixin {
-  List<ContactEntity> contacts;
+  
+  Map<ContactEntity, GlobalKey<ContactEditDetailsState>> contactKeys;
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    contactKeys = Map.fromIterable(widget.client.contacts,
+     key: (contact) => contact,
+     value: (contact) => GlobalKey<ContactEditDetailsState>(),
+    );
+  }
+
+  List<ContactEntity> getContacts() {
+    List<ContactEntity> contacts = [];
+    contactKeys.forEach((contact, contactKey) {
+      contacts.add(contactKey.currentState.getContact());
+    });
+    return contacts;
+  }
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
     var client = widget.client;
 
-    return KeyboardAwarePadding(
-      child: ListView(
-          children: client.contacts
-              .map((contact) => ContactSettings(contact))
-              .toList()),
-    );
+    return ListView(
+        children: client.contacts.map((contact) {
+      return ContactEditDetails(
+        contact: contact,
+        key: contactKeys[contact],
+      );
+    }).toList());
   }
 }
 
-class ContactSettings extends StatelessWidget {
-  ContactSettings(this.contact);
-  ContactEntity contact;
+class ContactEditDetails extends StatefulWidget {
+  ContactEditDetails({
+    Key key,
+    @required this.contact,
+  }) : super(key: key);
+
+  final ContactEntity contact;
+
+  @override
+  ContactEditDetailsState createState() => ContactEditDetailsState();
+}
+
+class ContactEditDetailsState extends State<ContactEditDetails> {
+  String _firstName;
+
+  ContactEntity getContact() {
+    return ContactEntity((b) => b
+      ..firstName = _firstName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +92,10 @@ class ContactSettings extends StatelessWidget {
             children: <Widget>[
               TextFormField(
                 autocorrect: false,
-                initialValue: contact.firstName,
+                initialValue: widget.contact.firstName,
+                onSaved: (value) => _firstName = value.trim(),
                 decoration: InputDecoration(
-                  labelText: localization.website,
+                  labelText: localization.firstName,
                 ),
               ),
             ],
