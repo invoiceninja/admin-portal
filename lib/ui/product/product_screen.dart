@@ -5,7 +5,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list_vm.dart';
-import 'package:invoiceninja/ui/product/product_edit_vm.dart';
+import 'package:invoiceninja/ui/product/product_details_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
@@ -35,7 +35,8 @@ class ProductScreen extends StatelessWidget {
       drawer: AppDrawerBuilder(),
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
-        entityType: EntityType.product,
+        selectedSortField: store.state.productListState().sortField,
+        selectedSortAscending: store.state.productListState().sortAscending,
         onSelectedSortField: (value) {
           store.dispatch(SortProducts(value));
         },
@@ -43,19 +44,20 @@ class ProductScreen extends StatelessWidget {
           ProductFields.productKey,
           ProductFields.cost,
         ],
+        selectedStates: store.state.productListState().stateFilters,
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterProductsByState(state));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColorDark,
+        backgroundColor: Theme.of(context).primaryColor,
         //key: ArchSampleKeys.addProductFab,
         onPressed: () {
           store.dispatch(SelectProductAction(ProductEntity()));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductEditBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ProductDetailsBuilder()));
         },
         child: Icon(Icons.add),
         tooltip: localization.newProduct,

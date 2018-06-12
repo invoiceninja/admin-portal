@@ -13,7 +13,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/client_list.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
-import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja/ui/client/client_details_vm.dart';
 
 class ClientListBuilder extends StatelessWidget {
   ClientListBuilder({Key key}) : super(key: key);
@@ -70,7 +70,7 @@ class ClientListVM {
           store.dispatch(SelectClientAction(client));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ClientViewBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ClientDetailsBuilder()));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,
