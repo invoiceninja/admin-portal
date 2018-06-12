@@ -107,42 +107,49 @@ class ContactEditDetails extends StatefulWidget {
 
 class ContactEditDetailsState extends State<ContactEditDetails> {
   String _firstName;
+  String _lastName;
 
   ContactEntity getContact() {
-    return ContactEntity((b) => b..firstName = _firstName);
+    return ContactEntity((b) => b
+      ..firstName = _firstName
+      ..lastName = _lastName);
   }
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
 
+    _confirmDelete() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              semanticLabel: localization.areYouSure,
+              title: Text(localization.areYouSure),
+              actions: <Widget>[
+                new FlatButton(
+                    child: Text(localization.cancel.toUpperCase()),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                new FlatButton(
+                    child: Text(localization.ok.toUpperCase()),
+                    onPressed: () {
+                      widget.onRemovePressed(widget.key);
+                      Navigator.pop(context);
+                    })
+              ],
+            ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Card(
         elevation: 2.0,
         child: Padding(
-          padding: const EdgeInsets.only(
-              left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextFormField(
-                      autocorrect: false,
-                      initialValue: widget.contact.firstName,
-                      onSaved: (value) => _firstName = value.trim(),
-                      decoration: InputDecoration(
-                        labelText: localization.firstName,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () => widget.onRemovePressed(widget.key),
-                  )
-                ],
-              ),
               TextFormField(
                 autocorrect: false,
                 initialValue: widget.contact.firstName,
@@ -150,6 +157,28 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 decoration: InputDecoration(
                   labelText: localization.firstName,
                 ),
+              ),
+              TextFormField(
+                autocorrect: false,
+                initialValue: widget.contact.lastName,
+                onSaved: (value) => _lastName = value.trim(),
+                decoration: InputDecoration(
+                  labelText: localization.lastName,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: FlatButton(
+                      child: Text(localization.delete, style: TextStyle(
+                        color: Colors.grey[700],
+                      ),),
+                      onPressed: _confirmDelete,
+                    ),
+                  )
+                ],
               ),
             ],
           ),
