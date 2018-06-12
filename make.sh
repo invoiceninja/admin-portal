@@ -30,10 +30,10 @@ declare -a files=('lib/data/models/product_model.dart'
    'lib/redux/product/product_state.dart'
    'lib/redux/product/product_middleware.dart'
    'lib/redux/product/product_selectors.dart'
-   'lib/ui/product/product_edit.dart'
-   'lib/ui/product/product_edit_vm.dart'
+   'lib/ui/product/product_details.dart'
    'lib/ui/product/product_item.dart'
    'lib/ui/product/product_list_vm.dart'
+   'lib/ui/product/product_details_vm.dart'
    'lib/ui/product/product_list.dart'
    'lib/ui/product/product_screen.dart')
 

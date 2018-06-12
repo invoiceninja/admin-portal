@@ -18,7 +18,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_middleware.dart';
 import 'package:invoiceninja/utils/localization.dart';
-//import 'package:redux_logging/redux_logging.dart';
+import 'package:redux_logging/redux_logging.dart';
 
 void main() {
   final store = Store<AppState>(appReducer,
@@ -30,7 +30,7 @@ void main() {
         ..addAll(createStoreClientsMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         ..addAll([
-          //LoggingMiddleware.printer(),
+          LoggingMiddleware.printer(),
         ]));
 
   runApp(new InvoiceNinjaApp(store: store));
@@ -59,8 +59,8 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         ],
         theme: ThemeData().copyWith(
           primaryColor: const Color(0xFF117cc1),
+          primaryColorDark: const Color(0xFF005090),
           primaryColorLight: const Color(0xFF5dabf4),
-          primaryColorDark: const Color(0xFF0D5D91),
         ),
         /*
         theme: ThemeData(

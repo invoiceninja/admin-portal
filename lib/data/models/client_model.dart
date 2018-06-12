@@ -25,8 +25,7 @@ abstract class ClientItemResponse implements Built<ClientItemResponse, ClientIte
 
 class ClientFields {
   static const String name = 'name';
-  static const String balance = 'balance';
-  static const String paidToDate = 'paidToDate';
+
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
@@ -180,10 +179,12 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     ClientEntity clientA = sortAscending ? this : client;
     ClientEntity clientB = sortAscending ? client: this;
 
+    /*
     switch (sortField) {
-      case ClientFields.balance:
-        response = clientA.balance.compareTo(clientB.balance);
+      case ClientFields.cost:
+        response = clientA.cost.compareTo(clientB.cost);
     }
+    */
 
     if (response == 0) {
       return clientA.name.compareTo(clientB.name);
@@ -197,7 +198,7 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
       return true;
     }
 
-    return displayName.contains(search);
+    return name.contains(search);
   }
 
   ClientEntity._();

@@ -43,7 +43,8 @@ class ClientItem extends StatelessWidget {
             ],
           ),
         ),
-        //subtitle: Text(localization.paidToDate + ': ' + client.balance.toStringAsFixed(2)),
+        subtitle: Text(
+            localization.paidToDate + ': ' + client.balance.toStringAsFixed(2)),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[

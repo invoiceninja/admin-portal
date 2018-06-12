@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'client_model.dart';
+part of 'vendor_model.dart';
 
 // **************************************************************************
 // Generator: BuiltValueGenerator
@@ -14,39 +14,39 @@ part of 'client_model.dart';
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
 
-Serializer<ClientListResponse> _$clientListResponseSerializer =
-    new _$ClientListResponseSerializer();
-Serializer<ClientItemResponse> _$clientItemResponseSerializer =
-    new _$ClientItemResponseSerializer();
-Serializer<ClientEntity> _$clientEntitySerializer =
-    new _$ClientEntitySerializer();
-Serializer<ContactEntity> _$contactEntitySerializer =
-    new _$ContactEntitySerializer();
+Serializer<VendorListResponse> _$vendorListResponseSerializer =
+    new _$VendorListResponseSerializer();
+Serializer<VendorItemResponse> _$vendorItemResponseSerializer =
+    new _$VendorItemResponseSerializer();
+Serializer<VendorEntity> _$vendorEntitySerializer =
+    new _$VendorEntitySerializer();
+Serializer<VendorContactEntity> _$vendorContactEntitySerializer =
+    new _$VendorContactEntitySerializer();
 
-class _$ClientListResponseSerializer
-    implements StructuredSerializer<ClientListResponse> {
+class _$VendorListResponseSerializer
+    implements StructuredSerializer<VendorListResponse> {
   @override
-  final Iterable<Type> types = const [ClientListResponse, _$ClientListResponse];
+  final Iterable<Type> types = const [VendorListResponse, _$VendorListResponse];
   @override
-  final String wireName = 'ClientListResponse';
+  final String wireName = 'VendorListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ClientListResponse object,
+  Iterable serialize(Serializers serializers, VendorListResponse object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(ClientEntity)])),
+              const FullType(BuiltList, const [const FullType(VendorEntity)])),
     ];
 
     return result;
   }
 
   @override
-  ClientListResponse deserialize(Serializers serializers, Iterable serialized,
+  VendorListResponse deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = new ClientListResponseBuilder();
+    final result = new VendorListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -57,7 +57,7 @@ class _$ClientListResponseSerializer
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ClientEntity)]))
+                      BuiltList, const [const FullType(VendorEntity)]))
               as BuiltList);
           break;
       }
@@ -67,29 +67,29 @@ class _$ClientListResponseSerializer
   }
 }
 
-class _$ClientItemResponseSerializer
-    implements StructuredSerializer<ClientItemResponse> {
+class _$VendorItemResponseSerializer
+    implements StructuredSerializer<VendorItemResponse> {
   @override
-  final Iterable<Type> types = const [ClientItemResponse, _$ClientItemResponse];
+  final Iterable<Type> types = const [VendorItemResponse, _$VendorItemResponse];
   @override
-  final String wireName = 'ClientItemResponse';
+  final String wireName = 'VendorItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ClientItemResponse object,
+  Iterable serialize(Serializers serializers, VendorItemResponse object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
-          specifiedType: const FullType(ClientEntity)),
+          specifiedType: const FullType(VendorEntity)),
     ];
 
     return result;
   }
 
   @override
-  ClientItemResponse deserialize(Serializers serializers, Iterable serialized,
+  VendorItemResponse deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = new ClientItemResponseBuilder();
+    final result = new VendorItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -99,7 +99,7 @@ class _$ClientItemResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ClientEntity)) as ClientEntity);
+              specifiedType: const FullType(VendorEntity)) as VendorEntity);
           break;
       }
     }
@@ -108,26 +108,20 @@ class _$ClientItemResponseSerializer
   }
 }
 
-class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
+class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
   @override
-  final Iterable<Type> types = const [ClientEntity, _$ClientEntity];
+  final Iterable<Type> types = const [VendorEntity, _$VendorEntity];
   @override
-  final String wireName = 'ClientEntity';
+  final String wireName = 'VendorEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ClientEntity object,
+  Iterable serialize(Serializers serializers, VendorEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[];
     if (object.name != null) {
       result
         ..add('name')
         ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.displayName != null) {
-      result
-        ..add('display_name')
-        ..add(serializers.serialize(object.displayName,
             specifiedType: const FullType(String)));
     }
     if (object.balance != null) {
@@ -190,10 +184,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.privateNotes,
             specifiedType: const FullType(String)));
     }
-    if (object.publicNotes != null) {
+    if (object.lastLogin != null) {
       result
-        ..add('public_notes')
-        ..add(serializers.serialize(object.publicNotes,
+        ..add('last_login')
+        ..add(serializers.serialize(object.lastLogin,
             specifiedType: const FullType(String)));
     }
     if (object.website != null) {
@@ -201,24 +195,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('website')
         ..add(serializers.serialize(object.website,
             specifiedType: const FullType(String)));
-    }
-    if (object.industryId != null) {
-      result
-        ..add('industry_id')
-        ..add(serializers.serialize(object.industryId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.sizeId != null) {
-      result
-        ..add('size_id')
-        ..add(serializers.serialize(object.sizeId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.paymentTerms != null) {
-      result
-        ..add('payment_terms')
-        ..add(serializers.serialize(object.paymentTerms,
-            specifiedType: const FullType(int)));
     }
     if (object.vatNumber != null) {
       result
@@ -232,88 +208,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.idNumber,
             specifiedType: const FullType(String)));
     }
-    if (object.languageId != null) {
-      result
-        ..add('language_id')
-        ..add(serializers.serialize(object.languageId,
-            specifiedType: const FullType(int)));
-    }
     if (object.currencyId != null) {
       result
         ..add('currency_id')
         ..add(serializers.serialize(object.currencyId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.invoiceNumberCounter != null) {
-      result
-        ..add('invoice_number_counter')
-        ..add(serializers.serialize(object.invoiceNumberCounter,
-            specifiedType: const FullType(int)));
-    }
-    if (object.quoteNumberCounter != null) {
-      result
-        ..add('quote_number_counter')
-        ..add(serializers.serialize(object.quoteNumberCounter,
-            specifiedType: const FullType(int)));
-    }
-    if (object.taskRate != null) {
-      result
-        ..add('task_rate')
-        ..add(serializers.serialize(object.taskRate,
-            specifiedType: const FullType(double)));
-    }
-    if (object.shippingAddress1 != null) {
-      result
-        ..add('shipping_address1')
-        ..add(serializers.serialize(object.shippingAddress1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingAddress2 != null) {
-      result
-        ..add('shipping_address2')
-        ..add(serializers.serialize(object.shippingAddress2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingCity != null) {
-      result
-        ..add('shipping_city')
-        ..add(serializers.serialize(object.shippingCity,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingState != null) {
-      result
-        ..add('shipping_state')
-        ..add(serializers.serialize(object.shippingState,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingPostalCode != null) {
-      result
-        ..add('shipping_postal_code')
-        ..add(serializers.serialize(object.shippingPostalCode,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingCountryId != null) {
-      result
-        ..add('shipping_country_id')
-        ..add(serializers.serialize(object.shippingCountryId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.showTasksInPortal != null) {
-      result
-        ..add('show_tasks_in_portal')
-        ..add(serializers.serialize(object.showTasksInPortal,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.sendReminders != null) {
-      result
-        ..add('send_reminders')
-        ..add(serializers.serialize(object.sendReminders,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.creditNumberCounter != null) {
-      result
-        ..add('credit_number_counter')
-        ..add(serializers.serialize(object.creditNumberCounter,
             specifiedType: const FullType(int)));
     }
     if (object.customValue1 != null) {
@@ -328,12 +226,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.customValue2,
             specifiedType: const FullType(String)));
     }
-    if (object.contacts != null) {
+    if (object.vendorContacts != null) {
       result
-        ..add('contacts')
-        ..add(serializers.serialize(object.contacts,
+        ..add('vendor_contacts')
+        ..add(serializers.serialize(object.vendorContacts,
             specifiedType: const FullType(
-                BuiltList, const [const FullType(ContactEntity)])));
+                BuiltList, const [const FullType(VendorContactEntity)])));
     }
     if (object.id != null) {
       result
@@ -364,9 +262,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   }
 
   @override
-  ClientEntity deserialize(Serializers serializers, Iterable serialized,
+  VendorEntity deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = new ClientEntityBuilder();
+    final result = new VendorEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -376,10 +274,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'display_name':
-          result.displayName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'balance':
@@ -422,25 +316,13 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.privateNotes = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'public_notes':
-          result.publicNotes = serializers.deserialize(value,
+        case 'last_login':
+          result.lastLogin = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'website':
           result.website = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'industry_id':
-          result.industryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'size_id':
-          result.sizeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'payment_terms':
-          result.paymentTerms = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
         case 'vat_number':
           result.vatNumber = serializers.deserialize(value,
@@ -450,60 +332,8 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.idNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'language_id':
-          result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'invoice_number_counter':
-          result.invoiceNumberCounter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'quote_number_counter':
-          result.quoteNumberCounter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'task_rate':
-          result.taskRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-        case 'shipping_address1':
-          result.shippingAddress1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'shipping_address2':
-          result.shippingAddress2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'shipping_city':
-          result.shippingCity = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'shipping_state':
-          result.shippingState = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'shipping_postal_code':
-          result.shippingPostalCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'shipping_country_id':
-          result.shippingCountryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'show_tasks_in_portal':
-          result.showTasksInPortal = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'send_reminders':
-          result.sendReminders = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'credit_number_counter':
-          result.creditNumberCounter = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'custom_value1':
@@ -514,10 +344,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'contacts':
-          result.contacts.replace(serializers.deserialize(value,
+        case 'vendor_contacts':
+          result.vendorContacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ContactEntity)]))
+                      BuiltList, const [const FullType(VendorContactEntity)]))
               as BuiltList);
           break;
         case 'id':
@@ -543,14 +373,18 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   }
 }
 
-class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
+class _$VendorContactEntitySerializer
+    implements StructuredSerializer<VendorContactEntity> {
   @override
-  final Iterable<Type> types = const [ContactEntity, _$ContactEntity];
+  final Iterable<Type> types = const [
+    VendorContactEntity,
+    _$VendorContactEntity
+  ];
   @override
-  final String wireName = 'ContactEntity';
+  final String wireName = 'VendorContactEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ContactEntity object,
+  Iterable serialize(Serializers serializers, VendorContactEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[];
     if (object.firstName != null) {
@@ -571,34 +405,16 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         ..add(serializers.serialize(object.email,
             specifiedType: const FullType(String)));
     }
-    if (object.phone != null) {
-      result
-        ..add('phone')
-        ..add(serializers.serialize(object.phone,
-            specifiedType: const FullType(String)));
-    }
-    if (object.contactKey != null) {
-      result
-        ..add('contact_key')
-        ..add(serializers.serialize(object.contactKey,
-            specifiedType: const FullType(String)));
-    }
     if (object.isPrimary != null) {
       result
         ..add('is_primary')
         ..add(serializers.serialize(object.isPrimary,
             specifiedType: const FullType(bool)));
     }
-    if (object.customValue1 != null) {
+    if (object.phone != null) {
       result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
+        ..add('phone')
+        ..add(serializers.serialize(object.phone,
             specifiedType: const FullType(String)));
     }
     if (object.id != null) {
@@ -630,9 +446,9 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
   }
 
   @override
-  ContactEntity deserialize(Serializers serializers, Iterable serialized,
+  VendorContactEntity deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = new ContactEntityBuilder();
+    final result = new VendorContactEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -652,24 +468,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'phone':
-          result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'contact_key':
-          result.contactKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'is_primary':
           result.isPrimary = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
+        case 'phone':
+          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -695,30 +499,30 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
   }
 }
 
-class _$ClientListResponse extends ClientListResponse {
+class _$VendorListResponse extends VendorListResponse {
   @override
-  final BuiltList<ClientEntity> data;
+  final BuiltList<VendorEntity> data;
 
-  factory _$ClientListResponse([void updates(ClientListResponseBuilder b)]) =>
-      (new ClientListResponseBuilder()..update(updates)).build();
+  factory _$VendorListResponse([void updates(VendorListResponseBuilder b)]) =>
+      (new VendorListResponseBuilder()..update(updates)).build();
 
-  _$ClientListResponse._({this.data}) : super._() {
+  _$VendorListResponse._({this.data}) : super._() {
     if (data == null)
-      throw new BuiltValueNullFieldError('ClientListResponse', 'data');
+      throw new BuiltValueNullFieldError('VendorListResponse', 'data');
   }
 
   @override
-  ClientListResponse rebuild(void updates(ClientListResponseBuilder b)) =>
+  VendorListResponse rebuild(void updates(VendorListResponseBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ClientListResponseBuilder toBuilder() =>
-      new ClientListResponseBuilder()..replace(this);
+  VendorListResponseBuilder toBuilder() =>
+      new VendorListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! ClientListResponse) return false;
+    if (other is! VendorListResponse) return false;
     return data == other.data;
   }
 
@@ -729,24 +533,24 @@ class _$ClientListResponse extends ClientListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ClientListResponse')
+    return (newBuiltValueToStringHelper('VendorListResponse')
           ..add('data', data))
         .toString();
   }
 }
 
-class ClientListResponseBuilder
-    implements Builder<ClientListResponse, ClientListResponseBuilder> {
-  _$ClientListResponse _$v;
+class VendorListResponseBuilder
+    implements Builder<VendorListResponse, VendorListResponseBuilder> {
+  _$VendorListResponse _$v;
 
-  ListBuilder<ClientEntity> _data;
-  ListBuilder<ClientEntity> get data =>
-      _$this._data ??= new ListBuilder<ClientEntity>();
-  set data(ListBuilder<ClientEntity> data) => _$this._data = data;
+  ListBuilder<VendorEntity> _data;
+  ListBuilder<VendorEntity> get data =>
+      _$this._data ??= new ListBuilder<VendorEntity>();
+  set data(ListBuilder<VendorEntity> data) => _$this._data = data;
 
-  ClientListResponseBuilder();
+  VendorListResponseBuilder();
 
-  ClientListResponseBuilder get _$this {
+  VendorListResponseBuilder get _$this {
     if (_$v != null) {
       _data = _$v.data?.toBuilder();
       _$v = null;
@@ -755,21 +559,21 @@ class ClientListResponseBuilder
   }
 
   @override
-  void replace(ClientListResponse other) {
+  void replace(VendorListResponse other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$ClientListResponse;
+    _$v = other as _$VendorListResponse;
   }
 
   @override
-  void update(void updates(ClientListResponseBuilder b)) {
+  void update(void updates(VendorListResponseBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$ClientListResponse build() {
-    _$ClientListResponse _$result;
+  _$VendorListResponse build() {
+    _$VendorListResponse _$result;
     try {
-      _$result = _$v ?? new _$ClientListResponse._(data: data.build());
+      _$result = _$v ?? new _$VendorListResponse._(data: data.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -777,7 +581,7 @@ class ClientListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ClientListResponse', _$failedField, e.toString());
+            'VendorListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -786,30 +590,30 @@ class ClientListResponseBuilder
   }
 }
 
-class _$ClientItemResponse extends ClientItemResponse {
+class _$VendorItemResponse extends VendorItemResponse {
   @override
-  final ClientEntity data;
+  final VendorEntity data;
 
-  factory _$ClientItemResponse([void updates(ClientItemResponseBuilder b)]) =>
-      (new ClientItemResponseBuilder()..update(updates)).build();
+  factory _$VendorItemResponse([void updates(VendorItemResponseBuilder b)]) =>
+      (new VendorItemResponseBuilder()..update(updates)).build();
 
-  _$ClientItemResponse._({this.data}) : super._() {
+  _$VendorItemResponse._({this.data}) : super._() {
     if (data == null)
-      throw new BuiltValueNullFieldError('ClientItemResponse', 'data');
+      throw new BuiltValueNullFieldError('VendorItemResponse', 'data');
   }
 
   @override
-  ClientItemResponse rebuild(void updates(ClientItemResponseBuilder b)) =>
+  VendorItemResponse rebuild(void updates(VendorItemResponseBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ClientItemResponseBuilder toBuilder() =>
-      new ClientItemResponseBuilder()..replace(this);
+  VendorItemResponseBuilder toBuilder() =>
+      new VendorItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! ClientItemResponse) return false;
+    if (other is! VendorItemResponse) return false;
     return data == other.data;
   }
 
@@ -820,23 +624,23 @@ class _$ClientItemResponse extends ClientItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ClientItemResponse')
+    return (newBuiltValueToStringHelper('VendorItemResponse')
           ..add('data', data))
         .toString();
   }
 }
 
-class ClientItemResponseBuilder
-    implements Builder<ClientItemResponse, ClientItemResponseBuilder> {
-  _$ClientItemResponse _$v;
+class VendorItemResponseBuilder
+    implements Builder<VendorItemResponse, VendorItemResponseBuilder> {
+  _$VendorItemResponse _$v;
 
-  ClientEntityBuilder _data;
-  ClientEntityBuilder get data => _$this._data ??= new ClientEntityBuilder();
-  set data(ClientEntityBuilder data) => _$this._data = data;
+  VendorEntityBuilder _data;
+  VendorEntityBuilder get data => _$this._data ??= new VendorEntityBuilder();
+  set data(VendorEntityBuilder data) => _$this._data = data;
 
-  ClientItemResponseBuilder();
+  VendorItemResponseBuilder();
 
-  ClientItemResponseBuilder get _$this {
+  VendorItemResponseBuilder get _$this {
     if (_$v != null) {
       _data = _$v.data?.toBuilder();
       _$v = null;
@@ -845,21 +649,21 @@ class ClientItemResponseBuilder
   }
 
   @override
-  void replace(ClientItemResponse other) {
+  void replace(VendorItemResponse other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$ClientItemResponse;
+    _$v = other as _$VendorItemResponse;
   }
 
   @override
-  void update(void updates(ClientItemResponseBuilder b)) {
+  void update(void updates(VendorItemResponseBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$ClientItemResponse build() {
-    _$ClientItemResponse _$result;
+  _$VendorItemResponse build() {
+    _$VendorItemResponse _$result;
     try {
-      _$result = _$v ?? new _$ClientItemResponse._(data: data.build());
+      _$result = _$v ?? new _$VendorItemResponse._(data: data.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -867,7 +671,7 @@ class ClientItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ClientItemResponse', _$failedField, e.toString());
+            'VendorItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -876,11 +680,9 @@ class ClientItemResponseBuilder
   }
 }
 
-class _$ClientEntity extends ClientEntity {
+class _$VendorEntity extends VendorEntity {
   @override
   final String name;
-  @override
-  final String displayName;
   @override
   final double balance;
   @override
@@ -902,53 +704,21 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String privateNotes;
   @override
-  final String publicNotes;
+  final String lastLogin;
   @override
   final String website;
-  @override
-  final int industryId;
-  @override
-  final int sizeId;
-  @override
-  final int paymentTerms;
   @override
   final String vatNumber;
   @override
   final String idNumber;
   @override
-  final int languageId;
-  @override
   final int currencyId;
-  @override
-  final int invoiceNumberCounter;
-  @override
-  final int quoteNumberCounter;
-  @override
-  final double taskRate;
-  @override
-  final String shippingAddress1;
-  @override
-  final String shippingAddress2;
-  @override
-  final String shippingCity;
-  @override
-  final String shippingState;
-  @override
-  final String shippingPostalCode;
-  @override
-  final int shippingCountryId;
-  @override
-  final bool showTasksInPortal;
-  @override
-  final bool sendReminders;
-  @override
-  final int creditNumberCounter;
   @override
   final String customValue1;
   @override
   final String customValue2;
   @override
-  final BuiltList<ContactEntity> contacts;
+  final BuiltList<VendorContactEntity> vendorContacts;
   @override
   final int id;
   @override
@@ -958,12 +728,11 @@ class _$ClientEntity extends ClientEntity {
   @override
   final bool isDeleted;
 
-  factory _$ClientEntity([void updates(ClientEntityBuilder b)]) =>
-      (new ClientEntityBuilder()..update(updates)).build();
+  factory _$VendorEntity([void updates(VendorEntityBuilder b)]) =>
+      (new VendorEntityBuilder()..update(updates)).build();
 
-  _$ClientEntity._(
+  _$VendorEntity._(
       {this.name,
-      this.displayName,
       this.balance,
       this.paidToDate,
       this.address1,
@@ -974,30 +743,14 @@ class _$ClientEntity extends ClientEntity {
       this.countryId,
       this.workPhone,
       this.privateNotes,
-      this.publicNotes,
+      this.lastLogin,
       this.website,
-      this.industryId,
-      this.sizeId,
-      this.paymentTerms,
       this.vatNumber,
       this.idNumber,
-      this.languageId,
       this.currencyId,
-      this.invoiceNumberCounter,
-      this.quoteNumberCounter,
-      this.taskRate,
-      this.shippingAddress1,
-      this.shippingAddress2,
-      this.shippingCity,
-      this.shippingState,
-      this.shippingPostalCode,
-      this.shippingCountryId,
-      this.showTasksInPortal,
-      this.sendReminders,
-      this.creditNumberCounter,
       this.customValue1,
       this.customValue2,
-      this.contacts,
+      this.vendorContacts,
       this.id,
       this.updatedAt,
       this.archivedAt,
@@ -1005,18 +758,17 @@ class _$ClientEntity extends ClientEntity {
       : super._();
 
   @override
-  ClientEntity rebuild(void updates(ClientEntityBuilder b)) =>
+  VendorEntity rebuild(void updates(VendorEntityBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ClientEntityBuilder toBuilder() => new ClientEntityBuilder()..replace(this);
+  VendorEntityBuilder toBuilder() => new VendorEntityBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! ClientEntity) return false;
+    if (other is! VendorEntity) return false;
     return name == other.name &&
-        displayName == other.displayName &&
         balance == other.balance &&
         paidToDate == other.paidToDate &&
         address1 == other.address1 &&
@@ -1027,30 +779,14 @@ class _$ClientEntity extends ClientEntity {
         countryId == other.countryId &&
         workPhone == other.workPhone &&
         privateNotes == other.privateNotes &&
-        publicNotes == other.publicNotes &&
+        lastLogin == other.lastLogin &&
         website == other.website &&
-        industryId == other.industryId &&
-        sizeId == other.sizeId &&
-        paymentTerms == other.paymentTerms &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
-        languageId == other.languageId &&
         currencyId == other.currencyId &&
-        invoiceNumberCounter == other.invoiceNumberCounter &&
-        quoteNumberCounter == other.quoteNumberCounter &&
-        taskRate == other.taskRate &&
-        shippingAddress1 == other.shippingAddress1 &&
-        shippingAddress2 == other.shippingAddress2 &&
-        shippingCity == other.shippingCity &&
-        shippingState == other.shippingState &&
-        shippingPostalCode == other.shippingPostalCode &&
-        shippingCountryId == other.shippingCountryId &&
-        showTasksInPortal == other.showTasksInPortal &&
-        sendReminders == other.sendReminders &&
-        creditNumberCounter == other.creditNumberCounter &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        contacts == other.contacts &&
+        vendorContacts == other.vendorContacts &&
         id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1077,22 +813,22 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode),
-                                                                                invoiceNumberCounter.hashCode),
-                                                                            quoteNumberCounter.hashCode),
-                                                                        taskRate.hashCode),
-                                                                    shippingAddress1.hashCode),
-                                                                shippingAddress2.hashCode),
-                                                            shippingCity.hashCode),
-                                                        shippingState.hashCode),
-                                                    shippingPostalCode.hashCode),
-                                                shippingCountryId.hashCode),
-                                            showTasksInPortal.hashCode),
-                                        sendReminders.hashCode),
-                                    creditNumberCounter.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode),
+                                                                                address2.hashCode),
+                                                                            city.hashCode),
+                                                                        state.hashCode),
+                                                                    postalCode.hashCode),
+                                                                countryId.hashCode),
+                                                            workPhone.hashCode),
+                                                        privateNotes.hashCode),
+                                                    lastLogin.hashCode),
+                                                website.hashCode),
+                                            vatNumber.hashCode),
+                                        idNumber.hashCode),
+                                    currencyId.hashCode),
                                 customValue1.hashCode),
                             customValue2.hashCode),
-                        contacts.hashCode),
+                        vendorContacts.hashCode),
                     id.hashCode),
                 updatedAt.hashCode),
             archivedAt.hashCode),
@@ -1101,9 +837,8 @@ class _$ClientEntity extends ClientEntity {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ClientEntity')
+    return (newBuiltValueToStringHelper('VendorEntity')
           ..add('name', name)
-          ..add('displayName', displayName)
           ..add('balance', balance)
           ..add('paidToDate', paidToDate)
           ..add('address1', address1)
@@ -1114,30 +849,14 @@ class _$ClientEntity extends ClientEntity {
           ..add('countryId', countryId)
           ..add('workPhone', workPhone)
           ..add('privateNotes', privateNotes)
-          ..add('publicNotes', publicNotes)
+          ..add('lastLogin', lastLogin)
           ..add('website', website)
-          ..add('industryId', industryId)
-          ..add('sizeId', sizeId)
-          ..add('paymentTerms', paymentTerms)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
-          ..add('languageId', languageId)
           ..add('currencyId', currencyId)
-          ..add('invoiceNumberCounter', invoiceNumberCounter)
-          ..add('quoteNumberCounter', quoteNumberCounter)
-          ..add('taskRate', taskRate)
-          ..add('shippingAddress1', shippingAddress1)
-          ..add('shippingAddress2', shippingAddress2)
-          ..add('shippingCity', shippingCity)
-          ..add('shippingState', shippingState)
-          ..add('shippingPostalCode', shippingPostalCode)
-          ..add('shippingCountryId', shippingCountryId)
-          ..add('showTasksInPortal', showTasksInPortal)
-          ..add('sendReminders', sendReminders)
-          ..add('creditNumberCounter', creditNumberCounter)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('contacts', contacts)
+          ..add('vendorContacts', vendorContacts)
           ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1146,17 +865,13 @@ class _$ClientEntity extends ClientEntity {
   }
 }
 
-class ClientEntityBuilder
-    implements Builder<ClientEntity, ClientEntityBuilder> {
-  _$ClientEntity _$v;
+class VendorEntityBuilder
+    implements Builder<VendorEntity, VendorEntityBuilder> {
+  _$VendorEntity _$v;
 
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
-
-  String _displayName;
-  String get displayName => _$this._displayName;
-  set displayName(String displayName) => _$this._displayName = displayName;
 
   double _balance;
   double get balance => _$this._balance;
@@ -1198,25 +913,13 @@ class ClientEntityBuilder
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
 
-  String _publicNotes;
-  String get publicNotes => _$this._publicNotes;
-  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
+  String _lastLogin;
+  String get lastLogin => _$this._lastLogin;
+  set lastLogin(String lastLogin) => _$this._lastLogin = lastLogin;
 
   String _website;
   String get website => _$this._website;
   set website(String website) => _$this._website = website;
-
-  int _industryId;
-  int get industryId => _$this._industryId;
-  set industryId(int industryId) => _$this._industryId = industryId;
-
-  int _sizeId;
-  int get sizeId => _$this._sizeId;
-  set sizeId(int sizeId) => _$this._sizeId = sizeId;
-
-  int _paymentTerms;
-  int get paymentTerms => _$this._paymentTerms;
-  set paymentTerms(int paymentTerms) => _$this._paymentTerms = paymentTerms;
 
   String _vatNumber;
   String get vatNumber => _$this._vatNumber;
@@ -1226,71 +929,9 @@ class ClientEntityBuilder
   String get idNumber => _$this._idNumber;
   set idNumber(String idNumber) => _$this._idNumber = idNumber;
 
-  int _languageId;
-  int get languageId => _$this._languageId;
-  set languageId(int languageId) => _$this._languageId = languageId;
-
   int _currencyId;
   int get currencyId => _$this._currencyId;
   set currencyId(int currencyId) => _$this._currencyId = currencyId;
-
-  int _invoiceNumberCounter;
-  int get invoiceNumberCounter => _$this._invoiceNumberCounter;
-  set invoiceNumberCounter(int invoiceNumberCounter) =>
-      _$this._invoiceNumberCounter = invoiceNumberCounter;
-
-  int _quoteNumberCounter;
-  int get quoteNumberCounter => _$this._quoteNumberCounter;
-  set quoteNumberCounter(int quoteNumberCounter) =>
-      _$this._quoteNumberCounter = quoteNumberCounter;
-
-  double _taskRate;
-  double get taskRate => _$this._taskRate;
-  set taskRate(double taskRate) => _$this._taskRate = taskRate;
-
-  String _shippingAddress1;
-  String get shippingAddress1 => _$this._shippingAddress1;
-  set shippingAddress1(String shippingAddress1) =>
-      _$this._shippingAddress1 = shippingAddress1;
-
-  String _shippingAddress2;
-  String get shippingAddress2 => _$this._shippingAddress2;
-  set shippingAddress2(String shippingAddress2) =>
-      _$this._shippingAddress2 = shippingAddress2;
-
-  String _shippingCity;
-  String get shippingCity => _$this._shippingCity;
-  set shippingCity(String shippingCity) => _$this._shippingCity = shippingCity;
-
-  String _shippingState;
-  String get shippingState => _$this._shippingState;
-  set shippingState(String shippingState) =>
-      _$this._shippingState = shippingState;
-
-  String _shippingPostalCode;
-  String get shippingPostalCode => _$this._shippingPostalCode;
-  set shippingPostalCode(String shippingPostalCode) =>
-      _$this._shippingPostalCode = shippingPostalCode;
-
-  int _shippingCountryId;
-  int get shippingCountryId => _$this._shippingCountryId;
-  set shippingCountryId(int shippingCountryId) =>
-      _$this._shippingCountryId = shippingCountryId;
-
-  bool _showTasksInPortal;
-  bool get showTasksInPortal => _$this._showTasksInPortal;
-  set showTasksInPortal(bool showTasksInPortal) =>
-      _$this._showTasksInPortal = showTasksInPortal;
-
-  bool _sendReminders;
-  bool get sendReminders => _$this._sendReminders;
-  set sendReminders(bool sendReminders) =>
-      _$this._sendReminders = sendReminders;
-
-  int _creditNumberCounter;
-  int get creditNumberCounter => _$this._creditNumberCounter;
-  set creditNumberCounter(int creditNumberCounter) =>
-      _$this._creditNumberCounter = creditNumberCounter;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1300,11 +941,11 @@ class ClientEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  ListBuilder<ContactEntity> _contacts;
-  ListBuilder<ContactEntity> get contacts =>
-      _$this._contacts ??= new ListBuilder<ContactEntity>();
-  set contacts(ListBuilder<ContactEntity> contacts) =>
-      _$this._contacts = contacts;
+  ListBuilder<VendorContactEntity> _vendorContacts;
+  ListBuilder<VendorContactEntity> get vendorContacts =>
+      _$this._vendorContacts ??= new ListBuilder<VendorContactEntity>();
+  set vendorContacts(ListBuilder<VendorContactEntity> vendorContacts) =>
+      _$this._vendorContacts = vendorContacts;
 
   int _id;
   int get id => _$this._id;
@@ -1322,12 +963,11 @@ class ClientEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  ClientEntityBuilder();
+  VendorEntityBuilder();
 
-  ClientEntityBuilder get _$this {
+  VendorEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
-      _displayName = _$v.displayName;
       _balance = _$v.balance;
       _paidToDate = _$v.paidToDate;
       _address1 = _$v.address1;
@@ -1338,30 +978,14 @@ class ClientEntityBuilder
       _countryId = _$v.countryId;
       _workPhone = _$v.workPhone;
       _privateNotes = _$v.privateNotes;
-      _publicNotes = _$v.publicNotes;
+      _lastLogin = _$v.lastLogin;
       _website = _$v.website;
-      _industryId = _$v.industryId;
-      _sizeId = _$v.sizeId;
-      _paymentTerms = _$v.paymentTerms;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
-      _languageId = _$v.languageId;
       _currencyId = _$v.currencyId;
-      _invoiceNumberCounter = _$v.invoiceNumberCounter;
-      _quoteNumberCounter = _$v.quoteNumberCounter;
-      _taskRate = _$v.taskRate;
-      _shippingAddress1 = _$v.shippingAddress1;
-      _shippingAddress2 = _$v.shippingAddress2;
-      _shippingCity = _$v.shippingCity;
-      _shippingState = _$v.shippingState;
-      _shippingPostalCode = _$v.shippingPostalCode;
-      _shippingCountryId = _$v.shippingCountryId;
-      _showTasksInPortal = _$v.showTasksInPortal;
-      _sendReminders = _$v.sendReminders;
-      _creditNumberCounter = _$v.creditNumberCounter;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _contacts = _$v.contacts?.toBuilder();
+      _vendorContacts = _$v.vendorContacts?.toBuilder();
       _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1372,24 +996,23 @@ class ClientEntityBuilder
   }
 
   @override
-  void replace(ClientEntity other) {
+  void replace(VendorEntity other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$ClientEntity;
+    _$v = other as _$VendorEntity;
   }
 
   @override
-  void update(void updates(ClientEntityBuilder b)) {
+  void update(void updates(VendorEntityBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$ClientEntity build() {
-    _$ClientEntity _$result;
+  _$VendorEntity build() {
+    _$VendorEntity _$result;
     try {
       _$result = _$v ??
-          new _$ClientEntity._(
+          new _$VendorEntity._(
               name: name,
-              displayName: displayName,
               balance: balance,
               paidToDate: paidToDate,
               address1: address1,
@@ -1400,30 +1023,14 @@ class ClientEntityBuilder
               countryId: countryId,
               workPhone: workPhone,
               privateNotes: privateNotes,
-              publicNotes: publicNotes,
+              lastLogin: lastLogin,
               website: website,
-              industryId: industryId,
-              sizeId: sizeId,
-              paymentTerms: paymentTerms,
               vatNumber: vatNumber,
               idNumber: idNumber,
-              languageId: languageId,
               currencyId: currencyId,
-              invoiceNumberCounter: invoiceNumberCounter,
-              quoteNumberCounter: quoteNumberCounter,
-              taskRate: taskRate,
-              shippingAddress1: shippingAddress1,
-              shippingAddress2: shippingAddress2,
-              shippingCity: shippingCity,
-              shippingState: shippingState,
-              shippingPostalCode: shippingPostalCode,
-              shippingCountryId: shippingCountryId,
-              showTasksInPortal: showTasksInPortal,
-              sendReminders: sendReminders,
-              creditNumberCounter: creditNumberCounter,
               customValue1: customValue1,
               customValue2: customValue2,
-              contacts: _contacts?.build(),
+              vendorContacts: _vendorContacts?.build(),
               id: id,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
@@ -1431,11 +1038,11 @@ class ClientEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'contacts';
-        _contacts?.build();
+        _$failedField = 'vendorContacts';
+        _vendorContacts?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ClientEntity', _$failedField, e.toString());
+            'VendorEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1444,7 +1051,7 @@ class ClientEntityBuilder
   }
 }
 
-class _$ContactEntity extends ContactEntity {
+class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String firstName;
   @override
@@ -1452,15 +1059,9 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String email;
   @override
-  final String phone;
-  @override
-  final String contactKey;
-  @override
   final bool isPrimary;
   @override
-  final String customValue1;
-  @override
-  final String customValue2;
+  final String phone;
   @override
   final int id;
   @override
@@ -1470,18 +1071,15 @@ class _$ContactEntity extends ContactEntity {
   @override
   final bool isDeleted;
 
-  factory _$ContactEntity([void updates(ContactEntityBuilder b)]) =>
-      (new ContactEntityBuilder()..update(updates)).build();
+  factory _$VendorContactEntity([void updates(VendorContactEntityBuilder b)]) =>
+      (new VendorContactEntityBuilder()..update(updates)).build();
 
-  _$ContactEntity._(
+  _$VendorContactEntity._(
       {this.firstName,
       this.lastName,
       this.email,
-      this.phone,
-      this.contactKey,
       this.isPrimary,
-      this.customValue1,
-      this.customValue2,
+      this.phone,
       this.id,
       this.updatedAt,
       this.archivedAt,
@@ -1489,24 +1087,22 @@ class _$ContactEntity extends ContactEntity {
       : super._();
 
   @override
-  ContactEntity rebuild(void updates(ContactEntityBuilder b)) =>
+  VendorContactEntity rebuild(void updates(VendorContactEntityBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ContactEntityBuilder toBuilder() => new ContactEntityBuilder()..replace(this);
+  VendorContactEntityBuilder toBuilder() =>
+      new VendorContactEntityBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! ContactEntity) return false;
+    if (other is! VendorContactEntity) return false;
     return firstName == other.firstName &&
         lastName == other.lastName &&
         email == other.email &&
-        phone == other.phone &&
-        contactKey == other.contactKey &&
         isPrimary == other.isPrimary &&
-        customValue1 == other.customValue1 &&
-        customValue2 == other.customValue2 &&
+        phone == other.phone &&
         id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1522,17 +1118,11 @@ class _$ContactEntity extends ContactEntity {
                     $jc(
                         $jc(
                             $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc($jc(0, firstName.hashCode),
-                                                lastName.hashCode),
-                                            email.hashCode),
-                                        phone.hashCode),
-                                    contactKey.hashCode),
-                                isPrimary.hashCode),
-                            customValue1.hashCode),
-                        customValue2.hashCode),
+                                $jc($jc(0, firstName.hashCode),
+                                    lastName.hashCode),
+                                email.hashCode),
+                            isPrimary.hashCode),
+                        phone.hashCode),
                     id.hashCode),
                 updatedAt.hashCode),
             archivedAt.hashCode),
@@ -1541,15 +1131,12 @@ class _$ContactEntity extends ContactEntity {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ContactEntity')
+    return (newBuiltValueToStringHelper('VendorContactEntity')
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('email', email)
-          ..add('phone', phone)
-          ..add('contactKey', contactKey)
           ..add('isPrimary', isPrimary)
-          ..add('customValue1', customValue1)
-          ..add('customValue2', customValue2)
+          ..add('phone', phone)
           ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1558,9 +1145,9 @@ class _$ContactEntity extends ContactEntity {
   }
 }
 
-class ContactEntityBuilder
-    implements Builder<ContactEntity, ContactEntityBuilder> {
-  _$ContactEntity _$v;
+class VendorContactEntityBuilder
+    implements Builder<VendorContactEntity, VendorContactEntityBuilder> {
+  _$VendorContactEntity _$v;
 
   String _firstName;
   String get firstName => _$this._firstName;
@@ -1574,25 +1161,13 @@ class ContactEntityBuilder
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
 
-  String _phone;
-  String get phone => _$this._phone;
-  set phone(String phone) => _$this._phone = phone;
-
-  String _contactKey;
-  String get contactKey => _$this._contactKey;
-  set contactKey(String contactKey) => _$this._contactKey = contactKey;
-
   bool _isPrimary;
   bool get isPrimary => _$this._isPrimary;
   set isPrimary(bool isPrimary) => _$this._isPrimary = isPrimary;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
-
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String _phone;
+  String get phone => _$this._phone;
+  set phone(String phone) => _$this._phone = phone;
 
   int _id;
   int get id => _$this._id;
@@ -1610,18 +1185,15 @@ class ContactEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  ContactEntityBuilder();
+  VendorContactEntityBuilder();
 
-  ContactEntityBuilder get _$this {
+  VendorContactEntityBuilder get _$this {
     if (_$v != null) {
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _email = _$v.email;
-      _phone = _$v.phone;
-      _contactKey = _$v.contactKey;
       _isPrimary = _$v.isPrimary;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
+      _phone = _$v.phone;
       _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1632,28 +1204,25 @@ class ContactEntityBuilder
   }
 
   @override
-  void replace(ContactEntity other) {
+  void replace(VendorContactEntity other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$ContactEntity;
+    _$v = other as _$VendorContactEntity;
   }
 
   @override
-  void update(void updates(ContactEntityBuilder b)) {
+  void update(void updates(VendorContactEntityBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$ContactEntity build() {
+  _$VendorContactEntity build() {
     final _$result = _$v ??
-        new _$ContactEntity._(
+        new _$VendorContactEntity._(
             firstName: firstName,
             lastName: lastName,
             email: email,
-            phone: phone,
-            contactKey: contactKey,
             isPrimary: isPrimary,
-            customValue1: customValue1,
-            customValue2: customValue2,
+            phone: phone,
             id: id,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
