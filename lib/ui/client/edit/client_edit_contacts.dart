@@ -19,6 +19,8 @@ class ClientEditContacts extends StatefulWidget {
 
 class ClientEditContactsState extends State<ClientEditContacts>
     with AutomaticKeepAliveClientMixin {
+  List<ContactEntity> contacts;
+
   @override
   bool get wantKeepAlive => true;
 
@@ -33,19 +35,6 @@ class ClientEditContactsState extends State<ClientEditContacts>
               .map((contact) => ContactSettings(contact))
               .toList()),
     );
-
-    return KeyboardAwarePadding(
-      child: Card(
-        elevation: 2.0,
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: ListView(
-              children: client.contacts
-                  .map((contact) => ContactSettings(contact))
-                  .toList()),
-        ),
-      ),
-    );
   }
 }
 
@@ -57,20 +46,24 @@ class ContactSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
 
-    return Card(
-      elevation: 2.0,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              autocorrect: false,
-              initialValue: contact.firstName,
-              decoration: InputDecoration(
-                labelText: localization.website,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Card(
+        elevation: 2.0,
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 12.0, right: 12.0, top: 12.0, bottom: 20.0),
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                autocorrect: false,
+                initialValue: contact.firstName,
+                decoration: InputDecoration(
+                  labelText: localization.website,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

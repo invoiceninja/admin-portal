@@ -94,15 +94,13 @@ class _ClientEditState extends State<ClientEdit>
             Tab(
               text: localization.details,
             ),
-            /*
             Tab(
               text: localization.contacts,
             ),
-            */
+            /*
             Tab(
               text: localization.billingAddress,
             ),
-            /*
             Tab(
               text: localization.shippingAddress,
             ),
