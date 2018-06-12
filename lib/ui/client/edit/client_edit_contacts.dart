@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/app/keyboard_aware_padding.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
@@ -52,7 +51,7 @@ class ContactSettings extends StatelessWidget {
         elevation: 2.0,
         child: Padding(
           padding: const EdgeInsets.only(
-              left: 12.0, right: 12.0, top: 12.0, bottom: 20.0),
+              left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
           child: Column(
             children: <Widget>[
               TextFormField(
