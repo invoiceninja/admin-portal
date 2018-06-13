@@ -11,6 +11,7 @@ import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
@@ -37,12 +38,13 @@ class AppDrawer extends StatelessWidget {
         child: new DropdownButton<String>(
           isDense: true,
           value: viewModel.selectedCompanyIndex,
-          items: viewModel.companies.map((CompanyEntity company) =>
-            DropdownMenuItem<String>(
-              value: (viewModel.companies.indexOf(company) + 1).toString(),
-              child: Text(company.name),
-            )
-          ).toList(),
+          items: viewModel.companies
+              .map((CompanyEntity company) => DropdownMenuItem<String>(
+                    value:
+                        (viewModel.companies.indexOf(company) + 1).toString(),
+                    child: Text(company.name),
+                  ))
+              .toList(),
           onChanged: (value) {
             viewModel.onCompanyChanged(context, value);
           },
@@ -59,13 +61,21 @@ class AppDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
-                    child: viewModel.selectedCompany.logoUrl != null ? Image.network(viewModel.selectedCompany.logoUrl) : null
-                  ),
+                      child: viewModel.selectedCompany.logoUrl != null
+                          //? Image.network(viewModel.selectedCompany.logoUrl)
+                          ? CachedNetworkImage(
+                            imageUrl: viewModel.selectedCompany.logoUrl,
+                            placeholder: new CircularProgressIndicator(),
+                            errorWidget: new Icon(Icons.error),
+                          )
+                          : null),
                 ),
                 SizedBox(
                   height: 18.0,
                 ),
-                viewModel.companies.length > 1 ? _multipleCompanies : _singleCompany,
+                viewModel.companies.length > 1
+                    ? _multipleCompanies
+                    : _singleCompany,
               ],
             )),
             color: Colors.white10,
@@ -92,7 +102,9 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(FontAwesomeIcons.cube, size: 22.0),
             title: Text(AppLocalization.of(context).products),
             onTap: () {
-              StoreProvider.of<AppState>(context).dispatch(SearchProducts(null));
+              StoreProvider
+                  .of<AppState>(context)
+                  .dispatch(SearchProducts(null));
               Navigator.of(context).pushReplacementNamed(ProductScreen.route);
             },
           ),
@@ -113,7 +125,11 @@ class AppDrawer extends StatelessWidget {
           ),
           AboutListTile(
             applicationName: 'Invoice Ninja',
-            applicationIcon: Image.asset('assets/images/logo.png', width: 40.0, height: 40.0,),
+            applicationIcon: Image.asset(
+              'assets/images/logo.png',
+              width: 40.0,
+              height: 40.0,
+            ),
             applicationVersion: 'v' + kAppVersion,
             icon: Icon(FontAwesomeIcons.info, size: 22.0),
           ),
