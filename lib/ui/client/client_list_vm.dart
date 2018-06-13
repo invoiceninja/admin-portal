@@ -36,6 +36,7 @@ class ClientListVM {
   final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
   final bool isLoading;
+  final bool isLoaded;
   final Function(BuildContext, ClientEntity) onClientTap;
   final Function(BuildContext, ClientEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
@@ -44,6 +45,7 @@ class ClientListVM {
     @required this.clientList,
     @required this.clientMap,
     @required this.isLoading,
+    @required this.isLoaded,
     @required this.onClientTap,
     @required this.onDismissed,
     @required this.onRefreshed,
@@ -65,7 +67,8 @@ class ClientListVM {
     return ClientListVM(
         clientList: memoizedClientList(store.state.clientState().map, store.state.clientState().list, store.state.clientListState()),
         clientMap: store.state.clientState().map,
-        isLoading: store.state.clientState().lastUpdated == 0,
+        isLoading: store.state.isLoading,
+        isLoaded: store.state.clientState().lastUpdated > 0,
         onClientTap: (context, client) {
           store.dispatch(SelectClientAction(client));
           Navigator

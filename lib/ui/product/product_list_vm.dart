@@ -35,6 +35,7 @@ class ProductListVM {
   final List<int> productList;
   final BuiltMap<int, ProductEntity> productMap;
   final bool isLoading;
+  final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
   final Function(BuildContext, ProductEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
@@ -43,6 +44,7 @@ class ProductListVM {
     @required this.productList,
     @required this.productMap,
     @required this.isLoading,
+    @required this.isLoaded,
     @required this.onProductTap,
     @required this.onDismissed,
     @required this.onRefreshed,
@@ -64,7 +66,8 @@ class ProductListVM {
     return ProductListVM(
         productList: memoizedProductList(store.state.productState().map, store.state.productState().list, store.state.productListState()),
         productMap: store.state.productState().map,
-        isLoading: store.state.productState().lastUpdated == 0,
+        isLoading: store.state.isLoading,
+        isLoaded: store.state.productState().lastUpdated > 0,
         onProductTap: (context, product) {
           store.dispatch(SelectProductAction(product));
           Navigator

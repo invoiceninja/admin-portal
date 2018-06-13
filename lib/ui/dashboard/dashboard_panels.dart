@@ -24,6 +24,7 @@ class DashboardPanels extends StatelessWidget {
 
   Widget _buildPanels(BuildContext context) {
     if (viewModel.dashboardState.data == null) {
+      viewModel.onRefreshed(context);
       return ListView();
     }
 
