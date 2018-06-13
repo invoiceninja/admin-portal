@@ -74,11 +74,12 @@ class ClientEditContactsState extends State<ClientEditContacts>
         contact: contact,
         key: contactKey,
         onRemovePressed: (key) => _onRemovePressed(key),
+        isRemoveVisible: contacts.length > 1,
       ));
     }
 
     items.add(Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
       child: RaisedButton(
         elevation: 4.0,
         color: Theme.of(context).primaryColor,
@@ -99,10 +100,12 @@ class ContactEditDetails extends StatefulWidget {
     Key key,
     @required this.contact,
     @required this.onRemovePressed,
+    @required this.isRemoveVisible,
   }) : super(key: key);
 
   final ContactEntity contact;
   final Function(GlobalKey<ContactEditDetailsState>) onRemovePressed;
+  final bool isRemoveVisible;
 
   @override
   ContactEditDetailsState createState() => ContactEditDetailsState();
@@ -150,59 +153,61 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     }
 
     return FormCard(
-          children: <Widget>[
-            TextFormField(
-              autocorrect: false,
-              initialValue: widget.contact.firstName,
-              onSaved: (value) => _firstName = value.trim(),
-              decoration: InputDecoration(
-                labelText: localization.firstName,
-              ),
-            ),
-            TextFormField(
-              autocorrect: false,
-              initialValue: widget.contact.lastName,
-              onSaved: (value) => _lastName = value.trim(),
-              decoration: InputDecoration(
-                labelText: localization.lastName,
-              ),
-            ),
-            TextFormField(
-              autocorrect: false,
-              initialValue: widget.contact.email,
-              onSaved: (value) => _email = value.trim(),
-              decoration: InputDecoration(
-                labelText: localization.email,
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            TextFormField(
-              autocorrect: false,
-              initialValue: widget.contact.phone,
-              onSaved: (value) => _phone = value.trim(),
-              decoration: InputDecoration(
-                labelText: localization.phone,
-              ),
-              keyboardType: TextInputType.phone,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 12.0),
-                  child: FlatButton(
-                    child: Text(
-                      localization.remove,
-                      style: TextStyle(
-                        color: Colors.grey[600],
+      children: <Widget>[
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.contact.firstName,
+          onSaved: (value) => _firstName = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.firstName,
+          ),
+        ),
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.contact.lastName,
+          onSaved: (value) => _lastName = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.lastName,
+          ),
+        ),
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.contact.email,
+          onSaved: (value) => _email = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.email,
+          ),
+          keyboardType: TextInputType.emailAddress,
+        ),
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.contact.phone,
+          onSaved: (value) => _phone = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.phone,
+          ),
+          keyboardType: TextInputType.phone,
+        ),
+        widget.isRemoveVisible
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: FlatButton(
+                      child: Text(
+                        localization.remove,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                        ),
                       ),
+                      onPressed: _confirmDelete,
                     ),
-                    onPressed: _confirmDelete,
-                  ),
-                )
-              ],
-            ),
-          ],
-        );
+                  )
+                ],
+              )
+            : Container(),
+      ],
+    );
   }
 }

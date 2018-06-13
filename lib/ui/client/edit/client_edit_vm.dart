@@ -54,9 +54,6 @@ class ClientEditVM {
               Navigator.of(context).pop();
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => ClientViewBuilder()));
-
-              //Navigator.of(context).pushReplacement(
-              //    MaterialPageRoute(builder: (_) => ClientViewBuilder()));
             } else {
               Navigator.of(context).pop();
             }
