@@ -5,6 +5,7 @@ import 'package:invoiceninja/ui/client/edit/client_edit_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
+import '../../app/save_icon_button.dart';
 import 'client_edit_billing_address.dart';
 import 'client_edit_contacts.dart';
 import 'client_edit_shipping_address.dart';
@@ -78,14 +79,43 @@ class _ClientEditState extends State<ClientEdit>
             ? localization.newClient
             : client.displayName), // Text(localizations.clientDetails),
         actions: <Widget>[
-          SaveButton(
-            viewModel: widget.viewModel,
-            editors: editors,
-            formKey: _formKey,
-            detailsKey: _detailsKey,
-            billingAddressKey: _billingAddressKey,
-            shippingAddressKey: _shippingAddressKey,
-            contactsKey: _contactsKey,
+          SaveIconButton(
+            isLoading: widget.viewModel.isLoading,
+            onPressed: () {
+              if (! _formKey.currentState.validate()) {
+                return;
+              }
+
+              _formKey.currentState.save();
+
+              var detailsState = _detailsKey.currentState;
+              var billingAddressState = _billingAddressKey.currentState;
+              //var shippingAddressState = _shippingAddressKey.currentState;
+              var contactState = _contactsKey.currentState;
+
+              ClientEntity client = widget.viewModel.client.rebuild((b) => b
+                ..name = detailsState.name
+                ..idNumber = detailsState.idNumber
+                ..vatNumber = detailsState.vatNumber
+                ..website = detailsState.website
+                ..workPhone = detailsState.phone
+                /*
+          ..address1 = billingAddressState.address1
+          ..address2 = billingAddressState.address2
+          ..city = billingAddressState.city
+          ..state = billingAddressState.state
+          ..postalCode = billingAddressState.postalCode
+          ..shippingAddress1 = shippingAddressState.shippingAddress1
+          ..shippingAddress2 = shippingAddressState.shippingAddress2
+          ..shippingCity = shippingAddressState.shippingCity
+          ..shippingState = shippingAddressState.shippingState
+          ..shippingPostalCode = shippingAddressState.shippingPostalCode
+          */
+                ..contacts.replace(
+                    contactState?.getContacts() ?? widget.viewModel.client.contacts));
+
+              widget.viewModel.onSaveClicked(context, client);
+            },
           )
         ],
         bottom: TabBar(
@@ -115,87 +145,6 @@ class _ClientEditState extends State<ClientEdit>
           controller: _controller,
           children: editors,
         ),
-      ),
-    );
-  }
-}
-
-class SaveButton extends StatelessWidget {
-  final ClientEditVM viewModel;
-  final List<Widget> editors;
-  final GlobalKey<FormState> formKey;
-  final GlobalKey<ClientEditDetailsState> detailsKey;
-  final GlobalKey<ClientEditContactsState> contactsKey;
-  final GlobalKey<ClientEditBillingAddressState> billingAddressKey;
-  final GlobalKey<ClientEditShippingAddressState> shippingAddressKey;
-
-  SaveButton({
-    this.viewModel,
-    this.editors,
-    this.formKey,
-    this.detailsKey,
-    this.contactsKey,
-    this.billingAddressKey,
-    this.shippingAddressKey,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var client = viewModel.client;
-
-    if (viewModel.isLoading) {
-      return IconButton(
-        onPressed: null,
-        icon: SizedBox(
-          //width: 28.0,
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            //strokeWidth: 2.0,
-          ),
-        ),
-      );
-    }
-
-    return IconButton(
-      onPressed: () {
-        if (!formKey.currentState.validate()) {
-          return;
-        }
-
-        formKey.currentState.save();
-
-        var detailsState = detailsKey.currentState;
-        var billingAddressState = billingAddressKey.currentState;
-        //var shippingAddressState = shippingAddressKey.currentState;
-        var contactState = contactsKey.currentState;
-
-        ClientEntity client = viewModel.client.rebuild((b) => b
-          ..name = detailsState.name
-          ..idNumber = detailsState.idNumber
-          ..vatNumber = detailsState.vatNumber
-          ..website = detailsState.website
-          ..workPhone = detailsState.phone
-          /*
-          ..address1 = billingAddressState.address1
-          ..address2 = billingAddressState.address2
-          ..city = billingAddressState.city
-          ..state = billingAddressState.state
-          ..postalCode = billingAddressState.postalCode
-          ..shippingAddress1 = shippingAddressState.shippingAddress1
-          ..shippingAddress2 = shippingAddressState.shippingAddress2
-          ..shippingCity = shippingAddressState.shippingCity
-          ..shippingState = shippingAddressState.shippingState
-          ..shippingPostalCode = shippingAddressState.shippingPostalCode
-          */
-          ..contacts.replace(contactState?.getContacts() ?? viewModel.client.contacts));
-
-        viewModel.onSaveClicked(context, client);
-      },
-      tooltip: localization.save,
-      icon: Icon(
-        Icons.cloud_upload,
-        color: Colors.white,
       ),
     );
   }

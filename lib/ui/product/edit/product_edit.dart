@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
-import 'package:invoiceninja/ui/product/product_edit_vm.dart';
+import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
-
-import '../app/form_card.dart';
 
 class ProductEdit extends StatefulWidget {
   final ProductEditVM viewModel;
@@ -34,7 +33,7 @@ class _ProductEditState extends State<ProductEdit> {
         title: Text(viewModel.product.id == null
             ? AppLocalization.of(context).newProduct
             : viewModel
-                .product.productKey), // Text(localizations.productDetails),
+                .product.productKey),
         actions: viewModel.product.id == null
             ? []
             : [

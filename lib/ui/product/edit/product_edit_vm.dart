@@ -6,7 +6,7 @@ import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/product/product_edit.dart';
+import 'package:invoiceninja/ui/product/edit/product_edit.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
