@@ -33,7 +33,7 @@ class _ProductEditState extends State<ProductEdit> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(viewModel.product.id == null
+        title: Text(viewModel.product.isNew()
             ? AppLocalization.of(context).newProduct
             : viewModel.product.productKey),
         actions: <Widget>[
@@ -56,7 +56,7 @@ class _ProductEditState extends State<ProductEdit> {
               },
             );
           }),
-          viewModel.product.id == null
+          viewModel.product.isNew()
               ? Container()
               : ActionMenuButton(
                   entity: viewModel.product,

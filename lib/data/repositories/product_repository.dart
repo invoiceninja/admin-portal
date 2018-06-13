@@ -31,7 +31,7 @@ class ProductsRepository {
     var data = serializers.serializeWith(ProductEntity.serializer, product);
     var response;
 
-    if (product.id == null) {
+    if (product.isNew()) {
       response = await webClient.post(
           auth.url + '/products', company.token, json.encode(data));
     } else {

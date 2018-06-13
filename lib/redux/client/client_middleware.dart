@@ -88,7 +88,7 @@ Middleware<AppState> _saveClient(ClientsRepository repository) {
         .saveData(store.state.selectedCompany(), store.state.authState,
             action.client)
         .then((client) {
-      if (action.client.id == null) {
+      if (action.client.isNew()) {
         store.dispatch(AddClientSuccess(client));
       } else {
         store.dispatch(SaveClientSuccess(client));

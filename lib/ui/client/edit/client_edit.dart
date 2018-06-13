@@ -75,7 +75,7 @@ class _ClientEditState extends State<ClientEdit>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(client.id == null
+        title: Text(client.isNew()
             ? localization.newClient
             : client.displayName), // Text(localizations.clientDetails),
         actions: <Widget>[

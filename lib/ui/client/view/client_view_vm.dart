@@ -53,7 +53,7 @@ class ClientViewVM {
 
     return ClientViewVM(
       isLoading: store.state.isLoading,
-      isDirty: client.id == null,
+      isDirty: client.isNew(),
       client: client,
       onDelete: () => false,
       onEditClicked: (BuildContext context) {
@@ -67,7 +67,7 @@ class ClientViewVM {
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-                message: client.id == null
+                message: client.isNew()
                     ? AppLocalization.of(context).successfullyCreatedClient
                     : AppLocalization.of(context).successfullyUpdatedClient,
               ),

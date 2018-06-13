@@ -58,6 +58,10 @@ abstract class BaseEntity {
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
 
+  bool isNew() {
+    return this.id == null;
+  }
+
   bool isActive() {
     return this.archivedAt == null;
   }

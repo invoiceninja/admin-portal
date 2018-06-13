@@ -88,7 +88,7 @@ Middleware<AppState> _saveProduct(ProductsRepository repository) {
         .saveData(store.state.selectedCompany(), store.state.authState,
             action.product)
         .then((product) {
-      if (action.product.id == null) {
+      if (action.product.isNew()) {
         store.dispatch(AddProductSuccess(product));
       } else {
         store.dispatch(SaveProductSuccess(product));

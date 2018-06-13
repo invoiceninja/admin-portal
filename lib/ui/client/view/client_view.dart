@@ -54,7 +54,7 @@ class _ClientViewState extends State<ClientView>
             ),
           ],
         ),
-        actions: widget.viewModel.client.id == null
+        actions: widget.viewModel.client.isNew()
             ? []
             : [
                 IconButton(

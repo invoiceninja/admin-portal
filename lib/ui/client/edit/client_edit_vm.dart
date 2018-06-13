@@ -50,7 +50,7 @@ class ClientEditVM {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(SaveClientRequest(completer, client));
           return completer.future.then((_) {
-            if (client.id == null) {
+            if (client.isNew()) {
               Navigator.of(context).pop();
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => ClientViewScreen()));
@@ -60,7 +60,7 @@ class ClientEditVM {
             /*
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
-                  message: client.id == null
+                  message: client.isNew()
                       ? AppLocalization.of(context).successfullyCreatedClient
                       : AppLocalization.of(context).successfullyUpdatedClient,
                 ),

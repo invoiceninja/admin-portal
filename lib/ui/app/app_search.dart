@@ -23,7 +23,6 @@ class AppSearch extends StatelessWidget {
     var localization = AppLocalization.of(context);
 
     return StoreConnector<AppState, ListUIState>(
-      //distinct: true,
       converter: (Store<AppState> store) => store.state.productListState(),
       builder: (BuildContext context, listUIState) {
         return listUIState.search == null
