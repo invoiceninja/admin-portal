@@ -69,7 +69,7 @@ class ProductListVM {
           store.dispatch(SelectProductAction(product));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductEditBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ProductEditScreen()));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ProductEntity product,

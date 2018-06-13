@@ -11,8 +11,8 @@ import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 
-class ClientEditBuilder extends StatelessWidget {
-  ClientEditBuilder({Key key}) : super(key: key);
+class ClientEditScreen extends StatelessWidget {
+  ClientEditScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class ClientEditVM {
             if (client.id == null) {
               Navigator.of(context).pop();
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => ClientViewBuilder()));
+                  MaterialPageRoute(builder: (_) => ClientViewScreen()));
             } else {
               Navigator.of(context).pop();
             }

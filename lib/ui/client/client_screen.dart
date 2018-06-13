@@ -57,7 +57,7 @@ class ClientScreen extends StatelessWidget {
           store.dispatch(SelectClientAction(client));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ClientEditBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ClientEditScreen()));
         },
         child: Icon(Icons.add),
         tooltip: localization.newClient,

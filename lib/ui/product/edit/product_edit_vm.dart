@@ -10,8 +10,8 @@ import 'package:invoiceninja/ui/product/edit/product_edit.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
-class ProductEditBuilder extends StatelessWidget {
-  ProductEditBuilder({Key key}) : super(key: key);
+class ProductEditScreen extends StatelessWidget {
+  ProductEditScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

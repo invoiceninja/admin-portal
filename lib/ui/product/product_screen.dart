@@ -55,7 +55,7 @@ class ProductScreen extends StatelessWidget {
           store.dispatch(SelectProductAction(ProductEntity()));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductEditBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ProductEditScreen()));
         },
         child: Icon(Icons.add),
         tooltip: localization.newProduct,

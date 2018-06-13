@@ -70,7 +70,7 @@ class ClientListVM {
           store.dispatch(SelectClientAction(client));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ClientViewBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ClientViewScreen()));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,
