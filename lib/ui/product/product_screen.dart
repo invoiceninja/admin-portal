@@ -12,7 +12,6 @@ import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
 
 class ProductScreen extends StatelessWidget {
-
   static final String route = '/products';
 
   @override
@@ -29,7 +28,12 @@ class ProductScreen extends StatelessWidget {
           },
         ),
         actions: [
-          AppSearchButton(),
+          AppSearchButton(
+            entityType: EntityType.product,
+            onSearchPressed: (value) {
+              store.dispatch(SearchProducts(value));
+            },
+          ),
         ],
       ),
       drawer: AppDrawerBuilder(),
@@ -50,7 +54,6 @@ class ProductScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorDark,
-        //key: ArchSampleKeys.addProductFab,
         onPressed: () {
           store.dispatch(SelectProductAction(ProductEntity()));
           Navigator

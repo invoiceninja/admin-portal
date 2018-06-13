@@ -12,7 +12,6 @@ import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
 
 class ClientScreen extends StatelessWidget {
-
   static final String route = '/clients';
 
   @override
@@ -29,7 +28,12 @@ class ClientScreen extends StatelessWidget {
           },
         ),
         actions: [
-          AppSearchButton(),
+          AppSearchButton(
+            entityType: EntityType.client,
+            onSearchPressed: (value) {
+              store.dispatch(SearchClients(value));
+            },
+          ),
         ],
       ),
       drawer: AppDrawerBuilder(),
@@ -51,9 +55,8 @@ class ClientScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
-          var client = ClientEntity().rebuild((b) => b
-            ..contacts.replace([ContactEntity()])
-          );
+          var client = ClientEntity()
+              .rebuild((b) => b..contacts.replace([ContactEntity()]));
           store.dispatch(SelectClientAction(client));
           Navigator
               .of(context)
