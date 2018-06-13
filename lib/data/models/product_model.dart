@@ -79,7 +79,7 @@ abstract class ProductEntity extends Object with BaseEntity implements Built<Pro
     }
 
     if (response == 0) {
-      return productA.productKey.compareTo(productB.productKey);
+      return productA.productKey.toLowerCase().compareTo(productB.productKey.toLowerCase());
     } else {
       return response;
     }
@@ -90,7 +90,9 @@ abstract class ProductEntity extends Object with BaseEntity implements Built<Pro
       return true;
     }
 
-    return productKey.contains(search) || notes.contains(search);
+    search = search.toLowerCase();
+
+    return productKey.toLowerCase().contains(search) || notes.toLowerCase().contains(search);
   }
 
   ProductEntity._();
