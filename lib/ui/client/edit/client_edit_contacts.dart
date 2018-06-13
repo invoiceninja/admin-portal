@@ -193,7 +193,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
+                    padding: const EdgeInsets.only(top: 14.0),
                     child: FlatButton(
                       child: Text(
                         localization.remove,
