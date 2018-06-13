@@ -68,6 +68,7 @@ class AppLocalization {
       'cancel': 'Cancel',
       'ok': 'Ok',
       'remove': 'Remove',
+      'email_is_invalid': 'Email is invalid',
 
       'product': 'Product',
       'products': 'Products',
@@ -158,6 +159,7 @@ class AppLocalization {
   String get cancel => _localizedValues[locale.languageCode]['cancel'];
   String get ok => _localizedValues[locale.languageCode]['ok'];
   String get remove => _localizedValues[locale.languageCode]['remove'];
+  String get emailIsInvalid => _localizedValues[locale.languageCode]['email_is_invalid'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];

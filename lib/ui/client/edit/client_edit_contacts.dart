@@ -178,6 +178,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
             labelText: localization.email,
           ),
           keyboardType: TextInputType.emailAddress,
+          validator: (value) => value.isNotEmpty && ! value.contains('@') ? localization.emailIsInvalid : null,
         ),
         TextFormField(
           autocorrect: false,
