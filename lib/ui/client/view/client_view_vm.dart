@@ -17,7 +17,6 @@ class ClientViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ClientViewVM>(
-      //ignoreChange: (state) => clientSelector(state.client().list, id).isNotPresent,
       converter: (Store<AppState> store) {
         return ClientViewVM.fromStore(store);
       },
