@@ -51,6 +51,10 @@ class ProductItem extends StatelessWidget {
             ],
           ),
         ),
+        subtitle: Text(product.notes,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+        ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -71,7 +75,6 @@ class ProductItem extends StatelessWidget {
             Text(product.cost.toStringAsFixed(2)),
           ],
         ),
-        subtitle: Text(product.notes),
       ),
     );
   }
