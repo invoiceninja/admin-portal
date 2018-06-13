@@ -6,9 +6,10 @@ import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
+import '../../app/save_icon_button.dart';
+
 class ProductEdit extends StatefulWidget {
   final ProductEditVM viewModel;
-  static final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   ProductEdit({
     Key key,
@@ -20,6 +21,8 @@ class ProductEdit extends StatefulWidget {
 }
 
 class _ProductEditState extends State<ProductEdit> {
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   String _productKey;
   String _notes;
   double _cost;
@@ -32,18 +35,37 @@ class _ProductEditState extends State<ProductEdit> {
       appBar: AppBar(
         title: Text(viewModel.product.id == null
             ? AppLocalization.of(context).newProduct
-            : viewModel
-                .product.productKey),
-        actions: viewModel.product.id == null
-            ? []
-            : [
-                ActionMenuButton(
+            : viewModel.product.productKey),
+        actions: <Widget>[
+          Builder(builder: (BuildContext context) {
+            return SaveIconButton(
+              isLoading: viewModel.isLoading,
+              onPressed: () {
+                if (!_formKey.currentState.validate()) {
+                  return;
+                }
+
+                _formKey.currentState.save();
+
+                viewModel.onSaveClicked(
+                    context,
+                    viewModel.product.rebuild((b) => b
+                      ..productKey = _productKey
+                      ..notes = _notes
+                      ..cost = _cost));
+              },
+            );
+          }),
+          viewModel.product.id == null
+              ? Container()
+              : ActionMenuButton(
                   entity: viewModel.product,
                   onSelected: viewModel.onActionSelected,
                 )
-              ],
+        ],
       ),
       body: Form(
+        key: _formKey,
         child: ListView(
           children: <Widget>[
             FormCard(
@@ -88,49 +110,9 @@ class _ProductEditState extends State<ProductEdit> {
                 ),
               ],
             ),
-            new Builder(builder: (BuildContext context) {
-              return viewModel.product.isDeleted == true
-                  ? Container()
-                  : ProgressButton(
-                      label: AppLocalization.of(context).save.toUpperCase(),
-                      isLoading: viewModel.isLoading,
-                      isDirty: viewModel.isDirty,
-                      onPressed: () {
-                        if (!ProductEdit.formKey.currentState.validate()) {
-                          return;
-                        }
-                        ProductEdit.formKey.currentState.save();
-
-                        viewModel.onSaveClicked(
-                            context,
-                            viewModel.product.rebuild((b) => b
-                              ..productKey = _productKey
-                              ..notes = _notes
-                              ..cost = _cost));
-                      },
-                    );
-            }),
           ],
         ),
       ),
-      /*
-      floatingActionButton: FloatingActionButton(
-        key: ArchSampleKeys.editProductFab,
-        tooltip: localizations.editProduct,
-        child: Icon(Icons.edit),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return EditProduct(
-                  product: product,
-                );
-              },
-            ),
-          );
-        },
-      ),
-      */
     );
   }
 }
