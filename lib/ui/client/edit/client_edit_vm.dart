@@ -57,6 +57,7 @@ class ClientEditVM {
             } else {
               Navigator.of(context).pop();
             }
+            /*
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: client.id == null
@@ -64,6 +65,7 @@ class ClientEditVM {
                       : AppLocalization.of(context).successfullyUpdatedClient,
                 ),
                 duration: Duration(seconds: 3)));
+                */
           });
         });
   }

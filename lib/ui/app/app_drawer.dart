@@ -71,14 +71,16 @@ class AppDrawer extends StatelessWidget {
             color: Colors.white10,
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.tachometerAlt),
+            dense: true,
+            leading: Icon(FontAwesomeIcons.tachometerAlt, size: 22.0),
             title: Text(AppLocalization.of(context).dashboard),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
             },
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.users),
+            dense: true,
+            leading: Icon(FontAwesomeIcons.users, size: 22.0),
             title: Text(AppLocalization.of(context).clients),
             onTap: () {
               StoreProvider.of<AppState>(context).dispatch(SearchClients(null));
@@ -86,7 +88,8 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.cube),
+            dense: true,
+            leading: Icon(FontAwesomeIcons.cube, size: 22.0),
             title: Text(AppLocalization.of(context).products),
             onTap: () {
               StoreProvider.of<AppState>(context).dispatch(SearchProducts(null));
@@ -95,13 +98,14 @@ class AppDrawer extends StatelessWidget {
           ),
           /*
           ListTile(
-            leading: Icon(Icons.email),
+            leading: Icon(Icons.email, size: 22.0),
             title: Text(''),
             onTap: () {},
           ),
           */
           ListTile(
-            leading: Icon(FontAwesomeIcons.powerOff),
+            dense: true,
+            leading: Icon(FontAwesomeIcons.powerOff, size: 22.0),
             title: Text(AppLocalization.of(context).logOut),
             onTap: () {
               viewModel.onLogoutTapped(context);
@@ -111,7 +115,7 @@ class AppDrawer extends StatelessWidget {
             applicationName: 'Invoice Ninja',
             applicationIcon: Image.asset('assets/images/logo.png', width: 40.0, height: 40.0,),
             applicationVersion: 'v' + kAppVersion,
-            icon: Icon(FontAwesomeIcons.info),
+            icon: Icon(FontAwesomeIcons.info, size: 22.0),
           ),
         ],
       ),
