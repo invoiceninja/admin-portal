@@ -84,7 +84,14 @@ class ClientEditContactsState extends State<ClientEditContacts>
         elevation: 4.0,
         color: Theme.of(context).primaryColor,
         textColor: Theme.of(context).secondaryHeaderColor,
-        child: Text(localization.addContact.toUpperCase()),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(localization.addContact.toUpperCase()),
+            SizedBox(width:12.0),
+            Icon(Icons.person_add),
+          ],
+        ),
         onPressed: _onAddPressed,
       ),
     ));

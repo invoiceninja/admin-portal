@@ -102,7 +102,9 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      listTiles.add(Divider());
+      if (listTiles.length > 0) {
+        listTiles.add(Divider());
+      }
 
       if ((client.vatNumber ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
