@@ -25,7 +25,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
-      throw '${localization.error}: ${localization.couldNotLaunch}';
+      throw '${localization.couldNotLaunch}';
     }
   }
 
