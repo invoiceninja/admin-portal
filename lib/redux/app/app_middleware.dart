@@ -3,7 +3,9 @@ import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/repositories/persistence_repository.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
+import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:redux/redux.dart';
@@ -32,6 +34,20 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, ArchiveProductSuccess>(dataLoaded),
     TypedMiddleware<AppState, DeleteProductSuccess>(dataLoaded),
     TypedMiddleware<AppState, RestoreProductSuccess>(dataLoaded),
+
+    TypedMiddleware<AppState, LoadClientsSuccess>(dataLoaded),
+    TypedMiddleware<AppState, AddClientSuccess>(dataLoaded),
+    TypedMiddleware<AppState, SaveClientSuccess>(dataLoaded),
+    TypedMiddleware<AppState, ArchiveClientSuccess>(dataLoaded),
+    TypedMiddleware<AppState, DeleteClientSuccess>(dataLoaded),
+    TypedMiddleware<AppState, RestoreClientSuccess>(dataLoaded),
+
+    TypedMiddleware<AppState, LoadInvoicesSuccess>(dataLoaded),
+    TypedMiddleware<AppState, AddInvoiceSuccess>(dataLoaded),
+    TypedMiddleware<AppState, SaveInvoiceSuccess>(dataLoaded),
+    TypedMiddleware<AppState, ArchiveInvoiceSuccess>(dataLoaded),
+    TypedMiddleware<AppState, DeleteInvoiceSuccess>(dataLoaded),
+    TypedMiddleware<AppState, RestoreInvoiceSuccess>(dataLoaded),
   ];
 }
 

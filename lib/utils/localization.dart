@@ -105,6 +105,20 @@ class AppLocalization {
       'successfully_archived_invoice': 'Successfully archived invoice',
       'successfully_deleted_invoice': 'Successfully deleted invoice',
       'successfully_restored_invoice': 'Successfully restored invoice',
+      'amount': 'Amount',
+      'invoice_number': 'Invoice Number',
+      'invoice_date': 'Invoice Date',
+      'discount': 'Discount',
+      'po_number': 'PO Number',
+      'terms': 'Terms',
+      'public_notes': 'Public Notes',
+      'private_notes': 'Private Notes',
+      'frequency': 'Frequency',
+      'start_date': 'Start Date',
+      'end_date': 'End Date',
+      'quote_number': 'Quote Number',
+      'quote_date': 'Quote Date',
+      'valid_until': 'Valid Until',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -202,6 +216,20 @@ class AppLocalization {
   String get successfullyArchivedInvoice => _localizedValues[locale.languageCode]['successfully_archived_invoice'];
   String get successfullyDeletedInvoice => _localizedValues[locale.languageCode]['successfully_deleted_invoice'];
   String get successfullyRestoredInvoice => _localizedValues[locale.languageCode]['successfully_restored_invoice'];
+  String get amount => _localizedValues[locale.languageCode]['amount'];
+  String get invoiceNumber => _localizedValues[locale.languageCode]['invoice_number'];
+  String get invoiceDate => _localizedValues[locale.languageCode]['invoice_date'];
+  String get discount => _localizedValues[locale.languageCode]['discount'];
+  String get poNumber => _localizedValues[locale.languageCode]['po_number'];
+  String get terms => _localizedValues[locale.languageCode]['terms'];
+  String get publicNotes => _localizedValues[locale.languageCode]['public_notes'];
+  String get privateNotes => _localizedValues[locale.languageCode]['private_notes'];
+  String get frequency => _localizedValues[locale.languageCode]['frequency'];
+  String get startDate => _localizedValues[locale.languageCode]['start_date'];
+  String get endDate => _localizedValues[locale.languageCode]['end_date'];
+  String get quoteNumber => _localizedValues[locale.languageCode]['quote_number'];
+  String get quoteDate => _localizedValues[locale.languageCode]['quote_date'];
+  String get validUntil => _localizedValues[locale.languageCode]['valid_until'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
