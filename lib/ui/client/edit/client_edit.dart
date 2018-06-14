@@ -4,11 +4,10 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
-
-import '../../app/save_icon_button.dart';
-import 'client_edit_billing_address.dart';
-import 'client_edit_contacts.dart';
-import 'client_edit_shipping_address.dart';
+import 'package:invoiceninja/ui/app/save_icon_button.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_billing_address.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_contacts.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_shipping_address.dart';
 
 class ClientEdit extends StatefulWidget {
   final ClientEditVM viewModel;

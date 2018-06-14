@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
-
-import '../../app/save_icon_button.dart';
+import 'package:invoiceninja/ui/app/save_icon_button.dart';
 
 class InvoiceEdit extends StatefulWidget {
   final InvoiceEditVM viewModel;
@@ -20,100 +21,89 @@ class InvoiceEdit extends StatefulWidget {
   _InvoiceEditState createState() => _InvoiceEditState();
 }
 
-class _InvoiceEditState extends State<InvoiceEdit> {
+class _InvoiceEditState extends State<InvoiceEdit>
+    with SingleTickerProviderStateMixin {
+  TabController _controller;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<InvoiceEditDetailsState> _detailsKey =
+      GlobalKey<InvoiceEditDetailsState>();
+  static final GlobalKey<InvoiceEditItemsState> _itemsKey =
+      GlobalKey<InvoiceEditItemsState>();
 
-  String _invoiceKey;
-  String _notes;
-  double _cost;
+  @override
+  void initState() {
+    super.initState();
+    _controller = new TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = widget.viewModel;
+    var localization = AppLocalization.of(context);
+    var invoice = widget.viewModel.invoice;
+
+    List<Widget> editors = [
+      InvoiceEditDetails(
+        invoice: invoice,
+        key: _detailsKey,
+      ),
+      InvoiceEditItems(
+        invoice: invoice,
+        key: _itemsKey,
+      ),
+    ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(viewModel.invoice.isNew()
-            ? AppLocalization.of(context).newInvoice
-            : viewModel.invoice.invoiceNumber),
+        title: Text(invoice.isNew()
+            ? localization.newInvoice
+            : invoice.invoiceNumber),
         actions: <Widget>[
-          Builder(builder: (BuildContext context) {
-            return SaveIconButton(
-              isLoading: viewModel.isLoading,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
+          SaveIconButton(
+            isLoading: widget.viewModel.isLoading,
+            onPressed: () {
+              if (! _formKey.currentState.validate()) {
+                return;
+              }
 
-                _formKey.currentState.save();
-                /*
-                viewModel.onSaveClicked(
-                    context,
-                    viewModel.invoice.rebuild((b) => b
-                      ..invoiceNumber= _invoiceKey
-                      ..notes = _notes
-                      ..cost = _cost));
-                      */
-              },
-            );
-          }),
-          viewModel.invoice.isNew()
-              ? Container()
-              : ActionMenuButton(
-                  entity: viewModel.invoice,
-                  onSelected: viewModel.onActionSelected,
-                )
+              _formKey.currentState.save();
+
+              var detailsState = _detailsKey.currentState;
+              var itemsState = _itemsKey.currentState;
+
+              /*
+              InvoiceEntity invoice = widget.viewModel.invoice.rebuild((b) => b
+                ..items.replace(
+                    itemState?.getItems() ?? widget.viewModel.invoice.items));
+              */
+
+              widget.viewModel.onSaveClicked(context, invoice);
+            },
+          )
         ],
+        bottom: TabBar(
+          controller: _controller,
+          //isScrollable: true,
+          tabs: [
+            Tab(
+              text: localization.details,
+            ),
+            Tab(
+              text: localization.items,
+            ),
+          ],
+        ),
       ),
       body: Form(
         key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            FormCard(
-              children: <Widget>[
-                /*
-                TextFormField(
-                  autocorrect: false,
-                  onSaved: (value) {
-                    _invoiceKey = value;
-                  },
-                  initialValue: viewModel.invoice.invoiceKey,
-                  decoration: InputDecoration(
-                    //border: InputBorder.none,
-                    labelText: AppLocalization.of(context).invoice,
-                  ),
-                  validator: (val) => val.isEmpty || val.trim().length == 0
-                      ? AppLocalization.of(context).pleaseEnterAInvoiceKey
-                      : null,
-                ),
-                TextFormField(
-                  initialValue: viewModel.invoice.notes,
-                  onSaved: (value) {
-                    _notes = value;
-                  },
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).notes,
-                  ),
-                ),
-                TextFormField(
-                  initialValue: viewModel.invoice.cost == null ||
-                          viewModel.invoice.cost == 0.0
-                      ? null
-                      : viewModel.invoice.cost.toStringAsFixed(2),
-                  onSaved: (value) {
-                    _cost = double.tryParse(value) ?? 0.0;
-                  },
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    //border: InputBorder.none,
-                    labelText: AppLocalization.of(context).cost,
-                  ),
-                ),
-                */
-              ],
-            ),
-          ],
+        child: TabBarView(
+          controller: _controller,
+          children: editors,
         ),
       ),
     );

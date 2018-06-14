@@ -119,6 +119,8 @@ class AppLocalization {
       'quote_number': 'Quote Number',
       'quote_date': 'Quote Date',
       'valid_until': 'Valid Until',
+      'items': 'Items',
+      'partial': 'Partial/Deposit',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -230,6 +232,9 @@ class AppLocalization {
   String get quoteNumber => _localizedValues[locale.languageCode]['quote_number'];
   String get quoteDate => _localizedValues[locale.languageCode]['quote_date'];
   String get validUntil => _localizedValues[locale.languageCode]['valid_until'];
+  String get items => _localizedValues[locale.languageCode]['items'];
+  String get partial => _localizedValues[locale.languageCode]['partial'];
+
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
