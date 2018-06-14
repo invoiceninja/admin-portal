@@ -1,4 +1,5 @@
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -27,7 +28,7 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
     var origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origProduct, EntityAction.archive)
+            origProduct, EntityAction.archive)
         .then((product) {
       store.dispatch(ArchiveProductSuccess(product));
       if (action.completer != null) {
@@ -47,7 +48,7 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
     var origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origProduct, EntityAction.delete)
+            origProduct, EntityAction.delete)
         .then((product) {
       store.dispatch(DeleteProductSuccess(product));
       if (action.completer != null) {
@@ -67,7 +68,7 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
     var origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origProduct, EntityAction.restore)
+            origProduct, EntityAction.restore)
         .then((product) {
       store.dispatch(RestoreProductSuccess(product));
       if (action.completer != null) {
@@ -85,8 +86,8 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
 Middleware<AppState> _saveProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            action.product)
+        .saveData(
+            store.state.selectedCompany, store.state.authState, action.product)
         .then((product) {
       if (action.product.isNew()) {
         store.dispatch(AddProductSuccess(product));
@@ -105,8 +106,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    
-    if (! store.state.productState.isStale && ! action.force) {
+    if (!store.state.productState.isStale && !action.force) {
       next(action);
       return;
     }
@@ -124,9 +124,11 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
+      if (!store.state.clientState.isLoaded) {
+        store.dispatch(LoadClientsAction());
+      }
     }).catchError((error) => store.dispatch(LoadProductsFailure(error)));
 
     next(action);
   };
 }
-

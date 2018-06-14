@@ -15,11 +15,9 @@ class InvoiceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (! viewModel.isLoaded) {
-      /*
       if (! viewModel.isLoading) {
         viewModel.onRefreshed(context);
       }
-      */
       return LoadingIndicator();
     }
 

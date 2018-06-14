@@ -1,4 +1,5 @@
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -124,6 +125,9 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
 
       if (action.completer != null) {
         action.completer.complete(null);
+      }
+      if (!store.state.invoiceState.isLoaded) {
+        store.dispatch(LoadInvoicesAction());
       }
     }).catchError((error) => store.dispatch(LoadClientsFailure(error)));
 

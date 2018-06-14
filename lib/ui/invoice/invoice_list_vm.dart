@@ -66,14 +66,6 @@ class InvoiceListVM {
       });
     }
 
-    if (! store.state.isLoading) {
-      if (! store.state.clientState.isLoaded) {
-        store.dispatch(LoadClientsAction());
-      } else if (! store.state.invoiceState.isLoaded) {
-        store.dispatch(LoadInvoicesAction());
-      }
-    }
-    
     return InvoiceListVM(
         invoiceList: memoizedInvoiceList(store.state.invoiceState.map,
             store.state.invoiceState.list, store.state.invoiceListState),

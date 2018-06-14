@@ -1,3 +1,4 @@
+import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -32,6 +33,9 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
               store.dispatch(LoadDashboardSuccess(data));
               if (action.completer != null) {
                 action.completer.complete(null);
+              }
+              if (! store.state.productState.isLoaded) {
+                store.dispatch(LoadProductsAction());
               }
             }
     ).catchError((error) => store.dispatch(LoadDashboardFailure(error)));
