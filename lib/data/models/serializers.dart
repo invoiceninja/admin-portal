@@ -38,6 +38,30 @@ part 'serializers.g.dart';
   TaskItemResponse,
   VendorListResponse,
   VendorItemResponse,
+  StaticDataItemResponse,
+  CountryItemResponse,
+  CountryListResponse,
+  CurrencyItemResponse,
+  CurrencyListResponse,
+  DateFormatItemResponse,
+  DateFormatListResponse,
+  DatetimeFormatItemResponse,
+  DatetimeFormatListResponse,
+  FrequencyItemResponse,
+  FrequencyListResponse,
+  IndustryItemResponse,
+  IndustryListResponse,
+  InvoiceDesignItemResponse,
+  InvoiceDesignListResponse,
+  LanguageItemResponse,
+  LanguageListResponse,
+  PaymentTypeItemResponse,
+  PaymentTypeListResponse,
+  SizeItemResponse,
+  SizeListResponse,
+  TimezoneItemResponse,
+  TimezoneListResponse
+  
 ])
 final Serializers serializers =
 (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

@@ -133,13 +133,13 @@ class _$DatetimeFormatEntitySerializer
       result
         ..add('format')
         ..add(serializers.serialize(object.format,
-            specifiedType: const FullType(double)));
+            specifiedType: const FullType(String)));
     }
     if (object.formatMoment != null) {
       result
         ..add('format_moment')
         ..add(serializers.serialize(object.formatMoment,
-            specifiedType: const FullType(double)));
+            specifiedType: const FullType(String)));
     }
 
     return result;
@@ -158,11 +158,11 @@ class _$DatetimeFormatEntitySerializer
       switch (key) {
         case 'format':
           result.format = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'format_moment':
           result.formatMoment = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -361,9 +361,9 @@ class DatetimeFormatItemResponseBuilder
 
 class _$DatetimeFormatEntity extends DatetimeFormatEntity {
   @override
-  final double format;
+  final String format;
   @override
-  final double formatMoment;
+  final String formatMoment;
 
   factory _$DatetimeFormatEntity(
           [void updates(DatetimeFormatEntityBuilder b)]) =>
@@ -404,13 +404,13 @@ class DatetimeFormatEntityBuilder
     implements Builder<DatetimeFormatEntity, DatetimeFormatEntityBuilder> {
   _$DatetimeFormatEntity _$v;
 
-  double _format;
-  double get format => _$this._format;
-  set format(double format) => _$this._format = format;
+  String _format;
+  String get format => _$this._format;
+  set format(String format) => _$this._format = format;
 
-  double _formatMoment;
-  double get formatMoment => _$this._formatMoment;
-  set formatMoment(double formatMoment) => _$this._formatMoment = formatMoment;
+  String _formatMoment;
+  String get formatMoment => _$this._formatMoment;
+  set formatMoment(String formatMoment) => _$this._formatMoment = formatMoment;
 
   DatetimeFormatEntityBuilder();
 

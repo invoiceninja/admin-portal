@@ -30,11 +30,11 @@ class DatetimeFormatFields {
 abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, DatetimeFormatEntityBuilder> {
 
   @nullable
-  double get format;
+  String get format;
 
   @nullable
   @BuiltValueField(wireName: 'format_moment')
-  double get formatMoment;
+  String get formatMoment;
   
 
   DatetimeFormatEntity._();
