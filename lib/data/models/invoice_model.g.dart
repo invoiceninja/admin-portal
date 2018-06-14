@@ -641,13 +641,13 @@ class _$InvoiceItemEntitySerializer
       result
         ..add('cost')
         ..add(serializers.serialize(object.cost,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(double)));
     }
     if (object.qty != null) {
       result
         ..add('qty')
         ..add(serializers.serialize(object.qty,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(double)));
     }
     if (object.taxName1 != null) {
       result
@@ -746,11 +746,11 @@ class _$InvoiceItemEntitySerializer
           break;
         case 'cost':
           result.cost = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(double)) as double;
           break;
         case 'qty':
           result.qty = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(double)) as double;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
@@ -1744,9 +1744,9 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final String notes;
   @override
-  final String cost;
+  final double cost;
   @override
-  final String qty;
+  final double qty;
   @override
   final String taxName1;
   @override
@@ -1897,13 +1897,13 @@ class InvoiceItemEntityBuilder
   String get notes => _$this._notes;
   set notes(String notes) => _$this._notes = notes;
 
-  String _cost;
-  String get cost => _$this._cost;
-  set cost(String cost) => _$this._cost = cost;
+  double _cost;
+  double get cost => _$this._cost;
+  set cost(double cost) => _$this._cost = cost;
 
-  String _qty;
-  String get qty => _$this._qty;
-  set qty(String qty) => _$this._qty = qty;
+  double _qty;
+  double get qty => _$this._qty;
+  set qty(double qty) => _$this._qty = qty;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;

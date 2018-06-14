@@ -216,10 +216,10 @@ abstract class InvoiceEntity extends Object with BaseEntity
   //String get last_login;
   //String get custom_messages;
 
-  int compareTo(InvoiceEntity client, String sortField, bool sortAscending) {
+  int compareTo(InvoiceEntity invoice, String sortField, bool sortAscending) {
     int response = 0;
-    InvoiceEntity clientA = sortAscending ? this : client;
-    InvoiceEntity clientB = sortAscending ? client: this;
+    InvoiceEntity invoiceA = sortAscending ? this : invoice;
+    InvoiceEntity invoiceB = sortAscending ? invoice: this;
 
     /*
     switch (sortField) {
@@ -228,7 +228,7 @@ abstract class InvoiceEntity extends Object with BaseEntity
     }
     */
     if (response == 0) {
-      return clientA.invoiceNumber.compareTo(clientB.invoiceNumber);
+      return invoiceA.invoiceNumber.compareTo(invoiceB.invoiceNumber);
     } else {
       return response;
     }
@@ -258,10 +258,10 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
   String get notes;
 
   @nullable
-  String get cost;
+  double get cost;
 
   @nullable
-  String get qty;
+  double get qty;
 
   @nullable
   @BuiltValueField(wireName: 'tax_name1')

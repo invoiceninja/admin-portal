@@ -124,7 +124,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       result
         ..add('duration')
         ..add(serializers.serialize(object.duration,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(int)));
     }
     if (object.invoiceId != null) {
       result
@@ -213,7 +213,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           break;
         case 'duration':
           result.duration = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(int)) as int;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
@@ -449,7 +449,7 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String description;
   @override
-  final String duration;
+  final int duration;
   @override
   final int invoiceId;
   @override
@@ -575,9 +575,9 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get description => _$this._description;
   set description(String description) => _$this._description = description;
 
-  String _duration;
-  String get duration => _$this._duration;
-  set duration(String duration) => _$this._duration = duration;
+  int _duration;
+  int get duration => _$this._duration;
+  set duration(int duration) => _$this._duration = duration;
 
   int _invoiceId;
   int get invoiceId => _$this._invoiceId;

@@ -45,7 +45,7 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
   String get description;
 
   @nullable
-  String get duration;
+  int get duration;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
