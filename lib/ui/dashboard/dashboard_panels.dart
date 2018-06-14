@@ -16,7 +16,7 @@ class DashboardPanels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppLoading(builder: (context, loading) {
-      return ! viewModel.dashboardState.isLoaded()
+      return ! viewModel.dashboardState.isLoaded
           ? LoadingIndicator()
           : _buildPanels(context);
     });

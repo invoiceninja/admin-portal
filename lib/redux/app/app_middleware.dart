@@ -78,7 +78,7 @@ Middleware<AppState> _createDataLoaded(PersistenceRepository repository) {
     // first process the action so the data is in the state
     next(action);
 
-    if (store.state.isLoaded()) {
+    if (store.state.isLoaded) {
       repository.saveData(store.state);
     }
   };

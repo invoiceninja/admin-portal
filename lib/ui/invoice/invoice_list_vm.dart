@@ -66,25 +66,22 @@ class InvoiceListVM {
       });
     }
 
-    print('Buildin..');
     if (! store.state.isLoading) {
-      if (! store.state.clientState().isLoaded()) {
-        print('loadin client');
+      if (! store.state.clientState.isLoaded) {
         store.dispatch(LoadClientsAction());
-      } else if (! store.state.invoiceState().isLoaded()) {
-        print('loadin invoice');
+      } else if (! store.state.invoiceState.isLoaded) {
         store.dispatch(LoadInvoicesAction());
       }
     }
     
     return InvoiceListVM(
-        invoiceList: memoizedInvoiceList(store.state.invoiceState().map,
-            store.state.invoiceState().list, store.state.invoiceListState()),
-        invoiceMap: store.state.invoiceState().map,
-        clientMap: store.state.clientState().map,
+        invoiceList: memoizedInvoiceList(store.state.invoiceState.map,
+            store.state.invoiceState.list, store.state.invoiceListState),
+        invoiceMap: store.state.invoiceState.map,
+        clientMap: store.state.clientState.map,
         isLoading: store.state.isLoading,
-        isLoaded: store.state.invoiceState().isLoaded() &&
-            store.state.clientState().isLoaded(),
+        isLoaded: store.state.invoiceState.isLoaded &&
+            store.state.clientState.isLoaded,
         onInvoiceTap: (context, invoice) {
           store.dispatch(SelectInvoiceAction(invoice));
           Navigator

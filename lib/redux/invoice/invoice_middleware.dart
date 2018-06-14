@@ -24,9 +24,9 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
 
 Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origInvoice = store.state.invoiceState().map[action.invoiceId];
+    var origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origInvoice, EntityAction.archive)
         .then((invoice) {
       store.dispatch(ArchiveInvoiceSuccess(invoice));
@@ -44,9 +44,9 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
 
 Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origInvoice = store.state.invoiceState().map[action.invoiceId];
+    var origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origInvoice, EntityAction.delete)
         .then((invoice) {
       store.dispatch(DeleteInvoiceSuccess(invoice));
@@ -64,9 +64,9 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
 
 Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origInvoice = store.state.invoiceState().map[action.invoiceId];
+    var origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origInvoice, EntityAction.restore)
         .then((invoice) {
       store.dispatch(RestoreInvoiceSuccess(invoice));
@@ -85,7 +85,7 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
 Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
             action.invoice)
         .then((invoice) {
       if (action.invoice.isNew()) {
@@ -106,7 +106,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
 Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     
-    if (! store.state.invoiceState().isStale() && ! action.force) {
+    if (! store.state.invoiceState.isStale && ! action.force) {
       next(action);
       return;
     }
@@ -118,7 +118,7 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
 
     store.dispatch(LoadInvoicesRequest());
     repository
-        .loadList(store.state.selectedCompany(), store.state.authState)
+        .loadList(store.state.selectedCompany, store.state.authState)
         .then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {

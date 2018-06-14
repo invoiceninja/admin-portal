@@ -64,10 +64,10 @@ class ProductListVM {
       }
 
     return ProductListVM(
-        productList: memoizedProductList(store.state.productState().map, store.state.productState().list, store.state.productListState()),
-        productMap: store.state.productState().map,
+        productList: memoizedProductList(store.state.productState.map, store.state.productState.list, store.state.productListState),
+        productMap: store.state.productState.map,
         isLoading: store.state.isLoading,
-        isLoaded: store.state.productState().isLoaded(),
+        isLoaded: store.state.productState.isLoaded,
         onProductTap: (context, product) {
           store.dispatch(SelectProductAction(product));
           Navigator

@@ -24,9 +24,9 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 
 Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origClient = store.state.clientState().map[action.clientId];
+    var origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origClient, EntityAction.archive)
         .then((client) {
       store.dispatch(ArchiveClientSuccess(client));
@@ -44,9 +44,9 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
 
 Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origClient = store.state.clientState().map[action.clientId];
+    var origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origClient, EntityAction.delete)
         .then((client) {
       store.dispatch(DeleteClientSuccess(client));
@@ -64,9 +64,9 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 
 Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origClient = store.state.clientState().map[action.clientId];
+    var origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origClient, EntityAction.restore)
         .then((client) {
       store.dispatch(RestoreClientSuccess(client));
@@ -85,7 +85,7 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
 Middleware<AppState> _saveClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
             action.client)
         .then((client) {
       if (action.client.isNew()) {
@@ -106,7 +106,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 Middleware<AppState> _loadClients(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     
-    if (! store.state.clientState().isStale() && ! action.force) {
+    if (! store.state.clientState.isStale && ! action.force) {
       next(action);
       return;
     }
@@ -118,7 +118,7 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
 
     store.dispatch(LoadClientsRequest());
     repository
-        .loadList(store.state.selectedCompany(), store.state.authState)
+        .loadList(store.state.selectedCompany, store.state.authState)
         .then((data) {
       store.dispatch(LoadClientsSuccess(data));
 

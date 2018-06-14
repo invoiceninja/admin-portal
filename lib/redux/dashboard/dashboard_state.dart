@@ -22,15 +22,15 @@ abstract class DashboardState implements Built<DashboardState, DashboardStateBui
     );
   }
 
-  bool isStale() {
-    if (! isLoaded()) {
+  bool get isStale {
+    if (! isLoaded) {
       return true;
     }
 
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool isLoaded() {
+  bool get isLoaded {
     return lastUpdated != null;
   }
 

@@ -24,9 +24,9 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origProduct = store.state.productState().map[action.productId];
+    var origProduct = store.state.productState.map[action.productId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origProduct, EntityAction.archive)
         .then((product) {
       store.dispatch(ArchiveProductSuccess(product));
@@ -44,9 +44,9 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
 
 Middleware<AppState> _deleteProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origProduct = store.state.productState().map[action.productId];
+    var origProduct = store.state.productState.map[action.productId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origProduct, EntityAction.delete)
         .then((product) {
       store.dispatch(DeleteProductSuccess(product));
@@ -64,9 +64,9 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
 
 Middleware<AppState> _restoreProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origProduct = store.state.productState().map[action.productId];
+    var origProduct = store.state.productState.map[action.productId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origProduct, EntityAction.restore)
         .then((product) {
       store.dispatch(RestoreProductSuccess(product));
@@ -85,7 +85,7 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
 Middleware<AppState> _saveProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
             action.product)
         .then((product) {
       if (action.product.isNew()) {
@@ -106,7 +106,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     
-    if (! store.state.productState().isStale() && ! action.force) {
+    if (! store.state.productState.isStale && ! action.force) {
       next(action);
       return;
     }
@@ -118,7 +118,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
 
     store.dispatch(LoadProductsRequest());
     repository
-        .loadList(store.state.selectedCompany(), store.state.authState)
+        .loadList(store.state.selectedCompany, store.state.authState)
         .then((data) {
       store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
