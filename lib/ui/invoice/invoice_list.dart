@@ -36,6 +36,7 @@ class InvoiceList extends StatelessWidget {
             return Column(children: <Widget>[
               InvoiceItem(
                 invoice: invoice,
+                client: viewModel.clientMap[invoice.clientId],
                 onDismissed: (DismissDirection direction) =>
                     viewModel.onDismissed(context, invoice, direction),
                 onTap: () => viewModel.onInvoiceTap(context, invoice),

@@ -11,6 +11,7 @@ class InvoiceItem extends StatelessWidget {
   final GestureTapCallback onTap;
   //final ValueChanged<bool> onCheckboxChanged;
   final InvoiceEntity invoice;
+  final ClientEntity client;
 
   static final invoiceItemKey = (int id) => Key('__invoice_item_${id}__');
 
@@ -19,6 +20,7 @@ class InvoiceItem extends StatelessWidget {
     @required this.onTap,
     //@required this.onCheckboxChanged,
     @required this.invoice,
+    @required this.client,
   });
 
   @override
@@ -45,7 +47,8 @@ class InvoiceItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  invoice.invoiceNumber,
+                  client.displayName,
+                  //invoice.invoiceNumber,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
@@ -56,6 +59,7 @@ class InvoiceItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text(invoice.invoiceNumber),
             /*
             invoice.notes.isNotEmpty
                 ? Text(

@@ -26,7 +26,7 @@ class AppSearch extends StatelessWidget {
           store.state.getListState(entityType),
       builder: (BuildContext context, listUIState) {
         return listUIState.search == null
-            ? Text(localization.lookup(entityType.toString()))
+            ? Text(localization.lookup(entityType.plural.toString()))
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 height: 38.0,
