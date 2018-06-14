@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -53,24 +54,37 @@ class InvoiceListVM {
   });
 
   static InvoiceListVM fromStore(Store<AppState> store) {
-      Future<Null> _handleRefresh(BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(LoadInvoicesAction(completer, true));
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-                message: AppLocalization.of(context).refreshComplete,
-              ),
-              duration: Duration(seconds: 3)));
-        });
-      }
+    Future<Null> _handleRefresh(BuildContext context) {
+      final Completer<Null> completer = new Completer<Null>();
+      store.dispatch(LoadInvoicesAction(completer, true));
+      return completer.future.then((_) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+            content: SnackBarRow(
+              message: AppLocalization.of(context).refreshComplete,
+            ),
+            duration: Duration(seconds: 3)));
+      });
+    }
 
+    print('Buildin..');
+    if (! store.state.isLoading) {
+      if (! store.state.clientState().isLoaded()) {
+        print('loadin client');
+        store.dispatch(LoadClientsAction());
+      } else if (! store.state.invoiceState().isLoaded()) {
+        print('loadin invoice');
+        store.dispatch(LoadInvoicesAction());
+      }
+    }
+    
     return InvoiceListVM(
-        invoiceList: memoizedInvoiceList(store.state.invoiceState().map, store.state.invoiceState().list, store.state.invoiceListState()),
+        invoiceList: memoizedInvoiceList(store.state.invoiceState().map,
+            store.state.invoiceState().list, store.state.invoiceListState()),
         invoiceMap: store.state.invoiceState().map,
         clientMap: store.state.clientState().map,
         isLoading: store.state.isLoading,
-        isLoaded: store.state.invoiceState().lastUpdated > 0,
+        isLoaded: store.state.invoiceState().isLoaded() &&
+            store.state.clientState().isLoaded(),
         onInvoiceTap: (context, invoice) {
           store.dispatch(SelectInvoiceAction(invoice));
           Navigator

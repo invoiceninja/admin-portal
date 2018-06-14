@@ -68,7 +68,7 @@ class ClientListVM {
         clientList: memoizedClientList(store.state.clientState().map, store.state.clientState().list, store.state.clientListState()),
         clientMap: store.state.clientState().map,
         isLoading: store.state.isLoading,
-        isLoaded: store.state.clientState().lastUpdated > 0,
+        isLoaded: store.state.clientState().isLoaded(),
         onClientTap: (context, client) {
           store.dispatch(SelectClientAction(client));
           Navigator

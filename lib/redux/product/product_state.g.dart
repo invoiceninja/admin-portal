@@ -30,9 +30,6 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
       'isLoading',
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
-      'lastUpdated',
-      serializers.serialize(object.lastUpdated,
-          specifiedType: const FullType(int)),
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap,
@@ -42,6 +39,12 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(int)])),
     ];
+    if (object.lastUpdated != null) {
+      result
+        ..add('lastUpdated')
+        ..add(serializers.serialize(object.lastUpdated,
+            specifiedType: const FullType(int)));
+    }
     if (object.editing != null) {
       result
         ..add('editing')
@@ -132,8 +135,6 @@ class _$ProductState extends ProductState {
       : super._() {
     if (isLoading == null)
       throw new BuiltValueNullFieldError('ProductState', 'isLoading');
-    if (lastUpdated == null)
-      throw new BuiltValueNullFieldError('ProductState', 'lastUpdated');
     if (map == null) throw new BuiltValueNullFieldError('ProductState', 'map');
     if (list == null)
       throw new BuiltValueNullFieldError('ProductState', 'list');

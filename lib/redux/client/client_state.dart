@@ -9,6 +9,8 @@ part 'client_state.g.dart';
 abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 
   bool get isLoading;
+
+  @nullable
   int get lastUpdated;
 
   BuiltMap<int, ClientEntity> get map;
@@ -23,13 +25,16 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   factory ClientState() {
     return _$ClientState._(
       isLoading: false,
-      lastUpdated: 0,
       map: BuiltMap<int, ClientEntity>(),
       list: BuiltList<int>(),
     );
   }
 
   bool isStale() {
+    if (! isLoaded()) {
+      return true;
+    }
+
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 

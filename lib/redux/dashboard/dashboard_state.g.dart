@@ -31,10 +31,13 @@ class _$DashboardStateSerializer
       'isLoading',
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
-      'lastUpdated',
-      serializers.serialize(object.lastUpdated,
-          specifiedType: const FullType(int)),
     ];
+    if (object.lastUpdated != null) {
+      result
+        ..add('lastUpdated')
+        ..add(serializers.serialize(object.lastUpdated,
+            specifiedType: const FullType(int)));
+    }
     if (object.data != null) {
       result
         ..add('data')
@@ -91,8 +94,6 @@ class _$DashboardState extends DashboardState {
       : super._() {
     if (isLoading == null)
       throw new BuiltValueNullFieldError('DashboardState', 'isLoading');
-    if (lastUpdated == null)
-      throw new BuiltValueNullFieldError('DashboardState', 'lastUpdated');
   }
 
   @override

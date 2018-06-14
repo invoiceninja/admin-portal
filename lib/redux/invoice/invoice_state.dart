@@ -9,6 +9,8 @@ part 'invoice_state.g.dart';
 abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> {
 
   bool get isLoading;
+
+  @nullable
   int get lastUpdated;
 
   BuiltMap<int, InvoiceEntity> get map;
@@ -23,13 +25,16 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
   factory InvoiceState() {
     return _$InvoiceState._(
       isLoading: false,
-      lastUpdated: 0,
       map: BuiltMap<int, InvoiceEntity>(),
       list: BuiltList<int>(),
     );
   }
 
   bool isStale() {
+    if (! isLoaded()) {
+      return true;
+    }
+
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 

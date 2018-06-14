@@ -29,9 +29,6 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
       'isLoading',
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
-      'lastUpdated',
-      serializers.serialize(object.lastUpdated,
-          specifiedType: const FullType(int)),
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap,
@@ -41,6 +38,12 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(int)])),
     ];
+    if (object.lastUpdated != null) {
+      result
+        ..add('lastUpdated')
+        ..add(serializers.serialize(object.lastUpdated,
+            specifiedType: const FullType(int)));
+    }
     if (object.editing != null) {
       result
         ..add('editing')
@@ -131,8 +134,6 @@ class _$ClientState extends ClientState {
       : super._() {
     if (isLoading == null)
       throw new BuiltValueNullFieldError('ClientState', 'isLoading');
-    if (lastUpdated == null)
-      throw new BuiltValueNullFieldError('ClientState', 'lastUpdated');
     if (map == null) throw new BuiltValueNullFieldError('ClientState', 'map');
     if (list == null) throw new BuiltValueNullFieldError('ClientState', 'list');
   }
