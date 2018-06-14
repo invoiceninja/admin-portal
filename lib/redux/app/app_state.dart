@@ -1,5 +1,6 @@
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/client/client_state.dart';
+import 'package:invoiceninja/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
@@ -73,6 +74,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return productListState();
       case EntityType.client:
         return clientListState();
+      case EntityType.invoice:
+        return invoiceListState();
       default:
         return null;
     }
@@ -85,4 +88,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ClientState clientState() => this.selectedCompanyState().clientState;
   EntityUIState clientUIState() => this.uiState.clientUIState;
   ListUIState clientListState() => this.uiState.clientUIState.listUIState;
+
+  InvoiceState invoiceState() => this.selectedCompanyState().invoiceState;
+  EntityUIState invoiceUIState() => this.uiState.invoiceUIState;
+  ListUIState invoiceListState() => this.uiState.invoiceUIState.listUIState;
 }

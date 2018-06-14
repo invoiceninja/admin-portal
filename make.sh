@@ -27,8 +27,9 @@ fi
 
 ## Create new files
 
-declare -a files=('lib/data/models/product_model.dart'
-   'lib/data/repositories/product_repository.dart'
+declare -a files=(
+   #'lib/data/models/product_model.dart'
+   #'lib/data/repositories/product_repository.dart'
    'lib/redux/product/product_actions.dart'
    'lib/redux/product/product_reducer.dart'
    'lib/redux/product/product_state.dart'

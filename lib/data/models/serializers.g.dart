@@ -42,6 +42,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(InvoiceItemEntity.serializer)
       ..add(InvoiceItemResponse.serializer)
       ..add(InvoiceListResponse.serializer)
+      ..add(InvoiceState.serializer)
       ..add(ListUIState.serializer)
       ..add(LoginResponse.serializer)
       ..add(PaymentEntity.serializer)
@@ -119,6 +120,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltMap,
               const [const FullType(int), const FullType(ClientEntity)]),
           () => new MapBuilder<int, ClientEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(int), const FullType(InvoiceEntity)]),
+          () => new MapBuilder<int, InvoiceEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())

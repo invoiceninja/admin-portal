@@ -5,10 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
-import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
