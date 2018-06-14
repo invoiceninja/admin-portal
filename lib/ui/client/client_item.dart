@@ -4,6 +4,8 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
+import '../app/entity_state_label.dart';
+
 class ClientItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
@@ -31,40 +33,14 @@ class ClientItem extends StatelessWidget {
         onTap: onTap,
         title: Container(
           width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  client.displayName,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
-                  style: Theme.of(context).textTheme.title,
-                ),
-              ),
-            ],
+          child: Text(
+            client.displayName,
+            style: Theme.of(context).textTheme.title,
           ),
         ),
-        //subtitle: Text(localization.paidToDate + ': ' + client.balance.toStringAsFixed(2)),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            client.isDeleted
-                ? Chip(
-                    label: Text(localization.deleted,
-                        style: TextStyle(color: Colors.white, fontSize: 11.0)),
-                    backgroundColor: Colors.red,
-                  )
-                : client.isArchived()
-                    ? Chip(
-                        label: Text(localization.archived,
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 11.0)),
-                        backgroundColor: Colors.orange,
-                      )
-                    : Container(),
-            SizedBox(width: 12.0),
-            Text(client.balance.toStringAsFixed(2)),
-          ],
-        ),
+        subtitle: EntityStateLabel(client),
+        trailing: Text(client.balance.toStringAsFixed(2),
+            style: Theme.of(context).textTheme.title),
       ),
     );
   }
