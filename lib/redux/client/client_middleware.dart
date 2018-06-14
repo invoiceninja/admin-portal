@@ -5,7 +5,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/repositories/client_repository.dart';
 
 List<Middleware<AppState>> createStoreClientsMiddleware([
-  ClientsRepository repository = const ClientsRepository(),
+  ClientRepository repository = const ClientRepository(),
 ]) {
   final loadClients = _loadClients(repository);
   final saveClient = _saveClient(repository);
@@ -22,7 +22,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   ];
 }
 
-Middleware<AppState> _archiveClient(ClientsRepository repository) {
+Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var origClient = store.state.clientState().map[action.clientId];
     repository
@@ -42,7 +42,7 @@ Middleware<AppState> _archiveClient(ClientsRepository repository) {
   };
 }
 
-Middleware<AppState> _deleteClient(ClientsRepository repository) {
+Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var origClient = store.state.clientState().map[action.clientId];
     repository
@@ -62,7 +62,7 @@ Middleware<AppState> _deleteClient(ClientsRepository repository) {
   };
 }
 
-Middleware<AppState> _restoreClient(ClientsRepository repository) {
+Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var origClient = store.state.clientState().map[action.clientId];
     repository
@@ -82,7 +82,7 @@ Middleware<AppState> _restoreClient(ClientsRepository repository) {
   };
 }
 
-Middleware<AppState> _saveClient(ClientsRepository repository) {
+Middleware<AppState> _saveClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
         .saveData(store.state.selectedCompany(), store.state.authState,
@@ -103,7 +103,7 @@ Middleware<AppState> _saveClient(ClientsRepository repository) {
   };
 }
 
-Middleware<AppState> _loadClients(ClientsRepository repository) {
+Middleware<AppState> _loadClients(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     
     if (! store.state.clientState().isStale() && ! action.force) {

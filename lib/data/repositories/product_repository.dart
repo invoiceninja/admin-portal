@@ -8,10 +8,10 @@ import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
-class ProductsRepository {
+class ProductRepository {
   final WebClient webClient;
 
-  const ProductsRepository({
+  const ProductRepository({
     this.webClient = const WebClient(),
   });
 

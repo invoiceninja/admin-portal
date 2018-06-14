@@ -5,7 +5,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/repositories/product_repository.dart';
 
 List<Middleware<AppState>> createStoreProductsMiddleware([
-  ProductsRepository repository = const ProductsRepository(),
+  ProductRepository repository = const ProductRepository(),
 ]) {
   final loadProducts = _loadProducts(repository);
   final saveProduct = _saveProduct(repository);
@@ -22,7 +22,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   ];
 }
 
-Middleware<AppState> _archiveProduct(ProductsRepository repository) {
+Middleware<AppState> _archiveProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var origProduct = store.state.productState().map[action.productId];
     repository
@@ -42,7 +42,7 @@ Middleware<AppState> _archiveProduct(ProductsRepository repository) {
   };
 }
 
-Middleware<AppState> _deleteProduct(ProductsRepository repository) {
+Middleware<AppState> _deleteProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var origProduct = store.state.productState().map[action.productId];
     repository
@@ -62,7 +62,7 @@ Middleware<AppState> _deleteProduct(ProductsRepository repository) {
   };
 }
 
-Middleware<AppState> _restoreProduct(ProductsRepository repository) {
+Middleware<AppState> _restoreProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var origProduct = store.state.productState().map[action.productId];
     repository
@@ -82,7 +82,7 @@ Middleware<AppState> _restoreProduct(ProductsRepository repository) {
   };
 }
 
-Middleware<AppState> _saveProduct(ProductsRepository repository) {
+Middleware<AppState> _saveProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
         .saveData(store.state.selectedCompany(), store.state.authState,
@@ -103,7 +103,7 @@ Middleware<AppState> _saveProduct(ProductsRepository repository) {
   };
 }
 
-Middleware<AppState> _loadProducts(ProductsRepository repository) {
+Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     
     if (! store.state.productState().isStale() && ! action.force) {
