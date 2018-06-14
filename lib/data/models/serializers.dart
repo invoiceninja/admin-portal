@@ -24,6 +24,20 @@ part 'serializers.g.dart';
   ProductItemResponse,
   ClientListResponse,
   ClientItemResponse,
+  CreditListResponse,
+  CreditItemResponse,
+  ProjectListResponse,
+  ProjectItemResponse,
+  PaymentListResponse,
+  PaymentItemResponse,
+  InvoiceListResponse,
+  InvoiceItemResponse,
+  ExpenseListResponse,
+  ExpenseItemResponse,
+  TaskListResponse,
+  TaskItemResponse,
+  VendorListResponse,
+  VendorItemResponse,
 ])
 final Serializers serializers =
 (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

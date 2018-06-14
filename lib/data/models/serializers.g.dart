@@ -24,19 +24,44 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CompanyEntity.serializer)
       ..add(CompanyState.serializer)
       ..add(ContactEntity.serializer)
+      ..add(CreditEntity.serializer)
+      ..add(CreditItemResponse.serializer)
+      ..add(CreditListResponse.serializer)
       ..add(DashboardEntity.serializer)
       ..add(DashboardResponse.serializer)
       ..add(DashboardState.serializer)
       ..add(EntityState.serializer)
       ..add(EntityUIState.serializer)
       ..add(ErrorMessage.serializer)
+      ..add(ExpenseCategoryEntity.serializer)
+      ..add(ExpenseEntity.serializer)
+      ..add(ExpenseItemResponse.serializer)
+      ..add(ExpenseListResponse.serializer)
+      ..add(InvitationEntity.serializer)
+      ..add(InvoiceEntity.serializer)
+      ..add(InvoiceItemEntity.serializer)
+      ..add(InvoiceItemResponse.serializer)
+      ..add(InvoiceListResponse.serializer)
       ..add(ListUIState.serializer)
       ..add(LoginResponse.serializer)
+      ..add(PaymentEntity.serializer)
+      ..add(PaymentItemResponse.serializer)
+      ..add(PaymentListResponse.serializer)
       ..add(ProductEntity.serializer)
       ..add(ProductItemResponse.serializer)
       ..add(ProductListResponse.serializer)
       ..add(ProductState.serializer)
+      ..add(ProjectEntity.serializer)
+      ..add(ProjectItemResponse.serializer)
+      ..add(ProjectListResponse.serializer)
+      ..add(TaskEntity.serializer)
+      ..add(TaskItemResponse.serializer)
+      ..add(TaskListResponse.serializer)
       ..add(UIState.serializer)
+      ..add(VendorContactEntity.serializer)
+      ..add(VendorEntity.serializer)
+      ..add(VendorItemResponse.serializer)
+      ..add(VendorListResponse.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ClientEntity)]),
           () => new ListBuilder<ClientEntity>())
@@ -47,14 +72,49 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ContactEntity)]),
           () => new ListBuilder<ContactEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(CreditEntity)]),
+          () => new ListBuilder<CreditEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => new ListBuilder<EntityState>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())
       ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(ExpenseCategoryEntity)]),
+          () => new ListBuilder<ExpenseCategoryEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ExpenseEntity)]),
+          () => new ListBuilder<ExpenseEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(InvoiceEntity)]),
+          () => new ListBuilder<InvoiceEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(InvoiceItemEntity)]),
+          () => new ListBuilder<InvoiceItemEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(InvitationEntity)]),
+          () => new ListBuilder<InvitationEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(PaymentEntity)]),
+          () => new ListBuilder<PaymentEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ProductEntity)]),
           () => new ListBuilder<ProductEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ProjectEntity)]),
+          () => new ListBuilder<ProjectEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(TaskEntity)]),
+          () => new ListBuilder<TaskEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(VendorContactEntity)]),
+          () => new ListBuilder<VendorContactEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(VendorEntity)]),
+          () => new ListBuilder<VendorEntity>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(int), const FullType(ClientEntity)]),
