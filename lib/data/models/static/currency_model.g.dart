@@ -18,7 +18,8 @@ Serializer<CurrencyListResponse> _$currencyListResponseSerializer =
     new _$CurrencyListResponseSerializer();
 Serializer<CurrencyItemResponse> _$currencyItemResponseSerializer =
     new _$CurrencyItemResponseSerializer();
-Serializer<Currency> _$currencySerializer = new _$CurrencySerializer();
+Serializer<CurrencyEntity> _$currencyEntitySerializer =
+    new _$CurrencyEntitySerializer();
 
 class _$CurrencyListResponseSerializer
     implements StructuredSerializer<CurrencyListResponse> {
@@ -36,8 +37,8 @@ class _$CurrencyListResponseSerializer
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Currency)])),
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(CurrencyEntity)])),
     ];
 
     return result;
@@ -56,8 +57,9 @@ class _$CurrencyListResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(
-                  BuiltList, const [const FullType(Currency)])) as BuiltList);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(CurrencyEntity)]))
+              as BuiltList);
           break;
       }
     }
@@ -82,7 +84,7 @@ class _$CurrencyItemResponseSerializer
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
-          specifiedType: const FullType(Currency)),
+          specifiedType: const FullType(CurrencyEntity)),
     ];
 
     return result;
@@ -101,7 +103,7 @@ class _$CurrencyItemResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Currency)) as Currency);
+              specifiedType: const FullType(CurrencyEntity)) as CurrencyEntity);
           break;
       }
     }
@@ -110,14 +112,15 @@ class _$CurrencyItemResponseSerializer
   }
 }
 
-class _$CurrencySerializer implements StructuredSerializer<Currency> {
+class _$CurrencyEntitySerializer
+    implements StructuredSerializer<CurrencyEntity> {
   @override
-  final Iterable<Type> types = const [Currency, _$Currency];
+  final Iterable<Type> types = const [CurrencyEntity, _$CurrencyEntity];
   @override
-  final String wireName = 'Currency';
+  final String wireName = 'CurrencyEntity';
 
   @override
-  Iterable serialize(Serializers serializers, Currency object,
+  Iterable serialize(Serializers serializers, CurrencyEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[];
     if (object.name != null) {
@@ -173,9 +176,9 @@ class _$CurrencySerializer implements StructuredSerializer<Currency> {
   }
 
   @override
-  Currency deserialize(Serializers serializers, Iterable serialized,
+  CurrencyEntity deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = new CurrencyBuilder();
+    final result = new CurrencyEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -224,7 +227,7 @@ class _$CurrencySerializer implements StructuredSerializer<Currency> {
 
 class _$CurrencyListResponse extends CurrencyListResponse {
   @override
-  final BuiltList<Currency> data;
+  final BuiltList<CurrencyEntity> data;
 
   factory _$CurrencyListResponse(
           [void updates(CurrencyListResponseBuilder b)]) =>
@@ -267,10 +270,10 @@ class CurrencyListResponseBuilder
     implements Builder<CurrencyListResponse, CurrencyListResponseBuilder> {
   _$CurrencyListResponse _$v;
 
-  ListBuilder<Currency> _data;
-  ListBuilder<Currency> get data =>
-      _$this._data ??= new ListBuilder<Currency>();
-  set data(ListBuilder<Currency> data) => _$this._data = data;
+  ListBuilder<CurrencyEntity> _data;
+  ListBuilder<CurrencyEntity> get data =>
+      _$this._data ??= new ListBuilder<CurrencyEntity>();
+  set data(ListBuilder<CurrencyEntity> data) => _$this._data = data;
 
   CurrencyListResponseBuilder();
 
@@ -316,7 +319,7 @@ class CurrencyListResponseBuilder
 
 class _$CurrencyItemResponse extends CurrencyItemResponse {
   @override
-  final Currency data;
+  final CurrencyEntity data;
 
   factory _$CurrencyItemResponse(
           [void updates(CurrencyItemResponseBuilder b)]) =>
@@ -359,9 +362,10 @@ class CurrencyItemResponseBuilder
     implements Builder<CurrencyItemResponse, CurrencyItemResponseBuilder> {
   _$CurrencyItemResponse _$v;
 
-  CurrencyBuilder _data;
-  CurrencyBuilder get data => _$this._data ??= new CurrencyBuilder();
-  set data(CurrencyBuilder data) => _$this._data = data;
+  CurrencyEntityBuilder _data;
+  CurrencyEntityBuilder get data =>
+      _$this._data ??= new CurrencyEntityBuilder();
+  set data(CurrencyEntityBuilder data) => _$this._data = data;
 
   CurrencyItemResponseBuilder();
 
@@ -405,7 +409,7 @@ class CurrencyItemResponseBuilder
   }
 }
 
-class _$Currency extends Currency {
+class _$CurrencyEntity extends CurrencyEntity {
   @override
   final String name;
   @override
@@ -423,10 +427,10 @@ class _$Currency extends Currency {
   @override
   final double exchangeRate;
 
-  factory _$Currency([void updates(CurrencyBuilder b)]) =>
-      (new CurrencyBuilder()..update(updates)).build();
+  factory _$CurrencyEntity([void updates(CurrencyEntityBuilder b)]) =>
+      (new CurrencyEntityBuilder()..update(updates)).build();
 
-  _$Currency._(
+  _$CurrencyEntity._(
       {this.name,
       this.symbol,
       this.precision,
@@ -438,16 +442,17 @@ class _$Currency extends Currency {
       : super._();
 
   @override
-  Currency rebuild(void updates(CurrencyBuilder b)) =>
+  CurrencyEntity rebuild(void updates(CurrencyEntityBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CurrencyBuilder toBuilder() => new CurrencyBuilder()..replace(this);
+  CurrencyEntityBuilder toBuilder() =>
+      new CurrencyEntityBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! Currency) return false;
+    if (other is! CurrencyEntity) return false;
     return name == other.name &&
         symbol == other.symbol &&
         precision == other.precision &&
@@ -476,7 +481,7 @@ class _$Currency extends Currency {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Currency')
+    return (newBuiltValueToStringHelper('CurrencyEntity')
           ..add('name', name)
           ..add('symbol', symbol)
           ..add('precision', precision)
@@ -489,8 +494,9 @@ class _$Currency extends Currency {
   }
 }
 
-class CurrencyBuilder implements Builder<Currency, CurrencyBuilder> {
-  _$Currency _$v;
+class CurrencyEntityBuilder
+    implements Builder<CurrencyEntity, CurrencyEntityBuilder> {
+  _$CurrencyEntity _$v;
 
   String _name;
   String get name => _$this._name;
@@ -527,9 +533,9 @@ class CurrencyBuilder implements Builder<Currency, CurrencyBuilder> {
   double get exchangeRate => _$this._exchangeRate;
   set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
 
-  CurrencyBuilder();
+  CurrencyEntityBuilder();
 
-  CurrencyBuilder get _$this {
+  CurrencyEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
       _symbol = _$v.symbol;
@@ -545,20 +551,20 @@ class CurrencyBuilder implements Builder<Currency, CurrencyBuilder> {
   }
 
   @override
-  void replace(Currency other) {
+  void replace(CurrencyEntity other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$Currency;
+    _$v = other as _$CurrencyEntity;
   }
 
   @override
-  void update(void updates(CurrencyBuilder b)) {
+  void update(void updates(CurrencyEntityBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Currency build() {
+  _$CurrencyEntity build() {
     final _$result = _$v ??
-        new _$Currency._(
+        new _$CurrencyEntity._(
             name: name,
             symbol: symbol,
             precision: precision,

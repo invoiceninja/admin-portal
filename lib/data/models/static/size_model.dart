@@ -6,7 +6,7 @@ part 'size_model.g.dart';
 
 abstract class SizeListResponse implements Built<SizeListResponse, SizeListResponseBuilder> {
 
-  BuiltList<Size> get data;
+  BuiltList<SizeEntity> get data;
 
   SizeListResponse._();
   factory SizeListResponse([updates(SizeListResponseBuilder b)]) = _$SizeListResponse;
@@ -15,7 +15,7 @@ abstract class SizeListResponse implements Built<SizeListResponse, SizeListRespo
 
 abstract class SizeItemResponse implements Built<SizeItemResponse, SizeItemResponseBuilder> {
 
-  Size get data;
+  SizeEntity get data;
 
   SizeItemResponse._();
   factory SizeItemResponse([updates(SizeItemResponseBuilder b)]) = _$SizeItemResponse;
@@ -26,12 +26,12 @@ class SizeFields {
   static const String name = 'name';
 }
 
-abstract class Size implements Built<Size, SizeBuilder> {
+abstract class SizeEntity implements Built<SizeEntity, SizeEntityBuilder> {
   
   @nullable
   String get name;
   
-  Size._();
-  factory Size([updates(SizeBuilder b)]) = _$Size;
-  static Serializer<Size> get serializer => _$sizeSerializer;
+  SizeEntity._();
+  factory SizeEntity([updates(SizeEntityBuilder b)]) = _$SizeEntity;
+  static Serializer<SizeEntity> get serializer => _$sizeEntitySerializer;
 }

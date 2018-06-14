@@ -18,7 +18,8 @@ Serializer<IndustryListResponse> _$industryListResponseSerializer =
     new _$IndustryListResponseSerializer();
 Serializer<IndustryItemResponse> _$industryItemResponseSerializer =
     new _$IndustryItemResponseSerializer();
-Serializer<Industry> _$industrySerializer = new _$IndustrySerializer();
+Serializer<IndustryEntity> _$industryEntitySerializer =
+    new _$IndustryEntitySerializer();
 
 class _$IndustryListResponseSerializer
     implements StructuredSerializer<IndustryListResponse> {
@@ -36,8 +37,8 @@ class _$IndustryListResponseSerializer
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Industry)])),
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(IndustryEntity)])),
     ];
 
     return result;
@@ -56,8 +57,9 @@ class _$IndustryListResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(
-                  BuiltList, const [const FullType(Industry)])) as BuiltList);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(IndustryEntity)]))
+              as BuiltList);
           break;
       }
     }
@@ -82,7 +84,7 @@ class _$IndustryItemResponseSerializer
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
-          specifiedType: const FullType(Industry)),
+          specifiedType: const FullType(IndustryEntity)),
     ];
 
     return result;
@@ -101,7 +103,7 @@ class _$IndustryItemResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Industry)) as Industry);
+              specifiedType: const FullType(IndustryEntity)) as IndustryEntity);
           break;
       }
     }
@@ -110,14 +112,15 @@ class _$IndustryItemResponseSerializer
   }
 }
 
-class _$IndustrySerializer implements StructuredSerializer<Industry> {
+class _$IndustryEntitySerializer
+    implements StructuredSerializer<IndustryEntity> {
   @override
-  final Iterable<Type> types = const [Industry, _$Industry];
+  final Iterable<Type> types = const [IndustryEntity, _$IndustryEntity];
   @override
-  final String wireName = 'Industry';
+  final String wireName = 'IndustryEntity';
 
   @override
-  Iterable serialize(Serializers serializers, Industry object,
+  Iterable serialize(Serializers serializers, IndustryEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[];
     if (object.name != null) {
@@ -131,9 +134,9 @@ class _$IndustrySerializer implements StructuredSerializer<Industry> {
   }
 
   @override
-  Industry deserialize(Serializers serializers, Iterable serialized,
+  IndustryEntity deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = new IndustryBuilder();
+    final result = new IndustryEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -154,7 +157,7 @@ class _$IndustrySerializer implements StructuredSerializer<Industry> {
 
 class _$IndustryListResponse extends IndustryListResponse {
   @override
-  final BuiltList<Industry> data;
+  final BuiltList<IndustryEntity> data;
 
   factory _$IndustryListResponse(
           [void updates(IndustryListResponseBuilder b)]) =>
@@ -197,10 +200,10 @@ class IndustryListResponseBuilder
     implements Builder<IndustryListResponse, IndustryListResponseBuilder> {
   _$IndustryListResponse _$v;
 
-  ListBuilder<Industry> _data;
-  ListBuilder<Industry> get data =>
-      _$this._data ??= new ListBuilder<Industry>();
-  set data(ListBuilder<Industry> data) => _$this._data = data;
+  ListBuilder<IndustryEntity> _data;
+  ListBuilder<IndustryEntity> get data =>
+      _$this._data ??= new ListBuilder<IndustryEntity>();
+  set data(ListBuilder<IndustryEntity> data) => _$this._data = data;
 
   IndustryListResponseBuilder();
 
@@ -246,7 +249,7 @@ class IndustryListResponseBuilder
 
 class _$IndustryItemResponse extends IndustryItemResponse {
   @override
-  final Industry data;
+  final IndustryEntity data;
 
   factory _$IndustryItemResponse(
           [void updates(IndustryItemResponseBuilder b)]) =>
@@ -289,9 +292,10 @@ class IndustryItemResponseBuilder
     implements Builder<IndustryItemResponse, IndustryItemResponseBuilder> {
   _$IndustryItemResponse _$v;
 
-  IndustryBuilder _data;
-  IndustryBuilder get data => _$this._data ??= new IndustryBuilder();
-  set data(IndustryBuilder data) => _$this._data = data;
+  IndustryEntityBuilder _data;
+  IndustryEntityBuilder get data =>
+      _$this._data ??= new IndustryEntityBuilder();
+  set data(IndustryEntityBuilder data) => _$this._data = data;
 
   IndustryItemResponseBuilder();
 
@@ -335,26 +339,27 @@ class IndustryItemResponseBuilder
   }
 }
 
-class _$Industry extends Industry {
+class _$IndustryEntity extends IndustryEntity {
   @override
   final String name;
 
-  factory _$Industry([void updates(IndustryBuilder b)]) =>
-      (new IndustryBuilder()..update(updates)).build();
+  factory _$IndustryEntity([void updates(IndustryEntityBuilder b)]) =>
+      (new IndustryEntityBuilder()..update(updates)).build();
 
-  _$Industry._({this.name}) : super._();
+  _$IndustryEntity._({this.name}) : super._();
 
   @override
-  Industry rebuild(void updates(IndustryBuilder b)) =>
+  IndustryEntity rebuild(void updates(IndustryEntityBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  IndustryBuilder toBuilder() => new IndustryBuilder()..replace(this);
+  IndustryEntityBuilder toBuilder() =>
+      new IndustryEntityBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! Industry) return false;
+    if (other is! IndustryEntity) return false;
     return name == other.name;
   }
 
@@ -365,21 +370,22 @@ class _$Industry extends Industry {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Industry')..add('name', name))
+    return (newBuiltValueToStringHelper('IndustryEntity')..add('name', name))
         .toString();
   }
 }
 
-class IndustryBuilder implements Builder<Industry, IndustryBuilder> {
-  _$Industry _$v;
+class IndustryEntityBuilder
+    implements Builder<IndustryEntity, IndustryEntityBuilder> {
+  _$IndustryEntity _$v;
 
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  IndustryBuilder();
+  IndustryEntityBuilder();
 
-  IndustryBuilder get _$this {
+  IndustryEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
       _$v = null;
@@ -388,19 +394,19 @@ class IndustryBuilder implements Builder<Industry, IndustryBuilder> {
   }
 
   @override
-  void replace(Industry other) {
+  void replace(IndustryEntity other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$Industry;
+    _$v = other as _$IndustryEntity;
   }
 
   @override
-  void update(void updates(IndustryBuilder b)) {
+  void update(void updates(IndustryEntityBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Industry build() {
-    final _$result = _$v ?? new _$Industry._(name: name);
+  _$IndustryEntity build() {
+    final _$result = _$v ?? new _$IndustryEntity._(name: name);
     replace(_$result);
     return _$result;
   }

@@ -6,7 +6,7 @@ part 'currency_model.g.dart';
 
 abstract class CurrencyListResponse implements Built<CurrencyListResponse, CurrencyListResponseBuilder> {
 
-  BuiltList<Currency> get data;
+  BuiltList<CurrencyEntity> get data;
 
   CurrencyListResponse._();
   factory CurrencyListResponse([updates(CurrencyListResponseBuilder b)]) = _$CurrencyListResponse;
@@ -15,7 +15,7 @@ abstract class CurrencyListResponse implements Built<CurrencyListResponse, Curre
 
 abstract class CurrencyItemResponse implements Built<CurrencyItemResponse, CurrencyItemResponseBuilder> {
 
-  Currency get data;
+  CurrencyEntity get data;
 
   CurrencyItemResponse._();
   factory CurrencyItemResponse([updates(CurrencyItemResponseBuilder b)]) = _$CurrencyItemResponse;
@@ -33,7 +33,7 @@ class CurrencyFields {
   static const String exchangeRate = 'exchangeRate';
 }
 
-abstract class Currency implements Built<Currency, CurrencyBuilder> {
+abstract class CurrencyEntity implements Built<CurrencyEntity, CurrencyEntityBuilder> {
   
   @nullable
   String get name;
@@ -63,7 +63,7 @@ abstract class Currency implements Built<Currency, CurrencyBuilder> {
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
-  Currency._();
-  factory Currency([updates(CurrencyBuilder b)]) = _$Currency;
-  static Serializer<Currency> get serializer => _$currencySerializer;
+  CurrencyEntity._();
+  factory CurrencyEntity([updates(CurrencyEntityBuilder b)]) = _$CurrencyEntity;
+  static Serializer<CurrencyEntity> get serializer => _$currencyEntitySerializer;
 }

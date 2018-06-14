@@ -6,7 +6,7 @@ part 'industry_model.g.dart';
 
 abstract class IndustryListResponse implements Built<IndustryListResponse, IndustryListResponseBuilder> {
 
-  BuiltList<Industry> get data;
+  BuiltList<IndustryEntity> get data;
 
   IndustryListResponse._();
   factory IndustryListResponse([updates(IndustryListResponseBuilder b)]) = _$IndustryListResponse;
@@ -15,7 +15,7 @@ abstract class IndustryListResponse implements Built<IndustryListResponse, Indus
 
 abstract class IndustryItemResponse implements Built<IndustryItemResponse, IndustryItemResponseBuilder> {
 
-  Industry get data;
+  IndustryEntity get data;
 
   IndustryItemResponse._();
   factory IndustryItemResponse([updates(IndustryItemResponseBuilder b)]) = _$IndustryItemResponse;
@@ -26,12 +26,12 @@ class IndustryFields {
   static const String name = 'name';
 }
 
-abstract class Industry implements Built<Industry, IndustryBuilder> {
+abstract class IndustryEntity implements Built<IndustryEntity, IndustryEntityBuilder> {
   
   @nullable
   String get name;
   
-  Industry._();
-  factory Industry([updates(IndustryBuilder b)]) = _$Industry;
-  static Serializer<Industry> get serializer => _$industrySerializer;
+  IndustryEntity._();
+  factory IndustryEntity([updates(IndustryEntityBuilder b)]) = _$IndustryEntity;
+  static Serializer<IndustryEntity> get serializer => _$industryEntitySerializer;
 }

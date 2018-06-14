@@ -6,7 +6,7 @@ part 'date_format_model.g.dart';
 
 abstract class DateFormatListResponse implements Built<DateFormatListResponse, DateFormatListResponseBuilder> {
 
-  BuiltList<DateFormat> get data;
+  BuiltList<DateFormatEntity> get data;
 
   DateFormatListResponse._();
   factory DateFormatListResponse([updates(DateFormatListResponseBuilder b)]) = _$DateFormatListResponse;
@@ -15,7 +15,7 @@ abstract class DateFormatListResponse implements Built<DateFormatListResponse, D
 
 abstract class DateFormatItemResponse implements Built<DateFormatItemResponse, DateFormatItemResponseBuilder> {
 
-  DateFormat get data;
+  DateFormatEntity get data;
 
   DateFormatItemResponse._();
   factory DateFormatItemResponse([updates(DateFormatItemResponseBuilder b)]) = _$DateFormatItemResponse;
@@ -28,7 +28,7 @@ class DateFormatFields {
   static const String formatMoment = 'formatMoment';
 }
 
-abstract class DateFormat implements Built<DateFormat, DateFormatBuilder> {
+abstract class DateFormatEntity implements Built<DateFormatEntity, DateFormatEntityBuilder> {
   
   @nullable
   String get format;
@@ -41,7 +41,7 @@ abstract class DateFormat implements Built<DateFormat, DateFormatBuilder> {
   @BuiltValueField(wireName: 'format_moment')
   String get formatMoment;
   
-  DateFormat._();
-  factory DateFormat([updates(DateFormatBuilder b)]) = _$DateFormat;
-  static Serializer<DateFormat> get serializer => _$dateFormatSerializer;
+  DateFormatEntity._();
+  factory DateFormatEntity([updates(DateFormatEntityBuilder b)]) = _$DateFormatEntity;
+  static Serializer<DateFormatEntity> get serializer => _$dateFormatEntitySerializer;
 }

@@ -18,7 +18,7 @@ Serializer<SizeListResponse> _$sizeListResponseSerializer =
     new _$SizeListResponseSerializer();
 Serializer<SizeItemResponse> _$sizeItemResponseSerializer =
     new _$SizeItemResponseSerializer();
-Serializer<Size> _$sizeSerializer = new _$SizeSerializer();
+Serializer<SizeEntity> _$sizeEntitySerializer = new _$SizeEntitySerializer();
 
 class _$SizeListResponseSerializer
     implements StructuredSerializer<SizeListResponse> {
@@ -34,7 +34,7 @@ class _$SizeListResponseSerializer
       'data',
       serializers.serialize(object.data,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(Size)])),
+              const FullType(BuiltList, const [const FullType(SizeEntity)])),
     ];
 
     return result;
@@ -53,9 +53,8 @@ class _$SizeListResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(Size)]))
-              as BuiltList);
+              specifiedType: const FullType(
+                  BuiltList, const [const FullType(SizeEntity)])) as BuiltList);
           break;
       }
     }
@@ -76,7 +75,8 @@ class _$SizeItemResponseSerializer
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
       'data',
-      serializers.serialize(object.data, specifiedType: const FullType(Size)),
+      serializers.serialize(object.data,
+          specifiedType: const FullType(SizeEntity)),
     ];
 
     return result;
@@ -95,7 +95,7 @@ class _$SizeItemResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Size)) as Size);
+              specifiedType: const FullType(SizeEntity)) as SizeEntity);
           break;
       }
     }
@@ -104,14 +104,14 @@ class _$SizeItemResponseSerializer
   }
 }
 
-class _$SizeSerializer implements StructuredSerializer<Size> {
+class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
   @override
-  final Iterable<Type> types = const [Size, _$Size];
+  final Iterable<Type> types = const [SizeEntity, _$SizeEntity];
   @override
-  final String wireName = 'Size';
+  final String wireName = 'SizeEntity';
 
   @override
-  Iterable serialize(Serializers serializers, Size object,
+  Iterable serialize(Serializers serializers, SizeEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[];
     if (object.name != null) {
@@ -125,9 +125,9 @@ class _$SizeSerializer implements StructuredSerializer<Size> {
   }
 
   @override
-  Size deserialize(Serializers serializers, Iterable serialized,
+  SizeEntity deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = new SizeBuilder();
+    final result = new SizeEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -148,7 +148,7 @@ class _$SizeSerializer implements StructuredSerializer<Size> {
 
 class _$SizeListResponse extends SizeListResponse {
   @override
-  final BuiltList<Size> data;
+  final BuiltList<SizeEntity> data;
 
   factory _$SizeListResponse([void updates(SizeListResponseBuilder b)]) =>
       (new SizeListResponseBuilder()..update(updates)).build();
@@ -189,9 +189,10 @@ class SizeListResponseBuilder
     implements Builder<SizeListResponse, SizeListResponseBuilder> {
   _$SizeListResponse _$v;
 
-  ListBuilder<Size> _data;
-  ListBuilder<Size> get data => _$this._data ??= new ListBuilder<Size>();
-  set data(ListBuilder<Size> data) => _$this._data = data;
+  ListBuilder<SizeEntity> _data;
+  ListBuilder<SizeEntity> get data =>
+      _$this._data ??= new ListBuilder<SizeEntity>();
+  set data(ListBuilder<SizeEntity> data) => _$this._data = data;
 
   SizeListResponseBuilder();
 
@@ -237,7 +238,7 @@ class SizeListResponseBuilder
 
 class _$SizeItemResponse extends SizeItemResponse {
   @override
-  final Size data;
+  final SizeEntity data;
 
   factory _$SizeItemResponse([void updates(SizeItemResponseBuilder b)]) =>
       (new SizeItemResponseBuilder()..update(updates)).build();
@@ -278,9 +279,9 @@ class SizeItemResponseBuilder
     implements Builder<SizeItemResponse, SizeItemResponseBuilder> {
   _$SizeItemResponse _$v;
 
-  SizeBuilder _data;
-  SizeBuilder get data => _$this._data ??= new SizeBuilder();
-  set data(SizeBuilder data) => _$this._data = data;
+  SizeEntityBuilder _data;
+  SizeEntityBuilder get data => _$this._data ??= new SizeEntityBuilder();
+  set data(SizeEntityBuilder data) => _$this._data = data;
 
   SizeItemResponseBuilder();
 
@@ -324,26 +325,26 @@ class SizeItemResponseBuilder
   }
 }
 
-class _$Size extends Size {
+class _$SizeEntity extends SizeEntity {
   @override
   final String name;
 
-  factory _$Size([void updates(SizeBuilder b)]) =>
-      (new SizeBuilder()..update(updates)).build();
+  factory _$SizeEntity([void updates(SizeEntityBuilder b)]) =>
+      (new SizeEntityBuilder()..update(updates)).build();
 
-  _$Size._({this.name}) : super._();
+  _$SizeEntity._({this.name}) : super._();
 
   @override
-  Size rebuild(void updates(SizeBuilder b)) =>
+  SizeEntity rebuild(void updates(SizeEntityBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SizeBuilder toBuilder() => new SizeBuilder()..replace(this);
+  SizeEntityBuilder toBuilder() => new SizeEntityBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! Size) return false;
+    if (other is! SizeEntity) return false;
     return name == other.name;
   }
 
@@ -354,20 +355,21 @@ class _$Size extends Size {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Size')..add('name', name)).toString();
+    return (newBuiltValueToStringHelper('SizeEntity')..add('name', name))
+        .toString();
   }
 }
 
-class SizeBuilder implements Builder<Size, SizeBuilder> {
-  _$Size _$v;
+class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
+  _$SizeEntity _$v;
 
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  SizeBuilder();
+  SizeEntityBuilder();
 
-  SizeBuilder get _$this {
+  SizeEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
       _$v = null;
@@ -376,19 +378,19 @@ class SizeBuilder implements Builder<Size, SizeBuilder> {
   }
 
   @override
-  void replace(Size other) {
+  void replace(SizeEntity other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$Size;
+    _$v = other as _$SizeEntity;
   }
 
   @override
-  void update(void updates(SizeBuilder b)) {
+  void update(void updates(SizeEntityBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Size build() {
-    final _$result = _$v ?? new _$Size._(name: name);
+  _$SizeEntity build() {
+    final _$result = _$v ?? new _$SizeEntity._(name: name);
     replace(_$result);
     return _$result;
   }
