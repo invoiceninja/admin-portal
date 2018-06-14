@@ -1,6 +1,13 @@
 export 'package:invoiceninja/data/models/entities.dart';
 export 'package:invoiceninja/data/models/product_model.dart';
 export 'package:invoiceninja/data/models/client_model.dart';
+export 'package:invoiceninja/data/models/credit_model.dart';
+export 'package:invoiceninja/data/models/project_model.dart';
+export 'package:invoiceninja/data/models/payment_model.dart';
+export 'package:invoiceninja/data/models/invoice_model.dart';
+export 'package:invoiceninja/data/models/task_model.dart';
+export 'package:invoiceninja/data/models/expense_model.dart';
+export 'package:invoiceninja/data/models/vendor_model.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
