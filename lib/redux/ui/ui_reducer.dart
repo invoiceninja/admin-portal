@@ -8,6 +8,6 @@ UIState uiReducer(UIState state, action) {
   return state.rebuild((b) => b
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
-    ..invoiceUIState.replace(invoiceUIReducer(state.clientUIState, action))
+    ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
   );
 }
