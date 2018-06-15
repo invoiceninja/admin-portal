@@ -36,41 +36,46 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails>
     var invoice = widget.invoice;
 
     return ListView(
-      shrinkWrap: true,
       children: <Widget>[
-        invoice.isNew()
-            ? Container()
-            : TextFormField(
-                autocorrect: false,
-                onSaved: (value) => invoiceNumber = value.trim(),
-                initialValue: invoice.invoiceNumber,
-                decoration: InputDecoration(
-                  labelText: localization.invoiceNumber,
-                ),
+        FormCard(
+          children: <Widget>[
+            invoice.isNew()
+                ? Container()
+                : TextFormField(
+                    autocorrect: false,
+                    onSaved: (value) => invoiceNumber = value.trim(),
+                    initialValue: invoice.invoiceNumber,
+                    decoration: InputDecoration(
+                      labelText: localization.invoiceNumber,
+                    ),
+                  ),
+            TextFormField(
+              autocorrect: false,
+              onSaved: (value) => poNumber = value.trim(),
+              initialValue: invoice.poNumber,
+              decoration: InputDecoration(
+                labelText: localization.poNumber,
               ),
-        TextFormField(
-          autocorrect: false,
-          onSaved: (value) => poNumber = value.trim(),
-          initialValue: invoice.poNumber,
-          decoration: InputDecoration(
-            labelText: localization.poNumber,
-          ),
-        ),
-        TextFormField(
-          autocorrect: false,
-          onSaved: (value) => discount = double.tryParse(value) ?? 0.0,
-          initialValue: invoice.discount?.toStringAsFixed(2),
-          decoration: InputDecoration(
-            labelText: localization.discount,
-          ),
-        ),
-        TextFormField(
-          autocorrect: false,
-          onSaved: (value) => partial = double.tryParse(value) ?? 0.0,
-          initialValue: invoice.partial?.toStringAsFixed(2),
-          decoration: InputDecoration(
-            labelText: localization.partial,
-          ),
+            ),
+            TextFormField(
+              autocorrect: false,
+              onSaved: (value) => discount = double.tryParse(value) ?? 0.0,
+              initialValue: invoice.discount?.toStringAsFixed(2),
+              decoration: InputDecoration(
+                labelText: localization.discount,
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            TextFormField(
+              autocorrect: false,
+              onSaved: (value) => partial = double.tryParse(value) ?? 0.0,
+              initialValue: invoice.partial?.toStringAsFixed(2),
+              decoration: InputDecoration(
+                labelText: localization.partial,
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ],
         ),
       ],
     );

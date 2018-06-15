@@ -81,7 +81,7 @@ class InvoiceEditItemsState extends State<InvoiceEditItems>
         elevation: 4.0,
         color: Theme.of(context).primaryColor,
         textColor: Theme.of(context).secondaryHeaderColor,
-        //child: Text(localization.addItem.toUpperCase()),
+        child: Text(localization.addContact.toUpperCase()),
         onPressed: _onAddPressed,
       ),
     ));
