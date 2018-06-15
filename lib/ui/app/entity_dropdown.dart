@@ -36,12 +36,12 @@ class _EntityDropdownState extends State<EntityDropdown> {
         _headerRow() {
           return Row(
             children: <Widget>[
-              SizedBox(
-                width: 10.0,
-              ),
-              Icon(
-                Icons.search,
-                color: Colors.grey,
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                ),
               ),
               Expanded(
                 child: TextField(
@@ -76,20 +76,25 @@ class _EntityDropdownState extends State<EntityDropdown> {
             builder: (BuildContext context) {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Material(
-                  child:
-                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    _headerRow(),
-                    Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: entityList
-                            .getRange(0, 7)
-                            .map((entityId) => ListTile(
-                                  title:
-                                      Text(entityMap[entityId].id.toString()),
-                                ))
-                            .toList()),
-                  ]),
+                child: Column(
+                  children: <Widget>[
+                    Material(
+                      child:
+                          Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                        _headerRow(),
+                        Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: entityList
+                                .getRange(0, 6)
+                                .map((entityId) => ListTile(
+                                      title:
+                                          Text(entityMap[entityId].id.toString()),
+                                    ))
+                                .toList()),
+                      ]),
+                    ),
+                    Expanded(child: Container()),
+                  ],
                 ),
               );
             });
