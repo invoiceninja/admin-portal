@@ -107,26 +107,29 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
 
 Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    if (!store.state.invoiceState.isStale && !action.force) {
+
+    AppState state = store.state;
+
+    if (!state.invoiceState.isStale && !action.force) {
       next(action);
       return;
     }
 
-    if (store.state.isLoading) {
+    if (state.isLoading) {
       next(action);
       return;
     }
 
     store.dispatch(LoadInvoicesRequest());
     repository
-        .loadList(store.state.selectedCompany, store.state.authState)
+        .loadList(state.selectedCompany, state.authState)
         .then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (store.state.productState.isStale) {
-        store.dispatch(LoadProductsAction());
+      if (state.clientState.isStale) {
+        store.dispatch(LoadClientsAction());
       }
     }).catchError((error) => store.dispatch(LoadInvoicesFailure(error)));
 

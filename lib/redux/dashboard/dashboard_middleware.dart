@@ -1,3 +1,4 @@
+import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
@@ -17,25 +18,27 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    if (! store.state.dashboardState.isStale && ! action.force) {
+    AppState state = store.state;
+
+    if (! state.dashboardState.isStale && ! action.force) {
       next(action);
       return;
     }
 
-    if (store.state.isLoading) {
+    if (state.isLoading) {
       next(action);
       return;
     }
 
     store.dispatch(LoadDashboardRequest());
-    repository.loadItem(store.state.selectedCompany, store.state.authState).then(
+    repository.loadItem(state.selectedCompany, state.authState).then(
             (data) {
               store.dispatch(LoadDashboardSuccess(data));
               if (action.completer != null) {
                 action.completer.complete(null);
               }
-              if (store.state.productState.isStale) {
-                store.dispatch(LoadProductsAction());
+              if (state.clientState.isStale) {
+                store.dispatch(LoadClientsAction());
               }
             }
     ).catchError((error) => store.dispatch(LoadDashboardFailure(error)));

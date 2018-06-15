@@ -1,5 +1,6 @@
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -28,7 +29,7 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
     var origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origClient, EntityAction.archive)
+            origClient, EntityAction.archive)
         .then((client) {
       store.dispatch(ArchiveClientSuccess(client));
       if (action.completer != null) {
@@ -48,7 +49,7 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
     var origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origClient, EntityAction.delete)
+            origClient, EntityAction.delete)
         .then((client) {
       store.dispatch(DeleteClientSuccess(client));
       if (action.completer != null) {
@@ -68,7 +69,7 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
     var origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origClient, EntityAction.restore)
+            origClient, EntityAction.restore)
         .then((client) {
       store.dispatch(RestoreClientSuccess(client));
       if (action.completer != null) {
@@ -86,8 +87,8 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
 Middleware<AppState> _saveClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            action.client)
+        .saveData(
+            store.state.selectedCompany, store.state.authState, action.client)
         .then((client) {
       if (action.client.isNew()) {
         store.dispatch(AddClientSuccess(client));
@@ -106,29 +107,33 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 
 Middleware<AppState> _loadClients(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    
-    if (! store.state.clientState.isStale && ! action.force) {
+
+    AppState state = store.state;
+
+    if (!state.clientState.isStale && !action.force) {
       next(action);
       return;
     }
 
-    if (store.state.isLoading) {
+    if (state.isLoading) {
       next(action);
       return;
     }
 
     store.dispatch(LoadClientsRequest());
     repository
-        .loadList(store.state.selectedCompany, store.state.authState)
+        .loadList(state.selectedCompany, state.authState)
         .then((data) {
       store.dispatch(LoadClientsSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
+      if (state.productState.isStale) {
+        store.dispatch(LoadProductsAction());
+      }
     }).catchError((error) => store.dispatch(LoadClientsFailure(error)));
 
     next(action);
   };
 }
-

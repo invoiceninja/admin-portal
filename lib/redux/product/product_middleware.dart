@@ -106,26 +106,26 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    if (!store.state.productState.isStale && !action.force) {
+
+    AppState state = store.state;
+
+    if (!state.productState.isStale && !action.force) {
       next(action);
       return;
     }
 
-    if (store.state.isLoading) {
+    if (state.isLoading) {
       next(action);
       return;
     }
 
     store.dispatch(LoadProductsRequest());
     repository
-        .loadList(store.state.selectedCompany, store.state.authState)
+        .loadList(state.selectedCompany, state.authState)
         .then((data) {
       store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
-      }
-      if (store.state.clientState.isStale) {
-        store.dispatch(LoadClientsAction());
       }
     }).catchError((error) => store.dispatch(LoadProductsFailure(error)));
 
