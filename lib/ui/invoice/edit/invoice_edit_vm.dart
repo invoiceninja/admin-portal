@@ -4,24 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
+import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/product/product_edit.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
-class ProductEditBuilder extends StatelessWidget {
-  ProductEditBuilder({Key key}) : super(key: key);
+class InvoiceEditScreen extends StatelessWidget {
+  InvoiceEditScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ProductEditVM>(
-      //ignoreChange: (state) => productSelector(state.product().list, id).isNotPresent,
+    return StoreConnector<AppState, InvoiceEditVM>(
+      //ignoreChange: (state) => invoiceSelector(state.invoice().list, id).isNotPresent,
       converter: (Store<AppState> store) {
-        return ProductEditVM.fromStore(store);
+        return InvoiceEditVM.fromStore(store);
       },
       builder: (context, vm) {
-        return ProductEdit(
+        return InvoiceEdit(
           viewModel: vm,
         );
       },
@@ -29,16 +29,16 @@ class ProductEditBuilder extends StatelessWidget {
   }
 }
 
-class ProductEditVM {
-  final ProductEntity product;
+class InvoiceEditVM {
+  final InvoiceEntity invoice;
   final Function onDelete;
-  final Function(BuildContext, ProductEntity) onSaveClicked;
+  final Function(BuildContext, InvoiceEntity) onSaveClicked;
   final Function(BuildContext, EntityAction) onActionSelected;
   final bool isLoading;
   final bool isDirty;
 
-  ProductEditVM({
-    @required this.product,
+  InvoiceEditVM({
+    @required this.invoice,
     @required this.onDelete,
     @required this.onSaveClicked,
     @required this.onActionSelected,
@@ -46,23 +46,23 @@ class ProductEditVM {
     @required this.isDirty,
   });
 
-  factory ProductEditVM.fromStore(Store<AppState> store) {
-    final product = store.state.productState().editing;
+  factory InvoiceEditVM.fromStore(Store<AppState> store) {
+    final invoice = store.state.invoiceState.editing;
 
-    return ProductEditVM(
+    return InvoiceEditVM(
       isLoading: store.state.isLoading,
-      isDirty: product.id == null,
-      product: product,
+      isDirty: invoice.isNew(),
+      invoice: invoice,
       onDelete: () => false,
-      onSaveClicked: (BuildContext context, ProductEntity product) {
+      onSaveClicked: (BuildContext context, InvoiceEntity invoice) {
         final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveProductRequest(completer, product));
+        store.dispatch(SaveInvoiceRequest(completer, invoice));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-                message: product.id == null
-                    ? AppLocalization.of(context).successfullyCreatedProduct
-                    : AppLocalization.of(context).successfullyUpdatedProduct,
+                message: invoice.isNew()
+                    ? AppLocalization.of(context).successfullyCreatedInvoice
+                    : AppLocalization.of(context).successfullyUpdatedInvoice,
               ),
               duration: Duration(seconds: 3)));
         });
@@ -72,16 +72,16 @@ class ProductEditVM {
         var message = '';
         switch (action) {
           case EntityAction.archive:
-            store.dispatch(ArchiveProductRequest(completer, product.id));
-            message = AppLocalization.of(context).successfullyArchivedProduct;
+            store.dispatch(ArchiveInvoiceRequest(completer, invoice.id));
+            message = AppLocalization.of(context).successfullyArchivedInvoice;
             break;
           case EntityAction.delete:
-            store.dispatch(DeleteProductRequest(completer, product.id));
-            message = AppLocalization.of(context).successfullyDeletedProduct;
+            store.dispatch(DeleteInvoiceRequest(completer, invoice.id));
+            message = AppLocalization.of(context).successfullyDeletedInvoice;
             break;
           case EntityAction.restore:
-            store.dispatch(RestoreProductRequest(completer, product.id));
-            message = AppLocalization.of(context).successfullyRestoredProduct;
+            store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
+            message = AppLocalization.of(context).successfullyRestoredInvoice;
             break;
         }
         return completer.future.then((_) {

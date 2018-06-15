@@ -58,7 +58,7 @@ class AppLocalization {
       'create': 'Create',
       'copied_to_clipboard': 'Copied to clipboard',
       'error': 'Error',
-      'could_not_launch': 'Could not aunch',
+      'could_not_launch': 'Could not launch',
       'contacts': 'Contacts',
       'additional': 'Additional',
       'first_name': 'First Name',
@@ -67,6 +67,8 @@ class AppLocalization {
       'are_you_sure': 'Are you sure?',
       'cancel': 'Cancel',
       'ok': 'Ok',
+      'remove': 'Remove',
+      'email_is_invalid': 'Email is invalid',
 
       'product': 'Product',
       'products': 'Products',
@@ -97,6 +99,28 @@ class AppLocalization {
 
       'invoice': 'Invoice',
       'invoices': 'Invoices',
+      'new_invoice': 'New Invoice',
+      'successfully_created_invoice': 'Successfully created invoice',
+      'successfully_updated_invoice': 'Successfully updated invoice',
+      'successfully_archived_invoice': 'Successfully archived invoice',
+      'successfully_deleted_invoice': 'Successfully deleted invoice',
+      'successfully_restored_invoice': 'Successfully restored invoice',
+      'amount': 'Amount',
+      'invoice_number': 'Invoice Number',
+      'invoice_date': 'Invoice Date',
+      'discount': 'Discount',
+      'po_number': 'PO Number',
+      'terms': 'Terms',
+      'public_notes': 'Public Notes',
+      'private_notes': 'Private Notes',
+      'frequency': 'Frequency',
+      'start_date': 'Start Date',
+      'end_date': 'End Date',
+      'quote_number': 'Quote Number',
+      'quote_date': 'Quote Date',
+      'valid_until': 'Valid Until',
+      'items': 'Items',
+      'partial': 'Partial/Deposit',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -156,6 +180,8 @@ class AppLocalization {
   String get areYouSure => _localizedValues[locale.languageCode]['are_you_sure'];
   String get cancel => _localizedValues[locale.languageCode]['cancel'];
   String get ok => _localizedValues[locale.languageCode]['ok'];
+  String get remove => _localizedValues[locale.languageCode]['remove'];
+  String get emailIsInvalid => _localizedValues[locale.languageCode]['email_is_invalid'];
 
   String get product => _localizedValues[locale.languageCode]['product'];
   String get products => _localizedValues[locale.languageCode]['products'];
@@ -163,7 +189,7 @@ class AppLocalization {
   String get successfullyCreatedProduct => _localizedValues[locale.languageCode]['successfully_created_product'];
   String get successfullyUpdatedProduct => _localizedValues[locale.languageCode]['successfully_updated_product'];
   String get successfullyArchivedProduct => _localizedValues[locale.languageCode]['successfully_archived_product'];
-  String get successfullyDeletedProduct=> _localizedValues[locale.languageCode]['successfully_deleted_product'];
+  String get successfullyDeletedProduct => _localizedValues[locale.languageCode]['successfully_deleted_product'];
   String get successfullyRestoredProduct => _localizedValues[locale.languageCode]['successfully_restored_product'];
   String get productKey => _localizedValues[locale.languageCode]['product_key'];
   String get notes => _localizedValues[locale.languageCode]['notes'];
@@ -175,7 +201,7 @@ class AppLocalization {
   String get successfullyCreatedClient => _localizedValues[locale.languageCode]['successfully_created_client'];
   String get successfullyUpdatedClient => _localizedValues[locale.languageCode]['successfully_updated_client'];
   String get successfullyArchivedClient => _localizedValues[locale.languageCode]['successfully_archived_client'];
-  String get successfullyDeletedClient=> _localizedValues[locale.languageCode]['successfully_deleted_client'];
+  String get successfullyDeletedClient => _localizedValues[locale.languageCode]['successfully_deleted_client'];
   String get successfullyRestoredClient => _localizedValues[locale.languageCode]['successfully_restored_client'];
   String get address1 => _localizedValues[locale.languageCode]['address1'];
   String get address2 => _localizedValues[locale.languageCode]['address2'];
@@ -186,6 +212,29 @@ class AppLocalization {
 
   String get invoice => _localizedValues[locale.languageCode]['invoice'];
   String get invoices => _localizedValues[locale.languageCode]['invoices'];
+  String get newInvoice => _localizedValues[locale.languageCode]['new_invoice'];
+  String get successfullyCreatedInvoice => _localizedValues[locale.languageCode]['successfully_created_invoice'];
+  String get successfullyUpdatedInvoice => _localizedValues[locale.languageCode]['successfully_updated_invoice'];
+  String get successfullyArchivedInvoice => _localizedValues[locale.languageCode]['successfully_archived_invoice'];
+  String get successfullyDeletedInvoice => _localizedValues[locale.languageCode]['successfully_deleted_invoice'];
+  String get successfullyRestoredInvoice => _localizedValues[locale.languageCode]['successfully_restored_invoice'];
+  String get amount => _localizedValues[locale.languageCode]['amount'];
+  String get invoiceNumber => _localizedValues[locale.languageCode]['invoice_number'];
+  String get invoiceDate => _localizedValues[locale.languageCode]['invoice_date'];
+  String get discount => _localizedValues[locale.languageCode]['discount'];
+  String get poNumber => _localizedValues[locale.languageCode]['po_number'];
+  String get terms => _localizedValues[locale.languageCode]['terms'];
+  String get publicNotes => _localizedValues[locale.languageCode]['public_notes'];
+  String get privateNotes => _localizedValues[locale.languageCode]['private_notes'];
+  String get frequency => _localizedValues[locale.languageCode]['frequency'];
+  String get startDate => _localizedValues[locale.languageCode]['start_date'];
+  String get endDate => _localizedValues[locale.languageCode]['end_date'];
+  String get quoteNumber => _localizedValues[locale.languageCode]['quote_number'];
+  String get quoteDate => _localizedValues[locale.languageCode]['quote_date'];
+  String get validUntil => _localizedValues[locale.languageCode]['valid_until'];
+  String get items => _localizedValues[locale.languageCode]['items'];
+  String get partial => _localizedValues[locale.languageCode]['partial'];
+
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

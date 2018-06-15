@@ -4,6 +4,8 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
+import '../app/entity_state_label.dart';
+
 class ProductItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
@@ -51,27 +53,21 @@ class ProductItem extends StatelessWidget {
             ],
           ),
         ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            product.isDeleted
-                ? Chip(
-              label: Text(AppLocalization.of(context).deleted,
-                  style: TextStyle(color: Colors.white, fontSize: 11.0)),
-              backgroundColor: Colors.red,
-            )
-                : product.isArchived()
-                ? Chip(
-              label: Text(AppLocalization.of(context).archived,
-                  style: TextStyle(color: Colors.white, fontSize: 11.0)),
-              backgroundColor: Colors.orange,
-            )
+            product.notes.isNotEmpty
+                ? Text(
+                    product.notes,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )
                 : Container(),
-            SizedBox(width: 12.0),
-            Text(product.cost.toStringAsFixed(2)),
+            EntityStateLabel(product),
           ],
         ),
-        subtitle: Text(product.notes),
+        trailing: Text(product.cost.toStringAsFixed(2),
+            style: Theme.of(context).textTheme.title),
       ),
     );
   }

@@ -25,7 +25,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
-      throw '${localization.error}: ${localization.couldNotLaunch}';
+      throw '${localization.couldNotLaunch}';
     }
   }
 
@@ -102,7 +102,9 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      listTiles.add(Divider());
+      if (listTiles.length > 0) {
+        listTiles.add(Divider());
+      }
 
       if ((client.vatNumber ?? '').isNotEmpty) {
         listTiles.add(AppListTile(

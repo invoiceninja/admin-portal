@@ -9,6 +9,8 @@ part 'product_state.g.dart';
 abstract class ProductState implements Built<ProductState, ProductStateBuilder> {
 
   bool get isLoading;
+
+  @nullable
   int get lastUpdated;
 
   BuiltMap<int, ProductEntity> get map;
@@ -23,17 +25,20 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
   factory ProductState() {
     return _$ProductState._(
       isLoading: false,
-      lastUpdated: 0,
       map: BuiltMap<int, ProductEntity>(),
       list: BuiltList<int>(),
     );
   }
 
-  bool isStale() {
+  bool get isStale {
+    if (! isLoaded) {
+      return true;
+    }
+
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool isLoaded() {
+  bool get isLoaded {
     return lastUpdated != null;
   }
 

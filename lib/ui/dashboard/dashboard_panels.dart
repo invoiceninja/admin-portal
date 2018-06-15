@@ -16,7 +16,7 @@ class DashboardPanels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppLoading(builder: (context, loading) {
-      return loading && viewModel.dashboardState.lastUpdated == 0
+      return ! viewModel.dashboardState.isLoaded
           ? LoadingIndicator()
           : _buildPanels(context);
     });
@@ -24,6 +24,7 @@ class DashboardPanels extends StatelessWidget {
 
   Widget _buildPanels(BuildContext context) {
     if (viewModel.dashboardState.data == null) {
+      viewModel.onRefreshed(context);
       return ListView();
     }
 

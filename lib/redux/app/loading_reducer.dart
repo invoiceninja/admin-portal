@@ -2,6 +2,7 @@ import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
+import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 
 final loadingReducer = combineReducers<bool>([
@@ -13,7 +14,7 @@ final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, LoadDashboardSuccess>(_setLoaded),
   TypedReducer<bool, LoadDashboardFailure>(_setLoaded),
 
-
+  // Products
   TypedReducer<bool, LoadProductsRequest>(_setLoading),
   TypedReducer<bool, LoadProductsSuccess>(_setLoaded),
   TypedReducer<bool, LoadProductsFailure>(_setLoaded),
@@ -35,7 +36,7 @@ final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, RestoreProductSuccess>(_setLoaded),
   TypedReducer<bool, RestoreProductFailure>(_setLoaded),
 
-
+  // Clients
   TypedReducer<bool, LoadClientsRequest>(_setLoading),
   TypedReducer<bool, LoadClientsSuccess>(_setLoaded),
   TypedReducer<bool, LoadClientsFailure>(_setLoaded),
@@ -56,6 +57,28 @@ final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, RestoreClientRequest>(_setLoading),
   TypedReducer<bool, RestoreClientSuccess>(_setLoaded),
   TypedReducer<bool, RestoreClientFailure>(_setLoaded),
+
+  // Invoices
+  TypedReducer<bool, LoadInvoicesRequest>(_setLoading),
+  TypedReducer<bool, LoadInvoicesSuccess>(_setLoaded),
+  TypedReducer<bool, LoadInvoicesFailure>(_setLoaded),
+
+  TypedReducer<bool, SaveInvoiceRequest>(_setLoading),
+  TypedReducer<bool, SaveInvoiceFailure>(_setLoaded),
+  TypedReducer<bool, SaveInvoiceSuccess>(_setLoaded),
+  TypedReducer<bool, AddInvoiceSuccess>(_setLoaded),
+
+  TypedReducer<bool, ArchiveInvoiceRequest>(_setLoading),
+  TypedReducer<bool, ArchiveInvoiceSuccess>(_setLoaded),
+  TypedReducer<bool, ArchiveInvoiceFailure>(_setLoaded),
+
+  TypedReducer<bool, DeleteInvoiceRequest>(_setLoading),
+  TypedReducer<bool, DeleteInvoiceSuccess>(_setLoaded),
+  TypedReducer<bool, DeleteInvoiceFailure>(_setLoaded),
+
+  TypedReducer<bool, RestoreInvoiceRequest>(_setLoading),
+  TypedReducer<bool, RestoreInvoiceSuccess>(_setLoaded),
+  TypedReducer<bool, RestoreInvoiceFailure>(_setLoaded),
 
 ]);
 

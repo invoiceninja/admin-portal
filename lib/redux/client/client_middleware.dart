@@ -1,11 +1,12 @@
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/data/repositories/client_repository.dart';
 
 List<Middleware<AppState>> createStoreClientsMiddleware([
-  ClientsRepository repository = const ClientsRepository(),
+  ClientRepository repository = const ClientRepository(),
 ]) {
   final loadClients = _loadClients(repository);
   final saveClient = _saveClient(repository);
@@ -22,11 +23,11 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   ];
 }
 
-Middleware<AppState> _archiveClient(ClientsRepository repository) {
+Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origClient = store.state.clientState().map[action.clientId];
+    var origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origClient, EntityAction.archive)
         .then((client) {
       store.dispatch(ArchiveClientSuccess(client));
@@ -42,11 +43,11 @@ Middleware<AppState> _archiveClient(ClientsRepository repository) {
   };
 }
 
-Middleware<AppState> _deleteClient(ClientsRepository repository) {
+Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origClient = store.state.clientState().map[action.clientId];
+    var origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origClient, EntityAction.delete)
         .then((client) {
       store.dispatch(DeleteClientSuccess(client));
@@ -62,11 +63,11 @@ Middleware<AppState> _deleteClient(ClientsRepository repository) {
   };
 }
 
-Middleware<AppState> _restoreClient(ClientsRepository repository) {
+Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var origClient = store.state.clientState().map[action.clientId];
+    var origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
         origClient, EntityAction.restore)
         .then((client) {
       store.dispatch(RestoreClientSuccess(client));
@@ -82,13 +83,13 @@ Middleware<AppState> _restoreClient(ClientsRepository repository) {
   };
 }
 
-Middleware<AppState> _saveClient(ClientsRepository repository) {
+Middleware<AppState> _saveClient(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
-        .saveData(store.state.selectedCompany(), store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
             action.client)
         .then((client) {
-      if (action.client.id == null) {
+      if (action.client.isNew()) {
         store.dispatch(AddClientSuccess(client));
       } else {
         store.dispatch(SaveClientSuccess(client));
@@ -103,10 +104,10 @@ Middleware<AppState> _saveClient(ClientsRepository repository) {
   };
 }
 
-Middleware<AppState> _loadClients(ClientsRepository repository) {
+Middleware<AppState> _loadClients(ClientRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     
-    if (! store.state.clientState().isStale() && ! action.force) {
+    if (! store.state.clientState.isStale && ! action.force) {
       next(action);
       return;
     }
@@ -118,12 +119,15 @@ Middleware<AppState> _loadClients(ClientsRepository repository) {
 
     store.dispatch(LoadClientsRequest());
     repository
-        .loadList(store.state.selectedCompany(), store.state.authState)
+        .loadList(store.state.selectedCompany, store.state.authState)
         .then((data) {
       store.dispatch(LoadClientsSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
+      }
+      if (!store.state.invoiceState.isLoaded) {
+        store.dispatch(LoadInvoicesAction());
       }
     }).catchError((error) => store.dispatch(LoadClientsFailure(error)));
 

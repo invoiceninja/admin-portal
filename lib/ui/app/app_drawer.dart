@@ -3,14 +3,17 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
+import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
+import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
@@ -37,12 +40,13 @@ class AppDrawer extends StatelessWidget {
         child: new DropdownButton<String>(
           isDense: true,
           value: viewModel.selectedCompanyIndex,
-          items: viewModel.companies.map((CompanyEntity company) =>
-            DropdownMenuItem<String>(
-              value: (viewModel.companies.indexOf(company) + 1).toString(),
-              child: Text(company.name),
-            )
-          ).toList(),
+          items: viewModel.companies
+              .map((CompanyEntity company) => DropdownMenuItem<String>(
+                    value:
+                        (viewModel.companies.indexOf(company) + 1).toString(),
+                    child: Text(company.name),
+                  ))
+              .toList(),
           onChanged: (value) {
             viewModel.onCompanyChanged(context, value);
           },
@@ -59,62 +63,114 @@ class AppDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
-                    child: viewModel.selectedCompany.logoUrl != null ? Image.network(viewModel.selectedCompany.logoUrl) : null
-                  ),
+                      child: viewModel.selectedCompany.logoUrl != null
+                          //? Image.network(viewModel.selectedCompany.logoUrl)
+                          ? CachedNetworkImage(
+                              imageUrl: viewModel.selectedCompany.logoUrl,
+                              placeholder: new CircularProgressIndicator(),
+                              errorWidget: new Icon(Icons.error),
+                            )
+                          : null),
                 ),
                 SizedBox(
                   height: 18.0,
                 ),
-                viewModel.companies.length > 1 ? _multipleCompanies : _singleCompany,
+                viewModel.companies.length > 1
+                    ? _multipleCompanies
+                    : _singleCompany,
               ],
             )),
             color: Colors.white10,
           ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.tachometerAlt),
-            title: Text(AppLocalization.of(context).dashboard),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
-            },
-          ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.users),
-            title: Text(AppLocalization.of(context).clients),
+          DrawerTile(
+              icon: FontAwesomeIcons.tachometerAlt,
+              title: AppLocalization.of(context).dashboard,
+              onTap: () {
+                Navigator
+                    .of(context)
+                    .pushReplacementNamed(DashboardScreen.route);
+              }),
+          DrawerTile(
+            icon: FontAwesomeIcons.users,
+            title: AppLocalization.of(context).clients,
             onTap: () {
               StoreProvider.of<AppState>(context).dispatch(SearchClients(null));
               Navigator.of(context).pushReplacementNamed(ClientScreen.route);
             },
           ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.cube),
-            title: Text(AppLocalization.of(context).products),
+          DrawerTile(
+            icon: FontAwesomeIcons.cube,
+            title: AppLocalization.of(context).products,
             onTap: () {
-              StoreProvider.of<AppState>(context).dispatch(SearchProducts(null));
+              StoreProvider
+                  .of<AppState>(context)
+                  .dispatch(SearchProducts(null));
               Navigator.of(context).pushReplacementNamed(ProductScreen.route);
             },
           ),
-          /*
-          ListTile(
-            leading: Icon(Icons.email),
-            title: Text(''),
-            onTap: () {},
+          DrawerTile(
+            icon: FontAwesomeIcons.filePdfO,
+            title: AppLocalization.of(context).invoices,
+            onTap: () {
+              StoreProvider
+                  .of<AppState>(context)
+                  .dispatch(SearchInvoices(null));
+              Navigator.of(context).pushReplacementNamed(InvoiceScreen.route);
+            },
           ),
-          */
-          ListTile(
-            leading: Icon(FontAwesomeIcons.powerOff),
-            title: Text(AppLocalization.of(context).logOut),
+          DrawerTile(
+            icon: FontAwesomeIcons.powerOff,
+            title: AppLocalization.of(context).logOut,
             onTap: () {
               viewModel.onLogoutTapped(context);
             },
           ),
           AboutListTile(
             applicationName: 'Invoice Ninja',
-            applicationIcon: Image.asset('assets/images/logo.png', width: 40.0, height: 40.0,),
+            applicationIcon: Image.asset(
+              'assets/images/logo.png',
+              width: 40.0,
+              height: 40.0,
+            ),
             applicationVersion: 'v' + kAppVersion,
-            icon: Icon(FontAwesomeIcons.info),
+            icon: Icon(FontAwesomeIcons.info, size: 22.0),
           ),
         ],
       ),
     );
   }
 }
+
+class DrawerTile extends StatelessWidget {
+  DrawerTile({
+    this.icon,
+    this.title,
+    this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      dense: true,
+      leading: Icon(icon, size: 22.0),
+      title: Text(title),
+      onTap: () => onTap(),
+    );
+  }
+}
+
+/*
+'payments' => 'credit-card',
+'recurring_invoices' => 'files-o',
+'credits' => 'credit-card',
+'quotes' => 'file-text-o',
+'proposals' => 'th-large',
+'tasks' => 'clock-o',
+'expenses' => 'file-image-o',
+'vendors' => 'building',
+'projects' => 'briefcase',
+*/

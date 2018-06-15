@@ -8,10 +8,10 @@ import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/data/web_client.dart';
 
-class ClientsRepository {
+class ClientRepository {
   final WebClient webClient;
 
-  const ClientsRepository({
+  const ClientRepository({
     this.webClient = const WebClient(),
   });
 
@@ -31,7 +31,7 @@ class ClientsRepository {
     var data = serializers.serializeWith(ClientEntity.serializer, client);
     var response;
 
-    if (client.id == null) {
+    if (client.isNew()) {
       response = await webClient.post(
           auth.url + '/clients', company.token, json.encode(data));
     } else {

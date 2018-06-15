@@ -22,6 +22,10 @@ class EntityType extends EnumClass {
 
   const EntityType._(String name) : super(name);
 
+  String get plural {
+    return this.toString() + 's';
+  }
+
   static BuiltSet<EntityType> get values => _$typeValues;
   static EntityType valueOf(String name) => _$typeValueOf(name);
 }
@@ -57,6 +61,10 @@ abstract class BaseEntity {
   @nullable
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
+
+  bool isNew() {
+    return this.id == null;
+  }
 
   bool isActive() {
     return this.archivedAt == null;

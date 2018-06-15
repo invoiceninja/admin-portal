@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
@@ -8,6 +9,14 @@ import 'package:invoiceninja/utils/localization.dart';
 
 class AppSearchButton extends StatelessWidget {
 
+  final EntityType entityType;
+  final Function onSearchPressed;
+
+  AppSearchButton({
+    this.entityType,
+    this.onSearchPressed,
+  });
+
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
@@ -15,15 +24,13 @@ class AppSearchButton extends StatelessWidget {
 
     return StoreConnector<AppState, ListUIState>(
       converter: (Store<AppState> store) =>
-          store.state.productListState(),
+          store.state.getListState(entityType),
       distinct: true,
       builder: (BuildContext context, listUIState) {
         return IconButton(
           icon: Icon(listUIState.search == null ? Icons.search : Icons.close),
           tooltip: localization.search,
-          onPressed: () {
-            store.dispatch(SearchProducts(listUIState.search == null ? '' : null));
-          },
+          onPressed: () => onSearchPressed(listUIState.search == null ? '' : null),
         );
       },
     );

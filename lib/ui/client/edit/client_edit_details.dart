@@ -4,6 +4,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja/ui/app/form_card.dart';
 
 class ClientEditDetails extends StatefulWidget {
   ClientEditDetails({
@@ -36,57 +37,51 @@ class ClientEditDetailsState extends State<ClientEditDetails>
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
-        Card(
-          elevation: 2.0,
-          child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    autocorrect: false,
-                    onSaved: (value) => name = value.trim(),
-                    initialValue: client.name,
-                    decoration: InputDecoration(
-                      labelText: localization.name,
-                    ),
-                  ),
-                  TextFormField(
-                    autocorrect: false,
-                    onSaved: (value) => idNumber = value.trim(),
-                    initialValue: client.idNumber,
-                    decoration: InputDecoration(
-                      labelText: localization.idNumber,
-                    ),
-                  ),
-                  TextFormField(
-                    autocorrect: false,
-                    onSaved: (value) => vatNumber = value.trim(),
-                    initialValue: client.vatNumber,
-                    decoration: InputDecoration(
-                      labelText: localization.vatNumber,
-                    ),
-                  ),
-                  TextFormField(
-                    autocorrect: false,
-                    onSaved: (value) => website = value.trim(),
-                    initialValue: client.website,
-                    decoration: InputDecoration(
-                      labelText: localization.website,
-                    ),
-                    keyboardType: TextInputType.url,
-                  ),
-                  TextFormField(
-                    autocorrect: false,
-                    onSaved: (value) => phone = value.trim(),
-                    initialValue: client.workPhone,
-                    decoration: InputDecoration(
-                      labelText: localization.phone,
-                    ),
-                    keyboardType: TextInputType.phone,
-                  ),
-                ],
-              )),
+        FormCard(
+          children: <Widget>[
+            TextFormField(
+              autocorrect: false,
+              onSaved: (value) => name = value.trim(),
+              initialValue: client.name,
+              decoration: InputDecoration(
+                labelText: localization.name,
+              ),
+            ),
+            TextFormField(
+              autocorrect: false,
+              onSaved: (value) => idNumber = value.trim(),
+              initialValue: client.idNumber,
+              decoration: InputDecoration(
+                labelText: localization.idNumber,
+              ),
+            ),
+            TextFormField(
+              autocorrect: false,
+              onSaved: (value) => vatNumber = value.trim(),
+              initialValue: client.vatNumber,
+              decoration: InputDecoration(
+                labelText: localization.vatNumber,
+              ),
+            ),
+            TextFormField(
+              autocorrect: false,
+              onSaved: (value) => website = value.trim(),
+              initialValue: client.website,
+              decoration: InputDecoration(
+                labelText: localization.website,
+              ),
+              keyboardType: TextInputType.url,
+            ),
+            TextFormField(
+              autocorrect: false,
+              onSaved: (value) => phone = value.trim(),
+              initialValue: client.workPhone,
+              decoration: InputDecoration(
+                labelText: localization.phone,
+              ),
+              keyboardType: TextInputType.phone,
+            ),
+          ],
         ),
       ],
     );

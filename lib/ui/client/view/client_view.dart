@@ -20,7 +20,6 @@ class ClientView extends StatefulWidget {
 
 class _ClientViewState extends State<ClientView>
     with SingleTickerProviderStateMixin {
-
   TabController _controller;
 
   @override
@@ -41,7 +40,8 @@ class _ClientViewState extends State<ClientView>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.viewModel.client.displayName), // Text(localizations.clientDetails),
+        title: Text(widget.viewModel.client
+            .displayName), // Text(localizations.clientDetails),
         bottom: TabBar(
           controller: _controller,
           //isScrollable: true,
@@ -54,7 +54,7 @@ class _ClientViewState extends State<ClientView>
             ),
           ],
         ),
-        actions: widget.viewModel.client.id == null
+        actions: widget.viewModel.client.isNew()
             ? []
             : [
                 IconButton(
@@ -102,58 +102,6 @@ class _ClientViewState extends State<ClientView>
         child: Icon(Icons.add),
         tooltip: localization.create,
       ),
-      /*
-        body:
-        */
-      /*
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: ListView(children: [
-          Card(
-            elevation: 2.0,
-            margin: EdgeInsets.all(0.0),
-            child: Form(
-              key: _formKey,
-              child: Container(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      autocorrect: false,
-                      key: _nameKey,
-                      initialValue: viewModel.client.name,
-                      decoration: InputDecoration(
-                        labelText: AppLocalization.of(context).name,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          new Builder(builder: (BuildContext context) {
-            return viewModel.client.isDeleted == true
-                ? Container()
-                : ProgressButton(
-                    label: AppLocalization.of(context).save.toUpperCase(),
-                    isLoading: viewModel.isLoading,
-                    isDirty: viewModel.isDirty,
-                    onPressed: () {
-                      if (!_formKey.currentState.validate()) {
-                        return;
-                      }
-
-                      viewModel.onSaveClicked(context,
-                          viewModel.client.rebuild((b) => b
-                            ..name = _nameKey.currentState.value)
-                      );
-                    },
-                  );
-          }),
-        ]),
-      ),
-     */
     );
   }
 }
-

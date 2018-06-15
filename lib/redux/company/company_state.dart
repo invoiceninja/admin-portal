@@ -1,4 +1,5 @@
 import 'package:invoiceninja/redux/client/client_state.dart';
+import 'package:invoiceninja/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja/data/models/entities.dart';
@@ -13,12 +14,14 @@ abstract class CompanyState implements Built<CompanyState, CompanyStateBuilder> 
   DashboardState get dashboardState;
   ProductState get productState;
   ClientState get clientState;
+  InvoiceState get invoiceState;
 
   factory CompanyState() {
     return _$CompanyState._(
       dashboardState: DashboardState(),
       productState: ProductState(),
       clientState: ClientState(),
+      invoiceState: InvoiceState(),
     );
   }
 

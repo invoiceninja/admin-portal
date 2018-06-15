@@ -186,7 +186,7 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     }
 
     if (response == 0) {
-      return clientA.name.compareTo(clientB.name);
+      return clientA.displayName.toLowerCase().compareTo(clientB.displayName.toLowerCase());
     } else {
       return response;
     }
@@ -197,7 +197,9 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
       return true;
     }
 
-    return displayName.contains(search);
+    search = search.toLowerCase();
+
+    return displayName.toLowerCase().contains(search);
   }
 
   ClientEntity._();

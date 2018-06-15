@@ -1,5 +1,6 @@
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/client/client_state.dart';
+import 'package:invoiceninja/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
@@ -41,7 +42,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   //factory AppState([updates(AppStateBuilder b)]) = _$AppState;
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
-  CompanyState selectedCompanyState() {
+  CompanyState get selectedCompanyState {
     switch (this.selectedCompanyIndex) {
       case 1:
         return this.companyState1;
@@ -58,31 +59,37 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return this.companyState1;
   }
 
-  bool isLoaded() {
-    return dashboardState().isLoaded()
-        && productState().isLoaded()
-        && clientState().isLoaded();
+  bool get isLoaded {
+    return dashboardState.isLoaded
+        && productState.isLoaded
+        && clientState.isLoaded;
   }
 
-  CompanyEntity selectedCompany() => this.selectedCompanyState().company;
-  DashboardState dashboardState() => this.selectedCompanyState().dashboardState;
+  CompanyEntity get selectedCompany => this.selectedCompanyState.company;
+  DashboardState get dashboardState => this.selectedCompanyState.dashboardState;
 
   ListUIState getListState(EntityType type) {
     switch (type) {
       case EntityType.product:
-        return productListState();
+        return productListState;
       case EntityType.client:
-        return clientListState();
+        return clientListState;
+      case EntityType.invoice:
+        return invoiceListState;
       default:
         return null;
     }
   }
 
-  ProductState productState() => this.selectedCompanyState().productState;
-  EntityUIState productUIState() => this.uiState.productUIState;
-  ListUIState productListState() => this.uiState.productUIState.listUIState;
+  ProductState get productState => this.selectedCompanyState.productState;
+  EntityUIState get productUIState => this.uiState.productUIState;
+  ListUIState get productListState => this.uiState.productUIState.listUIState;
 
-  ClientState clientState() => this.selectedCompanyState().clientState;
-  EntityUIState clientUIState() => this.uiState.clientUIState;
-  ListUIState clientListState() => this.uiState.clientUIState.listUIState;
+  ClientState get clientState => this.selectedCompanyState.clientState;
+  EntityUIState get clientUIState => this.uiState.clientUIState;
+  ListUIState get clientListState => this.uiState.clientUIState.listUIState;
+
+  InvoiceState get invoiceState => this.selectedCompanyState.invoiceState;
+  EntityUIState get invoiceUIState => this.uiState.invoiceUIState;
+  ListUIState get invoiceListState => this.uiState.invoiceUIState.listUIState;
 }

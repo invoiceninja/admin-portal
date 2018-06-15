@@ -8,6 +8,8 @@ part 'dashboard_state.g.dart';
 abstract class DashboardState implements Built<DashboardState, DashboardStateBuilder> {
 
   bool get isLoading;
+
+  @nullable
   int get lastUpdated;
 
   @nullable
@@ -16,16 +18,19 @@ abstract class DashboardState implements Built<DashboardState, DashboardStateBui
   factory DashboardState() {
     return _$DashboardState._(
       isLoading: false,
-      lastUpdated: 0,
       data: null,
     );
   }
 
-  bool isStale() {
+  bool get isStale {
+    if (! isLoaded) {
+      return true;
+    }
+
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool isLoaded() {
+  bool get isLoaded {
     return lastUpdated != null;
   }
 

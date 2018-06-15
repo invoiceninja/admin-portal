@@ -32,6 +32,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'clientUIState',
       serializers.serialize(object.clientUIState,
           specifiedType: const FullType(EntityUIState)),
+      'invoiceUIState',
+      serializers.serialize(object.invoiceUIState,
+          specifiedType: const FullType(EntityUIState)),
     ];
 
     return result;
@@ -56,6 +59,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.clientUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(EntityUIState)) as EntityUIState);
           break;
+        case 'invoiceUIState':
+          result.invoiceUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(EntityUIState)) as EntityUIState);
+          break;
       }
     }
 
@@ -68,15 +75,20 @@ class _$UIState extends UIState {
   final EntityUIState productUIState;
   @override
   final EntityUIState clientUIState;
+  @override
+  final EntityUIState invoiceUIState;
 
   factory _$UIState([void updates(UIStateBuilder b)]) =>
       (new UIStateBuilder()..update(updates)).build();
 
-  _$UIState._({this.productUIState, this.clientUIState}) : super._() {
+  _$UIState._({this.productUIState, this.clientUIState, this.invoiceUIState})
+      : super._() {
     if (productUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'productUIState');
     if (clientUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'clientUIState');
+    if (invoiceUIState == null)
+      throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
   }
 
   @override
@@ -91,19 +103,22 @@ class _$UIState extends UIState {
     if (identical(other, this)) return true;
     if (other is! UIState) return false;
     return productUIState == other.productUIState &&
-        clientUIState == other.clientUIState;
+        clientUIState == other.clientUIState &&
+        invoiceUIState == other.invoiceUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, productUIState.hashCode), clientUIState.hashCode));
+    return $jf($jc($jc($jc(0, productUIState.hashCode), clientUIState.hashCode),
+        invoiceUIState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
           ..add('productUIState', productUIState)
-          ..add('clientUIState', clientUIState))
+          ..add('clientUIState', clientUIState)
+          ..add('invoiceUIState', invoiceUIState))
         .toString();
   }
 }
@@ -123,12 +138,19 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set clientUIState(EntityUIStateBuilder clientUIState) =>
       _$this._clientUIState = clientUIState;
 
+  EntityUIStateBuilder _invoiceUIState;
+  EntityUIStateBuilder get invoiceUIState =>
+      _$this._invoiceUIState ??= new EntityUIStateBuilder();
+  set invoiceUIState(EntityUIStateBuilder invoiceUIState) =>
+      _$this._invoiceUIState = invoiceUIState;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
     if (_$v != null) {
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
+      _invoiceUIState = _$v.invoiceUIState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -152,7 +174,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$result = _$v ??
           new _$UIState._(
               productUIState: productUIState.build(),
-              clientUIState: clientUIState.build());
+              clientUIState: clientUIState.build(),
+              invoiceUIState: invoiceUIState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -160,6 +183,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         productUIState.build();
         _$failedField = 'clientUIState';
         clientUIState.build();
+        _$failedField = 'invoiceUIState';
+        invoiceUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UIState', _$failedField, e.toString());

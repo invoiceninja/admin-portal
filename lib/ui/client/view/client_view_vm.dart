@@ -11,13 +11,12 @@ import 'package:invoiceninja/ui/client/view/client_view.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
-class ClientViewBuilder extends StatelessWidget {
-  ClientViewBuilder({Key key}) : super(key: key);
+class ClientViewScreen extends StatelessWidget {
+  ClientViewScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ClientViewVM>(
-      //ignoreChange: (state) => clientSelector(state.client().list, id).isNotPresent,
       converter: (Store<AppState> store) {
         return ClientViewVM.fromStore(store);
       },
@@ -50,17 +49,17 @@ class ClientViewVM {
   });
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
-    final client = store.state.clientState().editing;
+    final client = store.state.clientState.editing;
 
     return ClientViewVM(
       isLoading: store.state.isLoading,
-      isDirty: client.id == null,
+      isDirty: client.isNew(),
       client: client,
       onDelete: () => false,
       onEditClicked: (BuildContext context) {
         Navigator
             .of(context)
-            .push(MaterialPageRoute(builder: (_) => ClientEditBuilder()));
+            .push(MaterialPageRoute(builder: (_) => ClientEditScreen()));
       },
       onSaveClicked: (BuildContext context, ClientEntity client) {
         final Completer<Null> completer = new Completer<Null>();
@@ -68,7 +67,7 @@ class ClientViewVM {
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-                message: client.id == null
+                message: client.isNew()
                     ? AppLocalization.of(context).successfullyCreatedClient
                     : AppLocalization.of(context).successfullyUpdatedClient,
               ),

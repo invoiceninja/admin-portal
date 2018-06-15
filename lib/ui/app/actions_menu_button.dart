@@ -23,6 +23,7 @@ class ActionMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<EntityAction>(
+      icon: Icon(Icons.more_vert),
       itemBuilder: (BuildContext context) {
         return [
           entity.isArchived() || entity.isDeleted ? PopupMenuItem<EntityAction>(

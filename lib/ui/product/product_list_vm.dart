@@ -12,7 +12,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/ui/product/product_edit_vm.dart';
+import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 
 class ProductListBuilder extends StatelessWidget {
   ProductListBuilder({Key key}) : super(key: key);
@@ -35,6 +35,7 @@ class ProductListVM {
   final List<int> productList;
   final BuiltMap<int, ProductEntity> productMap;
   final bool isLoading;
+  final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
   final Function(BuildContext, ProductEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
@@ -43,6 +44,7 @@ class ProductListVM {
     @required this.productList,
     @required this.productMap,
     @required this.isLoading,
+    @required this.isLoaded,
     @required this.onProductTap,
     @required this.onDismissed,
     @required this.onRefreshed,
@@ -62,14 +64,15 @@ class ProductListVM {
       }
 
     return ProductListVM(
-        productList: memoizedProductList(store.state.productState().map, store.state.productState().list, store.state.productListState()),
-        productMap: store.state.productState().map,
-        isLoading: store.state.productState().lastUpdated == 0,
+        productList: memoizedProductList(store.state.productState.map, store.state.productState.list, store.state.productListState),
+        productMap: store.state.productState.map,
+        isLoading: store.state.isLoading,
+        isLoaded: store.state.productState.isLoaded,
         onProductTap: (context, product) {
           store.dispatch(SelectProductAction(product));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductEditBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ProductEditScreen()));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ProductEntity product,

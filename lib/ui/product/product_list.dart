@@ -14,15 +14,21 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return viewModel.isLoading ? LoadingIndicator() : _buildListView(context);
+    if (! viewModel.isLoaded) {
+      if (! viewModel.isLoading) {
+        viewModel.onRefreshed(context);
+      }
+      return LoadingIndicator();
+    }
+
+    return _buildListView(context);
   }
 
   Widget _buildListView(BuildContext context) {
-
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.builder(
-        //shrinkWrap: true,
+          shrinkWrap: true,
           itemCount: viewModel.productList.length,
           itemBuilder: (BuildContext context, index) {
             var productId = viewModel.productList[index];
@@ -30,7 +36,8 @@ class ProductList extends StatelessWidget {
             return Column(children: <Widget>[
               ProductItem(
                 product: product,
-                onDismissed: (DismissDirection direction) => viewModel.onDismissed(context, product, direction),
+                onDismissed: (DismissDirection direction) =>
+                    viewModel.onDismissed(context, product, direction),
                 onTap: () => viewModel.onProductTap(context, product),
               ),
               Divider(

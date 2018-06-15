@@ -1,18 +1,17 @@
 import 'package:invoiceninja/ui/app/app_search.dart';
 import 'package:invoiceninja/ui/app/app_search_button.dart';
+import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/product/product_list_vm.dart';
-import 'package:invoiceninja/ui/product/product_edit_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
 
 class ProductScreen extends StatelessWidget {
-
   static final String route = '/products';
 
   @override
@@ -29,7 +28,12 @@ class ProductScreen extends StatelessWidget {
           },
         ),
         actions: [
-          AppSearchButton(),
+          AppSearchButton(
+            entityType: EntityType.product,
+            onSearchPressed: (value) {
+              store.dispatch(SearchProducts(value));
+            },
+          ),
         ],
       ),
       drawer: AppDrawerBuilder(),
@@ -50,12 +54,11 @@ class ProductScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorDark,
-        //key: ArchSampleKeys.addProductFab,
         onPressed: () {
           store.dispatch(SelectProductAction(ProductEntity()));
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductEditBuilder()));
+              .push(MaterialPageRoute(builder: (_) => ProductEditScreen()));
         },
         child: Icon(Icons.add),
         tooltip: localization.newProduct,

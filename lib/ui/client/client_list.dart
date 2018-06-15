@@ -14,15 +14,21 @@ class ClientList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return viewModel.isLoading ? LoadingIndicator() : _buildListView(context);
+    if (! viewModel.isLoaded) {
+      if (! viewModel.isLoading) {
+        viewModel.onRefreshed(context);
+      }
+      return LoadingIndicator();
+    }
+
+    return _buildListView(context);
   }
 
   Widget _buildListView(BuildContext context) {
-
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.builder(
-        //shrinkWrap: true,
+          shrinkWrap: true,
           itemCount: viewModel.clientList.length,
           itemBuilder: (BuildContext context, index) {
             var clientId = viewModel.clientList[index];
@@ -30,7 +36,8 @@ class ClientList extends StatelessWidget {
             return Column(children: <Widget>[
               ClientItem(
                 client: client,
-                onDismissed: (DismissDirection direction) => viewModel.onDismissed(context, client, direction),
+                onDismissed: (DismissDirection direction) =>
+                    viewModel.onDismissed(context, client, direction),
                 onTap: () => viewModel.onClientTap(context, client),
               ),
               Divider(

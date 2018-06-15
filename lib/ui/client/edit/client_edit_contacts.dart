@@ -5,6 +5,8 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
+import '../../app/form_card.dart';
+
 class ClientEditContacts extends StatefulWidget {
   ClientEditContacts({
     Key key,
@@ -38,7 +40,9 @@ class ClientEditContactsState extends State<ClientEditContacts>
   List<ContactEntity> getContacts() {
     List<ContactEntity> contacts = [];
     contactKeys.forEach((contactKey) {
-      contacts.add(contactKey.currentState.getContact());
+      if (contactKey.currentState != null) {
+        contacts.add(contactKey.currentState.getContact());
+      }
     });
     return contacts;
   }
@@ -61,7 +65,6 @@ class ClientEditContactsState extends State<ClientEditContacts>
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-
     List<Widget> items = [];
 
     for (var i = 0; i < contacts.length; i++) {
@@ -71,11 +74,12 @@ class ClientEditContactsState extends State<ClientEditContacts>
         contact: contact,
         key: contactKey,
         onRemovePressed: (key) => _onRemovePressed(key),
+        isRemoveVisible: contacts.length > 1,
       ));
     }
 
     items.add(Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
       child: RaisedButton(
         elevation: 4.0,
         color: Theme.of(context).primaryColor,
@@ -96,10 +100,12 @@ class ContactEditDetails extends StatefulWidget {
     Key key,
     @required this.contact,
     @required this.onRemovePressed,
+    @required this.isRemoveVisible,
   }) : super(key: key);
 
   final ContactEntity contact;
   final Function(GlobalKey<ContactEditDetailsState>) onRemovePressed;
+  final bool isRemoveVisible;
 
   @override
   ContactEditDetailsState createState() => ContactEditDetailsState();
@@ -112,7 +118,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   String _phone;
 
   ContactEntity getContact() {
-    return ContactEntity((b) => b
+    return widget.contact.rebuild((b) => b
       ..firstName = _firstName
       ..lastName = _lastName
       ..email = _email
@@ -146,56 +152,52 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Card(
-        elevation: 2.0,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.firstName,
-                onSaved: (value) => _firstName = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.firstName,
-                ),
-              ),
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.lastName,
-                onSaved: (value) => _lastName = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.lastName,
-                ),
-              ),
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.email,
-                onSaved: (value) => _email = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.email,
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              TextFormField(
-                autocorrect: false,
-                initialValue: widget.contact.phone,
-                onSaved: (value) => _phone = value.trim(),
-                decoration: InputDecoration(
-                  labelText: localization.phone,
-                ),
-                keyboardType: TextInputType.phone,
-              ),
-              Row(
+    return FormCard(
+      children: <Widget>[
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.contact.firstName,
+          onSaved: (value) => _firstName = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.firstName,
+          ),
+        ),
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.contact.lastName,
+          onSaved: (value) => _lastName = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.lastName,
+          ),
+        ),
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.contact.email,
+          onSaved: (value) => _email = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.email,
+          ),
+          keyboardType: TextInputType.emailAddress,
+          validator: (value) => value.isNotEmpty && ! value.contains('@') ? localization.emailIsInvalid : null,
+        ),
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.contact.phone,
+          onSaved: (value) => _phone = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.phone,
+          ),
+          keyboardType: TextInputType.phone,
+        ),
+        widget.isRemoveVisible
+            ? Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
+                    padding: const EdgeInsets.only(top: 14.0),
                     child: FlatButton(
                       child: Text(
-                        localization.delete,
+                        localization.remove,
                         style: TextStyle(
                           color: Colors.grey[600],
                         ),
@@ -204,11 +206,9 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     ),
                   )
                 ],
-              ),
-            ],
-          ),
-        ),
-      ),
+              )
+            : Container(),
+      ],
     );
   }
 }

@@ -48,19 +48,25 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      isDirty: ! store.state.authState.isAuthenticated,
-      isLoading: store.state.isLoading,
-      authState: store.state.authState,
-        onLoginClicked: (BuildContext context, String email, String password, String url, String secret) {
+        isDirty: !store.state.authState.isAuthenticated,
+        isLoading: store.state.isLoading,
+        authState: store.state.authState,
+        onLoginClicked: (BuildContext context, String email, String password,
+            String url, String secret) {
           if (store.state.isLoading) {
             return;
           }
           final Completer<Null> completer = new Completer<Null>();
-          store.dispatch(UserLoginRequest(completer, email.trim(), password.trim(), url.trim(), secret.trim()));
+          var apiUrl = url
+              .trim()
+              .replaceFirst(RegExp(r'/api/v1'), '')
+              .replaceFirst(RegExp(r'/$'), '');
+          apiUrl += '/api/v1';
+          store.dispatch(UserLoginRequest(
+              completer, email.trim(), password.trim(), apiUrl, secret.trim()));
           completer.future.then((_) {
             Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
           });
-        }
-    );
+        });
   }
 }

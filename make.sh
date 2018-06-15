@@ -11,27 +11,32 @@ if [ ! -d "lib/redux/$module" ]
 then
    echo "Creating directory: lib/redux/$module"
    mkdir "lib/redux/$module"
-   exit
 fi
 
 if [ ! -d "lib/ui/$module" ]
 then
    echo "Creating directory: lib/ui/$module"
    mkdir "lib/ui/$module"
-   exit
+fi
+
+if [ ! -d "lib/ui/$module/edit" ]
+then
+   echo "Creating directory: lib/ui/$module/edit"
+   mkdir "lib/ui/$module/edit"
 fi
 
 ## Create new files
 
-declare -a files=('lib/data/models/product_model.dart'
-   'lib/data/repositories/product_repository.dart'
+declare -a files=(
+   #'lib/data/models/product_model.dart'
+   #'lib/data/repositories/product_repository.dart'
    'lib/redux/product/product_actions.dart'
    'lib/redux/product/product_reducer.dart'
    'lib/redux/product/product_state.dart'
    'lib/redux/product/product_middleware.dart'
    'lib/redux/product/product_selectors.dart'
-   'lib/ui/product/product_edit.dart'
-   'lib/ui/product/product_edit_vm.dart'
+   'lib/ui/product/edit/product_edit.dart'
+   'lib/ui/product/edit/product_edit_vm.dart'
    'lib/ui/product/product_item.dart'
    'lib/ui/product/product_list_vm.dart'
    'lib/ui/product/product_list.dart'

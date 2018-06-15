@@ -53,7 +53,7 @@ class DashboardVM {
     }
 
     return DashboardVM(
-      dashboardState: store.state.dashboardState(),
+      dashboardState: store.state.dashboardState,
       isLoading: store.state.isLoading,
       onRefreshed: (context) => _handleRefresh(context),
     );
