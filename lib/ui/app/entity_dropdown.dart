@@ -26,36 +26,33 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
+    var entityList = widget.entityList;
+    var entityMap = widget.entityMap;
 
     _clientFocus.addListener(() {
       if (_clientFocus.hasFocus) {
         _clientFocus.unfocus();
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Material(
-                  child: Column(children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                        Expanded(
-                          child: TextField(
-                            autofocus: true,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: localization.filter,
-                            ),
-                          ),
-                        ),
-                        /*
+
+        _headerRow() {
+          return Row(
+            children: <Widget>[
+              SizedBox(
+                width: 10.0,
+              ),
+              Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
+              Expanded(
+                child: TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: localization.filter,
+                  ),
+                ),
+              ),
+              /*
                         FlatButton(
                           child: Text(localization.cancel),
                           onPressed: () => Navigator.pop(context),
@@ -64,28 +61,34 @@ class _EntityDropdownState extends State<EntityDropdown> {
                           child: Text(localization.create),
                         ),
                         */
-                        IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
-                    ),
-                    ListView.builder(
-                        itemCount: widget.entityList.length,
-                        itemBuilder: (BuildContext context, index) {
-                          var entityId = widget.entityList[index];
-                          var entity = widget.entityMap[entityId];
-                          return Column(children: <Widget>[
-                            ListTile(
-                              title: Text(entity.id.toString()),
-                            ),
-                            Divider(
-                              height: 1.0,
-                            ),
-                          ]);
-                        }),
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        }
+
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Material(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    _headerRow(),
+                    Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: entityList
+                            .getRange(0, 7)
+                            .map((entityId) => ListTile(
+                                  title:
+                                      Text(entityMap[entityId].id.toString()),
+                                ))
+                            .toList()),
                   ]),
                 ),
               );

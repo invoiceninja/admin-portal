@@ -42,12 +42,15 @@ class _InvoiceEditState extends State<InvoiceEdit>
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    var invoice = widget.viewModel.invoice;
+    var viewModel = widget.viewModel;
+    var invoice = viewModel.invoice;
 
     List<Widget> editors = [
       InvoiceEditDetails(
         invoice: invoice,
         key: _detailsKey,
+        clientList: viewModel.clientList,
+        clientMap: viewModel.clientMap,
       ),
       InvoiceEditItems(
         invoice: invoice,
