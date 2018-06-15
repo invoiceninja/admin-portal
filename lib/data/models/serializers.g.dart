@@ -24,12 +24,24 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CompanyEntity.serializer)
       ..add(CompanyState.serializer)
       ..add(ContactEntity.serializer)
+      ..add(CountryEntity.serializer)
+      ..add(CountryItemResponse.serializer)
+      ..add(CountryListResponse.serializer)
       ..add(CreditEntity.serializer)
       ..add(CreditItemResponse.serializer)
       ..add(CreditListResponse.serializer)
+      ..add(CurrencyEntity.serializer)
+      ..add(CurrencyItemResponse.serializer)
+      ..add(CurrencyListResponse.serializer)
       ..add(DashboardEntity.serializer)
       ..add(DashboardResponse.serializer)
       ..add(DashboardState.serializer)
+      ..add(DateFormatEntity.serializer)
+      ..add(DateFormatItemResponse.serializer)
+      ..add(DateFormatListResponse.serializer)
+      ..add(DatetimeFormatEntity.serializer)
+      ..add(DatetimeFormatItemResponse.serializer)
+      ..add(DatetimeFormatListResponse.serializer)
       ..add(EntityState.serializer)
       ..add(EntityUIState.serializer)
       ..add(ErrorMessage.serializer)
@@ -37,17 +49,33 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ExpenseEntity.serializer)
       ..add(ExpenseItemResponse.serializer)
       ..add(ExpenseListResponse.serializer)
+      ..add(FrequencyEntity.serializer)
+      ..add(FrequencyItemResponse.serializer)
+      ..add(FrequencyListResponse.serializer)
+      ..add(IndustryEntity.serializer)
+      ..add(IndustryItemResponse.serializer)
+      ..add(IndustryListResponse.serializer)
       ..add(InvitationEntity.serializer)
+      ..add(InvoiceDesignEntity.serializer)
+      ..add(InvoiceDesignItemResponse.serializer)
+      ..add(InvoiceDesignListResponse.serializer)
       ..add(InvoiceEntity.serializer)
       ..add(InvoiceItemEntity.serializer)
       ..add(InvoiceItemResponse.serializer)
       ..add(InvoiceListResponse.serializer)
       ..add(InvoiceState.serializer)
+      ..add(InvoiceStatusEntity.serializer)
+      ..add(LanguageEntity.serializer)
+      ..add(LanguageItemResponse.serializer)
+      ..add(LanguageListResponse.serializer)
       ..add(ListUIState.serializer)
       ..add(LoginResponse.serializer)
       ..add(PaymentEntity.serializer)
       ..add(PaymentItemResponse.serializer)
       ..add(PaymentListResponse.serializer)
+      ..add(PaymentTypeEntity.serializer)
+      ..add(PaymentTypeItemResponse.serializer)
+      ..add(PaymentTypeListResponse.serializer)
       ..add(ProductEntity.serializer)
       ..add(ProductItemResponse.serializer)
       ..add(ProductListResponse.serializer)
@@ -55,9 +83,17 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ProjectEntity.serializer)
       ..add(ProjectItemResponse.serializer)
       ..add(ProjectListResponse.serializer)
+      ..add(SizeEntity.serializer)
+      ..add(SizeItemResponse.serializer)
+      ..add(SizeListResponse.serializer)
+      ..add(StaticDataEntity.serializer)
+      ..add(StaticDataItemResponse.serializer)
       ..add(TaskEntity.serializer)
       ..add(TaskItemResponse.serializer)
       ..add(TaskListResponse.serializer)
+      ..add(TimezoneEntity.serializer)
+      ..add(TimezoneItemResponse.serializer)
+      ..add(TimezoneListResponse.serializer)
       ..add(UIState.serializer)
       ..add(VendorContactEntity.serializer)
       ..add(VendorEntity.serializer)
@@ -73,8 +109,60 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ContactEntity)]),
           () => new ListBuilder<ContactEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(CountryEntity)]),
+          () => new ListBuilder<CountryEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CreditEntity)]),
           () => new ListBuilder<CreditEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(CurrencyEntity)]),
+          () => new ListBuilder<CurrencyEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(CurrencyEntity)]),
+          () => new ListBuilder<CurrencyEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(SizeEntity)]),
+          () => new ListBuilder<SizeEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(IndustryEntity)]),
+          () => new ListBuilder<IndustryEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(TimezoneEntity)]),
+          () => new ListBuilder<TimezoneEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DateFormatEntity)]),
+          () => new ListBuilder<DateFormatEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(DatetimeFormatEntity)]),
+          () => new ListBuilder<DatetimeFormatEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(LanguageEntity)]),
+          () => new ListBuilder<LanguageEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(PaymentTypeEntity)]),
+          () => new ListBuilder<PaymentTypeEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(CountryEntity)]),
+          () => new ListBuilder<CountryEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(InvoiceDesignEntity)]),
+          () => new ListBuilder<InvoiceDesignEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(InvoiceStatusEntity)]),
+          () => new ListBuilder<InvoiceStatusEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(FrequencyEntity)]),
+          () => new ListBuilder<FrequencyEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DateFormatEntity)]),
+          () => new ListBuilder<DateFormatEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(DatetimeFormatEntity)]),
+          () => new ListBuilder<DatetimeFormatEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => new ListBuilder<EntityState>())
@@ -89,6 +177,16 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ExpenseEntity)]),
           () => new ListBuilder<ExpenseEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(FrequencyEntity)]),
+          () => new ListBuilder<FrequencyEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(IndustryEntity)]),
+          () => new ListBuilder<IndustryEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(InvoiceDesignEntity)]),
+          () => new ListBuilder<InvoiceDesignEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(InvoiceEntity)]),
           () => new ListBuilder<InvoiceEntity>())
       ..addBuilderFactory(
@@ -98,8 +196,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(InvitationEntity)]),
           () => new ListBuilder<InvitationEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(LanguageEntity)]),
+          () => new ListBuilder<LanguageEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(PaymentEntity)]),
           () => new ListBuilder<PaymentEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(PaymentTypeEntity)]),
+          () => new ListBuilder<PaymentTypeEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ProductEntity)]),
           () => new ListBuilder<ProductEntity>())
@@ -107,8 +211,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ProjectEntity)]),
           () => new ListBuilder<ProjectEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(SizeEntity)]),
+          () => new ListBuilder<SizeEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TaskEntity)]),
           () => new ListBuilder<TaskEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(TimezoneEntity)]),
+          () => new ListBuilder<TimezoneEntity>())
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(VendorContactEntity)]),
