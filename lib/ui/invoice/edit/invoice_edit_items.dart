@@ -27,7 +27,6 @@ class InvoiceEditItemsState extends State<InvoiceEditItems>
   @override
   void initState() {
     super.initState();
-    print('invoice');
     var invoice = widget.invoice;
     invoiceItems = invoice.invoiceItems.toList();
     invoiceItemKeys = invoice.invoiceItems
@@ -63,20 +62,20 @@ class InvoiceEditItemsState extends State<InvoiceEditItems>
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    List<Widget> invoiceItems = [];
+    List<Widget> widgets = [];
 
     for (var i = 0; i < invoiceItems.length; i++) {
       var invoiceItem = invoiceItems[i];
       var invoiceItemKey = invoiceItemKeys[i];
-      invoiceItems.add(ItemEditDetails(
-        //invoiceItem: invoiceItem,
+      widgets.add(ItemEditDetails(        
+        invoiceItem: invoiceItem,
         key: invoiceItemKey,
         onRemovePressed: (key) => _onRemovePressed(key),
         isRemoveVisible: invoiceItems.length > 1,
       ));
     }
 
-    invoiceItems.add(Padding(
+    widgets.add(Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
       child: RaisedButton(
         elevation: 4.0,
@@ -88,7 +87,7 @@ class InvoiceEditItemsState extends State<InvoiceEditItems>
     ));
 
     return ListView(
-      children: invoiceItems,
+      children: widgets,
     );
   }
 }

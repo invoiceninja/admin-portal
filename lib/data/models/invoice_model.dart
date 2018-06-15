@@ -242,8 +242,14 @@ abstract class InvoiceEntity extends Object with BaseEntity
     return invoiceNumber.contains(search);
   }
 
+  factory InvoiceEntity() {
+    return _$InvoiceEntity._(
+      invoiceItems: BuiltList<InvoiceItemEntity>(),
+    );
+  }
+
   InvoiceEntity._();
-  factory InvoiceEntity([updates(InvoiceEntityBuilder b)]) = _$InvoiceEntity;
+  //factory InvoiceEntity([updates(InvoiceEntityBuilder b)]) = _$InvoiceEntity;
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
 

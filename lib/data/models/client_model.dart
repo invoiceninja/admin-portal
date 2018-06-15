@@ -202,8 +202,14 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     return displayName.toLowerCase().contains(search);
   }
 
+  factory ClientEntity() {
+    return _$ClientEntity._(
+      contacts: BuiltList<ContactEntity>(),
+    );
+  }
+
   ClientEntity._();
-  factory ClientEntity([updates(ClientEntityBuilder b)]) = _$ClientEntity;
+  //factory ClientEntity([updates(ClientEntityBuilder b)]) = _$ClientEntity;
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
 

@@ -124,7 +124,8 @@ class AppLocalization {
       'partial': 'Partial/Deposit',
       'description': 'Description',
       'unit_cost': 'Unit Cost',
-      'Quantity': 'Quantity',
+      'quantity': 'Quantity',
+      'add_item': 'Add Item',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -241,6 +242,7 @@ class AppLocalization {
   String get description => _localizedValues[locale.languageCode]['description'];
   String get unitCost => _localizedValues[locale.languageCode]['unit_cost'];
   String get quantity => _localizedValues[locale.languageCode]['quantity'];
+  String get addItem => _localizedValues[locale.languageCode]['add_item'];
 
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
