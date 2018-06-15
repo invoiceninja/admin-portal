@@ -1,5 +1,7 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
@@ -7,9 +9,13 @@ class InvoiceEditDetails extends StatefulWidget {
   InvoiceEditDetails({
     Key key,
     @required this.invoice,
+    @required this.clientList,
+    @required this.clientMap,
   }) : super(key: key);
 
   final InvoiceEntity invoice;
+  final List<int> clientList;
+  final BuiltMap<int, ClientEntity> clientMap;
 
   @override
   InvoiceEditDetailsState createState() => new InvoiceEditDetailsState();
@@ -40,8 +46,11 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails>
         FormCard(
           children: <Widget>[
             invoice.isNew()
-                ? Container()
-                : TextFormField(
+                ? EntityDropdown(
+                    labelText: localization.client,
+                    entityList: widget.clientList,
+                    entityMap: widget.clientMap,
+                ) : TextFormField(
                     autocorrect: false,
                     onSaved: (value) => invoiceNumber = value.trim(),
                     initialValue: invoice.invoiceNumber,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -8,6 +9,7 @@ import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/client/client_selectors.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
 class InvoiceEditScreen extends StatelessWidget {
@@ -31,6 +33,8 @@ class InvoiceEditScreen extends StatelessWidget {
 
 class InvoiceEditVM {
   final InvoiceEntity invoice;
+  final List<int> clientList;
+  final BuiltMap<int, ClientEntity> clientMap;
   final Function onDelete;
   final Function(BuildContext, InvoiceEntity) onSaveClicked;
   final Function(BuildContext, EntityAction) onActionSelected;
@@ -39,6 +43,8 @@ class InvoiceEditVM {
 
   InvoiceEditVM({
     @required this.invoice,
+    @required this.clientList,
+    @required this.clientMap,
     @required this.onDelete,
     @required this.onSaveClicked,
     @required this.onActionSelected,
@@ -47,12 +53,15 @@ class InvoiceEditVM {
   });
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
-    final invoice = store.state.invoiceState.editing;
+    AppState state = store.state;
+    final invoice = state.invoiceState.editing;
 
     return InvoiceEditVM(
-      isLoading: store.state.isLoading,
+      isLoading: state.isLoading,
       isDirty: invoice.isNew(),
       invoice: invoice,
+      clientList: memoizedActiveClientList(state.clientState.map, state.clientState.list),
+      clientMap: state.clientState.map,
       onDelete: () => false,
       onSaveClicked: (BuildContext context, InvoiceEntity invoice) {
         final Completer<Null> completer = new Completer<Null>();

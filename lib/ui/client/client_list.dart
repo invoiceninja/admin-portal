@@ -28,7 +28,6 @@ class ClientList extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.builder(
-          shrinkWrap: true,
           itemCount: viewModel.clientList.length,
           itemBuilder: (BuildContext context, index) {
             var clientId = viewModel.clientList[index];

@@ -82,7 +82,6 @@ class _ClientViewState extends State<ClientView>
           showDialog(
             context: context,
             builder: (BuildContext context) => SimpleDialog(
-                    //title: const Text('Set backup account'),
                     children: <Widget>[
                       ListTile(
                         dense: true,

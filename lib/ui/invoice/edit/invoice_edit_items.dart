@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 
@@ -17,7 +18,6 @@ class InvoiceEditItems extends StatefulWidget {
 
 class InvoiceEditItemsState extends State<InvoiceEditItems>
     with AutomaticKeepAliveClientMixin {
-      
   List<InvoiceItemEntity> invoiceItems;
   List<GlobalKey<ItemEditDetailsState>> invoiceItemKeys;
 
@@ -67,7 +67,7 @@ class InvoiceEditItemsState extends State<InvoiceEditItems>
     for (var i = 0; i < invoiceItems.length; i++) {
       var invoiceItem = invoiceItems[i];
       var invoiceItemKey = invoiceItemKeys[i];
-      widgets.add(ItemEditDetails(        
+      widgets.add(ItemEditDetails(
         invoiceItem: invoiceItem,
         key: invoiceItemKey,
         onRemovePressed: (key) => _onRemovePressed(key),
@@ -116,8 +116,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
   InvoiceItemEntity getItem() {
     return widget.invoiceItem.rebuild((b) => b
-      //..phone = _phone
-    );
+        //..phone = _phone
+        );
   }
 
   @override
