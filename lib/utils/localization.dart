@@ -122,6 +122,9 @@ class AppLocalization {
       'valid_until': 'Valid Until',
       'items': 'Items',
       'partial': 'Partial/Deposit',
+      'description': 'Description',
+      'unit_cost': 'Unit Cost',
+      'Quantity': 'Quantity',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -235,6 +238,9 @@ class AppLocalization {
   String get validUntil => _localizedValues[locale.languageCode]['valid_until'];
   String get items => _localizedValues[locale.languageCode]['items'];
   String get partial => _localizedValues[locale.languageCode]['partial'];
+  String get description => _localizedValues[locale.languageCode]['description'];
+  String get unitCost => _localizedValues[locale.languageCode]['unit_cost'];
+  String get quantity => _localizedValues[locale.languageCode]['quantity'];
 
 
   String get payment => _localizedValues[locale.languageCode]['payment'];

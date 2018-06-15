@@ -27,6 +27,7 @@ class InvoiceEditItemsState extends State<InvoiceEditItems>
   @override
   void initState() {
     super.initState();
+    print('invoice');
     var invoice = widget.invoice;
     invoiceItems = invoice.invoiceItems.toList();
     invoiceItemKeys = invoice.invoiceItems
@@ -109,10 +110,10 @@ class ItemEditDetails extends StatefulWidget {
 }
 
 class ItemEditDetailsState extends State<ItemEditDetails> {
-  String _firstName;
-  String _lastName;
-  String _email;
-  String _phone;
+  String _productKey;
+  String _notes;
+  double _cost;
+  double _qty;
 
   InvoiceItemEntity getItem() {
     return widget.invoiceItem.rebuild((b) => b
@@ -149,16 +150,39 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
     return FormCard(
       children: <Widget>[
-        /*
         TextFormField(
           autocorrect: false,
-          initialValue: widget.invoiceItem.firstName,
-          onSaved: (value) => _firstName = value.trim(),
+          initialValue: widget.invoiceItem.productKey,
+          onSaved: (value) => _productKey = value.trim(),
           decoration: InputDecoration(
-            labelText: localization.firstName,
+            labelText: localization.product,
           ),
         ),
-        */
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.invoiceItem.notes,
+          maxLines: 4,
+          onSaved: (value) => _notes = value.trim(),
+          decoration: InputDecoration(
+            labelText: localization.description,
+          ),
+        ),
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.invoiceItem.cost?.toStringAsFixed(2),
+          onSaved: (value) => _cost = double.tryParse(value) ?? 0.0,
+          decoration: InputDecoration(
+            labelText: localization.unitCost,
+          ),
+        ),
+        TextFormField(
+          autocorrect: false,
+          initialValue: widget.invoiceItem.qty?.toStringAsFixed(2),
+          onSaved: (value) => _qty = double.tryParse(value) ?? 0.0,
+          decoration: InputDecoration(
+            labelText: localization.quantity,
+          ),
+        ),
         widget.isRemoveVisible
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.end,
