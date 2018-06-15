@@ -62,6 +62,18 @@ abstract class BaseEntity {
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
 
+  String get listDisplayName {
+    return 'Error: not set';
+  }
+
+  bool matchesSearch(String search) {
+    return true;
+  }
+
+  String matchesSearchField(String search) {
+    return null;
+  }
+
   bool isNew() {
     return this.id == null;
   }

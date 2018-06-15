@@ -175,6 +175,10 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
   //String get last_login;
   //String get custom_messages;
 
+  String get listDisplayName {
+    return displayName;
+  }
+
   int compareTo(ClientEntity client, String sortField, bool sortAscending) {
     int response = 0;
     ClientEntity clientA = sortAscending ? this : client;

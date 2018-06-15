@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -85,10 +87,14 @@ class _EntityDropdownState extends State<EntityDropdown> {
                         Column(
                             mainAxisSize: MainAxisSize.min,
                             children: entityList
-                                .getRange(0, 6)
+                                .getRange(0, min(6, entityList.length))
                                 .map((entityId) => ListTile(
+                                  dense: true,
                                       title:
-                                          Text(entityMap[entityId].id.toString()),
+                                          Text(entityMap[entityId].listDisplayName),
+                                          onTap: () {
+                                            //
+                                          },
                                     ))
                                 .toList()),
                       ]),
