@@ -15,11 +15,6 @@ import 'package:invoiceninja/data/models/static/invoice_design_model.dart';
 import 'package:invoiceninja/data/models/static/invoice_status_model.dart';
 import 'package:invoiceninja/data/models/static/frequency_model.dart';
 
-import 'package:invoiceninja/data/models/static/bank_model.dart';
-import 'package:invoiceninja/data/models/static/font_model.dart';
-import 'package:invoiceninja/data/models/static/gateway_model.dart';
-import 'package:invoiceninja/data/models/static/gateway_type_model.dart';
-
 part 'static_data_model.g.dart';
 
 abstract class StaticDataListResponse implements Built<StaticDataListResponse, StaticDataListResponseBuilder> {

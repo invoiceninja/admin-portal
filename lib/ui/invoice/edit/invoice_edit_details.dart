@@ -59,7 +59,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails>
         TextFormField(
           autocorrect: false,
           onSaved: (value) => discount = double.tryParse(value) ?? 0.0,
-          initialValue: invoice.discount.toStringAsFixed(2),
+          initialValue: invoice.discount?.toStringAsFixed(2),
           decoration: InputDecoration(
             labelText: localization.discount,
           ),
@@ -67,7 +67,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails>
         TextFormField(
           autocorrect: false,
           onSaved: (value) => partial = double.tryParse(value) ?? 0.0,
-          initialValue: invoice.partial.toStringAsFixed(2),
+          initialValue: invoice.partial?.toStringAsFixed(2),
           decoration: InputDecoration(
             labelText: localization.partial,
           ),
