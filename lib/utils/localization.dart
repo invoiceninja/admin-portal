@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:invoiceninja/utils/strings.dart';
 
 class AppLocalization {
   AppLocalization(this.locale);
@@ -240,8 +241,8 @@ class AppLocalization {
   String get payments => _localizedValues[locale.languageCode]['payments'];
 
 
-  String lookup(String key) {
-    return _localizedValues[locale.languageCode][key] ?? 'Missing: ' + key;
+  String lookup(String key) {    
+    return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? 'Missing: ' + key;
   }
 }
 

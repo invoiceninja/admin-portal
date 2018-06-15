@@ -10,7 +10,6 @@ String formatURL(String url) {
   return 'http://' + url;
 }
 
-
 String formatAddress({dynamic object, bool isShipping = false, String delimiter = '\n'}) {
   var str = '';
 
