@@ -30,7 +30,7 @@ class ActionMenuButton extends StatelessWidget {
             value: EntityAction.restore,
             child: Row(
               children: <Widget>[
-                Icon(Icons.restore, color:  Colors.grey[600]),
+                Icon(Icons.restore,),
                 SizedBox(width: 15.0),
                 Text(AppLocalization.of(context).restore),
               ],
@@ -40,7 +40,7 @@ class ActionMenuButton extends StatelessWidget {
             value: EntityAction.archive,
             child: Row(
               children: <Widget>[
-                Icon(Icons.archive, color: Colors.grey[600]),
+                Icon(Icons.archive,),
                 SizedBox(width: 15.0),
                 Text(AppLocalization.of(context).archive),
               ],
@@ -50,7 +50,7 @@ class ActionMenuButton extends StatelessWidget {
             value: EntityAction.delete,
             child: Row(
               children: <Widget>[
-                Icon(Icons.delete, color: Colors.grey[600]),
+                Icon(Icons.delete,),
                 SizedBox(width: 15.0),
                 Text(AppLocalization.of(context).delete),
               ],
