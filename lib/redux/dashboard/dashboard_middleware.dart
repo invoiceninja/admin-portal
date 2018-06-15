@@ -34,7 +34,7 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
               if (action.completer != null) {
                 action.completer.complete(null);
               }
-              if (! store.state.productState.isLoaded) {
+              if (store.state.productState.isStale) {
                 store.dispatch(LoadProductsAction());
               }
             }

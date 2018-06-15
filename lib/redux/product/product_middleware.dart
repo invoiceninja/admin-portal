@@ -124,7 +124,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (!store.state.clientState.isLoaded) {
+      if (store.state.clientState.isStale) {
         store.dispatch(LoadClientsAction());
       }
     }).catchError((error) => store.dispatch(LoadProductsFailure(error)));
