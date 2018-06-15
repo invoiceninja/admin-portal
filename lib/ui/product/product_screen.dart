@@ -60,7 +60,7 @@ class ProductScreen extends StatelessWidget {
               .of(context)
               .push(MaterialPageRoute(builder: (_) => ProductEditScreen()));
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add,color: Colors.white,),
         tooltip: localization.newProduct,
       ),
     );

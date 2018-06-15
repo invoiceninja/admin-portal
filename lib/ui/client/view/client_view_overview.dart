@@ -110,7 +110,6 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         Container(
-          color: Colors.white,
           child: Material(
             type: MaterialType.transparency,
             child: ListTile(
@@ -125,7 +124,6 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         Container(
-          color: Colors.white,
           child: Material(
             type: MaterialType.transparency,
             child: ListTile(
