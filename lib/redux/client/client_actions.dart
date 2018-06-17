@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja/redux/app/app_actions.dart';
 
 class LoadClientsAction {
   final Completer completer;
@@ -22,7 +23,7 @@ class LoadClientsFailure {
   }
 }
 
-class LoadClientsSuccess {
+class LoadClientsSuccess extends PersistData {
   final BuiltList<ClientEntity> clients;
   LoadClientsSuccess(this.clients);
 
@@ -43,7 +44,7 @@ class SaveClientRequest {
   SaveClientRequest(this.completer, this.client);
 }
 
-class SaveClientSuccess {
+class SaveClientSuccess extends PersistData {
   final ClientEntity client;
 
   SaveClientSuccess(this.client);
@@ -55,7 +56,7 @@ class ArchiveClientRequest {
 
   ArchiveClientRequest(this.completer, this.clientId);
 }
-class ArchiveClientSuccess {
+class ArchiveClientSuccess extends PersistData {
   final ClientEntity client;
   ArchiveClientSuccess(this.client);
 }
@@ -70,7 +71,7 @@ class DeleteClientRequest {
 
   DeleteClientRequest(this.completer, this.clientId);
 }
-class DeleteClientSuccess {
+class DeleteClientSuccess extends PersistData {
   final ClientEntity client;
   DeleteClientSuccess(this.client);
 }
@@ -84,7 +85,7 @@ class RestoreClientRequest {
   final int clientId;
   RestoreClientRequest(this.completer, this.clientId);
 }
-class RestoreClientSuccess {
+class RestoreClientSuccess extends PersistData {
   final ClientEntity client;
   RestoreClientSuccess(this.client);
 }
@@ -93,7 +94,7 @@ class RestoreClientFailure {
   RestoreClientFailure(this.client);
 }
 
-class AddClientSuccess {
+class AddClientSuccess extends PersistData {
   final ClientEntity client;
   AddClientSuccess(this.client);
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/app/app_actions.dart';
 
 class LoadDashboardAction {
   final Completer completer;
@@ -22,7 +23,7 @@ class LoadDashboardFailure {
   }
 }
 
-class LoadDashboardSuccess {
+class LoadDashboardSuccess extends PersistData {
   final DashboardEntity data;
 
   LoadDashboardSuccess(this.data);

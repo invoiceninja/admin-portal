@@ -1,12 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/file_storage.dart';
 import 'package:invoiceninja/data/repositories/persistence_repository.dart';
+import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
-import 'package:invoiceninja/redux/client/client_actions.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
@@ -91,26 +88,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
-    
-    TypedMiddleware<AppState, LoadDashboardSuccess>(dataLoaded),
-    TypedMiddleware<AppState, LoadProductsSuccess>(dataLoaded),
-    TypedMiddleware<AppState, AddProductSuccess>(dataLoaded),
-    TypedMiddleware<AppState, SaveProductSuccess>(dataLoaded),
-    TypedMiddleware<AppState, ArchiveProductSuccess>(dataLoaded),
-    TypedMiddleware<AppState, DeleteProductSuccess>(dataLoaded),
-    TypedMiddleware<AppState, RestoreProductSuccess>(dataLoaded),
-    TypedMiddleware<AppState, LoadClientsSuccess>(dataLoaded),
-    TypedMiddleware<AppState, AddClientSuccess>(dataLoaded),
-    TypedMiddleware<AppState, SaveClientSuccess>(dataLoaded),
-    TypedMiddleware<AppState, ArchiveClientSuccess>(dataLoaded),
-    TypedMiddleware<AppState, DeleteClientSuccess>(dataLoaded),
-    TypedMiddleware<AppState, RestoreClientSuccess>(dataLoaded),
-    TypedMiddleware<AppState, LoadInvoicesSuccess>(dataLoaded),
-    TypedMiddleware<AppState, AddInvoiceSuccess>(dataLoaded),
-    TypedMiddleware<AppState, SaveInvoiceSuccess>(dataLoaded),
-    TypedMiddleware<AppState, ArchiveInvoiceSuccess>(dataLoaded),
-    TypedMiddleware<AppState, DeleteInvoiceSuccess>(dataLoaded),
-    TypedMiddleware<AppState, RestoreInvoiceSuccess>(dataLoaded),
+    TypedMiddleware<AppState, PersistData>(dataLoaded),
   ];
 }
 
@@ -223,6 +201,8 @@ Middleware<AppState> _createDataLoaded(
   PersistenceRepository company5Repository,
 ) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    print('== Data loaded');
+
     // first process the action so the data is in the state
     next(action);
 
@@ -233,16 +213,16 @@ Middleware<AppState> _createDataLoaded(
         company1Repository.saveCompanyState(state.companyState1);
         break;
       case 2:
-        company1Repository.saveCompanyState(state.companyState2);
+        company2Repository.saveCompanyState(state.companyState2);
         break;
       case 3:
-        company1Repository.saveCompanyState(state.companyState3);
+        company3Repository.saveCompanyState(state.companyState3);
         break;
       case 4:
-        company1Repository.saveCompanyState(state.companyState4);
+        company4Repository.saveCompanyState(state.companyState4);
         break;
       case 5:
-        company1Repository.saveCompanyState(state.companyState5);
+        company5Repository.saveCompanyState(state.companyState5);
         break;
     }
   };

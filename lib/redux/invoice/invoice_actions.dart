@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja/redux/app/app_actions.dart';
 
 class LoadInvoicesAction {
   final Completer completer;
@@ -22,7 +23,7 @@ class LoadInvoicesFailure {
   }
 }
 
-class LoadInvoicesSuccess {
+class LoadInvoicesSuccess extends PersistData {
   final BuiltList<InvoiceEntity> invoices;
   LoadInvoicesSuccess(this.invoices);
 
@@ -43,7 +44,7 @@ class SaveInvoiceRequest {
   SaveInvoiceRequest(this.completer, this.invoice);
 }
 
-class SaveInvoiceSuccess {
+class SaveInvoiceSuccess extends PersistData {
   final InvoiceEntity invoice;
 
   SaveInvoiceSuccess(this.invoice);
@@ -55,7 +56,7 @@ class ArchiveInvoiceRequest {
 
   ArchiveInvoiceRequest(this.completer, this.invoiceId);
 }
-class ArchiveInvoiceSuccess {
+class ArchiveInvoiceSuccess extends PersistData {
   final InvoiceEntity invoice;
   ArchiveInvoiceSuccess(this.invoice);
 }
@@ -70,7 +71,7 @@ class DeleteInvoiceRequest {
 
   DeleteInvoiceRequest(this.completer, this.invoiceId);
 }
-class DeleteInvoiceSuccess {
+class DeleteInvoiceSuccess extends PersistData {
   final InvoiceEntity invoice;
   DeleteInvoiceSuccess(this.invoice);
 }
@@ -84,7 +85,7 @@ class RestoreInvoiceRequest {
   final int invoiceId;
   RestoreInvoiceRequest(this.completer, this.invoiceId);
 }
-class RestoreInvoiceSuccess {
+class RestoreInvoiceSuccess extends PersistData {
   final InvoiceEntity invoice;
   RestoreInvoiceSuccess(this.invoice);
 }
@@ -93,7 +94,7 @@ class RestoreInvoiceFailure {
   RestoreInvoiceFailure(this.invoice);
 }
 
-class AddInvoiceSuccess {
+class AddInvoiceSuccess extends PersistData {
   final InvoiceEntity invoice;
   AddInvoiceSuccess(this.invoice);
 }

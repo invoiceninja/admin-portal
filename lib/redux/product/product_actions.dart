@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja/redux/app/app_actions.dart';
 
 class LoadProductsAction {
   final Completer completer;
@@ -22,7 +23,7 @@ class LoadProductsFailure {
   }
 }
 
-class LoadProductsSuccess {
+class LoadProductsSuccess extends PersistData {
   final BuiltList<ProductEntity> products;
   LoadProductsSuccess(this.products);
 
@@ -44,7 +45,7 @@ class SaveProductRequest {
   SaveProductRequest(this.completer, this.product);
 }
 
-class SaveProductSuccess {
+class SaveProductSuccess extends PersistData {
   final ProductEntity product;
 
   SaveProductSuccess(this.product);
@@ -56,7 +57,7 @@ class ArchiveProductRequest {
 
   ArchiveProductRequest(this.completer, this.productId);
 }
-class ArchiveProductSuccess {
+class ArchiveProductSuccess extends PersistData {
   final ProductEntity product;
   ArchiveProductSuccess(this.product);
 }
@@ -71,7 +72,7 @@ class DeleteProductRequest {
 
   DeleteProductRequest(this.completer, this.productId);
 }
-class DeleteProductSuccess {
+class DeleteProductSuccess extends PersistData {
   final ProductEntity product;
   DeleteProductSuccess(this.product);
 }
@@ -85,7 +86,7 @@ class RestoreProductRequest {
   final int productId;
   RestoreProductRequest(this.completer, this.productId);
 }
-class RestoreProductSuccess {
+class RestoreProductSuccess extends PersistData {
   final ProductEntity product;
   RestoreProductSuccess(this.product);
 }
@@ -94,7 +95,7 @@ class RestoreProductFailure {
   RestoreProductFailure(this.product);
 }
 
-class AddProductSuccess {
+class AddProductSuccess extends PersistData {
   final ProductEntity product;
   AddProductSuccess(this.product);
 }
