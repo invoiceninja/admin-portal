@@ -56,9 +56,6 @@ class InvoiceScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
           store.dispatch(SelectInvoice(InvoiceEntity()));
-          Navigator
-              .of(context)
-              .push(MaterialPageRoute(builder: (_) => InvoiceEditScreen()));
         },
         child: Icon(Icons.add,color: Colors.white,),
         tooltip: localization.newInvoice,

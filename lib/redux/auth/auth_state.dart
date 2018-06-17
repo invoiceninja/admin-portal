@@ -18,9 +18,14 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   factory AuthState() {
     return _$AuthState._(
       email: '',
+      /*
       password: '',
       url: '',
       secret: '',
+      */
+      password: 'password',
+      url: 'https://staging.invoiceninja.com',
+      secret: 'secret',
       isAuthenticated: false,
       isInitialized: false,
     );

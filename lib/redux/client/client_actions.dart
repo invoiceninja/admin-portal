@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
@@ -36,6 +37,12 @@ class LoadClientsSuccess implements StopLoading, PersistData {
 class SelectClient {
   final ClientEntity client;
   SelectClient(this.client);
+}
+
+class EditClient {
+  final ClientEntity client;
+  final BuildContext context;
+  EditClient({this.client, this.context});
 }
 
 class SaveClientRequest implements StartLoading {

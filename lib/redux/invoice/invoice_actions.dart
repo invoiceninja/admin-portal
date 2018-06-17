@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
@@ -36,6 +37,12 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
 class SelectInvoice {
   final InvoiceEntity invoice;
   SelectInvoice(this.invoice);
+}
+
+class EditInvoice {
+  final InvoiceEntity invoice;
+  final BuildContext context;
+  EditInvoice({this.invoice, this.context});
 }
 
 class SaveInvoiceRequest implements StartLoading {

@@ -1,5 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -13,6 +16,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   final archiveClient = _archiveClient(repository);
   final deleteClient = _deleteClient(repository);
   final restoreClient = _restoreClient(repository);
+  final editClient = _editClient();
 
   return [
     TypedMiddleware<AppState, LoadClients>(loadClients),
@@ -20,7 +24,17 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
     TypedMiddleware<AppState, ArchiveClientRequest>(archiveClient),
     TypedMiddleware<AppState, DeleteClientRequest>(deleteClient),
     TypedMiddleware<AppState, RestoreClientRequest>(restoreClient),
+    TypedMiddleware<AppState, EditClient>(editClient),
   ];
+}
+
+Middleware<AppState> _editClient() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
+    Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+  };
 }
 
 Middleware<AppState> _archiveClient(ClientRepository repository) {

@@ -13,6 +13,7 @@ import 'package:invoiceninja/redux/client/client_selectors.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
 class InvoiceEditScreen extends StatelessWidget {
+  static final String route = '/invoices/edit';
   InvoiceEditScreen({Key key}) : super(key: key);
 
   @override

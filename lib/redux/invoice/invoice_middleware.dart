@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
@@ -13,6 +16,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final archiveInvoice = _archiveInvoice(repository);
   final deleteInvoice = _deleteInvoice(repository);
   final restoreInvoice = _restoreInvoice(repository);
+  final editInvoice = _editInvoice();
 
   return [
     TypedMiddleware<AppState, LoadInvoices>(loadInvoices),
@@ -20,7 +24,17 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, ArchiveInvoiceRequest>(archiveInvoice),
     TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
     TypedMiddleware<AppState, RestoreInvoiceRequest>(restoreInvoice),
+    TypedMiddleware<AppState, EditInvoice>(editInvoice),
   ];
+}
+
+Middleware<AppState> _editInvoice() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
+    Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
+  };
 }
 
 Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {

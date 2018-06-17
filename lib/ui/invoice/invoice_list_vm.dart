@@ -15,6 +15,7 @@ import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
+  static final String route = '/invoices/edit';
   InvoiceListBuilder({Key key}) : super(key: key);
 
   @override

@@ -10,6 +10,7 @@ import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
+  static final String route = '/clients/edit';
   ClientEditScreen({Key key}) : super(key: key);
 
   @override

@@ -32,7 +32,7 @@ Middleware<AppState> _editProduct() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
-    Navigator.of(action.context).pushReplacementNamed(ProductEditScreen.route);
+    Navigator.of(action.context).pushNamed(ProductEditScreen.route);
   };
 }
 

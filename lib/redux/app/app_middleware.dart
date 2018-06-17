@@ -4,6 +4,9 @@ import 'package:invoiceninja/data/repositories/persistence_repository.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
+import 'package:invoiceninja/redux/auth/auth_state.dart';
+import 'package:invoiceninja/redux/company/company_state.dart';
+import 'package:invoiceninja/redux/ui/ui_state.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
@@ -102,13 +105,13 @@ Middleware<AppState> _createLoadState(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  var authState;
-  var uiState;
-  var company1State;
-  var company2State;
-  var company3State;
-  var company4State;
-  var company5State;
+  AuthState authState;
+  UIState uiState;
+  CompanyState company1State;
+  CompanyState company2State;
+  CompanyState company3State;
+  CompanyState company4State;
+  CompanyState company5State;
 
   return (Store<AppState> store, action, NextDispatcher next) {
     authRepository.exists().then((exists) {
@@ -137,9 +140,22 @@ Middleware<AppState> _createLoadState(
                         ..companyState5.replace(company5State));
                       store.dispatch(LoadStateSuccess(appState));
                       if (uiState.currentRoute != LoginVM.route) {
-                        Navigator
-                            .of(action.context)
-                            .pushReplacementNamed(uiState.currentRoute);
+                        NavigatorState navigator = Navigator
+                            .of(action.context);
+                        var route = '';
+                        print('current route: ' + uiState.currentRoute);
+                        uiState.currentRoute.split('/').forEach((part) {
+                          if (part.isNotEmpty) {
+                            print('part: ' + part);
+                            if (part == 'edit' && route != '/products') {
+                              navigator.pushNamed(route + '/view');  
+                              print('push: ' + route + '/view');
+                            }
+                            route += '/' + part;
+                            navigator.pushNamed(route);
+                            print('push: ' + route);
+                          }
+                        });
                       }
                     });
                   });

@@ -6,6 +6,9 @@ import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/client/client_middleware.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -101,10 +104,14 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             widget.store.dispatch(LoadClients());
             return ClientScreen();
           },
+          ClientViewScreen.route: (context) => ClientEditScreen(),
+          ClientEditScreen.route: (context) => ClientEditScreen(),
           InvoiceScreen.route: (context) {
             widget.store.dispatch(LoadInvoices());
             return InvoiceScreen();
           },
+          //InvoiceViewScreen.route: (context) => InvoiceEditScreen(),
+          InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
         },
       ),
     );

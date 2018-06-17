@@ -58,9 +58,6 @@ class ClientScreen extends StatelessWidget {
           var client = ClientEntity()
               .rebuild((b) => b..contacts.replace([ContactEntity()]));
           store.dispatch(SelectClient(client));
-          Navigator
-              .of(context)
-              .push(MaterialPageRoute(builder: (_) => ClientEditScreen()));
         },
         child: Icon(Icons.add, color: Colors.white,),
         tooltip: localization.newClient,
