@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -23,7 +22,13 @@ class EntityDropdown extends StatefulWidget {
 }
 
 class _EntityDropdownState extends State<EntityDropdown> {
-  FocusNode _clientFocus = FocusNode();
+  final _focusNode = FocusNode();
+  
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +36,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
     var entityList = widget.entityList;
     var entityMap = widget.entityMap;
 
-    _clientFocus.addListener(() {
-      if (_clientFocus.hasFocus) {
-        _clientFocus.unfocus();
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        _focusNode.unfocus();
 
         _headerRow() {
           return Row(
@@ -47,6 +52,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
               ),
               Expanded(
                 child: TextField(
+                  onChanged: (value) {
+                    print('value: $value');
+                  },
                   autofocus: true,
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -81,23 +89,24 @@ class _EntityDropdownState extends State<EntityDropdown> {
                 child: Column(
                   children: <Widget>[
                     Material(
-                      child:
-                          Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                        _headerRow(),
-                        Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: entityList
-                                .getRange(0, min(6, entityList.length))
-                                .map((entityId) => ListTile(
-                                  dense: true,
-                                      title:
-                                          Text(entityMap[entityId].listDisplayName),
+                      child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            _headerRow(),
+                            Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: entityList
+                                    .getRange(0, min(6, entityList.length))
+                                    .map((entityId) => ListTile(
+                                          dense: true,
+                                          title: Text(entityMap[entityId]
+                                              .listDisplayName),
                                           onTap: () {
                                             //
                                           },
-                                    ))
-                                .toList()),
-                      ]),
+                                        ))
+                                    .toList()),
+                          ]),
                     ),
                     Expanded(child: Container()),
                   ],
@@ -108,11 +117,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
     });
 
     return TextFormField(
+      focusNode: _focusNode,
       decoration: InputDecoration(
         labelText: widget.labelText,
         suffixIcon: Icon(Icons.search),
       ),
-      focusNode: _clientFocus,
     );
   }
 }
