@@ -4,7 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 
-EntityUIState productUIReducer(EntityUIState state, action) {
+EntityUIState productUIReducer(ProductUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
   );

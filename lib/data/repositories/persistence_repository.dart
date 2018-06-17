@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/redux/company/company_state.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';

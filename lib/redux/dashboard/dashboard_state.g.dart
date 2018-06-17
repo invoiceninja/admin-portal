@@ -27,11 +27,7 @@ class _$DashboardStateSerializer
   @override
   Iterable serialize(Serializers serializers, DashboardState object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[
-      'isLoading',
-      serializers.serialize(object.isLoading,
-          specifiedType: const FullType(bool)),
-    ];
+    final result = <Object>[];
     if (object.lastUpdated != null) {
       result
         ..add('lastUpdated')
@@ -59,10 +55,6 @@ class _$DashboardStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'isLoading':
-          result.isLoading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'lastUpdated':
           result.lastUpdated = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -81,8 +73,6 @@ class _$DashboardStateSerializer
 
 class _$DashboardState extends DashboardState {
   @override
-  final bool isLoading;
-  @override
   final int lastUpdated;
   @override
   final DashboardEntity data;
@@ -90,11 +80,7 @@ class _$DashboardState extends DashboardState {
   factory _$DashboardState([void updates(DashboardStateBuilder b)]) =>
       (new DashboardStateBuilder()..update(updates)).build();
 
-  _$DashboardState._({this.isLoading, this.lastUpdated, this.data})
-      : super._() {
-    if (isLoading == null)
-      throw new BuiltValueNullFieldError('DashboardState', 'isLoading');
-  }
+  _$DashboardState._({this.lastUpdated, this.data}) : super._();
 
   @override
   DashboardState rebuild(void updates(DashboardStateBuilder b)) =>
@@ -108,21 +94,17 @@ class _$DashboardState extends DashboardState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! DashboardState) return false;
-    return isLoading == other.isLoading &&
-        lastUpdated == other.lastUpdated &&
-        data == other.data;
+    return lastUpdated == other.lastUpdated && data == other.data;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc(0, isLoading.hashCode), lastUpdated.hashCode), data.hashCode));
+    return $jf($jc($jc(0, lastUpdated.hashCode), data.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DashboardState')
-          ..add('isLoading', isLoading)
           ..add('lastUpdated', lastUpdated)
           ..add('data', data))
         .toString();
@@ -132,10 +114,6 @@ class _$DashboardState extends DashboardState {
 class DashboardStateBuilder
     implements Builder<DashboardState, DashboardStateBuilder> {
   _$DashboardState _$v;
-
-  bool _isLoading;
-  bool get isLoading => _$this._isLoading;
-  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
   int _lastUpdated;
   int get lastUpdated => _$this._lastUpdated;
@@ -150,7 +128,6 @@ class DashboardStateBuilder
 
   DashboardStateBuilder get _$this {
     if (_$v != null) {
-      _isLoading = _$v.isLoading;
       _lastUpdated = _$v.lastUpdated;
       _data = _$v.data?.toBuilder();
       _$v = null;
@@ -175,9 +152,7 @@ class DashboardStateBuilder
     try {
       _$result = _$v ??
           new _$DashboardState._(
-              isLoading: isLoading,
-              lastUpdated: lastUpdated,
-              data: _data?.build());
+              lastUpdated: lastUpdated, data: _data?.build());
     } catch (_) {
       String _$failedField;
       try {

@@ -3,6 +3,8 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 
 part 'invoice_state.g.dart';
 
@@ -38,4 +40,19 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
 
   InvoiceState._();
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
+}
+
+abstract class InvoiceUIState extends Object with EntityUIState implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
+
+  @nullable
+  ProductEntity get editing;
+
+  factory InvoiceUIState() {
+    return _$InvoiceUIState._(
+      listUIState: ListUIState(InvoiceFields.invoiceNumber),
+    );
+  }
+
+  InvoiceUIState._();
+  static Serializer<InvoiceUIState> get serializer => _$invoiceUIStateSerializer;
 }

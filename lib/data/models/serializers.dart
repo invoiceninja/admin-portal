@@ -14,7 +14,6 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/redux/company/company_state.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
-import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 import 'package:invoiceninja/redux/client/client_state.dart';

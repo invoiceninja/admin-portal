@@ -16,6 +16,8 @@ part of 'invoice_state.dart';
 
 Serializer<InvoiceState> _$invoiceStateSerializer =
     new _$InvoiceStateSerializer();
+Serializer<InvoiceUIState> _$invoiceUIStateSerializer =
+    new _$InvoiceUIStateSerializer();
 
 class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
   @override
@@ -27,9 +29,6 @@ class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
   Iterable serialize(Serializers serializers, InvoiceState object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
-      'isLoading',
-      serializers.serialize(object.isLoading,
-          specifiedType: const FullType(bool)),
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap,
@@ -51,12 +50,6 @@ class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(InvoiceEntity)));
     }
-    if (object.editingFor != null) {
-      result
-        ..add('editingFor')
-        ..add(serializers.serialize(object.editingFor,
-            specifiedType: const FullType(String)));
-    }
 
     return result;
   }
@@ -72,10 +65,6 @@ class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'isLoading':
-          result.isLoading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'lastUpdated':
           result.lastUpdated = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -97,9 +86,56 @@ class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
           break;
-        case 'editingFor':
-          result.editingFor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$InvoiceUIStateSerializer
+    implements StructuredSerializer<InvoiceUIState> {
+  @override
+  final Iterable<Type> types = const [InvoiceUIState, _$InvoiceUIState];
+  @override
+  final String wireName = 'InvoiceUIState';
+
+  @override
+  Iterable serialize(Serializers serializers, InvoiceUIState object,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = <Object>[
+      'listUIState',
+      serializers.serialize(object.listUIState,
+          specifiedType: const FullType(ListUIState)),
+    ];
+    if (object.editing != null) {
+      result
+        ..add('editing')
+        ..add(serializers.serialize(object.editing,
+            specifiedType: const FullType(ProductEntity)));
+    }
+
+    return result;
+  }
+
+  @override
+  InvoiceUIState deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = new InvoiceUIStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'editing':
+          result.editing.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ProductEntity)) as ProductEntity);
+          break;
+        case 'listUIState':
+          result.listUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ListUIState)) as ListUIState);
           break;
       }
     }
@@ -110,8 +146,6 @@ class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
 
 class _$InvoiceState extends InvoiceState {
   @override
-  final bool isLoading;
-  @override
   final int lastUpdated;
   @override
   final BuiltMap<int, InvoiceEntity> map;
@@ -119,22 +153,12 @@ class _$InvoiceState extends InvoiceState {
   final BuiltList<int> list;
   @override
   final InvoiceEntity editing;
-  @override
-  final String editingFor;
 
   factory _$InvoiceState([void updates(InvoiceStateBuilder b)]) =>
       (new InvoiceStateBuilder()..update(updates)).build();
 
-  _$InvoiceState._(
-      {this.isLoading,
-      this.lastUpdated,
-      this.map,
-      this.list,
-      this.editing,
-      this.editingFor})
+  _$InvoiceState._({this.lastUpdated, this.map, this.list, this.editing})
       : super._() {
-    if (isLoading == null)
-      throw new BuiltValueNullFieldError('InvoiceState', 'isLoading');
     if (map == null) throw new BuiltValueNullFieldError('InvoiceState', 'map');
     if (list == null)
       throw new BuiltValueNullFieldError('InvoiceState', 'list');
@@ -151,35 +175,26 @@ class _$InvoiceState extends InvoiceState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! InvoiceState) return false;
-    return isLoading == other.isLoading &&
-        lastUpdated == other.lastUpdated &&
+    return lastUpdated == other.lastUpdated &&
         map == other.map &&
         list == other.list &&
-        editing == other.editing &&
-        editingFor == other.editingFor;
+        editing == other.editing;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc(
-                $jc($jc($jc(0, isLoading.hashCode), lastUpdated.hashCode),
-                    map.hashCode),
-                list.hashCode),
-            editing.hashCode),
-        editingFor.hashCode));
+        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode),
+        editing.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceState')
-          ..add('isLoading', isLoading)
           ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list)
-          ..add('editing', editing)
-          ..add('editingFor', editingFor))
+          ..add('editing', editing))
         .toString();
   }
 }
@@ -187,10 +202,6 @@ class _$InvoiceState extends InvoiceState {
 class InvoiceStateBuilder
     implements Builder<InvoiceState, InvoiceStateBuilder> {
   _$InvoiceState _$v;
-
-  bool _isLoading;
-  bool get isLoading => _$this._isLoading;
-  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
   int _lastUpdated;
   int get lastUpdated => _$this._lastUpdated;
@@ -210,20 +221,14 @@ class InvoiceStateBuilder
       _$this._editing ??= new InvoiceEntityBuilder();
   set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
 
-  String _editingFor;
-  String get editingFor => _$this._editingFor;
-  set editingFor(String editingFor) => _$this._editingFor = editingFor;
-
   InvoiceStateBuilder();
 
   InvoiceStateBuilder get _$this {
     if (_$v != null) {
-      _isLoading = _$v.isLoading;
       _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _editing = _$v.editing?.toBuilder();
-      _editingFor = _$v.editingFor;
       _$v = null;
     }
     return this;
@@ -246,12 +251,10 @@ class InvoiceStateBuilder
     try {
       _$result = _$v ??
           new _$InvoiceState._(
-              isLoading: isLoading,
               lastUpdated: lastUpdated,
               map: map.build(),
               list: list.build(),
-              editing: _editing?.build(),
-              editingFor: editingFor);
+              editing: _editing?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -264,6 +267,111 @@ class InvoiceStateBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'InvoiceState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$InvoiceUIState extends InvoiceUIState {
+  @override
+  final ProductEntity editing;
+  @override
+  final ListUIState listUIState;
+
+  factory _$InvoiceUIState([void updates(InvoiceUIStateBuilder b)]) =>
+      (new InvoiceUIStateBuilder()..update(updates)).build();
+
+  _$InvoiceUIState._({this.editing, this.listUIState}) : super._() {
+    if (listUIState == null)
+      throw new BuiltValueNullFieldError('InvoiceUIState', 'listUIState');
+  }
+
+  @override
+  InvoiceUIState rebuild(void updates(InvoiceUIStateBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  InvoiceUIStateBuilder toBuilder() =>
+      new InvoiceUIStateBuilder()..replace(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    if (identical(other, this)) return true;
+    if (other is! InvoiceUIState) return false;
+    return editing == other.editing && listUIState == other.listUIState;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, editing.hashCode), listUIState.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('InvoiceUIState')
+          ..add('editing', editing)
+          ..add('listUIState', listUIState))
+        .toString();
+  }
+}
+
+class InvoiceUIStateBuilder
+    implements Builder<InvoiceUIState, InvoiceUIStateBuilder> {
+  _$InvoiceUIState _$v;
+
+  ProductEntityBuilder _editing;
+  ProductEntityBuilder get editing =>
+      _$this._editing ??= new ProductEntityBuilder();
+  set editing(ProductEntityBuilder editing) => _$this._editing = editing;
+
+  ListUIStateBuilder _listUIState;
+  ListUIStateBuilder get listUIState =>
+      _$this._listUIState ??= new ListUIStateBuilder();
+  set listUIState(ListUIStateBuilder listUIState) =>
+      _$this._listUIState = listUIState;
+
+  InvoiceUIStateBuilder();
+
+  InvoiceUIStateBuilder get _$this {
+    if (_$v != null) {
+      _editing = _$v.editing?.toBuilder();
+      _listUIState = _$v.listUIState?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(InvoiceUIState other) {
+    if (other == null) throw new ArgumentError.notNull('other');
+    _$v = other as _$InvoiceUIState;
+  }
+
+  @override
+  void update(void updates(InvoiceUIStateBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$InvoiceUIState build() {
+    _$InvoiceUIState _$result;
+    try {
+      _$result = _$v ??
+          new _$InvoiceUIState._(
+              editing: _editing?.build(), listUIState: listUIState.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'editing';
+        _editing?.build();
+        _$failedField = 'listUIState';
+        listUIState.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'InvoiceUIState', _$failedField, e.toString());
       }
       rethrow;
     }

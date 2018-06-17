@@ -15,6 +15,8 @@ part of 'client_state.dart';
 // ignore_for_file: sort_constructors_first
 
 Serializer<ClientState> _$clientStateSerializer = new _$ClientStateSerializer();
+Serializer<ClientUIState> _$clientUIStateSerializer =
+    new _$ClientUIStateSerializer();
 
 class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
   @override
@@ -26,9 +28,6 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
   Iterable serialize(Serializers serializers, ClientState object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
-      'isLoading',
-      serializers.serialize(object.isLoading,
-          specifiedType: const FullType(bool)),
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap,
@@ -50,12 +49,6 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(ClientEntity)));
     }
-    if (object.editingFor != null) {
-      result
-        ..add('editingFor')
-        ..add(serializers.serialize(object.editingFor,
-            specifiedType: const FullType(String)));
-    }
 
     return result;
   }
@@ -71,10 +64,6 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'isLoading':
-          result.isLoading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'lastUpdated':
           result.lastUpdated = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -96,9 +85,55 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(ClientEntity)) as ClientEntity);
           break;
-        case 'editingFor':
-          result.editingFor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
+  @override
+  final Iterable<Type> types = const [ClientUIState, _$ClientUIState];
+  @override
+  final String wireName = 'ClientUIState';
+
+  @override
+  Iterable serialize(Serializers serializers, ClientUIState object,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = <Object>[
+      'listUIState',
+      serializers.serialize(object.listUIState,
+          specifiedType: const FullType(ListUIState)),
+    ];
+    if (object.editing != null) {
+      result
+        ..add('editing')
+        ..add(serializers.serialize(object.editing,
+            specifiedType: const FullType(ProductEntity)));
+    }
+
+    return result;
+  }
+
+  @override
+  ClientUIState deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = new ClientUIStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'editing':
+          result.editing.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ProductEntity)) as ProductEntity);
+          break;
+        case 'listUIState':
+          result.listUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ListUIState)) as ListUIState);
           break;
       }
     }
@@ -109,8 +144,6 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
 
 class _$ClientState extends ClientState {
   @override
-  final bool isLoading;
-  @override
   final int lastUpdated;
   @override
   final BuiltMap<int, ClientEntity> map;
@@ -118,22 +151,12 @@ class _$ClientState extends ClientState {
   final BuiltList<int> list;
   @override
   final ClientEntity editing;
-  @override
-  final String editingFor;
 
   factory _$ClientState([void updates(ClientStateBuilder b)]) =>
       (new ClientStateBuilder()..update(updates)).build();
 
-  _$ClientState._(
-      {this.isLoading,
-      this.lastUpdated,
-      this.map,
-      this.list,
-      this.editing,
-      this.editingFor})
+  _$ClientState._({this.lastUpdated, this.map, this.list, this.editing})
       : super._() {
-    if (isLoading == null)
-      throw new BuiltValueNullFieldError('ClientState', 'isLoading');
     if (map == null) throw new BuiltValueNullFieldError('ClientState', 'map');
     if (list == null) throw new BuiltValueNullFieldError('ClientState', 'list');
   }
@@ -149,45 +172,32 @@ class _$ClientState extends ClientState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! ClientState) return false;
-    return isLoading == other.isLoading &&
-        lastUpdated == other.lastUpdated &&
+    return lastUpdated == other.lastUpdated &&
         map == other.map &&
         list == other.list &&
-        editing == other.editing &&
-        editingFor == other.editingFor;
+        editing == other.editing;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc(
-                $jc($jc($jc(0, isLoading.hashCode), lastUpdated.hashCode),
-                    map.hashCode),
-                list.hashCode),
-            editing.hashCode),
-        editingFor.hashCode));
+        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode),
+        editing.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ClientState')
-          ..add('isLoading', isLoading)
           ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list)
-          ..add('editing', editing)
-          ..add('editingFor', editingFor))
+          ..add('editing', editing))
         .toString();
   }
 }
 
 class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
   _$ClientState _$v;
-
-  bool _isLoading;
-  bool get isLoading => _$this._isLoading;
-  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
   int _lastUpdated;
   int get lastUpdated => _$this._lastUpdated;
@@ -207,20 +217,14 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
       _$this._editing ??= new ClientEntityBuilder();
   set editing(ClientEntityBuilder editing) => _$this._editing = editing;
 
-  String _editingFor;
-  String get editingFor => _$this._editingFor;
-  set editingFor(String editingFor) => _$this._editingFor = editingFor;
-
   ClientStateBuilder();
 
   ClientStateBuilder get _$this {
     if (_$v != null) {
-      _isLoading = _$v.isLoading;
       _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _editing = _$v.editing?.toBuilder();
-      _editingFor = _$v.editingFor;
       _$v = null;
     }
     return this;
@@ -243,12 +247,10 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
     try {
       _$result = _$v ??
           new _$ClientState._(
-              isLoading: isLoading,
               lastUpdated: lastUpdated,
               map: map.build(),
               list: list.build(),
-              editing: _editing?.build(),
-              editingFor: editingFor);
+              editing: _editing?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -261,6 +263,110 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ClientUIState extends ClientUIState {
+  @override
+  final ProductEntity editing;
+  @override
+  final ListUIState listUIState;
+
+  factory _$ClientUIState([void updates(ClientUIStateBuilder b)]) =>
+      (new ClientUIStateBuilder()..update(updates)).build();
+
+  _$ClientUIState._({this.editing, this.listUIState}) : super._() {
+    if (listUIState == null)
+      throw new BuiltValueNullFieldError('ClientUIState', 'listUIState');
+  }
+
+  @override
+  ClientUIState rebuild(void updates(ClientUIStateBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ClientUIStateBuilder toBuilder() => new ClientUIStateBuilder()..replace(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    if (identical(other, this)) return true;
+    if (other is! ClientUIState) return false;
+    return editing == other.editing && listUIState == other.listUIState;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, editing.hashCode), listUIState.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ClientUIState')
+          ..add('editing', editing)
+          ..add('listUIState', listUIState))
+        .toString();
+  }
+}
+
+class ClientUIStateBuilder
+    implements Builder<ClientUIState, ClientUIStateBuilder> {
+  _$ClientUIState _$v;
+
+  ProductEntityBuilder _editing;
+  ProductEntityBuilder get editing =>
+      _$this._editing ??= new ProductEntityBuilder();
+  set editing(ProductEntityBuilder editing) => _$this._editing = editing;
+
+  ListUIStateBuilder _listUIState;
+  ListUIStateBuilder get listUIState =>
+      _$this._listUIState ??= new ListUIStateBuilder();
+  set listUIState(ListUIStateBuilder listUIState) =>
+      _$this._listUIState = listUIState;
+
+  ClientUIStateBuilder();
+
+  ClientUIStateBuilder get _$this {
+    if (_$v != null) {
+      _editing = _$v.editing?.toBuilder();
+      _listUIState = _$v.listUIState?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ClientUIState other) {
+    if (other == null) throw new ArgumentError.notNull('other');
+    _$v = other as _$ClientUIState;
+  }
+
+  @override
+  void update(void updates(ClientUIStateBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ClientUIState build() {
+    _$ClientUIState _$result;
+    try {
+      _$result = _$v ??
+          new _$ClientUIState._(
+              editing: _editing?.build(), listUIState: listUIState.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'editing';
+        _editing?.build();
+        _$failedField = 'listUIState';
+        listUIState.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ClientUIState', _$failedField, e.toString());
       }
       rethrow;
     }

@@ -34,13 +34,13 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           specifiedType: const FullType(String)),
       'productUIState',
       serializers.serialize(object.productUIState,
-          specifiedType: const FullType(EntityUIState)),
+          specifiedType: const FullType(ProductUIState)),
       'clientUIState',
       serializers.serialize(object.clientUIState,
-          specifiedType: const FullType(EntityUIState)),
+          specifiedType: const FullType(ClientUIState)),
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
-          specifiedType: const FullType(EntityUIState)),
+          specifiedType: const FullType(InvoiceUIState)),
     ];
 
     return result;
@@ -67,15 +67,15 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           break;
         case 'productUIState':
           result.productUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(EntityUIState)) as EntityUIState);
+              specifiedType: const FullType(ProductUIState)) as ProductUIState);
           break;
         case 'clientUIState':
           result.clientUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(EntityUIState)) as EntityUIState);
+              specifiedType: const FullType(ClientUIState)) as ClientUIState);
           break;
         case 'invoiceUIState':
           result.invoiceUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(EntityUIState)) as EntityUIState);
+              specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
           break;
       }
     }
@@ -90,11 +90,11 @@ class _$UIState extends UIState {
   @override
   final String currentRoute;
   @override
-  final EntityUIState productUIState;
+  final ProductUIState productUIState;
   @override
-  final EntityUIState clientUIState;
+  final ClientUIState clientUIState;
   @override
-  final EntityUIState invoiceUIState;
+  final InvoiceUIState invoiceUIState;
 
   factory _$UIState([void updates(UIStateBuilder b)]) =>
       (new UIStateBuilder()..update(updates)).build();
@@ -172,22 +172,22 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String get currentRoute => _$this._currentRoute;
   set currentRoute(String currentRoute) => _$this._currentRoute = currentRoute;
 
-  EntityUIStateBuilder _productUIState;
-  EntityUIStateBuilder get productUIState =>
-      _$this._productUIState ??= new EntityUIStateBuilder();
-  set productUIState(EntityUIStateBuilder productUIState) =>
+  ProductUIStateBuilder _productUIState;
+  ProductUIStateBuilder get productUIState =>
+      _$this._productUIState ??= new ProductUIStateBuilder();
+  set productUIState(ProductUIStateBuilder productUIState) =>
       _$this._productUIState = productUIState;
 
-  EntityUIStateBuilder _clientUIState;
-  EntityUIStateBuilder get clientUIState =>
-      _$this._clientUIState ??= new EntityUIStateBuilder();
-  set clientUIState(EntityUIStateBuilder clientUIState) =>
+  ClientUIStateBuilder _clientUIState;
+  ClientUIStateBuilder get clientUIState =>
+      _$this._clientUIState ??= new ClientUIStateBuilder();
+  set clientUIState(ClientUIStateBuilder clientUIState) =>
       _$this._clientUIState = clientUIState;
 
-  EntityUIStateBuilder _invoiceUIState;
-  EntityUIStateBuilder get invoiceUIState =>
-      _$this._invoiceUIState ??= new EntityUIStateBuilder();
-  set invoiceUIState(EntityUIStateBuilder invoiceUIState) =>
+  InvoiceUIStateBuilder _invoiceUIState;
+  InvoiceUIStateBuilder get invoiceUIState =>
+      _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
+  set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
 
   UIStateBuilder();

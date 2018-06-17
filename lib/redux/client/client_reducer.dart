@@ -4,7 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/client/client_state.dart';
 
-EntityUIState clientUIReducer(EntityUIState state, action) {
+EntityUIState clientUIReducer(ClientUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(clientListReducer(state.listUIState, action))
   );
