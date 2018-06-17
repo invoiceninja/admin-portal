@@ -4,6 +4,9 @@ import 'dart:core';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/auth/auth_state.dart';
+import 'package:invoiceninja/redux/company/company_state.dart';
+import 'package:invoiceninja/redux/ui/ui_state.dart';
 import 'package:meta/meta.dart';
 import 'package:invoiceninja/data/models/serializers.dart';
 import 'package:invoiceninja/data/file_storage.dart';
@@ -15,18 +18,40 @@ class PersistenceRepository {
     @required this.fileStorage,
   });
 
-  Future<File> saveData(AppState state) async {
-    var data = serializers.serializeWith(AppState.serializer, state);
 
+  Future<File> saveCompanyState(CompanyState state) async {
+    var data = serializers.serializeWith(CompanyState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
-  Future<AppState> loadData() async {
+  Future<CompanyState> loadCompanyState() async {
     String data = await fileStorage.load();
-
-    return serializers.deserializeWith(AppState.serializer, json.decode(data));
+    return serializers.deserializeWith(CompanyState.serializer, json.decode(data));
     //return compute(_deserialize, data);
   }
+
+
+  Future<File> saveAuthState(AuthState state) async {
+    var data = serializers.serializeWith(AuthState.serializer, state);
+    return await fileStorage.save(json.encode(data));
+  }
+
+  Future<AuthState> loadAuthState() async {
+    String data = await fileStorage.load();
+    return serializers.deserializeWith(AuthState.serializer, json.decode(data));
+  }
+
+
+  Future<File> saveUIState(UIState state) async {
+    var data = serializers.serializeWith(UIState.serializer, state);
+    return await fileStorage.save(json.encode(data));
+  }
+
+  Future<UIState> loadUIState() async {
+    String data = await fileStorage.load();
+    return serializers.deserializeWith(UIState.serializer, json.decode(data));
+  }
+
 
   Future<FileSystemEntity> delete() async {
     return await fileStorage.delete();

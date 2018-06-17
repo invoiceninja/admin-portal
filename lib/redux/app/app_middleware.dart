@@ -11,36 +11,85 @@ import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
-  PersistenceRepository repository = const PersistenceRepository(
+  PersistenceRepository authRepository = const PersistenceRepository(
     fileStorage: const FileStorage(
-      'state',
+      'auth_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository uiRepository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'ui_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company1Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company1_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company2Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company2_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company3Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company3_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company4Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company4_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company5Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company5_state',
       getApplicationDocumentsDirectory,
     ),
   ),
 ]) {
-  final loadState = _createLoadState(repository);
-  final dataLoaded = _createDataLoaded(repository);
-  final deleteState = _createDeleteState(repository);
+  final loadState = _createLoadState(
+      authRepository,
+      uiRepository,
+      company1Repository,
+      company2Repository,
+      company3Repository,
+      company4Repository,
+      company5Repository);
+  final dataLoaded = _createDataLoaded(company1Repository, company2Repository,
+      company3Repository, company4Repository, company5Repository);
+  final deleteState = _createDeleteState(
+      authRepository,
+      uiRepository,
+      company1Repository,
+      company2Repository,
+      company3Repository,
+      company4Repository,
+      company5Repository);
 
   return [
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
+    
     TypedMiddleware<AppState, LoadDashboardSuccess>(dataLoaded),
-
     TypedMiddleware<AppState, LoadProductsSuccess>(dataLoaded),
     TypedMiddleware<AppState, AddProductSuccess>(dataLoaded),
     TypedMiddleware<AppState, SaveProductSuccess>(dataLoaded),
     TypedMiddleware<AppState, ArchiveProductSuccess>(dataLoaded),
     TypedMiddleware<AppState, DeleteProductSuccess>(dataLoaded),
     TypedMiddleware<AppState, RestoreProductSuccess>(dataLoaded),
-
     TypedMiddleware<AppState, LoadClientsSuccess>(dataLoaded),
     TypedMiddleware<AppState, AddClientSuccess>(dataLoaded),
     TypedMiddleware<AppState, SaveClientSuccess>(dataLoaded),
     TypedMiddleware<AppState, ArchiveClientSuccess>(dataLoaded),
     TypedMiddleware<AppState, DeleteClientSuccess>(dataLoaded),
     TypedMiddleware<AppState, RestoreClientSuccess>(dataLoaded),
-
     TypedMiddleware<AppState, LoadInvoicesSuccess>(dataLoaded),
     TypedMiddleware<AppState, AddInvoiceSuccess>(dataLoaded),
     TypedMiddleware<AppState, SaveInvoiceSuccess>(dataLoaded),
@@ -50,14 +99,68 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   ];
 }
 
-Middleware<AppState> _createLoadState(PersistenceRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+Middleware<AppState> _createLoadState(
+  PersistenceRepository authRepository,
+  PersistenceRepository uiRepository,
+  PersistenceRepository company1Repository,
+  PersistenceRepository company2Repository,
+  PersistenceRepository company3Repository,
+  PersistenceRepository company4Repository,
+  PersistenceRepository company5Repository,
+) {
+  var authState;
+  var uiState;
+  var company1State;
+  var company2State;
+  var company3State;
+  var company4State;
+  var company5State;
 
-    repository.exists().then((exists) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print('== load state');
+    authRepository.exists().then((exists) {
       if (exists) {
-        repository.loadData().then((state) {
-          store.dispatch(LoadStateSuccess(state));
-          Navigator.of(action.context).pushReplacementNamed(state.uiState.currentRoute);
+        print('auth exists');
+        authRepository.loadAuthState().then((state) {
+          authState = state;
+          print('loaded auth');
+          uiRepository.loadUIState().then((state) {
+            uiState = state;
+            print('loaded ui');
+            company1Repository.loadCompanyState().then((state) {
+              company1State = state;
+              print('loaded company1');
+              company2Repository.loadCompanyState().then((state) {
+                company2State = state;
+                print('loaded company2');
+                company3Repository.loadCompanyState().then((state) {
+                  company3State = state;
+                  print('loaded company3');
+                  company4Repository.loadCompanyState().then((state) {
+                    company4State = state;
+                    print('loaded company4');
+                    company5Repository.loadCompanyState().then((state) {
+                      company5State = state;
+                      print('loaded company5');
+                      AppState appState = AppState().rebuild((b) => b
+                        ..authState.replace(authState)
+                        ..uiState.replace(uiState)
+                        ..companyState1.replace(company1State)
+                        ..companyState2.replace(company2State)
+                        ..companyState3.replace(company3State)
+                        ..companyState4.replace(company4State)
+                        ..companyState5.replace(company5State));
+                      store.dispatch(LoadStateSuccess(appState));
+                    });
+                  });
+                });
+              });
+            });
+          });
+
+          Navigator
+              .of(action.context)
+              .pushReplacementNamed(uiState.currentRoute);
         }).catchError((error) {
           print(error);
           store.dispatch(LoadUserLogin());
@@ -71,22 +174,56 @@ Middleware<AppState> _createLoadState(PersistenceRepository repository) {
   };
 }
 
-Middleware<AppState> _createDataLoaded(PersistenceRepository repository) {
+Middleware<AppState> _createDataLoaded(
+  PersistenceRepository company1Repository,
+  PersistenceRepository company2Repository,
+  PersistenceRepository company3Repository,
+  PersistenceRepository company4Repository,
+  PersistenceRepository company5Repository,
+) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
     // first process the action so the data is in the state
     next(action);
 
-    if (store.state.isLoaded) {
-      repository.saveData(store.state);
+    AppState state = store.state;
+
+    switch (state.uiState.selectedCompanyIndex) {
+      case 1:
+        company1Repository.saveCompanyState(state.companyState1);
+        break;
+      case 2:
+        company1Repository.saveCompanyState(state.companyState2);
+        break;
+      case 3:
+        company1Repository.saveCompanyState(state.companyState3);
+        break;
+      case 4:
+        company1Repository.saveCompanyState(state.companyState4);
+        break;
+      case 5:
+        company1Repository.saveCompanyState(state.companyState5);
+        break;
     }
   };
 }
 
-Middleware<AppState> _createDeleteState(PersistenceRepository repository) {
+Middleware<AppState> _createDeleteState(
+  PersistenceRepository authRepository,
+  PersistenceRepository uiRepository,
+  PersistenceRepository company1Repository,
+  PersistenceRepository company2Repository,
+  PersistenceRepository company3Repository,
+  PersistenceRepository company4Repository,
+  PersistenceRepository company5Repository,
+) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
-    repository.delete();
+    authRepository.delete();
+    uiRepository.delete();
+    company1Repository.delete();
+    company2Repository.delete();
+    company3Repository.delete();
+    company4Repository.delete();
+    company5Repository.delete();
 
     next(action);
   };
