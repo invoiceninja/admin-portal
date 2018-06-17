@@ -92,7 +92,6 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             return LoginVM();
           },
           DashboardScreen.route: (context) {
-            print('here...');
             widget.store.dispatch(LoadDashboardAction());
             return DashboardScreen();
           },
@@ -105,13 +104,13 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             widget.store.dispatch(LoadClients());
             return ClientScreen();
           },
-          ClientViewScreen.route: (context) => ClientEditScreen(),
+          ClientViewScreen.route: (context) => ClientViewScreen(),
           ClientEditScreen.route: (context) => ClientEditScreen(),
           InvoiceScreen.route: (context) {
             widget.store.dispatch(LoadInvoices());
             return InvoiceScreen();
           },
-          //InvoiceViewScreen.route: (context) => InvoiceEditScreen(),
+          //InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
           InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
         },
       ),

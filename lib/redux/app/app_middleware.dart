@@ -145,9 +145,10 @@ Middleware<AppState> _createLoadState(
                         var route = '';
                         bool isFirst = true;
                         print('current route: ' + uiState.currentRoute);
+                        print('auth URL: ' + authState.url);
                         uiState.currentRoute.split('/').forEach((part) {
                           if (part.isNotEmpty) {
-                            if (part == 'edit' && route != '/products') {
+                            if (part == 'edit' && route != '/products' && route != '/invoices') {
                               navigator.pushNamed(route + '/view');  
                               print('push: ' + route + '/view');
                             }
