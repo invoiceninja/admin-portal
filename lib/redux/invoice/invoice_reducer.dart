@@ -16,6 +16,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SaveInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, ViewInvoice>(_updateEditing),
+  TypedReducer<InvoiceEntity, EditInvoice>(_updateEditing),
 ]);
 
 InvoiceEntity _updateEditing(InvoiceEntity client, action) {
