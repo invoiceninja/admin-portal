@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';

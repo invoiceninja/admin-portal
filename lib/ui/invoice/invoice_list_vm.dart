@@ -12,7 +12,6 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
   static final String route = '/invoices/edit';
