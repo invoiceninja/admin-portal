@@ -62,7 +62,6 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           GlobalMaterialLocalizations.delegate,
         ],
         // light theme
-        
         theme: ThemeData().copyWith(
           accentColor: Colors.lightBlueAccent,
           primaryColor: const Color(0xFF117cc1),
@@ -71,36 +70,17 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           indicatorColor: const Color(0xFFFFFFFF),
           iconTheme: IconThemeData().copyWith(),
           bottomAppBarColor: const Color(0xFF117cc1),
+          backgroundColor: Colors.grey[200],
         ),
-        
         
         //dark theme
-        /*
-        theme: ThemeData.dark().copyWith(
-          accentColor: Colors.lightBlueAccent,
-          primaryColor: const Color(0xFF117cc1),
-          primaryColorLight: const Color(0xFF5dabf4),
-          primaryColorDark: const Color(0xFF0D5D91),
-          indicatorColor: const Color(0xFFFFFFFF),
-          iconTheme: IconThemeData().copyWith(color: Colors.white),
-          bottomAppBarColor: const Color(0xFF117cc1),
-        ),
-        */
-        
-        /*
-        theme: ThemeData().copyWith(
-          primaryColor: const Color(0xFF117cc1),
-          primaryColorLight: const Color(0xFF5dabf4),
-          primaryColorDark: const Color(0xFF0D5D91),
-          indicatorColor: const Color(0xFFFFFFFF),
-        ),
-        */
         /*
         theme: ThemeData(
           brightness: Brightness.dark,
           accentColor: Colors.lightBlueAccent,
         ),
         */
+
         title: 'Invoice Ninja',
         routes: {
           LoginVM.route: (context) {

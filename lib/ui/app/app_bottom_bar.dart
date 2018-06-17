@@ -46,7 +46,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           converter: (Store<AppState> store) => store.state.getListState(widget.entityType).stateFilters,
           builder: (BuildContext context, stateFilters) {
             return Container(
-              color: Theme.of(context).backgroundColor, //Colors.grey[200],
+              color: Theme.of(context).backgroundColor,
               child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: EntityState.values.map<Widget>((state) {
