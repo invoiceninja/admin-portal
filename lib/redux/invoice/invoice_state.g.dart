@@ -98,10 +98,10 @@ class _$InvoiceUIStateSerializer
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
     ];
-    if (object.editing != null) {
+    if (object.selected != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(object.editing,
+        ..add(serializers.serialize(object.selected,
             specifiedType: const FullType(InvoiceEntity)));
     }
 
@@ -250,14 +250,14 @@ class InvoiceStateBuilder
 
 class _$InvoiceUIState extends InvoiceUIState {
   @override
-  final InvoiceEntity editing;
+  final InvoiceEntity selected;
   @override
   final ListUIState listUIState;
 
   factory _$InvoiceUIState([void updates(InvoiceUIStateBuilder b)]) =>
       (new InvoiceUIStateBuilder()..update(updates)).build();
 
-  _$InvoiceUIState._({this.editing, this.listUIState}) : super._() {
+  _$InvoiceUIState._({this.selected, this.listUIState}) : super._() {
     if (listUIState == null)
       throw new BuiltValueNullFieldError('InvoiceUIState', 'listUIState');
   }
@@ -274,18 +274,18 @@ class _$InvoiceUIState extends InvoiceUIState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! InvoiceUIState) return false;
-    return editing == other.editing && listUIState == other.listUIState;
+    return selected == other.selected && listUIState == other.listUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, editing.hashCode), listUIState.hashCode));
+    return $jf($jc($jc(0, selected.hashCode), listUIState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceUIState')
-          ..add('editing', editing)
+          ..add('editing', selected)
           ..add('listUIState', listUIState))
         .toString();
   }
@@ -310,7 +310,7 @@ class InvoiceUIStateBuilder
 
   InvoiceUIStateBuilder get _$this {
     if (_$v != null) {
-      _editing = _$v.editing?.toBuilder();
+      _editing = _$v.selected?.toBuilder();
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
     }
@@ -334,7 +334,7 @@ class InvoiceUIStateBuilder
     try {
       _$result = _$v ??
           new _$InvoiceUIState._(
-              editing: _editing?.build(), listUIState: listUIState.build());
+              selected: _editing?.build(), listUIState: listUIState.build());
     } catch (_) {
       String _$failedField;
       try {

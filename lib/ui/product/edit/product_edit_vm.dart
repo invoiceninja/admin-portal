@@ -48,7 +48,7 @@ class ProductEditVM {
   });
 
   factory ProductEditVM.fromStore(Store<AppState> store) {
-    final product = store.state.productUIState.editing;
+    final product = store.state.productUIState.selected;
 
     return ProductEditVM(
       isLoading: store.state.isLoading,

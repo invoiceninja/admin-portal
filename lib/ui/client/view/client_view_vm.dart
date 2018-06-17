@@ -49,7 +49,7 @@ class ClientViewVM {
   });
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
-    final client = store.state.clientUIState.editing;
+    final client = store.state.clientUIState.selected;
 
     return ClientViewVM(
       isLoading: store.state.isLoading,

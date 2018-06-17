@@ -40,7 +40,7 @@ class ClientEditVM {
   });
 
   factory ClientEditVM.fromStore(Store<AppState> store) {
-    final client = store.state.clientUIState.editing;
+    final client = store.state.clientUIState.selected;
 
     return ClientEditVM(
         client: client,

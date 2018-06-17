@@ -42,12 +42,12 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
 abstract class ProductUIState extends Object with EntityUIState implements Built<ProductUIState, ProductUIStateBuilder> {
 
   @nullable
-  ProductEntity get editing;
+  ProductEntity get selected;
 
   factory ProductUIState() {
     return _$ProductUIState._(
       listUIState: ListUIState(ProductFields.productKey),
-      editing: ProductEntity(),
+      selected: ProductEntity(),
     );
   }
 

@@ -42,12 +42,12 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 abstract class ClientUIState extends Object with EntityUIState implements Built<ClientUIState, ClientUIStateBuilder> {
 
   @nullable
-  ClientEntity get editing;
+  ClientEntity get selected;
 
   factory ClientUIState() {
     return _$ClientUIState._(
       listUIState: ListUIState(ClientFields.name),
-      editing: ClientEntity(),
+      selected: ClientEntity(),
     );
   }
 
