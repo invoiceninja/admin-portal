@@ -1,6 +1,5 @@
 import 'package:invoiceninja/ui/app/app_search.dart';
 import 'package:invoiceninja/ui/app/app_search_button.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
