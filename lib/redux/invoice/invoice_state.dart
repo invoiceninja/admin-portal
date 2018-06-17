@@ -8,8 +8,6 @@ part 'invoice_state.g.dart';
 
 abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> {
 
-  bool get isLoading;
-
   @nullable
   int get lastUpdated;
 
@@ -19,12 +17,8 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
   @nullable
   InvoiceEntity get editing;
 
-  @nullable
-  String get editingFor;
-
   factory InvoiceState() {
     return _$InvoiceState._(
-      isLoading: false,
       map: BuiltMap<int, InvoiceEntity>(),
       list: BuiltList<int>(),
     );
@@ -43,6 +37,5 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
   }
 
   InvoiceState._();
-  //factory InvoiceState([updates(InvoiceStateBuilder b)]) = _$InvoiceState;
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
 }

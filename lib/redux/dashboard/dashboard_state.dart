@@ -7,8 +7,6 @@ part 'dashboard_state.g.dart';
 
 abstract class DashboardState implements Built<DashboardState, DashboardStateBuilder> {
 
-  bool get isLoading;
-
   @nullable
   int get lastUpdated;
 
@@ -17,7 +15,6 @@ abstract class DashboardState implements Built<DashboardState, DashboardStateBui
 
   factory DashboardState() {
     return _$DashboardState._(
-      isLoading: false,
       data: null,
     );
   }
@@ -35,6 +32,5 @@ abstract class DashboardState implements Built<DashboardState, DashboardStateBui
   }
 
   DashboardState._();
-  //factory DashboardState([updates(DashboardStateBuilder b)]) = _$DashboardState;
   static Serializer<DashboardState> get serializer => _$dashboardStateSerializer;
 }

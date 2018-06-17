@@ -8,8 +8,6 @@ part 'product_state.g.dart';
 
 abstract class ProductState implements Built<ProductState, ProductStateBuilder> {
 
-  bool get isLoading;
-
   @nullable
   int get lastUpdated;
 
@@ -19,12 +17,8 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
   @nullable
   ProductEntity get editing;
 
-  @nullable
-  String get editingFor;
-
   factory ProductState() {
     return _$ProductState._(
-      isLoading: false,
       map: BuiltMap<int, ProductEntity>(),
       list: BuiltList<int>(),
     );
@@ -43,6 +37,5 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
   }
 
   ProductState._();
-  //factory ProductState([updates(ProductStateBuilder b)]) = _$ProductState;
   static Serializer<ProductState> get serializer => _$productStateSerializer;
 }

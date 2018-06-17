@@ -8,8 +8,6 @@ part 'client_state.g.dart';
 
 abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 
-  bool get isLoading;
-
   @nullable
   int get lastUpdated;
 
@@ -19,12 +17,8 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   @nullable
   ClientEntity get editing;
 
-  @nullable
-  String get editingFor;
-
   factory ClientState() {
     return _$ClientState._(
-      isLoading: false,
       map: BuiltMap<int, ClientEntity>(),
       list: BuiltList<int>(),
     );
@@ -43,6 +37,5 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   }
 
   ClientState._();
-  //factory ClientState([updates(ClientStateBuilder b)]) = _$ClientState;
   static Serializer<ClientState> get serializer => _$clientStateSerializer;
 }
