@@ -47,6 +47,7 @@ abstract class ProductUIState extends Object with EntityUIState implements Built
   factory ProductUIState() {
     return _$ProductUIState._(
       listUIState: ListUIState(ProductFields.productKey),
+      editing: ProductEntity(),
     );
   }
 

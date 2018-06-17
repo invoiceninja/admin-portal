@@ -19,7 +19,7 @@ final editingReducer = combineReducers<ProductEntity>([
 ]);
 
 ProductEntity _updateEditing(ProductEntity client, action) {
-  return action.client;
+  return action.product;
 }
 
 final productListReducer = combineReducers<ListUIState>([

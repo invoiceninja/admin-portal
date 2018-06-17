@@ -19,7 +19,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
 ]);
 
 InvoiceEntity _updateEditing(InvoiceEntity client, action) {
-  return action.client;
+  return action.invoice;
 }
 
 final invoiceListReducer = combineReducers<ListUIState>([

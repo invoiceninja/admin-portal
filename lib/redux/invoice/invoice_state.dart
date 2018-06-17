@@ -47,6 +47,7 @@ abstract class InvoiceUIState extends Object with EntityUIState implements Built
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
       listUIState: ListUIState(InvoiceFields.invoiceNumber),
+      editing: InvoiceEntity(),
     );
   }
 

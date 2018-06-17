@@ -47,6 +47,7 @@ abstract class ClientUIState extends Object with EntityUIState implements Built<
   factory ClientUIState() {
     return _$ClientUIState._(
       listUIState: ListUIState(ClientFields.name),
+      editing: ClientEntity(),
     );
   }
 
