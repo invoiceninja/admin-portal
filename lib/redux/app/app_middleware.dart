@@ -62,8 +62,21 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       company3Repository,
       company4Repository,
       company5Repository);
+
   final dataLoaded = _createDataLoaded(company1Repository, company2Repository,
       company3Repository, company4Repository, company5Repository);
+
+  final userLoggedIn = _createUserLoggedIn(
+      authRepository,
+      uiRepository,
+      company1Repository,
+      company2Repository,
+      company3Repository,
+      company4Repository,
+      company5Repository);
+
+  final uiChange = _createUIChange(uiRepository);
+
   final deleteState = _createDeleteState(
       authRepository,
       uiRepository,
@@ -76,7 +89,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   return [
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
-    
+    TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
     TypedMiddleware<AppState, LoadDashboardSuccess>(dataLoaded),
     TypedMiddleware<AppState, LoadProductsSuccess>(dataLoaded),
     TypedMiddleware<AppState, AddProductSuccess>(dataLoaded),
@@ -171,6 +184,38 @@ Middleware<AppState> _createLoadState(
     });
 
     next(action);
+  };
+}
+
+Middleware<AppState> _createUserLoggedIn(
+  PersistenceRepository authRepository,
+  PersistenceRepository uiRepository,
+  PersistenceRepository company1Repository,
+  PersistenceRepository company2Repository,
+  PersistenceRepository company3Repository,
+  PersistenceRepository company4Repository,
+  PersistenceRepository company5Repository,
+) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    var state = store.state;
+
+    authRepository.saveAuthState(state.authState);
+    uiRepository.saveUIState(state.uiState);
+    company1Repository.saveCompanyState(state.companyState1);
+    company2Repository.saveCompanyState(state.companyState2);
+    company3Repository.saveCompanyState(state.companyState3);
+    company4Repository.saveCompanyState(state.companyState4);
+    company5Repository.saveCompanyState(state.companyState5);
+  };
+}
+
+Middleware<AppState> _createUIChange(PersistenceRepository uiRepository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    uiRepository.saveUIState(store.state.uiState);
   };
 }
 
