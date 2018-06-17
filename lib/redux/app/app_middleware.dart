@@ -7,6 +7,7 @@ import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
+import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -90,6 +91,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
+    
     TypedMiddleware<AppState, LoadDashboardSuccess>(dataLoaded),
     TypedMiddleware<AppState, LoadProductsSuccess>(dataLoaded),
     TypedMiddleware<AppState, AddProductSuccess>(dataLoaded),
@@ -130,31 +132,23 @@ Middleware<AppState> _createLoadState(
   var company5State;
 
   return (Store<AppState> store, action, NextDispatcher next) {
-    print('== load state');
+    print('== loading state...');
     authRepository.exists().then((exists) {
       if (exists) {
-        print('auth exists');
         authRepository.loadAuthState().then((state) {
           authState = state;
-          print('loaded auth');
           uiRepository.loadUIState().then((state) {
             uiState = state;
-            print('loaded ui');
             company1Repository.loadCompanyState().then((state) {
               company1State = state;
-              print('loaded company1');
               company2Repository.loadCompanyState().then((state) {
                 company2State = state;
-                print('loaded company2');
                 company3Repository.loadCompanyState().then((state) {
                   company3State = state;
-                  print('loaded company3');
                   company4Repository.loadCompanyState().then((state) {
                     company4State = state;
-                    print('loaded company4');
                     company5Repository.loadCompanyState().then((state) {
                       company5State = state;
-                      print('loaded company5');
                       AppState appState = AppState().rebuild((b) => b
                         ..authState.replace(authState)
                         ..uiState.replace(uiState)
@@ -164,16 +158,18 @@ Middleware<AppState> _createLoadState(
                         ..companyState4.replace(company4State)
                         ..companyState5.replace(company5State));
                       store.dispatch(LoadStateSuccess(appState));
+                      print('== loaded: current route: ' + uiState.currentRoute);
+                      if (uiState.currentRoute != LoginVM.route) {
+                        Navigator
+                            .of(action.context)
+                            .pushReplacementNamed(uiState.currentRoute);
+                      }
                     });
                   });
                 });
               });
             });
           });
-
-          Navigator
-              .of(action.context)
-              .pushReplacementNamed(uiState.currentRoute);
         }).catchError((error) {
           print(error);
           store.dispatch(LoadUserLogin());
