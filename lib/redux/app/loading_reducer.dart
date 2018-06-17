@@ -7,12 +7,10 @@ final loadingReducer = combineReducers<bool>([
 ]);
 
 bool _setLoading(bool state, action) {
-  print('set loading to true');
   return true;
 }
 
 bool _setLoaded(bool state, action) {
-  print('set loading to false');
   return false;
 }
 
