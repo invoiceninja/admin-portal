@@ -46,7 +46,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           converter: (Store<AppState> store) => store.state.getListState(widget.entityType).stateFilters,
           builder: (BuildContext context, stateFilters) {
             return Container(
-              color: Colors.grey[200],
+              color: Theme.of(context).backgroundColor, //Colors.grey[200],
               child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: EntityState.values.map<Widget>((state) {
@@ -101,7 +101,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           converter: (Store<AppState> store) => store.state.getListState(widget.entityType),
           builder: (BuildContext context, listUIState) {
             return Container(
-              color: Colors.grey[200],
+              color: Theme.of(context).backgroundColor,
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: widget.sortFields.map((sortField) {
@@ -131,6 +131,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     return new BottomAppBar(
+      color: Theme.of(context).bottomAppBarColor,
       hasNotch: true,
       child: Row(
         children: <Widget>[
@@ -138,11 +139,13 @@ class _AppBottomBarState extends State<AppBottomBar> {
             tooltip: AppLocalization.of(context).sort,
             icon: Icon(Icons.sort_by_alpha),
             onPressed: _showSortSheet,
+            color: Colors.white,
           ),
           IconButton(
             tooltip: AppLocalization.of(context).filter,
             icon: Icon(Icons.filter_list),
             onPressed: _showFilterSheet,
+            color: Colors.white,
           ),
         ],
       ),
