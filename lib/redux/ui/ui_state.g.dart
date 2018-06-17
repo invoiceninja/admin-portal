@@ -26,6 +26,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   Iterable serialize(Serializers serializers, UIState object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'currentRoute',
+      serializers.serialize(object.currentRoute,
+          specifiedType: const FullType(String)),
       'productUIState',
       serializers.serialize(object.productUIState,
           specifiedType: const FullType(EntityUIState)),
@@ -51,6 +54,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'currentRoute':
+          result.currentRoute = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'productUIState':
           result.productUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(EntityUIState)) as EntityUIState);
@@ -72,6 +79,8 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
 
 class _$UIState extends UIState {
   @override
+  final String currentRoute;
+  @override
   final EntityUIState productUIState;
   @override
   final EntityUIState clientUIState;
@@ -81,8 +90,14 @@ class _$UIState extends UIState {
   factory _$UIState([void updates(UIStateBuilder b)]) =>
       (new UIStateBuilder()..update(updates)).build();
 
-  _$UIState._({this.productUIState, this.clientUIState, this.invoiceUIState})
+  _$UIState._(
+      {this.currentRoute,
+      this.productUIState,
+      this.clientUIState,
+      this.invoiceUIState})
       : super._() {
+    if (currentRoute == null)
+      throw new BuiltValueNullFieldError('UIState', 'currentRoute');
     if (productUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'productUIState');
     if (clientUIState == null)
@@ -102,20 +117,24 @@ class _$UIState extends UIState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! UIState) return false;
-    return productUIState == other.productUIState &&
+    return currentRoute == other.currentRoute &&
+        productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, productUIState.hashCode), clientUIState.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, currentRoute.hashCode), productUIState.hashCode),
+            clientUIState.hashCode),
         invoiceUIState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
+          ..add('currentRoute', currentRoute)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState))
@@ -125,6 +144,10 @@ class _$UIState extends UIState {
 
 class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   _$UIState _$v;
+
+  String _currentRoute;
+  String get currentRoute => _$this._currentRoute;
+  set currentRoute(String currentRoute) => _$this._currentRoute = currentRoute;
 
   EntityUIStateBuilder _productUIState;
   EntityUIStateBuilder get productUIState =>
@@ -148,6 +171,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   UIStateBuilder get _$this {
     if (_$v != null) {
+      _currentRoute = _$v.currentRoute;
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
@@ -173,6 +197,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     try {
       _$result = _$v ??
           new _$UIState._(
+              currentRoute: currentRoute,
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build());

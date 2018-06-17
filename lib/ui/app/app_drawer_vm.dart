@@ -46,7 +46,6 @@ class AppDrawerVM {
       selectedCompanyIndex: store.state.selectedCompanyIndex.toString(),
       onCompanyChanged: (BuildContext context, String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
-        //Navigator.of(context).pushReplacementNamed(AppRoutes.dashboard);
       },
       onLogoutTapped: (BuildContext context) {
         while(Navigator.of(context).canPop()) {

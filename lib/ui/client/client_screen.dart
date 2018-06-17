@@ -55,7 +55,6 @@ class ClientScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
-
           var client = ClientEntity()
               .rebuild((b) => b..contacts.replace([ContactEntity()]));
           store.dispatch(SelectClientAction(client));

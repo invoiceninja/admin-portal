@@ -16,13 +16,13 @@ part 'app_state.g.dart';
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isLoading;
   AuthState get authState;
+  UIState get uiState;
   int get selectedCompanyIndex;
   CompanyState get companyState1;
   CompanyState get companyState2;
   CompanyState get companyState3;
   CompanyState get companyState4;
   CompanyState get companyState5;
-  UIState get uiState;
 
   factory AppState() {
     return _$AppState._(

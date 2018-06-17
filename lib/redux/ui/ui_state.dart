@@ -8,12 +8,14 @@ part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
 
+  String get currentRoute;
   EntityUIState get productUIState;
   EntityUIState get clientUIState;
   EntityUIState get invoiceUIState;
 
   factory UIState() {
     return _$UIState._(
+      currentRoute: '/',
       productUIState: EntityUIState(ProductFields.productKey),
       clientUIState: EntityUIState(ClientFields.name),
       invoiceUIState: EntityUIState(InvoiceFields.invoiceNumber),

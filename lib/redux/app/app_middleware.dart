@@ -58,7 +58,7 @@ Middleware<AppState> _createLoadState(PersistenceRepository repository) {
       if (exists) {
         repository.loadData().then((state) {
           store.dispatch(LoadStateSuccess(state));
-          Navigator.of(action.context).pushReplacementNamed(DashboardScreen.route);
+          Navigator.of(action.context).pushReplacementNamed(state.uiState.currentRoute);
         }).catchError((error) {
           print(error);
           store.dispatch(LoadUserLogin());

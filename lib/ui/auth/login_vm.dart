@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -66,6 +67,7 @@ class _ViewModel {
               completer, email.trim(), password.trim(), apiUrl, secret.trim()));
           completer.future.then((_) {
             Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
+            store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
           });
         });
   }
