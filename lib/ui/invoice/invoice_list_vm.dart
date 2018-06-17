@@ -74,7 +74,7 @@ class InvoiceListVM {
         isLoaded: store.state.invoiceState.isLoaded &&
             store.state.clientState.isLoaded,
         onInvoiceTap: (context, invoice) {
-          store.dispatch(SelectInvoiceAction(invoice));
+          store.dispatch(SelectInvoice(invoice));
           Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (_) => InvoiceEditScreen()));

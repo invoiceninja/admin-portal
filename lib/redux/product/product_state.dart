@@ -16,9 +16,6 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
   BuiltMap<int, ProductEntity> get map;
   BuiltList<int> get list;
 
-  @nullable
-  ProductEntity get editing;
-
   factory ProductState() {
     return _$ProductState._(
       map: BuiltMap<int, ProductEntity>(),
@@ -41,7 +38,6 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
   ProductState._();
   static Serializer<ProductState> get serializer => _$productStateSerializer;
 }
-
 
 abstract class ProductUIState extends Object with EntityUIState implements Built<ProductUIState, ProductUIStateBuilder> {
 

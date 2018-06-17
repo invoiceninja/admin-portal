@@ -16,9 +16,6 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   BuiltMap<int, ClientEntity> get map;
   BuiltList<int> get list;
 
-  @nullable
-  ClientEntity get editing;
-
   factory ClientState() {
     return _$ClientState._(
       map: BuiltMap<int, ClientEntity>(),
@@ -45,7 +42,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 abstract class ClientUIState extends Object with EntityUIState implements Built<ClientUIState, ClientUIStateBuilder> {
 
   @nullable
-  ProductEntity get editing;
+  ClientEntity get editing;
 
   factory ClientUIState() {
     return _$ClientUIState._(

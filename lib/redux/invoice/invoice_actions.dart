@@ -33,9 +33,9 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
   }
 }
 
-class SelectInvoiceAction {
+class SelectInvoice {
   final InvoiceEntity invoice;
-  SelectInvoiceAction(this.invoice);
+  SelectInvoice(this.invoice);
 }
 
 class SaveInvoiceRequest implements StartLoading {

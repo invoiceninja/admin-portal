@@ -33,9 +33,9 @@ class LoadClientsSuccess implements StopLoading, PersistData {
   }
 }
 
-class SelectClientAction {
+class SelectClient {
   final ClientEntity client;
-  SelectClientAction(this.client);
+  SelectClient(this.client);
 }
 
 class SaveClientRequest implements StartLoading {

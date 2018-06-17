@@ -57,7 +57,7 @@ class ClientScreen extends StatelessWidget {
         onPressed: () {
           var client = ClientEntity()
               .rebuild((b) => b..contacts.replace([ContactEntity()]));
-          store.dispatch(SelectClientAction(client));
+          store.dispatch(SelectClient(client));
           Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (_) => ClientEditScreen()));

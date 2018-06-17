@@ -70,7 +70,7 @@ class ClientListVM {
         isLoading: store.state.isLoading,
         isLoaded: store.state.clientState.isLoaded,
         onClientTap: (context, client) {
-          store.dispatch(SelectClientAction(client));
+          store.dispatch(SelectClient(client));
           Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (_) => ClientViewScreen()));

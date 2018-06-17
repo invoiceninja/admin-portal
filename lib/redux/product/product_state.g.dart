@@ -44,12 +44,6 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-    if (object.editing != null) {
-      result
-        ..add('editing')
-        ..add(serializers.serialize(object.editing,
-            specifiedType: const FullType(ProductEntity)));
-    }
 
     return result;
   }
@@ -81,10 +75,6 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
               as BuiltList);
-          break;
-        case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductEntity)) as ProductEntity);
           break;
       }
     }
@@ -151,14 +141,11 @@ class _$ProductState extends ProductState {
   final BuiltMap<int, ProductEntity> map;
   @override
   final BuiltList<int> list;
-  @override
-  final ProductEntity editing;
 
   factory _$ProductState([void updates(ProductStateBuilder b)]) =>
       (new ProductStateBuilder()..update(updates)).build();
 
-  _$ProductState._({this.lastUpdated, this.map, this.list, this.editing})
-      : super._() {
+  _$ProductState._({this.lastUpdated, this.map, this.list}) : super._() {
     if (map == null) throw new BuiltValueNullFieldError('ProductState', 'map');
     if (list == null)
       throw new BuiltValueNullFieldError('ProductState', 'list');
@@ -177,15 +164,13 @@ class _$ProductState extends ProductState {
     if (other is! ProductState) return false;
     return lastUpdated == other.lastUpdated &&
         map == other.map &&
-        list == other.list &&
-        editing == other.editing;
+        list == other.list;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode),
-        editing.hashCode));
+    return $jf(
+        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
   }
 
   @override
@@ -193,8 +178,7 @@ class _$ProductState extends ProductState {
     return (newBuiltValueToStringHelper('ProductState')
           ..add('lastUpdated', lastUpdated)
           ..add('map', map)
-          ..add('list', list)
-          ..add('editing', editing))
+          ..add('list', list))
         .toString();
   }
 }
@@ -216,11 +200,6 @@ class ProductStateBuilder
   ListBuilder<int> get list => _$this._list ??= new ListBuilder<int>();
   set list(ListBuilder<int> list) => _$this._list = list;
 
-  ProductEntityBuilder _editing;
-  ProductEntityBuilder get editing =>
-      _$this._editing ??= new ProductEntityBuilder();
-  set editing(ProductEntityBuilder editing) => _$this._editing = editing;
-
   ProductStateBuilder();
 
   ProductStateBuilder get _$this {
@@ -228,7 +207,6 @@ class ProductStateBuilder
       _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
-      _editing = _$v.editing?.toBuilder();
       _$v = null;
     }
     return this;
@@ -251,10 +229,7 @@ class ProductStateBuilder
     try {
       _$result = _$v ??
           new _$ProductState._(
-              lastUpdated: lastUpdated,
-              map: map.build(),
-              list: list.build(),
-              editing: _editing?.build());
+              lastUpdated: lastUpdated, map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -262,8 +237,6 @@ class ProductStateBuilder
         map.build();
         _$failedField = 'list';
         list.build();
-        _$failedField = 'editing';
-        _editing?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ProductState', _$failedField, e.toString());

@@ -1,3 +1,4 @@
+import 'package:invoiceninja/data/models/product_model.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
@@ -7,14 +8,25 @@ import 'package:invoiceninja/redux/product/product_state.dart';
 EntityUIState productUIReducer(ProductUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
+    ..editing.replace(editingReducer(state.editing, action))
   );
 }
+
+final editingReducer = combineReducers<ProductEntity>([
+  TypedReducer<ProductEntity, SaveProductSuccess>(_updateEditing),
+  TypedReducer<ProductEntity, AddProductSuccess>(_updateEditing),
+  TypedReducer<ProductEntity, EditProduct>(_updateEditing),
+]);
 
 final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortProducts>(_sortProducts),
   TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
   TypedReducer<ListUIState, SearchProducts>(_searchProducts),
 ]);
+
+ProductEntity _updateEditing(ProductEntity client, action) {
+  return action.client;
+}
 
 ListUIState _filterProductsByState(ListUIState productListState, FilterProductsByState action) {
   if (productListState.stateFilters.contains(action.state)) {
@@ -47,7 +59,6 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, AddProductSuccess>(_addProduct),
   TypedReducer<ProductState, LoadProductsSuccess>(_setLoadedProducts),
   TypedReducer<ProductState, LoadProductsFailure>(_setNoProducts),
-  TypedReducer<ProductState, EditProduct>(_selectProduct),
 
   TypedReducer<ProductState, ArchiveProductRequest>(_archiveProductRequest),
   TypedReducer<ProductState, ArchiveProductSuccess>(_archiveProductSuccess),
@@ -69,21 +80,18 @@ ProductState _archiveProductRequest(ProductState productState, ArchiveProductReq
 
   return productState.rebuild((b) => b
     ..map[action.productId] = product
-    ..editing.replace(product)
   );
 }
 
 ProductState _archiveProductSuccess(ProductState productState, ArchiveProductSuccess action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
-    ..editing.replace(action.product)
   );
 }
 
 ProductState _archiveProductFailure(ProductState productState, ArchiveProductFailure action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
-    ..editing.replace(action.product)
   );
 }
 
@@ -95,21 +103,18 @@ ProductState _deleteProductRequest(ProductState productState, DeleteProductReque
 
   return productState.rebuild((b) => b
     ..map[action.productId] = product
-    ..editing.replace(product)
   );
 }
 
 ProductState _deleteProductSuccess(ProductState productState, DeleteProductSuccess action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
-    ..editing.replace(action.product)
   );
 }
 
 ProductState _deleteProductFailure(ProductState productState, DeleteProductFailure action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
-    ..editing.replace(action.product)
   );
 }
 
@@ -121,21 +126,18 @@ ProductState _restoreProductRequest(ProductState productState, RestoreProductReq
   );
   return productState.rebuild((b) => b
     ..map[action.productId] = product
-    ..editing.replace(product)
   );
 }
 
 ProductState _restoreProductSuccess(ProductState productState, RestoreProductSuccess action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
-    ..editing.replace(action.product)
   );
 }
 
 ProductState _restoreProductFailure(ProductState productState, RestoreProductFailure action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
-    ..editing.replace(action.product)
   );
 }
 
@@ -145,7 +147,6 @@ ProductState _addProduct(
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
     ..list.add(action.product.id)
-    ..editing.replace(action.product)
   );
 }
 
@@ -153,19 +154,12 @@ ProductState _updateProduct(
     ProductState productState, SaveProductSuccess action) {
   return productState.rebuild((b) => b
       ..map[action.product.id] = action.product
-      ..editing.replace(action.product)
   );
 }
 
 ProductState _setNoProducts(
     ProductState productState, LoadProductsFailure action) {
   return productState;
-}
-
-ProductState _selectProduct(
-    ProductState productState, EditProduct action) {
-  return productState.rebuild((b) => b
-    ..editing.replace(action.product));
 }
 
 ProductState _setLoadedProducts(

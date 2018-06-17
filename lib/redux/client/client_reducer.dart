@@ -1,3 +1,4 @@
+import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
@@ -7,14 +8,26 @@ import 'package:invoiceninja/redux/client/client_state.dart';
 EntityUIState clientUIReducer(ClientUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(clientListReducer(state.listUIState, action))
+    ..editing.replace(editingReducer(state.editing, action))
   );
 }
+
+final editingReducer = combineReducers<ClientEntity>([
+  TypedReducer<ClientEntity, SaveClientSuccess>(_updateEditing),
+  TypedReducer<ClientEntity, AddClientSuccess>(_updateEditing),
+  TypedReducer<ClientEntity, SelectClient>(_updateEditing),
+]);
+
 
 final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
   TypedReducer<ListUIState, SearchClients>(_searchClients),
 ]);
+
+ClientEntity _updateEditing(ClientEntity client, action) {
+  return action.client;
+}
 
 ListUIState _filterClientsByState(ListUIState clientListState, FilterClientsByState action) {
   if (clientListState.stateFilters.contains(action.state)) {
@@ -47,7 +60,6 @@ final clientsReducer = combineReducers<ClientState>([
   TypedReducer<ClientState, AddClientSuccess>(_addClient),
   TypedReducer<ClientState, LoadClientsSuccess>(_setLoadedClients),
   TypedReducer<ClientState, LoadClientsFailure>(_setNoClients),
-  TypedReducer<ClientState, SelectClientAction>(_selectClient),
 
   TypedReducer<ClientState, ArchiveClientRequest>(_archiveClientRequest),
   TypedReducer<ClientState, ArchiveClientSuccess>(_archiveClientSuccess),
@@ -69,21 +81,18 @@ ClientState _archiveClientRequest(ClientState clientState, ArchiveClientRequest 
 
   return clientState.rebuild((b) => b
     ..map[action.clientId] = client
-    ..editing.replace(client)
   );
 }
 
 ClientState _archiveClientSuccess(ClientState clientState, ArchiveClientSuccess action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
-    ..editing.replace(action.client)
   );
 }
 
 ClientState _archiveClientFailure(ClientState clientState, ArchiveClientFailure action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
-    ..editing.replace(action.client)
   );
 }
 
@@ -95,21 +104,18 @@ ClientState _deleteClientRequest(ClientState clientState, DeleteClientRequest ac
 
   return clientState.rebuild((b) => b
     ..map[action.clientId] = client
-    ..editing.replace(client)
   );
 }
 
 ClientState _deleteClientSuccess(ClientState clientState, DeleteClientSuccess action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
-    ..editing.replace(action.client)
   );
 }
 
 ClientState _deleteClientFailure(ClientState clientState, DeleteClientFailure action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
-    ..editing.replace(action.client)
   );
 }
 
@@ -121,21 +127,18 @@ ClientState _restoreClientRequest(ClientState clientState, RestoreClientRequest 
   );
   return clientState.rebuild((b) => b
     ..map[action.clientId] = client
-    ..editing.replace(client)
   );
 }
 
 ClientState _restoreClientSuccess(ClientState clientState, RestoreClientSuccess action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
-    ..editing.replace(action.client)
   );
 }
 
 ClientState _restoreClientFailure(ClientState clientState, RestoreClientFailure action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
-    ..editing.replace(action.client)
   );
 }
 
@@ -145,7 +148,6 @@ ClientState _addClient(
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
     ..list.add(action.client.id)
-    ..editing.replace(action.client)
   );
 }
 
@@ -153,19 +155,12 @@ ClientState _updateClient(
     ClientState clientState, SaveClientSuccess action) {
   return clientState.rebuild((b) => b
       ..map[action.client.id] = action.client
-      ..editing.replace(action.client)
   );
 }
 
 ClientState _setNoClients(
     ClientState clientState, LoadClientsFailure action) {
   return clientState;
-}
-
-ClientState _selectClient(
-    ClientState clientState, SelectClientAction action) {
-  return clientState.rebuild((b) => b
-    ..editing.replace(action.client));
 }
 
 ClientState _setLoadedClients(

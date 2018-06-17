@@ -44,12 +44,6 @@ class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-    if (object.editing != null) {
-      result
-        ..add('editing')
-        ..add(serializers.serialize(object.editing,
-            specifiedType: const FullType(InvoiceEntity)));
-    }
 
     return result;
   }
@@ -82,10 +76,6 @@ class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
                       const FullType(BuiltList, const [const FullType(int)]))
               as BuiltList);
           break;
-        case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
-          break;
       }
     }
 
@@ -112,7 +102,7 @@ class _$InvoiceUIStateSerializer
       result
         ..add('editing')
         ..add(serializers.serialize(object.editing,
-            specifiedType: const FullType(ProductEntity)));
+            specifiedType: const FullType(InvoiceEntity)));
     }
 
     return result;
@@ -131,7 +121,7 @@ class _$InvoiceUIStateSerializer
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductEntity)) as ProductEntity);
+              specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
@@ -151,14 +141,11 @@ class _$InvoiceState extends InvoiceState {
   final BuiltMap<int, InvoiceEntity> map;
   @override
   final BuiltList<int> list;
-  @override
-  final InvoiceEntity editing;
 
   factory _$InvoiceState([void updates(InvoiceStateBuilder b)]) =>
       (new InvoiceStateBuilder()..update(updates)).build();
 
-  _$InvoiceState._({this.lastUpdated, this.map, this.list, this.editing})
-      : super._() {
+  _$InvoiceState._({this.lastUpdated, this.map, this.list}) : super._() {
     if (map == null) throw new BuiltValueNullFieldError('InvoiceState', 'map');
     if (list == null)
       throw new BuiltValueNullFieldError('InvoiceState', 'list');
@@ -177,15 +164,13 @@ class _$InvoiceState extends InvoiceState {
     if (other is! InvoiceState) return false;
     return lastUpdated == other.lastUpdated &&
         map == other.map &&
-        list == other.list &&
-        editing == other.editing;
+        list == other.list;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode),
-        editing.hashCode));
+    return $jf(
+        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
   }
 
   @override
@@ -193,8 +178,7 @@ class _$InvoiceState extends InvoiceState {
     return (newBuiltValueToStringHelper('InvoiceState')
           ..add('lastUpdated', lastUpdated)
           ..add('map', map)
-          ..add('list', list)
-          ..add('editing', editing))
+          ..add('list', list))
         .toString();
   }
 }
@@ -216,11 +200,6 @@ class InvoiceStateBuilder
   ListBuilder<int> get list => _$this._list ??= new ListBuilder<int>();
   set list(ListBuilder<int> list) => _$this._list = list;
 
-  InvoiceEntityBuilder _editing;
-  InvoiceEntityBuilder get editing =>
-      _$this._editing ??= new InvoiceEntityBuilder();
-  set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
-
   InvoiceStateBuilder();
 
   InvoiceStateBuilder get _$this {
@@ -228,7 +207,6 @@ class InvoiceStateBuilder
       _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
-      _editing = _$v.editing?.toBuilder();
       _$v = null;
     }
     return this;
@@ -251,10 +229,7 @@ class InvoiceStateBuilder
     try {
       _$result = _$v ??
           new _$InvoiceState._(
-              lastUpdated: lastUpdated,
-              map: map.build(),
-              list: list.build(),
-              editing: _editing?.build());
+              lastUpdated: lastUpdated, map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -262,8 +237,6 @@ class InvoiceStateBuilder
         map.build();
         _$failedField = 'list';
         list.build();
-        _$failedField = 'editing';
-        _editing?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'InvoiceState', _$failedField, e.toString());
@@ -277,7 +250,7 @@ class InvoiceStateBuilder
 
 class _$InvoiceUIState extends InvoiceUIState {
   @override
-  final ProductEntity editing;
+  final InvoiceEntity editing;
   @override
   final ListUIState listUIState;
 
@@ -322,10 +295,10 @@ class InvoiceUIStateBuilder
     implements Builder<InvoiceUIState, InvoiceUIStateBuilder> {
   _$InvoiceUIState _$v;
 
-  ProductEntityBuilder _editing;
-  ProductEntityBuilder get editing =>
-      _$this._editing ??= new ProductEntityBuilder();
-  set editing(ProductEntityBuilder editing) => _$this._editing = editing;
+  InvoiceEntityBuilder _editing;
+  InvoiceEntityBuilder get editing =>
+      _$this._editing ??= new InvoiceEntityBuilder();
+  set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>

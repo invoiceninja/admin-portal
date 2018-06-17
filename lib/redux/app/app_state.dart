@@ -2,7 +2,6 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/client/client_state.dart';
 import 'package:invoiceninja/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';
-import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/redux/company/company_state.dart';
@@ -80,14 +79,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   ProductState get productState => this.selectedCompanyState.productState;
-  EntityUIState get productUIState => this.uiState.productUIState;
+  ProductUIState get productUIState => this.uiState.productUIState;
   ListUIState get productListState => this.uiState.productUIState.listUIState;
 
   ClientState get clientState => this.selectedCompanyState.clientState;
-  EntityUIState get clientUIState => this.uiState.clientUIState;
+  ClientUIState get clientUIState => this.uiState.clientUIState;
   ListUIState get clientListState => this.uiState.clientUIState.listUIState;
 
   InvoiceState get invoiceState => this.selectedCompanyState.invoiceState;
-  EntityUIState get invoiceUIState => this.uiState.invoiceUIState;
+  InvoiceUIState get invoiceUIState => this.uiState.invoiceUIState;
   ListUIState get invoiceListState => this.uiState.invoiceUIState.listUIState;
 }

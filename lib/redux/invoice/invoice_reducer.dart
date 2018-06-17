@@ -1,3 +1,4 @@
+import 'package:invoiceninja/data/models/invoice_model.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
@@ -7,14 +8,25 @@ import 'package:invoiceninja/redux/invoice/invoice_state.dart';
 EntityUIState invoiceUIReducer(InvoiceUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(invoiceListReducer(state.listUIState, action))
+    ..editing.replace(editingReducer(state.editing, action))
   );
 }
+
+final editingReducer = combineReducers<InvoiceEntity>([
+  TypedReducer<InvoiceEntity, SaveInvoiceSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, AddInvoiceSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, SelectInvoice>(_updateEditing),
+]);
 
 final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortInvoices>(_sortInvoices),
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
   TypedReducer<ListUIState, SearchInvoices>(_searchInvoices),
 ]);
+
+InvoiceEntity _updateEditing(InvoiceEntity client, action) {
+  return action.client;
+}
 
 ListUIState _filterInvoicesByState(ListUIState invoiceListState, FilterInvoicesByState action) {
   if (invoiceListState.stateFilters.contains(action.state)) {
@@ -47,7 +59,6 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, AddInvoiceSuccess>(_addInvoice),
   TypedReducer<InvoiceState, LoadInvoicesSuccess>(_setLoadedInvoices),
   TypedReducer<InvoiceState, LoadInvoicesFailure>(_setNoInvoices),
-  TypedReducer<InvoiceState, SelectInvoiceAction>(_selectInvoice),
 
   TypedReducer<InvoiceState, ArchiveInvoiceRequest>(_archiveInvoiceRequest),
   TypedReducer<InvoiceState, ArchiveInvoiceSuccess>(_archiveInvoiceSuccess),
@@ -69,21 +80,18 @@ InvoiceState _archiveInvoiceRequest(InvoiceState invoiceState, ArchiveInvoiceReq
 
   return invoiceState.rebuild((b) => b
     ..map[action.invoiceId] = invoice
-    ..editing.replace(invoice)
   );
 }
 
 InvoiceState _archiveInvoiceSuccess(InvoiceState invoiceState, ArchiveInvoiceSuccess action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
-    ..editing.replace(action.invoice)
   );
 }
 
 InvoiceState _archiveInvoiceFailure(InvoiceState invoiceState, ArchiveInvoiceFailure action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
-    ..editing.replace(action.invoice)
   );
 }
 
@@ -95,21 +103,18 @@ InvoiceState _deleteInvoiceRequest(InvoiceState invoiceState, DeleteInvoiceReque
 
   return invoiceState.rebuild((b) => b
     ..map[action.invoiceId] = invoice
-    ..editing.replace(invoice)
   );
 }
 
 InvoiceState _deleteInvoiceSuccess(InvoiceState invoiceState, DeleteInvoiceSuccess action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
-    ..editing.replace(action.invoice)
   );
 }
 
 InvoiceState _deleteInvoiceFailure(InvoiceState invoiceState, DeleteInvoiceFailure action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
-    ..editing.replace(action.invoice)
   );
 }
 
@@ -121,21 +126,18 @@ InvoiceState _restoreInvoiceRequest(InvoiceState invoiceState, RestoreInvoiceReq
   );
   return invoiceState.rebuild((b) => b
     ..map[action.invoiceId] = invoice
-    ..editing.replace(invoice)
   );
 }
 
 InvoiceState _restoreInvoiceSuccess(InvoiceState invoiceState, RestoreInvoiceSuccess action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
-    ..editing.replace(action.invoice)
   );
 }
 
 InvoiceState _restoreInvoiceFailure(InvoiceState invoiceState, RestoreInvoiceFailure action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
-    ..editing.replace(action.invoice)
   );
 }
 
@@ -145,7 +147,6 @@ InvoiceState _addInvoice(
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
     ..list.add(action.invoice.id)
-    ..editing.replace(action.invoice)
   );
 }
 
@@ -153,19 +154,12 @@ InvoiceState _updateInvoice(
     InvoiceState invoiceState, SaveInvoiceSuccess action) {
   return invoiceState.rebuild((b) => b
       ..map[action.invoice.id] = action.invoice
-      ..editing.replace(action.invoice)
   );
 }
 
 InvoiceState _setNoInvoices(
     InvoiceState invoiceState, LoadInvoicesFailure action) {
   return invoiceState;
-}
-
-InvoiceState _selectInvoice(
-    InvoiceState invoiceState, SelectInvoiceAction action) {
-  return invoiceState.rebuild((b) => b
-    ..editing.replace(action.invoice));
 }
 
 InvoiceState _setLoadedInvoices(

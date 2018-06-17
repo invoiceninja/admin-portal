@@ -55,7 +55,7 @@ class InvoiceScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
-          store.dispatch(SelectInvoiceAction(InvoiceEntity()));
+          store.dispatch(SelectInvoice(InvoiceEntity()));
           Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (_) => InvoiceEditScreen()));

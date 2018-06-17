@@ -43,12 +43,6 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-    if (object.editing != null) {
-      result
-        ..add('editing')
-        ..add(serializers.serialize(object.editing,
-            specifiedType: const FullType(ClientEntity)));
-    }
 
     return result;
   }
@@ -81,10 +75,6 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
                       const FullType(BuiltList, const [const FullType(int)]))
               as BuiltList);
           break;
-        case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ClientEntity)) as ClientEntity);
-          break;
       }
     }
 
@@ -110,7 +100,7 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
       result
         ..add('editing')
         ..add(serializers.serialize(object.editing,
-            specifiedType: const FullType(ProductEntity)));
+            specifiedType: const FullType(ClientEntity)));
     }
 
     return result;
@@ -129,7 +119,7 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductEntity)) as ProductEntity);
+              specifiedType: const FullType(ClientEntity)) as ClientEntity);
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
@@ -149,14 +139,11 @@ class _$ClientState extends ClientState {
   final BuiltMap<int, ClientEntity> map;
   @override
   final BuiltList<int> list;
-  @override
-  final ClientEntity editing;
 
   factory _$ClientState([void updates(ClientStateBuilder b)]) =>
       (new ClientStateBuilder()..update(updates)).build();
 
-  _$ClientState._({this.lastUpdated, this.map, this.list, this.editing})
-      : super._() {
+  _$ClientState._({this.lastUpdated, this.map, this.list}) : super._() {
     if (map == null) throw new BuiltValueNullFieldError('ClientState', 'map');
     if (list == null) throw new BuiltValueNullFieldError('ClientState', 'list');
   }
@@ -174,15 +161,13 @@ class _$ClientState extends ClientState {
     if (other is! ClientState) return false;
     return lastUpdated == other.lastUpdated &&
         map == other.map &&
-        list == other.list &&
-        editing == other.editing;
+        list == other.list;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode),
-        editing.hashCode));
+    return $jf(
+        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
   }
 
   @override
@@ -190,8 +175,7 @@ class _$ClientState extends ClientState {
     return (newBuiltValueToStringHelper('ClientState')
           ..add('lastUpdated', lastUpdated)
           ..add('map', map)
-          ..add('list', list)
-          ..add('editing', editing))
+          ..add('list', list))
         .toString();
   }
 }
@@ -212,11 +196,6 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
   ListBuilder<int> get list => _$this._list ??= new ListBuilder<int>();
   set list(ListBuilder<int> list) => _$this._list = list;
 
-  ClientEntityBuilder _editing;
-  ClientEntityBuilder get editing =>
-      _$this._editing ??= new ClientEntityBuilder();
-  set editing(ClientEntityBuilder editing) => _$this._editing = editing;
-
   ClientStateBuilder();
 
   ClientStateBuilder get _$this {
@@ -224,7 +203,6 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
       _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
-      _editing = _$v.editing?.toBuilder();
       _$v = null;
     }
     return this;
@@ -247,10 +225,7 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
     try {
       _$result = _$v ??
           new _$ClientState._(
-              lastUpdated: lastUpdated,
-              map: map.build(),
-              list: list.build(),
-              editing: _editing?.build());
+              lastUpdated: lastUpdated, map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -258,8 +233,6 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
         map.build();
         _$failedField = 'list';
         list.build();
-        _$failedField = 'editing';
-        _editing?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientState', _$failedField, e.toString());
@@ -273,7 +246,7 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
 
 class _$ClientUIState extends ClientUIState {
   @override
-  final ProductEntity editing;
+  final ClientEntity editing;
   @override
   final ListUIState listUIState;
 
@@ -317,10 +290,10 @@ class ClientUIStateBuilder
     implements Builder<ClientUIState, ClientUIStateBuilder> {
   _$ClientUIState _$v;
 
-  ProductEntityBuilder _editing;
-  ProductEntityBuilder get editing =>
-      _$this._editing ??= new ProductEntityBuilder();
-  set editing(ProductEntityBuilder editing) => _$this._editing = editing;
+  ClientEntityBuilder _editing;
+  ClientEntityBuilder get editing =>
+      _$this._editing ??= new ClientEntityBuilder();
+  set editing(ClientEntityBuilder editing) => _$this._editing = editing;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>

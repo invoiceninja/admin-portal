@@ -16,9 +16,6 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
   BuiltMap<int, InvoiceEntity> get map;
   BuiltList<int> get list;
 
-  @nullable
-  InvoiceEntity get editing;
-
   factory InvoiceState() {
     return _$InvoiceState._(
       map: BuiltMap<int, InvoiceEntity>(),
@@ -45,7 +42,7 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
 abstract class InvoiceUIState extends Object with EntityUIState implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
 
   @nullable
-  ProductEntity get editing;
+  InvoiceEntity get editing;
 
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
