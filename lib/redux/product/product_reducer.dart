@@ -18,15 +18,15 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, EditProduct>(_updateEditing),
 ]);
 
+ProductEntity _updateEditing(ProductEntity client, action) {
+  return action.client;
+}
+
 final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortProducts>(_sortProducts),
   TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
   TypedReducer<ListUIState, SearchProducts>(_searchProducts),
 ]);
-
-ProductEntity _updateEditing(ProductEntity client, action) {
-  return action.client;
-}
 
 ListUIState _filterProductsByState(ListUIState productListState, FilterProductsByState action) {
   if (productListState.stateFilters.contains(action.state)) {

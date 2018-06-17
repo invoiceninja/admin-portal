@@ -18,16 +18,15 @@ final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, SelectClient>(_updateEditing),
 ]);
 
+ClientEntity _updateEditing(ClientEntity client, action) {
+  return action.client;
+}
 
 final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
   TypedReducer<ListUIState, SearchClients>(_searchClients),
 ]);
-
-ClientEntity _updateEditing(ClientEntity client, action) {
-  return action.client;
-}
 
 ListUIState _filterClientsByState(ListUIState clientListState, FilterClientsByState action) {
   if (clientListState.stateFilters.contains(action.state)) {

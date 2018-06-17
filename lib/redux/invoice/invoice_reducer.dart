@@ -18,15 +18,15 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SelectInvoice>(_updateEditing),
 ]);
 
+InvoiceEntity _updateEditing(InvoiceEntity client, action) {
+  return action.client;
+}
+
 final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortInvoices>(_sortInvoices),
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
   TypedReducer<ListUIState, SearchInvoices>(_searchInvoices),
 ]);
-
-InvoiceEntity _updateEditing(InvoiceEntity client, action) {
-  return action.client;
-}
 
 ListUIState _filterInvoicesByState(ListUIState invoiceListState, FilterInvoicesByState action) {
   if (invoiceListState.stateFilters.contains(action.state)) {
