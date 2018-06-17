@@ -139,7 +139,7 @@ Middleware<AppState> _createLoadState(
                         ..companyState4.replace(company4State)
                         ..companyState5.replace(company5State));
                       store.dispatch(LoadStateSuccess(appState));
-                      if (uiState.currentRoute != LoginVM.route) {
+                      if (uiState.currentRoute != LoginVM.route && authState.url.isNotEmpty) {
                         NavigatorState navigator = Navigator
                             .of(action.context);
                         var route = '';

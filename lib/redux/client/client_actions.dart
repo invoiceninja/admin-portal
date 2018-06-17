@@ -34,9 +34,10 @@ class LoadClientsSuccess implements StopLoading, PersistData {
   }
 }
 
-class SelectClient {
+class ViewClient {
   final ClientEntity client;
-  SelectClient(this.client);
+  final BuildContext context;
+  ViewClient({this.client, this.context});
 }
 
 class EditClient {

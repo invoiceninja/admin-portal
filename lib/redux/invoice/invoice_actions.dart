@@ -34,9 +34,10 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
   }
 }
 
-class SelectInvoice {
+class ViewInvoice {
   final InvoiceEntity invoice;
-  SelectInvoice(this.invoice);
+  final BuildContext context;
+  ViewInvoice({this.invoice, this.context});
 }
 
 class EditInvoice {

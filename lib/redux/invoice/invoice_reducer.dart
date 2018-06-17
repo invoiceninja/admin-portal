@@ -15,7 +15,7 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, action) {
 final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SaveInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddInvoiceSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, SelectInvoice>(_updateEditing),
+  TypedReducer<InvoiceEntity, ViewInvoice>(_updateEditing),
 ]);
 
 InvoiceEntity _updateEditing(InvoiceEntity client, action) {

@@ -56,7 +56,7 @@ class ClientScreen extends StatelessWidget {
         onPressed: () {
           var client = ClientEntity()
               .rebuild((b) => b..contacts.replace([ContactEntity()]));
-          store.dispatch(SelectClient(client));
+          store.dispatch(EditClient(client: client, context: context));
         },
         child: Icon(Icons.add, color: Colors.white,),
         tooltip: localization.newClient,
