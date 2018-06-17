@@ -111,7 +111,6 @@ Middleware<AppState> _createLoadState(
   var company5State;
 
   return (Store<AppState> store, action, NextDispatcher next) {
-    print('== loading state...');
     authRepository.exists().then((exists) {
       if (exists) {
         authRepository.loadAuthState().then((state) {
@@ -137,7 +136,6 @@ Middleware<AppState> _createLoadState(
                         ..companyState4.replace(company4State)
                         ..companyState5.replace(company5State));
                       store.dispatch(LoadStateSuccess(appState));
-                      print('== loaded: current route: ' + uiState.currentRoute);
                       if (uiState.currentRoute != LoginVM.route) {
                         Navigator
                             .of(action.context)
@@ -189,7 +187,6 @@ Middleware<AppState> _createUserLoggedIn(
 Middleware<AppState> _createUIChange(PersistenceRepository uiRepository) {
   return (Store<AppState> store, action, NextDispatcher next) {
 
-    print('== Saving UI');
     next(action);
 
     uiRepository.saveUIState(store.state.uiState);
@@ -204,7 +201,6 @@ Middleware<AppState> _createDataLoaded(
   PersistenceRepository company5Repository,
 ) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print('== Saving data');
 
     // first process the action so the data is in the state
     next(action);
