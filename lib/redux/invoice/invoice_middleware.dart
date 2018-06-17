@@ -16,6 +16,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final archiveInvoice = _archiveInvoice(repository);
   final deleteInvoice = _deleteInvoice(repository);
   final restoreInvoice = _restoreInvoice(repository);
+  final viewInvoice = _viewInvoice();
   final editInvoice = _editInvoice();
 
   return [
@@ -24,8 +25,18 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, ArchiveInvoiceRequest>(archiveInvoice),
     TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
     TypedMiddleware<AppState, RestoreInvoiceRequest>(restoreInvoice),
+    TypedMiddleware<AppState, ViewInvoice>(viewInvoice),
     TypedMiddleware<AppState, EditInvoice>(editInvoice),
   ];
+}
+
+Middleware<AppState> _viewInvoice() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    //store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+    //Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
+  };
 }
 
 Middleware<AppState> _editInvoice() {

@@ -34,13 +34,13 @@ class LoadClientsSuccess implements StopLoading, PersistData {
   }
 }
 
-class ViewClient {
+class ViewClient implements PersistUI {
   final ClientEntity client;
   final BuildContext context;
   ViewClient({this.client, this.context});
 }
 
-class EditClient {
+class EditClient implements PersistUI {
   final ClientEntity client;
   final BuildContext context;
   EditClient({this.client, this.context});

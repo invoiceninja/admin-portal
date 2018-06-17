@@ -33,7 +33,7 @@ class LoadProductsSuccess implements PersistData, StopLoading {
   }
 }
 
-class EditProduct {
+class EditProduct implements PersistUI {
   final ProductEntity product;
   final BuildContext context;
   EditProduct({this.product, this.context});

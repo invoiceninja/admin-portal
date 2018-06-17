@@ -58,9 +58,7 @@ class ClientViewVM {
       client: client,
       onDelete: () => false,
       onEditClicked: (BuildContext context) {
-        Navigator
-            .of(context)
-            .push(MaterialPageRoute(builder: (_) => ClientEditScreen()));
+        store.dispatch(EditClient(client: client, context: context));
       },
       onSaveClicked: (BuildContext context, ClientEntity client) {
         final Completer<Null> completer = new Completer<Null>();

@@ -34,13 +34,13 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
   }
 }
 
-class ViewInvoice {
+class ViewInvoice implements PersistUI {
   final InvoiceEntity invoice;
   final BuildContext context;
   ViewInvoice({this.invoice, this.context});
 }
 
-class EditInvoice {
+class EditInvoice implements PersistUI {
   final InvoiceEntity invoice;
   final BuildContext context;
   EditInvoice({this.invoice, this.context});
