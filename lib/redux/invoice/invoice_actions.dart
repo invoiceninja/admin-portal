@@ -4,16 +4,16 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
-class LoadInvoicesAction {
+class LoadInvoices {
   final Completer completer;
   final bool force;
 
-  LoadInvoicesAction([this.completer, this.force = false]);
+  LoadInvoices([this.completer, this.force = false]);
 }
 
-class LoadInvoicesRequest {}
+class LoadInvoicesRequest implements StartLoading {}
 
-class LoadInvoicesFailure {
+class LoadInvoicesFailure implements StopLoading {
   final dynamic error;
   LoadInvoicesFailure(this.error);
 
@@ -23,7 +23,7 @@ class LoadInvoicesFailure {
   }
 }
 
-class LoadInvoicesSuccess implements PersistData {
+class LoadInvoicesSuccess implements StopLoading, PersistData {
   final BuiltList<InvoiceEntity> invoices;
   LoadInvoicesSuccess(this.invoices);
 
@@ -38,74 +38,74 @@ class SelectInvoiceAction {
   SelectInvoiceAction(this.invoice);
 }
 
-class SaveInvoiceRequest {
+class SaveInvoiceRequest implements StartLoading {
   final Completer completer;
   final InvoiceEntity invoice;
   SaveInvoiceRequest(this.completer, this.invoice);
 }
 
-class SaveInvoiceSuccess implements PersistData {
+class SaveInvoiceSuccess implements StopLoading, PersistData {
   final InvoiceEntity invoice;
 
   SaveInvoiceSuccess(this.invoice);
 }
 
-class SaveInvoiceFailure {
+class SaveInvoiceFailure implements StopLoading {
   final String error;
   SaveInvoiceFailure (this.error);
 }
 
-class ArchiveInvoiceRequest {
+class ArchiveInvoiceRequest implements StartLoading {
   final Completer completer;
   final int invoiceId;
 
   ArchiveInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class ArchiveInvoiceSuccess implements PersistData {
+class ArchiveInvoiceSuccess implements StopLoading, PersistData {
   final InvoiceEntity invoice;
   ArchiveInvoiceSuccess(this.invoice);
 }
 
-class ArchiveInvoiceFailure {
+class ArchiveInvoiceFailure implements StopLoading {
   final InvoiceEntity invoice;
   ArchiveInvoiceFailure(this.invoice);
 }
 
-class DeleteInvoiceRequest {
+class DeleteInvoiceRequest implements StartLoading {
   final Completer completer;
   final int invoiceId;
 
   DeleteInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class DeleteInvoiceSuccess implements PersistData {
+class DeleteInvoiceSuccess implements StopLoading, PersistData {
   final InvoiceEntity invoice;
   DeleteInvoiceSuccess(this.invoice);
 }
 
-class DeleteInvoiceFailure {
+class DeleteInvoiceFailure implements StopLoading {
   final InvoiceEntity invoice;
   DeleteInvoiceFailure(this.invoice);
 }
 
-class RestoreInvoiceRequest {
+class RestoreInvoiceRequest implements StartLoading {
   final Completer completer;
   final int invoiceId;
   RestoreInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class RestoreInvoiceSuccess implements PersistData {
+class RestoreInvoiceSuccess implements StopLoading, PersistData {
   final InvoiceEntity invoice;
   RestoreInvoiceSuccess(this.invoice);
 }
 
-class RestoreInvoiceFailure {
+class RestoreInvoiceFailure implements StopLoading {
   final InvoiceEntity invoice;
   RestoreInvoiceFailure(this.invoice);
 }
 
-class AddInvoiceSuccess implements PersistData {
+class AddInvoiceSuccess implements StopLoading, PersistData {
   final InvoiceEntity invoice;
   AddInvoiceSuccess(this.invoice);
 }

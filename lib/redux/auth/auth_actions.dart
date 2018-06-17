@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 
 class LoadStateRequest {
@@ -22,7 +23,7 @@ class UserLoginLoaded {
   UserLoginLoaded(this.email, this.password, this.url, this.secret);
 }
 
-class UserLoginRequest {
+class UserLoginRequest implements StartLoading {
   final Completer completer;
   final String email;
   final String password;
@@ -32,9 +33,9 @@ class UserLoginRequest {
   UserLoginRequest(this.completer, this.email, this.password, this.url, this.secret);
 }
 
-class UserLoginSuccess {}
+class UserLoginSuccess implements StopLoading {}
 
-class UserLoginFailure {
+class UserLoginFailure implements StopLoading {
   final String error;
 
   UserLoginFailure(this.error);

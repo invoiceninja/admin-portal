@@ -15,7 +15,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final restoreInvoice = _restoreInvoice(repository);
 
   return [
-    TypedMiddleware<AppState, LoadInvoicesAction>(loadInvoices),
+    TypedMiddleware<AppState, LoadInvoices>(loadInvoices),
     TypedMiddleware<AppState, SaveInvoiceRequest>(saveInvoice),
     TypedMiddleware<AppState, ArchiveInvoiceRequest>(archiveInvoice),
     TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
@@ -128,7 +128,7 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
         action.completer.complete(null);
       }
       if (state.clientState.isStale) {
-        store.dispatch(LoadClientsAction());
+        store.dispatch(LoadClients());
       }
     }).catchError((error) => store.dispatch(LoadInvoicesFailure(error)));
 

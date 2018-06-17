@@ -11,9 +11,9 @@ class LoadProducts {
   LoadProducts([this.completer, this.force = false]);
 }
 
-class LoadProductsRequest {}
+class LoadProductsRequest implements StartLoading {}
 
-class LoadProductsFailure {
+class LoadProductsFailure implements StopLoading {
   final dynamic error;
   LoadProductsFailure(this.error);
 
@@ -23,7 +23,7 @@ class LoadProductsFailure {
   }
 }
 
-class LoadProductsSuccess implements PersistData {
+class LoadProductsSuccess implements PersistData, StopLoading {
   final BuiltList<ProductEntity> products;
   LoadProductsSuccess(this.products);
 
@@ -39,76 +39,76 @@ class EditProduct {
   EditProduct({this.product, this.context});
 }
 
-class SaveProductRequest {
+class SaveProductRequest implements StartLoading {
   final Completer completer;
   final ProductEntity product;
   SaveProductRequest(this.completer, this.product);
 }
 
-class SaveProductSuccess implements PersistData {
+class SaveProductSuccess implements StopLoading, PersistData {
   final ProductEntity product;
 
   SaveProductSuccess(this.product);
 }
 
-class SaveProductFailure {
+class AddProductSuccess implements StopLoading, PersistData {
+  final ProductEntity product;
+  AddProductSuccess(this.product);
+}
+
+class SaveProductFailure implements StopLoading {
   final String error;
   SaveProductFailure (this.error);
 }
 
-class ArchiveProductRequest {
+class ArchiveProductRequest implements StartLoading {
   final Completer completer;
   final int productId;
 
   ArchiveProductRequest(this.completer, this.productId);
 }
 
-class ArchiveProductSuccess implements PersistData {
+class ArchiveProductSuccess implements StopLoading, PersistData {
   final ProductEntity product;
   ArchiveProductSuccess(this.product);
 }
 
-class ArchiveProductFailure {
+class ArchiveProductFailure implements StopLoading {
   final ProductEntity product;
   ArchiveProductFailure(this.product);
 }
 
-class DeleteProductRequest {
+class DeleteProductRequest implements StartLoading {
   final Completer completer;
   final int productId;
 
   DeleteProductRequest(this.completer, this.productId);
 }
 
-class DeleteProductSuccess implements PersistData {
+class DeleteProductSuccess implements StopLoading, PersistData {
   final ProductEntity product;
   DeleteProductSuccess(this.product);
 }
 
-class DeleteProductFailure {
+class DeleteProductFailure implements StopLoading {
   final ProductEntity product;
   DeleteProductFailure(this.product);
 }
 
-class RestoreProductRequest {
+class RestoreProductRequest implements StartLoading {
   final Completer completer;
   final int productId;
   RestoreProductRequest(this.completer, this.productId);
 }
 
-class RestoreProductSuccess implements PersistData {
+class RestoreProductSuccess implements StopLoading, PersistData {
   final ProductEntity product;
   RestoreProductSuccess(this.product);
 }
 
-class RestoreProductFailure {
+class RestoreProductFailure implements StopLoading {
   final ProductEntity product;
   RestoreProductFailure(this.product);
-}
-
-class AddProductSuccess implements PersistData {
-  final ProductEntity product;
-  AddProductSuccess(this.product);
 }
 
 

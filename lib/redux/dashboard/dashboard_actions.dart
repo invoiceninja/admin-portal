@@ -10,9 +10,9 @@ class LoadDashboardAction {
   LoadDashboardAction([this.completer, this.force = false]);
 }
 
-class LoadDashboardRequest {}
+class LoadDashboardRequest implements StartLoading {}
 
-class LoadDashboardFailure {
+class LoadDashboardFailure implements StopLoading {
   final dynamic error;
 
   LoadDashboardFailure(this.error);
@@ -23,7 +23,7 @@ class LoadDashboardFailure {
   }
 }
 
-class LoadDashboardSuccess implements PersistData {
+class LoadDashboardSuccess implements StopLoading, PersistData {
   final DashboardEntity data;
 
   LoadDashboardSuccess(this.data);

@@ -4,16 +4,16 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
-class LoadClientsAction {
+class LoadClients {
   final Completer completer;
   final bool force;
 
-  LoadClientsAction([this.completer, this.force = false]);
+  LoadClients([this.completer, this.force = false]);
 }
 
-class LoadClientsRequest {}
+class LoadClientsRequest implements StartLoading {}
 
-class LoadClientsFailure {
+class LoadClientsFailure implements StopLoading {
   final dynamic error;
   LoadClientsFailure(this.error);
 
@@ -23,7 +23,7 @@ class LoadClientsFailure {
   }
 }
 
-class LoadClientsSuccess implements PersistData {
+class LoadClientsSuccess implements StopLoading, PersistData {
   final BuiltList<ClientEntity> clients;
   LoadClientsSuccess(this.clients);
 
@@ -38,74 +38,74 @@ class SelectClientAction {
   SelectClientAction(this.client);
 }
 
-class SaveClientRequest {
+class SaveClientRequest implements StartLoading {
   final Completer completer;
   final ClientEntity client;
   SaveClientRequest(this.completer, this.client);
 }
 
-class SaveClientSuccess implements PersistData {
+class SaveClientSuccess implements StopLoading, PersistData {
   final ClientEntity client;
 
   SaveClientSuccess(this.client);
 }
 
-class SaveClientFailure {
+class SaveClientFailure implements StopLoading {
   final String error;
   SaveClientFailure (this.error);
 }
 
-class ArchiveClientRequest {
+class ArchiveClientRequest implements StartLoading {
   final Completer completer;
   final int clientId;
 
   ArchiveClientRequest(this.completer, this.clientId);
 }
 
-class ArchiveClientSuccess implements PersistData {
+class ArchiveClientSuccess implements StopLoading, PersistData {
   final ClientEntity client;
   ArchiveClientSuccess(this.client);
 }
 
-class ArchiveClientFailure {
+class ArchiveClientFailure implements StopLoading {
   final ClientEntity client;
   ArchiveClientFailure(this.client);
 }
 
-class DeleteClientRequest {
+class DeleteClientRequest implements StartLoading {
   final Completer completer;
   final int clientId;
 
   DeleteClientRequest(this.completer, this.clientId);
 }
 
-class DeleteClientSuccess implements PersistData {
+class DeleteClientSuccess implements StopLoading, PersistData {
   final ClientEntity client;
   DeleteClientSuccess(this.client);
 }
 
-class DeleteClientFailure {
+class DeleteClientFailure implements StopLoading {
   final ClientEntity client;
   DeleteClientFailure(this.client);
 }
 
-class RestoreClientRequest {
+class RestoreClientRequest implements StartLoading {
   final Completer completer;
   final int clientId;
   RestoreClientRequest(this.completer, this.clientId);
 }
 
-class RestoreClientSuccess implements PersistData {
+class RestoreClientSuccess implements StopLoading, PersistData {
   final ClientEntity client;
   RestoreClientSuccess(this.client);
 }
 
-class RestoreClientFailure {
+class RestoreClientFailure implements StopLoading {
   final ClientEntity client;
   RestoreClientFailure(this.client);
 }
 
-class AddClientSuccess implements PersistData {
+class AddClientSuccess implements StopLoading, PersistData {
   final ClientEntity client;
   AddClientSuccess(this.client);
 }

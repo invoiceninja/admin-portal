@@ -15,7 +15,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   final restoreClient = _restoreClient(repository);
 
   return [
-    TypedMiddleware<AppState, LoadClientsAction>(loadClients),
+    TypedMiddleware<AppState, LoadClients>(loadClients),
     TypedMiddleware<AppState, SaveClientRequest>(saveClient),
     TypedMiddleware<AppState, ArchiveClientRequest>(archiveClient),
     TypedMiddleware<AppState, DeleteClientRequest>(deleteClient),

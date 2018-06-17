@@ -54,7 +54,7 @@ class ClientListVM {
   static ClientListVM fromStore(Store<AppState> store) {
       Future<Null> _handleRefresh(BuildContext context) {
         final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(LoadClientsAction(completer, true));
+        store.dispatch(LoadClients(completer, true));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

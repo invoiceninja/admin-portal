@@ -37,7 +37,7 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
                 action.completer.complete(null);
               }
               if (state.clientState.isStale) {
-                store.dispatch(LoadClientsAction());
+                store.dispatch(LoadClients());
               }
             }
     ).catchError((error) => store.dispatch(LoadDashboardFailure(error)));
