@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 
@@ -32,9 +32,10 @@ class LoadProductsSuccess {
   }
 }
 
-class SelectProductAction {
+class EditProductAction {
   final ProductEntity product;
-  SelectProductAction(this.product);
+  final BuildContext context;
+  EditProductAction({this.product, this.context});
 }
 
 class SaveProductRequest {

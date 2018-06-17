@@ -69,10 +69,7 @@ class ProductListVM {
         isLoading: store.state.isLoading,
         isLoaded: store.state.productState.isLoaded,
         onProductTap: (context, product) {
-          store.dispatch(SelectProductAction(product));
-          Navigator
-              .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductEditScreen()));
+          store.dispatch(EditProductAction(product: product, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ProductEntity product,

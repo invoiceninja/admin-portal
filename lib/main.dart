@@ -6,6 +6,7 @@ import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/client/client_middleware.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
+import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
@@ -95,6 +96,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             widget.store.dispatch(LoadProductsAction());
             return ProductScreen();
           },
+          ProductEditScreen.route: (context) => ProductEditScreen(),
           ClientScreen.route: (context) {
             widget.store.dispatch(LoadClientsAction());
             return ClientScreen();

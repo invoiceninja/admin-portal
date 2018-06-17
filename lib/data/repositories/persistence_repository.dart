@@ -37,6 +37,8 @@ class PersistenceRepository {
   }
 }
 
+/*
 AppState _deserialize(String data) {
   return serializers.deserializeWith(AppState.serializer, json.decode(data));
 }
+*/

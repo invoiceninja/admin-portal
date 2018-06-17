@@ -1,3 +1,4 @@
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/app/app_search.dart';
 import 'package:invoiceninja/ui/app/app_search_button.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
@@ -55,12 +56,13 @@ class ProductScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
-          store.dispatch(SelectProductAction(ProductEntity()));
-          Navigator
-              .of(context)
-              .push(MaterialPageRoute(builder: (_) => ProductEditScreen()));
+          store.dispatch(
+              EditProductAction(product: ProductEntity(), context: context));
         },
-        child: Icon(Icons.add,color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         tooltip: localization.newProduct,
       ),
     );

@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -13,6 +16,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   final archiveProduct = _archiveProduct(repository);
   final deleteProduct = _deleteProduct(repository);
   final restoreProduct = _restoreProduct(repository);
+  final editProduct = _editProduct();
 
   return [
     TypedMiddleware<AppState, LoadProductsAction>(loadProducts),
@@ -20,7 +24,17 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
     TypedMiddleware<AppState, ArchiveProductRequest>(archiveProduct),
     TypedMiddleware<AppState, DeleteProductRequest>(deleteProduct),
     TypedMiddleware<AppState, RestoreProductRequest>(restoreProduct),
+    TypedMiddleware<AppState, EditProductAction>(editProduct),
   ];
+}
+
+Middleware<AppState> _editProduct() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
+    Navigator.of(action.context).pushReplacementNamed(ProductEditScreen.route);
+  };
 }
 
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
@@ -106,7 +120,6 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
     AppState state = store.state;
 
     if (!state.productState.isStale && !action.force) {
@@ -120,9 +133,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
     }
 
     store.dispatch(LoadProductsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState)
-        .then((data) {
+    repository.loadList(state.selectedCompany, state.authState).then((data) {
       store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
