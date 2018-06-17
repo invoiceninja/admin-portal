@@ -8,8 +8,8 @@ class LoadDashboardAction {
   final bool force;
 
   LoadDashboardAction([this.completer, this.force = false]);
-
 }
+
 class LoadDashboardRequest {}
 
 class LoadDashboardFailure {
@@ -23,7 +23,7 @@ class LoadDashboardFailure {
   }
 }
 
-class LoadDashboardSuccess extends PersistData {
+class LoadDashboardSuccess implements PersistData {
   final DashboardEntity data;
 
   LoadDashboardSuccess(this.data);

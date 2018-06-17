@@ -23,7 +23,7 @@ class LoadInvoicesFailure {
   }
 }
 
-class LoadInvoicesSuccess extends PersistData {
+class LoadInvoicesSuccess implements PersistData {
   final BuiltList<InvoiceEntity> invoices;
   LoadInvoicesSuccess(this.invoices);
 
@@ -44,7 +44,7 @@ class SaveInvoiceRequest {
   SaveInvoiceRequest(this.completer, this.invoice);
 }
 
-class SaveInvoiceSuccess extends PersistData {
+class SaveInvoiceSuccess implements PersistData {
   final InvoiceEntity invoice;
 
   SaveInvoiceSuccess(this.invoice);
@@ -62,7 +62,7 @@ class ArchiveInvoiceRequest {
   ArchiveInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class ArchiveInvoiceSuccess extends PersistData {
+class ArchiveInvoiceSuccess implements PersistData {
   final InvoiceEntity invoice;
   ArchiveInvoiceSuccess(this.invoice);
 }
@@ -79,7 +79,7 @@ class DeleteInvoiceRequest {
   DeleteInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class DeleteInvoiceSuccess extends PersistData {
+class DeleteInvoiceSuccess implements PersistData {
   final InvoiceEntity invoice;
   DeleteInvoiceSuccess(this.invoice);
 }
@@ -95,7 +95,7 @@ class RestoreInvoiceRequest {
   RestoreInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class RestoreInvoiceSuccess extends PersistData {
+class RestoreInvoiceSuccess implements PersistData {
   final InvoiceEntity invoice;
   RestoreInvoiceSuccess(this.invoice);
 }
@@ -105,7 +105,7 @@ class RestoreInvoiceFailure {
   RestoreInvoiceFailure(this.invoice);
 }
 
-class AddInvoiceSuccess extends PersistData {
+class AddInvoiceSuccess implements PersistData {
   final InvoiceEntity invoice;
   AddInvoiceSuccess(this.invoice);
 }
@@ -116,12 +116,12 @@ class SearchInvoices {
   SearchInvoices(this.search);
 }
 
-class SortInvoices extends PersistUI {
+class SortInvoices implements PersistUI {
   final String field;
   SortInvoices(this.field);
 }
 
-class FilterInvoicesByState extends PersistUI {
+class FilterInvoicesByState implements PersistUI {
   final EntityState state;
 
   FilterInvoicesByState(this.state);

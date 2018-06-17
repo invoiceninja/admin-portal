@@ -23,7 +23,7 @@ class LoadProductsFailure {
   }
 }
 
-class LoadProductsSuccess extends PersistData {
+class LoadProductsSuccess implements PersistData {
   final BuiltList<ProductEntity> products;
   LoadProductsSuccess(this.products);
 
@@ -45,7 +45,7 @@ class SaveProductRequest {
   SaveProductRequest(this.completer, this.product);
 }
 
-class SaveProductSuccess extends PersistData {
+class SaveProductSuccess implements PersistData {
   final ProductEntity product;
 
   SaveProductSuccess(this.product);
@@ -63,7 +63,7 @@ class ArchiveProductRequest {
   ArchiveProductRequest(this.completer, this.productId);
 }
 
-class ArchiveProductSuccess extends PersistData {
+class ArchiveProductSuccess implements PersistData {
   final ProductEntity product;
   ArchiveProductSuccess(this.product);
 }
@@ -80,7 +80,7 @@ class DeleteProductRequest {
   DeleteProductRequest(this.completer, this.productId);
 }
 
-class DeleteProductSuccess extends PersistData {
+class DeleteProductSuccess implements PersistData {
   final ProductEntity product;
   DeleteProductSuccess(this.product);
 }
@@ -96,7 +96,7 @@ class RestoreProductRequest {
   RestoreProductRequest(this.completer, this.productId);
 }
 
-class RestoreProductSuccess extends PersistData {
+class RestoreProductSuccess implements PersistData {
   final ProductEntity product;
   RestoreProductSuccess(this.product);
 }
@@ -106,7 +106,7 @@ class RestoreProductFailure {
   RestoreProductFailure(this.product);
 }
 
-class AddProductSuccess extends PersistData {
+class AddProductSuccess implements PersistData {
   final ProductEntity product;
   AddProductSuccess(this.product);
 }
@@ -117,12 +117,12 @@ class SearchProducts {
   SearchProducts(this.search);
 }
 
-class SortProducts extends PersistUI {
+class SortProducts implements PersistUI {
   final String field;
   SortProducts(this.field);
 }
 
-class FilterProductsByState extends PersistUI {
+class FilterProductsByState implements PersistUI {
   final EntityState state;
 
   FilterProductsByState(this.state);
