@@ -63,7 +63,7 @@ class ClientScreen extends StatelessWidget {
               .of(context)
               .push(MaterialPageRoute(builder: (_) => ClientEditScreen()));
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white,),
         tooltip: localization.newClient,
       ),
     );

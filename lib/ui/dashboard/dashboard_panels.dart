@@ -97,7 +97,7 @@ class DashboardRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(this.title,
-                  style: TextStyle(color: Colors.grey[700])),
+                  style: TextStyle()),
                 Text(this.isMoney
                     ? "\$" + this.amount.toStringAsFixed(2)
                     : this.amount.toString(),
@@ -140,7 +140,7 @@ class DashboardColumn extends StatelessWidget {
                 Center(child: ColorIcon(this.icon, this.color)),
                 SizedBox(height: 18.0),
                 Text(this.title,
-                    style: TextStyle(color: Colors.grey[700])),
+                    style: TextStyle()),
                 Text(this.isMoney
                     ? "\$" + this.amount.toStringAsFixed(2)
                     : this.amount.toString(),

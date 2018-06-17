@@ -83,7 +83,6 @@ class ClientEditContactsState extends State<ClientEditContacts>
       child: RaisedButton(
         elevation: 4.0,
         color: Theme.of(context).primaryColor,
-        textColor: Theme.of(context).secondaryHeaderColor,
         child: Text(localization.addContact.toUpperCase()),
         onPressed: _onAddPressed,
       ),
