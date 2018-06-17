@@ -3,6 +3,7 @@
 
 .packages
 .pub/
+.vscode/
 
 build/
 
