@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
@@ -35,6 +37,7 @@ class ProductEditVM {
   final Function onDelete;
   final Function(BuildContext, ProductEntity) onSaveClicked;
   final Function(BuildContext, EntityAction) onActionSelected;
+  final Function onBackClicked;
   final bool isLoading;
   final bool isDirty;
 
@@ -42,6 +45,7 @@ class ProductEditVM {
     @required this.product,
     @required this.onDelete,
     @required this.onSaveClicked,
+    @required this.onBackClicked,
     @required this.onActionSelected,
     @required this.isLoading,
     @required this.isDirty,
@@ -55,6 +59,9 @@ class ProductEditVM {
       isDirty: product.isNew(),
       product: product,
       onDelete: () => false,
+      onBackClicked: () {
+        store.dispatch(UpdateCurrentRoute(ProductScreen.route));
+      },
       onSaveClicked: (BuildContext context, ProductEntity product) {
         final Completer<Null> completer = new Completer<Null>();
         store.dispatch(SaveProductRequest(completer, product));

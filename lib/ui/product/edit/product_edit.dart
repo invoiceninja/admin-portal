@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
@@ -29,86 +31,92 @@ class _ProductEditState extends State<ProductEdit> {
   Widget build(BuildContext context) {
     var viewModel = widget.viewModel;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(viewModel.product.isNew()
-            ? AppLocalization.of(context).newProduct
-            : viewModel.product.productKey),
-        actions: <Widget>[
-          Builder(builder: (BuildContext context) {
-            return SaveIconButton(
-              isLoading: viewModel.isLoading,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
+    return WillPopScope(
+      onWillPop: () async {
+        viewModel.onBackClicked();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(viewModel.product.isNew()
+              ? AppLocalization.of(context).newProduct
+              : viewModel.product.productKey),
+          actions: <Widget>[
+            Builder(builder: (BuildContext context) {
+              return SaveIconButton(
+                isLoading: viewModel.isLoading,
+                onPressed: () {
+                  if (!_formKey.currentState.validate()) {
+                    return;
+                  }
 
-                _formKey.currentState.save();
+                  _formKey.currentState.save();
 
-                viewModel.onSaveClicked(
-                    context,
-                    viewModel.product.rebuild((b) => b
-                      ..productKey = _productKey
-                      ..notes = _notes
-                      ..cost = _cost));
-              },
-            );
-          }),
-          viewModel.product.isNew()
-              ? Container()
-              : ActionMenuButton(
-                  entity: viewModel.product,
-                  onSelected: viewModel.onActionSelected,
-                )
-        ],
-      ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            FormCard(
-              children: <Widget>[
-                TextFormField(
-                  autocorrect: false,
-                  onSaved: (value) {
-                    _productKey = value;
-                  },
-                  initialValue: viewModel.product.productKey,
-                  decoration: InputDecoration(
-                    //border: InputBorder.none,
-                    labelText: AppLocalization.of(context).product,
-                  ),
-                  validator: (val) => val.isEmpty || val.trim().length == 0
-                      ? AppLocalization.of(context).pleaseEnterAProductKey
-                      : null,
-                ),
-                TextFormField(
-                  initialValue: viewModel.product.notes,
-                  onSaved: (value) {
-                    _notes = value;
-                  },
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).notes,
-                  ),
-                ),
-                TextFormField(
-                  initialValue: viewModel.product.cost == null ||
-                          viewModel.product.cost == 0.0
-                      ? null
-                      : viewModel.product.cost.toStringAsFixed(2),
-                  onSaved: (value) {
-                    _cost = double.tryParse(value) ?? 0.0;
-                  },
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    //border: InputBorder.none,
-                    labelText: AppLocalization.of(context).cost,
-                  ),
-                ),
-              ],
-            ),
+                  viewModel.onSaveClicked(
+                      context,
+                      viewModel.product.rebuild((b) => b
+                        ..productKey = _productKey
+                        ..notes = _notes
+                        ..cost = _cost));
+                },
+              );
+            }),
+            viewModel.product.isNew()
+                ? Container()
+                : ActionMenuButton(
+                    entity: viewModel.product,
+                    onSelected: viewModel.onActionSelected,
+                  )
           ],
+        ),
+        body: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
+                  TextFormField(
+                    autocorrect: false,
+                    onSaved: (value) {
+                      _productKey = value;
+                    },
+                    initialValue: viewModel.product.productKey,
+                    decoration: InputDecoration(
+                      //border: InputBorder.none,
+                      labelText: AppLocalization.of(context).product,
+                    ),
+                    validator: (val) => val.isEmpty || val.trim().length == 0
+                        ? AppLocalization.of(context).pleaseEnterAProductKey
+                        : null,
+                  ),
+                  TextFormField(
+                    initialValue: viewModel.product.notes,
+                    onSaved: (value) {
+                      _notes = value;
+                    },
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      labelText: AppLocalization.of(context).notes,
+                    ),
+                  ),
+                  TextFormField(
+                    initialValue: viewModel.product.cost == null ||
+                            viewModel.product.cost == 0.0
+                        ? null
+                        : viewModel.product.cost.toStringAsFixed(2),
+                    onSaved: (value) {
+                      _cost = double.tryParse(value) ?? 0.0;
+                    },
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      //border: InputBorder.none,
+                      labelText: AppLocalization.of(context).cost,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

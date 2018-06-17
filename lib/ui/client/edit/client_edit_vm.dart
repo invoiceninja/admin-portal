@@ -5,6 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:redux/redux.dart';
@@ -32,11 +34,13 @@ class ClientEditVM {
   final bool isLoading;
   final ClientEntity client;
   final Function(BuildContext, ClientEntity) onSaveClicked;
+  final Function onBackClicked;
 
   ClientEditVM({
     @required this.isLoading,
     @required this.client,
     @required this.onSaveClicked,
+    @required this.onBackClicked,
   });
 
   factory ClientEditVM.fromStore(Store<AppState> store) {
@@ -45,6 +49,9 @@ class ClientEditVM {
     return ClientEditVM(
         client: client,
         isLoading: store.state.isLoading,
+        onBackClicked: () {
+          store.dispatch(UpdateCurrentRoute(ClientScreen.route));
+        },
         onSaveClicked: (BuildContext context, ClientEntity client) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(SaveClientRequest(completer, client));

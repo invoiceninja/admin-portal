@@ -3,6 +3,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
@@ -39,6 +41,7 @@ class InvoiceEditVM {
   final Function onDelete;
   final Function(BuildContext, InvoiceEntity) onSaveClicked;
   final Function(BuildContext, EntityAction) onActionSelected;
+  final Function onBackClicked;
   final bool isLoading;
   final bool isDirty;
 
@@ -48,6 +51,7 @@ class InvoiceEditVM {
     @required this.clientMap,
     @required this.onDelete,
     @required this.onSaveClicked,
+    @required this.onBackClicked,
     @required this.onActionSelected,
     @required this.isLoading,
     @required this.isDirty,
@@ -64,7 +68,10 @@ class InvoiceEditVM {
       clientList: memoizedActiveClientList(state.clientState.map, state.clientState.list),
       clientMap: state.clientState.map,
       onDelete: () => false,
-      onSaveClicked: (BuildContext context, InvoiceEntity invoice) {
+        onBackClicked: () {
+          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
+        },
+        onSaveClicked: (BuildContext context, InvoiceEntity invoice) {
         final Completer<Null> completer = new Completer<Null>();
         store.dispatch(SaveInvoiceRequest(completer, invoice));
         return completer.future.then((_) {

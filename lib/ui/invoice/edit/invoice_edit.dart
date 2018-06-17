@@ -58,52 +58,58 @@ class _InvoiceEditState extends State<InvoiceEdit>
       ),
     ];
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(invoice.isNew()
-            ? localization.newInvoice
-            : invoice.invoiceNumber),
-        actions: <Widget>[
-          SaveIconButton(
-            isLoading: widget.viewModel.isLoading,
-            onPressed: () {
-              if (! _formKey.currentState.validate()) {
-                return;
-              }
+    return WillPopScope(
+      onWillPop: () async {
+        viewModel.onBackClicked();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(invoice.isNew()
+              ? localization.newInvoice
+              : invoice.invoiceNumber),
+          actions: <Widget>[
+            SaveIconButton(
+              isLoading: widget.viewModel.isLoading,
+              onPressed: () {
+                if (! _formKey.currentState.validate()) {
+                  return;
+                }
 
-              _formKey.currentState.save();
+                _formKey.currentState.save();
 
-              //var detailsState = _detailsKey.currentState;
-              //var itemsState = _itemsKey.currentState;
+                //var detailsState = _detailsKey.currentState;
+                //var itemsState = _itemsKey.currentState;
 
-              /*
-              InvoiceEntity invoice = widget.viewModel.invoice.rebuild((b) => b
-                ..items.replace(
-                    itemState?.getItems() ?? widget.viewModel.invoice.items));
-              */
+                /*
+                InvoiceEntity invoice = widget.viewModel.invoice.rebuild((b) => b
+                  ..items.replace(
+                      itemState?.getItems() ?? widget.viewModel.invoice.items));
+                */
 
-              widget.viewModel.onSaveClicked(context, invoice);
-            },
-          )
-        ],
-        bottom: TabBar(
-          controller: _controller,
-          //isScrollable: true,
-          tabs: [
-            Tab(
-              text: localization.details,
-            ),
-            Tab(
-              text: localization.items,
-            ),
+                widget.viewModel.onSaveClicked(context, invoice);
+              },
+            )
           ],
+          bottom: TabBar(
+            controller: _controller,
+            //isScrollable: true,
+            tabs: [
+              Tab(
+                text: localization.details,
+              ),
+              Tab(
+                text: localization.items,
+              ),
+            ],
+          ),
         ),
-      ),
-      body: Form(
-        key: _formKey,
-        child: TabBarView(
-          controller: _controller,
-          children: editors,
+        body: Form(
+          key: _formKey,
+          child: TabBarView(
+            controller: _controller,
+            children: editors,
+          ),
         ),
       ),
     );
