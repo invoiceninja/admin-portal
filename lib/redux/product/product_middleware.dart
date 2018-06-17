@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:redux/redux.dart';

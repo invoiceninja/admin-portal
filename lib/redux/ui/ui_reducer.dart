@@ -1,4 +1,5 @@
 import 'package:invoiceninja/redux/client/client_reducer.dart';
+import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';
 import 'package:invoiceninja/redux/product/product_reducer.dart';
@@ -8,6 +9,7 @@ import 'package:redux/redux.dart';
 UIState uiReducer(UIState state, action) {
 
   return state.rebuild((b) => b
+    ..selectedCompanyIndex = selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
@@ -21,4 +23,12 @@ Reducer<String> currentRouteReducer = combineReducers([
 
 String updateCurrentRouteReducer(String currentRoute, UpdateCurrentRoute action) {
   return action.route;
+}
+
+Reducer<int> selectedCompanyIndexReducer = combineReducers([
+  TypedReducer<int, SelectCompany>(selectCompanyReducer),
+]);
+
+int selectCompanyReducer(int selectedCompanyIndex, SelectCompany action) {
+  return action.companyIndex;
 }

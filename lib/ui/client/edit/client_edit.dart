@@ -5,9 +5,7 @@ import 'package:invoiceninja/ui/client/edit/client_edit_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/save_icon_button.dart';
-import 'package:invoiceninja/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_contacts.dart';
-import 'package:invoiceninja/ui/client/edit/client_edit_shipping_address.dart';
 
 class ClientEdit extends StatefulWidget {
   final ClientEditVM viewModel;
@@ -27,10 +25,12 @@ class _ClientEditState extends State<ClientEdit>
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static final GlobalKey<ClientEditDetailsState> _detailsKey =
       GlobalKey<ClientEditDetailsState>();
+      /*
   static final GlobalKey<ClientEditBillingAddressState> _billingAddressKey =
       GlobalKey<ClientEditBillingAddressState>();
   static final GlobalKey<ClientEditShippingAddressState> _shippingAddressKey =
       GlobalKey<ClientEditShippingAddressState>();
+      */
   static final GlobalKey<ClientEditContactsState> _contactsKey =
       GlobalKey<ClientEditContactsState>();
 
@@ -88,7 +88,7 @@ class _ClientEditState extends State<ClientEdit>
               _formKey.currentState.save();
 
               var detailsState = _detailsKey.currentState;
-              var billingAddressState = _billingAddressKey.currentState;
+              //var billingAddressState = _billingAddressKey.currentState;
               //var shippingAddressState = _shippingAddressKey.currentState;
               var contactState = _contactsKey.currentState;
 

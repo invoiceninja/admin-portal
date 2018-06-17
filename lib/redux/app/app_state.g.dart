@@ -35,9 +35,6 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'uiState',
       serializers.serialize(object.uiState,
           specifiedType: const FullType(UIState)),
-      'selectedCompanyIndex',
-      serializers.serialize(object.selectedCompanyIndex,
-          specifiedType: const FullType(int)),
       'companyState1',
       serializers.serialize(object.companyState1,
           specifiedType: const FullType(CompanyState)),
@@ -81,10 +78,6 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.uiState.replace(serializers.deserialize(value,
               specifiedType: const FullType(UIState)) as UIState);
           break;
-        case 'selectedCompanyIndex':
-          result.selectedCompanyIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'companyState1':
           result.companyState1.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyState)) as CompanyState);
@@ -120,8 +113,6 @@ class _$AppState extends AppState {
   @override
   final UIState uiState;
   @override
-  final int selectedCompanyIndex;
-  @override
   final CompanyState companyState1;
   @override
   final CompanyState companyState2;
@@ -139,7 +130,6 @@ class _$AppState extends AppState {
       {this.isLoading,
       this.authState,
       this.uiState,
-      this.selectedCompanyIndex,
       this.companyState1,
       this.companyState2,
       this.companyState3,
@@ -152,8 +142,6 @@ class _$AppState extends AppState {
       throw new BuiltValueNullFieldError('AppState', 'authState');
     if (uiState == null)
       throw new BuiltValueNullFieldError('AppState', 'uiState');
-    if (selectedCompanyIndex == null)
-      throw new BuiltValueNullFieldError('AppState', 'selectedCompanyIndex');
     if (companyState1 == null)
       throw new BuiltValueNullFieldError('AppState', 'companyState1');
     if (companyState2 == null)
@@ -180,7 +168,6 @@ class _$AppState extends AppState {
     return isLoading == other.isLoading &&
         authState == other.authState &&
         uiState == other.uiState &&
-        selectedCompanyIndex == other.selectedCompanyIndex &&
         companyState1 == other.companyState1 &&
         companyState2 == other.companyState2 &&
         companyState3 == other.companyState3 &&
@@ -195,12 +182,8 @@ class _$AppState extends AppState {
             $jc(
                 $jc(
                     $jc(
-                        $jc(
-                            $jc(
-                                $jc($jc(0, isLoading.hashCode),
-                                    authState.hashCode),
-                                uiState.hashCode),
-                            selectedCompanyIndex.hashCode),
+                        $jc($jc($jc(0, isLoading.hashCode), authState.hashCode),
+                            uiState.hashCode),
                         companyState1.hashCode),
                     companyState2.hashCode),
                 companyState3.hashCode),
@@ -214,7 +197,6 @@ class _$AppState extends AppState {
           ..add('isLoading', isLoading)
           ..add('authState', authState)
           ..add('uiState', uiState)
-          ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('companyState1', companyState1)
           ..add('companyState2', companyState2)
           ..add('companyState3', companyState3)
@@ -239,11 +221,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   UIStateBuilder _uiState;
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
   set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
-
-  int _selectedCompanyIndex;
-  int get selectedCompanyIndex => _$this._selectedCompanyIndex;
-  set selectedCompanyIndex(int selectedCompanyIndex) =>
-      _$this._selectedCompanyIndex = selectedCompanyIndex;
 
   CompanyStateBuilder _companyState1;
   CompanyStateBuilder get companyState1 =>
@@ -282,7 +259,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _isLoading = _$v.isLoading;
       _authState = _$v.authState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
-      _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _companyState1 = _$v.companyState1?.toBuilder();
       _companyState2 = _$v.companyState2?.toBuilder();
       _companyState3 = _$v.companyState3?.toBuilder();
@@ -313,7 +289,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               isLoading: isLoading,
               authState: authState.build(),
               uiState: uiState.build(),
-              selectedCompanyIndex: selectedCompanyIndex,
               companyState1: companyState1.build(),
               companyState2: companyState2.build(),
               companyState3: companyState3.build(),
@@ -326,7 +301,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         authState.build();
         _$failedField = 'uiState';
         uiState.build();
-
         _$failedField = 'companyState1';
         companyState1.build();
         _$failedField = 'companyState2';

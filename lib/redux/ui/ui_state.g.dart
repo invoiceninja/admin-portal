@@ -26,6 +26,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   Iterable serialize(Serializers serializers, UIState object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'selectedCompanyIndex',
+      serializers.serialize(object.selectedCompanyIndex,
+          specifiedType: const FullType(int)),
       'currentRoute',
       serializers.serialize(object.currentRoute,
           specifiedType: const FullType(String)),
@@ -54,6 +57,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'selectedCompanyIndex':
+          result.selectedCompanyIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'currentRoute':
           result.currentRoute = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -79,6 +86,8 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
 
 class _$UIState extends UIState {
   @override
+  final int selectedCompanyIndex;
+  @override
   final String currentRoute;
   @override
   final EntityUIState productUIState;
@@ -91,11 +100,14 @@ class _$UIState extends UIState {
       (new UIStateBuilder()..update(updates)).build();
 
   _$UIState._(
-      {this.currentRoute,
+      {this.selectedCompanyIndex,
+      this.currentRoute,
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState})
       : super._() {
+    if (selectedCompanyIndex == null)
+      throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
     if (currentRoute == null)
       throw new BuiltValueNullFieldError('UIState', 'currentRoute');
     if (productUIState == null)
@@ -117,7 +129,8 @@ class _$UIState extends UIState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! UIState) return false;
-    return currentRoute == other.currentRoute &&
+    return selectedCompanyIndex == other.selectedCompanyIndex &&
+        currentRoute == other.currentRoute &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState;
@@ -126,7 +139,11 @@ class _$UIState extends UIState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, currentRoute.hashCode), productUIState.hashCode),
+        $jc(
+            $jc(
+                $jc($jc(0, selectedCompanyIndex.hashCode),
+                    currentRoute.hashCode),
+                productUIState.hashCode),
             clientUIState.hashCode),
         invoiceUIState.hashCode));
   }
@@ -134,6 +151,7 @@ class _$UIState extends UIState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
+          ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
@@ -144,6 +162,11 @@ class _$UIState extends UIState {
 
 class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   _$UIState _$v;
+
+  int _selectedCompanyIndex;
+  int get selectedCompanyIndex => _$this._selectedCompanyIndex;
+  set selectedCompanyIndex(int selectedCompanyIndex) =>
+      _$this._selectedCompanyIndex = selectedCompanyIndex;
 
   String _currentRoute;
   String get currentRoute => _$this._currentRoute;
@@ -171,6 +194,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   UIStateBuilder get _$this {
     if (_$v != null) {
+      _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
@@ -197,6 +221,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     try {
       _$result = _$v ??
           new _$UIState._(
+              selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),

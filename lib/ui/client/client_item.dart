@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/dismissible_entity.dart';
-import 'package:invoiceninja/utils/localization.dart';
+//import 'package:invoiceninja/utils/localization.dart';
 
 import '../app/entity_state_label.dart';
 
@@ -23,7 +23,7 @@ class ClientItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    //var localization = AppLocalization.of(context);
 
     return DismissibleEntity(
       onDismissed: onDismissed,

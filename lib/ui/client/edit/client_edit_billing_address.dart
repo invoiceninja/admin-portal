@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 import '../../app/form_card.dart';

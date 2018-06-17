@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';

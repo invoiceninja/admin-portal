@@ -43,7 +43,7 @@ class AppDrawerVM {
     return AppDrawerVM(
       companies: companiesSelector(store.state),
       selectedCompany: store.state.selectedCompany,
-      selectedCompanyIndex: store.state.selectedCompanyIndex.toString(),
+      selectedCompanyIndex: store.state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged: (BuildContext context, String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
       },

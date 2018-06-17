@@ -7,7 +7,6 @@ import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 

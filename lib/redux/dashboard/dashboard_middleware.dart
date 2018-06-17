@@ -1,5 +1,4 @@
 import 'package:invoiceninja/redux/client/client_actions.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';

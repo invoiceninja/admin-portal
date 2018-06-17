@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 

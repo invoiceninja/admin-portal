@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
-import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/save_icon_button.dart';

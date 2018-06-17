@@ -17,7 +17,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isLoading;
   AuthState get authState;
   UIState get uiState;
-  int get selectedCompanyIndex;
   CompanyState get companyState1;
   CompanyState get companyState2;
   CompanyState get companyState3;
@@ -28,7 +27,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return _$AppState._(
       isLoading: false,
       authState: AuthState(),
-      selectedCompanyIndex: 0,
       companyState1: CompanyState(),
       companyState2: CompanyState(),
       companyState3: CompanyState(),
@@ -43,7 +41,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
   CompanyState get selectedCompanyState {
-    switch (this.selectedCompanyIndex) {
+    switch (this.uiState.selectedCompanyIndex) {
       case 1:
         return this.companyState1;
       case 2:

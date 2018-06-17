@@ -73,8 +73,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
               _formKey.currentState.save();
 
-              var detailsState = _detailsKey.currentState;
-              var itemsState = _itemsKey.currentState;
+              //var detailsState = _detailsKey.currentState;
+              //var itemsState = _itemsKey.currentState;
 
               /*
               InvoiceEntity invoice = widget.viewModel.invoice.rebuild((b) => b
