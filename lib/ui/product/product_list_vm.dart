@@ -52,7 +52,7 @@ class ProductListVM {
   static ProductListVM fromStore(Store<AppState> store) {
       Future<Null> _handleRefresh(BuildContext context) {
         final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(LoadProductsAction(completer, true));
+        store.dispatch(LoadProducts(completer, true));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
@@ -68,7 +68,7 @@ class ProductListVM {
         isLoading: store.state.isLoading,
         isLoaded: store.state.productState.isLoaded,
         onProductTap: (context, product) {
-          store.dispatch(EditProductAction(product: product, context: context));
+          store.dispatch(EditProduct(product: product, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ProductEntity product,

@@ -55,7 +55,7 @@ class ProductScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
           store.dispatch(
-              EditProductAction(product: ProductEntity(), context: context));
+              EditProduct(product: ProductEntity(), context: context));
         },
         child: Icon(
           Icons.add,

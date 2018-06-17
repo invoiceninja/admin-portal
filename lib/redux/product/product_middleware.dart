@@ -18,12 +18,12 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   final editProduct = _editProduct();
 
   return [
-    TypedMiddleware<AppState, LoadProductsAction>(loadProducts),
+    TypedMiddleware<AppState, LoadProducts>(loadProducts),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
     TypedMiddleware<AppState, ArchiveProductRequest>(archiveProduct),
     TypedMiddleware<AppState, DeleteProductRequest>(deleteProduct),
     TypedMiddleware<AppState, RestoreProductRequest>(restoreProduct),
-    TypedMiddleware<AppState, EditProductAction>(editProduct),
+    TypedMiddleware<AppState, EditProduct>(editProduct),
   ];
 }
 

@@ -50,16 +50,23 @@ class SaveClientSuccess extends PersistData {
   SaveClientSuccess(this.client);
 }
 
+class SaveClientFailure {
+  final String error;
+  SaveClientFailure (this.error);
+}
+
 class ArchiveClientRequest {
   final Completer completer;
   final int clientId;
 
   ArchiveClientRequest(this.completer, this.clientId);
 }
+
 class ArchiveClientSuccess extends PersistData {
   final ClientEntity client;
   ArchiveClientSuccess(this.client);
 }
+
 class ArchiveClientFailure {
   final ClientEntity client;
   ArchiveClientFailure(this.client);
@@ -71,10 +78,12 @@ class DeleteClientRequest {
 
   DeleteClientRequest(this.completer, this.clientId);
 }
+
 class DeleteClientSuccess extends PersistData {
   final ClientEntity client;
   DeleteClientSuccess(this.client);
 }
+
 class DeleteClientFailure {
   final ClientEntity client;
   DeleteClientFailure(this.client);
@@ -85,10 +94,12 @@ class RestoreClientRequest {
   final int clientId;
   RestoreClientRequest(this.completer, this.clientId);
 }
+
 class RestoreClientSuccess extends PersistData {
   final ClientEntity client;
   RestoreClientSuccess(this.client);
 }
+
 class RestoreClientFailure {
   final ClientEntity client;
   RestoreClientFailure(this.client);
@@ -99,10 +110,6 @@ class AddClientSuccess extends PersistData {
   AddClientSuccess(this.client);
 }
 
-class SaveClientFailure {
-  final String error;
-  SaveClientFailure (this.error);
-}
 
 
 class SearchClients {
@@ -110,12 +117,12 @@ class SearchClients {
   SearchClients(this.search);
 }
 
-class SortClients {
+class SortClients extends PersistUI {
   final String field;
   SortClients(this.field);
 }
 
-class FilterClientsByState {
+class FilterClientsByState extends PersistUI {
   final EntityState state;
 
   FilterClientsByState(this.state);

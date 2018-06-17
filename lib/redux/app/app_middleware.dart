@@ -89,6 +89,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
     TypedMiddleware<AppState, PersistData>(dataLoaded),
+    TypedMiddleware<AppState, PersistUI>(uiChange),
   ];
 }
 
@@ -187,6 +188,8 @@ Middleware<AppState> _createUserLoggedIn(
 
 Middleware<AppState> _createUIChange(PersistenceRepository uiRepository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+
+    print('== Saving UI');
     next(action);
 
     uiRepository.saveUIState(store.state.uiState);
@@ -201,7 +204,7 @@ Middleware<AppState> _createDataLoaded(
   PersistenceRepository company5Repository,
 ) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print('== Data loaded');
+    print('== Saving data');
 
     // first process the action so the data is in the state
     next(action);

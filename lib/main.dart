@@ -93,7 +93,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             return DashboardScreen();
           },
           ProductScreen.route: (context) {
-            widget.store.dispatch(LoadProductsAction());
+            widget.store.dispatch(LoadProducts());
             return ProductScreen();
           },
           ProductEditScreen.route: (context) => ProductEditScreen(),

@@ -4,11 +4,11 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
-class LoadProductsAction {
+class LoadProducts {
   final Completer completer;
   final bool force;
 
-  LoadProductsAction([this.completer, this.force = false]);
+  LoadProducts([this.completer, this.force = false]);
 }
 
 class LoadProductsRequest {}
@@ -33,10 +33,10 @@ class LoadProductsSuccess extends PersistData {
   }
 }
 
-class EditProductAction {
+class EditProduct {
   final ProductEntity product;
   final BuildContext context;
-  EditProductAction({this.product, this.context});
+  EditProduct({this.product, this.context});
 }
 
 class SaveProductRequest {
@@ -51,16 +51,23 @@ class SaveProductSuccess extends PersistData {
   SaveProductSuccess(this.product);
 }
 
+class SaveProductFailure {
+  final String error;
+  SaveProductFailure (this.error);
+}
+
 class ArchiveProductRequest {
   final Completer completer;
   final int productId;
 
   ArchiveProductRequest(this.completer, this.productId);
 }
+
 class ArchiveProductSuccess extends PersistData {
   final ProductEntity product;
   ArchiveProductSuccess(this.product);
 }
+
 class ArchiveProductFailure {
   final ProductEntity product;
   ArchiveProductFailure(this.product);
@@ -72,10 +79,12 @@ class DeleteProductRequest {
 
   DeleteProductRequest(this.completer, this.productId);
 }
+
 class DeleteProductSuccess extends PersistData {
   final ProductEntity product;
   DeleteProductSuccess(this.product);
 }
+
 class DeleteProductFailure {
   final ProductEntity product;
   DeleteProductFailure(this.product);
@@ -86,10 +95,12 @@ class RestoreProductRequest {
   final int productId;
   RestoreProductRequest(this.completer, this.productId);
 }
+
 class RestoreProductSuccess extends PersistData {
   final ProductEntity product;
   RestoreProductSuccess(this.product);
 }
+
 class RestoreProductFailure {
   final ProductEntity product;
   RestoreProductFailure(this.product);
@@ -100,23 +111,18 @@ class AddProductSuccess extends PersistData {
   AddProductSuccess(this.product);
 }
 
-class SaveProductFailure {
-  final String error;
-  SaveProductFailure (this.error);
-}
-
 
 class SearchProducts {
   final String search;
   SearchProducts(this.search);
 }
 
-class SortProducts {
+class SortProducts extends PersistUI {
   final String field;
   SortProducts(this.field);
 }
 
-class FilterProductsByState {
+class FilterProductsByState extends PersistUI {
   final EntityState state;
 
   FilterProductsByState(this.state);
