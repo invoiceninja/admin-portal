@@ -137,7 +137,10 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) => store.dispatch(LoadProductsFailure(error)));
+    }).catchError((error) {
+      print(error);
+      store.dispatch(LoadProductsFailure(error));
+    });
 
     next(action);
   };

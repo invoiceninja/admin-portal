@@ -143,16 +143,21 @@ Middleware<AppState> _createLoadState(
                         NavigatorState navigator = Navigator
                             .of(action.context);
                         var route = '';
+                        bool isFirst = true;
                         print('current route: ' + uiState.currentRoute);
                         uiState.currentRoute.split('/').forEach((part) {
                           if (part.isNotEmpty) {
-                            print('part: ' + part);
                             if (part == 'edit' && route != '/products') {
                               navigator.pushNamed(route + '/view');  
                               print('push: ' + route + '/view');
                             }
                             route += '/' + part;
-                            navigator.pushNamed(route);
+                            if (isFirst) {
+                              navigator.pushReplacementNamed(route);
+                              isFirst = false;
+                            } else {
+                              navigator.pushNamed(route);
+                            }
                             print('push: ' + route);
                           }
                         });

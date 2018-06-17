@@ -16,10 +16,9 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 
 Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
     AppState state = store.state;
 
-    if (! state.dashboardState.isStale && ! action.force) {
+    if (!state.dashboardState.isStale && !action.force) {
       next(action);
       return;
     }
@@ -30,17 +29,18 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
     }
 
     store.dispatch(LoadDashboardRequest());
-    repository.loadItem(state.selectedCompany, state.authState).then(
-            (data) {
-              store.dispatch(LoadDashboardSuccess(data));
-              if (action.completer != null) {
-                action.completer.complete(null);
-              }
-              if (state.clientState.isStale) {
-                store.dispatch(LoadClients());
-              }
-            }
-    ).catchError((error) => store.dispatch(LoadDashboardFailure(error)));
+    repository.loadItem(state.selectedCompany, state.authState).then((data) {
+      store.dispatch(LoadDashboardSuccess(data));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+      if (state.clientState.isStale) {
+        store.dispatch(LoadClients());
+      }
+    }).catchError((error) {
+      print(error);
+      store.dispatch(LoadDashboardFailure(error));
+    });
 
     next(action);
   };

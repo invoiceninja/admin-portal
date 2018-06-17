@@ -145,7 +145,10 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
-    }).catchError((error) => store.dispatch(LoadClientsFailure(error)));
+    }).catchError((error) {
+      print(error);
+      store.dispatch(LoadClientsFailure(error));
+    });
 
     next(action);
   };
