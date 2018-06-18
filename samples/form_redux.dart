@@ -144,8 +144,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                       return;
                     }
 
-                    _formKey.currentState.save();
-
                     // Do something with the client...
                     print('Client name: ' + store.state.client.name);
                   },
@@ -239,14 +237,15 @@ class ContactsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
-      var contacts = store.state.client.contacts
+      var client = store.state.client;
+      var contacts = client.contacts
           .map((contact) => ContactForm(
               contact: contact,
-              index: store.state.client.contacts.indexOf(contact)))
-          .toList();
+              index: store.state.client.contacts.indexOf(contact)));
 
       return ListView(
         children: []
+          ..addAll(client.contacts.map((contact) => Container()))
           ..addAll(contacts)
           ..add(Padding(
             padding: const EdgeInsets.all(12.0),
