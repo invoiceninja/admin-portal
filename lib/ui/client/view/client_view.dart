@@ -41,7 +41,7 @@ class _ClientViewState extends State<ClientView>
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.viewModel.client
-            .displayName), // Text(localizations.clientDetails),
+            .displayName ?? ''), // Text(localizations.clientDetails),
         bottom: TabBar(
           controller: _controller,
           //isScrollable: true,

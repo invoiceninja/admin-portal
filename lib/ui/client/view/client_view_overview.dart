@@ -30,7 +30,7 @@ class ClientOverview extends StatelessWidget {
                 height: 6.0,
               ),
               Text(
-                client.paidToDate.toStringAsFixed(2),
+                client.paidToDate?.toStringAsFixed(2) ?? '',
                 style: TextStyle(
                   fontSize: 26.0,
                   fontWeight: FontWeight.bold,
@@ -51,7 +51,7 @@ class ClientOverview extends StatelessWidget {
                 height: 6.0,
               ),
               Text(
-                client.balance.toStringAsFixed(2),
+                client.balance?.toStringAsFixed(2) ?? '',
                 style: TextStyle(
                   fontSize: 26.0,
                   fontWeight: FontWeight.bold,

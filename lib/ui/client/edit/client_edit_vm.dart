@@ -33,12 +33,20 @@ class ClientEditScreen extends StatelessWidget {
 class ClientEditVM {
   final bool isLoading;
   final ClientEntity client;
-  final Function(BuildContext, ClientEntity) onSaveClicked;
+  final Function(ClientEntity) onChanged;
+  final Function() onAddContactClicked;
+  final Function(int) onRemoveContactPressed;
+  final Function(ContactEntity, int) onChangedContact;
+  final Function(BuildContext) onSaveClicked;
   final Function onBackClicked;
 
   ClientEditVM({
     @required this.isLoading,
     @required this.client,
+    @required this.onAddContactClicked,
+    @required this.onRemoveContactPressed,
+    @required this.onChangedContact,
+    @required this.onChanged,
     @required this.onSaveClicked,
     @required this.onBackClicked,
   });
@@ -49,17 +57,28 @@ class ClientEditVM {
     return ClientEditVM(
         client: client,
         isLoading: store.state.isLoading,
-        onBackClicked: () {
-          store.dispatch(UpdateCurrentRoute(ClientScreen.route));
+        onBackClicked: () =>
+            store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
+        onAddContactClicked: () => store.dispatch(AddContact()),
+        onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
+        onChangedContact: (contact, index) {
+          print('== ON CHANGED');
+          print(store.state.clientUIState.selected);
+          print(contact);
+          store.dispatch(UpdateContact(contact: contact, index: index));
         },
-        onSaveClicked: (BuildContext context, ClientEntity client) {
+        onChanged: (ClientEntity client) =>
+            store.dispatch(UpdateClient(client)),
+        onSaveClicked: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
-          store.dispatch(SaveClientRequest(completer, client));
+          store.dispatch(
+              SaveClientRequest(completer: completer, client: client));
           return completer.future.then((_) {
             if (client.isNew()) {
               Navigator.of(context).pop();
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => ClientViewScreen()));
+              Navigator
+                  .of(context)
+                  .push(MaterialPageRoute(builder: (_) => ClientViewScreen()));
             } else {
               Navigator.of(context).pop();
             }

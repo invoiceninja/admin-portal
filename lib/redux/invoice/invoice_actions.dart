@@ -46,10 +46,28 @@ class EditInvoice implements PersistUI {
   EditInvoice({this.invoice, this.context});
 }
 
+class UpdateInvoice implements PersistUI {
+  final InvoiceEntity invoice;
+  UpdateInvoice(this.invoice);
+}
+
+class AddInvoiceItem {}
+
+class UpdateInvoiceItem {
+  final int index;
+  final InvoiceItemEntity invoiceItem;
+  UpdateInvoiceItem({this.index, this.invoiceItem});
+}
+
+class DeleteInvoiceItem {
+  final int index;
+  DeleteInvoiceItem(this.index);
+}
+
 class SaveInvoiceRequest implements StartLoading {
   final Completer completer;
   final InvoiceEntity invoice;
-  SaveInvoiceRequest(this.completer, this.invoice);
+  SaveInvoiceRequest({this.completer, this.invoice});
 }
 
 class SaveInvoiceSuccess implements StopLoading, PersistData {

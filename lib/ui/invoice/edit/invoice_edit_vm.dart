@@ -38,23 +38,21 @@ class InvoiceEditVM {
   final InvoiceEntity invoice;
   final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
-  final Function onDelete;
-  final Function(BuildContext, InvoiceEntity) onSaveClicked;
+  final Function(InvoiceEntity) onChanged;
+  final Function(BuildContext) onSaveClicked;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function onBackClicked;
   final bool isLoading;
-  final bool isDirty;
 
   InvoiceEditVM({
     @required this.invoice,
     @required this.clientList,
     @required this.clientMap,
-    @required this.onDelete,
+    @required this.onChanged,
     @required this.onSaveClicked,
     @required this.onBackClicked,
     @required this.onActionSelected,
     @required this.isLoading,
-    @required this.isDirty,
   });
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
@@ -62,53 +60,55 @@ class InvoiceEditVM {
     final invoice = state.invoiceUIState.selected;
 
     return InvoiceEditVM(
-      isLoading: state.isLoading,
-      isDirty: invoice.isNew(),
-      invoice: invoice,
-      clientList: memoizedActiveClientList(state.clientState.map, state.clientState.list),
-      clientMap: state.clientState.map,
-      onDelete: () => false,
+        isLoading: state.isLoading,
+        invoice: invoice,
+        clientList: memoizedActiveClientList(
+            state.clientState.map, state.clientState.list),
+        clientMap: state.clientState.map,
         onBackClicked: () {
           store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
         },
-        onSaveClicked: (BuildContext context, InvoiceEntity invoice) {
-        final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveInvoiceRequest(completer, invoice));
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-                message: invoice.isNew()
-                    ? AppLocalization.of(context).successfullyCreatedInvoice
-                    : AppLocalization.of(context).successfullyUpdatedInvoice,
-              ),
-              duration: Duration(seconds: 3)));
+        onChanged: (InvoiceEntity invoice) {
+          store.dispatch(UpdateInvoice(invoice));
+        },
+        onSaveClicked: (BuildContext context) {
+          final Completer<Null> completer = new Completer<Null>();
+          store.dispatch(
+              SaveInvoiceRequest(completer: completer, invoice: invoice));
+          return completer.future.then((_) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: invoice.isNew()
+                      ? AppLocalization.of(context).successfullyCreatedInvoice
+                      : AppLocalization.of(context).successfullyUpdatedInvoice,
+                ),
+                duration: Duration(seconds: 3)));
+          });
+        },
+        onActionSelected: (BuildContext context, EntityAction action) {
+          final Completer<Null> completer = new Completer<Null>();
+          var message = '';
+          switch (action) {
+            case EntityAction.archive:
+              store.dispatch(ArchiveInvoiceRequest(completer, invoice.id));
+              message = AppLocalization.of(context).successfullyArchivedInvoice;
+              break;
+            case EntityAction.delete:
+              store.dispatch(DeleteInvoiceRequest(completer, invoice.id));
+              message = AppLocalization.of(context).successfullyDeletedInvoice;
+              break;
+            case EntityAction.restore:
+              store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
+              message = AppLocalization.of(context).successfullyRestoredInvoice;
+              break;
+          }
+          return completer.future.then((_) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: message,
+                ),
+                duration: Duration(seconds: 3)));
+          });
         });
-      },
-      onActionSelected: (BuildContext context, EntityAction action) {
-        final Completer<Null> completer = new Completer<Null>();
-        var message = '';
-        switch (action) {
-          case EntityAction.archive:
-            store.dispatch(ArchiveInvoiceRequest(completer, invoice.id));
-            message = AppLocalization.of(context).successfullyArchivedInvoice;
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeleteInvoiceRequest(completer, invoice.id));
-            message = AppLocalization.of(context).successfullyDeletedInvoice;
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
-            message = AppLocalization.of(context).successfullyRestoredInvoice;
-            break;
-        }
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-                message: message,
-              ),
-              duration: Duration(seconds: 3)));
-        });
-      }
-    );
   }
 }

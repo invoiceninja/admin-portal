@@ -11,30 +11,70 @@ class InvoiceEditDetails extends StatefulWidget {
     @required this.invoice,
     @required this.clientList,
     @required this.clientMap,
+    @required this.onChanged,
   }) : super(key: key);
 
   final InvoiceEntity invoice;
   final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
+  final Function(InvoiceEntity) onChanged;
 
   @override
   InvoiceEditDetailsState createState() => new InvoiceEditDetailsState();
 }
 
-class InvoiceEditDetailsState extends State<InvoiceEditDetails>
-    with AutomaticKeepAliveClientMixin {
-  int clientId;
-  String invoiceDate;
-  String dueDate;
-  double partial;
-  String partialDate;
-  String invoiceNumber;
-  String poNumber;
-  double discount;
-  bool isAmountDiscount;
+class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
+
+  final _invoiceNumberController = TextEditingController();
+  final _poNumberController = TextEditingController();
+  final _discountController = TextEditingController();
+  final _partialController = TextEditingController();
+
+  var _controllers = [];
 
   @override
-  bool get wantKeepAlive => true;
+  void didChangeDependencies() {
+
+    _controllers = [
+      _invoiceNumberController,
+      _poNumberController,
+      _discountController,
+      _partialController,
+    ];
+
+    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+
+    var invoice = widget.invoice;
+    _invoiceNumberController.text = invoice.invoiceNumber;
+    _poNumberController.text = invoice.poNumber;
+    _discountController.text = invoice.discount?.toStringAsFixed(2) ?? '';
+    _partialController.text = invoice.partial?.toStringAsFixed(2) ?? '';
+
+    _controllers.forEach((controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  _onChanged() {
+    var invoice = widget.invoice.rebuild((b) => b
+      ..poNumber = _poNumberController.text.trim()
+      ..discount = double.tryParse(_discountController.text) ?? 0.0
+      ..partial = double.tryParse(_partialController.text) ?? 0.0
+    );
+    if (invoice != widget.invoice) {
+      widget.onChanged(invoice);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +92,21 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails>
                     entityMap: widget.clientMap,
                 ) : TextFormField(
                     autocorrect: false,
-                    onSaved: (value) => invoiceNumber = value.trim(),
-                    initialValue: invoice.invoiceNumber,
+                    controller: _invoiceNumberController,
                     decoration: InputDecoration(
                       labelText: localization.invoiceNumber,
                     ),
                   ),
             TextFormField(
               autocorrect: false,
-              onSaved: (value) => poNumber = value.trim(),
-              initialValue: invoice.poNumber,
+              controller: _poNumberController,
               decoration: InputDecoration(
                 labelText: localization.poNumber,
               ),
             ),
             TextFormField(
               autocorrect: false,
-              onSaved: (value) => discount = double.tryParse(value) ?? 0.0,
-              initialValue: invoice.discount?.toStringAsFixed(2),
+              controller: _discountController,
               decoration: InputDecoration(
                 labelText: localization.discount,
               ),
@@ -77,8 +114,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails>
             ),
             TextFormField(
               autocorrect: false,
-              onSaved: (value) => partial = double.tryParse(value) ?? 0.0,
-              initialValue: invoice.partial?.toStringAsFixed(2),
+              controller: _partialController,
               decoration: InputDecoration(
                 labelText: localization.partial,
               ),

@@ -25,34 +25,35 @@ class _ProductEditState extends State<ProductEdit> {
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
 
+  var _controllers = [];
+
   @override
   void didChangeDependencies() {
-    _productKeyController.removeListener(_onChanged);
-    _notesController.removeListener(_onChanged);
-    _costController.removeListener(_onChanged);
+
+    _controllers = [
+      _productKeyController,
+      _notesController,
+      _costController,
+    ];
+
+    _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     var product = widget.viewModel.product;
-
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
     _costController.text = product.cost?.toStringAsFixed(2) ?? '';
 
-    _productKeyController.addListener(_onChanged);
-    _notesController.addListener(_onChanged);
-    _costController.addListener(_onChanged);
+    _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _productKeyController.removeListener(_onChanged);
-    _notesController.removeListener(_onChanged);
-    _costController.removeListener(_onChanged);
-
-    _productKeyController.dispose();
-    _notesController.dispose();
-    _costController.dispose();
+    _controllers.forEach((controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
 
     super.dispose();
   }

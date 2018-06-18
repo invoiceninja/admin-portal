@@ -1,93 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/form_card.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-import '../../app/form_card.dart';
-
-class ClientEditContacts extends StatefulWidget {
+class ClientEditContacts extends StatelessWidget {
   ClientEditContacts({
     Key key,
-    @required this.client,
+    @required this.viewModel,
   }) : super(key: key);
 
-  final ClientEntity client;
-
-  @override
-  ClientEditContactsState createState() => new ClientEditContactsState();
-}
-
-class ClientEditContactsState extends State<ClientEditContacts>
-    with AutomaticKeepAliveClientMixin {
-  List<ContactEntity> contacts;
-  List<GlobalKey<ContactEditDetailsState>> contactKeys;
-
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
-  void initState() {
-    super.initState();
-    var client = widget.client;
-    contacts = client.contacts.toList();
-    contactKeys = client.contacts
-        .map((contact) => GlobalKey<ContactEditDetailsState>())
-        .toList();
-  }
-
-  List<ContactEntity> getContacts() {
-    List<ContactEntity> contacts = [];
-    contactKeys.forEach((contactKey) {
-      if (contactKey.currentState != null) {
-        contacts.add(contactKey.currentState.getContact());
-      }
-    });
-    return contacts;
-  }
-
-  _onAddPressed() {
-    setState(() {
-      contacts.add(ContactEntity());
-      contactKeys.add(GlobalKey<ContactEditDetailsState>());
-    });
-  }
-
-  _onRemovePressed(GlobalKey<ContactEditDetailsState> key) {
-    setState(() {
-      var index = contactKeys.indexOf(key);
-      contactKeys.removeAt(index);
-      contacts.removeAt(index);
-    });
-  }
+  final ClientEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    List<Widget> items = [];
-
-    for (var i = 0; i < contacts.length; i++) {
-      var contact = contacts[i];
-      var contactKey = contactKeys[i];
-      items.add(ContactEditDetails(
+    var client = viewModel.client;
+    var contacts = client.contacts.map((contact) => ContactEditDetails(
+        viewModel: viewModel,
+        isRemoveVisible: client.contacts.length > 1,
         contact: contact,
-        key: contactKey,
-        onRemovePressed: (key) => _onRemovePressed(key),
-        isRemoveVisible: contacts.length > 1,
-      ));
-    }
-
-    items.add(Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
-      child: RaisedButton(
-        elevation: 4.0,
-        color: Theme.of(context).primaryColor,
-        child: Text(localization.addContact.toUpperCase()),
-        onPressed: _onAddPressed,
-      ),
-    ));
+        index: client.contacts.indexOf(contact)));
 
     return ListView(
-      children: items,
+      children: []
+        ..addAll(client.contacts.map((contact) => Container()))
+        ..addAll(contacts)
+        ..add(Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: RaisedButton(
+            elevation: 4.0,
+            color: Theme.of(context).primaryColor,
+            textColor: Theme.of(context).secondaryHeaderColor,
+            child: Text(localization.addContact.toUpperCase()),
+            onPressed: viewModel.onAddContactClicked,
+          ),
+        )),
     );
   }
 }
@@ -95,13 +44,15 @@ class ClientEditContactsState extends State<ClientEditContacts>
 class ContactEditDetails extends StatefulWidget {
   ContactEditDetails({
     Key key,
+    @required this.index,
     @required this.contact,
-    @required this.onRemovePressed,
+    @required this.viewModel,
     @required this.isRemoveVisible,
   }) : super(key: key);
 
+  final int index;
   final ContactEntity contact;
-  final Function(GlobalKey<ContactEditDetailsState>) onRemovePressed;
+  final ClientEditVM viewModel;
   final bool isRemoveVisible;
 
   @override
@@ -109,17 +60,55 @@ class ContactEditDetails extends StatefulWidget {
 }
 
 class ContactEditDetailsState extends State<ContactEditDetails> {
-  String _firstName;
-  String _lastName;
-  String _email;
-  String _phone;
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
 
-  ContactEntity getContact() {
-    return widget.contact.rebuild((b) => b
-      ..firstName = _firstName
-      ..lastName = _lastName
-      ..email = _email
-      ..phone = _phone);
+  var _controllers = [];
+
+  @override
+  void didChangeDependencies() {
+    _controllers = [
+      _firstNameController,
+      _lastNameController,
+      _emailController,
+      _phoneController,
+    ];
+
+    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+
+    var contact = widget.contact;
+    _firstNameController.text = contact.firstName;
+    _lastNameController.text = contact.lastName;
+    _emailController.text = contact.email;
+    _phoneController.text = contact.phone;
+
+    _controllers.forEach((controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  _onChanged() {
+    var contact = widget.contact.rebuild((b) => b
+      ..firstName = _firstNameController.text.trim()
+      ..lastName = _lastNameController.text.trim()
+      ..email = _emailController.text.trim()
+      ..phone = _phoneController.text.trim());
+
+    if (contact != widget.contact) {
+      widget.viewModel.onChangedContact(contact, widget.index);
+    }
   }
 
   @override
@@ -141,7 +130,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 new FlatButton(
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
-                      widget.onRemovePressed(widget.key);
+                      widget.viewModel.onRemoveContactPressed(widget.index);
                       Navigator.pop(context);
                     })
               ],
@@ -153,34 +142,32 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       children: <Widget>[
         TextFormField(
           autocorrect: false,
-          initialValue: widget.contact.firstName,
-          onSaved: (value) => _firstName = value.trim(),
+          controller: _firstNameController,
           decoration: InputDecoration(
             labelText: localization.firstName,
           ),
         ),
         TextFormField(
           autocorrect: false,
-          initialValue: widget.contact.lastName,
-          onSaved: (value) => _lastName = value.trim(),
+          controller: _lastNameController,
           decoration: InputDecoration(
             labelText: localization.lastName,
           ),
         ),
         TextFormField(
           autocorrect: false,
-          initialValue: widget.contact.email,
-          onSaved: (value) => _email = value.trim(),
+          controller: _emailController,
           decoration: InputDecoration(
             labelText: localization.email,
           ),
           keyboardType: TextInputType.emailAddress,
-          validator: (value) => value.isNotEmpty && ! value.contains('@') ? localization.emailIsInvalid : null,
+          validator: (value) => value.isNotEmpty && !value.contains('@')
+              ? localization.emailIsInvalid
+              : null,
         ),
         TextFormField(
           autocorrect: false,
-          initialValue: widget.contact.phone,
-          onSaved: (value) => _phone = value.trim(),
+          controller: _phoneController,
           decoration: InputDecoration(
             labelText: localization.phone,
           ),

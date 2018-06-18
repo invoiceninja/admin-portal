@@ -46,10 +46,28 @@ class EditClient implements PersistUI {
   EditClient({this.client, this.context});
 }
 
+class UpdateClient implements PersistUI {
+  final ClientEntity client;
+  UpdateClient(this.client);
+}
+
+class AddContact {}
+
+class UpdateContact {
+  final int index;
+  final ContactEntity contact;
+  UpdateContact({this.index, this.contact});
+}
+
+class DeleteContact {
+  final int index;
+  DeleteContact(this.index);
+}
+
 class SaveClientRequest implements StartLoading {
   final Completer completer;
   final ClientEntity client;
-  SaveClientRequest(this.completer, this.client);
+  SaveClientRequest({this.completer, this.client});
 }
 
 class SaveClientSuccess implements StopLoading, PersistData {

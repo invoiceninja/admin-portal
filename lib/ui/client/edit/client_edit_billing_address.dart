@@ -1,79 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/utils/localization.dart';
-
-import '../../app/form_card.dart';
-
 
 class ClientEditBillingAddress extends StatefulWidget {
   ClientEditBillingAddress({
     Key key,
     @required this.client,
+    @required this.onChanged,
   }) : super(key: key);
 
   final ClientEntity client;
+  final Function(ClientEntity) onChanged;
 
   @override
   ClientEditBillingAddressState createState() =>
       new ClientEditBillingAddressState();
 }
 
-class ClientEditBillingAddressState extends State<ClientEditBillingAddress>
-    with AutomaticKeepAliveClientMixin {
-  String address1;
-  String address2;
-  String city;
-  String state;
-  String postalCode;
+class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
+
+  final _address1Controller = TextEditingController();
+  final _address2Controller = TextEditingController();
+  final _cityController = TextEditingController();
+  final _stateController = TextEditingController();
+  final _postalCodeController = TextEditingController();
+
+  var _controllers = [];
 
   @override
-  bool get wantKeepAlive => true;
+  void didChangeDependencies() {
+
+    _controllers = [
+      _address1Controller,
+      _address2Controller,
+      _cityController,
+      _stateController,
+      _postalCodeController,
+    ];
+
+    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+
+    var client = widget.client;
+    _address1Controller.text = client.address1;
+    _address2Controller.text = client.address2;
+    _cityController.text = client.city;
+    _stateController.text = client.state;
+    _postalCodeController.text = client.postalCode;
+
+    _controllers.forEach((controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  _onChanged() {
+    var client = widget.client.rebuild((b) => b
+      ..address1 = _address1Controller.text.trim()
+        ..address2 = _address2Controller.text.trim()
+        ..city = _cityController.text.trim()
+        ..state = _stateController.text.trim()
+        ..postalCode = _postalCodeController.text.trim()
+    );
+    if (client != widget.client) {
+      widget.onChanged(client);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    var client = widget.client;
 
     return ListView(shrinkWrap: true, children: <Widget>[
       FormCard(
         children: <Widget>[
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => address1 = value.trim(),
-            initialValue: client.address1,
+            controller: _address1Controller,
             decoration: InputDecoration(
               labelText: localization.address1,
             ),
           ),
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => address2 = value.trim(),
-            initialValue: client.address2,
+            controller: _address2Controller,
             decoration: InputDecoration(
               labelText: localization.address2,
             ),
           ),
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => city = value.trim(),
-            initialValue: client.city,
+            controller: _cityController,
             decoration: InputDecoration(
               labelText: localization.city,
             ),
           ),
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => state = value.trim(),
-            initialValue: client.state,
+            controller: _stateController,
             decoration: InputDecoration(
               labelText: localization.state,
             ),
           ),
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => postalCode = value.trim(),
-            initialValue: client.postalCode,
+            controller: _postalCodeController,
             decoration: InputDecoration(
               labelText: localization.postalCode,
             ),

@@ -22,10 +22,6 @@ class _InvoiceEditState extends State<InvoiceEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static final GlobalKey<InvoiceEditDetailsState> _detailsKey =
-      GlobalKey<InvoiceEditDetailsState>();
-  static final GlobalKey<InvoiceEditItemsState> _itemsKey =
-      GlobalKey<InvoiceEditItemsState>();
 
   @override
   void initState() {
@@ -48,13 +44,11 @@ class _InvoiceEditState extends State<InvoiceEdit>
     List<Widget> editors = [
       InvoiceEditDetails(
         invoice: invoice,
-        key: _detailsKey,
         clientList: viewModel.clientList,
         clientMap: viewModel.clientMap,
       ),
       InvoiceEditItems(
         invoice: invoice,
-        key: _itemsKey,
       ),
     ];
 
@@ -87,7 +81,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                       itemState?.getItems() ?? widget.viewModel.invoice.items));
                 */
 
-                widget.viewModel.onSaveClicked(context, invoice);
+                widget.viewModel.onSaveClicked(context);
               },
             )
           ],

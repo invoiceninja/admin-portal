@@ -17,10 +17,32 @@ final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, AddClientSuccess>(_updateEditing),
   TypedReducer<ClientEntity, ViewClient>(_updateEditing),
   TypedReducer<ClientEntity, EditClient>(_updateEditing),
+  TypedReducer<ClientEntity, UpdateClient>(_updateEditing),
+  TypedReducer<ClientEntity, AddContact>(_addContact),
+  TypedReducer<ClientEntity, DeleteContact>(_removeContact),
+  TypedReducer<ClientEntity, UpdateContact>(_updateContact),
 ]);
 
 ClientEntity _updateEditing(ClientEntity client, action) {
   return action.client;
+}
+
+ClientEntity _addContact(ClientEntity client, AddContact action) {
+  return client.rebuild((b) => b
+    ..contacts.add(ContactEntity())
+  );
+}
+
+ClientEntity _removeContact(ClientEntity client, DeleteContact action) {
+  return client.rebuild((b) => b
+    ..contacts.removeAt(action.index)
+  );
+}
+
+ClientEntity _updateContact(ClientEntity client, UpdateContact action) {
+  return client.rebuild((b) => b
+    ..contacts[action.index] = action.contact
+  );
 }
 
 final clientListReducer = combineReducers<ListUIState>([

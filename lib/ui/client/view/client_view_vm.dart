@@ -61,7 +61,7 @@ class ClientViewVM {
       },
       onSaveClicked: (BuildContext context, ClientEntity client) {
         final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveClientRequest(completer, client));
+        store.dispatch(SaveClientRequest(completer: completer, client: client));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

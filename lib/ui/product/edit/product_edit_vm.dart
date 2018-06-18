@@ -66,7 +66,7 @@ class ProductEditVM {
       },
       onSaveClicked: (BuildContext context) {
         final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveProductRequest(completer));
+        store.dispatch(SaveProductRequest(completer: completer, product: product));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

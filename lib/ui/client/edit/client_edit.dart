@@ -23,16 +23,6 @@ class _ClientEditState extends State<ClientEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static final GlobalKey<ClientEditDetailsState> _detailsKey =
-      GlobalKey<ClientEditDetailsState>();
-      /*
-  static final GlobalKey<ClientEditBillingAddressState> _billingAddressKey =
-      GlobalKey<ClientEditBillingAddressState>();
-  static final GlobalKey<ClientEditShippingAddressState> _shippingAddressKey =
-      GlobalKey<ClientEditShippingAddressState>();
-      */
-  static final GlobalKey<ClientEditContactsState> _contactsKey =
-      GlobalKey<ClientEditContactsState>();
 
   @override
   void initState() {
@@ -49,32 +39,12 @@ class _ClientEditState extends State<ClientEdit>
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    var client = widget.viewModel.client;
-
-    List<Widget> editors = [
-      ClientEditDetails(
-        client: client,
-        key: _detailsKey,
-      ),
-      ClientEditContacts(
-        client: client,
-        key: _contactsKey,
-      ),
-      /*
-      ClientEditBillingAddress(
-        client: client,
-        key: _billingAddressKey,
-      ),
-      ClientEditShippingAddress(
-        client: client,
-        key: _shippingAddressKey,
-      ),
-      */
-    ];
+    var viewModel = widget.viewModel;
+    var client = viewModel.client;
 
     return WillPopScope(
       onWillPop: () async {
-        widget.viewModel.onBackClicked();
+        viewModel.onBackClicked();
         return true;
       },
       child: Scaffold(
@@ -84,19 +54,13 @@ class _ClientEditState extends State<ClientEdit>
               : client.displayName), // Text(localizations.clientDetails),
           actions: <Widget>[
             SaveIconButton(
-              isLoading: widget.viewModel.isLoading,
+              isLoading: viewModel.isLoading,
               onPressed: () {
                 if (! _formKey.currentState.validate()) {
                   return;
                 }
 
-                _formKey.currentState.save();
-
-                var detailsState = _detailsKey.currentState;
-                //var billingAddressState = _billingAddressKey.currentState;
-                //var shippingAddressState = _shippingAddressKey.currentState;
-                var contactState = _contactsKey.currentState;
-
+                /*
                 ClientEntity client = widget.viewModel.client.rebuild((b) => b
                   ..name = detailsState.name
                   ..idNumber = detailsState.idNumber
@@ -117,8 +81,9 @@ class _ClientEditState extends State<ClientEdit>
             */
                   ..contacts.replace(
                       contactState?.getContacts() ?? widget.viewModel.client.contacts));
+                */
 
-                widget.viewModel.onSaveClicked(context, client);
+                viewModel.onSaveClicked(context);
               },
             )
           ],
@@ -147,7 +112,22 @@ class _ClientEditState extends State<ClientEdit>
           key: _formKey,
           child: TabBarView(
             controller: _controller,
-            children: editors,
+            children: <Widget>[
+              ClientEditDetails(
+                viewModel: widget.viewModel,
+              ),
+              ClientEditContacts(
+                viewModel: widget.viewModel,
+              ),
+              /*
+              ClientEditBillingAddress(
+                client: client,
+              ),
+              ClientEditShippingAddress(
+                client: client,
+              ),
+              */
+            ],
           ),
         ),
       ),

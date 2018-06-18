@@ -46,7 +46,8 @@ class UpdateProduct implements PersistUI {
 
 class SaveProductRequest implements StartLoading {
   final Completer completer;
-  SaveProductRequest(this.completer);
+  final ProductEntity product;
+  SaveProductRequest({this.product, this.completer});
 }
 
 class SaveProductSuccess implements StopLoading, PersistData {

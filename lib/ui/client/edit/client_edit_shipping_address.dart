@@ -8,77 +8,120 @@ class ClientEditShippingAddress extends StatefulWidget {
   ClientEditShippingAddress({
     Key key,
     @required this.client,
+    @required this.onChanged,
   }) : super(key: key);
 
   final ClientEntity client;
+  final Function(ClientEntity) onChanged;
 
   @override
   ClientEditShippingAddressState createState() =>
       new ClientEditShippingAddressState();
 }
 
-class ClientEditShippingAddressState extends State<ClientEditShippingAddress>
-    with AutomaticKeepAliveClientMixin {
-  String shippingAddress1;
-  String shippingAddress2;
-  String shippingCity;
-  String shippingState;
-  String shippingPostalCode;
+class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
+
+  final _shippingAddress1Controller = TextEditingController();
+  final _shippingAddress2Controller = TextEditingController();
+  final _shippingCityController = TextEditingController();
+  final _shippingStateController = TextEditingController();
+  final _shippingPostalCodeController = TextEditingController();
+
+  var _controllers = [];
 
   @override
-  bool get wantKeepAlive => true;
+  void didChangeDependencies() {
+
+    _controllers = [
+      _shippingAddress1Controller,
+      _shippingAddress2Controller,
+      _shippingCityController,
+      _shippingStateController,
+      _shippingPostalCodeController,
+    ];
+
+    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+
+    var client = widget.client;
+    _shippingAddress1Controller.text = client.shippingAddress1;
+    _shippingAddress2Controller.text = client.shippingAddress2;
+    _shippingCityController.text = client.shippingCity;
+    _shippingStateController.text = client.shippingState;
+    _shippingPostalCodeController.text = client.shippingPostalCode;
+
+    _controllers.forEach((controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  _onChanged() {
+    var client = widget.client.rebuild((b) => b
+      ..shippingAddress1 = _shippingAddress1Controller.text.trim()
+      ..shippingAddress2 = _shippingAddress2Controller.text.trim()
+      ..shippingCity = _shippingCityController.text.trim()
+      ..shippingState = _shippingStateController.text.trim()
+      ..shippingPostalCode = _shippingPostalCodeController.text.trim()
+    );
+    if (client != widget.client) {
+      widget.onChanged(client);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    var client = widget.client;
 
-    return ListView(children: <Widget>[
+    return ListView(shrinkWrap: true, children: <Widget>[
       FormCard(
         children: <Widget>[
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => shippingAddress1 = value.trim(),
-            initialValue: client.shippingAddress1,
+            controller: _shippingAddress1Controller,
             decoration: InputDecoration(
               labelText: localization.address1,
             ),
           ),
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => shippingAddress2 = value.trim(),
-            initialValue: client.shippingAddress2,
+            controller: _shippingAddress2Controller,
             decoration: InputDecoration(
               labelText: localization.address2,
             ),
           ),
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => shippingCity = value.trim(),
-            initialValue: client.shippingCity,
+            controller: _shippingCityController,
             decoration: InputDecoration(
               labelText: localization.city,
             ),
           ),
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => shippingState = value.trim(),
-            initialValue: client.shippingState,
+            controller: _shippingStateController,
             decoration: InputDecoration(
               labelText: localization.state,
             ),
           ),
           TextFormField(
             autocorrect: false,
-            onSaved: (value) => shippingPostalCode = value.trim(),
-            initialValue: client.shippingPostalCode,
+            controller: _shippingPostalCodeController,
             decoration: InputDecoration(
               labelText: localization.postalCode,
             ),
             keyboardType: TextInputType.phone,
           ),
         ],
-      ),
+      )
     ]);
   }
 }

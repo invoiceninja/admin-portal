@@ -1,36 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 
 class ClientEditDetails extends StatefulWidget {
   ClientEditDetails({
     Key key,
-    @required this.client,
+    @required this.viewModel,
   }) : super(key: key);
 
-  final ClientEntity client;
+  final ClientEditVM viewModel;
 
   @override
   ClientEditDetailsState createState() => new ClientEditDetailsState();
 }
 
-class ClientEditDetailsState extends State<ClientEditDetails>
-    with AutomaticKeepAliveClientMixin {
-  String name;
-  String idNumber;
-  String vatNumber;
-  String website;
-  String phone;
+class ClientEditDetailsState extends State<ClientEditDetails> {
+
+  final _nameController = TextEditingController();
+  final _idNumberController = TextEditingController();
+  final _vatNumberController = TextEditingController();
+  final _websiteController = TextEditingController();
+  final _phoneController = TextEditingController();
+
+  var _controllers = [];
 
   @override
-  bool get wantKeepAlive => true;
+  void didChangeDependencies() {
+    List<TextEditingController> _controllers = [
+      _nameController,
+      _idNumberController,
+      _vatNumberController,
+      _websiteController,
+      _phoneController,
+    ];
+
+    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+
+    var client = widget.viewModel.client;
+    _nameController.text = client.name;
+    _idNumberController.text = client.idNumber;
+    _vatNumberController.text = client.vatNumber;
+    _websiteController.text = client.website;
+    _phoneController.text = client.workPhone;
+
+    _controllers.forEach((controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  _onChanged() {
+    var viewModel = widget.viewModel;
+    var client = viewModel.client.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..idNumber = _idNumberController.text.trim()
+        ..vatNumber = _vatNumberController.text.trim()
+        ..website = _websiteController.text.trim()
+        ..workPhone = _phoneController.text.trim()
+    );
+    if (client != viewModel.client) {
+      viewModel.onChanged(client);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    var client = widget.client;
 
     return ListView(
       shrinkWrap: true,
@@ -39,32 +86,27 @@ class ClientEditDetailsState extends State<ClientEditDetails>
           children: <Widget>[
             TextFormField(
               autocorrect: false,
-              onSaved: (value) => name = value.trim(),
-              initialValue: client.name,
+              controller: _nameController,
               decoration: InputDecoration(
                 labelText: localization.name,
               ),
             ),
             TextFormField(
               autocorrect: false,
-              onSaved: (value) => idNumber = value.trim(),
-              initialValue: client.idNumber,
-              decoration: InputDecoration(
-                labelText: localization.idNumber,
+              controller: _idNumberController,
+              decoration: InputDecoration(labelText: localization.idNumber,
               ),
             ),
             TextFormField(
               autocorrect: false,
-              onSaved: (value) => vatNumber = value.trim(),
-              initialValue: client.vatNumber,
+              controller: _vatNumberController,
               decoration: InputDecoration(
                 labelText: localization.vatNumber,
               ),
             ),
             TextFormField(
               autocorrect: false,
-              onSaved: (value) => website = value.trim(),
-              initialValue: client.website,
+              controller: _websiteController,
               decoration: InputDecoration(
                 labelText: localization.website,
               ),
@@ -72,8 +114,7 @@ class ClientEditDetailsState extends State<ClientEditDetails>
             ),
             TextFormField(
               autocorrect: false,
-              onSaved: (value) => phone = value.trim(),
-              initialValue: client.workPhone,
+              controller: _phoneController,
               decoration: InputDecoration(
                 labelText: localization.phone,
               ),
