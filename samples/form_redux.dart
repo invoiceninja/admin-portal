@@ -8,11 +8,21 @@ class ClientEntity {
   ClientEntity({this.name, this.contacts});
   String name;
   List<ContactEntity> contacts;
+
+  @override
+  String toString() {
+    return (name ?? '') + ': ' + contacts.join(', ');
+  }
 }
 
 class ContactEntity {
   ContactEntity({this.email});
   String email;
+
+  @override
+  String toString() {
+    return email ?? '';
+  }
 }
 
 // Redux classes
@@ -24,6 +34,11 @@ class AppState {
       : client = ClientEntity(
             name: 'Acme Client',
             contacts: [ContactEntity(email: 'test@example.com')]);
+
+  @override
+  String toString() {
+    return client.toString();
+  }
 }
 
 class UpdateClient {
@@ -34,18 +49,18 @@ class UpdateClient {
 class AddContact {}
 
 class UpdateContact {
-  final ContactEntity oldContact;
-  final ContactEntity newContact;
-  UpdateContact({this.oldContact, this.newContact});
+  final int index;
+  final String email;
+  UpdateContact({this.index, this.email});
 }
 
 class DeleteContact {
-  final String email;
-  DeleteContact(this.email);
+  final int index;
+  DeleteContact(this.index);
 }
 
 AppState reducer(AppState state, action) {
-  // In an app you'd most like want to
+  // In an actual app you'd most like want to
   // use built_value to rebuild the state
   if (action is UpdateClient) {
     return AppState(ClientEntity(
@@ -58,15 +73,19 @@ AppState reducer(AppState state, action) {
         contacts: []
           ..addAll(state.client.contacts)
           ..add(ContactEntity())));
-  } else if (action is DeleteContact) {
-    return AppState(ClientEntity(
-      name: state.client.name,
-      contacts: state.client.contacts.where((contact) => contact.email != action.email).toList(),
-    ));
   } else if (action is UpdateContact) {
     return AppState(ClientEntity(
-      name: state.client.name,
-    ));
+        name: state.client.name,
+        contacts: []
+          ..addAll(state.client.contacts)
+          ..removeAt(action.index)
+          ..insert(action.index, ContactEntity(email: action.email))));
+  } else if (action is DeleteContact) {
+    return AppState(ClientEntity(
+        name: state.client.name,
+        contacts: []
+          ..addAll(state.client.contacts)
+          ..removeAt(action.index)));
   }
 
   return state;
@@ -176,6 +195,13 @@ class _ClientPageState extends State<ClientPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    var store = StoreProvider.of<AppState>(context);
+    _nameController.text = store.state.client.name;
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _nameController.removeListener(_onChanged);
     _nameController.dispose();
@@ -184,13 +210,16 @@ class _ClientPageState extends State<ClientPage> {
 
   _onChanged() {
     var name = _nameController.text.trim();
-    StoreProvider.of<AppState>(context).dispatch(UpdateClient(name));
+    var store = StoreProvider.of<AppState>(context);
+    if (name != store.state.client.name) {
+      store.dispatch(UpdateClient(name));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
-      _nameController.text = store.state.client.name;
+      //_nameController.text = store.state.client.name;
 
       return FormCard(
         children: <Widget>[
@@ -211,7 +240,9 @@ class ContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       var contacts = store.state.client.contacts
-          .map((contact) => ContactForm(contact))
+          .map((contact) => ContactForm(
+              contact: contact,
+              index: store.state.client.contacts.indexOf(contact)))
           .toList();
 
       return ListView(
@@ -235,7 +266,9 @@ class ContactsPage extends StatelessWidget {
 }
 
 class ContactForm extends StatefulWidget {
-  ContactForm(this.contact);
+  ContactForm({this.contact, this.index});
+
+  final int index;
   final ContactEntity contact;
 
   @override
@@ -252,6 +285,12 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   @override
+  void didChangeDependencies() {
+    _emailController.text = widget.contact.email;
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _emailController.removeListener(_onChanged);
     _emailController.dispose();
@@ -259,8 +298,11 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   _onChanged() {
-    var name = _emailController.text.trim();
-    //StoreProvider.of<AppState>(context).dispatch(UpdateClient(name));
+    var store = StoreProvider.of<AppState>(context);
+    var email = _emailController.text.trim();
+    if (email != widget.contact.email) {
+      store.dispatch(UpdateContact(email: email, index: widget.index));
+    }
   }
 
   @override
@@ -270,8 +312,7 @@ class _ContactFormState extends State<ContactForm> {
     return FormCard(
       children: <Widget>[
         TextFormField(
-          initialValue: widget.contact.email,
-          //onSaved: (value) => _email = value.trim(),
+          controller: _emailController,
           decoration: InputDecoration(
             labelText: 'Email',
           ),
@@ -283,7 +324,7 @@ class _ContactFormState extends State<ContactForm> {
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: FlatButton(
-                onPressed: () => store.dispatch(DeleteContact(widget.contact.email)),
+                onPressed: () => store.dispatch(DeleteContact(widget.index)),
                 child: Text(
                   'Delete',
                   style: TextStyle(
