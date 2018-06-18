@@ -41,7 +41,7 @@ void main() {
           //LoggingMiddleware.printer(),
         ]));
 
-  runApp(new InvoiceNinjaApp(store: store));
+  runApp(InvoiceNinjaApp(store: store));
 }
 
 class InvoiceNinjaApp extends StatefulWidget {
@@ -50,16 +50,16 @@ class InvoiceNinjaApp extends StatefulWidget {
   InvoiceNinjaApp({Key key, this.store}) : super(key: key);
 
   @override
-  _InvoiceNinjaAppState createState() => new _InvoiceNinjaAppState();
+  _InvoiceNinjaAppState createState() => _InvoiceNinjaAppState();
 }
 
 class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
   @override
   Widget build(BuildContext context) {
-    return new StoreProvider<AppState>(
+    return StoreProvider<AppState>(
       store: widget.store,
-      child: new MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           const AppLocalizationsDelegate(),
