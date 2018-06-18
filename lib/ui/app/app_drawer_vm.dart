@@ -30,6 +30,7 @@ class AppDrawerVM {
   final String selectedCompanyIndex;
   final Function(BuildContext context, String) onCompanyChanged;
   final Function(BuildContext context) onLogoutTapped;
+  final bool isLoading;
 
   AppDrawerVM({
     @required this.companies,
@@ -37,13 +38,17 @@ class AppDrawerVM {
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
     @required this.onLogoutTapped,
+    @required this.isLoading,
 });
 
   static AppDrawerVM fromStore(Store<AppState> store) {
+    AppState state = store.state;
+
     return AppDrawerVM(
-      companies: companiesSelector(store.state),
-      selectedCompany: store.state.selectedCompany,
-      selectedCompanyIndex: store.state.uiState.selectedCompanyIndex.toString(),
+      isLoading: state.isLoading,
+      companies: companiesSelector(state),
+      selectedCompany: state.selectedCompany,
+      selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged: (BuildContext context, String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
       },

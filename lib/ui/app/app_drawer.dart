@@ -80,7 +80,7 @@ class AppDrawer extends StatelessWidget {
                 SizedBox(
                   height: 18.0,
                 ),
-                viewModel.companies.length > 1
+                viewModel.companies.length > 1 && ! viewModel.isLoading
                     ? _multipleCompanies
                     : _singleCompany,
               ],
