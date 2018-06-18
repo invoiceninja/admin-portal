@@ -16,6 +16,7 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, SaveProductSuccess>(_updateEditing),
   TypedReducer<ProductEntity, AddProductSuccess>(_updateEditing),
   TypedReducer<ProductEntity, EditProduct>(_updateEditing),
+  TypedReducer<ProductEntity, UpdateProduct>(_updateEditing),
 ]);
 
 ProductEntity _updateEditing(ProductEntity client, action) {

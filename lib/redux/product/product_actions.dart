@@ -39,10 +39,14 @@ class EditProduct implements PersistUI {
   EditProduct({this.product, this.context});
 }
 
+class UpdateProduct implements PersistUI {
+  final ProductEntity product;
+  UpdateProduct(this.product);
+}
+
 class SaveProductRequest implements StartLoading {
   final Completer completer;
-  final ProductEntity product;
-  SaveProductRequest(this.completer, this.product);
+  SaveProductRequest(this.completer);
 }
 
 class SaveProductSuccess implements StopLoading, PersistData {

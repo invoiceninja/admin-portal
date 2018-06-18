@@ -139,18 +139,16 @@ Middleware<AppState> _createLoadState(
                         ..companyState4.replace(company4State)
                         ..companyState5.replace(company5State));
                       store.dispatch(LoadStateSuccess(appState));
+
                       if (uiState.currentRoute != LoginVM.route && authState.url.isNotEmpty) {
                         NavigatorState navigator = Navigator
                             .of(action.context);
                         var route = '';
                         bool isFirst = true;
-                        print('current route: ' + uiState.currentRoute);
-                        print('auth URL: ' + authState.url);
                         uiState.currentRoute.split('/').forEach((part) {
                           if (part.isNotEmpty) {
                             if (part == 'edit' && route != '/products' && route != '/invoices') {
                               navigator.pushNamed(route + '/view');  
-                              print('push: ' + route + '/view');
                             }
                             route += '/' + part;
                             if (isFirst) {
@@ -159,27 +157,30 @@ Middleware<AppState> _createLoadState(
                             } else {
                               navigator.pushNamed(route);
                             }
-                            print('push: ' + route);
                           }
                         });
                       }
-                    });
-                  });
-                });
-              });
-            });
-          });
-        }).catchError((error) {
-          print(error);
-          store.dispatch(LoadUserLogin());
-        });
+                    }).catchError((error) => _handleError(store, error));
+                  }).catchError((error) => _handleError(store, error));
+                }).catchError((error) => _handleError(store, error));
+              }).catchError((error) => _handleError(store, error));
+            }).catchError((error) => _handleError(store, error));
+          }).catchError((error) => _handleError(store, error));
+        }).catchError((error) => _handleError(store, error));
       } else {
+        store.dispatch(UserLogout());
         store.dispatch(LoadUserLogin());
       }
-    });
+    }).catchError((error) => _handleError(store, error));
 
     next(action);
   };
+}
+
+_handleError(store, error) {
+  print(error);
+  store.dispatch(UserLogout());
+  store.dispatch(LoadUserLogin());
 }
 
 Middleware<AppState> _createUserLoggedIn(

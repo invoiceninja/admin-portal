@@ -21,9 +21,52 @@ class ProductEdit extends StatefulWidget {
 class _ProductEditState extends State<ProductEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _productKey;
-  String _notes;
-  double _cost;
+  final _productKeyController = TextEditingController();
+  final _notesController = TextEditingController();
+  final _costController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _productKeyController.removeListener(_onChanged);
+    _notesController.removeListener(_onChanged);
+    _costController.removeListener(_onChanged);
+
+    var product = widget.viewModel.product;
+
+    _productKeyController.text = product.productKey;
+    _notesController.text = product.notes;
+    _costController.text = product.cost?.toStringAsFixed(2) ?? '';
+
+    _productKeyController.addListener(_onChanged);
+    _notesController.addListener(_onChanged);
+    _costController.addListener(_onChanged);
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _productKeyController.removeListener(_onChanged);
+    _notesController.removeListener(_onChanged);
+    _costController.removeListener(_onChanged);
+
+    _productKeyController.dispose();
+    _notesController.dispose();
+    _costController.dispose();
+
+    super.dispose();
+  }
+
+  _onChanged() {
+    var product = widget.viewModel.product.rebuild((b) => b
+      ..productKey = _productKeyController.text.trim()
+      ..notes = _notesController.text.trim()
+      ..cost = double.tryParse(_costController.text) ?? 0.0
+    );
+    if (product != widget.viewModel.product) {
+      widget.viewModel.onChanged(product);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +91,7 @@ class _ProductEditState extends State<ProductEdit> {
                     return;
                   }
 
-                  _formKey.currentState.save();
-
-                  viewModel.onSaveClicked(
-                      context,
-                      viewModel.product.rebuild((b) => b
-                        ..productKey = _productKey
-                        ..notes = _notes
-                        ..cost = _cost));
+                  viewModel.onSaveClicked(context);
                 },
               );
             }),
@@ -74,11 +110,8 @@ class _ProductEditState extends State<ProductEdit> {
               FormCard(
                 children: <Widget>[
                   TextFormField(
+                    controller: _productKeyController,
                     autocorrect: false,
-                    onSaved: (value) {
-                      _productKey = value;
-                    },
-                    initialValue: viewModel.product.productKey,
                     decoration: InputDecoration(
                       //border: InputBorder.none,
                       labelText: AppLocalization.of(context).product,
@@ -88,26 +121,17 @@ class _ProductEditState extends State<ProductEdit> {
                         : null,
                   ),
                   TextFormField(
-                    initialValue: viewModel.product.notes,
-                    onSaved: (value) {
-                      _notes = value;
-                    },
+                    controller: _notesController,
                     maxLines: 4,
                     decoration: InputDecoration(
                       labelText: AppLocalization.of(context).notes,
                     ),
                   ),
                   TextFormField(
-                    initialValue: viewModel.product.cost == null ||
-                            viewModel.product.cost == 0.0
-                        ? null
-                        : viewModel.product.cost.toStringAsFixed(2),
-                    onSaved: (value) {
-                      _cost = double.tryParse(value) ?? 0.0;
-                    },
+                    autocorrect: false,
+                    controller: _costController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      //border: InputBorder.none,
                       labelText: AppLocalization.of(context).cost,
                     ),
                   ),

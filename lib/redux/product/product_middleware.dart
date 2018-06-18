@@ -100,9 +100,9 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository
         .saveData(
-            store.state.selectedCompany, store.state.authState, action.product)
+            store.state.selectedCompany, store.state.authState, store.state.productUIState.selected)
         .then((product) {
-      if (action.product.isNew()) {
+      if (store.state.productUIState.selected.isNew()) {
         store.dispatch(AddProductSuccess(product));
       } else {
         store.dispatch(SaveProductSuccess(product));

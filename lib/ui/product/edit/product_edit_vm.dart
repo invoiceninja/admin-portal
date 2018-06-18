@@ -34,8 +34,8 @@ class ProductEditScreen extends StatelessWidget {
 
 class ProductEditVM {
   final ProductEntity product;
-  final Function onDelete;
-  final Function(BuildContext, ProductEntity) onSaveClicked;
+  final Function(ProductEntity) onChanged;
+  final Function(BuildContext) onSaveClicked;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function onBackClicked;
   final bool isLoading;
@@ -43,7 +43,7 @@ class ProductEditVM {
 
   ProductEditVM({
     @required this.product,
-    @required this.onDelete,
+    @required this.onChanged,
     @required this.onSaveClicked,
     @required this.onBackClicked,
     @required this.onActionSelected,
@@ -58,13 +58,15 @@ class ProductEditVM {
       isLoading: store.state.isLoading,
       isDirty: product.isNew(),
       product: product,
-      onDelete: () => false,
+      onChanged: (ProductEntity product) {
+        store.dispatch(UpdateProduct(product));
+      },
       onBackClicked: () {
         store.dispatch(UpdateCurrentRoute(ProductScreen.route));
       },
-      onSaveClicked: (BuildContext context, ProductEntity product) {
+      onSaveClicked: (BuildContext context) {
         final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveProductRequest(completer, product));
+        store.dispatch(SaveProductRequest(completer));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
