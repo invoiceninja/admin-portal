@@ -72,17 +72,28 @@ class AppDrawer extends StatelessWidget {
                           //? Image.network(viewModel.selectedCompany.logoUrl)
                           ? CachedNetworkImage(
                               imageUrl: viewModel.selectedCompany.logoUrl,
-                              placeholder: new CircularProgressIndicator(),
-                              errorWidget: new Icon(Icons.error),
+                              placeholder: CircularProgressIndicator(),
+                              errorWidget: Icon(Icons.error),
                             )
                           : null),
                 ),
                 SizedBox(
                   height: 18.0,
                 ),
-                viewModel.companies.length > 1 && ! viewModel.isLoading
-                    ? _multipleCompanies
-                    : _singleCompany,
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: viewModel.companies.length > 1 && ! viewModel.isLoading
+                          ? _multipleCompanies
+                          : _singleCompany
+                    ),
+                    viewModel.isLoading ? SizedBox(
+                        width: 20.0,
+                        height: 20.0,
+                        child: CircularProgressIndicator()
+                    ) : Container(),
+                  ],
+                ),
               ],
             )),
             color: Colors.white10,
