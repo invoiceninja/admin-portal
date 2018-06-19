@@ -35,17 +35,17 @@ class ProductEditScreen extends StatelessWidget {
 class ProductEditVM {
   final ProductEntity product;
   final Function(ProductEntity) onChanged;
-  final Function(BuildContext) onSaveClicked;
+  final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
-  final Function onBackClicked;
+  final Function onBackPressed;
   final bool isLoading;
   final bool isDirty;
 
   ProductEditVM({
     @required this.product,
     @required this.onChanged,
-    @required this.onSaveClicked,
-    @required this.onBackClicked,
+    @required this.onSavePressed,
+    @required this.onBackPressed,
     @required this.onActionSelected,
     @required this.isLoading,
     @required this.isDirty,
@@ -61,10 +61,10 @@ class ProductEditVM {
       onChanged: (ProductEntity product) {
         store.dispatch(UpdateProduct(product));
       },
-      onBackClicked: () {
+      onBackPressed: () {
         store.dispatch(UpdateCurrentRoute(ProductScreen.route));
       },
-      onSaveClicked: (BuildContext context) {
+      onSavePressed: (BuildContext context) {
         final Completer<Null> completer = new Completer<Null>();
         store.dispatch(SaveProductRequest(completer: completer, product: product));
         return completer.future.then((_) {

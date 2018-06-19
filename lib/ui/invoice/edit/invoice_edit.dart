@@ -52,7 +52,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
     return WillPopScope(
       onWillPop: () async {
-        viewModel.onBackClicked();
+        viewModel.onBackPressed();
         return true;
       },
       child: Scaffold(
@@ -79,7 +79,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                       itemState?.getItems() ?? widget.viewModel.invoice.items));
                 */
 
-                widget.viewModel.onSaveClicked(context);
+                widget.viewModel.onSavePressed(context);
               },
             )
           ],

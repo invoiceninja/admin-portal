@@ -33,7 +33,7 @@ class InvoiceEditItems extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).secondaryHeaderColor,
             child: Text(localization.addItem.toUpperCase()),
-            onPressed: viewModel.onAddInvoiceItemClicked,
+            onPressed: viewModel.onAddInvoiceItemPressed,
           ),
         )),
     );

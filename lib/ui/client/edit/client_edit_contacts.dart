@@ -34,7 +34,7 @@ class ClientEditContacts extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).secondaryHeaderColor,
             child: Text(localization.addContact.toUpperCase()),
-            onPressed: viewModel.onAddContactClicked,
+            onPressed: viewModel.onAddContactPressed,
           ),
         )),
     );

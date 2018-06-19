@@ -9,14 +9,14 @@ class Login extends StatelessWidget {
   final bool isLoading;
   final bool isDirty;
   final AuthState authState;
-  final Function(BuildContext, String, String, String, String) onLoginClicked;
+  final Function(BuildContext, String, String, String, String) onLoginPressed;
 
   Login({
     Key key,
     @required this.isDirty,
     @required this.isLoading,
     @required this.authState,
-    @required this.onLoginClicked,
+    @required this.onLoginPressed,
   }) : super(key: key);
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -120,7 +120,7 @@ class Login extends StatelessWidget {
               return;
             }
 
-            this.onLoginClicked(
+            this.onLoginPressed(
                 context,
                 _emailKey.currentState.value,
                 _passwordKey.currentState.value,

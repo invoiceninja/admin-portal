@@ -32,18 +32,18 @@ class ClientViewScreen extends StatelessWidget {
 class ClientViewVM {
   final ClientEntity client;
   final Function onDelete;
-  final Function(BuildContext, ClientEntity) onSaveClicked;
+  final Function(BuildContext, ClientEntity) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext) onEditClicked;
+  final Function(BuildContext) onEditPressed;
   final bool isLoading;
   final bool isDirty;
 
   ClientViewVM({
     @required this.client,
     @required this.onDelete,
-    @required this.onSaveClicked,
+    @required this.onSavePressed,
     @required this.onActionSelected,
-    @required this.onEditClicked,
+    @required this.onEditPressed,
     @required this.isLoading,
     @required this.isDirty,
   });
@@ -56,10 +56,10 @@ class ClientViewVM {
       isDirty: client.isNew(),
       client: client,
       onDelete: () => false,
-      onEditClicked: (BuildContext context) {
+      onEditPressed: (BuildContext context) {
         store.dispatch(EditClient(client: client, context: context));
       },
-      onSaveClicked: (BuildContext context, ClientEntity client) {
+      onSavePressed: (BuildContext context, ClientEntity client) {
         final Completer<Null> completer = new Completer<Null>();
         store.dispatch(SaveClientRequest(completer: completer, client: client));
         return completer.future.then((_) {

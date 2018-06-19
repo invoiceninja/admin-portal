@@ -39,12 +39,12 @@ class InvoiceEditVM {
   final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
   final Function(InvoiceEntity) onChanged;
-  final Function(BuildContext) onSaveClicked;
+  final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
-  final Function() onAddInvoiceItemClicked;
+  final Function() onAddInvoiceItemPressed;
   final Function(int) onRemoveInvoiceItemPressed;
   final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
-  final Function onBackClicked;
+  final Function onBackPressed;
   final bool isLoading;
 
   InvoiceEditVM({
@@ -52,11 +52,11 @@ class InvoiceEditVM {
     @required this.clientList,
     @required this.clientMap,
     @required this.onChanged,
-    @required this.onSaveClicked,
-    @required this.onAddInvoiceItemClicked,
+    @required this.onSavePressed,
+    @required this.onAddInvoiceItemPressed,
     @required this.onRemoveInvoiceItemPressed,
     @required this.onChangedInvoiceItem,
-    @required this.onBackClicked,
+    @required this.onBackPressed,
     @required this.onActionSelected,
     @required this.isLoading,
   });
@@ -71,14 +71,14 @@ class InvoiceEditVM {
         clientList: memoizedActiveClientList(
             state.clientState.map, state.clientState.list),
         clientMap: state.clientState.map,
-        onBackClicked: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
-        onAddInvoiceItemClicked: () => store.dispatch(AddInvoiceItem()),
+        onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+        onAddInvoiceItemPressed: () => store.dispatch(AddInvoiceItem()),
         onRemoveInvoiceItemPressed: (index) => store.dispatch(DeleteInvoiceItem(index)),
         onChangedInvoiceItem: (invoiceItem, index) {
           store.dispatch(UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
         },
         onChanged: (InvoiceEntity invoice) => store.dispatch(UpdateInvoice(invoice)),
-        onSaveClicked: (BuildContext context) {
+        onSavePressed: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(
               SaveInvoiceRequest(completer: completer, invoice: invoice));

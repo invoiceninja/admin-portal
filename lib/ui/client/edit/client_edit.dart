@@ -46,7 +46,7 @@ class _ClientEditState extends State<ClientEdit>
 
     return WillPopScope(
       onWillPop: () async {
-        viewModel.onBackClicked();
+        viewModel.onBackPressed();
         return true;
       },
       child: Scaffold(
@@ -61,7 +61,7 @@ class _ClientEditState extends State<ClientEdit>
                 if (! _formKey.currentState.validate()) {
                   return;
                 }
-                viewModel.onSaveClicked(context);
+                viewModel.onSavePressed(context);
               },
             )
           ],

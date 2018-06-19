@@ -26,7 +26,7 @@ class LoginVM extends StatelessWidget {
             isLoading: vm.isLoading,
             isDirty: vm.isDirty,
             authState: vm.authState,
-            onLoginClicked: vm.onLoginClicked,
+            onLoginPressed: vm.onLoginPressed,
           );
         },
       ),
@@ -38,13 +38,13 @@ class _ViewModel {
   bool isLoading;
   bool isDirty;
   AuthState authState;
-  final Function(BuildContext, String, String, String, String) onLoginClicked;
+  final Function(BuildContext, String, String, String, String) onLoginPressed;
 
   _ViewModel({
     @required this.isLoading,
     @required this.isDirty,
     @required this.authState,
-    @required this.onLoginClicked,
+    @required this.onLoginPressed,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -52,7 +52,7 @@ class _ViewModel {
         isDirty: !store.state.authState.isAuthenticated,
         isLoading: store.state.isLoading,
         authState: store.state.authState,
-        onLoginClicked: (BuildContext context, String email, String password,
+        onLoginPressed: (BuildContext context, String email, String password,
             String url, String secret) {
           if (store.state.isLoading) {
             return;

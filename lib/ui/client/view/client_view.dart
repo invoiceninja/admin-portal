@@ -60,7 +60,7 @@ class _ClientViewState extends State<ClientView>
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
-                    widget.viewModel.onEditClicked(context);
+                    widget.viewModel.onEditPressed(context);
                   },
                 ),
                 ActionMenuButton(

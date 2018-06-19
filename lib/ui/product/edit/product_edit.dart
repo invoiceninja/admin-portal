@@ -75,7 +75,7 @@ class _ProductEditState extends State<ProductEdit> {
 
     return WillPopScope(
       onWillPop: () async {
-        viewModel.onBackClicked();
+        viewModel.onBackPressed();
         return true;
       },
       child: Scaffold(
@@ -92,7 +92,7 @@ class _ProductEditState extends State<ProductEdit> {
                     return;
                   }
 
-                  viewModel.onSaveClicked(context);
+                  viewModel.onSavePressed(context);
                 },
               );
             }),

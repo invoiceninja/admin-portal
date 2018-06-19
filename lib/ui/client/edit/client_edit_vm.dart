@@ -36,21 +36,21 @@ class ClientEditVM {
   final bool isLoading;
   final ClientEntity client;
   final Function(ClientEntity) onChanged;
-  final Function() onAddContactClicked;
+  final Function() onAddContactPressed;
   final Function(int) onRemoveContactPressed;
   final Function(ContactEntity, int) onChangedContact;
-  final Function(BuildContext) onSaveClicked;
-  final Function onBackClicked;
+  final Function(BuildContext) onSavePressed;
+  final Function onBackPressed;
 
   ClientEditVM({
     @required this.isLoading,
     @required this.client,
-    @required this.onAddContactClicked,
+    @required this.onAddContactPressed,
     @required this.onRemoveContactPressed,
     @required this.onChangedContact,
     @required this.onChanged,
-    @required this.onSaveClicked,
-    @required this.onBackClicked,
+    @required this.onSavePressed,
+    @required this.onBackPressed,
   });
 
   factory ClientEditVM.fromStore(Store<AppState> store) {
@@ -59,16 +59,16 @@ class ClientEditVM {
     return ClientEditVM(
         client: client,
         isLoading: store.state.isLoading,
-        onBackClicked: () =>
+        onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
-        onAddContactClicked: () => store.dispatch(AddContact()),
+        onAddContactPressed: () => store.dispatch(AddContact()),
         onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
         onChangedContact: (contact, index) {
           store.dispatch(UpdateContact(contact: contact, index: index));
         },
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
-        onSaveClicked: (BuildContext context) {
+        onSavePressed: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
