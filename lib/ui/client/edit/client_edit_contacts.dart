@@ -19,13 +19,13 @@ class ClientEditContacts extends StatelessWidget {
     var client = viewModel.client;
     var contacts = client.contacts.map((contact) => ContactEditDetails(
         viewModel: viewModel,
+        key: Key('__${EntityType.contact}_${contact.id}__'),
         isRemoveVisible: client.contacts.length > 1,
         contact: contact,
         index: client.contacts.indexOf(contact)));
 
     return ListView(
       children: []
-        ..addAll(client.contacts.map((contact) => Container()))
         ..addAll(contacts)
         ..add(Padding(
           padding: const EdgeInsets.all(12.0),

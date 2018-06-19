@@ -54,6 +54,13 @@ class ExpenseFields {
 
 abstract class ExpenseEntity extends Object with BaseEntity implements Built<ExpenseEntity, ExpenseEntityBuilder> {
 
+  static int counter = 0;
+  factory ExpenseEntity() {
+    return _$ExpenseEntity._(
+      id: --ExpenseEntity.counter,
+    );
+  }
+
   @nullable
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
@@ -160,7 +167,6 @@ abstract class ExpenseEntity extends Object with BaseEntity implements Built<Exp
   }
   
   ExpenseEntity._();
-  factory ExpenseEntity([updates(ExpenseEntityBuilder b)]) = _$ExpenseEntity;
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 

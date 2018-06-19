@@ -234,15 +234,13 @@ class ContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       var client = store.state.client;
-      var contacts = client.contacts
-          .map((contact) => ContactForm(
-              contact: contact,
-              index: store.state.client.contacts.indexOf(contact)));
+      var contacts = client.contacts.map((contact) => ContactForm(
+          contact: contact,
+          //key: Key('__contact_${contact.id}__'),
+          index: store.state.client.contacts.indexOf(contact)));
 
       return ListView(
         children: []
-          ..addAll(client.contacts.map((contact) => Container()))
-          ..addAll(contacts)
           ..add(Padding(
             padding: const EdgeInsets.all(12.0),
             child: RaisedButton(
@@ -261,7 +259,8 @@ class ContactsPage extends StatelessWidget {
 }
 
 class ContactForm extends StatefulWidget {
-  ContactForm({this.contact, this.index});
+  ContactForm({Key key, @required this.contact, @required this.index})
+      : super(key: key);
 
   final int index;
   final ContactEntity contact;
@@ -333,7 +332,11 @@ class _ContactFormState extends State<ContactForm> {
 
 // Helper widget to make the form look a bit nicer
 class FormCard extends StatelessWidget {
-  FormCard({this.children});
+  FormCard({
+    Key key,
+    @required this.children,
+  }) : super(key: key);
+
   final List<Widget> children;
 
   @override

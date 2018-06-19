@@ -40,6 +40,13 @@ class CreditFields {
 
 abstract class CreditEntity extends Object with BaseEntity implements Built<CreditEntity, CreditEntityBuilder> {
 
+  static int counter = 0;
+  factory CreditEntity() {
+    return _$CreditEntity._(
+      id: --CreditEntity.counter,
+    );
+  }
+
   @nullable
   double get amount;
 
@@ -89,6 +96,5 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
   }
   
   CreditEntity._();
-  factory CreditEntity([updates(CreditEntityBuilder b)]) = _$CreditEntity;
   static Serializer<CreditEntity> get serializer => _$creditEntitySerializer;
 }

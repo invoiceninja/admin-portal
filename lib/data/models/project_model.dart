@@ -40,6 +40,13 @@ class ProjectFields {
 
 abstract class ProjectEntity extends Object with BaseEntity implements Built<ProjectEntity, ProjectEntityBuilder> {
 
+  static int counter = 0;
+  factory ProjectEntity() {
+    return _$ProjectEntity._(
+        id: --ProjectEntity.counter
+    );
+  }
+
   @nullable
   String get name;
 
@@ -97,6 +104,5 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
   }
 
   ProjectEntity._();
-  factory ProjectEntity([updates(ProjectEntityBuilder b)]) = _$ProjectEntity;
   static Serializer<ProjectEntity> get serializer => _$projectEntitySerializer;
 }

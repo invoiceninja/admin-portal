@@ -19,12 +19,12 @@ class InvoiceEditItems extends StatelessWidget {
     var invoiceItems = invoice.invoiceItems.map((invoiceItem) =>
         ItemEditDetails(
             viewModel: viewModel,
+            key: Key('__${EntityType.contact}_${invoiceItem.id}__'),
             invoiceItem: invoiceItem,
             index: invoice.invoiceItems.indexOf(invoiceItem)));
 
     return ListView(
       children: []
-        ..addAll(invoice.invoiceItems.map((contact) => Container()))
         ..addAll(invoiceItems)
         ..add(Padding(
           padding: const EdgeInsets.all(12.0),

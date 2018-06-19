@@ -52,6 +52,14 @@ class InvoiceFields {
 abstract class InvoiceEntity extends Object with BaseEntity 
   implements Built<InvoiceEntity, InvoiceEntityBuilder> {
 
+  static int counter = 0;
+  factory InvoiceEntity() {
+    return _$InvoiceEntity._(
+        id: --InvoiceEntity.counter,
+        invoiceItems: BuiltList<InvoiceItemEntity>(),
+    );
+  }
+
   @nullable
   double get amount;
 
@@ -242,19 +250,19 @@ abstract class InvoiceEntity extends Object with BaseEntity
     return invoiceNumber.contains(search);
   }
 
-  factory InvoiceEntity() {
-    return _$InvoiceEntity._(
-      invoiceItems: BuiltList<InvoiceItemEntity>(),
-    );
-  }
-
   InvoiceEntity._();
-  //factory InvoiceEntity([updates(InvoiceEntityBuilder b)]) = _$InvoiceEntity;
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
 
 
 abstract class InvoiceItemEntity extends Object with BaseEntity implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
+
+  static int counter = 0;
+  factory InvoiceItemEntity() {
+    return _$InvoiceItemEntity._(
+      id: --InvoiceItemEntity.counter
+    );
+  }
 
   @nullable
   @BuiltValueField(wireName: 'product_key')
@@ -301,7 +309,6 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
   double get discount;
 
   InvoiceItemEntity._();
-  factory InvoiceItemEntity([updates(InvoiceItemEntityBuilder b)]) = _$InvoiceItemEntity;
   static Serializer<InvoiceItemEntity> get serializer => _$invoiceItemEntitySerializer;
 }
 

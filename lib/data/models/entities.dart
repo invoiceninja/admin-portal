@@ -13,6 +13,7 @@ class EntityType extends EnumClass {
   static const EntityType quote = _$quote;
   static const EntityType product = _$product;
   static const EntityType client = _$client;
+  static const EntityType contact = _$contact;
   static const EntityType task = _$task;
   static const EntityType project = _$project;
   static const EntityType expense = _$expense;

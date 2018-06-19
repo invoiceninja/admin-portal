@@ -51,6 +51,13 @@ class VendorFields {
 
 abstract class VendorEntity extends Object with BaseEntity implements Built<VendorEntity, VendorEntityBuilder> {
 
+  static int counter = 0;
+  factory VendorEntity() {
+    return _$VendorEntity._(
+        id: --VendorEntity.counter
+    );
+  }
+
   @nullable
   String get name;
 
@@ -143,11 +150,17 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
   }
   
   VendorEntity._();
-  factory VendorEntity([updates(VendorEntityBuilder b)]) = _$VendorEntity;
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }
 
 abstract class VendorContactEntity extends Object with BaseEntity implements Built<VendorContactEntity, VendorContactEntityBuilder> {
+
+  static int counter = 0;
+  factory VendorContactEntity() {
+    return _$VendorContactEntity._(
+        id: --VendorContactEntity.counter
+    );
+  }
 
   @nullable
   @BuiltValueField(wireName: 'first_name')
@@ -168,6 +181,5 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
   String get phone;
 
   VendorContactEntity._();
-  factory VendorContactEntity([updates(VendorContactEntityBuilder b)]) = _$VendorContactEntity;
   static Serializer<VendorContactEntity> get serializer => _$vendorContactEntitySerializer;
 }

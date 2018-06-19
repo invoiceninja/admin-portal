@@ -41,6 +41,13 @@ class TaskFields {
 
 abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEntity, TaskEntityBuilder> {
 
+  static int counter = 0;
+  factory TaskEntity() {
+    return _$TaskEntity._(
+        id: --TaskEntity.counter
+    );
+  }
+
   @nullable
   String get description;
 
@@ -101,6 +108,5 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
   }
 
   TaskEntity._();
-  factory TaskEntity([updates(TaskEntityBuilder b)]) = _$TaskEntity;
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }

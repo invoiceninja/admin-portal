@@ -34,6 +34,13 @@ class ProductFields {
 
 abstract class ProductEntity extends Object with BaseEntity implements Built<ProductEntity, ProductEntityBuilder> {
 
+  static int counter = 0;
+  factory ProductEntity() {
+    return _$ProductEntity._(
+        id: --ProductEntity.counter
+    );
+  }
+
   @nullable
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
@@ -96,6 +103,5 @@ abstract class ProductEntity extends Object with BaseEntity implements Built<Pro
   }
 
   ProductEntity._();
-  factory ProductEntity([updates(ProductEntityBuilder b)]) = _$ProductEntity;
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

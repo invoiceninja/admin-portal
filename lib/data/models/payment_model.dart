@@ -42,6 +42,13 @@ class PaymentFields {
 
 abstract class PaymentEntity extends Object with BaseEntity implements Built<PaymentEntity, PaymentEntityBuilder> {
 
+  static int counter = 0;
+  factory PaymentEntity() {
+    return _$PaymentEntity._(
+      id: --PaymentEntity.counter,
+    );
+  }
+
   @nullable
   double get amount;
 
@@ -99,6 +106,5 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   }
   
   PaymentEntity._();
-  factory PaymentEntity([updates(PaymentEntityBuilder b)]) = _$PaymentEntity;
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
 }
