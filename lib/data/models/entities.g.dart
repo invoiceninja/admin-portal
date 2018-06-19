@@ -15,6 +15,7 @@ part of 'entities.dart';
 // ignore_for_file: sort_constructors_first
 
 const EntityType _$invoice = const EntityType._('invoice');
+const EntityType _$invoiceItem = const EntityType._('invoiceItem');
 const EntityType _$quote = const EntityType._('quote');
 const EntityType _$product = const EntityType._('product');
 const EntityType _$client = const EntityType._('client');
@@ -30,6 +31,8 @@ EntityType _$typeValueOf(String name) {
   switch (name) {
     case 'invoice':
       return _$invoice;
+    case 'invoiceItem':
+      return _$invoiceItem;
     case 'quote':
       return _$quote;
     case 'product':
@@ -58,6 +61,7 @@ EntityType _$typeValueOf(String name) {
 final BuiltSet<EntityType> _$typeValues =
     new BuiltSet<EntityType>(const <EntityType>[
   _$invoice,
+  _$invoiceItem,
   _$quote,
   _$product,
   _$client,

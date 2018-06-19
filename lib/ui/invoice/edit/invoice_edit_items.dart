@@ -19,7 +19,7 @@ class InvoiceEditItems extends StatelessWidget {
     var invoiceItems = invoice.invoiceItems.map((invoiceItem) =>
         ItemEditDetails(
             viewModel: viewModel,
-            key: Key('__${EntityType.contact}_${invoiceItem.id}__'),
+            key: Key('__${EntityType.}_${invoiceItem.id}__'),
             invoiceItem: invoiceItem,
             index: invoice.invoiceItems.indexOf(invoiceItem)));
 
@@ -112,6 +112,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     var localization = AppLocalization.of(context);
 
     _confirmDelete() {
+      widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
+
+      /*
       showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -132,10 +135,12 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               ],
             ),
       );
+      */
     }
 
     return FormCard(
       children: <Widget>[
+        Text('Id: ${widget.invoiceItem.id}'),
         TextFormField(
           autocorrect: false,
           controller: _productKeyController,
@@ -143,6 +148,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             labelText: localization.product,
           ),
         ),
+        /*
         TextFormField(
           autocorrect: false,
           controller: _notesController,
@@ -167,6 +173,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             labelText: localization.quantity,
           ),
         ),
+        */
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
