@@ -154,6 +154,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         TextFormField(
           autocorrect: false,
           controller: _costController,
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: localization.unitCost,
           ),
@@ -161,6 +162,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         TextFormField(
           autocorrect: false,
           controller: _qtyController,
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: localization.quantity,
           ),

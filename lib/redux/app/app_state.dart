@@ -92,6 +92,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    return this.invoiceUIState.selected.toString();
+    return '';
+    //return this.invoiceUIState.selected.toString();
   }
 }
