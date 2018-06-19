@@ -89,4 +89,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   InvoiceState get invoiceState => this.selectedCompanyState.invoiceState;
   InvoiceUIState get invoiceUIState => this.uiState.invoiceUIState;
   ListUIState get invoiceListState => this.uiState.invoiceUIState.listUIState;
+
+  @override
+  String toString() {
+    return 'State: ' + this.invoiceUIState.selected.toString();
+  }
 }

@@ -190,20 +190,6 @@ class _$AppState extends AppState {
             companyState4.hashCode),
         companyState5.hashCode));
   }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('AppState')
-          ..add('isLoading', isLoading)
-          ..add('authState', authState)
-          ..add('uiState', uiState)
-          ..add('companyState1', companyState1)
-          ..add('companyState2', companyState2)
-          ..add('companyState3', companyState3)
-          ..add('companyState4', companyState4)
-          ..add('companyState5', companyState5))
-        .toString();
-  }
 }
 
 class AppStateBuilder implements Builder<AppState, AppStateBuilder> {

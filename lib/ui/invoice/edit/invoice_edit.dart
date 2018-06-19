@@ -43,12 +43,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
     List<Widget> editors = [
       InvoiceEditDetails(
-        invoice: invoice,
-        clientList: viewModel.clientList,
-        clientMap: viewModel.clientMap,
+        viewModel: viewModel,
       ),
       InvoiceEditItems(
-        invoice: invoice,
+        viewModel: viewModel,
       ),
     ];
 

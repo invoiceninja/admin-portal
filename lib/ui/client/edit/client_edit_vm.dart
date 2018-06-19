@@ -62,9 +62,6 @@ class ClientEditVM {
         onAddContactClicked: () => store.dispatch(AddContact()),
         onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
         onChangedContact: (contact, index) {
-          print('== ON CHANGED');
-          print(store.state.clientUIState.selected);
-          print(contact);
           store.dispatch(UpdateContact(contact: contact, index: index));
         },
         onChanged: (ClientEntity client) =>

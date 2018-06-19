@@ -8,7 +8,7 @@ import 'package:invoiceninja/redux/invoice/invoice_state.dart';
 EntityUIState invoiceUIReducer(InvoiceUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(invoiceListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.selected, action))
+    ..selected.replace(editingReducer(state.selected, action))
   );
 }
 
@@ -18,10 +18,31 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, ViewInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, EditInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, UpdateInvoice>(_updateEditing),
+  TypedReducer<InvoiceEntity, AddInvoiceItem>(_addInvoiceItem),
+  TypedReducer<InvoiceEntity, DeleteInvoiceItem>(_removeInvoiceItem),
+  TypedReducer<InvoiceEntity, UpdateInvoiceItem>(_updateInvoiceItem),
 ]);
 
-InvoiceEntity _updateEditing(InvoiceEntity client, action) {
+InvoiceEntity _updateEditing(InvoiceEntity invoice, action) {
   return action.invoice;
+}
+
+InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
+  return invoice.rebuild((b) => b
+    ..invoiceItems.add(InvoiceItemEntity())
+  );
+}
+
+InvoiceEntity _removeInvoiceItem(InvoiceEntity invoice, DeleteInvoiceItem action) {
+  return invoice.rebuild((b) => b
+    ..invoiceItems.removeAt(action.index)
+  );
+}
+
+InvoiceEntity _updateInvoiceItem(InvoiceEntity invoice, UpdateInvoiceItem action) {
+  return invoice.rebuild((b) => b
+    ..invoiceItems[action.index] = action.invoiceItem
+  );
 }
 
 final invoiceListReducer = combineReducers<ListUIState>([

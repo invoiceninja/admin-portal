@@ -3,21 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class InvoiceEditDetails extends StatefulWidget {
   InvoiceEditDetails({
     Key key,
-    @required this.invoice,
-    @required this.clientList,
-    @required this.clientMap,
-    @required this.onChanged,
+    @required this.viewModel,
   }) : super(key: key);
 
-  final InvoiceEntity invoice;
-  final List<int> clientList;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final Function(InvoiceEntity) onChanged;
+  final InvoiceEditVM viewModel;
 
   @override
   InvoiceEditDetailsState createState() => new InvoiceEditDetailsState();
@@ -44,7 +39,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    var invoice = widget.invoice;
+    var invoice = widget.viewModel.invoice;
     _invoiceNumberController.text = invoice.invoiceNumber;
     _poNumberController.text = invoice.poNumber;
     _discountController.text = invoice.discount?.toStringAsFixed(2) ?? '';
@@ -66,20 +61,21 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   }
 
   _onChanged() {
-    var invoice = widget.invoice.rebuild((b) => b
+    var invoice = widget.viewModel.invoice.rebuild((b) => b
       ..poNumber = _poNumberController.text.trim()
       ..discount = double.tryParse(_discountController.text) ?? 0.0
       ..partial = double.tryParse(_partialController.text) ?? 0.0
     );
-    if (invoice != widget.invoice) {
-      widget.onChanged(invoice);
+    if (invoice != widget.viewModel.invoice) {
+      widget.viewModel.onChanged(invoice);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    var invoice = widget.invoice;
+    var viewModel = widget.viewModel;
+    var invoice = viewModel.invoice;
 
     return ListView(
       children: <Widget>[
@@ -88,8 +84,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             invoice.isNew()
                 ? EntityDropdown(
                     labelText: localization.client,
-                    entityList: widget.clientList,
-                    entityMap: widget.clientMap,
+                    entityList: viewModel.clientList,
+                    entityMap: viewModel.clientMap,
                 ) : TextFormField(
                     autocorrect: false,
                     controller: _invoiceNumberController,

@@ -1,42 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 
 class InvoiceEditItems extends StatelessWidget {
   InvoiceEditItems({
     Key key,
-    @required this.invoice,
-    @required this.onChanged,
+    @required this.viewModel,
   }) : super(key: key);
 
-  final InvoiceEntity invoice;
-  final Function(InvoiceEntity) onChanged;
+  final InvoiceEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {
-    return new Container();
+    var localization = AppLocalization.of(context);
+    var invoice = viewModel.invoice;
+    var invoiceItems = invoice.invoiceItems.map((invoiceItem) =>
+        ItemEditDetails(
+            viewModel: viewModel,
+            invoiceItem: invoiceItem,
+            index: invoice.invoiceItems.indexOf(invoiceItem)));
+
+    return ListView(
+      children: []
+        ..addAll(invoice.invoiceItems.map((contact) => Container()))
+        ..addAll(invoiceItems)
+        ..add(Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: RaisedButton(
+            elevation: 4.0,
+            color: Theme.of(context).primaryColor,
+            textColor: Theme.of(context).secondaryHeaderColor,
+            child: Text(localization.addItem.toUpperCase()),
+            onPressed: viewModel.onAddInvoiceItemClicked,
+          ),
+        )),
+    );
   }
 }
 
 class ItemEditDetails extends StatefulWidget {
   ItemEditDetails({
     Key key,
+    @required this.index,
     @required this.invoiceItem,
-    @required this.onRemovePressed,
-    @required this.isRemoveVisible,
+    @required this.viewModel,
   }) : super(key: key);
 
+  final int index;
   final InvoiceItemEntity invoiceItem;
-  final Function(GlobalKey<ItemEditDetailsState>) onRemovePressed;
-  final bool isRemoveVisible;
+  final InvoiceEditVM viewModel;
 
   @override
   ItemEditDetailsState createState() => ItemEditDetailsState();
 }
 
 class ItemEditDetailsState extends State<ItemEditDetails> {
-
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
@@ -46,7 +66,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
       _productKeyController,
       _notesController,
@@ -56,8 +75,11 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    //var client = widget.client;
-    //_nameController.text = client.name;
+    var invoiceItem = widget.invoiceItem;
+    _productKeyController.text = invoiceItem.productKey;
+    _notesController.text = invoiceItem.notes;
+    _costController.text = invoiceItem.cost?.toStringAsFixed(2) ?? '';
+    _qtyController.text = invoiceItem.qty?.toStringAsFixed(2) ?? '';
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -75,20 +97,14 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   }
 
   _onChanged() {
-    /*
-    var client = widget.client.rebuild((b) => b
-      ..name = _nameController.text.trim()
-    );
-    if (client != widget.client) {
-      widget.onChanged(client);
+    var invoiceItem = widget.invoiceItem.rebuild((b) => b
+      ..productKey = _productKeyController.text.trim()
+      ..notes = _notesController.text.trim()
+      ..cost = double.tryParse(_costController.text) ?? 0.0
+      ..qty = double.tryParse(_qtyController.text) ?? 0.0);
+    if (invoiceItem != widget.invoiceItem) {
+      widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
     }
-    */
-  }
-
-  InvoiceItemEntity getItem() {
-    return widget.invoiceItem.rebuild((b) => b
-        //..phone = _phone
-        );
   }
 
   @override
@@ -110,7 +126,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 new FlatButton(
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
-                      widget.onRemovePressed(widget.key);
+                      widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
                       Navigator.pop(context);
                     })
               ],
@@ -122,12 +138,14 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       children: <Widget>[
         TextFormField(
           autocorrect: false,
+          controller: _productKeyController,
           decoration: InputDecoration(
             labelText: localization.product,
           ),
         ),
         TextFormField(
           autocorrect: false,
+          controller: _notesController,
           maxLines: 4,
           decoration: InputDecoration(
             labelText: localization.description,
@@ -135,35 +153,35 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         ),
         TextFormField(
           autocorrect: false,
+          controller: _costController,
           decoration: InputDecoration(
             labelText: localization.unitCost,
           ),
         ),
         TextFormField(
           autocorrect: false,
+          controller: _qtyController,
           decoration: InputDecoration(
             labelText: localization.quantity,
           ),
         ),
-        widget.isRemoveVisible
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 14.0),
-                    child: FlatButton(
-                      child: Text(
-                        localization.remove,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      onPressed: _confirmDelete,
-                    ),
-                  )
-                ],
-              )
-            : Container(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 14.0),
+              child: FlatButton(
+                child: Text(
+                  localization.remove,
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                  ),
+                ),
+                onPressed: _confirmDelete,
+              ),
+            )
+          ],
+        ),
       ],
     );
   }

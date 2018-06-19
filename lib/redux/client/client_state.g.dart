@@ -98,7 +98,7 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
     ];
     if (object.selected != null) {
       result
-        ..add('editing')
+        ..add('selected')
         ..add(serializers.serialize(object.selected,
             specifiedType: const FullType(ClientEntity)));
     }
@@ -117,8 +117,8 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'editing':
-          result.editing.replace(serializers.deserialize(value,
+        case 'selected':
+          result.selected.replace(serializers.deserialize(value,
               specifiedType: const FullType(ClientEntity)) as ClientEntity);
           break;
         case 'listUIState':
@@ -280,7 +280,7 @@ class _$ClientUIState extends ClientUIState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ClientUIState')
-          ..add('editing', selected)
+          ..add('selected', selected)
           ..add('listUIState', listUIState))
         .toString();
   }
@@ -290,10 +290,10 @@ class ClientUIStateBuilder
     implements Builder<ClientUIState, ClientUIStateBuilder> {
   _$ClientUIState _$v;
 
-  ClientEntityBuilder _editing;
-  ClientEntityBuilder get editing =>
-      _$this._editing ??= new ClientEntityBuilder();
-  set editing(ClientEntityBuilder editing) => _$this._editing = editing;
+  ClientEntityBuilder _selected;
+  ClientEntityBuilder get selected =>
+      _$this._selected ??= new ClientEntityBuilder();
+  set selected(ClientEntityBuilder selected) => _$this._selected = selected;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -305,7 +305,7 @@ class ClientUIStateBuilder
 
   ClientUIStateBuilder get _$this {
     if (_$v != null) {
-      _editing = _$v.selected?.toBuilder();
+      _selected = _$v.selected?.toBuilder();
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
     }
@@ -329,12 +329,12 @@ class ClientUIStateBuilder
     try {
       _$result = _$v ??
           new _$ClientUIState._(
-              selected: _editing?.build(), listUIState: listUIState.build());
+              selected: _selected?.build(), listUIState: listUIState.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'editing';
-        _editing?.build();
+        _$failedField = 'selected';
+        _selected?.build();
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {

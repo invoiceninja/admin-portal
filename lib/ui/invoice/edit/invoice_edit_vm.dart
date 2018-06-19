@@ -41,6 +41,9 @@ class InvoiceEditVM {
   final Function(InvoiceEntity) onChanged;
   final Function(BuildContext) onSaveClicked;
   final Function(BuildContext, EntityAction) onActionSelected;
+  final Function() onAddInvoiceItemClicked;
+  final Function(int) onRemoveInvoiceItemPressed;
+  final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
   final Function onBackClicked;
   final bool isLoading;
 
@@ -50,6 +53,9 @@ class InvoiceEditVM {
     @required this.clientMap,
     @required this.onChanged,
     @required this.onSaveClicked,
+    @required this.onAddInvoiceItemClicked,
+    @required this.onRemoveInvoiceItemPressed,
+    @required this.onChangedInvoiceItem,
     @required this.onBackClicked,
     @required this.onActionSelected,
     @required this.isLoading,
@@ -65,12 +71,13 @@ class InvoiceEditVM {
         clientList: memoizedActiveClientList(
             state.clientState.map, state.clientState.list),
         clientMap: state.clientState.map,
-        onBackClicked: () {
-          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
+        onBackClicked: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+        onAddInvoiceItemClicked: () => store.dispatch(AddInvoiceItem()),
+        onRemoveInvoiceItemPressed: (index) => store.dispatch(DeleteInvoiceItem(index)),
+        onChangedInvoiceItem: (invoiceItem, index) {
+          store.dispatch(UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
         },
-        onChanged: (InvoiceEntity invoice) {
-          store.dispatch(UpdateInvoice(invoice));
-        },
+        onChanged: (InvoiceEntity invoice) => store.dispatch(UpdateInvoice(invoice)),
         onSaveClicked: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(
