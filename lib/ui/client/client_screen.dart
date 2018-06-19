@@ -11,7 +11,7 @@ import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
 
 class ClientScreen extends StatelessWidget {
-  static final String route = '/clients';
+  static final String route = '/client';
 
   @override
   Widget build(BuildContext context) {

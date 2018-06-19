@@ -139,27 +139,17 @@ Middleware<AppState> _createLoadState(
                         ..companyState4.replace(company4State)
                         ..companyState5.replace(company5State));
                       store.dispatch(LoadStateSuccess(appState));
-
                       if (uiState.currentRoute != LoginVM.route &&
                           authState.url.isNotEmpty) {
                         NavigatorState navigator = Navigator.of(action.context);
-                        var route = '';
                         bool isFirst = true;
-                        uiState.currentRoute.split('/').forEach((part) {
-                          if (part.isNotEmpty) {
-                            if (part == 'edit' &&
-                                route != '/products' &&
-                                route != '/invoices') {
-                              navigator.pushNamed(route + '/view');
-                            }
-                            route += '/' + part;
-                            if (isFirst) {
-                              navigator.pushReplacementNamed(route);
-                              isFirst = false;
-                            } else {
-                              navigator.pushNamed(route);
-                            }
+                        _getRoutes(appState).forEach((route){
+                          if (isFirst) {
+                            navigator.pushReplacementNamed(route);
+                          } else {
+                            navigator.pushNamed(route);
                           }
+                          isFirst = false;
                         });
                       }
                     }).catchError((error) => _handleError(store, error));
@@ -179,16 +169,16 @@ Middleware<AppState> _createLoadState(
   };
 }
 
-List<String> _getPages(AppState state, String currentRoute) {
+List<String> _getRoutes(AppState state) {
   List<String> routes = [];
   var route = '';
 
-  currentRoute.split('/').forEach((part) {
+  state.uiState.currentRoute.split('/').forEach((part) {
     if (part.isNotEmpty) {
-      if (part == 'edit' && route != '/products' && route != '/invoices') {
+      if (part == 'edit' && route != '/product' && route != '/invoice') {
         switch (route) {
-          case '/clients':
-            if (!state.clientUIState.selected.isNew()) {
+          case '/client':
+            if (! state.clientUIState.selected.isNew()) {
               routes.add(route + '/view');
             }
         }

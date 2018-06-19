@@ -14,7 +14,7 @@ import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
-  static final String route = '/clients/edit';
+  static final String route = '/client/edit';
   ClientEditScreen({Key key}) : super(key: key);
 
   @override
