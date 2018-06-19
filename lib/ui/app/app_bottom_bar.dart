@@ -131,7 +131,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     return new BottomAppBar(
-      color: Theme.of(context).bottomAppBarColor,
       hasNotch: true,
       child: Row(
         children: <Widget>[
@@ -139,13 +138,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
             tooltip: AppLocalization.of(context).sort,
             icon: Icon(Icons.sort_by_alpha),
             onPressed: _showSortSheet,
-            color: Colors.white,
           ),
           IconButton(
             tooltip: AppLocalization.of(context).filter,
             icon: Icon(Icons.filter_list),
             onPressed: _showFilterSheet,
-            color: Colors.white,
           ),
         ],
       ),
