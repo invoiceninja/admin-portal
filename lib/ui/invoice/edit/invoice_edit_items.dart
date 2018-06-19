@@ -136,7 +136,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
     return FormCard(
       children: <Widget>[
-        Text('Id: ${widget.invoiceItem.id}'),
         TextFormField(
           autocorrect: false,
           controller: _productKeyController,
