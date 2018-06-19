@@ -87,11 +87,13 @@ class AppDrawer extends StatelessWidget {
                           ? _multipleCompanies
                           : _singleCompany
                     ),
+                    /*
                     viewModel.isLoading ? SizedBox(
                         width: 20.0,
                         height: 20.0,
                         child: CircularProgressIndicator()
                     ) : Container(),
+                    */
                   ],
                 ),
               ],

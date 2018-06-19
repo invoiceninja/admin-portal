@@ -63,7 +63,7 @@ class ClientOverview extends StatelessWidget {
       );
     }
 
-    return Column(
+    return ListView(
       children: <Widget>[
         Padding(
           padding: EdgeInsets.all(16.0),

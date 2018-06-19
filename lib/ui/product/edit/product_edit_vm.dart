@@ -19,7 +19,6 @@ class ProductEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductEditVM>(
-      //ignoreChange: (state) => productSelector(state.product().list, id).isNotPresent,
       converter: (Store<AppState> store) {
         return ProductEditVM.fromStore(store);
       },
