@@ -19,7 +19,7 @@ class InvoiceEditItems extends StatelessWidget {
     var invoiceItems = invoice.invoiceItems.map((invoiceItem) =>
         ItemEditDetails(
             viewModel: viewModel,
-            key: Key('__${EntityType.}_${invoiceItem.id}__'),
+            key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
             invoiceItem: invoiceItem,
             index: invoice.invoiceItems.indexOf(invoiceItem)));
 
