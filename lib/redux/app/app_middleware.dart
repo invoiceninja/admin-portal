@@ -175,6 +175,7 @@ List<String> _getRoutes(AppState state) {
 
   state.uiState.currentRoute.split('/').forEach((part) {
     if (part.isNotEmpty) {
+      // TODO automatically lookup state using the route/entity type
       if (part == 'edit' && route != '/product' && route != '/invoice') {
         switch (route) {
           case '/client':
