@@ -140,15 +140,17 @@ Middleware<AppState> _createLoadState(
                         ..companyState5.replace(company5State));
                       store.dispatch(LoadStateSuccess(appState));
 
-                      if (uiState.currentRoute != LoginVM.route && authState.url.isNotEmpty) {
-                        NavigatorState navigator = Navigator
-                            .of(action.context);
+                      if (uiState.currentRoute != LoginVM.route &&
+                          authState.url.isNotEmpty) {
+                        NavigatorState navigator = Navigator.of(action.context);
                         var route = '';
                         bool isFirst = true;
                         uiState.currentRoute.split('/').forEach((part) {
                           if (part.isNotEmpty) {
-                            if (part == 'edit' && route != '/products' && route != '/invoices') {
-                              navigator.pushNamed(route + '/view');  
+                            if (part == 'edit' &&
+                                route != '/products' &&
+                                route != '/invoices') {
+                              navigator.pushNamed(route + '/view');
                             }
                             route += '/' + part;
                             if (isFirst) {
@@ -175,6 +177,28 @@ Middleware<AppState> _createLoadState(
 
     next(action);
   };
+}
+
+List<String> _getPages(AppState state, String currentRoute) {
+  List<String> routes = [];
+  var route = '';
+
+  currentRoute.split('/').forEach((part) {
+    if (part.isNotEmpty) {
+      if (part == 'edit' && route != '/products' && route != '/invoices') {
+        switch (route) {
+          case '/clients':
+            if (!state.clientUIState.selected.isNew()) {
+              routes.add(route + '/view');
+            }
+        }
+      }
+      route += '/' + part;
+      routes.add(route);
+    }
+  });
+
+  return routes;
 }
 
 _handleError(store, error) {
@@ -209,7 +233,6 @@ Middleware<AppState> _createUserLoggedIn(
 
 Middleware<AppState> _createUIChange(PersistenceRepository uiRepository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
     next(action);
 
     uiRepository.saveUIState(store.state.uiState);
@@ -224,7 +247,6 @@ Middleware<AppState> _createDataLoaded(
   PersistenceRepository company5Repository,
 ) {
   return (Store<AppState> store, action, NextDispatcher next) {
-
     // first process the action so the data is in the state
     next(action);
 

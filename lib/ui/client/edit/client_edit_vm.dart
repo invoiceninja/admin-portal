@@ -6,9 +6,11 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
@@ -71,6 +73,7 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((_) {
+            /*
             if (client.isNew()) {
               Navigator.of(context).pop();
               Navigator
@@ -79,7 +82,7 @@ class ClientEditVM {
             } else {
               Navigator.of(context).pop();
             }
-            /*
+            */
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: client.isNew()
@@ -87,7 +90,7 @@ class ClientEditVM {
                       : AppLocalization.of(context).successfullyUpdatedClient,
                 ),
                 duration: Duration(seconds: 3)));
-                */
+
           });
         });
   }
