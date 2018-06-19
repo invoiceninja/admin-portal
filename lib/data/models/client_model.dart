@@ -35,6 +35,14 @@ class ClientFields {
 
 abstract class ClientEntity extends Object with BaseEntity implements Built<ClientEntity, ClientEntityBuilder> {
 
+  static int counter = 0;
+  factory ClientEntity() {
+    return _$ClientEntity._(
+        id: --ClientEntity.counter,
+        contacts: BuiltList<ContactEntity>(),
+    );
+  }
+
   @nullable
   @BuiltValueField(wireName: 'name')
   String get name;
@@ -206,19 +214,19 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     return displayName.toLowerCase().contains(search);
   }
 
-  factory ClientEntity() {
-    return _$ClientEntity._(
-      contacts: BuiltList<ContactEntity>(),
-    );
-  }
-
   ClientEntity._();
-  //factory ClientEntity([updates(ClientEntityBuilder b)]) = _$ClientEntity;
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
 
 
 abstract class ContactEntity extends Object with BaseEntity implements Built<ContactEntity, ContactEntityBuilder> {
+
+  static int counter = 0;
+  factory ContactEntity() {
+    return _$ContactEntity._(
+        id: --ContactEntity.counter
+    );
+  }
 
   @nullable
   @BuiltValueField(wireName: 'first_name')
@@ -256,6 +264,5 @@ abstract class ContactEntity extends Object with BaseEntity implements Built<Con
 
 
   ContactEntity._();
-  factory ContactEntity([updates(ContactEntityBuilder b)]) = _$ContactEntity;
   static Serializer<ContactEntity> get serializer => _$contactEntitySerializer;
 }

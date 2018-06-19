@@ -112,9 +112,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     var localization = AppLocalization.of(context);
 
     _confirmDelete() {
-      widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
-
-      /*
       showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -135,7 +132,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               ],
             ),
       );
-      */
     }
 
     return FormCard(
@@ -148,7 +144,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             labelText: localization.product,
           ),
         ),
-        /*
         TextFormField(
           autocorrect: false,
           controller: _notesController,
@@ -173,7 +168,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             labelText: localization.quantity,
           ),
         ),
-        */
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
