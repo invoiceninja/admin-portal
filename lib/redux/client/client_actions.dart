@@ -51,15 +51,15 @@ class UpdateClient implements PersistUI {
   UpdateClient(this.client);
 }
 
-class AddContact {}
+class AddContact implements PersistUI {}
 
-class UpdateContact {
+class UpdateContact implements PersistUI {
   final int index;
   final ContactEntity contact;
   UpdateContact({this.index, this.contact});
 }
 
-class DeleteContact {
+class DeleteContact implements PersistUI {
   final int index;
   DeleteContact(this.index);
 }

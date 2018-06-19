@@ -51,15 +51,15 @@ class UpdateInvoice implements PersistUI {
   UpdateInvoice(this.invoice);
 }
 
-class AddInvoiceItem {}
+class AddInvoiceItem implements PersistUI {}
 
-class UpdateInvoiceItem {
+class UpdateInvoiceItem implements PersistUI {
   final int index;
   final InvoiceItemEntity invoiceItem;
   UpdateInvoiceItem({this.index, this.invoiceItem});
 }
 
-class DeleteInvoiceItem {
+class DeleteInvoiceItem implements PersistUI {
   final int index;
   DeleteInvoiceItem(this.index);
 }
