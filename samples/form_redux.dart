@@ -189,15 +189,11 @@ class _ClientPageState extends State<ClientPage> {
   final _nameController = new TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    _nameController.addListener(_onChanged);
-  }
-
-  @override
   void didChangeDependencies() {
     var store = StoreProvider.of<AppState>(context);
+    _nameController.removeListener(_onChanged);
     _nameController.text = store.state.client.name;
+    _nameController.addListener(_onChanged);
     super.didChangeDependencies();
   }
 
@@ -278,14 +274,10 @@ class _ContactFormState extends State<ContactForm> {
   final _emailController = new TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    _emailController.addListener(_onChanged);
-  }
-
-  @override
   void didChangeDependencies() {
+    _emailController.removeListener(_onChanged);
     _emailController.text = widget.contact.email;
+    _emailController.addListener(_onChanged);
     super.didChangeDependencies();
   }
 
