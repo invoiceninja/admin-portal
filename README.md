@@ -4,10 +4,9 @@ This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/
 
 The project is under active development, for the time being we recommend using the existing [mobile apps](https://www.invoiceninja.com/iphone-android/).
 
-![Screenshot](samples/screenshots/screenshot_01.png)
-![Screenshot](samples/screenshots/screenshot_02.png)
-![Screenshot](samples/screenshots/screenshot_03.png)
-
+<p align="center">
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_01.png" alt="" width="100px"/>
+</p>
 
 ## Features
 
