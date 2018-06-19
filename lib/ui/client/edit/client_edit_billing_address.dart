@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientEditBillingAddress extends StatefulWidget {
   ClientEditBillingAddress({
     Key key,
-    @required this.client,
-    @required this.onChanged,
+    @required this.viewModel,
   }) : super(key: key);
 
-  final ClientEntity client;
-  final Function(ClientEntity) onChanged;
+  final ClientEditVM viewModel;
 
   @override
   ClientEditBillingAddressState createState() =>
@@ -42,7 +41,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    var client = widget.client;
+    var client = widget.viewModel.client;
     _address1Controller.text = client.address1;
     _address2Controller.text = client.address2;
     _cityController.text = client.city;
@@ -65,15 +64,15 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   }
 
   _onChanged() {
-    var client = widget.client.rebuild((b) => b
+    var client = widget.viewModel.client.rebuild((b) => b
       ..address1 = _address1Controller.text.trim()
         ..address2 = _address2Controller.text.trim()
         ..city = _cityController.text.trim()
         ..state = _stateController.text.trim()
         ..postalCode = _postalCodeController.text.trim()
     );
-    if (client != widget.client) {
-      widget.onChanged(client);
+    if (client != widget.viewModel.client) {
+      widget.viewModel.onChanged(client);
     }
   }
 

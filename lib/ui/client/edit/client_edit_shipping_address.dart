@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 import '../../app/form_card.dart';
@@ -7,12 +8,10 @@ import '../../app/form_card.dart';
 class ClientEditShippingAddress extends StatefulWidget {
   ClientEditShippingAddress({
     Key key,
-    @required this.client,
-    @required this.onChanged,
+    @required this.viewModel,
   }) : super(key: key);
 
-  final ClientEntity client;
-  final Function(ClientEntity) onChanged;
+  final ClientEditVM viewModel;
 
   @override
   ClientEditShippingAddressState createState() =>
@@ -42,7 +41,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    var client = widget.client;
+    var client = widget.viewModel.client;
     _shippingAddress1Controller.text = client.shippingAddress1;
     _shippingAddress2Controller.text = client.shippingAddress2;
     _shippingCityController.text = client.shippingCity;
@@ -65,15 +64,15 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
   }
 
   _onChanged() {
-    var client = widget.client.rebuild((b) => b
+    var client = widget.viewModel.client.rebuild((b) => b
       ..shippingAddress1 = _shippingAddress1Controller.text.trim()
       ..shippingAddress2 = _shippingAddress2Controller.text.trim()
       ..shippingCity = _shippingCityController.text.trim()
       ..shippingState = _shippingStateController.text.trim()
       ..shippingPostalCode = _shippingPostalCodeController.text.trim()
     );
-    if (client != widget.client) {
-      widget.onChanged(client);
+    if (client != widget.viewModel.client) {
+      widget.viewModel.onChanged(client);
     }
   }
 

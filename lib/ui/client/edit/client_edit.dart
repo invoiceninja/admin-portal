@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_details.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_shipping_address.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/save_icon_button.dart';
@@ -27,7 +29,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 2);
+    _controller = new TabController(vsync: this, length: 4);
   }
 
   @override
@@ -59,37 +61,13 @@ class _ClientEditState extends State<ClientEdit>
                 if (! _formKey.currentState.validate()) {
                   return;
                 }
-
-                /*
-                ClientEntity client = widget.viewModel.client.rebuild((b) => b
-                  ..name = detailsState.name
-                  ..idNumber = detailsState.idNumber
-                  ..vatNumber = detailsState.vatNumber
-                  ..website = detailsState.website
-                  ..workPhone = detailsState.phone
-                  /*
-            ..address1 = billingAddressState.address1
-            ..address2 = billingAddressState.address2
-            ..city = billingAddressState.city
-            ..state = billingAddressState.state
-            ..postalCode = billingAddressState.postalCode
-            ..shippingAddress1 = shippingAddressState.shippingAddress1
-            ..shippingAddress2 = shippingAddressState.shippingAddress2
-            ..shippingCity = shippingAddressState.shippingCity
-            ..shippingState = shippingAddressState.shippingState
-            ..shippingPostalCode = shippingAddressState.shippingPostalCode
-            */
-                  ..contacts.replace(
-                      contactState?.getContacts() ?? widget.viewModel.client.contacts));
-                */
-
                 viewModel.onSaveClicked(context);
               },
             )
           ],
           bottom: TabBar(
             controller: _controller,
-            //isScrollable: true,
+            isScrollable: true,
             tabs: [
               Tab(
                 text: localization.details,
@@ -97,14 +75,12 @@ class _ClientEditState extends State<ClientEdit>
               Tab(
                 text: localization.contacts,
               ),
-              /*
               Tab(
                 text: localization.billingAddress,
               ),
               Tab(
                 text: localization.shippingAddress,
               ),
-              */
             ],
           ),
         ),
@@ -119,14 +95,12 @@ class _ClientEditState extends State<ClientEdit>
               ClientEditContacts(
                 viewModel: widget.viewModel,
               ),
-              /*
               ClientEditBillingAddress(
-                client: client,
+                viewModel: widget.viewModel,
               ),
               ClientEditShippingAddress(
-                client: client,
+                viewModel: widget.viewModel,
               ),
-              */
             ],
           ),
         ),
