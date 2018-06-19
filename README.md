@@ -4,6 +4,15 @@ This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/
 
 The project is under active development, for the time being we recommend using the existing [mobile apps](https://www.invoiceninja.com/iphone-android/).
 
+![Alt text](samples/screenshots/screenshot_01.png?raw=true "Product List")
+![Alt text](samples/screenshots/screenshot_02.png?raw=true "Edit Product")
+![Alt text](samples/screenshots/screenshot_03.png?raw=true "Drawer")
+![Alt text](samples/screenshots/screenshot_04.png?raw=true "Dashboard")
+![Alt text](samples/screenshots/screenshot_05.png?raw=true "Client Overview")
+![Alt text](samples/screenshots/screenshot_06.png?raw=true "Contact Details")
+![Alt text](samples/screenshots/screenshot_07.png?raw=true "Edit Contacts")
+![Alt text](samples/screenshots/screenshot_08.png?raw=true "New Invoice")
+
 ## Features
 
 - [x] Dashboard
