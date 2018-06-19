@@ -1,4 +1,5 @@
 import 'package:invoiceninja/data/models/invoice_model.dart';
+import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
@@ -21,7 +22,12 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, AddInvoiceItem>(_addInvoiceItem),
   TypedReducer<InvoiceEntity, DeleteInvoiceItem>(_removeInvoiceItem),
   TypedReducer<InvoiceEntity, UpdateInvoiceItem>(_updateInvoiceItem),
+  TypedReducer<InvoiceEntity, SelectCompany>(_clearEditing),
 ]);
+
+InvoiceEntity _clearEditing(InvoiceEntity client, action) {
+  return InvoiceEntity();
+}
 
 InvoiceEntity _updateEditing(InvoiceEntity invoice, action) {
   return action.invoice;

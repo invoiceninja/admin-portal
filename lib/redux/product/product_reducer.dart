@@ -1,4 +1,5 @@
 import 'package:invoiceninja/data/models/product_model.dart';
+import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
@@ -17,7 +18,12 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, AddProductSuccess>(_updateEditing),
   TypedReducer<ProductEntity, EditProduct>(_updateEditing),
   TypedReducer<ProductEntity, UpdateProduct>(_updateEditing),
+  TypedReducer<ProductEntity, SelectCompany>(_clearEditing),
 ]);
+
+ProductEntity _clearEditing(ProductEntity client, action) {
+  return ProductEntity();
+}
 
 ProductEntity _updateEditing(ProductEntity client, action) {
   return action.product;
