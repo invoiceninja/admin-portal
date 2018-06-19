@@ -2,7 +2,7 @@
 
 This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja) web app.
 
-The project is in the very early stages of development, for the time being we recommend using the existing [mobile apps](https://www.invoiceninja.com/iphone-android/).
+The project is under active development, for the time being we recommend using the existing [mobile apps](https://www.invoiceninja.com/iphone-android/).
 
 ## Features
 
@@ -19,9 +19,11 @@ The project is in the very early stages of development, for the time being we re
 - [ ] Projects
 - [ ] Tasks
 
-## Architecture
+## Code Samples
 
-The application architecture is based off these two projects:
+- Forms: [Keys](https://github.com/invoiceninja/flutter-mobile/blob/master/samples/form_keys.dart) vs [Redux](https://github.com/invoiceninja/flutter-mobile/blob/master/samples/form_redux.dart)
+
+The architecture is based off these two projects:
 - [Redux Sample](https://github.com/brianegan/flutter_architecture_samples/tree/master/example/redux) - [Brian Egan](https://twitter.com/brianegan)
 - [inKino](https://github.com/roughike/inKino) - [Iiro Krankka](https://twitter.com/koorankka)
 
