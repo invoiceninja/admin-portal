@@ -23,7 +23,10 @@ The project is under active development, for the time being we recommend using t
 
 - Forms: [Keys](https://github.com/invoiceninja/flutter-mobile/blob/master/samples/form_keys.dart) vs [Redux](https://github.com/invoiceninja/flutter-mobile/blob/master/samples/form_redux.dart)
 
+## Application Architecture
+
 The architecture is based off these two projects:
+
 - [Redux Sample](https://github.com/brianegan/flutter_architecture_samples/tree/master/example/redux) - [Brian Egan](https://twitter.com/brianegan)
 - [inKino](https://github.com/roughike/inKino) - [Iiro Krankka](https://twitter.com/koorankka)
 
