@@ -77,7 +77,7 @@ abstract class BaseEntity {
   }
 
   bool isNew() {
-    return this.id == null;
+    return this.id == null || this.id < 0;
   }
 
   bool isActive() {
