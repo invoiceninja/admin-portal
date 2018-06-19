@@ -44,6 +44,8 @@ abstract class ProductUIState extends Object with EntityUIState implements Built
   @nullable
   ProductEntity get selected;
 
+  bool get isSelectedNew => selected.isNew();
+
   factory ProductUIState() {
     return _$ProductUIState._(
       listUIState: ListUIState(ProductFields.productKey),

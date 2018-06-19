@@ -44,6 +44,8 @@ abstract class InvoiceUIState extends Object with EntityUIState implements Built
   @nullable
   InvoiceEntity get selected;
 
+  bool get isSelectedNew => selected.isNew();
+
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
       listUIState: ListUIState(InvoiceFields.invoiceNumber),

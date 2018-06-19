@@ -44,6 +44,8 @@ abstract class ClientUIState extends Object with EntityUIState implements Built<
   @nullable
   ClientEntity get selected;
 
+  bool get isSelectedNew => selected.isNew();
+
   factory ClientUIState() {
     return _$ClientUIState._(
       listUIState: ListUIState(ClientFields.name),

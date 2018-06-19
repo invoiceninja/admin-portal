@@ -59,7 +59,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
         appBar: AppBar(
           title: Text(invoice.isNew()
               ? localization.newInvoice
-              : invoice.invoiceNumber),
+              : '${localization.invoice} ${invoice.invoiceNumber}'),
           actions: <Widget>[
             SaveIconButton(
               isLoading: widget.viewModel.isLoading,

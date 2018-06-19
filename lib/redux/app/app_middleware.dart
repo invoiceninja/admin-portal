@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/file_storage.dart';
+import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/data/repositories/persistence_repository.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -143,7 +144,7 @@ Middleware<AppState> _createLoadState(
                           authState.url.isNotEmpty) {
                         NavigatorState navigator = Navigator.of(action.context);
                         bool isFirst = true;
-                        _getRoutes(appState).forEach((route){
+                        _getRoutes(appState).forEach((route) {
                           if (isFirst) {
                             navigator.pushReplacementNamed(route);
                           } else {
@@ -172,21 +173,29 @@ Middleware<AppState> _createLoadState(
 List<String> _getRoutes(AppState state) {
   List<String> routes = [];
   var route = '';
+  EntityType entityType = null;
 
-  state.uiState.currentRoute.split('/').forEach((part) {
-    if (part.isNotEmpty) {
-      // TODO automatically lookup state using the route/entity type
-      if (part == 'edit' && route != '/product' && route != '/invoice') {
-        switch (route) {
-          case '/client':
-            if (! state.clientUIState.selected.isNew()) {
-              routes.add(route + '/view');
-            }
-        }
+  state.uiState.currentRoute
+      .split('/')
+      .where((part) => part.isNotEmpty)
+      .forEach((part) {
+    if (part == 'edit') {
+      // Only restore new unsaved entities to prevent conflicts
+      bool isNew = state.getUIState(entityType).isSelectedNew;
+      if (isNew) {
+        route += '/edit';
+      } else if (entityType == EntityType.client) {
+        route += '/view';
       }
+    } else {
+      if (entityType == null) {
+        entityType = EntityType.valueOf(part);
+      }
+
       route += '/' + part;
-      routes.add(route);
     }
+
+    routes.add(route);
   });
 
   return routes;
