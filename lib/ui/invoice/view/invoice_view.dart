@@ -7,6 +7,7 @@ import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/two_value_header.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceView extends StatefulWidget {
   final InvoiceViewVM viewModel;
@@ -42,6 +43,15 @@ class _InvoiceViewState extends State<InvoiceView>
     var store = StoreProvider.of<AppState>(context);
     var invoice = widget.viewModel.invoice;
 
+    _launchURL() async {
+      const url = 'https://flutter.io';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text((localization.invoice + ' ' + widget.viewModel.invoice.invoiceNumber) ?? ''), // Text(localizations.invoiceDetails),
@@ -59,6 +69,11 @@ class _InvoiceViewState extends State<InvoiceView>
             onSelected: widget.viewModel.onActionSelected,
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _launchURL();
+          }
       ),
       body: ListView(
         children: <Widget>[
