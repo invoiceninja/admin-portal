@@ -11,16 +11,16 @@ EntityUIState clientUIReducer(ClientUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(clientListReducer(state.listUIState, action))
     ..selected.replace(editingReducer(state.selected, action))
-    ..dropdownFilter = entityDropdownFilterReducer(state.dropdownFilter, action)
+    ..dropdownFilter = dropdownFilterReducer(state.dropdownFilter, action)
   );
 }
 
-Reducer<String> entityDropdownFilterReducer = combineReducers([
-  TypedReducer<String, UpdateEntityDropdownFilter>(updateEntityDropdownFilterReducer),
+Reducer<String> dropdownFilterReducer = combineReducers([
+  TypedReducer<String, FilterClientDropdown>(filterClientDropdownReducer),
 ]);
 
-String updateEntityDropdownFilterReducer(String entityDropdownFilter, UpdateEntityDropdownFilter action) {
-  return action.entityType == EntityType.client ? action.filter : entityDropdownFilter;
+String filterClientDropdownReducer(String dropdownFilter, FilterClientDropdown action) {
+  return action.filter;
 }
 
 final editingReducer = combineReducers<ClientEntity>([

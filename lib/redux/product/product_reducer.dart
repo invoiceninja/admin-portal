@@ -10,7 +10,16 @@ EntityUIState productUIReducer(ProductUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
     ..selected.replace(editingReducer(state.selected, action))
+    ..dropdownFilter = dropdownFilterReducer(state.dropdownFilter, action)
   );
+}
+
+Reducer<String> dropdownFilterReducer = combineReducers([
+  TypedReducer<String, FilterProductDropdown>(filterClientDropdownReducer),
+]);
+
+String filterClientDropdownReducer(String dropdownFilter, FilterProductDropdown action) {
+  return action.filter;
 }
 
 final editingReducer = combineReducers<ProductEntity>([

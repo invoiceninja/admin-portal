@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:redux/redux.dart';
@@ -54,8 +55,7 @@ class InvoiceEditDetailsVM {
         clientList: memoizedDropdownClientList(state.clientState.map,
             state.clientState.list, state.clientUIState.dropdownFilter),
         clientMap: state.clientState.map,
-        onEntityFilterChanged: (String filter) => store.dispatch(
-            UpdateEntityDropdownFilter(
-                entityType: EntityType.client, filter: filter)));
+        onEntityFilterChanged: (String filter) =>
+            store.dispatch(FilterClientDropdown(filter)));
   }
 }

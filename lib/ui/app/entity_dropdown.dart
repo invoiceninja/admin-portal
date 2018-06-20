@@ -49,6 +49,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
       return;
     }
 
+    widget.onFilterChanged('');
     _focusNode.unfocus();
     var localization = AppLocalization.of(context);
 

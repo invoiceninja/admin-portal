@@ -132,3 +132,8 @@ class FilterProductsByState implements PersistUI {
 
   FilterProductsByState(this.state);
 }
+
+class FilterProductDropdown {
+  final String filter;
+  FilterProductDropdown(this.filter);
+}
