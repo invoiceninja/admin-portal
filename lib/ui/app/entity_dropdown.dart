@@ -14,6 +14,7 @@ class EntityDropdown extends StatefulWidget {
     @required this.entityList,
     @required this.entityMap,
     @required this.onFilterChanged,
+    @required this.onSelected,
     this.initialValue,
   });
 
@@ -23,6 +24,7 @@ class EntityDropdown extends StatefulWidget {
   final String labelText;
   final int initialValue;
   final Function(String) onFilterChanged;
+  final Function(int) onSelected;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -116,9 +118,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                                   title: Text(entity.listDisplayName),
                                   subtitle:
                                       subtitle != null ? Text(subtitle) : null,
-                                  onTap: () {
-                                    //
-                                  },
+                                  onTap: () => widget.onSelected(entityId),
                                 );
                               }).toList()),
                         ]),

@@ -87,6 +87,12 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     entityList: viewModel.clientList,
                     entityMap: viewModel.clientMap,
                     onFilterChanged: viewModel.onEntityFilterChanged,
+                    onSelected: (clientId) {
+                      var invoice = widget.viewModel.invoice.rebuild((b) => b
+                        ..clientId = clientId
+                      );
+                      widget.viewModel.onChanged(invoice);
+                    },
                 ) : TextFormField(
                     autocorrect: false,
                     controller: _invoiceNumberController,
