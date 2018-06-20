@@ -73,7 +73,6 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((_) {
-            /*
             if (client.isNew()) {
               Navigator.of(context).pop();
               Navigator
@@ -82,7 +81,7 @@ class ClientEditVM {
             } else {
               Navigator.of(context).pop();
             }
-            */
+            /*
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: client.isNew()
@@ -90,7 +89,7 @@ class ClientEditVM {
                       : AppLocalization.of(context).successfullyUpdatedClient,
                 ),
                 duration: Duration(seconds: 3)));
-
+            */
           });
         });
   }
