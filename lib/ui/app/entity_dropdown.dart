@@ -15,14 +15,14 @@ class EntityDropdown extends StatefulWidget {
     @required this.entityMap,
     @required this.onFilterChanged,
     @required this.onSelected,
-    this.value,
+    this.initialValue,
   });
 
   final EntityType entityType;
   final List<int> entityList;
   final BuiltMap<int, BaseEntity> entityMap;
   final String labelText;
-  final String value;
+  final String initialValue;
   final Function(String) onFilterChanged;
   final Function(int) onSelected;
 
@@ -37,6 +37,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   void initState() {
     super.initState();
+    _textController.text = widget.initialValue;
     _focusNode.addListener(_onFocusChanged);
   }
 

@@ -84,7 +84,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 ? EntityDropdown(
                     entityType: EntityType.client,
                     labelText: localization.client,
-                    value: viewModel.clientMap[invoice.clientId]?.displayName,
+                    initialValue: viewModel.clientMap[invoice.clientId]?.displayName,
                     entityList: viewModel.clientList,
                     entityMap: viewModel.clientMap,
                     onFilterChanged: viewModel.onEntityFilterChanged,
