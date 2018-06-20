@@ -4,5 +4,5 @@ abstract class EntityUIState {
 
   bool get isSelectedNew;
   ListUIState get listUIState;
-
+  String get dropdownFilter;
 }

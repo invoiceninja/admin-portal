@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
@@ -81,6 +82,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           children: <Widget>[
             invoice.isNew()
                 ? EntityDropdown(
+                    entityType: EntityType.client,
                     labelText: localization.client,
                     entityList: viewModel.clientList,
                     entityMap: viewModel.clientMap,

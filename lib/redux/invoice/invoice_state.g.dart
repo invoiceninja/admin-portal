@@ -97,6 +97,9 @@ class _$InvoiceUIStateSerializer
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
+      'dropdownFilter',
+      serializers.serialize(object.dropdownFilter,
+          specifiedType: const FullType(String)),
     ];
     if (object.selected != null) {
       result
@@ -126,6 +129,10 @@ class _$InvoiceUIStateSerializer
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ListUIState)) as ListUIState);
+          break;
+        case 'dropdownFilter':
+          result.dropdownFilter = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -253,13 +260,18 @@ class _$InvoiceUIState extends InvoiceUIState {
   final InvoiceEntity selected;
   @override
   final ListUIState listUIState;
+  @override
+  final String dropdownFilter;
 
   factory _$InvoiceUIState([void updates(InvoiceUIStateBuilder b)]) =>
       (new InvoiceUIStateBuilder()..update(updates)).build();
 
-  _$InvoiceUIState._({this.selected, this.listUIState}) : super._() {
+  _$InvoiceUIState._({this.selected, this.listUIState, this.dropdownFilter})
+      : super._() {
     if (listUIState == null)
       throw new BuiltValueNullFieldError('InvoiceUIState', 'listUIState');
+    if (dropdownFilter == null)
+      throw new BuiltValueNullFieldError('InvoiceUIState', 'dropdownFilter');
   }
 
   @override
@@ -274,19 +286,23 @@ class _$InvoiceUIState extends InvoiceUIState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! InvoiceUIState) return false;
-    return selected == other.selected && listUIState == other.listUIState;
+    return selected == other.selected &&
+        listUIState == other.listUIState &&
+        dropdownFilter == other.dropdownFilter;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, selected.hashCode), listUIState.hashCode));
+    return $jf($jc($jc($jc(0, selected.hashCode), listUIState.hashCode),
+        dropdownFilter.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceUIState')
           ..add('selected', selected)
-          ..add('listUIState', listUIState))
+          ..add('listUIState', listUIState)
+          ..add('dropdownFilter', dropdownFilter))
         .toString();
   }
 }
@@ -306,12 +322,18 @@ class InvoiceUIStateBuilder
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
+  String _dropdownFilter;
+  String get dropdownFilter => _$this._dropdownFilter;
+  set dropdownFilter(String dropdownFilter) =>
+      _$this._dropdownFilter = dropdownFilter;
+
   InvoiceUIStateBuilder();
 
   InvoiceUIStateBuilder get _$this {
     if (_$v != null) {
       _selected = _$v.selected?.toBuilder();
       _listUIState = _$v.listUIState?.toBuilder();
+      _dropdownFilter = _$v.dropdownFilter;
       _$v = null;
     }
     return this;
@@ -334,7 +356,9 @@ class InvoiceUIStateBuilder
     try {
       _$result = _$v ??
           new _$InvoiceUIState._(
-              selected: _selected?.build(), listUIState: listUIState.build());
+              selected: _selected?.build(),
+              listUIState: listUIState.build(),
+              dropdownFilter: dropdownFilter);
     } catch (_) {
       String _$failedField;
       try {

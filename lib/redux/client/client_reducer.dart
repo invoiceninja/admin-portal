@@ -2,6 +2,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/client/client_state.dart';
@@ -10,7 +11,16 @@ EntityUIState clientUIReducer(ClientUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(clientListReducer(state.listUIState, action))
     ..selected.replace(editingReducer(state.selected, action))
+    ..dropdownFilter = entityDropdownFilterReducer(state.dropdownFilter, action)
   );
+}
+
+Reducer<String> entityDropdownFilterReducer = combineReducers([
+  TypedReducer<String, UpdateEntityDropdownFilter>(updateEntityDropdownFilterReducer),
+]);
+
+String updateEntityDropdownFilterReducer(String entityDropdownFilter, UpdateEntityDropdownFilter action) {
+  return action.entityType == EntityType.client ? action.filter : entityDropdownFilter;
 }
 
 final editingReducer = combineReducers<ClientEntity>([

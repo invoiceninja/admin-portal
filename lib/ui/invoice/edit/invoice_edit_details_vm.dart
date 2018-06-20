@@ -48,14 +48,14 @@ class InvoiceEditDetailsVM {
     final invoice = state.invoiceUIState.selected;
 
     return InvoiceEditDetailsVM(
-      invoice: invoice,
-      onChanged: (InvoiceEntity invoice) =>
-          store.dispatch(UpdateInvoice(invoice)),
-      clientList: memoizedDropdownClientList(state.clientState.map,
-          state.clientState.list, state.uiState.entityDropdownFilter),
-      clientMap: state.clientState.map,
-      onEntityFilterChanged: (String filter) =>
-          store.dispatch(UpdateEntityDropdownFilter(filter)),
-    );
+        invoice: invoice,
+        onChanged: (InvoiceEntity invoice) =>
+            store.dispatch(UpdateInvoice(invoice)),
+        clientList: memoizedDropdownClientList(state.clientState.map,
+            state.clientState.list, state.clientUIState.dropdownFilter),
+        clientMap: state.clientState.map,
+        onEntityFilterChanged: (String filter) => store.dispatch(
+            UpdateEntityDropdownFilter(
+                entityType: EntityType.client, filter: filter)));
   }
 }

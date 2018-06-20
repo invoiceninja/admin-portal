@@ -9,6 +9,7 @@ import 'package:redux/redux.dart';
 
 class EntityDropdown extends StatefulWidget {
   EntityDropdown({
+    @required this.entityType,
     @required this.labelText,
     @required this.entityList,
     @required this.entityMap,
@@ -16,6 +17,7 @@ class EntityDropdown extends StatefulWidget {
     this.initialValue,
   });
 
+  final EntityType entityType;
   final List<int> entityList;
   final BuiltMap<int, BaseEntity> entityMap;
   final String labelText;
@@ -30,62 +32,67 @@ class _EntityDropdownState extends State<EntityDropdown> {
   final _focusNode = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChanged);
+  }
+
+  @override
   void dispose() {
+    _focusNode.removeListener(_onFocusChanged);
     _focusNode.dispose();
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  _onFocusChanged() {
+    if (!_focusNode.hasFocus) {
+      return;
+    }
+
+    _focusNode.unfocus();
     var localization = AppLocalization.of(context);
 
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        _focusNode.unfocus();
-
-        _headerRow() {
-          return Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                child: Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                ),
+    _headerRow() {
+      return Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            child: Icon(
+              Icons.search,
+              color: Colors.grey,
+            ),
+          ),
+          Expanded(
+            child: TextField(
+              onChanged: (value) => widget.onFilterChanged(value),
+              autofocus: true,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: localization.filter,
               ),
-              Expanded(
-                child: TextField(
-                  onChanged: (value) => widget.onFilterChanged(value),
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: localization.filter,
-                  ),
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-          );
-        }
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      );
+    }
 
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: StoreBuilder(
-                    builder: (BuildContext context, Store<AppState> store) {
-                  return Column(
-                    children: <Widget>[
-                      Material(
-                        child:
-                            Column(mainAxisSize: MainAxisSize.min, children: <
-                                Widget>[
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: StoreBuilder(
+                builder: (BuildContext context, Store<AppState> store) {
+              return Column(
+                children: <Widget>[
+                  Material(
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
                           _headerRow(),
                           Column(
                               mainAxisSize: MainAxisSize.min,
@@ -94,7 +101,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                                   .map((entityId) {
                                 var entity = widget.entityMap[entityId];
                                 var filter =
-                                    store.state.uiState.entityDropdownFilter;
+                                    store.state.getUIState(widget.entityType).dropdownFilter;
                                 var subtitle = null;
                                 var matchField =
                                     entity.matchesSearchField(filter);
@@ -114,16 +121,17 @@ class _EntityDropdownState extends State<EntityDropdown> {
                                 );
                               }).toList()),
                         ]),
-                      ),
-                      Expanded(child: Container()),
-                    ],
-                  );
-                }),
+                  ),
+                  Expanded(child: Container()),
+                ],
               );
-            });
-      }
-    });
+            }),
+          );
+        });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
       focusNode: _focusNode,
       decoration: InputDecoration(

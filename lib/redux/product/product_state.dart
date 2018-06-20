@@ -50,6 +50,7 @@ abstract class ProductUIState extends Object with EntityUIState implements Built
     return _$ProductUIState._(
       listUIState: ListUIState(ProductFields.productKey),
       selected: ProductEntity(),
+      dropdownFilter: '',
     );
   }
 
