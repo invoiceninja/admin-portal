@@ -15,14 +15,14 @@ class EntityDropdown extends StatefulWidget {
     @required this.entityMap,
     @required this.onFilterChanged,
     @required this.onSelected,
-    this.initialValue,
+    this.value,
   });
 
   final EntityType entityType;
   final List<int> entityList;
   final BuiltMap<int, BaseEntity> entityMap;
   final String labelText;
-  final int initialValue;
+  final String value;
   final Function(String) onFilterChanged;
   final Function(int) onSelected;
 
@@ -32,6 +32,7 @@ class EntityDropdown extends StatefulWidget {
 
 class _EntityDropdownState extends State<EntityDropdown> {
   final _focusNode = FocusNode();
+  final _textController = TextEditingController();
 
   @override
   void initState() {
@@ -41,6 +42,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   void dispose() {
+    _textController.dispose();
     _focusNode.removeListener(_onFocusChanged);
     _focusNode.dispose();
     super.dispose();
@@ -118,7 +120,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
                                   title: Text(entity.listDisplayName),
                                   subtitle:
                                       subtitle != null ? Text(subtitle) : null,
-                                  onTap: () => widget.onSelected(entityId),
+                                  onTap: () {
+                                    _textController.text = widget.entityMap[entityId].listDisplayName;
+                                    widget.onSelected(entityId);
+                                    Navigator.pop(context);
+                                  },
                                 );
                               }).toList()),
                         ]),
@@ -134,6 +140,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: _textController,
       focusNode: _focusNode,
       decoration: InputDecoration(
         labelText: widget.labelText,
