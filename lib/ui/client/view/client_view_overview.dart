@@ -109,30 +109,65 @@ class ClientOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
-        Container(
-          child: Material(
-            type: MaterialType.transparency,
-            child: ListTile(
-              title: Text(localization.invoices),
-              leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () {},
-            ),
-          ),
+        ListTile(
+          title: Text(localization.invoices),
+          leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
+          trailing: Icon(Icons.navigate_next),
+          onTap: () {},
         ),
         Divider(
           height: 1.0,
         ),
-        Container(
-          child: Material(
-            type: MaterialType.transparency,
-            child: ListTile(
-              title: Text(localization.payments),
-              leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () {},
-            ),
-          ),
+        ListTile(
+          title: Text(localization.payments),
+          leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+          trailing: Icon(Icons.navigate_next),
+          onTap: () {},
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        ListTile(
+          title: Text(localization.quotes),
+          leading: Icon(FontAwesomeIcons.fileAltO, size: 18.0),
+          trailing: Icon(Icons.navigate_next),
+          onTap: () {},
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        ListTile(
+          title: Text(localization.projects),
+          leading: Icon(FontAwesomeIcons.briefcase, size: 18.0),
+          trailing: Icon(Icons.navigate_next),
+          onTap: () {},
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        ListTile(
+          title: Text(localization.tasks),
+          leading: Icon(FontAwesomeIcons.clockO, size: 18.0),
+          trailing: Icon(Icons.navigate_next),
+          onTap: () {},
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        ListTile(
+          title: Text(localization.expenses),
+          leading: Icon(FontAwesomeIcons.fileImageO, size: 18.0),
+          trailing: Icon(Icons.navigate_next),
+          onTap: () {},
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        ListTile(
+          title: Text(localization.vendors),
+          leading: Icon(FontAwesomeIcons.building, size: 18.0),
+          trailing: Icon(Icons.navigate_next),
+          onTap: () {},
         ),
         Divider(
           height: 1.0,

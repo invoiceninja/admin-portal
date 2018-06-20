@@ -131,6 +131,24 @@ class AppLocalization {
 
       'payment': 'Payment',
       'payments': 'Payments',
+
+      'quote': 'Quote',
+      'quotes': 'Quotes',
+
+      'expense': 'Expense',
+      'expenses': 'Expenses',
+
+      'vendor': 'Vendor',
+      'vendors': 'Vendors',
+
+      'task': 'Task',
+      'tasks': 'Tasks',
+
+      'project': 'Project',
+      'projects': 'Projects',
+
+
+
     },
   };
 
@@ -248,9 +266,23 @@ class AppLocalization {
   String get contact => _localizedValues[locale.languageCode]['contact'];
   String get workPhone => _localizedValues[locale.languageCode]['work_phone'];
 
-
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
+
+  String get quote => _localizedValues[locale.languageCode]['quote'];
+  String get quotes => _localizedValues[locale.languageCode]['quotes'];
+
+  String get expense => _localizedValues[locale.languageCode]['expense'];
+  String get expenses => _localizedValues[locale.languageCode]['expenses'];
+
+  String get vendor => _localizedValues[locale.languageCode]['vendor'];
+  String get vendors => _localizedValues[locale.languageCode]['vendors'];
+
+  String get task => _localizedValues[locale.languageCode]['task'];
+  String get tasks => _localizedValues[locale.languageCode]['tasks'];
+
+  String get project => _localizedValues[locale.languageCode]['project'];
+  String get projects => _localizedValues[locale.languageCode]['projects'];
 
 
   String lookup(String key) {    
