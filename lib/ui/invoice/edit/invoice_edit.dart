@@ -66,17 +66,6 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   return;
                 }
 
-                _formKey.currentState.save();
-
-                //var detailsState = _detailsKey.currentState;
-                //var itemsState = _itemsKey.currentState;
-
-                /*
-                InvoiceEntity invoice = widget.viewModel.invoice.rebuild((b) => b
-                  ..items.replace(
-                      itemState?.getItems() ?? widget.viewModel.invoice.items));
-                */
-
                 widget.viewModel.onSavePressed(context);
               },
             )

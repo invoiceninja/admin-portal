@@ -19,7 +19,6 @@ class InvoiceEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceEditVM>(
-      //ignoreChange: (state) => invoiceSelector(state.invoice().list, id).isNotPresent,
       converter: (Store<AppState> store) {
         return InvoiceEditVM.fromStore(store);
       },
