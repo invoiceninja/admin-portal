@@ -33,7 +33,6 @@ class InvoiceViewScreen extends StatelessWidget {
 class InvoiceViewVM {
   final InvoiceEntity invoice;
   final ClientEntity client;
-  final Function onDelete;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
   final Function(BuildContext) onClientPressed;
@@ -43,7 +42,6 @@ class InvoiceViewVM {
   InvoiceViewVM({
     @required this.invoice,
     @required this.client,
-    @required this.onDelete,
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.onClientPressed,
@@ -60,7 +58,6 @@ class InvoiceViewVM {
         isDirty: invoice.isNew(),
         invoice: invoice,
         client: client,
-        onDelete: () => false,
         onEditPressed: (BuildContext context) {
           store.dispatch(EditInvoice(invoice: invoice, context: context));
         },

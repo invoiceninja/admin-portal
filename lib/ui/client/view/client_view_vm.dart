@@ -31,7 +31,6 @@ class ClientViewScreen extends StatelessWidget {
 
 class ClientViewVM {
   final ClientEntity client;
-  final Function onDelete;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
   final bool isLoading;
@@ -39,7 +38,6 @@ class ClientViewVM {
 
   ClientViewVM({
     @required this.client,
-    @required this.onDelete,
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.isLoading,
@@ -53,7 +51,6 @@ class ClientViewVM {
       isLoading: store.state.isLoading,
       isDirty: client.isNew(),
       client: client,
-      onDelete: () => false,
       onEditPressed: (BuildContext context) {
         store.dispatch(EditClient(client: client, context: context));
       },

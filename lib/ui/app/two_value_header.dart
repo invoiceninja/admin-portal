@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class TwoValueHeader extends StatelessWidget {
   TwoValueHeader({this.label1, this.label2, this.value1, this.value2});
-  String label1;
-  String label2;
-  double value1;
-  double value2;
+  final String label1;
+  final String label2;
+  final double value1;
+  final double value2;
 
   @override
   Widget build(BuildContext context) {
