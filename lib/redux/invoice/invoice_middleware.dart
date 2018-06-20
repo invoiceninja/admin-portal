@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
@@ -34,8 +35,8 @@ Middleware<AppState> _viewInvoice() {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
 
-    //store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-    //Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
+    store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+    Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
   };
 }
 

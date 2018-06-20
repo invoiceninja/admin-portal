@@ -9,7 +9,6 @@ import 'package:invoiceninja/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja/utils/localization.dart';
-import 'package:redux/redux.dart';
 
 class ClientView extends StatefulWidget {
   final ClientViewVM viewModel;

@@ -32,7 +32,6 @@ class ClientViewScreen extends StatelessWidget {
 class ClientViewVM {
   final ClientEntity client;
   final Function onDelete;
-  final Function(BuildContext, ClientEntity) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
   final bool isLoading;
@@ -41,7 +40,6 @@ class ClientViewVM {
   ClientViewVM({
     @required this.client,
     @required this.onDelete,
-    @required this.onSavePressed,
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.isLoading,
@@ -58,19 +56,6 @@ class ClientViewVM {
       onDelete: () => false,
       onEditPressed: (BuildContext context) {
         store.dispatch(EditClient(client: client, context: context));
-      },
-      onSavePressed: (BuildContext context, ClientEntity client) {
-        final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveClientRequest(completer: completer, client: client));
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-                message: client.isNew()
-                    ? AppLocalization.of(context).successfullyCreatedClient
-                    : AppLocalization.of(context).successfullyUpdatedClient,
-              ),
-              duration: Duration(seconds: 3)));
-        });
       },
       onActionSelected: (BuildContext context, EntityAction action) {
         final Completer<Null> completer = new Completer<Null>();

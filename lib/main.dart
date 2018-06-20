@@ -9,6 +9,7 @@ import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -111,7 +112,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             widget.store.dispatch(LoadInvoices());
             return InvoiceScreen();
           },
-          //InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
+          InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
           InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
         },
       ),
