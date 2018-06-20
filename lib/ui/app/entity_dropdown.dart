@@ -97,9 +97,12 @@ class _EntityDropdownState extends State<EntityDropdown> {
                                 var filter =
                                     store.state.uiState.entityDropdownFilter;
                                 var subtitle = null;
-                                var matchField = entity.matchesSearchField(filter);
+                                var matchField =
+                                    entity.matchesSearchField(filter);
                                 if (matchField != null) {
-                                  subtitle = matchField + ': ' + entity.matchesSearchValue(filter);
+                                  var field = localization.lookup(matchField);
+                                  var value = entity.matchesSearchValue(filter);
+                                  subtitle = '$field: $value';
                                 }
                                 return ListTile(
                                   dense: true,

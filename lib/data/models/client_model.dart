@@ -32,6 +32,7 @@ class ClientFields {
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
+  static const String contact = 'contact';
 }
 
 
@@ -237,8 +238,15 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
 
     if (vatNumber.toLowerCase().contains(search)) {
       return ClientFields.vatNumber;
-    } else if (idNumber.toLowerCase().contains(search)) {
+    }
+
+    if (idNumber.toLowerCase().contains(search)) {
       return ClientFields.idNumber;
+    }
+
+    var contact = contacts.where((contact) => contact.matchesSearch(search)).first;
+    if (contact != null) {
+      return contact.matchesSearchField(search);
     }
 
     return null;
@@ -252,8 +260,15 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     search = search.toLowerCase();
     if (vatNumber.toLowerCase().contains(search)) {
       return vatNumber;
-    } else if (idNumber.toLowerCase().contains(search)) {
+    }
+
+    if (idNumber.toLowerCase().contains(search)) {
       return idNumber;
+    }
+
+    var contact = contacts.where((contact) => contact.matchesSearch(search)).first;
+    if (contact != null) {
+      return contact.matchesSearchValue(search);
     }
 
     return null;
@@ -263,6 +278,13 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
 
+
+class ContactFields {
+  static const String firstName = 'firstName';
+  static const String lastName = 'lastName';
+  static const String email = 'email';
+  static const String phone = 'phone';
+}
 
 abstract class ContactEntity extends Object with BaseEntity implements Built<ContactEntity, ContactEntityBuilder> {
 
@@ -305,6 +327,59 @@ abstract class ContactEntity extends Object with BaseEntity implements Built<Con
 
   String fullName () {
     return (firstName + ' ' + lastName).trim();
+  }
+
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+    search = search.toLowerCase();
+    if (firstName.toLowerCase().contains(search)) {
+      return true;
+    }
+    if (lastName.toLowerCase().contains(search)) {
+      return true;
+    }
+    if (phone.toLowerCase().contains(search)) {
+      return true;
+    }
+    if (email.toLowerCase().contains(search)) {
+      return true;
+    }
+    return false;
+  }
+
+  String matchesSearchField(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+    search = search.toLowerCase();
+    if (fullName().toLowerCase().contains(search)) {
+      return ClientFields.contact;
+    } else if (email.toLowerCase().contains(search)) {
+      return ContactFields.email;
+    } else if (phone.toLowerCase().contains(search)) {
+      return ContactFields.phone;
+    }
+
+    return null;
+  }
+
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    search = search.toLowerCase();
+    if (fullName().toLowerCase().contains(search)) {
+      return fullName();
+    } else if (email.toLowerCase().contains(search)) {
+      return email;
+    } else if (phone.toLowerCase().contains(search)) {
+      return phone;
+    }
+
+    return null;
   }
 
 
