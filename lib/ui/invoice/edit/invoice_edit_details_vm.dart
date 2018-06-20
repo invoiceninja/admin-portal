@@ -57,7 +57,7 @@ class InvoiceEditDetailsVM {
       invoice: invoice,
       onChanged: (InvoiceEntity invoice) =>
           store.dispatch(UpdateInvoice(invoice)),
-      clientList: dropdownClientsSelector(state.clientState.map,
+      clientList: memoizedDropdownClientList(state.clientState.map,
           state.clientState.list, state.uiState.entityDropdownFilter),
       clientMap: state.clientState.map,
       onEntityFilterChanged: (String filter) =>

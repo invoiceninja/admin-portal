@@ -26,6 +26,8 @@ abstract class ClientItemResponse implements Built<ClientItemResponse, ClientIte
 class ClientFields {
   static const String name = 'name';
   static const String balance = 'balance';
+  static const String vatNumber = 'vatNumber';
+  static const String idNumber = 'idNumber';
   static const String paidToDate = 'paidToDate';
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
@@ -208,10 +210,53 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     if (search == null || search.isEmpty) {
       return true;
     }
+    search = search.toLowerCase();
+    if (displayName.toLowerCase().contains(search)) {
+      return true;
+    }
+    if (vatNumber.toLowerCase().contains(search)) {
+      return true;
+    }
+    if (idNumber.toLowerCase().contains(search)) {
+      return true;
+    }
+    if (contacts.where((contact) => contact.matchesSearch(search)).length > 0) {
+      return true;
+    }
+    return false;
+  }
+
+  String matchesSearchField(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+    search = search.toLowerCase();
+    if (displayName.toLowerCase().contains(search)) {
+      return null;
+    }
+
+    if (vatNumber.toLowerCase().contains(search)) {
+      return ClientFields.vatNumber;
+    } else if (idNumber.toLowerCase().contains(search)) {
+      return ClientFields.idNumber;
+    }
+
+    return null;
+  }
+
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
 
     search = search.toLowerCase();
+    if (vatNumber.toLowerCase().contains(search)) {
+      return vatNumber;
+    } else if (idNumber.toLowerCase().contains(search)) {
+      return idNumber;
+    }
 
-    return displayName.toLowerCase().contains(search);
+    return null;
   }
 
   ClientEntity._();

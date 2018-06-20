@@ -39,8 +39,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    var entityList = widget.entityList;
-    var entityMap = widget.entityMap;
 
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
@@ -66,15 +64,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   ),
                 ),
               ),
-              /*
-                        FlatButton(
-                          child: Text(localization.cancel),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        RaisedButton(
-                          child: Text(localization.create),
-                        ),
-                        */
               IconButton(
                 icon: Icon(Icons.close),
                 onPressed: () {
@@ -95,25 +84,34 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   return Column(
                     children: <Widget>[
                       Material(
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              _headerRow(),
-                              Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: widget.entityList
-                                      .getRange(
-                                          0, min(6, widget.entityList.length))
-                                      .map((entityId) => ListTile(
-                                            dense: true,
-                                            title: Text(entityMap[entityId]
-                                                .listDisplayName),
-                                            onTap: () {
-                                              //
-                                            },
-                                          ))
-                                      .toList()),
-                            ]),
+                        child:
+                            Column(mainAxisSize: MainAxisSize.min, children: <
+                                Widget>[
+                          _headerRow(),
+                          Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: widget.entityList
+                                  .getRange(0, min(6, widget.entityList.length))
+                                  .map((entityId) {
+                                var entity = widget.entityMap[entityId];
+                                var filter =
+                                    store.state.uiState.entityDropdownFilter;
+                                var subtitle = null;
+                                var matchField = entity.matchesSearchField(filter);
+                                if (matchField != null) {
+                                  subtitle = matchField + ': ' + entity.matchesSearchValue(filter);
+                                }
+                                return ListTile(
+                                  dense: true,
+                                  title: Text(entity.listDisplayName),
+                                  subtitle:
+                                      subtitle != null ? Text(subtitle) : null,
+                                  onTap: () {
+                                    //
+                                  },
+                                );
+                              }).toList()),
+                        ]),
                       ),
                       Expanded(child: Container()),
                     ],

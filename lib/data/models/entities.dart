@@ -76,6 +76,10 @@ abstract class BaseEntity {
     return null;
   }
 
+  String matchesSearchValue(String search) {
+    return null;
+  }
+
   bool isNew() {
     return this.id == null || this.id < 0;
   }
