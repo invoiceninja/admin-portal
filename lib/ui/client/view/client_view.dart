@@ -1,10 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:redux/redux.dart';
 
 class ClientView extends StatefulWidget {
   final ClientViewVM viewModel;
@@ -37,11 +42,13 @@ class _ClientViewState extends State<ClientView>
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
+    var store = StoreProvider.of<AppState>(context);
+    var client = widget.viewModel.client;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.viewModel.client
-            .displayName ?? ''), // Text(localizations.clientDetails),
+        title: Text(widget.viewModel.client.displayName ??
+            ''), // Text(localizations.clientDetails),
         bottom: TabBar(
           controller: _controller,
           //isScrollable: true,
@@ -81,24 +88,34 @@ class _ClientViewState extends State<ClientView>
         onPressed: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => SimpleDialog(
-                    children: <Widget>[
-                      ListTile(
-                        dense: true,
-                        leading: Icon(Icons.add_circle_outline),
-                        title: Text(localization.invoice),
-                        onTap: () {},
-                      ),
-                      ListTile(
-                        dense: true,
-                        leading: Icon(Icons.add_circle_outline),
-                        title: Text(localization.payment),
-                        onTap: () {},
-                      ),
-                    ]),
+            builder: (BuildContext context) => SimpleDialog(children: <Widget>[
+                  ListTile(
+                    dense: true,
+                    leading: Icon(Icons.add_circle_outline),
+                    title: Text(localization.invoice),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      store.dispatch(EditInvoice(
+                          invoice: InvoiceEntity()
+                              .rebuild((b) => b.clientId = client.id),
+                          context: context));
+                    },
+                  ),
+                  /*
+                  ListTile(
+                    dense: true,
+                    leading: Icon(Icons.add_circle_outline),
+                    title: Text(localization.payment),
+                    onTap: () {},
+                  ),
+                  */
+                ]),
           );
         },
-        child: Icon(Icons.add, color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         tooltip: localization.create,
       ),
     );
