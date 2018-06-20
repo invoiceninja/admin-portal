@@ -31,7 +31,7 @@ class ProjectsRepository {
     var data = serializers.serializeWith(ProjectEntity.serializer, project);
     var response;
 
-    if (project.id == null) {
+    if (project.isNew()) {
       response = await webClient.post(
           auth.url + '/projects', company.token, json.encode(data));
     } else {

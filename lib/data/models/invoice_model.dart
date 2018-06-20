@@ -260,7 +260,8 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
   static int counter = 0;
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
-      id: --InvoiceItemEntity.counter
+      id: --InvoiceItemEntity.counter,
+      qty: 1.0,
     );
   }
 

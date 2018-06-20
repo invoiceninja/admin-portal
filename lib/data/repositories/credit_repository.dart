@@ -31,7 +31,7 @@ class CreditsRepository {
     var data = serializers.serializeWith(CreditEntity.serializer, credit);
     var response;
 
-    if (credit.id == null) {
+    if (credit.isNew()) {
       response = await webClient.post(
           auth.url + '/credits', company.token, json.encode(data));
     } else {
