@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
+import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
@@ -73,6 +74,15 @@ class InvoiceEditVM {
           store.dispatch(
               SaveInvoiceRequest(completer: completer, invoice: invoice));
           return completer.future.then((_) {
+            if (invoice.isNew()) {
+              Navigator.of(context).pop();
+              Navigator
+                  .of(context)
+                  .push(MaterialPageRoute(builder: (_) => InvoiceViewScreen()));
+            } else {
+              Navigator.of(context).pop();
+            }
+            /*
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: invoice.isNew()
@@ -80,6 +90,7 @@ class InvoiceEditVM {
                       : AppLocalization.of(context).successfullyUpdatedInvoice,
                 ),
                 duration: Duration(seconds: 3)));
+                */
           });
         },
         onActionSelected: (BuildContext context, EntityAction action) {

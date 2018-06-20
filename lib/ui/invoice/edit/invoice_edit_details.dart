@@ -61,6 +61,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
   _onChanged() {
     var invoice = widget.viewModel.invoice.rebuild((b) => b
+      ..invoiceNumber = widget.viewModel.invoice.isNew() ? null : _invoiceNumberController.text.trim()
       ..poNumber = _poNumberController.text.trim()
       ..discount = double.tryParse(_discountController.text) ?? 0.0
       ..partial = double.tryParse(_partialController.text) ?? 0.0

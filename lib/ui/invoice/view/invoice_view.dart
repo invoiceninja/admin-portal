@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja/ui/app/two_value_header.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
@@ -42,7 +44,7 @@ class _InvoiceViewState extends State<InvoiceView>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.viewModel.invoice.invoiceNumber ?? ''), // Text(localizations.invoiceDetails),
+        title: Text((localization.invoice + ' ' + widget.viewModel.invoice.invoiceNumber) ?? ''), // Text(localizations.invoiceDetails),
         actions: widget.viewModel.invoice.isNew()
             ? []
             : [
@@ -58,7 +60,28 @@ class _InvoiceViewState extends State<InvoiceView>
           )
         ],
       ),
-      body: Text('test'),
+      body: ListView(
+        children: <Widget>[
+          TwoValueHeader(
+            label1: localization.totalAmount,
+            value1: invoice.amount,
+            label2: localization.balanceDue,
+            value2: invoice.balance,
+          ),
+          Divider(
+            height: 1.0,
+          ),
+          ListTile(
+            title: Text(widget.viewModel.client?.displayName ?? ''),
+            leading: Icon(FontAwesomeIcons.users, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () => widget.viewModel.onClientPressed(context),
+          ),
+          Divider(
+            height: 1.0,
+          ),
+        ],
+      ),
     );
   }
 }
