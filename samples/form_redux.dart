@@ -241,6 +241,7 @@ class ContactsPage extends StatelessWidget {
 
       return ListView(
         children: []
+          ..addAll(contacts)
           ..add(Padding(
             padding: const EdgeInsets.all(12.0),
             child: RaisedButton(

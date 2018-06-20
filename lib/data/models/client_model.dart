@@ -33,6 +33,7 @@ class ClientFields {
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
   static const String contact = 'contact';
+  static const String workPhone = 'workPhone';
 }
 
 
@@ -221,6 +222,9 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     if (idNumber.toLowerCase().contains(search)) {
       return true;
     }
+    if (workPhone.toLowerCase().contains(search)) {
+      return true;
+    }
     if (contacts.where((contact) => contact.matchesSearch(search)).length > 0) {
       return true;
     }
@@ -235,15 +239,15 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     if (displayName.toLowerCase().contains(search)) {
       return null;
     }
-
     if (vatNumber.toLowerCase().contains(search)) {
       return ClientFields.vatNumber;
     }
-
     if (idNumber.toLowerCase().contains(search)) {
       return ClientFields.idNumber;
     }
-
+    if (workPhone.toLowerCase().contains(search)) {
+      return ClientFields.workPhone;
+    }
     var contact = contacts.where((contact) => contact.matchesSearch(search)).first;
     if (contact != null) {
       return contact.matchesSearchField(search);
@@ -261,11 +265,12 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     if (vatNumber.toLowerCase().contains(search)) {
       return vatNumber;
     }
-
     if (idNumber.toLowerCase().contains(search)) {
       return idNumber;
     }
-
+    if (workPhone.toLowerCase().contains(search)) {
+      return workPhone;
+    }
     var contact = contacts.where((contact) => contact.matchesSearch(search)).first;
     if (contact != null) {
       return contact.matchesSearchValue(search);
@@ -381,7 +386,6 @@ abstract class ContactEntity extends Object with BaseEntity implements Built<Con
 
     return null;
   }
-
 
   ContactEntity._();
   static Serializer<ContactEntity> get serializer => _$contactEntitySerializer;

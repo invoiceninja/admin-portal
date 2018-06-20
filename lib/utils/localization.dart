@@ -127,6 +127,7 @@ class AppLocalization {
       'quantity': 'Quantity',
       'add_item': 'Add Item',
       'contact': 'Contact',
+      'work_phone': 'Phone',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -245,6 +246,7 @@ class AppLocalization {
   String get quantity => _localizedValues[locale.languageCode]['quantity'];
   String get addItem => _localizedValues[locale.languageCode]['add_item'];
   String get contact => _localizedValues[locale.languageCode]['contact'];
+  String get workPhone => _localizedValues[locale.languageCode]['work_phone'];
 
 
   String get payment => _localizedValues[locale.languageCode]['payment'];

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -11,7 +10,6 @@ import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/client/client_selectors.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
 class InvoiceEditScreen extends StatelessWidget {
