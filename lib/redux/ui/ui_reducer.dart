@@ -11,10 +11,19 @@ UIState uiReducer(UIState state, action) {
   return state.rebuild((b) => b
     ..selectedCompanyIndex = selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
+    ..entityDropdownFilter = entityDropdownFilterReducer(state.entityDropdownFilter, action)
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
   );
+}
+
+Reducer<String> entityDropdownFilterReducer = combineReducers([
+  TypedReducer<String, UpdateEntityDropdownFilter>(updateEntityDropdownFilterReducer),
+]);
+
+String updateEntityDropdownFilterReducer(String currentRoute, UpdateEntityDropdownFilter action) {
+  return action.filter;
 }
 
 Reducer<String> currentRouteReducer = combineReducers([

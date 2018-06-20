@@ -15,6 +15,9 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   ClientUIState get clientUIState;
   InvoiceUIState get invoiceUIState;
 
+  @nullable
+  String get entityDropdownFilter;
+
   factory UIState() {
     return _$UIState._(
       selectedCompanyIndex: 0,

@@ -1,7 +1,10 @@
 import 'dart:math';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class EntityDropdown extends StatefulWidget {
@@ -9,6 +12,7 @@ class EntityDropdown extends StatefulWidget {
     @required this.labelText,
     @required this.entityList,
     @required this.entityMap,
+    @required this.onFilterChanged,
     this.initialValue,
   });
 
@@ -16,6 +20,7 @@ class EntityDropdown extends StatefulWidget {
   final BuiltMap<int, BaseEntity> entityMap;
   final String labelText;
   final int initialValue;
+  final Function(String) onFilterChanged;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -23,7 +28,7 @@ class EntityDropdown extends StatefulWidget {
 
 class _EntityDropdownState extends State<EntityDropdown> {
   final _focusNode = FocusNode();
-  
+
   @override
   void dispose() {
     _focusNode.dispose();
@@ -52,9 +57,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
               ),
               Expanded(
                 child: TextField(
-                  onChanged: (value) {
-                    print('value: $value');
-                  },
+                  onChanged: (value) => widget.onFilterChanged(value),
                   autofocus: true,
                   decoration: InputDecoration(
                     border: InputBorder.none,

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -42,9 +43,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
     var invoice = viewModel.invoice;
 
     List<Widget> editors = [
-      InvoiceEditDetails(
-        viewModel: viewModel,
-      ),
+      InvoiceEditDetailsScreen(),
       InvoiceEditItems(
         viewModel: viewModel,
       ),

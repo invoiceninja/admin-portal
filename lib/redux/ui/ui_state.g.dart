@@ -42,6 +42,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
     ];
+    if (object.entityDropdownFilter != null) {
+      result
+        ..add('entityDropdownFilter')
+        ..add(serializers.serialize(object.entityDropdownFilter,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -77,6 +83,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
           break;
+        case 'entityDropdownFilter':
+          result.entityDropdownFilter = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -95,6 +105,8 @@ class _$UIState extends UIState {
   final ClientUIState clientUIState;
   @override
   final InvoiceUIState invoiceUIState;
+  @override
+  final String entityDropdownFilter;
 
   factory _$UIState([void updates(UIStateBuilder b)]) =>
       (new UIStateBuilder()..update(updates)).build();
@@ -104,7 +116,8 @@ class _$UIState extends UIState {
       this.currentRoute,
       this.productUIState,
       this.clientUIState,
-      this.invoiceUIState})
+      this.invoiceUIState,
+      this.entityDropdownFilter})
       : super._() {
     if (selectedCompanyIndex == null)
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
@@ -133,7 +146,8 @@ class _$UIState extends UIState {
         currentRoute == other.currentRoute &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
-        invoiceUIState == other.invoiceUIState;
+        invoiceUIState == other.invoiceUIState &&
+        entityDropdownFilter == other.entityDropdownFilter;
   }
 
   @override
@@ -141,11 +155,13 @@ class _$UIState extends UIState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc(0, selectedCompanyIndex.hashCode),
-                    currentRoute.hashCode),
-                productUIState.hashCode),
-            clientUIState.hashCode),
-        invoiceUIState.hashCode));
+                $jc(
+                    $jc($jc(0, selectedCompanyIndex.hashCode),
+                        currentRoute.hashCode),
+                    productUIState.hashCode),
+                clientUIState.hashCode),
+            invoiceUIState.hashCode),
+        entityDropdownFilter.hashCode));
   }
 
   @override
@@ -155,7 +171,8 @@ class _$UIState extends UIState {
           ..add('currentRoute', currentRoute)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
-          ..add('invoiceUIState', invoiceUIState))
+          ..add('invoiceUIState', invoiceUIState)
+          ..add('entityDropdownFilter', entityDropdownFilter))
         .toString();
   }
 }
@@ -190,6 +207,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
 
+  String _entityDropdownFilter;
+  String get entityDropdownFilter => _$this._entityDropdownFilter;
+  set entityDropdownFilter(String entityDropdownFilter) =>
+      _$this._entityDropdownFilter = entityDropdownFilter;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
@@ -199,6 +221,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
+      _entityDropdownFilter = _$v.entityDropdownFilter;
       _$v = null;
     }
     return this;
@@ -225,7 +248,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               currentRoute: currentRoute,
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
-              invoiceUIState: invoiceUIState.build());
+              invoiceUIState: invoiceUIState.build(),
+              entityDropdownFilter: entityDropdownFilter);
     } catch (_) {
       String _$failedField;
       try {

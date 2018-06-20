@@ -36,8 +36,6 @@ class InvoiceEditScreen extends StatelessWidget {
 
 class InvoiceEditVM {
   final InvoiceEntity invoice;
-  final List<int> clientList;
-  final BuiltMap<int, ClientEntity> clientMap;
   final Function(InvoiceEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
@@ -49,8 +47,6 @@ class InvoiceEditVM {
 
   InvoiceEditVM({
     @required this.invoice,
-    @required this.clientList,
-    @required this.clientMap,
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onAddInvoiceItemPressed,
@@ -68,9 +64,6 @@ class InvoiceEditVM {
     return InvoiceEditVM(
         isLoading: state.isLoading,
         invoice: invoice,
-        clientList: memoizedActiveClientList(
-            state.clientState.map, state.clientState.list),
-        clientMap: state.clientState.map,
         onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onAddInvoiceItemPressed: () => store.dispatch(AddInvoiceItem()),
         onRemoveInvoiceItemPressed: (index) => store.dispatch(DeleteInvoiceItem(index)),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
@@ -12,7 +13,7 @@ class InvoiceEditDetails extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final InvoiceEditVM viewModel;
+  final InvoiceEditDetailsVM viewModel;
 
   @override
   InvoiceEditDetailsState createState() => new InvoiceEditDetailsState();
@@ -86,6 +87,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     labelText: localization.client,
                     entityList: viewModel.clientList,
                     entityMap: viewModel.clientMap,
+                    onFilterChanged: viewModel.onEntityFilterChanged,
                 ) : TextFormField(
                     autocorrect: false,
                     controller: _invoiceNumberController,
