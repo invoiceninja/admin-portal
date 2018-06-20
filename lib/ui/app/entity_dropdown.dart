@@ -6,6 +6,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:redux/redux.dart';
 
 class EntityDropdown extends StatefulWidget {
   EntityDropdown({
@@ -89,31 +90,35 @@ class _EntityDropdownState extends State<EntityDropdown> {
             builder: (BuildContext context) {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: <Widget>[
-                    Material(
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            _headerRow(),
-                            Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: entityList
-                                    .getRange(0, min(6, entityList.length))
-                                    .map((entityId) => ListTile(
-                                          dense: true,
-                                          title: Text(entityMap[entityId]
-                                              .listDisplayName),
-                                          onTap: () {
-                                            //
-                                          },
-                                        ))
-                                    .toList()),
-                          ]),
-                    ),
-                    Expanded(child: Container()),
-                  ],
-                ),
+                child: StoreBuilder(
+                    builder: (BuildContext context, Store<AppState> store) {
+                  return Column(
+                    children: <Widget>[
+                      Material(
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              _headerRow(),
+                              Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: widget.entityList
+                                      .getRange(
+                                          0, min(6, widget.entityList.length))
+                                      .map((entityId) => ListTile(
+                                            dense: true,
+                                            title: Text(entityMap[entityId]
+                                                .listDisplayName),
+                                            onTap: () {
+                                              //
+                                            },
+                                          ))
+                                      .toList()),
+                            ]),
+                      ),
+                      Expanded(child: Container()),
+                    ],
+                  );
+                }),
               );
             });
       }

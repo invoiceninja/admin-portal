@@ -3,17 +3,24 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 
-var memoizedActiveClientList = memo2((
+var memoizedDropdownClientList = memo3((
     BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList) => activeClientsSelector(clientMap, clientList)
+    BuiltList<int> clientList,
+    String filter) => dropdownClientsSelector(clientMap, clientList, filter)
 );
 
-List<int> activeClientsSelector(
+List<int> dropdownClientsSelector(
     BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList,) {
+    BuiltList<int> clientList,
+    String filter) {
 
+  print('search for ${filter}');
   var list = clientList.where((clientId) {
-    return clientMap[clientId].isActive();
+    var client = clientMap[clientId];
+    if (! client.isActive()) {
+      return false;
+    }
+    return client.matchesSearch(filter);
   }).toList();
 
   list.sort((clientAId, clientBId) {
@@ -21,7 +28,7 @@ List<int> activeClientsSelector(
     var clientB = clientMap[clientBId];
     return clientA.compareTo(clientB, ClientFields.name, true);
   });
-
+  print(list.toString());
   return list;
 }
 
@@ -42,10 +49,7 @@ List<int> visibleClientsSelector(
     if (! client.matchesStates(clientListState.stateFilters)) {
       return false;
     }
-    if (! client.matchesSearch(clientListState.search)) {
-      return false;
-    }
-    return true;
+    return client.matchesSearch(clientListState.search);
   }).toList();
 
   list.sort((clientAId, clientBId) {
