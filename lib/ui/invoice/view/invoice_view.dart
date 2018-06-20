@@ -7,6 +7,7 @@ import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/two_value_header.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:share/share.dart';
 
 class InvoiceView extends StatefulWidget {
   final InvoiceViewVM viewModel;
@@ -59,6 +60,12 @@ class _InvoiceViewState extends State<InvoiceView>
             onSelected: widget.viewModel.onActionSelected,
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print('pressed');
+            Share.share('testing');
+          }
       ),
       body: ListView(
         children: <Widget>[

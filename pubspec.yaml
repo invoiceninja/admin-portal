@@ -21,6 +21,8 @@ dependencies:
   memoize: "^1.4.0"
   url_launcher: "^3.0.2"
   cached_network_image: "^0.4.1"
+  share: "^0.5.2"
+
 
 dev_dependencies:
   flutter_driver:
