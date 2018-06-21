@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/two_value_header.dart';
@@ -44,11 +45,11 @@ class _InvoiceViewState extends State<InvoiceView>
     var invoice = widget.viewModel.invoice;
 
     _launchURL() async {
-      const url = 'https://flutter.io';
+      var url = 'http://www.google.com';
       if (await canLaunch(url)) {
-        await launch(url);
+        await launch(url, forceSafariVC: false, forceWebView: false);
       } else {
-        throw 'Could not launch $url';
+        throw '${localization.couldNotLaunch}';
       }
     }
 
@@ -65,15 +66,22 @@ class _InvoiceViewState extends State<InvoiceView>
             },
           ),
           ActionMenuButton(
+            customActions: [
+              ActionMenuChoice(
+                action: EntityAction.email,
+                icon: Icons.send,
+                label: AppLocalization.of(context).email,
+              ),
+              ActionMenuChoice(
+                action: EntityAction.pdf,
+                icon: Icons.picture_as_pdf,
+                label: AppLocalization.of(context).pdf,
+              ),
+            ],
             entity: widget.viewModel.invoice,
             onSelected: widget.viewModel.onActionSelected,
           )
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _launchURL();
-          }
       ),
       body: ListView(
         children: <Widget>[

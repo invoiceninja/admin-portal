@@ -18,7 +18,7 @@ class InvoiceRepository {
   Future<BuiltList<InvoiceEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
     final response = await webClient.get(
-        auth.url + '/invoices?per_page=500', company.token);
+        auth.url + '/invoices?include=invitations&per_page=500', company.token);
 
     InvoiceListResponse invoiceResponse = serializers.deserializeWith(
         InvoiceListResponse.serializer, response);

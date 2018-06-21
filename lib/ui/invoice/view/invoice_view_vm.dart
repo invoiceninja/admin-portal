@@ -10,6 +10,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
   static final String route = '/invoice/view';
@@ -53,6 +54,26 @@ class InvoiceViewVM {
     final invoice = store.state.invoiceUIState.selected;
     final client = store.state.clientState.map[invoice.clientId];
 
+    Future<Null> _viewPdf(BuildContext context) async {
+      var localization = AppLocalization.of(context);
+      var url;
+      var useWebView;
+
+      if (Theme.of(context).platform == TargetPlatform.iOS) {
+        url = invoice.invitationSilentLink;
+        useWebView = true;
+      } else {
+        url = 'https://docs.google.com/viewer?url=' +  invoice.invitationDownloadLink;
+        useWebView = false;
+      }
+
+      if (await canLaunch(url)) {
+        await launch(url, forceSafariVC: useWebView, forceWebView: useWebView);
+      } else {
+        throw '${localization.anErrorOccurred}';
+      }
+    }
+
     return InvoiceViewVM(
         isLoading: store.state.isLoading,
         isDirty: invoice.isNew(),
@@ -66,8 +87,11 @@ class InvoiceViewVM {
         },
         onActionSelected: (BuildContext context, EntityAction action) {
           final Completer<Null> completer = new Completer<Null>();
-          var message = '';
+          var message;
           switch (action) {
+            case EntityAction.pdf:
+              _viewPdf(context);
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(completer, invoice.id));
               message = AppLocalization.of(context).successfullyArchivedInvoice;
@@ -81,13 +105,15 @@ class InvoiceViewVM {
               message = AppLocalization.of(context).successfullyRestoredInvoice;
               break;
           }
-          return completer.future.then((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: message,
-                ),
-                duration: Duration(seconds: 3)));
-          });
+          if (message != null) {
+            return completer.future.then((_) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: SnackBarRow(
+                    message: message,
+                  ),
+                  duration: Duration(seconds: 3)));
+            });
+          }
         }
     );
   }

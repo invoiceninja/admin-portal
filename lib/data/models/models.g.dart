@@ -19,7 +19,9 @@ const EntityAction _$delete = const EntityAction._('delete');
 const EntityAction _$restore = const EntityAction._('restore');
 const EntityAction _$clone = const EntityAction._('clone');
 const EntityAction _$download = const EntityAction._('download');
+const EntityAction _$email = const EntityAction._('email');
 const EntityAction _$invoice = const EntityAction._('invoice');
+const EntityAction _$pdf = const EntityAction._('pdf');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -33,8 +35,12 @@ EntityAction _$valueOf(String name) {
       return _$clone;
     case 'download':
       return _$download;
+    case 'email':
+      return _$email;
     case 'invoice':
       return _$invoice;
+    case 'pdf':
+      return _$pdf;
     default:
       throw new ArgumentError(name);
   }
@@ -47,7 +53,9 @@ final BuiltSet<EntityAction> _$values =
   _$restore,
   _$clone,
   _$download,
+  _$email,
   _$invoice,
+  _$pdf,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

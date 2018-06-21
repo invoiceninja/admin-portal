@@ -129,6 +129,7 @@ class AppLocalization {
       'contact': 'Contact',
       'work_phone': 'Phone',
       'total_amount': 'Total Amount',
+      'pdf': 'PDF',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -185,6 +186,7 @@ class AppLocalization {
   String get ascending => _localizedValues[locale.languageCode]['ascending'];
   String get descending => _localizedValues[locale.languageCode]['descending'];
   String get save => _localizedValues[locale.languageCode]['save'];
+  String get anErrorOccurred => _localizedValues[locale.languageCode]['an_error_occurred'];
   String get paidToDate => _localizedValues[locale.languageCode]['paid_to_date'];
   String get balanceDue => _localizedValues[locale.languageCode]['balance_due'];
   String get balance => _localizedValues[locale.languageCode]['balance'];
@@ -267,6 +269,7 @@ class AppLocalization {
   String get contact => _localizedValues[locale.languageCode]['contact'];
   String get workPhone => _localizedValues[locale.languageCode]['work_phone'];
   String get totalAmount => _localizedValues[locale.languageCode]['total_amount'];
+  String get pdf => _localizedValues[locale.languageCode]['pdf'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

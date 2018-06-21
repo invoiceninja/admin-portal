@@ -250,6 +250,10 @@ abstract class InvoiceEntity extends Object with BaseEntity
     return invoiceNumber.contains(search);
   }
 
+  String get invitationLink => invitations.first?.link;
+  String get invitationSilentLink => invitations.first?.silentLink;
+  String get invitationDownloadLink => invitations.first?.downloadLink;
+
   InvoiceEntity._();
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
@@ -328,6 +332,9 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
   @nullable
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
+
+  String get silentLink => link + '?silent=true';
+  String get downloadLink => link.replaceFirst('/view/', '/download/');
 
   InvitationEntity._();
   factory InvitationEntity([updates(InvitationEntityBuilder b)]) = _$InvitationEntity;
