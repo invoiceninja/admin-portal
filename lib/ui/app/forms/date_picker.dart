@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 
 class DatePicker extends StatefulWidget {
@@ -10,8 +11,8 @@ class DatePicker extends StatefulWidget {
   });
 
   final String labelText;
-  final DateTime selectedDate;
-  final Function(int) onSelected;
+  final String selectedDate;
+  final Function(String) onSelected;
 
   @override
   _DatePickerState createState() => new _DatePickerState();
@@ -24,7 +25,8 @@ class _DatePickerState extends State<DatePicker> {
   @override
   void initState() {
     super.initState();
-    _textController.text = widget.selectedDate?.toIso8601String();
+
+    _textController.text = widget.selectedDate;
   }
 
   @override
@@ -34,29 +36,25 @@ class _DatePickerState extends State<DatePicker> {
   }
 
   _showDatePicker() async {
-    print('== Focused: ');
-
-    final DateTime picked = await showDatePicker(
+    final DateTime selectedDate = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: widget.selectedDate != null && widget.selectedDate.isNotEmpty ? DateTime.tryParse(widget.selectedDate) : DateTime.now(),
         firstDate: new DateTime(2015, 8),
         lastDate: new DateTime(2101)
     );
 
-    print('== Picked: ');
-    print(picked);
-
-    //var localization = AppLocalization.of(context);
-
+    _textController.text = convertDateTimeToSqlDate(selectedDate);
+    widget.onSelected(convertDateTimeToSqlDate(selectedDate));
   }
 
-  
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _showDatePicker(),
       child: IgnorePointer(
         child: TextFormField(
+          controller: _textController,
           decoration: InputDecoration(
             labelText: widget.labelText,
             suffixIcon: Icon(Icons.date_range),

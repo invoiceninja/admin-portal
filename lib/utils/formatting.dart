@@ -32,3 +32,5 @@ String formatAddress({dynamic object, bool isShipping = false, String delimiter 
 
   return str;
 }
+
+String convertDateTimeToSqlDate(DateTime date) => date.toIso8601String().split('T').first;

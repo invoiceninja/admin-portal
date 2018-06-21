@@ -97,7 +97,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    return 'Is Loading: ${this.isLoading}, Entity Filter: ${this.clientUIState.dropdownFilter}';
+    return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return this.invoiceUIState.selected.toString();
   }
 }

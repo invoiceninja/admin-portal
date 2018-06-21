@@ -132,6 +132,8 @@ class AppLocalization {
       'work_phone': 'Phone',
       'total_amount': 'Total Amount',
       'pdf': 'PDF',
+      'due_date': 'Due Date',
+      'partial_due_date': 'Partial Due Date',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -274,6 +276,8 @@ class AppLocalization {
   String get workPhone => _localizedValues[locale.languageCode]['work_phone'];
   String get totalAmount => _localizedValues[locale.languageCode]['total_amount'];
   String get pdf => _localizedValues[locale.languageCode]['pdf'];
+  String get dueDate => _localizedValues[locale.languageCode]['due_date'];
+  String get partialDueDate => _localizedValues[locale.languageCode]['partial_due_date'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
