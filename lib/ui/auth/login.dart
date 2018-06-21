@@ -23,10 +23,10 @@ class Login extends StatelessWidget {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // add controllers
-  final _emailController = TextEditingController()..text = '';
-  final _passwordController = TextEditingController() ..text = '';
-  final _urlController = TextEditingController()..text = '';
-  final _secretController = TextEditingController()..text = '';
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _urlController = TextEditingController();
+  final _secretController = TextEditingController();
 
   // keys
   static final ValueKey _emailKey = new Key(LoginKeys.emailKeyString);
