@@ -10,3 +10,5 @@ android/
 build/
 
 .flutter-plugins
+
+.env.dart
