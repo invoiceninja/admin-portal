@@ -42,11 +42,12 @@ class _ClientViewState extends State<ClientView>
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
     var store = StoreProvider.of<AppState>(context);
-    var client = widget.viewModel.client;
+    var viewModel = widget.viewModel;
+    var client = viewModel.client;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.viewModel.client.displayName ??
+        title: Text(client.displayName ??
             ''), // Text(localizations.clientDetails),
         bottom: TabBar(
           controller: _controller,
@@ -60,26 +61,27 @@ class _ClientViewState extends State<ClientView>
             ),
           ],
         ),
-        actions: widget.viewModel.client.isNew()
+        actions: client.isNew()
             ? []
             : [
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
-                    widget.viewModel.onEditPressed(context);
+                    viewModel.onEditPressed(context);
                   },
                 ),
                 ActionMenuButton(
-                  entity: widget.viewModel.client,
-                  onSelected: widget.viewModel.onActionSelected,
+                  isLoading: viewModel.isLoading,
+                  entity: client,
+                  onSelected: viewModel.onActionSelected,
                 )
               ],
       ),
       body: TabBarView(
         controller: _controller,
         children: <Widget>[
-          ClientOverview(client: widget.viewModel.client),
-          ClientViewDetails(client: widget.viewModel.client),
+          ClientOverview(client: client),
+          ClientViewDetails(client: client),
         ],
       ),
       floatingActionButton: FloatingActionButton(

@@ -17,16 +17,29 @@ class ActionMenuButton extends StatelessWidget {
   final BaseEntity entity;
   final List<ActionMenuChoice> customActions;
   final Function(BuildContext, EntityAction) onSelected;
+  final bool isLoading;
 
   ActionMenuButton({
+    @required this.entity,
+    @required this.onSelected,
+    @required this.isLoading,
     this.customActions,
-    this.entity,
-    this.onSelected,
   });
 
   @override
   Widget build(BuildContext context) {
     List<PopupMenuEntry<EntityAction>> actions = [];
+
+    if (isLoading) {
+      return IconButton(
+        onPressed: null,
+        icon: SizedBox(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          ),
+        ),
+      );
+    }
 
     customActions?.forEach((action) {
       if (action != null) {
