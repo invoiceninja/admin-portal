@@ -34,17 +34,6 @@ class Login extends StatelessWidget {
   static final ValueKey _urlKey = new Key(LoginKeys.urlKeyString);
   static final ValueKey _secretKey = new Key(LoginKeys.secretKeyString);
 
-  /*
-  static final GlobalKey<FormFieldState<String>> _emailKey =
-      GlobalKey<FormFieldState<String>>(debugLabel: 'email');
-  static final GlobalKey<FormFieldState<String>> _passwordKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _urlKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _secretKey =
-      GlobalKey<FormFieldState<String>>();
-  */
-
   @override
   Widget build(BuildContext context) {
     if (!authState.isInitialized) {
@@ -66,7 +55,6 @@ class Login extends StatelessWidget {
               TextFormField(
                 controller: _emailController,
                 key: _emailKey,
-                //initialValue: authState.email,
                 autocorrect: false,
                 decoration: InputDecoration(
                     labelText: AppLocalization.of(context).email),
@@ -78,7 +66,6 @@ class Login extends StatelessWidget {
               TextFormField(
                 controller: _passwordController,
                 key: _passwordKey,
-                //initialValue: authState.password,
                 autocorrect: false,
                 decoration: InputDecoration(
                     labelText: AppLocalization.of(context).password),
@@ -90,7 +77,6 @@ class Login extends StatelessWidget {
               TextFormField(
                 controller: _urlController,
                 key: _urlKey,
-                //initialValue: authState.url,
                 autocorrect: false,
                 decoration:
                     InputDecoration(labelText: AppLocalization.of(context).url),
@@ -102,7 +88,6 @@ class Login extends StatelessWidget {
               TextFormField(
                 controller: _secretController,
                 key: _secretKey,
-                //initialValue: authState.secret,
                 autocorrect: false,
                 decoration: InputDecoration(
                     labelText: AppLocalization.of(context).secret),
@@ -138,13 +123,12 @@ class Login extends StatelessWidget {
             if (!_formKey.currentState.validate()) {
               return;
             }
-
             this.onLoginPressed(
                 context,
-                _emailController.text,//_emailKey.currentState.value,
-                _passwordController.text,//_passwordKey.currentState.value,
-                _urlController.text,//_urlKey.currentState.value,
-                _secretController.text);//_secretKey.currentState.value);
+                _emailController.text,
+                _passwordController.text,
+                _urlController.text,
+                _secretController.text);
           },
         ),
       ],
