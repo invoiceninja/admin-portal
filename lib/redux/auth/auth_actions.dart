@@ -12,7 +12,10 @@ class LoadStateSuccess {
   LoadStateSuccess(this.state);
 }
 
-class LoadUserLogin {}
+class LoadUserLogin {
+  final BuildContext context;
+  LoadUserLogin(this.context);
+}
 
 class UserLoginLoaded {
   final String email;
@@ -41,5 +44,5 @@ class UserLoginFailure implements StopLoading {
   UserLoginFailure(this.error);
 }
 
-class UserLogout {}
+class UserLogout implements PersistData {}
 

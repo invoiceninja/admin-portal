@@ -28,6 +28,7 @@ class AppLocalization {
       'secret': 'Secret',
       'name': 'Name',
       'log_out': 'Log Out',
+      'login': 'Login',
       'filter': 'Filter',
       'sort': 'Sort',
       'search': 'Search',
@@ -169,6 +170,7 @@ class AppLocalization {
   String get secret => _localizedValues[locale.languageCode]['secret'];
   String get name => _localizedValues[locale.languageCode]['name'];
   String get logOut => _localizedValues[locale.languageCode]['log_out'];
+  String get login => _localizedValues[locale.languageCode]['login'];
   String get filter => _localizedValues[locale.languageCode]['filter'];
   String get sort => _localizedValues[locale.languageCode]['sort'];
   String get search => _localizedValues[locale.languageCode]['search'];

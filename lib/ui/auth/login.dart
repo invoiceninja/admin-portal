@@ -6,13 +6,14 @@ import 'package:invoiceninja/ui/app/form_card.dart';
 
 import 'package:invoiceninja/utils/keys.dart';
 
-class Login extends StatelessWidget {
+
+class LoginView extends StatefulWidget {
   final bool isLoading;
   final bool isDirty;
   final AuthState authState;
   final Function(BuildContext, String, String, String, String) onLoginPressed;
 
-  Login({
+  LoginView({
     Key key,
     @required this.isDirty,
     @required this.isLoading,
@@ -20,23 +21,47 @@ class Login extends StatelessWidget {
     @required this.onLoginPressed,
   }) : super(key: key);
 
+  @override
+  _LoginState createState() => new _LoginState();
+}
+
+class _LoginState extends State<LoginView> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // add controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _urlController = TextEditingController();
   final _secretController = TextEditingController();
 
-  // keys
   static final ValueKey _emailKey = new Key(LoginKeys.emailKeyString);
   static final ValueKey _passwordKey = new Key(LoginKeys.passwordKeyString);
   static final ValueKey _urlKey = new Key(LoginKeys.urlKeyString);
   static final ValueKey _secretKey = new Key(LoginKeys.secretKeyString);
 
   @override
+  void didChangeDependencies() {
+    _emailController.text = widget.authState.email;
+    _passwordController.text = widget.authState.password;
+    _urlController.text = widget.authState.url;
+    _secretController.text = widget.authState.secret;
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _urlController.dispose();
+    _secretController.dispose();
+
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    if (!authState.isInitialized) {
+    if (!widget.authState.isInitialized) {
       return Container();
     }
 
@@ -98,13 +123,13 @@ class Login extends StatelessWidget {
                         */
                 obscureText: true,
               ),
-              authState.error == null
+              widget.authState.error == null
                   ? Container()
                   : Container(
                       padding: EdgeInsets.only(top: 26.0, bottom: 4.0),
                       child: Center(
                         child: Text(
-                          authState.error,
+                          widget.authState.error,
                           style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
@@ -116,14 +141,14 @@ class Login extends StatelessWidget {
           ),
         ),
         ProgressButton(
-          label: 'LOGIN',
-          isLoading: this.isLoading,
-          isDirty: this.isDirty,
+          label: AppLocalization.of(context).login.toUpperCase(),
+          isLoading: widget.isLoading,
+          isDirty: widget.isDirty,
           onPressed: () {
             if (!_formKey.currentState.validate()) {
               return;
             }
-            this.onLoginPressed(
+            widget.onLoginPressed(
                 context,
                 _emailController.text,
                 _passwordController.text,

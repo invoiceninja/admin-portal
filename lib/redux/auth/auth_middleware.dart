@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -39,6 +41,7 @@ _loadAuthLocal(Store<AppState> store, action) async {
   String secret = prefs.getString('secret');
 
   store.dispatch(UserLoginLoaded(email, password, url, secret));
+  Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
 }
 
 

@@ -18,7 +18,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState() {
     return _$UIState._(
       selectedCompanyIndex: 0,
-      currentRoute: LoginVM.route,
+      currentRoute: LoginScreen.route,
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),

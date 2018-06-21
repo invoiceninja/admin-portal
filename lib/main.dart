@@ -5,6 +5,7 @@ import 'package:invoiceninja/redux/app/app_middleware.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/client/client_middleware.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja/ui/auth/init_screen.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
@@ -88,10 +89,13 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
         title: 'Invoice Ninja',
         routes: {
-          LoginVM.route: (context) {
+          InitScreen.route: (context) {
             widget.store.dispatch(LoadStateRequest(context));
             //widget.store.dispatch(LoadUserLogin());
-            return LoginVM();
+            return InitScreen();
+          },
+          LoginScreen.route: (context) {
+            return LoginScreen();
           },
           DashboardScreen.route: (context) {
             widget.store.dispatch(LoadDashboardAction());

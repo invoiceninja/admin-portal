@@ -140,7 +140,7 @@ Middleware<AppState> _createLoadState(
                         ..companyState4.replace(company4State)
                         ..companyState5.replace(company5State));
                       store.dispatch(LoadStateSuccess(appState));
-                      if (uiState.currentRoute != LoginVM.route &&
+                      if (uiState.currentRoute != LoginScreen.route &&
                           authState.url.isNotEmpty) {
                         NavigatorState navigator = Navigator.of(action.context);
                         bool isFirst = true;
@@ -153,18 +153,18 @@ Middleware<AppState> _createLoadState(
                           isFirst = false;
                         });
                       }
-                    }).catchError((error) => _handleError(store, error));
-                  }).catchError((error) => _handleError(store, error));
-                }).catchError((error) => _handleError(store, error));
-              }).catchError((error) => _handleError(store, error));
-            }).catchError((error) => _handleError(store, error));
-          }).catchError((error) => _handleError(store, error));
-        }).catchError((error) => _handleError(store, error));
+                    }).catchError((error) => _handleError(store, error, action.context));
+                  }).catchError((error) => _handleError(store, error, action.context));
+                }).catchError((error) => _handleError(store, error, action.context));
+              }).catchError((error) => _handleError(store, error, action.context));
+            }).catchError((error) => _handleError(store, error, action.context));
+          }).catchError((error) => _handleError(store, error, action.context));
+        }).catchError((error) => _handleError(store, error, action.context));
       } else {
         store.dispatch(UserLogout());
-        store.dispatch(LoadUserLogin());
+        store.dispatch(LoadUserLogin(action.context));
       }
-    }).catchError((error) => _handleError(store, error));
+    }).catchError((error) => _handleError(store, error, action.context));
 
     next(action);
   };
@@ -201,10 +201,10 @@ List<String> _getRoutes(AppState state) {
   return routes;
 }
 
-_handleError(store, error) {
+_handleError(store, error, context) {
   print(error);
   store.dispatch(UserLogout());
-  store.dispatch(LoadUserLogin());
+  store.dispatch(LoadUserLogin(context));
 }
 
 Middleware<AppState> _createUserLoggedIn(

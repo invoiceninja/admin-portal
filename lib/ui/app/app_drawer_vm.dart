@@ -56,7 +56,7 @@ class AppDrawerVM {
         while(Navigator.of(context).canPop()) {
           Navigator.of(context).pop();
         }
-        Navigator.of(context).pushReplacementNamed(LoginVM.route);
+        Navigator.of(context).pushReplacementNamed(LoginScreen.route);
         store.dispatch(UserLogout());
       }
     );

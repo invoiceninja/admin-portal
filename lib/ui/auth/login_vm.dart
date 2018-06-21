@@ -11,18 +11,18 @@ import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/ui/auth/login.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 
-class LoginVM extends StatelessWidget {
-  LoginVM({Key key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  LoginScreen({Key key}) : super(key: key);
 
-  static final String route = '/';
+  static final String route = '/login';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<AppState, _ViewModel>(
-        converter: _ViewModel.fromStore,
+      body: StoreConnector<AppState, LoginVM>(
+        converter: LoginVM.fromStore,
         builder: (context, vm) {
-          return Login(
+          return LoginView(
             isLoading: vm.isLoading,
             isDirty: vm.isDirty,
             authState: vm.authState,
@@ -34,21 +34,21 @@ class LoginVM extends StatelessWidget {
   }
 }
 
-class _ViewModel {
+class LoginVM {
   bool isLoading;
   bool isDirty;
   AuthState authState;
   final Function(BuildContext, String, String, String, String) onLoginPressed;
 
-  _ViewModel({
+  LoginVM({
     @required this.isLoading,
     @required this.isDirty,
     @required this.authState,
     @required this.onLoginPressed,
   });
 
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
+  static LoginVM fromStore(Store<AppState> store) {
+    return LoginVM(
         isDirty: !store.state.authState.isAuthenticated,
         isLoading: store.state.isLoading,
         authState: store.state.authState,
