@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
+import 'package:invoiceninja/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
@@ -20,6 +21,7 @@ class InvoiceEditDetails extends StatefulWidget {
 class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
   final _invoiceNumberController = TextEditingController();
+  final _invoiceDateController = TextEditingController();
   final _poNumberController = TextEditingController();
   final _discountController = TextEditingController();
   final _partialController = TextEditingController();
@@ -31,6 +33,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
     _controllers = [
       _invoiceNumberController,
+      _invoiceDateController,
       _poNumberController,
       _discountController,
       _partialController,
@@ -40,6 +43,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
     var invoice = widget.viewModel.invoice;
     _invoiceNumberController.text = invoice.invoiceNumber;
+    _invoiceDateController.text = invoice.invoiceDate;
     _poNumberController.text = invoice.poNumber;
     _discountController.text = invoice.discount?.toStringAsFixed(2) ?? '';
     _partialController.text = invoice.partial?.toStringAsFixed(2) ?? '';
@@ -102,6 +106,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                       labelText: localization.invoiceNumber,
                     ),
                   ),
+            DatePicker(
+              labelText: localization.invoiceDate,
+            ),
             TextFormField(
               autocorrect: false,
               controller: _poNumberController,
