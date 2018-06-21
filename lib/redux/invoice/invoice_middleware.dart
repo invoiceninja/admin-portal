@@ -17,6 +17,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final archiveInvoice = _archiveInvoice(repository);
   final deleteInvoice = _deleteInvoice(repository);
   final restoreInvoice = _restoreInvoice(repository);
+  final emailInvoice = _emailInvoice(repository);
   final viewInvoice = _viewInvoice();
   final editInvoice = _editInvoice();
 
@@ -26,6 +27,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, ArchiveInvoiceRequest>(archiveInvoice),
     TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
     TypedMiddleware<AppState, RestoreInvoiceRequest>(restoreInvoice),
+    TypedMiddleware<AppState, EmailInvoiceRequest>(emailInvoice),
     TypedMiddleware<AppState, ViewInvoice>(viewInvoice),
     TypedMiddleware<AppState, EditInvoice>(editInvoice),
   ];
@@ -103,6 +105,26 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
     }).catchError((error) {
       print(error);
       store.dispatch(RestoreInvoiceFailure(origInvoice));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    var origInvoice = store.state.invoiceState.map[action.invoiceId];
+    repository
+        .emailInvoice(store.state.selectedCompany, store.state.authState,
+        origInvoice)
+        .then((response) {
+      store.dispatch(EmailInvoiceSuccess());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((error) {
+      print(error);
+      store.dispatch(EmailInvoiceFailure(error));
     });
 
     next(action);

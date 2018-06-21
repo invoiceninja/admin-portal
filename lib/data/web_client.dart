@@ -15,6 +15,10 @@ class WebClient {
       },
     );
 
+    if (response.statusCode >= 400) {
+      throw('An error occurred: ' + response.body);
+    }
+
     final jsonResponse = json.decode(response.body);
 
     //print(jsonResponse);
@@ -31,6 +35,11 @@ class WebClient {
         'Content-Type': 'application/json',
       },
     );
+
+    if (response.statusCode >= 400) {
+      throw('An error occurred: ' + response.body);
+    }
+
     try {
       final jsonResponse = json.decode(response.body);
       return jsonResponse;
@@ -49,6 +58,10 @@ class WebClient {
         'Content-Type': 'application/json',
       },
     );
+
+    if (response.statusCode >= 400) {
+      throw('An error occurred: ' + response.body);
+    }
 
     try {
       final jsonResponse = json.decode(response.body);

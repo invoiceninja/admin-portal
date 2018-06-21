@@ -47,4 +47,18 @@ class InvoiceRepository {
 
     return invoiceResponse.data;
   }
+
+  Future emailInvoice(CompanyEntity company, AuthState auth, InvoiceEntity invoice) async {
+
+    var response = await webClient.post(
+          auth.url + '/email_invoice?invoice_id=${invoice.id}', company.token, null);
+
+    print('== response ==');
+    print(response.toString());
+
+    InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
+        InvoiceItemResponse.serializer, response);
+
+    return invoiceResponse.data;
+  }
 }
