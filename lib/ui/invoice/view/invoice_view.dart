@@ -25,7 +25,6 @@ class InvoiceView extends StatefulWidget {
 }
 
 class _InvoiceViewState extends State<InvoiceView> {
-
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
@@ -58,6 +57,31 @@ class _InvoiceViewState extends State<InvoiceView> {
         widgets.add(IconMessage(invoice.privateNotes));
       }
 
+      Map<String, String> fields = {
+        InvoiceFields.invoiceDate: invoice.invoiceDate,
+        InvoiceFields.dueDate: invoice.dueDate,
+        InvoiceFields.partial: invoice.partial.toStringAsFixed(2),
+        InvoiceFields.partialDueDate: invoice.partialDueDate,
+        InvoiceFields.poNumber: invoice.poNumber,
+        InvoiceFields.discount: invoice.discount.toStringAsFixed(2),
+      };
+
+      List<Widget> fieldWidgets = [];
+      fields.forEach((field, value) {
+        if (value != null && value.isNotEmpty) {
+          fieldWidgets.add(Row(
+            children: <Widget>[
+              SizedBox(
+                child: Text(localization.lookup(field)),
+                width: 100.0,
+              ),
+              Text(value),
+            ],
+          ));
+          fieldWidgets.addAll([]);
+        }
+      });
+
       widgets.addAll([
         Divider(
           height: 1.0,
@@ -71,12 +95,16 @@ class _InvoiceViewState extends State<InvoiceView> {
         Divider(
           height: 1.0,
         ),
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: fieldWidgets,
+          ),
+        )
       ]);
 
       invoice.invoiceItems.forEach((invoiceItem) {
-        widgets.add(
-          InvoiceItemListTile(invoiceItem)
-        );
+        widgets.add(InvoiceItemListTile(invoiceItem));
       });
 
       return widgets;
@@ -84,8 +112,7 @@ class _InvoiceViewState extends State<InvoiceView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ??
-            ''),
+        title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
         actions: invoice.isNew()
             ? []
             : [

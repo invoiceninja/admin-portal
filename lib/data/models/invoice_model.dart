@@ -35,6 +35,8 @@ class InvoiceFields {
   static const String invoiceDate = 'invoiceDate';
   static const String dueDate = 'dueDate';
   static const String terms = 'terms';
+  static const String partial = 'partial';
+  static const String partialDueDate = 'partialDueDate';
   static const String publicNotes = 'publicNotes';
   static const String privateNotes = 'privateNotes';
   static const String invoiceTypeId = 'invoiceTypeId';
