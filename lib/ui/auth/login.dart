@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja/ui/app/form_card.dart';
 
-import '../app/form_card.dart';
+import 'package:invoiceninja/utils/keys.dart';
 
 class Login extends StatelessWidget {
   final bool isLoading;
@@ -21,14 +22,17 @@ class Login extends StatelessWidget {
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  static final GlobalKey<FormFieldState<String>> _emailKey =
-      GlobalKey<FormFieldState<String>>(debugLabel: 'email');
-  static final GlobalKey<FormFieldState<String>> _passwordKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _urlKey =
-      GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _secretKey =
-      GlobalKey<FormFieldState<String>>();
+  // add controllers
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _urlController = TextEditingController();
+  final _secretController = TextEditingController();
+
+  // keys
+  static final ValueKey _emailKey = new Key(LoginKeys.emailKeyString);
+  static final ValueKey _passwordKey = new Key(LoginKeys.passwordKeyString);
+  static final ValueKey _urlKey = new Key(LoginKeys.urlKeyString);
+  static final ValueKey _secretKey = new Key(LoginKeys.secretKeyString);
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +53,8 @@ class Login extends StatelessWidget {
           child: FormCard(
             children: <Widget>[
               TextFormField(
+                controller: _emailController,
                 key: _emailKey,
-                initialValue: authState.email,
                 autocorrect: false,
                 decoration: InputDecoration(
                     labelText: AppLocalization.of(context).email),
@@ -60,8 +64,8 @@ class Login extends StatelessWidget {
                     : null,
               ),
               TextFormField(
+                controller: _passwordController,
                 key: _passwordKey,
-                initialValue: authState.password,
                 autocorrect: false,
                 decoration: InputDecoration(
                     labelText: AppLocalization.of(context).password),
@@ -71,8 +75,8 @@ class Login extends StatelessWidget {
                 obscureText: true,
               ),
               TextFormField(
+                controller: _urlController,
                 key: _urlKey,
-                initialValue: authState.url,
                 autocorrect: false,
                 decoration:
                     InputDecoration(labelText: AppLocalization.of(context).url),
@@ -82,8 +86,8 @@ class Login extends StatelessWidget {
                 keyboardType: TextInputType.url,
               ),
               TextFormField(
+                controller: _secretController,
                 key: _secretKey,
-                initialValue: authState.secret,
                 autocorrect: false,
                 decoration: InputDecoration(
                     labelText: AppLocalization.of(context).secret),
@@ -119,13 +123,12 @@ class Login extends StatelessWidget {
             if (!_formKey.currentState.validate()) {
               return;
             }
-
             this.onLoginPressed(
                 context,
-                _emailKey.currentState.value,
-                _passwordKey.currentState.value,
-                _urlKey.currentState.value,
-                _secretKey.currentState.value);
+                _emailController.text,
+                _passwordController.text,
+                _urlController.text,
+                _secretController.text);
           },
         ),
       ],
