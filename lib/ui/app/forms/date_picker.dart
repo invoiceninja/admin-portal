@@ -19,30 +19,22 @@ class DatePicker extends StatefulWidget {
 
 class _DatePickerState extends State<DatePicker> {
 
-  final _focusNode = FocusNode();
   final _textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _textController.text = widget.selectedDate?.toIso8601String();
-    _focusNode.addListener(_onFocusChanged);
   }
 
   @override
   void dispose() {
     _textController.dispose();
-    _focusNode.removeListener(_onFocusChanged);
-    _focusNode.dispose();
     super.dispose();
   }
 
-  _onFocusChanged() async {
+  _showDatePicker() async {
     print('== Focused: ');
-    if (!_focusNode.hasFocus) {
-      return;
-    }
-    _focusNode.unfocus();
 
     final DateTime picked = await showDatePicker(
         context: context,
@@ -58,16 +50,18 @@ class _DatePickerState extends State<DatePicker> {
 
   }
 
-
+  
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: TextInputType.multiline,
-      //controller: _textController,
-      focusNode: _focusNode,
-      decoration: InputDecoration(
-        labelText: widget.labelText,
-        suffixIcon: Icon(Icons.date_range),
+    return InkWell(
+      onTap: () => _showDatePicker(),
+      child: IgnorePointer(
+        child: TextFormField(
+          decoration: InputDecoration(
+            labelText: widget.labelText,
+            suffixIcon: Icon(Icons.date_range),
+          ),
+        ),
       ),
     );
   }
