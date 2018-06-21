@@ -92,6 +92,10 @@ class InvoiceViewVM {
             case EntityAction.pdf:
               _viewPdf(context);
               break;
+            case EntityAction.email:
+              store.dispatch(EmailInvoiceRequest(completer, invoice.id));
+              message = AppLocalization.of(context).successfullyEmailedInvoice;
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(completer, invoice.id));
               message = AppLocalization.of(context).successfullyArchivedInvoice;

@@ -76,9 +76,28 @@ class SaveInvoiceSuccess implements StopLoading, PersistData {
   SaveInvoiceSuccess(this.invoice);
 }
 
+class AddInvoiceSuccess implements StopLoading, PersistData {
+  final InvoiceEntity invoice;
+  AddInvoiceSuccess(this.invoice);
+}
+
 class SaveInvoiceFailure implements StopLoading {
   final String error;
   SaveInvoiceFailure (this.error);
+}
+
+class EmailInvoiceRequest implements StartLoading {
+  final Completer completer;
+  final int invoiceId;
+
+  EmailInvoiceRequest(this.completer, this.invoiceId);
+}
+
+class EmailInvoiceSuccess implements StopLoading, PersistData {}
+
+class EmailInvoiceFailure implements StopLoading {
+  final dynamic error;
+  EmailInvoiceFailure(this.error);
 }
 
 class ArchiveInvoiceRequest implements StartLoading {
@@ -131,10 +150,7 @@ class RestoreInvoiceFailure implements StopLoading {
   RestoreInvoiceFailure(this.invoice);
 }
 
-class AddInvoiceSuccess implements StopLoading, PersistData {
-  final InvoiceEntity invoice;
-  AddInvoiceSuccess(this.invoice);
-}
+
 
 
 class SearchInvoices {
