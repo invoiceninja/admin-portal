@@ -313,6 +313,8 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
   @nullable
   double get discount;
 
+  double get total => qty * cost;
+
   InvoiceItemEntity._();
   static Serializer<InvoiceItemEntity> get serializer => _$invoiceItemEntitySerializer;
 }

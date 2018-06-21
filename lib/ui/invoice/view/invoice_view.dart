@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja/ui/app/icon_message.dart';
+import 'package:invoiceninja/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja/ui/app/two_value_header.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -22,21 +24,7 @@ class InvoiceView extends StatefulWidget {
   _InvoiceViewState createState() => new _InvoiceViewState();
 }
 
-class _InvoiceViewState extends State<InvoiceView>
-    with SingleTickerProviderStateMixin {
-  TabController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = new TabController(vsync: this, length: 2);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class _InvoiceViewState extends State<InvoiceView> {
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +43,49 @@ class _InvoiceViewState extends State<InvoiceView>
       }
     }
 
+    _buildView() {
+      var invoice = widget.viewModel.invoice;
+      var widgets = <Widget>[
+        TwoValueHeader(
+          label1: localization.totalAmount,
+          value1: invoice.amount,
+          label2: localization.balanceDue,
+          value2: invoice.balance,
+        ),
+      ];
+
+      if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
+        widgets.add(IconMessage(invoice.privateNotes));
+      }
+
+      widgets.addAll([
+        Divider(
+          height: 1.0,
+        ),
+        ListTile(
+          title: Text(client?.displayName ?? ''),
+          leading: Icon(FontAwesomeIcons.users, size: 18.0),
+          trailing: Icon(Icons.navigate_next),
+          onTap: () => viewModel.onClientPressed(context),
+        ),
+        Divider(
+          height: 1.0,
+        ),
+      ]);
+
+      invoice.invoiceItems.forEach((invoiceItem) {
+        widgets.add(
+          InvoiceItemListTile(invoiceItem)
+        );
+      });
+
+      return widgets;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ??
-            ''), // Text(localizations.invoiceDetails),
+            ''),
         actions: invoice.isNew()
             ? []
             : [
@@ -90,26 +117,7 @@ class _InvoiceViewState extends State<InvoiceView>
               ],
       ),
       body: ListView(
-        children: <Widget>[
-          TwoValueHeader(
-            label1: localization.totalAmount,
-            value1: invoice.amount,
-            label2: localization.balanceDue,
-            value2: invoice.balance,
-          ),
-          Divider(
-            height: 1.0,
-          ),
-          ListTile(
-            title: Text(client?.displayName ?? ''),
-            leading: Icon(FontAwesomeIcons.users, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () => viewModel.onClientPressed(context),
-          ),
-          Divider(
-            height: 1.0,
-          ),
-        ],
+        children: _buildView(),
       ),
     );
   }
