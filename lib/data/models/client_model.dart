@@ -191,6 +191,8 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     return displayName;
   }
 
+  bool get hasEmailAddress => contacts.where((contact) => contact.email?.isNotEmpty).length > 0;
+
   int compareTo(ClientEntity client, String sortField, bool sortAscending) {
     int response = 0;
     ClientEntity clientA = sortAscending ? this : client;

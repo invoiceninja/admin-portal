@@ -29,16 +29,18 @@ class ActionMenuButton extends StatelessWidget {
     List<PopupMenuEntry<EntityAction>> actions = [];
 
     customActions?.forEach((action) {
-      actions.add(PopupMenuItem<EntityAction>(
-        value: action.action,
-        child: Row(
-          children: <Widget>[
-            Icon(action.icon),
-            SizedBox(width: 15.0),
-            Text(action.label ?? ''),
-          ],
-        ),
-      ));
+      if (action != null) {
+        actions.add(PopupMenuItem<EntityAction>(
+          value: action.action,
+          child: Row(
+            children: <Widget>[
+              Icon(action.icon),
+              SizedBox(width: 15.0),
+              Text(action.label ?? ''),
+            ],
+          ),
+        ));
+      }
     });
 
     if (actions.length > 0) {

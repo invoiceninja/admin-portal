@@ -42,7 +42,9 @@ class _InvoiceViewState extends State<InvoiceView>
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
     var store = StoreProvider.of<AppState>(context);
-    var invoice = widget.viewModel.invoice;
+    var viewModel = widget.viewModel;
+    var invoice = viewModel.invoice;
+    var client = viewModel.client;
 
     _launchURL() async {
       var url = 'http://www.google.com';
@@ -55,33 +57,36 @@ class _InvoiceViewState extends State<InvoiceView>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text((localization.invoice + ' ' + widget.viewModel.invoice.invoiceNumber) ?? ''), // Text(localizations.invoiceDetails),
-        actions: widget.viewModel.invoice.isNew()
+        title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ??
+            ''), // Text(localizations.invoiceDetails),
+        actions: invoice.isNew()
             ? []
             : [
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              widget.viewModel.onEditPressed(context);
-            },
-          ),
-          ActionMenuButton(
-            customActions: [
-              ActionMenuChoice(
-                action: EntityAction.email,
-                icon: Icons.send,
-                label: AppLocalization.of(context).email,
-              ),
-              ActionMenuChoice(
-                action: EntityAction.pdf,
-                icon: Icons.picture_as_pdf,
-                label: AppLocalization.of(context).pdf,
-              ),
-            ],
-            entity: widget.viewModel.invoice,
-            onSelected: widget.viewModel.onActionSelected,
-          )
-        ],
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    viewModel.onEditPressed(context);
+                  },
+                ),
+                ActionMenuButton(
+                  customActions: [
+                    client.hasEmailAddress
+                        ? ActionMenuChoice(
+                            action: EntityAction.email,
+                            icon: Icons.send,
+                            label: AppLocalization.of(context).email,
+                          )
+                        : null,
+                    ActionMenuChoice(
+                      action: EntityAction.pdf,
+                      icon: Icons.picture_as_pdf,
+                      label: AppLocalization.of(context).pdf,
+                    ),
+                  ],
+                  entity: invoice,
+                  onSelected: viewModel.onActionSelected,
+                )
+              ],
       ),
       body: ListView(
         children: <Widget>[
@@ -95,10 +100,10 @@ class _InvoiceViewState extends State<InvoiceView>
             height: 1.0,
           ),
           ListTile(
-            title: Text(widget.viewModel.client?.displayName ?? ''),
+            title: Text(client?.displayName ?? ''),
             leading: Icon(FontAwesomeIcons.users, size: 18.0),
             trailing: Icon(Icons.navigate_next),
-            onTap: () => widget.viewModel.onClientPressed(context),
+            onTap: () => viewModel.onClientPressed(context),
           ),
           Divider(
             height: 1.0,
