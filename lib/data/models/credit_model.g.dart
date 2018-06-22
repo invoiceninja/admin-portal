@@ -115,49 +115,29 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
   @override
   Iterable serialize(Serializers serializers, CreditEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.amount != null) {
-      result
-        ..add('amount')
-        ..add(serializers.serialize(object.amount,
-            specifiedType: const FullType(double)));
-    }
-    if (object.balance != null) {
-      result
-        ..add('balance')
-        ..add(serializers.serialize(object.balance,
-            specifiedType: const FullType(double)));
-    }
-    if (object.creditDate != null) {
-      result
-        ..add('credit_date')
-        ..add(serializers.serialize(object.creditDate,
-            specifiedType: const FullType(String)));
-    }
-    if (object.creditNumber != null) {
-      result
-        ..add('credit_number')
-        ..add(serializers.serialize(object.creditNumber,
-            specifiedType: const FullType(String)));
-    }
-    if (object.privateNotes != null) {
-      result
-        ..add('private_notes')
-        ..add(serializers.serialize(object.privateNotes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.publicNotes != null) {
-      result
-        ..add('public_notes')
-        ..add(serializers.serialize(object.publicNotes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.clientId != null) {
-      result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(int)));
-    }
+    final result = <Object>[
+      'amount',
+      serializers.serialize(object.amount,
+          specifiedType: const FullType(double)),
+      'balance',
+      serializers.serialize(object.balance,
+          specifiedType: const FullType(double)),
+      'credit_date',
+      serializers.serialize(object.creditDate,
+          specifiedType: const FullType(String)),
+      'credit_number',
+      serializers.serialize(object.creditNumber,
+          specifiedType: const FullType(String)),
+      'private_notes',
+      serializers.serialize(object.privateNotes,
+          specifiedType: const FullType(String)),
+      'public_notes',
+      serializers.serialize(object.publicNotes,
+          specifiedType: const FullType(String)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(int)),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -468,7 +448,22 @@ class _$CreditEntity extends CreditEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted})
-      : super._();
+      : super._() {
+    if (amount == null)
+      throw new BuiltValueNullFieldError('CreditEntity', 'amount');
+    if (balance == null)
+      throw new BuiltValueNullFieldError('CreditEntity', 'balance');
+    if (creditDate == null)
+      throw new BuiltValueNullFieldError('CreditEntity', 'creditDate');
+    if (creditNumber == null)
+      throw new BuiltValueNullFieldError('CreditEntity', 'creditNumber');
+    if (privateNotes == null)
+      throw new BuiltValueNullFieldError('CreditEntity', 'privateNotes');
+    if (publicNotes == null)
+      throw new BuiltValueNullFieldError('CreditEntity', 'publicNotes');
+    if (clientId == null)
+      throw new BuiltValueNullFieldError('CreditEntity', 'clientId');
+  }
 
   @override
   CreditEntity rebuild(void updates(CreditEntityBuilder b)) =>
