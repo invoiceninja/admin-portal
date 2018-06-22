@@ -128,25 +128,16 @@ class _$InvoiceDesignEntitySerializer
   @override
   Iterable serialize(Serializers serializers, InvoiceDesignEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.javascript != null) {
-      result
-        ..add('javascript')
-        ..add(serializers.serialize(object.javascript,
-            specifiedType: const FullType(String)));
-    }
-    if (object.pdfmake != null) {
-      result
-        ..add('pdfmake')
-        ..add(serializers.serialize(object.pdfmake,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'javascript',
+      serializers.serialize(object.javascript,
+          specifiedType: const FullType(String)),
+      'pdfmake',
+      serializers.serialize(object.pdfmake,
+          specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -381,7 +372,14 @@ class _$InvoiceDesignEntity extends InvoiceDesignEntity {
       (new InvoiceDesignEntityBuilder()..update(updates)).build();
 
   _$InvoiceDesignEntity._({this.name, this.javascript, this.pdfmake})
-      : super._();
+      : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'name');
+    if (javascript == null)
+      throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'javascript');
+    if (pdfmake == null)
+      throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'pdfmake');
+  }
 
   @override
   InvoiceDesignEntity rebuild(void updates(InvoiceDesignEntityBuilder b)) =>

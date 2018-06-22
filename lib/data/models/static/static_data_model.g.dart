@@ -125,91 +125,56 @@ class _$StaticDataEntitySerializer
   @override
   Iterable serialize(Serializers serializers, StaticDataEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.currencies != null) {
-      result
-        ..add('currencies')
-        ..add(serializers.serialize(object.currencies,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(CurrencyEntity)])));
-    }
-    if (object.sizes != null) {
-      result
-        ..add('sizes')
-        ..add(serializers.serialize(object.sizes,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(SizeEntity)])));
-    }
-    if (object.industries != null) {
-      result
-        ..add('industries')
-        ..add(serializers.serialize(object.industries,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(IndustryEntity)])));
-    }
-    if (object.timezones != null) {
-      result
-        ..add('timezones')
-        ..add(serializers.serialize(object.timezones,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(TimezoneEntity)])));
-    }
-    if (object.dateFormats != null) {
-      result
-        ..add('dateFormats')
-        ..add(serializers.serialize(object.dateFormats,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(DateFormatEntity)])));
-    }
-    if (object.datetimeFormats != null) {
-      result
-        ..add('datetimeFormats')
-        ..add(serializers.serialize(object.datetimeFormats,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(DatetimeFormatEntity)])));
-    }
-    if (object.languages != null) {
-      result
-        ..add('languages')
-        ..add(serializers.serialize(object.languages,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(LanguageEntity)])));
-    }
-    if (object.paymentTypes != null) {
-      result
-        ..add('paymentTypes')
-        ..add(serializers.serialize(object.paymentTypes,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(PaymentTypeEntity)])));
-    }
-    if (object.countries != null) {
-      result
-        ..add('countries')
-        ..add(serializers.serialize(object.countries,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(CountryEntity)])));
-    }
-    if (object.invoiceDesigns != null) {
-      result
-        ..add('invoiceDesigns')
-        ..add(serializers.serialize(object.invoiceDesigns,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(InvoiceDesignEntity)])));
-    }
-    if (object.invoiceStatus != null) {
-      result
-        ..add('invoiceStatus')
-        ..add(serializers.serialize(object.invoiceStatus,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(InvoiceStatusEntity)])));
-    }
-    if (object.frequencies != null) {
-      result
-        ..add('frequencies')
-        ..add(serializers.serialize(object.frequencies,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(FrequencyEntity)])));
-    }
+    final result = <Object>[
+      'currencies',
+      serializers.serialize(object.currencies,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(CurrencyEntity)])),
+      'sizes',
+      serializers.serialize(object.sizes,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(SizeEntity)])),
+      'industries',
+      serializers.serialize(object.industries,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(IndustryEntity)])),
+      'timezones',
+      serializers.serialize(object.timezones,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(TimezoneEntity)])),
+      'dateFormats',
+      serializers.serialize(object.dateFormats,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DateFormatEntity)])),
+      'datetimeFormats',
+      serializers.serialize(object.datetimeFormats,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DatetimeFormatEntity)])),
+      'languages',
+      serializers.serialize(object.languages,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(LanguageEntity)])),
+      'paymentTypes',
+      serializers.serialize(object.paymentTypes,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(PaymentTypeEntity)])),
+      'countries',
+      serializers.serialize(object.countries,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(CountryEntity)])),
+      'invoiceDesigns',
+      serializers.serialize(object.invoiceDesigns,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(InvoiceDesignEntity)])),
+      'invoiceStatus',
+      serializers.serialize(object.invoiceStatus,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(InvoiceStatusEntity)])),
+      'frequencies',
+      serializers.serialize(object.frequencies,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(FrequencyEntity)])),
+    ];
 
     return result;
   }
@@ -531,7 +496,32 @@ class _$StaticDataEntity extends StaticDataEntity {
       this.invoiceDesigns,
       this.invoiceStatus,
       this.frequencies})
-      : super._();
+      : super._() {
+    if (currencies == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'currencies');
+    if (sizes == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'sizes');
+    if (industries == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'industries');
+    if (timezones == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'timezones');
+    if (dateFormats == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'dateFormats');
+    if (datetimeFormats == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'datetimeFormats');
+    if (languages == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'languages');
+    if (paymentTypes == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'paymentTypes');
+    if (countries == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'countries');
+    if (invoiceDesigns == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'invoiceDesigns');
+    if (invoiceStatus == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'invoiceStatus');
+    if (frequencies == null)
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'frequencies');
+  }
 
   @override
   StaticDataEntity rebuild(void updates(StaticDataEntityBuilder b)) =>
@@ -717,45 +707,45 @@ class StaticDataEntityBuilder
     try {
       _$result = _$v ??
           new _$StaticDataEntity._(
-              currencies: _currencies?.build(),
-              sizes: _sizes?.build(),
-              industries: _industries?.build(),
-              timezones: _timezones?.build(),
-              dateFormats: _dateFormats?.build(),
-              datetimeFormats: _datetimeFormats?.build(),
-              languages: _languages?.build(),
-              paymentTypes: _paymentTypes?.build(),
-              countries: _countries?.build(),
-              invoiceDesigns: _invoiceDesigns?.build(),
-              invoiceStatus: _invoiceStatus?.build(),
-              frequencies: _frequencies?.build());
+              currencies: currencies.build(),
+              sizes: sizes.build(),
+              industries: industries.build(),
+              timezones: timezones.build(),
+              dateFormats: dateFormats.build(),
+              datetimeFormats: datetimeFormats.build(),
+              languages: languages.build(),
+              paymentTypes: paymentTypes.build(),
+              countries: countries.build(),
+              invoiceDesigns: invoiceDesigns.build(),
+              invoiceStatus: invoiceStatus.build(),
+              frequencies: frequencies.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'currencies';
-        _currencies?.build();
+        currencies.build();
         _$failedField = 'sizes';
-        _sizes?.build();
+        sizes.build();
         _$failedField = 'industries';
-        _industries?.build();
+        industries.build();
         _$failedField = 'timezones';
-        _timezones?.build();
+        timezones.build();
         _$failedField = 'dateFormats';
-        _dateFormats?.build();
+        dateFormats.build();
         _$failedField = 'datetimeFormats';
-        _datetimeFormats?.build();
+        datetimeFormats.build();
         _$failedField = 'languages';
-        _languages?.build();
+        languages.build();
         _$failedField = 'paymentTypes';
-        _paymentTypes?.build();
+        paymentTypes.build();
         _$failedField = 'countries';
-        _countries?.build();
+        countries.build();
         _$failedField = 'invoiceDesigns';
-        _invoiceDesigns?.build();
+        invoiceDesigns.build();
         _$failedField = 'invoiceStatus';
-        _invoiceStatus?.build();
+        invoiceStatus.build();
         _$failedField = 'frequencies';
-        _frequencies?.build();
+        frequencies.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'StaticDataEntity', _$failedField, e.toString());

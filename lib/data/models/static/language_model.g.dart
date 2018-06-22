@@ -122,19 +122,13 @@ class _$LanguageEntitySerializer
   @override
   Iterable serialize(Serializers serializers, LanguageEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.locale != null) {
-      result
-        ..add('locale')
-        ..add(serializers.serialize(object.locale,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'locale',
+      serializers.serialize(object.locale,
+          specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -358,7 +352,12 @@ class _$LanguageEntity extends LanguageEntity {
   factory _$LanguageEntity([void updates(LanguageEntityBuilder b)]) =>
       (new LanguageEntityBuilder()..update(updates)).build();
 
-  _$LanguageEntity._({this.name, this.locale}) : super._();
+  _$LanguageEntity._({this.name, this.locale}) : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('LanguageEntity', 'name');
+    if (locale == null)
+      throw new BuiltValueNullFieldError('LanguageEntity', 'locale');
+  }
 
   @override
   LanguageEntity rebuild(void updates(LanguageEntityBuilder b)) =>

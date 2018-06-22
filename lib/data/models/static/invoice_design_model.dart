@@ -32,22 +32,25 @@ class InvoiceDesignFields {
 
 abstract class InvoiceDesignEntity implements Built<InvoiceDesignEntity, InvoiceDesignEntityBuilder> {
 
-  @nullable
+  factory InvoiceDesignEntity() {
+    return _$InvoiceDesignEntity._(
+      name: '',
+      javascript: '',
+      pdfmake: '',
+    );
+  }
+
+
   @BuiltValueField(wireName: 'name')
   String get name;
 
-  @nullable
   @BuiltValueField(wireName: 'javascript')
   String get javascript;
 
-  @nullable
   @BuiltValueField(wireName: 'pdfmake')
   String get pdfmake;
  
-
-
   InvoiceDesignEntity._();
-  factory InvoiceDesignEntity([updates(InvoiceDesignEntityBuilder b)]) = _$InvoiceDesignEntity;
   static Serializer<InvoiceDesignEntity> get serializer => _$invoiceDesignEntitySerializer;
 }
 

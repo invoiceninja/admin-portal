@@ -27,15 +27,18 @@ class InvoiceStatusFields {
   
 }
 
-
 abstract class InvoiceStatusEntity implements Built<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
 
-  @nullable
+  factory InvoiceStatusEntity() {
+    return _$InvoiceStatusEntity._(
+      name: '',
+    );
+  }
+
   @BuiltValueField(wireName: 'name')
   String get name;
 
   InvoiceStatusEntity._();
-  factory InvoiceStatusEntity([updates(InvoiceStatusEntityBuilder b)]) = _$InvoiceStatusEntity;
   static Serializer<InvoiceStatusEntity> get serializer => _$invoiceStatusEntitySerializer;
 }
 
