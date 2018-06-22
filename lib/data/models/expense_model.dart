@@ -145,7 +145,7 @@ abstract class ExpenseEntity extends Object
   String get customValue2;
 
   @BuiltValueField(wireName: 'expense_category')
-  BuiltList<ExpenseCategoryEntity> get expenseCtegories;
+  BuiltList<ExpenseCategoryEntity> get expenseCategories;
 
   int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {
     int response = 0;
