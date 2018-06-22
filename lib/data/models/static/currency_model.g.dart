@@ -122,55 +122,30 @@ class _$CurrencyEntitySerializer
   @override
   Iterable serialize(Serializers serializers, CurrencyEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.symbol != null) {
-      result
-        ..add('symbol')
-        ..add(serializers.serialize(object.symbol,
-            specifiedType: const FullType(String)));
-    }
-    if (object.precision != null) {
-      result
-        ..add('precision')
-        ..add(serializers.serialize(object.precision,
-            specifiedType: const FullType(String)));
-    }
-    if (object.thousandSeparator != null) {
-      result
-        ..add('thousand_separator')
-        ..add(serializers.serialize(object.thousandSeparator,
-            specifiedType: const FullType(String)));
-    }
-    if (object.decimalSeparator != null) {
-      result
-        ..add('decimal_separator')
-        ..add(serializers.serialize(object.decimalSeparator,
-            specifiedType: const FullType(String)));
-    }
-    if (object.code != null) {
-      result
-        ..add('code')
-        ..add(serializers.serialize(object.code,
-            specifiedType: const FullType(String)));
-    }
-    if (object.swapCurrencySymbol != null) {
-      result
-        ..add('swap_currency_symbol')
-        ..add(serializers.serialize(object.swapCurrencySymbol,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.exchangeRate != null) {
-      result
-        ..add('exchange_rate')
-        ..add(serializers.serialize(object.exchangeRate,
-            specifiedType: const FullType(double)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'symbol',
+      serializers.serialize(object.symbol,
+          specifiedType: const FullType(String)),
+      'precision',
+      serializers.serialize(object.precision,
+          specifiedType: const FullType(String)),
+      'thousand_separator',
+      serializers.serialize(object.thousandSeparator,
+          specifiedType: const FullType(String)),
+      'decimal_separator',
+      serializers.serialize(object.decimalSeparator,
+          specifiedType: const FullType(String)),
+      'code',
+      serializers.serialize(object.code, specifiedType: const FullType(String)),
+      'swap_currency_symbol',
+      serializers.serialize(object.swapCurrencySymbol,
+          specifiedType: const FullType(bool)),
+      'exchange_rate',
+      serializers.serialize(object.exchangeRate,
+          specifiedType: const FullType(double)),
+    ];
 
     return result;
   }
@@ -439,7 +414,25 @@ class _$CurrencyEntity extends CurrencyEntity {
       this.code,
       this.swapCurrencySymbol,
       this.exchangeRate})
-      : super._();
+      : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('CurrencyEntity', 'name');
+    if (symbol == null)
+      throw new BuiltValueNullFieldError('CurrencyEntity', 'symbol');
+    if (precision == null)
+      throw new BuiltValueNullFieldError('CurrencyEntity', 'precision');
+    if (thousandSeparator == null)
+      throw new BuiltValueNullFieldError('CurrencyEntity', 'thousandSeparator');
+    if (decimalSeparator == null)
+      throw new BuiltValueNullFieldError('CurrencyEntity', 'decimalSeparator');
+    if (code == null)
+      throw new BuiltValueNullFieldError('CurrencyEntity', 'code');
+    if (swapCurrencySymbol == null)
+      throw new BuiltValueNullFieldError(
+          'CurrencyEntity', 'swapCurrencySymbol');
+    if (exchangeRate == null)
+      throw new BuiltValueNullFieldError('CurrencyEntity', 'exchangeRate');
+  }
 
   @override
   CurrencyEntity rebuild(void updates(CurrencyEntityBuilder b)) =>
