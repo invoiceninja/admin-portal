@@ -82,6 +82,7 @@ abstract class ExpenseEntity extends Object
       vendorId: 0,
       customValue1: '',
       customValue2: '',
+      expenseCategories: BuiltList<ExpenseCategoryEntity>(),
     );
   }
 
