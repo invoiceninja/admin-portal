@@ -125,25 +125,17 @@ class _$DateFormatEntitySerializer
   @override
   Iterable serialize(Serializers serializers, DateFormatEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.format != null) {
-      result
-        ..add('format')
-        ..add(serializers.serialize(object.format,
-            specifiedType: const FullType(String)));
-    }
-    if (object.pickerFormat != null) {
-      result
-        ..add('picker_format')
-        ..add(serializers.serialize(object.pickerFormat,
-            specifiedType: const FullType(String)));
-    }
-    if (object.formatMoment != null) {
-      result
-        ..add('format_moment')
-        ..add(serializers.serialize(object.formatMoment,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'format',
+      serializers.serialize(object.format,
+          specifiedType: const FullType(String)),
+      'picker_format',
+      serializers.serialize(object.pickerFormat,
+          specifiedType: const FullType(String)),
+      'format_moment',
+      serializers.serialize(object.formatMoment,
+          specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -376,7 +368,14 @@ class _$DateFormatEntity extends DateFormatEntity {
       (new DateFormatEntityBuilder()..update(updates)).build();
 
   _$DateFormatEntity._({this.format, this.pickerFormat, this.formatMoment})
-      : super._();
+      : super._() {
+    if (format == null)
+      throw new BuiltValueNullFieldError('DateFormatEntity', 'format');
+    if (pickerFormat == null)
+      throw new BuiltValueNullFieldError('DateFormatEntity', 'pickerFormat');
+    if (formatMoment == null)
+      throw new BuiltValueNullFieldError('DateFormatEntity', 'formatMoment');
+  }
 
   @override
   DateFormatEntity rebuild(void updates(DateFormatEntityBuilder b)) =>
