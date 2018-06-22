@@ -34,36 +34,40 @@ class CurrencyFields {
 }
 
 abstract class CurrencyEntity implements Built<CurrencyEntity, CurrencyEntityBuilder> {
+
+  factory CurrencyEntity() {
+    return _$CurrencyEntity._(
+      name: '',
+      symbol: '',
+      precision: '',
+      thousandSeparator: '',
+      decimalSeparator: '',
+      code: '',
+      swapCurrencySymbol: false,
+      exchangeRate: 0.0,
+    );
+  }
   
-  @nullable
   String get name;
 
-  @nullable
   String get symbol;
 
-  @nullable
   String get precision;
 
-  @nullable
   @BuiltValueField(wireName: 'thousand_separator')
   String get thousandSeparator;
 
-  @nullable
   @BuiltValueField(wireName: 'decimal_separator')
   String get decimalSeparator;
 
-  @nullable
   String get code;
 
-  @nullable
   @BuiltValueField(wireName: 'swap_currency_symbol')
   bool get swapCurrencySymbol;
 
-  @nullable
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
   CurrencyEntity._();
-  factory CurrencyEntity([updates(CurrencyEntityBuilder b)]) = _$CurrencyEntity;
   static Serializer<CurrencyEntity> get serializer => _$currencyEntitySerializer;
 }

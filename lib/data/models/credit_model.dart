@@ -44,32 +44,35 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
   factory CreditEntity() {
     return _$CreditEntity._(
       id: --CreditEntity.counter,
+      amount: 0.0,
+      balance: 0.0,
+      creditDate: '',
+      creditNumber: '',
+      privateNotes: '',
+      publicNotes: '',
+      clientId: 0,
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
 
-  @nullable
   double get amount;
-
-  @nullable
+  
   double get balance;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'credit_date')
   String get creditDate;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'credit_number')
   String get creditNumber;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'public_notes')
   String get publicNotes;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 

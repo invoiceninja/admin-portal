@@ -117,224 +117,114 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   @override
   Iterable serialize(Serializers serializers, ClientEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.displayName != null) {
-      result
-        ..add('display_name')
-        ..add(serializers.serialize(object.displayName,
-            specifiedType: const FullType(String)));
-    }
-    if (object.balance != null) {
-      result
-        ..add('balance')
-        ..add(serializers.serialize(object.balance,
-            specifiedType: const FullType(double)));
-    }
-    if (object.paidToDate != null) {
-      result
-        ..add('paid_to_date')
-        ..add(serializers.serialize(object.paidToDate,
-            specifiedType: const FullType(double)));
-    }
-    if (object.address1 != null) {
-      result
-        ..add('address1')
-        ..add(serializers.serialize(object.address1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.address2 != null) {
-      result
-        ..add('address2')
-        ..add(serializers.serialize(object.address2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.city != null) {
-      result
-        ..add('city')
-        ..add(serializers.serialize(object.city,
-            specifiedType: const FullType(String)));
-    }
-    if (object.state != null) {
-      result
-        ..add('state')
-        ..add(serializers.serialize(object.state,
-            specifiedType: const FullType(String)));
-    }
-    if (object.postalCode != null) {
-      result
-        ..add('postal_code')
-        ..add(serializers.serialize(object.postalCode,
-            specifiedType: const FullType(String)));
-    }
-    if (object.countryId != null) {
-      result
-        ..add('country_id')
-        ..add(serializers.serialize(object.countryId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.workPhone != null) {
-      result
-        ..add('work_phone')
-        ..add(serializers.serialize(object.workPhone,
-            specifiedType: const FullType(String)));
-    }
-    if (object.privateNotes != null) {
-      result
-        ..add('private_notes')
-        ..add(serializers.serialize(object.privateNotes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.publicNotes != null) {
-      result
-        ..add('public_notes')
-        ..add(serializers.serialize(object.publicNotes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.website != null) {
-      result
-        ..add('website')
-        ..add(serializers.serialize(object.website,
-            specifiedType: const FullType(String)));
-    }
-    if (object.industryId != null) {
-      result
-        ..add('industry_id')
-        ..add(serializers.serialize(object.industryId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.sizeId != null) {
-      result
-        ..add('size_id')
-        ..add(serializers.serialize(object.sizeId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.paymentTerms != null) {
-      result
-        ..add('payment_terms')
-        ..add(serializers.serialize(object.paymentTerms,
-            specifiedType: const FullType(int)));
-    }
-    if (object.vatNumber != null) {
-      result
-        ..add('vat_number')
-        ..add(serializers.serialize(object.vatNumber,
-            specifiedType: const FullType(String)));
-    }
-    if (object.idNumber != null) {
-      result
-        ..add('id_number')
-        ..add(serializers.serialize(object.idNumber,
-            specifiedType: const FullType(String)));
-    }
-    if (object.languageId != null) {
-      result
-        ..add('language_id')
-        ..add(serializers.serialize(object.languageId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.currencyId != null) {
-      result
-        ..add('currency_id')
-        ..add(serializers.serialize(object.currencyId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.invoiceNumberCounter != null) {
-      result
-        ..add('invoice_number_counter')
-        ..add(serializers.serialize(object.invoiceNumberCounter,
-            specifiedType: const FullType(int)));
-    }
-    if (object.quoteNumberCounter != null) {
-      result
-        ..add('quote_number_counter')
-        ..add(serializers.serialize(object.quoteNumberCounter,
-            specifiedType: const FullType(int)));
-    }
-    if (object.taskRate != null) {
-      result
-        ..add('task_rate')
-        ..add(serializers.serialize(object.taskRate,
-            specifiedType: const FullType(double)));
-    }
-    if (object.shippingAddress1 != null) {
-      result
-        ..add('shipping_address1')
-        ..add(serializers.serialize(object.shippingAddress1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingAddress2 != null) {
-      result
-        ..add('shipping_address2')
-        ..add(serializers.serialize(object.shippingAddress2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingCity != null) {
-      result
-        ..add('shipping_city')
-        ..add(serializers.serialize(object.shippingCity,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingState != null) {
-      result
-        ..add('shipping_state')
-        ..add(serializers.serialize(object.shippingState,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingPostalCode != null) {
-      result
-        ..add('shipping_postal_code')
-        ..add(serializers.serialize(object.shippingPostalCode,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shippingCountryId != null) {
-      result
-        ..add('shipping_country_id')
-        ..add(serializers.serialize(object.shippingCountryId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.showTasksInPortal != null) {
-      result
-        ..add('show_tasks_in_portal')
-        ..add(serializers.serialize(object.showTasksInPortal,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.sendReminders != null) {
-      result
-        ..add('send_reminders')
-        ..add(serializers.serialize(object.sendReminders,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.creditNumberCounter != null) {
-      result
-        ..add('credit_number_counter')
-        ..add(serializers.serialize(object.creditNumberCounter,
-            specifiedType: const FullType(int)));
-    }
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.contacts != null) {
-      result
-        ..add('contacts')
-        ..add(serializers.serialize(object.contacts,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(ContactEntity)])));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'display_name',
+      serializers.serialize(object.displayName,
+          specifiedType: const FullType(String)),
+      'balance',
+      serializers.serialize(object.balance,
+          specifiedType: const FullType(double)),
+      'paid_to_date',
+      serializers.serialize(object.paidToDate,
+          specifiedType: const FullType(double)),
+      'address1',
+      serializers.serialize(object.address1,
+          specifiedType: const FullType(String)),
+      'address2',
+      serializers.serialize(object.address2,
+          specifiedType: const FullType(String)),
+      'city',
+      serializers.serialize(object.city, specifiedType: const FullType(String)),
+      'state',
+      serializers.serialize(object.state,
+          specifiedType: const FullType(String)),
+      'postal_code',
+      serializers.serialize(object.postalCode,
+          specifiedType: const FullType(String)),
+      'country_id',
+      serializers.serialize(object.countryId,
+          specifiedType: const FullType(int)),
+      'work_phone',
+      serializers.serialize(object.workPhone,
+          specifiedType: const FullType(String)),
+      'private_notes',
+      serializers.serialize(object.privateNotes,
+          specifiedType: const FullType(String)),
+      'public_notes',
+      serializers.serialize(object.publicNotes,
+          specifiedType: const FullType(String)),
+      'website',
+      serializers.serialize(object.website,
+          specifiedType: const FullType(String)),
+      'industry_id',
+      serializers.serialize(object.industryId,
+          specifiedType: const FullType(int)),
+      'size_id',
+      serializers.serialize(object.sizeId, specifiedType: const FullType(int)),
+      'payment_terms',
+      serializers.serialize(object.paymentTerms,
+          specifiedType: const FullType(int)),
+      'vat_number',
+      serializers.serialize(object.vatNumber,
+          specifiedType: const FullType(String)),
+      'id_number',
+      serializers.serialize(object.idNumber,
+          specifiedType: const FullType(String)),
+      'language_id',
+      serializers.serialize(object.languageId,
+          specifiedType: const FullType(int)),
+      'currency_id',
+      serializers.serialize(object.currencyId,
+          specifiedType: const FullType(int)),
+      'invoice_number_counter',
+      serializers.serialize(object.invoiceNumberCounter,
+          specifiedType: const FullType(int)),
+      'quote_number_counter',
+      serializers.serialize(object.quoteNumberCounter,
+          specifiedType: const FullType(int)),
+      'task_rate',
+      serializers.serialize(object.taskRate,
+          specifiedType: const FullType(double)),
+      'shipping_address1',
+      serializers.serialize(object.shippingAddress1,
+          specifiedType: const FullType(String)),
+      'shipping_address2',
+      serializers.serialize(object.shippingAddress2,
+          specifiedType: const FullType(String)),
+      'shipping_city',
+      serializers.serialize(object.shippingCity,
+          specifiedType: const FullType(String)),
+      'shipping_state',
+      serializers.serialize(object.shippingState,
+          specifiedType: const FullType(String)),
+      'shipping_postal_code',
+      serializers.serialize(object.shippingPostalCode,
+          specifiedType: const FullType(String)),
+      'shipping_country_id',
+      serializers.serialize(object.shippingCountryId,
+          specifiedType: const FullType(int)),
+      'show_tasks_in_portal',
+      serializers.serialize(object.showTasksInPortal,
+          specifiedType: const FullType(bool)),
+      'send_reminders',
+      serializers.serialize(object.sendReminders,
+          specifiedType: const FullType(bool)),
+      'credit_number_counter',
+      serializers.serialize(object.creditNumberCounter,
+          specifiedType: const FullType(int)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'contacts',
+      serializers.serialize(object.contacts,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(ContactEntity)])),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -552,55 +442,32 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
   @override
   Iterable serialize(Serializers serializers, ContactEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.firstName != null) {
-      result
-        ..add('first_name')
-        ..add(serializers.serialize(object.firstName,
-            specifiedType: const FullType(String)));
-    }
-    if (object.lastName != null) {
-      result
-        ..add('last_name')
-        ..add(serializers.serialize(object.lastName,
-            specifiedType: const FullType(String)));
-    }
-    if (object.email != null) {
-      result
-        ..add('email')
-        ..add(serializers.serialize(object.email,
-            specifiedType: const FullType(String)));
-    }
-    if (object.phone != null) {
-      result
-        ..add('phone')
-        ..add(serializers.serialize(object.phone,
-            specifiedType: const FullType(String)));
-    }
-    if (object.contactKey != null) {
-      result
-        ..add('contact_key')
-        ..add(serializers.serialize(object.contactKey,
-            specifiedType: const FullType(String)));
-    }
-    if (object.isPrimary != null) {
-      result
-        ..add('is_primary')
-        ..add(serializers.serialize(object.isPrimary,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'first_name',
+      serializers.serialize(object.firstName,
+          specifiedType: const FullType(String)),
+      'last_name',
+      serializers.serialize(object.lastName,
+          specifiedType: const FullType(String)),
+      'email',
+      serializers.serialize(object.email,
+          specifiedType: const FullType(String)),
+      'phone',
+      serializers.serialize(object.phone,
+          specifiedType: const FullType(String)),
+      'contact_key',
+      serializers.serialize(object.contactKey,
+          specifiedType: const FullType(String)),
+      'is_primary',
+      serializers.serialize(object.isPrimary,
+          specifiedType: const FullType(bool)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -1002,7 +869,81 @@ class _$ClientEntity extends ClientEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted})
-      : super._();
+      : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'name');
+    if (displayName == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'displayName');
+    if (balance == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'balance');
+    if (paidToDate == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'paidToDate');
+    if (address1 == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'address1');
+    if (address2 == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'address2');
+    if (city == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'city');
+    if (state == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'state');
+    if (postalCode == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'postalCode');
+    if (countryId == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'countryId');
+    if (workPhone == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'workPhone');
+    if (privateNotes == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'privateNotes');
+    if (publicNotes == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'publicNotes');
+    if (website == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'website');
+    if (industryId == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'industryId');
+    if (sizeId == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'sizeId');
+    if (paymentTerms == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'paymentTerms');
+    if (vatNumber == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'vatNumber');
+    if (idNumber == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'idNumber');
+    if (languageId == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'languageId');
+    if (currencyId == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'currencyId');
+    if (invoiceNumberCounter == null)
+      throw new BuiltValueNullFieldError(
+          'ClientEntity', 'invoiceNumberCounter');
+    if (quoteNumberCounter == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'quoteNumberCounter');
+    if (taskRate == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'taskRate');
+    if (shippingAddress1 == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress1');
+    if (shippingAddress2 == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress2');
+    if (shippingCity == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'shippingCity');
+    if (shippingState == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'shippingState');
+    if (shippingPostalCode == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'shippingPostalCode');
+    if (shippingCountryId == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'shippingCountryId');
+    if (showTasksInPortal == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'showTasksInPortal');
+    if (sendReminders == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'sendReminders');
+    if (creditNumberCounter == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'creditNumberCounter');
+    if (customValue1 == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'customValue1');
+    if (customValue2 == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'customValue2');
+    if (contacts == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'contacts');
+  }
 
   @override
   ClientEntity rebuild(void updates(ClientEntityBuilder b)) =>
@@ -1423,7 +1364,7 @@ class ClientEntityBuilder
               creditNumberCounter: creditNumberCounter,
               customValue1: customValue1,
               customValue2: customValue2,
-              contacts: _contacts?.build(),
+              contacts: contacts.build(),
               id: id,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
@@ -1432,7 +1373,7 @@ class ClientEntityBuilder
       String _$failedField;
       try {
         _$failedField = 'contacts';
-        _contacts?.build();
+        contacts.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientEntity', _$failedField, e.toString());
@@ -1486,7 +1427,24 @@ class _$ContactEntity extends ContactEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted})
-      : super._();
+      : super._() {
+    if (firstName == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'firstName');
+    if (lastName == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'lastName');
+    if (email == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'email');
+    if (phone == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'phone');
+    if (contactKey == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'contactKey');
+    if (isPrimary == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'isPrimary');
+    if (customValue1 == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'customValue1');
+    if (customValue2 == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'customValue2');
+  }
 
   @override
   ContactEntity rebuild(void updates(ContactEntityBuilder b)) =>

@@ -54,76 +54,80 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
   static int counter = 0;
   factory VendorEntity() {
     return _$VendorEntity._(
-        id: --VendorEntity.counter
+        id: --VendorEntity.counter,
+        name: '',
+        balance: 0.0,
+        paidToDate: 0.0,
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        countryId: 0,
+        workPhone: '',
+        privateNotes: '',
+        lastLogin: '',
+        website: '',
+        vatNumber: '',
+        idNumber: '',
+        currencyId: 0,
+        customValue1: '',
+        customValue2: '',
+        vendorContacts: BuiltList<VendorContactEntity>(),
+
+        updatedAt: 0,
+        archivedAt: 0,
+        isDeleted: false,
     );
   }
 
-  @nullable
   String get name;
 
-  @nullable
   double get balance;
 
-  @nullable
   @BuiltValueField(wireName: 'paid_to_date')
   double get paidToDate;
 
-  @nullable
   String get address1;
 
-  @nullable
   String get address2;
 
-  @nullable
   String get city;
 
-  @nullable
   String get state;
 
-  @nullable
   @BuiltValueField(wireName: 'postal_code')
   String get postalCode;
 
-  @nullable
   @BuiltValueField(wireName: 'country_id')
   int get countryId;
 
-  @nullable
   @BuiltValueField(wireName: 'work_phone')
   String get workPhone;
 
-  @nullable
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
-  @nullable
   @BuiltValueField(wireName: 'last_login')
   String get lastLogin;
 
-  @nullable
   String get website;
 
-  @nullable
   @BuiltValueField(wireName: 'vat_number')
   String get vatNumber;
 
-  @nullable
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
 
-  @nullable
   @BuiltValueField(wireName: 'currency_id')
   int get currencyId;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'vendor_contacts')
   BuiltList<VendorContactEntity> get vendorContacts;
 
@@ -158,26 +162,30 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
   static int counter = 0;
   factory VendorContactEntity() {
     return _$VendorContactEntity._(
-        id: --VendorContactEntity.counter
+        id: --VendorContactEntity.counter,
+        firstName: '',
+        lastName: '',
+        email: '',
+        isPrimary: false,
+        phone: '',
+        
+        updatedAt: 0,
+        archivedAt: 0,
+        isDeleted: false,
     );
   }
 
-  @nullable
   @BuiltValueField(wireName: 'first_name')
   String get firstName;
 
-  @nullable
   @BuiltValueField(wireName: 'last_name')
   String get lastName;
 
-  @nullable
   String get email;
 
-  @nullable
   @BuiltValueField(wireName: 'is_primary')
   bool get isPrimary;
 
-  @nullable
   String get phone;
 
   VendorContactEntity._();

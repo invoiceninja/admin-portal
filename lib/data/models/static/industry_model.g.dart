@@ -122,13 +122,10 @@ class _$IndustryEntitySerializer
   @override
   Iterable serialize(Serializers serializers, IndustryEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -346,7 +343,10 @@ class _$IndustryEntity extends IndustryEntity {
   factory _$IndustryEntity([void updates(IndustryEntityBuilder b)]) =>
       (new IndustryEntityBuilder()..update(updates)).build();
 
-  _$IndustryEntity._({this.name}) : super._();
+  _$IndustryEntity._({this.name}) : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('IndustryEntity', 'name');
+  }
 
   @override
   IndustryEntity rebuild(void updates(IndustryEntityBuilder b)) =>

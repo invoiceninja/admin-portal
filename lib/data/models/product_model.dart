@@ -37,41 +37,44 @@ abstract class ProductEntity extends Object with BaseEntity implements Built<Pro
   static int counter = 0;
   factory ProductEntity() {
     return _$ProductEntity._(
-        id: --ProductEntity.counter
+        id: --ProductEntity.counter,
+        productKey: '',
+        notes: '',
+        cost: 0.0,
+        taxName1: '',
+        taxRate1: 0.0,
+        taxName2: '',
+        taxRate2: 0.0,
+        customValue1: '',
+        customValue2: '',
+        updatedAt: 0,
+        archivedAt: 0,
+        isDeleted: false,
     );
   }
 
-  @nullable
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
-
-  @nullable
+  
   String get notes;
-
-  @nullable
+  
   double get cost;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'tax_rate1')
   double get taxRate1;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'tax_name2')
   String get taxName2;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
-
-  @nullable
+  
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 

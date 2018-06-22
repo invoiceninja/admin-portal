@@ -27,11 +27,15 @@ class SizeFields {
 }
 
 abstract class SizeEntity implements Built<SizeEntity, SizeEntityBuilder> {
-  
-  @nullable
+
+  factory SizeEntity() {
+    return _$SizeEntity._(
+      name: '',
+    );
+  }
+
   String get name;
   
   SizeEntity._();
-  factory SizeEntity([updates(SizeEntityBuilder b)]) = _$SizeEntity;
   static Serializer<SizeEntity> get serializer => _$sizeEntitySerializer;
 }

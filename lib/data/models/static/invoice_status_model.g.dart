@@ -128,13 +128,10 @@ class _$InvoiceStatusEntitySerializer
   @override
   Iterable serialize(Serializers serializers, InvoiceStatusEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -356,7 +353,10 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
   factory _$InvoiceStatusEntity([void updates(InvoiceStatusEntityBuilder b)]) =>
       (new InvoiceStatusEntityBuilder()..update(updates)).build();
 
-  _$InvoiceStatusEntity._({this.name}) : super._();
+  _$InvoiceStatusEntity._({this.name}) : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('InvoiceStatusEntity', 'name');
+  }
 
   @override
   InvoiceStatusEntity rebuild(void updates(InvoiceStatusEntityBuilder b)) =>

@@ -121,109 +121,57 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
   @override
   Iterable serialize(Serializers serializers, CountryEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.capital != null) {
-      result
-        ..add('capital')
-        ..add(serializers.serialize(object.capital,
-            specifiedType: const FullType(String)));
-    }
-    if (object.citizenship != null) {
-      result
-        ..add('citizenship')
-        ..add(serializers.serialize(object.citizenship,
-            specifiedType: const FullType(String)));
-    }
-    if (object.countryCode != null) {
-      result
-        ..add('country_code')
-        ..add(serializers.serialize(object.countryCode,
-            specifiedType: const FullType(String)));
-    }
-    if (object.currency != null) {
-      result
-        ..add('currency')
-        ..add(serializers.serialize(object.currency,
-            specifiedType: const FullType(String)));
-    }
-    if (object.currencyCode != null) {
-      result
-        ..add('currency_code')
-        ..add(serializers.serialize(object.currencyCode,
-            specifiedType: const FullType(String)));
-    }
-    if (object.currencySubUnit != null) {
-      result
-        ..add('currency_sub_unit')
-        ..add(serializers.serialize(object.currencySubUnit,
-            specifiedType: const FullType(String)));
-    }
-    if (object.fullName != null) {
-      result
-        ..add('full_name')
-        ..add(serializers.serialize(object.fullName,
-            specifiedType: const FullType(String)));
-    }
-    if (object.iso_3166_2 != null) {
-      result
-        ..add('iso_3166_2')
-        ..add(serializers.serialize(object.iso_3166_2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.iso_3166_3 != null) {
-      result
-        ..add('iso_3166_3')
-        ..add(serializers.serialize(object.iso_3166_3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.regionCode != null) {
-      result
-        ..add('region_code')
-        ..add(serializers.serialize(object.regionCode,
-            specifiedType: const FullType(String)));
-    }
-    if (object.subRegionCode != null) {
-      result
-        ..add('sub_region_code')
-        ..add(serializers.serialize(object.subRegionCode,
-            specifiedType: const FullType(String)));
-    }
-    if (object.eea != null) {
-      result
-        ..add('eea')
-        ..add(serializers.serialize(object.eea,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.swapPostalCode != null) {
-      result
-        ..add('swap_postal_code')
-        ..add(serializers.serialize(object.swapPostalCode,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.swapCurrencySymbol != null) {
-      result
-        ..add('swap_currency_symbol')
-        ..add(serializers.serialize(object.swapCurrencySymbol,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.thousandSeparator != null) {
-      result
-        ..add('thousand_separator')
-        ..add(serializers.serialize(object.thousandSeparator,
-            specifiedType: const FullType(String)));
-    }
-    if (object.decimalSeparator != null) {
-      result
-        ..add('decimal_separator')
-        ..add(serializers.serialize(object.decimalSeparator,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'capital',
+      serializers.serialize(object.capital,
+          specifiedType: const FullType(String)),
+      'citizenship',
+      serializers.serialize(object.citizenship,
+          specifiedType: const FullType(String)),
+      'country_code',
+      serializers.serialize(object.countryCode,
+          specifiedType: const FullType(String)),
+      'currency',
+      serializers.serialize(object.currency,
+          specifiedType: const FullType(String)),
+      'currency_code',
+      serializers.serialize(object.currencyCode,
+          specifiedType: const FullType(String)),
+      'currency_sub_unit',
+      serializers.serialize(object.currencySubUnit,
+          specifiedType: const FullType(String)),
+      'full_name',
+      serializers.serialize(object.fullName,
+          specifiedType: const FullType(String)),
+      'iso_3166_2',
+      serializers.serialize(object.iso_3166_2,
+          specifiedType: const FullType(String)),
+      'iso_3166_3',
+      serializers.serialize(object.iso_3166_3,
+          specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'region_code',
+      serializers.serialize(object.regionCode,
+          specifiedType: const FullType(String)),
+      'sub_region_code',
+      serializers.serialize(object.subRegionCode,
+          specifiedType: const FullType(String)),
+      'eea',
+      serializers.serialize(object.eea, specifiedType: const FullType(bool)),
+      'swap_postal_code',
+      serializers.serialize(object.swapPostalCode,
+          specifiedType: const FullType(bool)),
+      'swap_currency_symbol',
+      serializers.serialize(object.swapCurrencySymbol,
+          specifiedType: const FullType(bool)),
+      'thousand_separator',
+      serializers.serialize(object.thousandSeparator,
+          specifiedType: const FullType(String)),
+      'decimal_separator',
+      serializers.serialize(object.decimalSeparator,
+          specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -552,7 +500,41 @@ class _$CountryEntity extends CountryEntity {
       this.swapCurrencySymbol,
       this.thousandSeparator,
       this.decimalSeparator})
-      : super._();
+      : super._() {
+    if (capital == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'capital');
+    if (citizenship == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'citizenship');
+    if (countryCode == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'countryCode');
+    if (currency == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'currency');
+    if (currencyCode == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'currencyCode');
+    if (currencySubUnit == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'currencySubUnit');
+    if (fullName == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'fullName');
+    if (iso_3166_2 == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'iso_3166_2');
+    if (iso_3166_3 == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'iso_3166_3');
+    if (name == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'name');
+    if (regionCode == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'regionCode');
+    if (subRegionCode == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'subRegionCode');
+    if (eea == null) throw new BuiltValueNullFieldError('CountryEntity', 'eea');
+    if (swapPostalCode == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'swapPostalCode');
+    if (swapCurrencySymbol == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'swapCurrencySymbol');
+    if (thousandSeparator == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'thousandSeparator');
+    if (decimalSeparator == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'decimalSeparator');
+  }
 
   @override
   CountryEntity rebuild(void updates(CountryEntityBuilder b)) =>

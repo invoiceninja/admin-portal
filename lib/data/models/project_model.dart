@@ -43,45 +43,49 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
   static int counter = 0;
   factory ProjectEntity() {
     return _$ProjectEntity._(
-        id: --ProjectEntity.counter
+        id: --ProjectEntity.counter,
+        name: '',
+        clientId: 0,
+        taskRate: 0.0,
+        dueDate: '',
+        privateNotes: '',
+        budgetedHours: 0.0,
+        customValue1: '',
+        customValue2: '',
+        
+        updatedAt: 0,
+        archivedAt: 0,
+        isDeleted: false,
     );
   }
 
-  @nullable
   String get name;
 
-  @nullable
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
   
-  @nullable
   @BuiltValueField(wireName: 'task_rate')
   double get taskRate;
 
-  @nullable
   @BuiltValueField(wireName: 'due_date')
   String get dueDate;
 
-  @nullable
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
-  @nullable
   @BuiltValueField(wireName: 'budgeted_hours')
   double get budgetedHours;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
   int compareTo(ProjectEntity project, String sortField, bool sortAscending) {
     int response = 0;
     ProjectEntity projectA = sortAscending ? this : project;
-    ProjectEntity projectB = sortAscending ? project: this;
+    ProjectEntity projectB = sortAscending ? project: this; 
 
     switch (sortField) {
       case ProjectFields.taskRate:

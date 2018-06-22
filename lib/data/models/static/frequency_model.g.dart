@@ -125,19 +125,13 @@ class _$FrequencyEntitySerializer
   @override
   Iterable serialize(Serializers serializers, FrequencyEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.dateInterval != null) {
-      result
-        ..add('date_interval')
-        ..add(serializers.serialize(object.dateInterval,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'date_interval',
+      serializers.serialize(object.dateInterval,
+          specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -361,7 +355,12 @@ class _$FrequencyEntity extends FrequencyEntity {
   factory _$FrequencyEntity([void updates(FrequencyEntityBuilder b)]) =>
       (new FrequencyEntityBuilder()..update(updates)).build();
 
-  _$FrequencyEntity._({this.name, this.dateInterval}) : super._();
+  _$FrequencyEntity._({this.name, this.dateInterval}) : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('FrequencyEntity', 'name');
+    if (dateInterval == null)
+      throw new BuiltValueNullFieldError('FrequencyEntity', 'dateInterval');
+  }
 
   @override
   FrequencyEntity rebuild(void updates(FrequencyEntityBuilder b)) =>

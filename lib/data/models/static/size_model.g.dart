@@ -113,13 +113,10 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
   @override
   Iterable serialize(Serializers serializers, SizeEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -332,7 +329,9 @@ class _$SizeEntity extends SizeEntity {
   factory _$SizeEntity([void updates(SizeEntityBuilder b)]) =>
       (new SizeEntityBuilder()..update(updates)).build();
 
-  _$SizeEntity._({this.name}) : super._();
+  _$SizeEntity._({this.name}) : super._() {
+    if (name == null) throw new BuiltValueNullFieldError('SizeEntity', 'name');
+  }
 
   @override
   SizeEntity rebuild(void updates(SizeEntityBuilder b)) =>

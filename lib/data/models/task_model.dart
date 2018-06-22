@@ -44,41 +44,45 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
   static int counter = 0;
   factory TaskEntity() {
     return _$TaskEntity._(
-        id: --TaskEntity.counter
+        id: --TaskEntity.counter,
+        description: '',
+        duration: 0,
+        invoiceId: 0,
+        clientId: 0,
+        projectId: 0,
+        timeLog: '',
+        isRunning: false,
+        customValue1: '',
+        customValue2: '',
+        
+        updatedAt: 0,
+        archivedAt: 0,
+        isDeleted: false,
     );
   }
 
-  @nullable
   String get description;
 
-  @nullable
   int get duration;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   int get invoiceId;
   
-  @nullable
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 
-  @nullable
   @BuiltValueField(wireName: 'project_id')
   int get projectId;
 
-  @nullable
   @BuiltValueField(wireName: 'time_log')
   String get timeLog;
 
-  @nullable
   @BuiltValueField(wireName: 'is_running')
   bool get isRunning;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 

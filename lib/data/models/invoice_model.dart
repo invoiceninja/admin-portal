@@ -58,169 +58,172 @@ abstract class InvoiceEntity extends Object with BaseEntity
   factory InvoiceEntity() {
     return _$InvoiceEntity._(
         id: --InvoiceEntity.counter,
+        amount: 0.0,
+        balance: 0.0,
+        clientId: 0,
+        invoiceStatusId: 0,
+        invoiceNumber: '',
+        discount: 0.0,
+        poNumber: '',
+        invoiceDate: '',
+        dueDate: '',
+        terms: '',
+        publicNotes: '',
+        privateNotes: '',
+        invoiceTypeId: 0,
+        isRecurring: false,
+        frequencyId: 0,
+        startDate: '',
+        endDate: '',
+        lastSentDate: '',
+        recurringInvoiceId: 0,
+        taxName1: '',
+        taxRate1: 0.0,
+        taxName2: '',
+        taxRate2: 0.0,
+        isAmountDiscount: false,
+        invoiceFooter: '',
+        partial: 0.0,
+        partialDueDate: '',
+        hasTasks: false,
+        autoBill: false,
+        customValue1: 0.0,
+        customValue2: 0.0,
+        customTaxes1: false,
+        customTaxes2: false,
+        hasExpenses: false,
+        quoteInvoiceId: 0,
+        customTextValue1: '',
+        customTextValue2: '',
+        isQuote: false,
+        isPublic: false,
+        filename: '',
         invoiceItems: BuiltList<InvoiceItemEntity>(),
+        invitations: BuiltList<InvitationEntity>(),
+        
+        updatedAt: 0,
+        archivedAt: 0,
+        isDeleted: false,
     );
   }
 
-  @nullable
   double get amount;
 
-  @nullable
   double get balance;
 
-  @nullable
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_status_id')
   int get invoiceStatusId;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
 
-  @nullable
   double get discount;
 
-  @nullable
   @BuiltValueField(wireName: 'po_number')
   String get poNumber;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_date')
   String get invoiceDate;
 
-  @nullable
   @BuiltValueField(wireName: 'due_date')
   String get dueDate;
 
-  @nullable
   String get terms;
 
-  @nullable
   @BuiltValueField(wireName: 'public_notes')
   String get publicNotes;
 
-  @nullable
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_type_id')
   int get invoiceTypeId;
 
-  @nullable
   @BuiltValueField(wireName: 'is_recurring')
   bool get isRecurring;
 
-  @nullable
   @BuiltValueField(wireName: 'frequency_id')
   int get frequencyId;
 
-  @nullable
   @BuiltValueField(wireName: 'start_date')
   String get startDate;
 
-  @nullable
   @BuiltValueField(wireName: 'end_date')
   String get endDate;
   
-  @nullable
   @BuiltValueField(wireName: 'last_sent_date')
   String get lastSentDate;
 
-  @nullable
   @BuiltValueField(wireName: 'recurring_invoice_id')
   int get recurringInvoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_rate1')
   double get taxRate1;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_name2')
   String get taxName2;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
 
-  @nullable
   @BuiltValueField(wireName: 'is_amount_discount')
   bool get isAmountDiscount;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_footer')
   String get invoiceFooter;
   
-  @nullable
   double get partial;
 
-  @nullable
   @BuiltValueField(wireName: 'partial_due_date')
   String get partialDueDate;
 
-  @nullable
   @BuiltValueField(wireName: 'has_tasks')
   bool get hasTasks;
 
-  @nullable
   @BuiltValueField(wireName: 'auto_bill')
   bool get autoBill;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value1')
   double get customValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   double get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_taxes1')
   bool get customTaxes1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_taxes2')
   bool get customTaxes2;
 
-  @nullable
   @BuiltValueField(wireName: 'has_expenses')
   bool get hasExpenses;
 
-  @nullable
   @BuiltValueField(wireName: 'quote_invoice_id')
   int get quoteInvoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_text_value1')
   String get customTextValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_text_value2')
   String get customTextValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'is_quote')
   bool get isQuote;
 
-  @nullable
   @BuiltValueField(wireName: 'is_public')
   bool get isPublic;
 
-  @nullable
   String get filename;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_items')
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
-  @nullable
   BuiltList<InvitationEntity> get invitations;
 
   //String get last_login;
@@ -267,52 +270,55 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
       id: --InvoiceItemEntity.counter,
-      qty: 1.0,
+      productKey: '',
+      notes: '',
+      cost: 0.0,
+      qty: 0.0,
+      taxName1: '',
+      taxRate1: 0.0,
+      taxName2: '',
+      taxRate2: 0.0,
+      invoiceItemTypeId: 0,
+      customValue1: '',
+      customValue2: '',
+      discount: 0.0,
+      
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
 
-  @nullable
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
 
-  @nullable
   String get notes;
 
-  @nullable
   double get cost;
 
-  @nullable
   double get qty;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_rate1')
   double get taxRate1;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_name2')
   String get taxName2;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_item_type_id')
   int get invoiceItemTypeId;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   double get discount;
 
   double get total => qty * cost;
@@ -323,17 +329,28 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
 
 abstract class InvitationEntity extends Object with BaseEntity implements Built<InvitationEntity, InvitationEntityBuilder> {
 
-  @nullable
+  static int counter = 0;
+  factory InvitationEntity() {
+    return _$InvitationEntity._(
+      id: --InvitationEntity.counter,
+      key: '',
+      link: '',
+      sentDate: '',
+      viewedDate: '',
+      
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
+    );
+  }
+
   String get key;
 
-  @nullable
   String get link;
 
-  @nullable
   @BuiltValueField(wireName: 'sent_date')
   String get sentDate;
 
-  @nullable
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
 
@@ -341,6 +358,5 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
   String get downloadLink => link.replaceFirst('/view/', '/download/');
 
   InvitationEntity._();
-  factory InvitationEntity([updates(InvitationEntityBuilder b)]) = _$InvitationEntity;
   static Serializer<InvitationEntity> get serializer => _$invitationEntitySerializer;
 }

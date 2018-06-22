@@ -30,18 +30,22 @@ class DateFormatFields {
 
 abstract class DateFormatEntity implements Built<DateFormatEntity, DateFormatEntityBuilder> {
   
-  @nullable
+  factory DateFormatEntity() {
+    return _$DateFormatEntity._(
+      format: '',
+      pickerFormat: '',
+      formatMoment: '',
+    );
+  }
+
   String get format;
 
-  @nullable
   @BuiltValueField(wireName: 'picker_format')
   String get pickerFormat;
 
-  @nullable
   @BuiltValueField(wireName: 'format_moment')
   String get formatMoment;
   
   DateFormatEntity._();
-  factory DateFormatEntity([updates(DateFormatEntityBuilder b)]) = _$DateFormatEntity;
   static Serializer<DateFormatEntity> get serializer => _$dateFormatEntitySerializer;
 }

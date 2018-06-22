@@ -125,19 +125,13 @@ class _$PaymentTypeEntitySerializer
   @override
   Iterable serialize(Serializers serializers, PaymentTypeEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.gatewayTypeId != null) {
-      result
-        ..add('gateway_type_id')
-        ..add(serializers.serialize(object.gatewayTypeId,
-            specifiedType: const FullType(int)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'gateway_type_id',
+      serializers.serialize(object.gatewayTypeId,
+          specifiedType: const FullType(int)),
+    ];
 
     return result;
   }
@@ -365,7 +359,12 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   factory _$PaymentTypeEntity([void updates(PaymentTypeEntityBuilder b)]) =>
       (new PaymentTypeEntityBuilder()..update(updates)).build();
 
-  _$PaymentTypeEntity._({this.name, this.gatewayTypeId}) : super._();
+  _$PaymentTypeEntity._({this.name, this.gatewayTypeId}) : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('PaymentTypeEntity', 'name');
+    if (gatewayTypeId == null)
+      throw new BuiltValueNullFieldError('PaymentTypeEntity', 'gatewayTypeId');
+  }
 
   @override
   PaymentTypeEntity rebuild(void updates(PaymentTypeEntityBuilder b)) =>

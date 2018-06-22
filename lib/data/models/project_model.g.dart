@@ -121,55 +121,31 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
   @override
   Iterable serialize(Serializers serializers, ProjectEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.clientId != null) {
-      result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.taskRate != null) {
-      result
-        ..add('task_rate')
-        ..add(serializers.serialize(object.taskRate,
-            specifiedType: const FullType(double)));
-    }
-    if (object.dueDate != null) {
-      result
-        ..add('due_date')
-        ..add(serializers.serialize(object.dueDate,
-            specifiedType: const FullType(String)));
-    }
-    if (object.privateNotes != null) {
-      result
-        ..add('private_notes')
-        ..add(serializers.serialize(object.privateNotes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.budgetedHours != null) {
-      result
-        ..add('budgeted_hours')
-        ..add(serializers.serialize(object.budgetedHours,
-            specifiedType: const FullType(double)));
-    }
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(int)),
+      'task_rate',
+      serializers.serialize(object.taskRate,
+          specifiedType: const FullType(double)),
+      'due_date',
+      serializers.serialize(object.dueDate,
+          specifiedType: const FullType(String)),
+      'private_notes',
+      serializers.serialize(object.privateNotes,
+          specifiedType: const FullType(String)),
+      'budgeted_hours',
+      serializers.serialize(object.budgetedHours,
+          specifiedType: const FullType(double)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -487,7 +463,24 @@ class _$ProjectEntity extends ProjectEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted})
-      : super._();
+      : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('ProjectEntity', 'name');
+    if (clientId == null)
+      throw new BuiltValueNullFieldError('ProjectEntity', 'clientId');
+    if (taskRate == null)
+      throw new BuiltValueNullFieldError('ProjectEntity', 'taskRate');
+    if (dueDate == null)
+      throw new BuiltValueNullFieldError('ProjectEntity', 'dueDate');
+    if (privateNotes == null)
+      throw new BuiltValueNullFieldError('ProjectEntity', 'privateNotes');
+    if (budgetedHours == null)
+      throw new BuiltValueNullFieldError('ProjectEntity', 'budgetedHours');
+    if (customValue1 == null)
+      throw new BuiltValueNullFieldError('ProjectEntity', 'customValue1');
+    if (customValue2 == null)
+      throw new BuiltValueNullFieldError('ProjectEntity', 'customValue2');
+  }
 
   @override
   ProjectEntity rebuild(void updates(ProjectEntityBuilder b)) =>

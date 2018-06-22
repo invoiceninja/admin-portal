@@ -29,15 +29,18 @@ class DatetimeFormatFields {
 
 abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, DatetimeFormatEntityBuilder> {
 
-  @nullable
+  factory DatetimeFormatEntity() {
+    return _$DatetimeFormatEntity._(
+      format: '',
+      formatMoment: '',
+    );
+  }
+  
   String get format;
 
-  @nullable
   @BuiltValueField(wireName: 'format_moment')
   String get formatMoment;
   
-
   DatetimeFormatEntity._();
-  factory DatetimeFormatEntity([updates(DatetimeFormatEntityBuilder b)]) = _$DatetimeFormatEntity;
   static Serializer<DatetimeFormatEntity> get serializer => _$datetimeFormatEntitySerializer;
 }
