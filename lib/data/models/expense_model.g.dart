@@ -123,134 +123,72 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
   @override
   Iterable serialize(Serializers serializers, ExpenseEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.privateNotes != null) {
-      result
-        ..add('private_notes')
-        ..add(serializers.serialize(object.privateNotes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.publicNotes != null) {
-      result
-        ..add('public_notes')
-        ..add(serializers.serialize(object.publicNotes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.shouldBeInvoiced != null) {
-      result
-        ..add('should_be_invoiced')
-        ..add(serializers.serialize(object.shouldBeInvoiced,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.transactionId != null) {
-      result
-        ..add('transaction_id')
-        ..add(serializers.serialize(object.transactionId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.transactionReference != null) {
-      result
-        ..add('transaction_reference')
-        ..add(serializers.serialize(object.transactionReference,
-            specifiedType: const FullType(String)));
-    }
-    if (object.bankId != null) {
-      result
-        ..add('bank_id')
-        ..add(serializers.serialize(object.bankId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.expenseCurrencyId != null) {
-      result
-        ..add('expense_currency_id')
-        ..add(serializers.serialize(object.expenseCurrencyId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.exchangeCurrencyId != null) {
-      result
-        ..add('expense_category_id')
-        ..add(serializers.serialize(object.exchangeCurrencyId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.amount != null) {
-      result
-        ..add('amount')
-        ..add(serializers.serialize(object.amount,
-            specifiedType: const FullType(double)));
-    }
-    if (object.expenseDate != null) {
-      result
-        ..add('expense_date')
-        ..add(serializers.serialize(object.expenseDate,
-            specifiedType: const FullType(String)));
-    }
-    if (object.exchangeRate != null) {
-      result
-        ..add('exchange_rate')
-        ..add(serializers.serialize(object.exchangeRate,
-            specifiedType: const FullType(double)));
-    }
-    if (object.invoiceCurrencyId != null) {
-      result
-        ..add('invoiceCurrencyId')
-        ..add(serializers.serialize(object.invoiceCurrencyId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.taxName1 != null) {
-      result
-        ..add('tax_name1')
-        ..add(serializers.serialize(object.taxName1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taxRate1 != null) {
-      result
-        ..add('tax_rate1')
-        ..add(serializers.serialize(object.taxRate1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taxRate2 != null) {
-      result
-        ..add('tax_rate2')
-        ..add(serializers.serialize(object.taxRate2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.clientId != null) {
-      result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.invoiceId != null) {
-      result
-        ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.vendorId != null) {
-      result
-        ..add('vendor_id')
-        ..add(serializers.serialize(object.vendorId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.expenseCtegories != null) {
-      result
-        ..add('expense_category')
-        ..add(serializers.serialize(object.expenseCtegories,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(ExpenseCategoryEntity)])));
-    }
+    final result = <Object>[
+      'private_notes',
+      serializers.serialize(object.privateNotes,
+          specifiedType: const FullType(String)),
+      'public_notes',
+      serializers.serialize(object.publicNotes,
+          specifiedType: const FullType(String)),
+      'should_be_invoiced',
+      serializers.serialize(object.shouldBeInvoiced,
+          specifiedType: const FullType(bool)),
+      'transaction_id',
+      serializers.serialize(object.transactionId,
+          specifiedType: const FullType(String)),
+      'transaction_reference',
+      serializers.serialize(object.transactionReference,
+          specifiedType: const FullType(String)),
+      'bank_id',
+      serializers.serialize(object.bankId,
+          specifiedType: const FullType(String)),
+      'expense_currency_id',
+      serializers.serialize(object.expenseCurrencyId,
+          specifiedType: const FullType(int)),
+      'expense_category_id',
+      serializers.serialize(object.exchangeCurrencyId,
+          specifiedType: const FullType(int)),
+      'amount',
+      serializers.serialize(object.amount,
+          specifiedType: const FullType(double)),
+      'expense_date',
+      serializers.serialize(object.expenseDate,
+          specifiedType: const FullType(String)),
+      'exchange_rate',
+      serializers.serialize(object.exchangeRate,
+          specifiedType: const FullType(double)),
+      'invoiceCurrencyId',
+      serializers.serialize(object.invoiceCurrencyId,
+          specifiedType: const FullType(int)),
+      'tax_name1',
+      serializers.serialize(object.taxName1,
+          specifiedType: const FullType(String)),
+      'tax_rate1',
+      serializers.serialize(object.taxRate1,
+          specifiedType: const FullType(String)),
+      'tax_rate2',
+      serializers.serialize(object.taxRate2,
+          specifiedType: const FullType(String)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(int)),
+      'invoice_id',
+      serializers.serialize(object.invoiceId,
+          specifiedType: const FullType(int)),
+      'vendor_id',
+      serializers.serialize(object.vendorId,
+          specifiedType: const FullType(int)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'expense_category',
+      serializers.serialize(object.expenseCategories,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ExpenseCategoryEntity)])),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -371,7 +309,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'expense_category':
-          result.expenseCtegories.replace(serializers.deserialize(value,
+          result.expenseCategories.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ExpenseCategoryEntity)]))
               as BuiltList);
@@ -412,13 +350,10 @@ class _$ExpenseCategoryEntitySerializer
   @override
   Iterable serialize(Serializers serializers, ExpenseCategoryEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -709,7 +644,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String customValue2;
   @override
-  final BuiltList<ExpenseCategoryEntity> expenseCtegories;
+  final BuiltList<ExpenseCategoryEntity> expenseCategories;
   @override
   final int id;
   @override
@@ -743,12 +678,56 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.vendorId,
       this.customValue1,
       this.customValue2,
-      this.expenseCtegories,
+      this.expenseCategories,
       this.id,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted})
-      : super._();
+      : super._() {
+    if (privateNotes == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'privateNotes');
+    if (publicNotes == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'publicNotes');
+    if (shouldBeInvoiced == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'shouldBeInvoiced');
+    if (transactionId == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'transactionId');
+    if (transactionReference == null)
+      throw new BuiltValueNullFieldError(
+          'ExpenseEntity', 'transactionReference');
+    if (bankId == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'bankId');
+    if (expenseCurrencyId == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCurrencyId');
+    if (exchangeCurrencyId == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'exchangeCurrencyId');
+    if (amount == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'amount');
+    if (expenseDate == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseDate');
+    if (exchangeRate == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'exchangeRate');
+    if (invoiceCurrencyId == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceCurrencyId');
+    if (taxName1 == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxName1');
+    if (taxRate1 == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate1');
+    if (taxRate2 == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate2');
+    if (clientId == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'clientId');
+    if (invoiceId == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceId');
+    if (vendorId == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'vendorId');
+    if (customValue1 == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue1');
+    if (customValue2 == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue2');
+    if (expenseCategories == null)
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCategories');
+  }
 
   @override
   ExpenseEntity rebuild(void updates(ExpenseEntityBuilder b)) =>
@@ -781,7 +760,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         vendorId == other.vendorId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        expenseCtegories == other.expenseCtegories &&
+        expenseCategories == other.expenseCategories &&
         id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -823,7 +802,7 @@ class _$ExpenseEntity extends ExpenseEntity {
                                     vendorId.hashCode),
                                 customValue1.hashCode),
                             customValue2.hashCode),
-                        expenseCtegories.hashCode),
+                        expenseCategories.hashCode),
                     id.hashCode),
                 updatedAt.hashCode),
             archivedAt.hashCode),
@@ -853,7 +832,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('vendorId', vendorId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('expenseCtegories', expenseCtegories)
+          ..add('expenseCategories', expenseCategories)
           ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -952,11 +931,11 @@ class ExpenseEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  ListBuilder<ExpenseCategoryEntity> _expenseCtegories;
-  ListBuilder<ExpenseCategoryEntity> get expenseCtegories =>
-      _$this._expenseCtegories ??= new ListBuilder<ExpenseCategoryEntity>();
-  set expenseCtegories(ListBuilder<ExpenseCategoryEntity> expenseCtegories) =>
-      _$this._expenseCtegories = expenseCtegories;
+  ListBuilder<ExpenseCategoryEntity> _expenseCategories;
+  ListBuilder<ExpenseCategoryEntity> get expenseCategories =>
+      _$this._expenseCategories ??= new ListBuilder<ExpenseCategoryEntity>();
+  set expenseCategories(ListBuilder<ExpenseCategoryEntity> expenseCategories) =>
+      _$this._expenseCategories = expenseCategories;
 
   int _id;
   int get id => _$this._id;
@@ -998,7 +977,7 @@ class ExpenseEntityBuilder
       _vendorId = _$v.vendorId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _expenseCtegories = _$v.expenseCtegories?.toBuilder();
+      _expenseCategories = _$v.expenseCategories?.toBuilder();
       _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1045,7 +1024,7 @@ class ExpenseEntityBuilder
               vendorId: vendorId,
               customValue1: customValue1,
               customValue2: customValue2,
-              expenseCtegories: _expenseCtegories?.build(),
+              expenseCategories: expenseCategories.build(),
               id: id,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
@@ -1053,8 +1032,8 @@ class ExpenseEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'expenseCtegories';
-        _expenseCtegories?.build();
+        _$failedField = 'expenseCategories';
+        expenseCategories.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ExpenseEntity', _$failedField, e.toString());
@@ -1084,7 +1063,10 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
 
   _$ExpenseCategoryEntity._(
       {this.name, this.id, this.updatedAt, this.archivedAt, this.isDeleted})
-      : super._();
+      : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'name');
+  }
 
   @override
   ExpenseCategoryEntity rebuild(void updates(ExpenseCategoryEntityBuilder b)) =>

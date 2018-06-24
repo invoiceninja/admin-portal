@@ -121,61 +121,35 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
   @override
   Iterable serialize(Serializers serializers, PaymentEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.amount != null) {
-      result
-        ..add('amount')
-        ..add(serializers.serialize(object.amount,
-            specifiedType: const FullType(double)));
-    }
-    if (object.transactionReference != null) {
-      result
-        ..add('transaction_reference')
-        ..add(serializers.serialize(object.transactionReference,
-            specifiedType: const FullType(String)));
-    }
-    if (object.paymentDate != null) {
-      result
-        ..add('payment_date')
-        ..add(serializers.serialize(object.paymentDate,
-            specifiedType: const FullType(String)));
-    }
-    if (object.paymentTypeId != null) {
-      result
-        ..add('payment_type_id')
-        ..add(serializers.serialize(object.paymentTypeId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.invoiceId != null) {
-      result
-        ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.invoice_number != null) {
-      result
-        ..add('invoice_number')
-        ..add(serializers.serialize(object.invoice_number,
-            specifiedType: const FullType(String)));
-    }
-    if (object.privateNotes != null) {
-      result
-        ..add('private_notes')
-        ..add(serializers.serialize(object.privateNotes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.exchangeRate != null) {
-      result
-        ..add('exchange_rate')
-        ..add(serializers.serialize(object.exchangeRate,
-            specifiedType: const FullType(double)));
-    }
-    if (object.exchangeCurrencyId != null) {
-      result
-        ..add('exchange_currency_id')
-        ..add(serializers.serialize(object.exchangeCurrencyId,
-            specifiedType: const FullType(int)));
-    }
+    final result = <Object>[
+      'amount',
+      serializers.serialize(object.amount,
+          specifiedType: const FullType(double)),
+      'transaction_reference',
+      serializers.serialize(object.transactionReference,
+          specifiedType: const FullType(String)),
+      'payment_date',
+      serializers.serialize(object.paymentDate,
+          specifiedType: const FullType(String)),
+      'payment_type_id',
+      serializers.serialize(object.paymentTypeId,
+          specifiedType: const FullType(int)),
+      'invoice_id',
+      serializers.serialize(object.invoiceId,
+          specifiedType: const FullType(int)),
+      'invoice_number',
+      serializers.serialize(object.invoice_number,
+          specifiedType: const FullType(String)),
+      'private_notes',
+      serializers.serialize(object.privateNotes,
+          specifiedType: const FullType(String)),
+      'exchange_rate',
+      serializers.serialize(object.exchangeRate,
+          specifiedType: const FullType(double)),
+      'exchange_currency_id',
+      serializers.serialize(object.exchangeCurrencyId,
+          specifiedType: const FullType(int)),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -500,7 +474,27 @@ class _$PaymentEntity extends PaymentEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted})
-      : super._();
+      : super._() {
+    if (amount == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'amount');
+    if (transactionReference == null)
+      throw new BuiltValueNullFieldError(
+          'PaymentEntity', 'transactionReference');
+    if (paymentDate == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'paymentDate');
+    if (paymentTypeId == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'paymentTypeId');
+    if (invoiceId == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'invoiceId');
+    if (invoice_number == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'invoice_number');
+    if (privateNotes == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'privateNotes');
+    if (exchangeRate == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeRate');
+    if (exchangeCurrencyId == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeCurrencyId');
+  }
 
   @override
   PaymentEntity rebuild(void updates(PaymentEntityBuilder b)) =>

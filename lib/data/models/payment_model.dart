@@ -46,41 +46,45 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   factory PaymentEntity() {
     return _$PaymentEntity._(
       id: --PaymentEntity.counter,
+      amount: 0.0,
+      transactionReference: '',
+      paymentDate: '',
+      paymentTypeId: 0,
+      invoiceId: 0,
+      invoice_number: '',
+      privateNotes: '',
+      exchangeRate: 0.0,
+      exchangeCurrencyId: 0,
+      
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
 
-  @nullable
   double get amount;
 
-  @nullable
   @BuiltValueField(wireName: 'transaction_reference')
   String get transactionReference;
 
-  @nullable
   @BuiltValueField(wireName: 'payment_date')
   String get paymentDate;
 
-  @nullable
   @BuiltValueField(wireName: 'payment_type_id')
   int get paymentTypeId;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   int get invoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_number')
   String get invoice_number;
 
-  @nullable
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
-  @nullable
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
-  @nullable
   @BuiltValueField(wireName: 'exchange_currency_id')
   int get exchangeCurrencyId;
   

@@ -113,61 +113,35 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
   @override
   Iterable serialize(Serializers serializers, TaskEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.description != null) {
-      result
-        ..add('description')
-        ..add(serializers.serialize(object.description,
-            specifiedType: const FullType(String)));
-    }
-    if (object.duration != null) {
-      result
-        ..add('duration')
-        ..add(serializers.serialize(object.duration,
-            specifiedType: const FullType(int)));
-    }
-    if (object.invoiceId != null) {
-      result
-        ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.clientId != null) {
-      result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.projectId != null) {
-      result
-        ..add('project_id')
-        ..add(serializers.serialize(object.projectId,
-            specifiedType: const FullType(int)));
-    }
-    if (object.timeLog != null) {
-      result
-        ..add('time_log')
-        ..add(serializers.serialize(object.timeLog,
-            specifiedType: const FullType(String)));
-    }
-    if (object.isRunning != null) {
-      result
-        ..add('is_running')
-        ..add(serializers.serialize(object.isRunning,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+      'duration',
+      serializers.serialize(object.duration,
+          specifiedType: const FullType(int)),
+      'invoice_id',
+      serializers.serialize(object.invoiceId,
+          specifiedType: const FullType(int)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(int)),
+      'project_id',
+      serializers.serialize(object.projectId,
+          specifiedType: const FullType(int)),
+      'time_log',
+      serializers.serialize(object.timeLog,
+          specifiedType: const FullType(String)),
+      'is_running',
+      serializers.serialize(object.isRunning,
+          specifiedType: const FullType(bool)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -490,7 +464,26 @@ class _$TaskEntity extends TaskEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted})
-      : super._();
+      : super._() {
+    if (description == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'description');
+    if (duration == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'duration');
+    if (invoiceId == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'invoiceId');
+    if (clientId == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'clientId');
+    if (projectId == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'projectId');
+    if (timeLog == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'timeLog');
+    if (isRunning == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'isRunning');
+    if (customValue1 == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'customValue1');
+    if (customValue2 == null)
+      throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
+  }
 
   @override
   TaskEntity rebuild(void updates(TaskEntityBuilder b)) =>

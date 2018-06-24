@@ -40,80 +40,65 @@ class StaticDataFields {
   static const String sizes = 'sizes';
   static const String industries = 'industries';
   static const String timezones = 'timezones';
-  
   static const String dateFormats = 'dateFormats';
   static const String datetimeFormats = 'datetimeFormats';
   static const String languages = 'languages';
   static const String paymentTypes = 'paymentTypes';
-
   static const String countries = 'countries';
   static const String invoiceDesigns = 'invoiceDesigns';
   static const String invoiceStatus = 'invoiceStatus';
   static const String frequencies = 'frequencies';
-
   static const String gateways = 'gateways';
   static const String gatewayTypes = 'gatewayTypes';
   static const String fonts = 'fonts';
   static const String banks = 'banks';
-  
-
 }
-
 
 abstract class StaticDataEntity implements Built<StaticDataEntity, StaticDataEntityBuilder> {
 
-  @nullable
+  factory StaticDataEntity() {
+    return _$StaticDataEntity._(
+      currencies: BuiltList<CurrencyEntity>(),
+      sizes: BuiltList<SizeEntity>(),
+      industries: BuiltList<IndustryEntity>(),
+      timezones: BuiltList<TimezoneEntity>(),
+      dateFormats: BuiltList<DateFormatEntity>(),
+      datetimeFormats: BuiltList<DatetimeFormatEntity>(),
+      languages: BuiltList<LanguageEntity>(),
+      paymentTypes: BuiltList<PaymentTypeEntity>(),
+      countries: BuiltList<CountryEntity>(),
+      invoiceDesigns: BuiltList<InvoiceDesignEntity>(),
+      invoiceStatus: BuiltList<InvoiceStatusEntity>(),
+      frequencies: BuiltList<FrequencyEntity>(),
+    );
+
+  }
+
   BuiltList<CurrencyEntity> get currencies;
 
-  @nullable
   BuiltList<SizeEntity> get sizes;
 
-  @nullable
   BuiltList<IndustryEntity> get industries;
 
-  @nullable
   BuiltList<TimezoneEntity> get timezones;
 
-  @nullable
   BuiltList<DateFormatEntity> get dateFormats;
 
-  @nullable
   BuiltList<DatetimeFormatEntity> get datetimeFormats;
 
-  @nullable
   BuiltList<LanguageEntity> get languages;
 
-  @nullable
   BuiltList<PaymentTypeEntity> get paymentTypes;
 
-  @nullable
   BuiltList<CountryEntity> get countries;
 
-  @nullable
   BuiltList<InvoiceDesignEntity> get invoiceDesigns;
 
-  @nullable
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
 
-  @nullable
   BuiltList<FrequencyEntity> get frequencies;
 
-/*
-  @nullable
-  BuiltList<GatewayEntity> get gateways;
-
-  @nullable
-  BuiltList<GatewayTypeEntity> get gatewayTypes;
-
-  @nullable
-  BuiltList<FontEntity> get fonts;
-
-  @nullable
-  BuiltList<BankEntity> get banks;
-  */
-
   StaticDataEntity._();
-  factory StaticDataEntity([updates(StaticDataEntityBuilder b)]) = _$StaticDataEntity;
   static Serializer<StaticDataEntity> get serializer => _$staticDataEntitySerializer;
 }
 

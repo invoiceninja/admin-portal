@@ -28,10 +28,14 @@ class IndustryFields {
 
 abstract class IndustryEntity implements Built<IndustryEntity, IndustryEntityBuilder> {
   
-  @nullable
+  factory IndustryEntity() {
+    return _$IndustryEntity._(
+      name: '',
+    );
+  }
+  
   String get name;
   
   IndustryEntity._();
-  factory IndustryEntity([updates(IndustryEntityBuilder b)]) = _$IndustryEntity;
   static Serializer<IndustryEntity> get serializer => _$industryEntitySerializer;
 }

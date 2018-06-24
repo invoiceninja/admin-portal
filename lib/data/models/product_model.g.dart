@@ -121,61 +121,34 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
   @override
   Iterable serialize(Serializers serializers, ProductEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.productKey != null) {
-      result
-        ..add('product_key')
-        ..add(serializers.serialize(object.productKey,
-            specifiedType: const FullType(String)));
-    }
-    if (object.notes != null) {
-      result
-        ..add('notes')
-        ..add(serializers.serialize(object.notes,
-            specifiedType: const FullType(String)));
-    }
-    if (object.cost != null) {
-      result
-        ..add('cost')
-        ..add(serializers.serialize(object.cost,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxName1 != null) {
-      result
-        ..add('tax_name1')
-        ..add(serializers.serialize(object.taxName1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taxRate1 != null) {
-      result
-        ..add('tax_rate1')
-        ..add(serializers.serialize(object.taxRate1,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxName2 != null) {
-      result
-        ..add('tax_name2')
-        ..add(serializers.serialize(object.taxName2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taxRate2 != null) {
-      result
-        ..add('tax_rate2')
-        ..add(serializers.serialize(object.taxRate2,
-            specifiedType: const FullType(double)));
-    }
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'product_key',
+      serializers.serialize(object.productKey,
+          specifiedType: const FullType(String)),
+      'notes',
+      serializers.serialize(object.notes,
+          specifiedType: const FullType(String)),
+      'cost',
+      serializers.serialize(object.cost, specifiedType: const FullType(double)),
+      'tax_name1',
+      serializers.serialize(object.taxName1,
+          specifiedType: const FullType(String)),
+      'tax_rate1',
+      serializers.serialize(object.taxRate1,
+          specifiedType: const FullType(double)),
+      'tax_name2',
+      serializers.serialize(object.taxName2,
+          specifiedType: const FullType(String)),
+      'tax_rate2',
+      serializers.serialize(object.taxRate2,
+          specifiedType: const FullType(double)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -500,7 +473,26 @@ class _$ProductEntity extends ProductEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted})
-      : super._();
+      : super._() {
+    if (productKey == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'productKey');
+    if (notes == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'notes');
+    if (cost == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'cost');
+    if (taxName1 == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'taxName1');
+    if (taxRate1 == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'taxRate1');
+    if (taxName2 == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'taxName2');
+    if (taxRate2 == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'taxRate2');
+    if (customValue1 == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'customValue1');
+    if (customValue2 == null)
+      throw new BuiltValueNullFieldError('ProductEntity', 'customValue2');
+  }
 
   @override
   ProductEntity rebuild(void updates(ProductEntityBuilder b)) =>

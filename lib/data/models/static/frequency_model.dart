@@ -31,19 +31,20 @@ class FrequencyFields {
 
 abstract class FrequencyEntity implements Built<FrequencyEntity, FrequencyEntityBuilder> {
 
-  @nullable
+  factory FrequencyEntity() {
+    return _$FrequencyEntity._(
+      name: '',
+      dateInterval: '',
+    );
+  }
+
   @BuiltValueField(wireName: 'name')
   String get name;
 
-  @nullable
   @BuiltValueField(wireName: 'date_interval')
   String get dateInterval;
 
- 
-
-
   FrequencyEntity._();
-  factory FrequencyEntity([updates(FrequencyEntityBuilder b)]) = _$FrequencyEntity;
   static Serializer<FrequencyEntity> get serializer => _$frequencyEntitySerializer;
 }
 

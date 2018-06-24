@@ -128,19 +128,14 @@ class _$DatetimeFormatEntitySerializer
   @override
   Iterable serialize(Serializers serializers, DatetimeFormatEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.format != null) {
-      result
-        ..add('format')
-        ..add(serializers.serialize(object.format,
-            specifiedType: const FullType(String)));
-    }
-    if (object.formatMoment != null) {
-      result
-        ..add('format_moment')
-        ..add(serializers.serialize(object.formatMoment,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'format',
+      serializers.serialize(object.format,
+          specifiedType: const FullType(String)),
+      'format_moment',
+      serializers.serialize(object.formatMoment,
+          specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -369,7 +364,13 @@ class _$DatetimeFormatEntity extends DatetimeFormatEntity {
           [void updates(DatetimeFormatEntityBuilder b)]) =>
       (new DatetimeFormatEntityBuilder()..update(updates)).build();
 
-  _$DatetimeFormatEntity._({this.format, this.formatMoment}) : super._();
+  _$DatetimeFormatEntity._({this.format, this.formatMoment}) : super._() {
+    if (format == null)
+      throw new BuiltValueNullFieldError('DatetimeFormatEntity', 'format');
+    if (formatMoment == null)
+      throw new BuiltValueNullFieldError(
+          'DatetimeFormatEntity', 'formatMoment');
+  }
 
   @override
   DatetimeFormatEntity rebuild(void updates(DatetimeFormatEntityBuilder b)) =>

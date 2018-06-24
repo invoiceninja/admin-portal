@@ -46,77 +46,80 @@ class CountryFields {
 
 abstract class CountryEntity implements Built<CountryEntity, CountryEntityBuilder> {
 
-  @nullable
+  factory CountryEntity() {
+    return _$CountryEntity._(
+      capital: '',
+      citizenship: '',
+      countryCode: '',
+      currency: '',
+      currencyCode: '',
+      currencySubUnit: '',
+      fullName: '',
+      iso_3166_2: '',
+      iso_3166_3: '',
+      name: '',
+      regionCode: '',
+      subRegionCode: '',
+      eea: false,
+      swapPostalCode: false,
+      swapCurrencySymbol: false,
+      thousandSeparator: '',
+      decimalSeparator: '',
+    );
+  }
+
   @BuiltValueField(wireName: 'capital')
   String get capital;
 
-  @nullable
   @BuiltValueField(wireName: 'citizenship')
   String get citizenship;
 
-  @nullable
   @BuiltValueField(wireName: 'country_code')
   String get countryCode;
 
-  @nullable
   @BuiltValueField(wireName: 'currency')
   String get currency;
 
-  @nullable
   @BuiltValueField(wireName: 'currency_code')
   String get currencyCode;
 
-  @nullable
   @BuiltValueField(wireName: 'currency_sub_unit')
   String get currencySubUnit;
 
-  @nullable
   @BuiltValueField(wireName: 'full_name')
   String get fullName;
 
-  @nullable
   @BuiltValueField(wireName: 'iso_3166_2')
   String get iso_3166_2;
 
-  @nullable
   @BuiltValueField(wireName: 'iso_3166_3')
   String get iso_3166_3;
 
-  @nullable
   @BuiltValueField(wireName: 'name')
   String get name;
 
-  @nullable
   @BuiltValueField(wireName: 'region_code')
   String get regionCode;
 
-  @nullable
   @BuiltValueField(wireName: 'sub_region_code')
   String get subRegionCode;
 
-  @nullable
   @BuiltValueField(wireName: 'eea')
   bool get eea;
 
-  @nullable
   @BuiltValueField(wireName: 'swap_postal_code')
   bool get swapPostalCode;
 
-  @nullable
   @BuiltValueField(wireName: 'swap_currency_symbol')
   bool get swapCurrencySymbol;
 
-  @nullable
   @BuiltValueField(wireName: 'thousand_separator')
   String get thousandSeparator;
 
-  @nullable
   @BuiltValueField(wireName: 'decimal_separator')
   String get decimalSeparator;
 
-
   CountryEntity._();
-  factory CountryEntity([updates(CountryEntityBuilder b)]) = _$CountryEntity;
   static Serializer<CountryEntity> get serializer => _$countryEntitySerializer;
 }
 

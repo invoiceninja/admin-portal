@@ -122,19 +122,13 @@ class _$TimezoneEntitySerializer
   @override
   Iterable serialize(Serializers serializers, TimezoneEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.name != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
-    }
-    if (object.location != null) {
-      result
-        ..add('location')
-        ..add(serializers.serialize(object.location,
-            specifiedType: const FullType(String)));
-    }
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(String)),
+    ];
 
     return result;
   }
@@ -358,7 +352,12 @@ class _$TimezoneEntity extends TimezoneEntity {
   factory _$TimezoneEntity([void updates(TimezoneEntityBuilder b)]) =>
       (new TimezoneEntityBuilder()..update(updates)).build();
 
-  _$TimezoneEntity._({this.name, this.location}) : super._();
+  _$TimezoneEntity._({this.name, this.location}) : super._() {
+    if (name == null)
+      throw new BuiltValueNullFieldError('TimezoneEntity', 'name');
+    if (location == null)
+      throw new BuiltValueNullFieldError('TimezoneEntity', 'location');
+  }
 
   @override
   TimezoneEntity rebuild(void updates(TimezoneEntityBuilder b)) =>

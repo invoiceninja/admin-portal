@@ -28,22 +28,22 @@ class LanguageFields {
   
 }
 
-
 abstract class LanguageEntity implements Built<LanguageEntity, LanguageEntityBuilder> {
 
-  @nullable
+  factory LanguageEntity() {
+    return _$LanguageEntity._(
+      name: '',
+      locale: '',
+    );
+  }
+
   @BuiltValueField(wireName: 'name')
   String get name;
 
-  @nullable
   @BuiltValueField(wireName: 'locale')
   String get locale;
 
- 
-
-
   LanguageEntity._();
-  factory LanguageEntity([updates(LanguageEntityBuilder b)]) = _$LanguageEntity;
   static Serializer<LanguageEntity> get serializer => _$languageEntitySerializer;
 }
 

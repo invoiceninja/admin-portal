@@ -29,13 +29,17 @@ class TimezoneFields {
 
 abstract class TimezoneEntity implements Built<TimezoneEntity, TimezoneEntityBuilder> {
   
-  @nullable
+  factory TimezoneEntity() {
+    return _$TimezoneEntity._(
+      name: '',
+      location: '',
+    );
+  }
+
   String get name;
 
-  @nullable
   String get location;
   
   TimezoneEntity._();
-  factory TimezoneEntity([updates(TimezoneEntityBuilder b)]) = _$TimezoneEntity;
   static Serializer<TimezoneEntity> get serializer => _$timezoneEntitySerializer;
 }
