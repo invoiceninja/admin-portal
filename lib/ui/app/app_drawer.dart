@@ -12,6 +12,7 @@ import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
+import 'package:invoiceninja/ui/settings/settings_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -135,10 +136,10 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            icon: FontAwesomeIcons.powerOff,
-            title: AppLocalization.of(context).logOut,
+            icon: FontAwesomeIcons.cog,
+            title: AppLocalization.of(context).settings,
             onTap: () {
-              viewModel.onLogoutTapped(context);
+              navigator.pushReplacementNamed(SettingsScreen.route);
             },
           ),
           AboutListTile(
