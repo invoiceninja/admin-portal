@@ -2,12 +2,17 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:invoiceninja/constants.dart';
 
 class WebClient {
 
   const WebClient();
 
   Future<dynamic> get(String url, String token) async {
+
+    if (! url.contains('?')) url += '?';
+    url += '&per_page=${kMaxRecordsPerApiPage}';
+
     final http.Response response = await http.Client().get(
       url,
       headers: {

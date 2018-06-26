@@ -18,7 +18,7 @@ class ClientRepository {
   Future<BuiltList<ClientEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
     final response = await webClient.get(
-        auth.url + '/clients?per_page=500', company.token);
+        auth.url + '/clients', company.token);
 
     ClientListResponse clientResponse = serializers.deserializeWith(
         ClientListResponse.serializer, response);
