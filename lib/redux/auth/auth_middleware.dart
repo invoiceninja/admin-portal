@@ -87,6 +87,8 @@ bool _isVersionSupported(version) {
   int major = int.parse(parts[0]);
   int minor = int.parse(parts[1]);
 
-  return false;
+  return true;
+
+  // TODO enable before release
   //return major >= 4 && minor >= 5;
 }
