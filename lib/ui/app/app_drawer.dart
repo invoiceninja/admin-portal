@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
+import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/entities.dart';
@@ -87,13 +88,6 @@ class AppDrawer extends StatelessWidget {
                           ? _multipleCompanies
                           : _singleCompany
                     ),
-                    /*
-                    viewModel.isLoading ? SizedBox(
-                        width: 20.0,
-                        height: 20.0,
-                        child: CircularProgressIndicator()
-                    ) : Container(),
-                    */
                   ],
                 ),
               ],
@@ -104,34 +98,27 @@ class AppDrawer extends StatelessWidget {
               icon: FontAwesomeIcons.tachometerAlt,
               title: AppLocalization.of(context).dashboard,
               onTap: () {
-                store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
-                navigator.pushReplacementNamed(DashboardScreen.route);
+                store.dispatch(ViewDashboard(context));
               }),
           DrawerTile(
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
             onTap: () {
-              store.dispatch(SearchClients(null));
-              store.dispatch(UpdateCurrentRoute(ClientScreen.route));
-              navigator.pushReplacementNamed(ClientScreen.route);
+              store.dispatch(ViewClientList(context));
             },
           ),
           DrawerTile(
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
             onTap: () {
-              store.dispatch(SearchProducts(null));
-              store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-              navigator.pushReplacementNamed(ProductScreen.route);
+              store.dispatch(ViewProductList(context));
             },
           ),
           DrawerTile(
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
             onTap: () {
-              store.dispatch(SearchInvoices(null));
-              store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
-              navigator.pushReplacementNamed(InvoiceScreen.route);
+              store.dispatch(ViewInvoiceList(context));
             },
           ),
           DrawerTile(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
@@ -12,25 +13,41 @@ import 'package:invoiceninja/data/repositories/invoice_repository.dart';
 List<Middleware<AppState>> createStoreInvoicesMiddleware([
   InvoiceRepository repository = const InvoiceRepository(),
 ]) {
+  final viewInvoiceList = _viewInvoiceList();
+  final viewInvoice = _viewInvoice();
+  final editInvoice = _editInvoice();
   final loadInvoices = _loadInvoices(repository);
   final saveInvoice = _saveInvoice(repository);
   final archiveInvoice = _archiveInvoice(repository);
   final deleteInvoice = _deleteInvoice(repository);
   final restoreInvoice = _restoreInvoice(repository);
   final emailInvoice = _emailInvoice(repository);
-  final viewInvoice = _viewInvoice();
-  final editInvoice = _editInvoice();
 
   return [
+    TypedMiddleware<AppState, ViewInvoiceList>(viewInvoiceList),
+    TypedMiddleware<AppState, ViewInvoice>(viewInvoice),
+    TypedMiddleware<AppState, EditInvoice>(editInvoice),
     TypedMiddleware<AppState, LoadInvoices>(loadInvoices),
     TypedMiddleware<AppState, SaveInvoiceRequest>(saveInvoice),
     TypedMiddleware<AppState, ArchiveInvoiceRequest>(archiveInvoice),
     TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
     TypedMiddleware<AppState, RestoreInvoiceRequest>(restoreInvoice),
     TypedMiddleware<AppState, EmailInvoiceRequest>(emailInvoice),
-    TypedMiddleware<AppState, ViewInvoice>(viewInvoice),
-    TypedMiddleware<AppState, EditInvoice>(editInvoice),
   ];
+}
+
+Middleware<AppState> _viewInvoiceList() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    store.dispatch(LoadInvoices());
+    store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
+
+    if (action.context != null) {
+      NavigatorState navigator = Navigator.of(action.context);
+      navigator.pushReplacementNamed(InvoiceScreen.route);
+    }
+
+    next(action);
+  };
 }
 
 Middleware<AppState> _viewInvoice() {

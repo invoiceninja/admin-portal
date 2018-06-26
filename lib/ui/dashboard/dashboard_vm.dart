@@ -42,7 +42,7 @@ class DashboardVM {
   static DashboardVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       final Completer<Null> completer = new Completer<Null>();
-      store.dispatch(LoadDashboardAction(completer, true));
+      store.dispatch(LoadDashboard(completer, true));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
             content: SnackBarRow(

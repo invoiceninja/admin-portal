@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
+import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -10,21 +11,37 @@ import 'package:invoiceninja/data/repositories/product_repository.dart';
 List<Middleware<AppState>> createStoreProductsMiddleware([
   ProductRepository repository = const ProductRepository(),
 ]) {
+  final viewProductList = _viewProductList();
+  final editProduct = _editProduct();
   final loadProducts = _loadProducts(repository);
   final saveProduct = _saveProduct(repository);
   final archiveProduct = _archiveProduct(repository);
   final deleteProduct = _deleteProduct(repository);
   final restoreProduct = _restoreProduct(repository);
-  final editProduct = _editProduct();
 
   return [
+    TypedMiddleware<AppState, ViewProductList>(viewProductList),
+    TypedMiddleware<AppState, EditProduct>(editProduct),
     TypedMiddleware<AppState, LoadProducts>(loadProducts),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
     TypedMiddleware<AppState, ArchiveProductRequest>(archiveProduct),
     TypedMiddleware<AppState, DeleteProductRequest>(deleteProduct),
     TypedMiddleware<AppState, RestoreProductRequest>(restoreProduct),
-    TypedMiddleware<AppState, EditProduct>(editProduct),
   ];
+}
+
+Middleware<AppState> _viewProductList() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    store.dispatch(LoadProducts());
+    store.dispatch(UpdateCurrentRoute(ProductScreen.route));
+
+    if (action.context != null) {
+      NavigatorState navigator = Navigator.of(action.context);
+      navigator.pushReplacementNamed(ProductScreen.route);
+    }
+
+    next(action);
+  };
 }
 
 Middleware<AppState> _editProduct() {

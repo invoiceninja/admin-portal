@@ -1,13 +1,19 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
-class LoadDashboardAction {
+class ViewDashboard implements PersistUI {
+  final BuildContext context;
+  ViewDashboard([this.context]);
+}
+
+class LoadDashboard {
   final Completer completer;
   final bool force;
 
-  LoadDashboardAction([this.completer, this.force = false]);
+  LoadDashboard([this.completer, this.force = false]);
 }
 
 class LoadDashboardRequest implements StartLoading {}

@@ -4,6 +4,23 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
+class ViewProductList implements PersistUI {
+  final BuildContext context;
+  ViewProductList([this.context]);
+}
+
+class EditProduct implements PersistUI {
+  final ProductEntity product;
+  final BuildContext context;
+  EditProduct({this.product, this.context});
+}
+
+class UpdateProduct implements PersistUI {
+  final ProductEntity product;
+  UpdateProduct(this.product);
+}
+
+
 class LoadProducts {
   final Completer completer;
   final bool force;
@@ -31,17 +48,6 @@ class LoadProductsSuccess implements PersistData, StopLoading {
   String toString() {
     return 'LoadProductsSuccess{products: $products}';
   }
-}
-
-class EditProduct implements PersistUI {
-  final ProductEntity product;
-  final BuildContext context;
-  EditProduct({this.product, this.context});
-}
-
-class UpdateProduct implements PersistUI {
-  final ProductEntity product;
-  UpdateProduct(this.product);
 }
 
 class SaveProductRequest implements StartLoading {

@@ -98,22 +98,22 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             return LoginScreen();
           },
           DashboardScreen.route: (context) {
-            widget.store.dispatch(LoadDashboardAction());
+            widget.store.dispatch(ViewDashboard());
             return DashboardScreen();
           },
           ProductScreen.route: (context) {
-            widget.store.dispatch(LoadProducts());
+            widget.store.dispatch(ViewProductList());
             return ProductScreen();
           },
           ProductEditScreen.route: (context) => ProductEditScreen(),
           ClientScreen.route: (context) {
-            widget.store.dispatch(LoadClients());
+            widget.store.dispatch(ViewClientList());
             return ClientScreen();
           },
           ClientViewScreen.route: (context) => ClientViewScreen(),
           ClientEditScreen.route: (context) => ClientEditScreen(),
           InvoiceScreen.route: (context) {
-            widget.store.dispatch(LoadInvoices());
+            widget.store.dispatch(ViewInvoiceList());
             return InvoiceScreen();
           },
           InvoiceViewScreen.route: (context) => InvoiceViewScreen(),

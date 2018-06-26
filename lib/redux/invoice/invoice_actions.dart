@@ -5,6 +5,29 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
+class ViewInvoiceList implements PersistUI {
+  final BuildContext context;
+  ViewInvoiceList([this.context]);
+}
+
+class ViewInvoice implements PersistUI {
+  final InvoiceEntity invoice;
+  final BuildContext context;
+  ViewInvoice({this.invoice, this.context});
+}
+
+class EditInvoice implements PersistUI {
+  final InvoiceEntity invoice;
+  final BuildContext context;
+  EditInvoice({this.invoice, this.context});
+}
+
+class UpdateInvoice implements PersistUI {
+  final InvoiceEntity invoice;
+  UpdateInvoice(this.invoice);
+}
+
+
 class LoadInvoices {
   final Completer completer;
   final bool force;
@@ -34,22 +57,6 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
   }
 }
 
-class ViewInvoice implements PersistUI {
-  final InvoiceEntity invoice;
-  final BuildContext context;
-  ViewInvoice({this.invoice, this.context});
-}
-
-class EditInvoice implements PersistUI {
-  final InvoiceEntity invoice;
-  final BuildContext context;
-  EditInvoice({this.invoice, this.context});
-}
-
-class UpdateInvoice implements PersistUI {
-  final InvoiceEntity invoice;
-  UpdateInvoice(this.invoice);
-}
 
 class AddInvoiceItem implements PersistUI {}
 

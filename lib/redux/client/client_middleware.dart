@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:redux/redux.dart';
@@ -12,23 +13,39 @@ import 'package:invoiceninja/data/repositories/client_repository.dart';
 List<Middleware<AppState>> createStoreClientsMiddleware([
   ClientRepository repository = const ClientRepository(),
 ]) {
+  final viewClientList = _viewClientList();
+  final viewClient = _viewClient();
+  final editClient = _editClient();
   final loadClients = _loadClients(repository);
   final saveClient = _saveClient(repository);
   final archiveClient = _archiveClient(repository);
   final deleteClient = _deleteClient(repository);
   final restoreClient = _restoreClient(repository);
-  final editClient = _editClient();
-  final viewClient = _viewClient();
 
   return [
+    TypedMiddleware<AppState, ViewClientList>(viewClientList),
+    TypedMiddleware<AppState, ViewClient>(viewClient),
+    TypedMiddleware<AppState, EditClient>(editClient),
     TypedMiddleware<AppState, LoadClients>(loadClients),
     TypedMiddleware<AppState, SaveClientRequest>(saveClient),
     TypedMiddleware<AppState, ArchiveClientRequest>(archiveClient),
     TypedMiddleware<AppState, DeleteClientRequest>(deleteClient),
     TypedMiddleware<AppState, RestoreClientRequest>(restoreClient),
-    TypedMiddleware<AppState, EditClient>(editClient),
-    TypedMiddleware<AppState, ViewClient>(viewClient),
   ];
+}
+
+Middleware<AppState> _viewClientList() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    store.dispatch(LoadClients());
+    store.dispatch(UpdateCurrentRoute(ClientScreen.route));
+
+    if (action.context != null) {
+      NavigatorState navigator = Navigator.of(action.context);
+      navigator.pushReplacementNamed(ClientScreen.route);
+    }
+
+    next(action);
+  };
 }
 
 Middleware<AppState> _editClient() {

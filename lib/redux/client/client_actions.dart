@@ -5,6 +5,29 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
+class ViewClientList implements PersistUI {
+  final BuildContext context;
+  ViewClientList([this.context]);
+}
+
+class ViewClient implements PersistUI {
+  final ClientEntity client;
+  final BuildContext context;
+  ViewClient({this.client, this.context});
+}
+
+class EditClient implements PersistUI {
+  final ClientEntity client;
+  final BuildContext context;
+  EditClient({this.client, this.context});
+}
+
+class UpdateClient implements PersistUI {
+  final ClientEntity client;
+  UpdateClient(this.client);
+}
+
+
 class LoadClients {
   final Completer completer;
   final bool force;
@@ -34,22 +57,6 @@ class LoadClientsSuccess implements StopLoading, PersistData {
   }
 }
 
-class ViewClient implements PersistUI {
-  final ClientEntity client;
-  final BuildContext context;
-  ViewClient({this.client, this.context});
-}
-
-class EditClient implements PersistUI {
-  final ClientEntity client;
-  final BuildContext context;
-  EditClient({this.client, this.context});
-}
-
-class UpdateClient implements PersistUI {
-  final ClientEntity client;
-  UpdateClient(this.client);
-}
 
 class AddContact implements PersistUI {}
 
