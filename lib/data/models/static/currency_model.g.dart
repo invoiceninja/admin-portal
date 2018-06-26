@@ -142,10 +142,13 @@ class _$CurrencyEntitySerializer
       'swap_currency_symbol',
       serializers.serialize(object.swapCurrencySymbol,
           specifiedType: const FullType(bool)),
-      'exchange_rate',
-      serializers.serialize(object.exchangeRate,
-          specifiedType: const FullType(double)),
     ];
+    if (object.exchangeRate != null) {
+      result
+        ..add('exchange_rate')
+        ..add(serializers.serialize(object.exchangeRate,
+            specifiedType: const FullType(double)));
+    }
 
     return result;
   }
@@ -430,8 +433,6 @@ class _$CurrencyEntity extends CurrencyEntity {
     if (swapCurrencySymbol == null)
       throw new BuiltValueNullFieldError(
           'CurrencyEntity', 'swapCurrencySymbol');
-    if (exchangeRate == null)
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'exchangeRate');
   }
 
   @override

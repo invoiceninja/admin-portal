@@ -128,9 +128,6 @@ class _$PaymentTypeEntitySerializer
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'gateway_type_id',
-      serializers.serialize(object.gatewayTypeId,
-          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -150,10 +147,6 @@ class _$PaymentTypeEntitySerializer
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'gateway_type_id':
-          result.gatewayTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -353,17 +346,13 @@ class PaymentTypeItemResponseBuilder
 class _$PaymentTypeEntity extends PaymentTypeEntity {
   @override
   final String name;
-  @override
-  final int gatewayTypeId;
 
   factory _$PaymentTypeEntity([void updates(PaymentTypeEntityBuilder b)]) =>
       (new PaymentTypeEntityBuilder()..update(updates)).build();
 
-  _$PaymentTypeEntity._({this.name, this.gatewayTypeId}) : super._() {
+  _$PaymentTypeEntity._({this.name}) : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('PaymentTypeEntity', 'name');
-    if (gatewayTypeId == null)
-      throw new BuiltValueNullFieldError('PaymentTypeEntity', 'gatewayTypeId');
   }
 
   @override
@@ -378,19 +367,17 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! PaymentTypeEntity) return false;
-    return name == other.name && gatewayTypeId == other.gatewayTypeId;
+    return name == other.name;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), gatewayTypeId.hashCode));
+    return $jf($jc(0, name.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PaymentTypeEntity')
-          ..add('name', name)
-          ..add('gatewayTypeId', gatewayTypeId))
+    return (newBuiltValueToStringHelper('PaymentTypeEntity')..add('name', name))
         .toString();
   }
 }
@@ -403,16 +390,11 @@ class PaymentTypeEntityBuilder
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  int _gatewayTypeId;
-  int get gatewayTypeId => _$this._gatewayTypeId;
-  set gatewayTypeId(int gatewayTypeId) => _$this._gatewayTypeId = gatewayTypeId;
-
   PaymentTypeEntityBuilder();
 
   PaymentTypeEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
-      _gatewayTypeId = _$v.gatewayTypeId;
       _$v = null;
     }
     return this;
@@ -431,8 +413,7 @@ class PaymentTypeEntityBuilder
 
   @override
   _$PaymentTypeEntity build() {
-    final _$result = _$v ??
-        new _$PaymentTypeEntity._(name: name, gatewayTypeId: gatewayTypeId);
+    final _$result = _$v ?? new _$PaymentTypeEntity._(name: name);
     replace(_$result);
     return _$result;
   }

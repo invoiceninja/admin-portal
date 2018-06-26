@@ -122,43 +122,8 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
   Iterable serialize(Serializers serializers, CountryEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
-      'capital',
-      serializers.serialize(object.capital,
-          specifiedType: const FullType(String)),
-      'citizenship',
-      serializers.serialize(object.citizenship,
-          specifiedType: const FullType(String)),
-      'country_code',
-      serializers.serialize(object.countryCode,
-          specifiedType: const FullType(String)),
-      'currency',
-      serializers.serialize(object.currency,
-          specifiedType: const FullType(String)),
-      'currency_code',
-      serializers.serialize(object.currencyCode,
-          specifiedType: const FullType(String)),
-      'currency_sub_unit',
-      serializers.serialize(object.currencySubUnit,
-          specifiedType: const FullType(String)),
-      'full_name',
-      serializers.serialize(object.fullName,
-          specifiedType: const FullType(String)),
-      'iso_3166_2',
-      serializers.serialize(object.iso_3166_2,
-          specifiedType: const FullType(String)),
-      'iso_3166_3',
-      serializers.serialize(object.iso_3166_3,
-          specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'region_code',
-      serializers.serialize(object.regionCode,
-          specifiedType: const FullType(String)),
-      'sub_region_code',
-      serializers.serialize(object.subRegionCode,
-          specifiedType: const FullType(String)),
-      'eea',
-      serializers.serialize(object.eea, specifiedType: const FullType(bool)),
       'swap_postal_code',
       serializers.serialize(object.swapPostalCode,
           specifiedType: const FullType(bool)),
@@ -187,57 +152,9 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'capital':
-          result.capital = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'citizenship':
-          result.citizenship = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'country_code':
-          result.countryCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'currency':
-          result.currency = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'currency_code':
-          result.currencyCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'currency_sub_unit':
-          result.currencySubUnit = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'full_name':
-          result.fullName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'iso_3166_2':
-          result.iso_3166_2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'iso_3166_3':
-          result.iso_3166_3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'region_code':
-          result.regionCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'sub_region_code':
-          result.subRegionCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'eea':
-          result.eea = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'swap_postal_code':
           result.swapPostalCode = serializers.deserialize(value,
@@ -445,31 +362,7 @@ class CountryItemResponseBuilder
 
 class _$CountryEntity extends CountryEntity {
   @override
-  final String capital;
-  @override
-  final String citizenship;
-  @override
-  final String countryCode;
-  @override
-  final String currency;
-  @override
-  final String currencyCode;
-  @override
-  final String currencySubUnit;
-  @override
-  final String fullName;
-  @override
-  final String iso_3166_2;
-  @override
-  final String iso_3166_3;
-  @override
   final String name;
-  @override
-  final String regionCode;
-  @override
-  final String subRegionCode;
-  @override
-  final bool eea;
   @override
   final bool swapPostalCode;
   @override
@@ -483,49 +376,14 @@ class _$CountryEntity extends CountryEntity {
       (new CountryEntityBuilder()..update(updates)).build();
 
   _$CountryEntity._(
-      {this.capital,
-      this.citizenship,
-      this.countryCode,
-      this.currency,
-      this.currencyCode,
-      this.currencySubUnit,
-      this.fullName,
-      this.iso_3166_2,
-      this.iso_3166_3,
-      this.name,
-      this.regionCode,
-      this.subRegionCode,
-      this.eea,
+      {this.name,
       this.swapPostalCode,
       this.swapCurrencySymbol,
       this.thousandSeparator,
       this.decimalSeparator})
       : super._() {
-    if (capital == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'capital');
-    if (citizenship == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'citizenship');
-    if (countryCode == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'countryCode');
-    if (currency == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'currency');
-    if (currencyCode == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'currencyCode');
-    if (currencySubUnit == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'currencySubUnit');
-    if (fullName == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'fullName');
-    if (iso_3166_2 == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'iso_3166_2');
-    if (iso_3166_3 == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'iso_3166_3');
     if (name == null)
       throw new BuiltValueNullFieldError('CountryEntity', 'name');
-    if (regionCode == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'regionCode');
-    if (subRegionCode == null)
-      throw new BuiltValueNullFieldError('CountryEntity', 'subRegionCode');
-    if (eea == null) throw new BuiltValueNullFieldError('CountryEntity', 'eea');
     if (swapPostalCode == null)
       throw new BuiltValueNullFieldError('CountryEntity', 'swapPostalCode');
     if (swapCurrencySymbol == null)
@@ -547,19 +405,7 @@ class _$CountryEntity extends CountryEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! CountryEntity) return false;
-    return capital == other.capital &&
-        citizenship == other.citizenship &&
-        countryCode == other.countryCode &&
-        currency == other.currency &&
-        currencyCode == other.currencyCode &&
-        currencySubUnit == other.currencySubUnit &&
-        fullName == other.fullName &&
-        iso_3166_2 == other.iso_3166_2 &&
-        iso_3166_3 == other.iso_3166_3 &&
-        name == other.name &&
-        regionCode == other.regionCode &&
-        subRegionCode == other.subRegionCode &&
-        eea == other.eea &&
+    return name == other.name &&
         swapPostalCode == other.swapPostalCode &&
         swapCurrencySymbol == other.swapCurrencySymbol &&
         thousandSeparator == other.thousandSeparator &&
@@ -570,39 +416,7 @@ class _$CountryEntity extends CountryEntity {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        0,
-                                                                        capital
-                                                                            .hashCode),
-                                                                    citizenship
-                                                                        .hashCode),
-                                                                countryCode
-                                                                    .hashCode),
-                                                            currency.hashCode),
-                                                        currencyCode.hashCode),
-                                                    currencySubUnit.hashCode),
-                                                fullName.hashCode),
-                                            iso_3166_2.hashCode),
-                                        iso_3166_3.hashCode),
-                                    name.hashCode),
-                                regionCode.hashCode),
-                            subRegionCode.hashCode),
-                        eea.hashCode),
-                    swapPostalCode.hashCode),
+            $jc($jc($jc(0, name.hashCode), swapPostalCode.hashCode),
                 swapCurrencySymbol.hashCode),
             thousandSeparator.hashCode),
         decimalSeparator.hashCode));
@@ -611,19 +425,7 @@ class _$CountryEntity extends CountryEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CountryEntity')
-          ..add('capital', capital)
-          ..add('citizenship', citizenship)
-          ..add('countryCode', countryCode)
-          ..add('currency', currency)
-          ..add('currencyCode', currencyCode)
-          ..add('currencySubUnit', currencySubUnit)
-          ..add('fullName', fullName)
-          ..add('iso_3166_2', iso_3166_2)
-          ..add('iso_3166_3', iso_3166_3)
           ..add('name', name)
-          ..add('regionCode', regionCode)
-          ..add('subRegionCode', subRegionCode)
-          ..add('eea', eea)
           ..add('swapPostalCode', swapPostalCode)
           ..add('swapCurrencySymbol', swapCurrencySymbol)
           ..add('thousandSeparator', thousandSeparator)
@@ -636,59 +438,9 @@ class CountryEntityBuilder
     implements Builder<CountryEntity, CountryEntityBuilder> {
   _$CountryEntity _$v;
 
-  String _capital;
-  String get capital => _$this._capital;
-  set capital(String capital) => _$this._capital = capital;
-
-  String _citizenship;
-  String get citizenship => _$this._citizenship;
-  set citizenship(String citizenship) => _$this._citizenship = citizenship;
-
-  String _countryCode;
-  String get countryCode => _$this._countryCode;
-  set countryCode(String countryCode) => _$this._countryCode = countryCode;
-
-  String _currency;
-  String get currency => _$this._currency;
-  set currency(String currency) => _$this._currency = currency;
-
-  String _currencyCode;
-  String get currencyCode => _$this._currencyCode;
-  set currencyCode(String currencyCode) => _$this._currencyCode = currencyCode;
-
-  String _currencySubUnit;
-  String get currencySubUnit => _$this._currencySubUnit;
-  set currencySubUnit(String currencySubUnit) =>
-      _$this._currencySubUnit = currencySubUnit;
-
-  String _fullName;
-  String get fullName => _$this._fullName;
-  set fullName(String fullName) => _$this._fullName = fullName;
-
-  String _iso_3166_2;
-  String get iso_3166_2 => _$this._iso_3166_2;
-  set iso_3166_2(String iso_3166_2) => _$this._iso_3166_2 = iso_3166_2;
-
-  String _iso_3166_3;
-  String get iso_3166_3 => _$this._iso_3166_3;
-  set iso_3166_3(String iso_3166_3) => _$this._iso_3166_3 = iso_3166_3;
-
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
-
-  String _regionCode;
-  String get regionCode => _$this._regionCode;
-  set regionCode(String regionCode) => _$this._regionCode = regionCode;
-
-  String _subRegionCode;
-  String get subRegionCode => _$this._subRegionCode;
-  set subRegionCode(String subRegionCode) =>
-      _$this._subRegionCode = subRegionCode;
-
-  bool _eea;
-  bool get eea => _$this._eea;
-  set eea(bool eea) => _$this._eea = eea;
 
   bool _swapPostalCode;
   bool get swapPostalCode => _$this._swapPostalCode;
@@ -714,19 +466,7 @@ class CountryEntityBuilder
 
   CountryEntityBuilder get _$this {
     if (_$v != null) {
-      _capital = _$v.capital;
-      _citizenship = _$v.citizenship;
-      _countryCode = _$v.countryCode;
-      _currency = _$v.currency;
-      _currencyCode = _$v.currencyCode;
-      _currencySubUnit = _$v.currencySubUnit;
-      _fullName = _$v.fullName;
-      _iso_3166_2 = _$v.iso_3166_2;
-      _iso_3166_3 = _$v.iso_3166_3;
       _name = _$v.name;
-      _regionCode = _$v.regionCode;
-      _subRegionCode = _$v.subRegionCode;
-      _eea = _$v.eea;
       _swapPostalCode = _$v.swapPostalCode;
       _swapCurrencySymbol = _$v.swapCurrencySymbol;
       _thousandSeparator = _$v.thousandSeparator;
@@ -751,19 +491,7 @@ class CountryEntityBuilder
   _$CountryEntity build() {
     final _$result = _$v ??
         new _$CountryEntity._(
-            capital: capital,
-            citizenship: citizenship,
-            countryCode: countryCode,
-            currency: currency,
-            currencyCode: currencyCode,
-            currencySubUnit: currencySubUnit,
-            fullName: fullName,
-            iso_3166_2: iso_3166_2,
-            iso_3166_3: iso_3166_3,
             name: name,
-            regionCode: regionCode,
-            subRegionCode: subRegionCode,
-            eea: eea,
             swapPostalCode: swapPostalCode,
             swapCurrencySymbol: swapCurrencySymbol,
             thousandSeparator: thousandSeparator,

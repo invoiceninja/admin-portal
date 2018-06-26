@@ -23,6 +23,13 @@ abstract class CountryItemResponse implements Built<CountryItemResponse, Country
 }
 
 class CountryFields {
+  static const String name = 'name';
+  static const String swapPostalCode = 'swapPostalCode';
+  static const String swapCurrencySymbol = 'swapCurrencySymbol';
+  static const String thousandSeparator = 'thousandSeparator';
+  static const String decimalSeparator = 'decimalSeparator';
+
+  /*
   static const String capital = 'capital';
   static const String citizenship = 'citizenship';
   static const String countryCode = 'countryCode';
@@ -30,22 +37,41 @@ class CountryFields {
   static const String currencyCode = 'currencyCode';
   static const String currencySubUnit = 'currencySubUnit';
   static const String fullName = 'fullName';
-  static const String iso_3166_2 = 'iso_3166_2';
-  static const String iso_3166_3 = 'iso_3166_3';
-  static const String name = 'name';
   static const String regionCode = 'regionCode';
   static const String subRegionCode = 'subRegionCode';
   static const String eea = 'eea';
-  static const String swapPostalCode = 'swapPostalCode';
-  static const String swapCurrencySymbol = 'swapCurrencySymbol';
-  static const String thousandSeparator = 'thousandSeparator';
-  static const String decimalSeparator = 'decimalSeparator';
-  
+  */
 }
 
 
 abstract class CountryEntity implements Built<CountryEntity, CountryEntityBuilder> {
 
+  factory CountryEntity() {
+    return _$CountryEntity._(
+      name: '',
+      swapPostalCode: false,
+      swapCurrencySymbol: false,
+      thousandSeparator: '',
+      decimalSeparator: '',
+    );
+  }
+
+  @BuiltValueField(wireName: 'name')
+  String get name;
+
+  @BuiltValueField(wireName: 'swap_postal_code')
+  bool get swapPostalCode;
+
+  @BuiltValueField(wireName: 'swap_currency_symbol')
+  bool get swapCurrencySymbol;
+
+  @BuiltValueField(wireName: 'thousand_separator')
+  String get thousandSeparator;
+
+  @BuiltValueField(wireName: 'decimal_separator')
+  String get decimalSeparator;
+
+  /*
   factory CountryEntity() {
     return _$CountryEntity._(
       capital: '',
@@ -95,9 +121,6 @@ abstract class CountryEntity implements Built<CountryEntity, CountryEntityBuilde
   @BuiltValueField(wireName: 'iso_3166_3')
   String get iso_3166_3;
 
-  @BuiltValueField(wireName: 'name')
-  String get name;
-
   @BuiltValueField(wireName: 'region_code')
   String get regionCode;
 
@@ -106,18 +129,9 @@ abstract class CountryEntity implements Built<CountryEntity, CountryEntityBuilde
 
   @BuiltValueField(wireName: 'eea')
   bool get eea;
+  */
 
-  @BuiltValueField(wireName: 'swap_postal_code')
-  bool get swapPostalCode;
 
-  @BuiltValueField(wireName: 'swap_currency_symbol')
-  bool get swapCurrencySymbol;
-
-  @BuiltValueField(wireName: 'thousand_separator')
-  String get thousandSeparator;
-
-  @BuiltValueField(wireName: 'decimal_separator')
-  String get decimalSeparator;
 
   CountryEntity._();
   static Serializer<CountryEntity> get serializer => _$countryEntitySerializer;

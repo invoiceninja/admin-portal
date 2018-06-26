@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/data/models/models.dart';
 
 part 'entities.g.dart';
 
@@ -141,10 +142,30 @@ abstract class LoginResponseData implements Built<LoginResponseData, LoginRespon
 
   BuiltList<CompanyEntity> get accounts;
   String get version;
+  StaticData get static;
 
   LoginResponseData._();
   factory LoginResponseData([updates(LoginResponseDataBuilder b)]) = _$LoginResponseData;
   static Serializer<LoginResponseData> get serializer => _$loginResponseDataSerializer;
+}
+
+abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
+
+  BuiltList<CurrencyEntity> get currencies;
+  BuiltList<SizeEntity> get sizes;
+  BuiltList<IndustryEntity> get industries;
+  BuiltList<TimezoneEntity> get timezones;
+  BuiltList<DateFormatEntity> get dateFormats;
+  BuiltList<DatetimeFormatEntity> get datetimeFormats;
+  BuiltList<LanguageEntity> get languages;
+  BuiltList<PaymentTypeEntity> get paymentTypes;
+  BuiltList<CountryEntity> get countries;
+  BuiltList<InvoiceStatusEntity> get invoiceStatus;
+  BuiltList<FrequencyEntity> get frequencies;
+
+  StaticData._();
+  factory StaticData([updates(StaticDataBuilder b)]) = _$StaticData;
+  static Serializer<StaticData> get serializer => _$staticDataSerializer;
 }
 
 abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {

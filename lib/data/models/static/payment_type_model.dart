@@ -33,15 +33,11 @@ abstract class PaymentTypeEntity implements Built<PaymentTypeEntity, PaymentType
   factory PaymentTypeEntity() {
     return _$PaymentTypeEntity._(
       name: '',
-      gatewayTypeId: 0,
     );
   }
 
   @BuiltValueField(wireName: 'name')
   String get name;
-
-  @BuiltValueField(wireName: 'gateway_type_id')
-  int get gatewayTypeId;
 
   PaymentTypeEntity._();
   static Serializer<PaymentTypeEntity> get serializer => _$paymentTypeEntitySerializer;
