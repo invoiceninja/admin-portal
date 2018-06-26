@@ -23,9 +23,8 @@ class DashboardPanels extends StatelessWidget {
   }
 
   Widget _buildPanels(BuildContext context) {
-    if (viewModel.dashboardState.data == null) {
-      viewModel.onRefreshed(context);
-      return ListView();
+    if (! viewModel.dashboardState.isLoaded) {
+      return LoadingIndicator();
     }
 
     var localization = AppLocalization.of(context);
