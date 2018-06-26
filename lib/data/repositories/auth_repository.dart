@@ -13,7 +13,7 @@ class AuthRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<BuiltList<CompanyEntity>> login(String email, String password, String url, String secret) async {
+  Future<LoginResponseData> login(String email, String password, String url, String secret) async {
 
     final credentials = {
       'token_name': 'mobile-app',
@@ -22,7 +22,7 @@ class AuthRepository {
       'password': password,
     };
 
-    final response = await webClient.post(url + '/login', '', json.encode(credentials));
+    final response = await webClient.post(url + '/login?include_static=true', '', json.encode(credentials));
 
     LoginResponse loginResponse = serializers.deserializeWith(
         LoginResponse.serializer, response);
@@ -31,6 +31,6 @@ class AuthRepository {
       throw (loginResponse.error.message);
     }
 
-    return loginResponse.data.toBuiltList();
+    return loginResponse.data;
  }
 }

@@ -127,7 +127,7 @@ abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> 
 
 abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilder> {
 
-  BuiltList<CompanyEntity> get data;
+  LoginResponseData get data;
 
   @nullable
   ErrorMessage get error;
@@ -135,6 +135,16 @@ abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilde
   LoginResponse._();
   factory LoginResponse([updates(LoginResponseBuilder b)]) = _$LoginResponse;
   static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
+}
+
+abstract class LoginResponseData implements Built<LoginResponseData, LoginResponseDataBuilder> {
+
+  BuiltList<CompanyEntity> get accounts;
+  String get version;
+
+  LoginResponseData._();
+  factory LoginResponseData([updates(LoginResponseDataBuilder b)]) = _$LoginResponseData;
+  static Serializer<LoginResponseData> get serializer => _$loginResponseDataSerializer;
 }
 
 abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {

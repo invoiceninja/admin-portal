@@ -33,6 +33,7 @@ class _InvoiceViewState extends State<InvoiceView> {
     var invoice = viewModel.invoice;
     var client = viewModel.client;
 
+    
     _launchURL() async {
       var url = 'http://www.google.com';
       if (await canLaunch(url)) {

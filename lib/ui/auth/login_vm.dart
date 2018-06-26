@@ -57,6 +57,7 @@ class LoginVM {
           if (store.state.isLoading) {
             return;
           }
+
           final Completer<Null> completer = new Completer<Null>();
           var apiUrl = url
               .trim()

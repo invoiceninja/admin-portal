@@ -104,6 +104,8 @@ Serializer<ErrorMessage> _$errorMessageSerializer =
     new _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
     new _$LoginResponseSerializer();
+Serializer<LoginResponseData> _$loginResponseDataSerializer =
+    new _$LoginResponseDataSerializer();
 Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
 Serializer<DashboardResponse> _$dashboardResponseSerializer =
@@ -197,8 +199,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(CompanyEntity)])),
+          specifiedType: const FullType(LoginResponseData)),
     ];
     if (object.error != null) {
       result
@@ -223,13 +224,63 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CompanyEntity)]))
-              as BuiltList);
+                  specifiedType: const FullType(LoginResponseData))
+              as LoginResponseData);
           break;
         case 'error':
           result.error.replace(serializers.deserialize(value,
               specifiedType: const FullType(ErrorMessage)) as ErrorMessage);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$LoginResponseDataSerializer
+    implements StructuredSerializer<LoginResponseData> {
+  @override
+  final Iterable<Type> types = const [LoginResponseData, _$LoginResponseData];
+  @override
+  final String wireName = 'LoginResponseData';
+
+  @override
+  Iterable serialize(Serializers serializers, LoginResponseData object,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = <Object>[
+      'accounts',
+      serializers.serialize(object.accounts,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(CompanyEntity)])),
+      'version',
+      serializers.serialize(object.version,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  LoginResponseData deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = new LoginResponseDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'accounts':
+          result.accounts.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(CompanyEntity)]))
+              as BuiltList);
+          break;
+        case 'version':
+          result.version = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -543,7 +594,7 @@ class ErrorMessageBuilder
 
 class _$LoginResponse extends LoginResponse {
   @override
-  final BuiltList<CompanyEntity> data;
+  final LoginResponseData data;
   @override
   final ErrorMessage error;
 
@@ -587,10 +638,10 @@ class LoginResponseBuilder
     implements Builder<LoginResponse, LoginResponseBuilder> {
   _$LoginResponse _$v;
 
-  ListBuilder<CompanyEntity> _data;
-  ListBuilder<CompanyEntity> get data =>
-      _$this._data ??= new ListBuilder<CompanyEntity>();
-  set data(ListBuilder<CompanyEntity> data) => _$this._data = data;
+  LoginResponseDataBuilder _data;
+  LoginResponseDataBuilder get data =>
+      _$this._data ??= new LoginResponseDataBuilder();
+  set data(LoginResponseDataBuilder data) => _$this._data = data;
 
   ErrorMessageBuilder _error;
   ErrorMessageBuilder get error => _$this._error ??= new ErrorMessageBuilder();
@@ -634,6 +685,110 @@ class LoginResponseBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'LoginResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$LoginResponseData extends LoginResponseData {
+  @override
+  final BuiltList<CompanyEntity> accounts;
+  @override
+  final String version;
+
+  factory _$LoginResponseData([void updates(LoginResponseDataBuilder b)]) =>
+      (new LoginResponseDataBuilder()..update(updates)).build();
+
+  _$LoginResponseData._({this.accounts, this.version}) : super._() {
+    if (accounts == null)
+      throw new BuiltValueNullFieldError('LoginResponseData', 'accounts');
+    if (version == null)
+      throw new BuiltValueNullFieldError('LoginResponseData', 'version');
+  }
+
+  @override
+  LoginResponseData rebuild(void updates(LoginResponseDataBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  LoginResponseDataBuilder toBuilder() =>
+      new LoginResponseDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    if (identical(other, this)) return true;
+    if (other is! LoginResponseData) return false;
+    return accounts == other.accounts && version == other.version;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, accounts.hashCode), version.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('LoginResponseData')
+          ..add('accounts', accounts)
+          ..add('version', version))
+        .toString();
+  }
+}
+
+class LoginResponseDataBuilder
+    implements Builder<LoginResponseData, LoginResponseDataBuilder> {
+  _$LoginResponseData _$v;
+
+  ListBuilder<CompanyEntity> _accounts;
+  ListBuilder<CompanyEntity> get accounts =>
+      _$this._accounts ??= new ListBuilder<CompanyEntity>();
+  set accounts(ListBuilder<CompanyEntity> accounts) =>
+      _$this._accounts = accounts;
+
+  String _version;
+  String get version => _$this._version;
+  set version(String version) => _$this._version = version;
+
+  LoginResponseDataBuilder();
+
+  LoginResponseDataBuilder get _$this {
+    if (_$v != null) {
+      _accounts = _$v.accounts?.toBuilder();
+      _version = _$v.version;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(LoginResponseData other) {
+    if (other == null) throw new ArgumentError.notNull('other');
+    _$v = other as _$LoginResponseData;
+  }
+
+  @override
+  void update(void updates(LoginResponseDataBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$LoginResponseData build() {
+    _$LoginResponseData _$result;
+    try {
+      _$result = _$v ??
+          new _$LoginResponseData._(
+              accounts: accounts.build(), version: version);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'accounts';
+        accounts.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'LoginResponseData', _$failedField, e.toString());
       }
       rethrow;
     }

@@ -44,34 +44,35 @@ _loadAuthLocal(Store<AppState> store, action) async {
   Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
 }
 
-
 Middleware<AppState> _createLoginInit() {
   return (Store<AppState> store, action, NextDispatcher next) {
-
     _loadAuthLocal(store, action);
-    
+
     next(action);
   };
 }
 
 Middleware<AppState> _createLoginRequest(AuthRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    repository
+        .login(action.email, action.password, action.url, action.secret)
+        .then((data) {
+      _saveAuthLocal(action);
 
-    repository.login(action.email, action.password, action.url, action.secret).then(
-        (data) {
-          _saveAuthLocal(action);
-
-          for (int i=0; i<data.length; i++) {
-            store.dispatch(SelectCompany(i+1));
-            store.dispatch(LoadCompanySuccess(data[i]));
-          }
-
-          store.dispatch(SelectCompany(1));
-          store.dispatch(UserLoginSuccess());
-
-          action.completer.complete(null);
+      if (_isVersionSupported(data.version)) {
+        for (int i = 0; i < data.accounts.length; i++) {
+          store.dispatch(SelectCompany(i + 1));
+          store.dispatch(LoadCompanySuccess(data.accounts[i]));
         }
-    ).catchError((error) {
+
+        store.dispatch(SelectCompany(1));
+        store.dispatch(UserLoginSuccess());
+
+        action.completer.complete(null);
+      } else {
+        store.dispatch(UserLoginFailure('The minimum version is v4.5'));
+      }
+    }).catchError((error) {
       print(error);
       store.dispatch(UserLoginFailure(error));
     });
@@ -80,3 +81,12 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
   };
 }
 
+bool _isVersionSupported(version) {
+  var parts = version.split('.');
+
+  int major = int.parse(parts[0]);
+  int minor = int.parse(parts[1]);
+
+  return false;
+  //return major >= 4 && minor >= 5;
+}
