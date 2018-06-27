@@ -56,5 +56,10 @@ void main() {
 
       await driver.waitFor(find.byType('ProductScreen'));
     });
+
+    test('Add a new product', () async {
+      await driver.tap(find.byValueKey(ProductKeys.productScreenFABKeyString));
+      
+    });
   });
 }
