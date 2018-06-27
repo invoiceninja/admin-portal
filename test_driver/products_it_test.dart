@@ -76,12 +76,39 @@ void main() {
 
       await driver.tap(find.byTooltip('Back'));
 
-      await driver.tap(find.text('Example Test Driver Product'));
-
       // verify entered text while new product creation
+      await driver.tap(find.text('Example Test Driver Product'));
       await driver.waitFor(find.text('Example Test Driver Product'));
       await driver.waitFor(find.text('Example Test Driver Notes'));
       await driver.waitFor(find.text('100.50'));
+
+      await driver.tap(find.byTooltip('Back'));
+    });
+
+    test('Edit a existing product', () async {
+      await driver.tap(find.text('Example Test Driver Product'));
+
+      await driver.tap(find.byValueKey(ProductKeys.productEditProductFieldKeyString));
+      await driver.enterText('Updated Example Test Driver Product');
+
+      await driver.tap(find.byValueKey(ProductKeys.productEditNotesFieldKeyString));
+      await driver.enterText('Updated Example Test Driver Notes');
+
+      await driver.tap(find.byValueKey(ProductKeys.productEditCostFieldKeyString));
+      await driver.enterText('200.50');
+
+      await driver.tap(find.byTooltip('Save'));
+
+      // verify snackbar
+      await driver.waitFor(find.text('Successfully updated product'));
+
+      await driver.tap(find.byTooltip('Back'));
+
+      // verify updated values while editing existing product 
+      await driver.tap(find.text('Updated Example Test Driver Notes'));
+      await driver.waitFor(find.text('Updated Example Test Driver Product'));
+      await driver.waitFor(find.text('Updated Example Test Driver Notes'));
+      await driver.waitFor(find.text('200.50'));
 
       await driver.tap(find.byTooltip('Back'));
     });
