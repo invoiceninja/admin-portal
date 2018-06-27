@@ -6,7 +6,6 @@
 .vscode/
 .idea/
 
-android/
 build/
 
 .flutter-plugins
