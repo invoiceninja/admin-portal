@@ -33,7 +33,6 @@ class _InvoiceViewState extends State<InvoiceView> {
     var invoice = viewModel.invoice;
     var client = viewModel.client;
 
-    
     _launchURL() async {
       var url = 'http://www.google.com';
       if (await canLaunch(url)) {
@@ -54,10 +53,6 @@ class _InvoiceViewState extends State<InvoiceView> {
         ),
       ];
 
-      if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
-        widgets.add(IconMessage(invoice.privateNotes));
-      }
-
       Map<String, String> fields = {
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
@@ -70,16 +65,27 @@ class _InvoiceViewState extends State<InvoiceView> {
       List<Widget> fieldWidgets = [];
       fields.forEach((field, value) {
         if (value != null && value.isNotEmpty) {
-          fieldWidgets.add(Row(
+          fieldWidgets.add(Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
-                child: Text(localization.lookup(field)),
-                width: 100.0,
+              Flexible(child:
+                Text(
+                  localization.lookup(field),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
               ),
-              Text(value),
+              Flexible(child:
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              ),
             ],
           ));
-          fieldWidgets.addAll([]);
         }
       });
 
@@ -93,19 +99,44 @@ class _InvoiceViewState extends State<InvoiceView> {
           trailing: Icon(Icons.navigate_next),
           onTap: () => viewModel.onClientPressed(context),
         ),
-        Divider(
-          height: 1.0,
+        Divider(height: 1.0),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
         ),
+        Divider(height: 1.0),
         Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: fieldWidgets,
+          padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
+          child: IgnorePointer(
+            child: GridView.count(
+              shrinkWrap: true,
+              primary: true,
+              crossAxisCount: 2,
+              children: fieldWidgets,
+              childAspectRatio: 3.5,
+            ),
           ),
-        )
+        ),
+        Divider(height: 1.0),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
+        ),
+        Divider(height: 1.0),
       ]);
 
+      if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
+        widgets.addAll([
+          IconMessage(invoice.privateNotes),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+        ]);
+      }
+
       invoice.invoiceItems.forEach((invoiceItem) {
-        widgets.add(InvoiceItemListTile(invoiceItem));
+        widgets.addAll([InvoiceItemListTile(invoiceItem), Divider(height: 1.0)]);
       });
 
       return widgets;

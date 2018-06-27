@@ -34,3 +34,7 @@ List<int> visibleInvoicesSelector(BuiltMap<int, InvoiceEntity> invoiceMap,
 
   return list;
 }
+
+String invoiceStatusSelector(InvoiceEntity invoice) {
+
+}
