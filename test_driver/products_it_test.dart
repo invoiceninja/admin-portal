@@ -68,6 +68,13 @@ void main() {
 
       await driver.tap(find.byValueKey(ProductKeys.productEditCostFieldKeyString));
       await driver.enterText('100.50');
+
+      await driver.tap(find.byTooltip('Save'));
+
+      // verify snackbar
+      await driver.waitFor(find.text('Successfully created product'));
+
+      await driver.tap(find.byTooltip('Back'));
     });
   });
 }
