@@ -31,31 +31,22 @@ class EntityDropdown extends StatefulWidget {
 }
 
 class _EntityDropdownState extends State<EntityDropdown> {
-  final _focusNode = FocusNode();
   final _textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _textController.text = widget.initialValue;
-    _focusNode.addListener(_onFocusChanged);
   }
 
   @override
   void dispose() {
     _textController.dispose();
-    _focusNode.removeListener(_onFocusChanged);
-    _focusNode.dispose();
     super.dispose();
   }
 
-  _onFocusChanged() {
-    if (!_focusNode.hasFocus) {
-      return;
-    }
-
+  _showOptions() {
     widget.onFilterChanged('');
-    _focusNode.unfocus();
     var localization = AppLocalization.of(context);
 
     _headerRow() {
@@ -140,12 +131,16 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _textController,
-      focusNode: _focusNode,
-      decoration: InputDecoration(
-        labelText: widget.labelText,
-        suffixIcon: Icon(Icons.search),
+    return InkWell(
+      onTap: () => _showOptions(),
+      child: IgnorePointer(
+        child: TextFormField(
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: widget.labelText,
+            suffixIcon: Icon(Icons.search),
+          ),
+        ),
       ),
     );
   }
