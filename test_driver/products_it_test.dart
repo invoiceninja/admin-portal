@@ -75,6 +75,15 @@ void main() {
       await driver.waitFor(find.text('Successfully created product'));
 
       await driver.tap(find.byTooltip('Back'));
+
+      await driver.tap(find.text('Example Test Driver Product'));
+
+      // verify entered text while new product creation
+      await driver.waitFor(find.text('Example Test Driver Product'));
+      await driver.waitFor(find.text('Example Test Driver Notes'));
+      await driver.waitFor(find.text('100.50'));
+
+      await driver.tap(find.byTooltip('Back'));
     });
   });
 }
