@@ -77,6 +77,36 @@ class _EntityDropdownState extends State<EntityDropdown> {
       );
     }
 
+    _entityList(store) {
+      return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: widget.entityList
+              .getRange(0, min(6, widget.entityList.length))
+              .map((entityId) {
+            var entity = widget.entityMap[entityId];
+            var filter =
+                store.state.getUIState(widget.entityType).dropdownFilter;
+            var subtitle = null;
+            var matchField = entity.matchesSearchField(filter);
+            if (matchField != null) {
+              var field = localization.lookup(matchField);
+              var value = entity.matchesSearchValue(filter);
+              subtitle = '$field: $value';
+            }
+            return ListTile(
+              dense: true,
+              title: Text(entity.listDisplayName),
+              subtitle: subtitle != null ? Text(subtitle) : null,
+              onTap: () {
+                _textController.text =
+                    widget.entityMap[entityId].listDisplayName;
+                widget.onSelected(entityId);
+                Navigator.pop(context);
+              },
+            );
+          }).toList());
+    }
+
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -91,34 +121,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           _headerRow(),
-                          Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: widget.entityList
-                                  .getRange(0, min(6, widget.entityList.length))
-                                  .map((entityId) {
-                                var entity = widget.entityMap[entityId];
-                                var filter =
-                                    store.state.getUIState(widget.entityType).dropdownFilter;
-                                var subtitle = null;
-                                var matchField =
-                                    entity.matchesSearchField(filter);
-                                if (matchField != null) {
-                                  var field = localization.lookup(matchField);
-                                  var value = entity.matchesSearchValue(filter);
-                                  subtitle = '$field: $value';
-                                }
-                                return ListTile(
-                                  dense: true,
-                                  title: Text(entity.listDisplayName),
-                                  subtitle:
-                                      subtitle != null ? Text(subtitle) : null,
-                                  onTap: () {
-                                    _textController.text = widget.entityMap[entityId].listDisplayName;
-                                    widget.onSelected(entityId);
-                                    Navigator.pop(context);
-                                  },
-                                );
-                              }).toList()),
+                          _entityList(store),
                         ]),
                   ),
                   Expanded(child: Container()),
