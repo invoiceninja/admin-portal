@@ -153,6 +153,8 @@ class AppLocalization {
       'project': 'Project',
       'projects': 'Projects',
 
+      'settings': 'Settings',
+      'dark_theme': 'Dark Theme',
 
 
     },
@@ -297,6 +299,8 @@ class AppLocalization {
   String get project => _localizedValues[locale.languageCode]['project'];
   String get projects => _localizedValues[locale.languageCode]['projects'];
 
+  String get settings => _localizedValues[locale.languageCode]['settings'];
+  String get dark_theme => _localizedValues[locale.languageCode]['dark_theme'];
 
   String lookup(String key) {    
     return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? 'Missing: ' + key;
