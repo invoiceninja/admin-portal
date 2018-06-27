@@ -5,6 +5,7 @@ import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/save_icon_button.dart';
+import 'package:invoiceninja/utils/keys.dart';
 
 class ProductEdit extends StatefulWidget {
   final ProductEditVM viewModel;
@@ -112,6 +113,7 @@ class _ProductEditState extends State<ProductEdit> {
               FormCard(
                 children: <Widget>[
                   TextFormField(
+                    key: Key(ProductKeys.productEditProductFieldKeyString),
                     controller: _productKeyController,
                     autocorrect: false,
                     decoration: InputDecoration(
@@ -123,6 +125,7 @@ class _ProductEditState extends State<ProductEdit> {
                         : null,
                   ),
                   TextFormField(
+                    key: Key(ProductKeys.productEditNotesFieldKeyString),
                     controller: _notesController,
                     maxLines: 4,
                     decoration: InputDecoration(
@@ -130,6 +133,7 @@ class _ProductEditState extends State<ProductEdit> {
                     ),
                   ),
                   TextFormField(
+                    key: Key(ProductKeys.productEditCostFieldKeyString),
                     autocorrect: false,
                     controller: _costController,
                     keyboardType: TextInputType.number,
