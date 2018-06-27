@@ -1,4 +1,5 @@
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/static/static_state.dart';
 import 'package:invoiceninja/redux/client/client_state.dart';
 import 'package:invoiceninja/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
@@ -16,6 +17,7 @@ part 'app_state.g.dart';
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isLoading;
   AuthState get authState;
+  StaticState get staticState;
   UIState get uiState;
   CompanyState get companyState1;
   CompanyState get companyState2;
@@ -27,6 +29,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return _$AppState._(
       isLoading: false,
       authState: AuthState(),
+      staticState: StaticState(),
       companyState1: CompanyState(),
       companyState2: CompanyState(),
       companyState3: CompanyState(),

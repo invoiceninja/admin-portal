@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
@@ -60,6 +61,8 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       _saveAuthLocal(action);
 
       if (_isVersionSupported(data.version)) {
+        store.dispatch(LoadStaticSuccess(data.static));
+
         for (int i = 0; i < data.accounts.length; i++) {
           store.dispatch(SelectCompany(i + 1));
           store.dispatch(LoadCompanySuccess(data.accounts[i]));

@@ -11,6 +11,7 @@ import 'package:invoiceninja/data/models/project_model.dart';
 import 'package:invoiceninja/data/models/task_model.dart';
 import 'package:invoiceninja/data/models/vendor_model.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/static/static_state.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/redux/company/company_state.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';

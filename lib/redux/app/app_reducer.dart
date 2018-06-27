@@ -3,6 +3,7 @@ import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/app/loading_reducer.dart';
 import 'package:invoiceninja/redux/auth/auth_reducer.dart';
+import 'package:invoiceninja/redux/static/static_reducer.dart';
 import 'package:invoiceninja/redux/company/company_reducer.dart';
 
 // We create the State reducer by combining many smaller reducers into one!
@@ -16,6 +17,7 @@ AppState appReducer(AppState state, action) {
   return state.rebuild((b) => b
     ..isLoading = loadingReducer(state.isLoading, action)
     ..authState.replace(authReducer(state.authState, action))
+    ..staticState.replace(staticReducer(state.staticState, action))
     ..companyState1.replace(state.uiState.selectedCompanyIndex == 1
         ? companyReducer(state.companyState1, action) : state.companyState1)
     ..companyState2.replace(state.uiState.selectedCompanyIndex == 2

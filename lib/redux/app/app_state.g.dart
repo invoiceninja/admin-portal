@@ -32,6 +32,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'authState',
       serializers.serialize(object.authState,
           specifiedType: const FullType(AuthState)),
+      'staticState',
+      serializers.serialize(object.staticState,
+          specifiedType: const FullType(StaticState)),
       'uiState',
       serializers.serialize(object.uiState,
           specifiedType: const FullType(UIState)),
@@ -74,6 +77,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.authState.replace(serializers.deserialize(value,
               specifiedType: const FullType(AuthState)) as AuthState);
           break;
+        case 'staticState':
+          result.staticState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(StaticState)) as StaticState);
+          break;
         case 'uiState':
           result.uiState.replace(serializers.deserialize(value,
               specifiedType: const FullType(UIState)) as UIState);
@@ -111,6 +118,8 @@ class _$AppState extends AppState {
   @override
   final AuthState authState;
   @override
+  final StaticState staticState;
+  @override
   final UIState uiState;
   @override
   final CompanyState companyState1;
@@ -129,6 +138,7 @@ class _$AppState extends AppState {
   _$AppState._(
       {this.isLoading,
       this.authState,
+      this.staticState,
       this.uiState,
       this.companyState1,
       this.companyState2,
@@ -140,6 +150,8 @@ class _$AppState extends AppState {
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
     if (authState == null)
       throw new BuiltValueNullFieldError('AppState', 'authState');
+    if (staticState == null)
+      throw new BuiltValueNullFieldError('AppState', 'staticState');
     if (uiState == null)
       throw new BuiltValueNullFieldError('AppState', 'uiState');
     if (companyState1 == null)
@@ -167,6 +179,7 @@ class _$AppState extends AppState {
     if (other is! AppState) return false;
     return isLoading == other.isLoading &&
         authState == other.authState &&
+        staticState == other.staticState &&
         uiState == other.uiState &&
         companyState1 == other.companyState1 &&
         companyState2 == other.companyState2 &&
@@ -182,7 +195,11 @@ class _$AppState extends AppState {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, isLoading.hashCode), authState.hashCode),
+                        $jc(
+                            $jc(
+                                $jc($jc(0, isLoading.hashCode),
+                                    authState.hashCode),
+                                staticState.hashCode),
                             uiState.hashCode),
                         companyState1.hashCode),
                     companyState2.hashCode),
@@ -203,6 +220,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   AuthStateBuilder get authState =>
       _$this._authState ??= new AuthStateBuilder();
   set authState(AuthStateBuilder authState) => _$this._authState = authState;
+
+  StaticStateBuilder _staticState;
+  StaticStateBuilder get staticState =>
+      _$this._staticState ??= new StaticStateBuilder();
+  set staticState(StaticStateBuilder staticState) =>
+      _$this._staticState = staticState;
 
   UIStateBuilder _uiState;
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
@@ -244,6 +267,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
       _authState = _$v.authState?.toBuilder();
+      _staticState = _$v.staticState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
       _companyState1 = _$v.companyState1?.toBuilder();
       _companyState2 = _$v.companyState2?.toBuilder();
@@ -274,6 +298,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               isLoading: isLoading,
               authState: authState.build(),
+              staticState: staticState.build(),
               uiState: uiState.build(),
               companyState1: companyState1.build(),
               companyState2: companyState2.build(),
@@ -285,6 +310,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       try {
         _$failedField = 'authState';
         authState.build();
+        _$failedField = 'staticState';
+        staticState.build();
         _$failedField = 'uiState';
         uiState.build();
         _$failedField = 'companyState1';

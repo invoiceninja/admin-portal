@@ -4,13 +4,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/icon_message.dart';
 import 'package:invoiceninja/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja/ui/app/two_value_header.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceView extends StatefulWidget {
   final InvoiceViewVM viewModel;
@@ -33,15 +33,6 @@ class _InvoiceViewState extends State<InvoiceView> {
     var invoice = viewModel.invoice;
     var client = viewModel.client;
 
-    _launchURL() async {
-      var url = 'http://www.google.com';
-      if (await canLaunch(url)) {
-        await launch(url, forceSafariVC: false, forceWebView: false);
-      } else {
-        throw '${localization.couldNotLaunch}';
-      }
-    }
-
     _buildView() {
       var invoice = widget.viewModel.invoice;
       var widgets = <Widget>[
@@ -54,6 +45,7 @@ class _InvoiceViewState extends State<InvoiceView> {
       ];
 
       Map<String, String> fields = {
+        //InvoiceFields.invoiceStatusId: invoiceStatusSelector(invoice, store.state.),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
         InvoiceFields.partial: invoice.partial.toStringAsFixed(2),

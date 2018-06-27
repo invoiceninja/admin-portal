@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja/redux/static/static_state.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/redux/company/company_state.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';
@@ -38,6 +39,17 @@ class PersistenceRepository {
   Future<AuthState> loadAuthState() async {
     String data = await fileStorage.load();
     return serializers.deserializeWith(AuthState.serializer, json.decode(data));
+  }
+
+
+  Future<File> saveStaticState(StaticState state) async {
+    var data = serializers.serializeWith(StaticState.serializer, state);
+    return await fileStorage.save(json.encode(data));
+  }
+
+  Future<StaticState> loadStaticState() async {
+    String data = await fileStorage.load();
+    return serializers.deserializeWith(StaticState.serializer, json.decode(data));
   }
 
 

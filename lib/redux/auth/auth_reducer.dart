@@ -1,5 +1,4 @@
 import 'package:redux/redux.dart';
-
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 
