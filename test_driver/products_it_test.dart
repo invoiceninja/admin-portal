@@ -112,5 +112,21 @@ void main() {
 
       await driver.tap(find.byTooltip('Back'));
     });
+
+    test('Deleteing an item test', () async {
+      // delete the test product created
+      await driver.tap(find.text('Updated Example Test Driver Product'));
+
+      await driver.tap(find.byTooltip('Show menu'));
+      await driver.tap(find.text('Delete'));
+
+      // verify snackbar
+      await driver.waitFor(find.text('Successfully deleted product'));
+
+      await driver.tap(find.byTooltip('Back'));
+
+      // verify not in list
+      await driver.waitForAbsent(find.text('Updated Example Test Driver Product'));
+    });
   });
 }
