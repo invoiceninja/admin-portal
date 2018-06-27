@@ -59,7 +59,15 @@ void main() {
 
     test('Add a new product', () async {
       await driver.tap(find.byValueKey(ProductKeys.productScreenFABKeyString));
-      
+
+      await driver.tap(find.byValueKey(ProductKeys.productEditProductFieldKeyString));
+      await driver.enterText('Example Test Driver Product');
+
+      await driver.tap(find.byValueKey(ProductKeys.productEditNotesFieldKeyString));
+      await driver.enterText('Example Test Driver Notes');
+
+      await driver.tap(find.byValueKey(ProductKeys.productEditCostFieldKeyString));
+      await driver.enterText('100.50');
     });
   });
 }
