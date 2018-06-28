@@ -1,3 +1,4 @@
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
@@ -42,7 +43,7 @@ class _ProductEditState extends State<ProductEdit> {
     var product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
-    _costController.text = product.cost?.toStringAsFixed(2) ?? '';
+    _costController.text = formatNumber(product.cost, widget.viewModel.state, formatNumberType: FormatNumberType.input);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 

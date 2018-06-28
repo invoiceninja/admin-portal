@@ -32,6 +32,7 @@ class ProductList extends StatelessWidget {
             var product = viewModel.productMap[productId];
             return Column(children: <Widget>[
               ProductItem(
+                state: viewModel.state,
                 product: product,
                 onDismissed: (DismissDirection direction) =>
                     viewModel.onDismissed(context, product, direction),

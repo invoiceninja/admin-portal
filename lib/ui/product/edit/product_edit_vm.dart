@@ -32,6 +32,7 @@ class ProductEditScreen extends StatelessWidget {
 }
 
 class ProductEditVM {
+  final AppState state;
   final ProductEntity product;
   final Function(ProductEntity) onChanged;
   final Function(BuildContext) onSavePressed;
@@ -41,6 +42,7 @@ class ProductEditVM {
   final bool isDirty;
 
   ProductEditVM({
+    @required this.state,
     @required this.product,
     @required this.onChanged,
     @required this.onSavePressed,
@@ -54,6 +56,7 @@ class ProductEditVM {
     final product = store.state.productUIState.selected;
 
     return ProductEditVM(
+      state: store.state,
       isLoading: store.state.isLoading,
       isDirty: product.isNew(),
       product: product,
