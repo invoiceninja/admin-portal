@@ -1,3 +1,4 @@
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
@@ -78,8 +79,11 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     var invoiceItem = widget.invoiceItem;
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
-    _costController.text = invoiceItem.cost?.toStringAsFixed(2) ?? '';
-    _qtyController.text = invoiceItem.qty?.toStringAsFixed(2) ?? '';
+    _costController.text = formatNumber(
+        invoiceItem.cost, widget.viewModel.state,
+        formatNumberType: FormatNumberType.input);
+    _qtyController.text = formatNumber(invoiceItem.qty, widget.viewModel.state,
+        formatNumberType: FormatNumberType.input);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 

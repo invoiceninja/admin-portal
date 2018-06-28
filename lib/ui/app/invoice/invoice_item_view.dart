@@ -18,7 +18,7 @@ class InvoiceItemListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String cost = formatNumber(invoiceItem.cost, state, clientId: invoice.clientId);
-    String qty = formatNumber(invoiceItem.qty, state, clientId: invoice.clientId, formatType: NumberFormatTypes.double);
+    String qty = formatNumber(invoiceItem.qty, state, clientId: invoice.clientId, formatNumberType: FormatNumberType.double);
 
     return ListTile(
       title: Text(invoiceItem.productKey),

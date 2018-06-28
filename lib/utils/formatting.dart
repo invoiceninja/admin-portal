@@ -5,19 +5,23 @@ import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 
-enum NumberFormatTypes {
-  money,
-  percent,
-  int,
-  double,
+enum FormatNumberType {
+  money, // $1,000.00
+  percent, // $1,000.00%
+  int, // 1,000
+  double, // 1,000.00
+  input, // 1000.00
 }
 
-String formatNumber(double value, AppState state, {
+String formatNumber(
+  double value,
+  AppState state, {
   int clientId,
-  NumberFormatTypes formatType = NumberFormatTypes.money,
+  FormatNumberType formatNumberType = FormatNumberType.money,
   bool zeroIsNull = false,
 }) {
-  if (zeroIsNull && value == 0) {
+  if ((zeroIsNull || formatNumberType == FormatNumberType.input) &&
+      value == 0) {
     return null;
   }
 
@@ -65,16 +69,18 @@ String formatNumber(double value, AppState state, {
   var formatter;
   String formatted;
 
-  if (formatType == NumberFormatTypes.int) {
+  if (formatNumberType == FormatNumberType.int) {
     return NumberFormat('#,##0', 'custom').format(value);
-  } else if (formatType == NumberFormatTypes.double) {
+  } else if (formatNumberType == FormatNumberType.double) {
     return NumberFormat('#,##0.####', 'custom').format(value);
+  } else if (formatNumberType == FormatNumberType.input) {
+    return NumberFormat('#.####', 'custom').format(value);
   } else {
     formatter = NumberFormat('#,##0.00##', 'custom');
     formatted = formatter.format(value);
   }
 
-  if (formatType == NumberFormatTypes.percent) {
+  if (formatNumberType == FormatNumberType.percent) {
     return '${formatted}%';
   } else if (company.showCurrencyCode || currency.symbol.isEmpty) {
     return '${formatted} ${currency.code}';
@@ -97,14 +103,18 @@ String formatURL(String url) {
   return 'http://' + url;
 }
 
-String formatAddress({dynamic object, bool isShipping = false, String delimiter = '\n'}) {
+String formatAddress(
+    {dynamic object, bool isShipping = false, String delimiter = '\n'}) {
   var str = '';
 
-  String address1 = (isShipping ? object.shippingAddress1 : object.address1) ?? '';
-  String address2 = (isShipping ? object.shippingAddress2 : object.address2) ?? '';
+  String address1 =
+      (isShipping ? object.shippingAddress1 : object.address1) ?? '';
+  String address2 =
+      (isShipping ? object.shippingAddress2 : object.address2) ?? '';
   String city = (isShipping ? object.city : object.city) ?? '';
   String state = (isShipping ? object.state : object.state) ?? '';
-  String postalCode = (isShipping ? object.postalCode : object.postalCode) ?? '';
+  String postalCode =
+      (isShipping ? object.postalCode : object.postalCode) ?? '';
 
   if (address1.isNotEmpty) {
     str += address1 + delimiter;
@@ -120,4 +130,5 @@ String formatAddress({dynamic object, bool isShipping = false, String delimiter 
   return str;
 }
 
-String convertDateTimeToSqlDate(DateTime date) => date.toIso8601String().split('T').first;
+String convertDateTimeToSqlDate(DateTime date) =>
+    date.toIso8601String().split('T').first;

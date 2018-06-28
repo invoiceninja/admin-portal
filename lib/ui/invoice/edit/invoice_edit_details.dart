@@ -1,3 +1,4 @@
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/entity_dropdown.dart';
@@ -43,8 +44,12 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     _invoiceNumberController.text = invoice.invoiceNumber;
     _invoiceDateController.text = invoice.invoiceDate;
     _poNumberController.text = invoice.poNumber;
-    _discountController.text = invoice.discount?.toStringAsFixed(2) ?? '';
-    _partialController.text = invoice.partial?.toStringAsFixed(2) ?? '';
+    _discountController.text = formatNumber(
+        invoice.discount, widget.viewModel.state,
+        formatNumberType: FormatNumberType.input);
+    _partialController.text = formatNumber(
+        invoice.partial, widget.viewModel.state,
+        formatNumberType: FormatNumberType.input);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -109,16 +114,15 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               labelText: localization.invoiceDate,
               selectedDate: invoice.invoiceDate,
               onSelected: (date) {
-                viewModel.onChanged(
-                    invoice.rebuild((b) => b..invoiceDate = date));
+                viewModel
+                    .onChanged(invoice.rebuild((b) => b..invoiceDate = date));
               },
             ),
             DatePicker(
               labelText: localization.dueDate,
               selectedDate: invoice.dueDate,
               onSelected: (date) {
-                viewModel.onChanged(
-                    invoice.rebuild((b) => b..dueDate = date));
+                viewModel.onChanged(invoice.rebuild((b) => b..dueDate = date));
               },
             ),
             TextFormField(
@@ -129,14 +133,16 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               ),
               keyboardType: TextInputType.number,
             ),
-            invoice.partial != null && invoice.partial > 0 ? DatePicker(
-              labelText: localization.partialDueDate,
-              selectedDate: invoice.partialDueDate,
-              onSelected: (date) {
-                viewModel.onChanged(
-                    invoice.rebuild((b) => b..partialDueDate = date));
-              },
-            ) : Container(),
+            invoice.partial != null && invoice.partial > 0
+                ? DatePicker(
+                    labelText: localization.partialDueDate,
+                    selectedDate: invoice.partialDueDate,
+                    onSelected: (date) {
+                      viewModel.onChanged(
+                          invoice.rebuild((b) => b..partialDueDate = date));
+                    },
+                  )
+                : Container(),
             TextFormField(
               autocorrect: false,
               controller: _poNumberController,

@@ -61,9 +61,9 @@ class _InvoiceViewState extends State<InvoiceView> {
             invoice.discount, widget.viewModel.appState,
             clientId: invoice.clientId,
             zeroIsNull: true,
-            formatType: invoice.isAmountDiscount
-                ? NumberFormatTypes.money
-                : NumberFormatTypes.percent),
+            formatNumberType: invoice.isAmountDiscount
+                ? FormatNumberType.money
+                : FormatNumberType.percent),
       };
 
       List<Widget> fieldWidgets = [];

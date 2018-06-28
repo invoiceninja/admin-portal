@@ -33,6 +33,7 @@ class InvoiceEditScreen extends StatelessWidget {
 }
 
 class InvoiceEditVM {
+  final AppState state;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
   final Function(BuildContext) onSavePressed;
@@ -44,6 +45,7 @@ class InvoiceEditVM {
   final bool isLoading;
 
   InvoiceEditVM({
+    @required this.state,
     @required this.invoice,
     @required this.onChanged,
     @required this.onSavePressed,
@@ -60,6 +62,7 @@ class InvoiceEditVM {
     final invoice = state.invoiceUIState.selected;
 
     return InvoiceEditVM(
+        state: state,
         isLoading: state.isLoading,
         invoice: invoice,
         onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
