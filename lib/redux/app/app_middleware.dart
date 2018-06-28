@@ -218,7 +218,7 @@ List<String> _getRoutes(AppState state) {
 }
 
 _handleError(store, error, context) {
-  print(error.toString());
+  print(error);
   store.dispatch(UserLogout());
   store.dispatch(LoadUserLogin(context));
 }
