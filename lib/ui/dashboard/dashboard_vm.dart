@@ -29,11 +29,13 @@ class DashboardBuilder extends StatelessWidget {
 }
 
 class DashboardVM {
+  final AppState state;
   final DashboardState dashboardState;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
 
   DashboardVM({
+    @required this.state,
     @required this.dashboardState,
     @required this.isLoading,
     @required this.onRefreshed,
@@ -53,6 +55,7 @@ class DashboardVM {
     }
 
     return DashboardVM(
+      state: store.state,
       dashboardState: store.state.dashboardState,
       isLoading: store.state.isLoading,
       onRefreshed: (context) => _handleRefresh(context),

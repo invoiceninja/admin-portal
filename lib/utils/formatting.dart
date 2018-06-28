@@ -8,6 +8,8 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 enum NumberFormatTypes {
   money,
   percent,
+  int,
+  double,
 }
 
 String formatNumber(double value, AppState state, {
@@ -60,8 +62,17 @@ String formatNumber(double value, AppState state, {
     MINUS_SIGN: '-',
   );
 
-  var formatter = NumberFormat('#,##0.00##', 'custom');
-  String formatted = formatter.format(value);
+  var formatter;
+  String formatted;
+
+  if (formatType == NumberFormatTypes.int) {
+    return NumberFormat('#,##0', 'custom').format(value);
+  } else if (formatType == NumberFormatTypes.double) {
+    return NumberFormat('#,##0.####', 'custom').format(value);
+  } else {
+    formatter = NumberFormat('#,##0.00##', 'custom');
+    formatted = formatter.format(value);
+  }
 
   if (formatType == NumberFormatTypes.percent) {
     return '${formatted}%';
