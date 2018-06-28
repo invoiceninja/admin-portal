@@ -32,6 +32,7 @@ class InvoiceViewScreen extends StatelessWidget {
 }
 
 class InvoiceViewVM {
+  final AppState appState;
   final InvoiceEntity invoice;
   final ClientEntity client;
   final Function(BuildContext, EntityAction) onActionSelected;
@@ -41,6 +42,7 @@ class InvoiceViewVM {
   final bool isDirty;
 
   InvoiceViewVM({
+    @required this.appState,
     @required this.invoice,
     @required this.client,
     @required this.onActionSelected,
@@ -75,6 +77,7 @@ class InvoiceViewVM {
     }
 
     return InvoiceViewVM(
+        appState: store.state,
         isLoading: store.state.isLoading,
         isDirty: invoice.isNew(),
         invoice: invoice,

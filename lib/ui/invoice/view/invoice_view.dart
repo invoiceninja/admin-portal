@@ -1,3 +1,4 @@
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -45,13 +46,13 @@ class _InvoiceViewState extends State<InvoiceView> {
       ];
 
       Map<String, String> fields = {
-        InvoiceFields.invoiceStatusId: invoiceStatusSelector(invoice, store.state.staticState),
+        InvoiceFields.invoiceStatusId:
+            invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
-        InvoiceFields.partial: invoice.partial != 0 ? invoice.partial.toStringAsFixed(2) : null,
-        InvoiceFields.partialDueDate: invoice.partialDueDate,
-        InvoiceFields.poNumber: invoice.poNumber,
-        InvoiceFields.discount: invoice.discount != 0 ? invoice.discount.toStringAsFixed(2) : null,
+        InvoiceFields.partial: formatMoney(
+            invoice.partial, widget.viewModel.appState,
+            clientId: invoice.clientId, zeroIsNull: true),
       };
 
       List<Widget> fieldWidgets = [];
@@ -60,22 +61,21 @@ class _InvoiceViewState extends State<InvoiceView> {
           fieldWidgets.add(Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Flexible(child:
-                Text(
+              Flexible(
+                child: Text(
                   localization.lookup(field),
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
                   ),
                 ),
               ),
-              Flexible(child:
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                )
-              ),
+              Flexible(
+                  child: Text(
+                value,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              )),
             ],
           ));
         }
@@ -128,7 +128,8 @@ class _InvoiceViewState extends State<InvoiceView> {
       }
 
       invoice.invoiceItems.forEach((invoiceItem) {
-        widgets.addAll([InvoiceItemListTile(invoiceItem), Divider(height: 1.0)]);
+        widgets
+            .addAll([InvoiceItemListTile(invoiceItem), Divider(height: 1.0)]);
       });
 
       return widgets;

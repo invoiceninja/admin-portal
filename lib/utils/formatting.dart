@@ -3,12 +3,33 @@ import 'package:intl/number_symbols_data.dart';
 import 'package:intl/number_symbols.dart';
 import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
-String formatMoney(double value, {
-  CompanyEntity company,
-  CurrencyEntity currency,
-  CountryEntity country
+String formatMoney(double value, AppState state, {
+  int clientId,
+  bool zeroIsNull = false,
 }) {
+  if (zeroIsNull && value == 0) {
+    return null;
+  }
+
+  CompanyEntity company = state.selectedCompany;
+  ClientEntity client = state.selectedCompanyState.clientState.map[clientId];
+
+  //var countryId = client?.countryId ?? company.countryId;
+  var currencyId;
+  var countryId = client?.countryId ?? 1;
+
+  if (client != null && client.currencyId > 0) {
+    currencyId = client.currencyId;
+  } else if (company.currencyId > 0) {
+    currencyId = company.currencyId;
+  } else {
+    currencyId = kCurrencyUSDollar;
+  }
+
+  CurrencyEntity currency = state.staticState.currencyMap[currencyId];
+  CountryEntity country = state.staticState.countryMap[countryId];
 
   String thousandSeparator = currency.thousandSeparator;
   String decimalSeparator = currency.decimalSeparator;
@@ -24,27 +45,16 @@ String formatMoney(double value, {
     }
   }
 
-  numberFormatSymbols['zz'] = new NumberSymbols(
-    NAME: "zz",
+  numberFormatSymbols['custom'] = new NumberSymbols(
+    NAME: 'custom',
     DECIMAL_SEP: decimalSeparator,
     GROUP_SEP: thousandSeparator,
-    //GROUP_SEP: '\u00A0',
-    PERCENT: '%',
     ZERO_DIGIT: '0',
     PLUS_SIGN: '+',
     MINUS_SIGN: '-',
-    EXP_SYMBOL: 'e',
-    PERMILL: '\u2030',
-    INFINITY: '\u221E',
-    NAN: 'NaN',
-    DECIMAL_PATTERN: '#,##0.###',
-    SCIENTIFIC_PATTERN: '#E0',
-    PERCENT_PATTERN: '#,##0%',
-    CURRENCY_PATTERN: '\u00A4#,##0.00',
-    DEF_CURRENCY_CODE: 'AUD',
   );
 
-  var formatter = NumberFormat('###.0#', 'zz');
+  var formatter = NumberFormat('#,###.00##', 'custom');
   String formatted = formatter.format(value);
 
   if (company.showCurrencyCode || currency.symbol.isEmpty) {
