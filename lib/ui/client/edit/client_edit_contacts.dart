@@ -28,7 +28,7 @@ class ClientEditContacts extends StatelessWidget {
       children: []
         ..addAll(contacts)
         ..add(Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(14.0),
           child: RaisedButton(
             elevation: 4.0,
             color: Theme.of(context).primaryColorDark,
