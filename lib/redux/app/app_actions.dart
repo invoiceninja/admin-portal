@@ -1,7 +1,7 @@
 import 'package:invoiceninja/data/models/entities.dart';
 
-class PersistData {}
 class PersistUI {}
+class PersistData {}
 
 class StartLoading {}
 class StopLoading {}

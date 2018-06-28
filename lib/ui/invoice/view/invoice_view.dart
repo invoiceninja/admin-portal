@@ -45,7 +45,7 @@ class _InvoiceViewState extends State<InvoiceView> {
       ];
 
       Map<String, String> fields = {
-        //InvoiceFields.invoiceStatusId: invoiceStatusSelector(invoice, store.state.),
+        InvoiceFields.invoiceStatusId: invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
         InvoiceFields.partial: invoice.partial.toStringAsFixed(2),

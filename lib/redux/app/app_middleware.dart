@@ -7,6 +7,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/redux/company/company_state.dart';
+import 'package:invoiceninja/redux/static/static_state.dart';
 import 'package:invoiceninja/redux/ui/ui_state.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
@@ -22,6 +23,12 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository uiRepository = const PersistenceRepository(
     fileStorage: const FileStorage(
       'ui_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository staticRepository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'static_state',
       getApplicationDocumentsDirectory,
     ),
   ),
@@ -59,6 +66,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   final loadState = _createLoadState(
       authRepository,
       uiRepository,
+      staticRepository,
       company1Repository,
       company2Repository,
       company3Repository,
@@ -71,6 +79,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   final userLoggedIn = _createUserLoggedIn(
       authRepository,
       uiRepository,
+      staticRepository,
       company1Repository,
       company2Repository,
       company3Repository,
@@ -82,6 +91,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   final deleteState = _createDeleteState(
       authRepository,
       uiRepository,
+      staticRepository,
       company1Repository,
       company2Repository,
       company3Repository,
@@ -100,6 +110,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
 Middleware<AppState> _createLoadState(
   PersistenceRepository authRepository,
   PersistenceRepository uiRepository,
+  PersistenceRepository staticRepository,
   PersistenceRepository company1Repository,
   PersistenceRepository company2Repository,
   PersistenceRepository company3Repository,
@@ -108,6 +119,7 @@ Middleware<AppState> _createLoadState(
 ) {
   AuthState authState;
   UIState uiState;
+  StaticState staticState;
   CompanyState company1State;
   CompanyState company2State;
   CompanyState company3State;
@@ -121,38 +133,42 @@ Middleware<AppState> _createLoadState(
           authState = state;
           uiRepository.loadUIState().then((state) {
             uiState = state;
-            company1Repository.loadCompanyState().then((state) {
-              company1State = state;
-              company2Repository.loadCompanyState().then((state) {
-                company2State = state;
-                company3Repository.loadCompanyState().then((state) {
-                  company3State = state;
-                  company4Repository.loadCompanyState().then((state) {
-                    company4State = state;
-                    company5Repository.loadCompanyState().then((state) {
-                      company5State = state;
-                      AppState appState = AppState().rebuild((b) => b
-                        ..authState.replace(authState)
-                        ..uiState.replace(uiState)
-                        ..companyState1.replace(company1State)
-                        ..companyState2.replace(company2State)
-                        ..companyState3.replace(company3State)
-                        ..companyState4.replace(company4State)
-                        ..companyState5.replace(company5State));
-                      store.dispatch(LoadStateSuccess(appState));
-                      if (uiState.currentRoute != LoginScreen.route &&
-                          authState.url.isNotEmpty) {
-                        NavigatorState navigator = Navigator.of(action.context);
-                        bool isFirst = true;
-                        _getRoutes(appState).forEach((route) {
-                          if (isFirst) {
-                            navigator.pushReplacementNamed(route);
-                          } else {
-                            navigator.pushNamed(route);
-                          }
-                          isFirst = false;
-                        });
-                      }
+            staticRepository.loadStaticState().then((state) {
+              staticState = state;
+              company1Repository.loadCompanyState().then((state) {
+                company1State = state;
+                company2Repository.loadCompanyState().then((state) {
+                  company2State = state;
+                  company3Repository.loadCompanyState().then((state) {
+                    company3State = state;
+                    company4Repository.loadCompanyState().then((state) {
+                      company4State = state;
+                      company5Repository.loadCompanyState().then((state) {
+                        company5State = state;
+                        AppState appState = AppState().rebuild((b) => b
+                          ..authState.replace(authState)
+                          ..uiState.replace(uiState)
+                          ..staticState.replace(staticState)
+                          ..companyState1.replace(company1State)
+                          ..companyState2.replace(company2State)
+                          ..companyState3.replace(company3State)
+                          ..companyState4.replace(company4State)
+                          ..companyState5.replace(company5State));
+                        store.dispatch(LoadStateSuccess(appState));
+                        if (uiState.currentRoute != LoginScreen.route &&
+                            authState.url.isNotEmpty) {
+                          NavigatorState navigator = Navigator.of(action.context);
+                          bool isFirst = true;
+                          _getRoutes(appState).forEach((route) {
+                            if (isFirst) {
+                              navigator.pushReplacementNamed(route);
+                            } else {
+                              navigator.pushNamed(route);
+                            }
+                            isFirst = false;
+                          });
+                        }
+                      }).catchError((error) => _handleError(store, error, action.context));
                     }).catchError((error) => _handleError(store, error, action.context));
                   }).catchError((error) => _handleError(store, error, action.context));
                 }).catchError((error) => _handleError(store, error, action.context));
@@ -210,6 +226,7 @@ _handleError(store, error, context) {
 Middleware<AppState> _createUserLoggedIn(
   PersistenceRepository authRepository,
   PersistenceRepository uiRepository,
+  PersistenceRepository staticRepository,
   PersistenceRepository company1Repository,
   PersistenceRepository company2Repository,
   PersistenceRepository company3Repository,
@@ -223,6 +240,7 @@ Middleware<AppState> _createUserLoggedIn(
 
     authRepository.saveAuthState(state.authState);
     uiRepository.saveUIState(state.uiState);
+    staticRepository.saveStaticState(state.staticState);
     company1Repository.saveCompanyState(state.companyState1);
     company2Repository.saveCompanyState(state.companyState2);
     company3Repository.saveCompanyState(state.companyState3);
@@ -275,6 +293,7 @@ Middleware<AppState> _createDataLoaded(
 Middleware<AppState> _createDeleteState(
   PersistenceRepository authRepository,
   PersistenceRepository uiRepository,
+    PersistenceRepository staticRepository,
   PersistenceRepository company1Repository,
   PersistenceRepository company2Repository,
   PersistenceRepository company3Repository,
@@ -284,6 +303,7 @@ Middleware<AppState> _createDeleteState(
   return (Store<AppState> store, action, NextDispatcher next) {
     authRepository.delete();
     uiRepository.delete();
+    staticRepository.delete();
     company1Repository.delete();
     company2Repository.delete();
     company3Repository.delete();

@@ -7,20 +7,23 @@ part 'static_state.g.dart';
 
 abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
 
-  BuiltList<CurrencyEntity> get currencies;
-  BuiltList<SizeEntity> get sizes;
-  BuiltList<IndustryEntity> get industries;
-  BuiltList<TimezoneEntity> get timezones;
-  BuiltList<DateFormatEntity> get dateFormats;
-  BuiltList<DatetimeFormatEntity> get datetimeFormats;
-  BuiltList<LanguageEntity> get languages;
-  BuiltList<PaymentTypeEntity> get paymentTypes;
-  BuiltList<CountryEntity> get countries;
-  BuiltList<InvoiceStatusEntity> get invoiceStatus;
-  BuiltList<FrequencyEntity> get frequencies;
+  BuiltMap<int, CurrencyEntity> get currencyMap;
+  BuiltMap<int, SizeEntity> get sizeMap;
+  BuiltMap<int, IndustryEntity> get industryMap;
+  BuiltMap<int, TimezoneEntity> get timezoneMap;
+  BuiltMap<int, DateFormatEntity> get dateFormatMap;
+  BuiltMap<int, DatetimeFormatEntity> get datetimeFormatMap;
+  BuiltMap<int, LanguageEntity> get languageMap;
+  BuiltMap<int, PaymentTypeEntity> get paymentTypeMap;
+  BuiltMap<int, CountryEntity> get countryMap;
+  BuiltMap<int, InvoiceStatusEntity> get invoiceStatusMap;
+  BuiltMap<int, FrequencyEntity> get frequencyMap;
 
   factory StaticState() {
     return _$StaticState._(
+      //currencyList: BuiltList<int>(),
+      //currencyMap: BuiltMap<int, CurrencyEntity>(),
+      /*
       currencies: BuiltList<CurrencyEntity>(),
         sizes: BuiltList<SizeEntity>(),
         industries: BuiltList<IndustryEntity>(),
@@ -32,6 +35,7 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
         countries: BuiltList<CountryEntity>(),
         invoiceStatus: BuiltList<InvoiceStatusEntity>(),
         frequencies: BuiltList<FrequencyEntity>(),
+        */
     );
   }
 
