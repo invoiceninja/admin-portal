@@ -80,7 +80,7 @@ class _ClientViewState extends State<ClientView>
       body: TabBarView(
         controller: _controller,
         children: <Widget>[
-          ClientOverview(client: client),
+          ClientOverview(client: client, state: viewModel.state),
           ClientViewDetails(client: client),
         ],
       ),

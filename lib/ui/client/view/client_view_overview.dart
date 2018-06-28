@@ -1,3 +1,5 @@
+import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -6,8 +8,9 @@ import 'package:invoiceninja/ui/app/two_value_header.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientOverview extends StatelessWidget {
-  ClientOverview({this.client});
+  ClientOverview({this.client, this.state});
 
+  final AppState state;
   final ClientEntity client;
 
   @override
@@ -18,9 +21,9 @@ class ClientOverview extends StatelessWidget {
       children: <Widget>[
         TwoValueHeader(
           label1: localization.paidToDate,
-          //value1: client.paidToDate,
+          value1: formatNumber(client.paidToDate, state, clientId: client.id),
           label2: localization.balanceDue,
-          //value2: client.balance,
+          value2: formatNumber(client.balance, state, clientId: client.id),
         ),
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)

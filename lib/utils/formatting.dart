@@ -60,7 +60,7 @@ String formatNumber(double value, AppState state, {
     MINUS_SIGN: '-',
   );
 
-  var formatter = NumberFormat('#,###.00##', 'custom');
+  var formatter = NumberFormat('#,##0.00##', 'custom');
   String formatted = formatter.format(value);
 
   if (formatType == NumberFormatTypes.percent) {
