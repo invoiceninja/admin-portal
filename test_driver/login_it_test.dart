@@ -1,11 +1,8 @@
 // Import Flutter Driver API
 import 'package:flutter_driver/flutter_driver.dart';
+import 'package:invoiceninja/.env.dart';
 import 'package:test/test.dart';
-
 import 'package:invoiceninja/utils/keys.dart';
-
-// env.dart defines configuration for laravel server
-import '../.env.dart';
 
 void main() {
   group('LOGIN TEST', () {
@@ -20,7 +17,7 @@ void main() {
       loginEmail = Config.LOGIN_EMAIL;
       loginPassword = Config.LOGIN_PASSWORD;
       loginUrl = Config.LOGIN_URL;
-      loginSecret = Config.LOGIN_API_SECRET;
+      loginSecret = Config.LOGIN_SECRET;
     });
 
     tearDown(() async {

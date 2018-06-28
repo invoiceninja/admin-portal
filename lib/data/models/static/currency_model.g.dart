@@ -123,6 +123,8 @@ class _$CurrencyEntitySerializer
   Iterable serialize(Serializers serializers, CurrencyEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'symbol',
@@ -164,6 +166,10 @@ class _$CurrencyEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -389,6 +395,8 @@ class CurrencyItemResponseBuilder
 
 class _$CurrencyEntity extends CurrencyEntity {
   @override
+  final int id;
+  @override
   final String name;
   @override
   final String symbol;
@@ -409,7 +417,8 @@ class _$CurrencyEntity extends CurrencyEntity {
       (new CurrencyEntityBuilder()..update(updates)).build();
 
   _$CurrencyEntity._(
-      {this.name,
+      {this.id,
+      this.name,
       this.symbol,
       this.precision,
       this.thousandSeparator,
@@ -418,6 +427,7 @@ class _$CurrencyEntity extends CurrencyEntity {
       this.swapCurrencySymbol,
       this.exchangeRate})
       : super._() {
+    if (id == null) throw new BuiltValueNullFieldError('CurrencyEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('CurrencyEntity', 'name');
     if (symbol == null)
@@ -447,7 +457,8 @@ class _$CurrencyEntity extends CurrencyEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! CurrencyEntity) return false;
-    return name == other.name &&
+    return id == other.id &&
+        name == other.name &&
         symbol == other.symbol &&
         precision == other.precision &&
         thousandSeparator == other.thousandSeparator &&
@@ -464,7 +475,9 @@ class _$CurrencyEntity extends CurrencyEntity {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, name.hashCode), symbol.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), name.hashCode),
+                                symbol.hashCode),
                             precision.hashCode),
                         thousandSeparator.hashCode),
                     decimalSeparator.hashCode),
@@ -476,6 +489,7 @@ class _$CurrencyEntity extends CurrencyEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CurrencyEntity')
+          ..add('id', id)
           ..add('name', name)
           ..add('symbol', symbol)
           ..add('precision', precision)
@@ -491,6 +505,10 @@ class _$CurrencyEntity extends CurrencyEntity {
 class CurrencyEntityBuilder
     implements Builder<CurrencyEntity, CurrencyEntityBuilder> {
   _$CurrencyEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -531,6 +549,7 @@ class CurrencyEntityBuilder
 
   CurrencyEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _symbol = _$v.symbol;
       _precision = _$v.precision;
@@ -559,6 +578,7 @@ class CurrencyEntityBuilder
   _$CurrencyEntity build() {
     final _$result = _$v ??
         new _$CurrencyEntity._(
+            id: id,
             name: name,
             symbol: symbol,
             precision: precision,

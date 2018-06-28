@@ -1,9 +1,8 @@
 import 'package:flutter_driver/flutter_driver.dart';
+import 'package:invoiceninja/.env.dart';
 import 'package:test/test.dart';
 
 import 'package:invoiceninja/utils/keys.dart';
-
-import '../.env.dart';
 
 class Constants {
   static String newProductKey = 'Example Test Driver Product';
@@ -39,7 +38,7 @@ void main() {
       loginEmail = Config.LOGIN_EMAIL;
       loginPassword = Config.LOGIN_PASSWORD;
       loginUrl = Config.LOGIN_URL;
-      loginSecret = Config.LOGIN_API_SECRET;
+      loginSecret = Config.LOGIN_SECRET;
     });
 
     tearDown(() async {

@@ -9,5 +9,4 @@
 build/
 
 .flutter-plugins
-
 .env.dart

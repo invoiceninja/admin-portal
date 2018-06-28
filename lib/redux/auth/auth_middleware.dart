@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja/.env.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
@@ -36,10 +37,10 @@ _saveAuthLocal(action) async {
 _loadAuthLocal(Store<AppState> store, action) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  String email = prefs.getString('email');
-  String password = prefs.getString('password');
-  String url = prefs.getString('url');
-  String secret = prefs.getString('secret');
+  String email = prefs.getString('email') ?? Config.LOGIN_EMAIL;
+  String password = prefs.getString('password') ?? Config.LOGIN_PASSWORD;
+  String url = prefs.getString('url') ?? Config.LOGIN_URL;
+  String secret = prefs.getString('secret') ?? Config.LOGIN_SECRET;
 
   store.dispatch(UserLoginLoaded(email, password, url, secret));
   Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);

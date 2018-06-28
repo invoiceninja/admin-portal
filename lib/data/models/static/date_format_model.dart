@@ -32,11 +32,14 @@ abstract class DateFormatEntity implements Built<DateFormatEntity, DateFormatEnt
   
   factory DateFormatEntity() {
     return _$DateFormatEntity._(
+      id: 0,
       format: '',
       pickerFormat: '',
       formatMoment: '',
     );
   }
+
+  int get id;
 
   String get format;
 

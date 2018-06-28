@@ -37,6 +37,7 @@ abstract class CurrencyEntity implements Built<CurrencyEntity, CurrencyEntityBui
 
   factory CurrencyEntity() {
     return _$CurrencyEntity._(
+      id: 0,
       name: '',
       symbol: '',
       precision: '',
@@ -47,7 +48,9 @@ abstract class CurrencyEntity implements Built<CurrencyEntity, CurrencyEntityBui
       exchangeRate: 0.0,
     );
   }
-  
+
+  int get id;
+
   String get name;
 
   String get symbol;

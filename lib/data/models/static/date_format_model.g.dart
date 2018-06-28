@@ -126,6 +126,8 @@ class _$DateFormatEntitySerializer
   Iterable serialize(Serializers serializers, DateFormatEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'format',
       serializers.serialize(object.format,
           specifiedType: const FullType(String)),
@@ -151,6 +153,10 @@ class _$DateFormatEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'format':
           result.format = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -358,6 +364,8 @@ class DateFormatItemResponseBuilder
 
 class _$DateFormatEntity extends DateFormatEntity {
   @override
+  final int id;
+  @override
   final String format;
   @override
   final String pickerFormat;
@@ -367,8 +375,11 @@ class _$DateFormatEntity extends DateFormatEntity {
   factory _$DateFormatEntity([void updates(DateFormatEntityBuilder b)]) =>
       (new DateFormatEntityBuilder()..update(updates)).build();
 
-  _$DateFormatEntity._({this.format, this.pickerFormat, this.formatMoment})
+  _$DateFormatEntity._(
+      {this.id, this.format, this.pickerFormat, this.formatMoment})
       : super._() {
+    if (id == null)
+      throw new BuiltValueNullFieldError('DateFormatEntity', 'id');
     if (format == null)
       throw new BuiltValueNullFieldError('DateFormatEntity', 'format');
     if (pickerFormat == null)
@@ -389,20 +400,23 @@ class _$DateFormatEntity extends DateFormatEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! DateFormatEntity) return false;
-    return format == other.format &&
+    return id == other.id &&
+        format == other.format &&
         pickerFormat == other.pickerFormat &&
         formatMoment == other.formatMoment;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, format.hashCode), pickerFormat.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, id.hashCode), format.hashCode), pickerFormat.hashCode),
         formatMoment.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DateFormatEntity')
+          ..add('id', id)
           ..add('format', format)
           ..add('pickerFormat', pickerFormat)
           ..add('formatMoment', formatMoment))
@@ -413,6 +427,10 @@ class _$DateFormatEntity extends DateFormatEntity {
 class DateFormatEntityBuilder
     implements Builder<DateFormatEntity, DateFormatEntityBuilder> {
   _$DateFormatEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _format;
   String get format => _$this._format;
@@ -430,6 +448,7 @@ class DateFormatEntityBuilder
 
   DateFormatEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _format = _$v.format;
       _pickerFormat = _$v.pickerFormat;
       _formatMoment = _$v.formatMoment;
@@ -453,6 +472,7 @@ class DateFormatEntityBuilder
   _$DateFormatEntity build() {
     final _$result = _$v ??
         new _$DateFormatEntity._(
+            id: id,
             format: format,
             pickerFormat: pickerFormat,
             formatMoment: formatMoment);
