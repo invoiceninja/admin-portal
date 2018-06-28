@@ -31,6 +31,7 @@ class ClientList extends StatelessWidget {
             var client = viewModel.clientMap[clientId];
             return Column(children: <Widget>[
               ClientItem(
+                state: viewModel.state,
                 client: client,
                 onDismissed: (DismissDirection direction) =>
                     viewModel.onDismissed(context, client, direction),

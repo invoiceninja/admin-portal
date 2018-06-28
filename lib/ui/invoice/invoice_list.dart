@@ -37,6 +37,7 @@ class InvoiceList extends StatelessWidget {
                 onDismissed: (DismissDirection direction) =>
                     viewModel.onDismissed(context, invoice, direction),
                 onTap: () => viewModel.onInvoiceTap(context, invoice),
+                state: viewModel.state,
               ),
               Divider(
                 height: 1.0,

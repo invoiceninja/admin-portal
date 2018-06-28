@@ -5,8 +5,14 @@ import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 
-String formatMoney(double value, AppState state, {
+enum NumberFormatTypes {
+  money,
+  percent,
+}
+
+String formatNumber(double value, AppState state, {
   int clientId,
+  NumberFormatTypes formatType = NumberFormatTypes.money,
   bool zeroIsNull = false,
 }) {
   if (zeroIsNull && value == 0) {
@@ -57,7 +63,9 @@ String formatMoney(double value, AppState state, {
   var formatter = NumberFormat('#,###.00##', 'custom');
   String formatted = formatter.format(value);
 
-  if (company.showCurrencyCode || currency.symbol.isEmpty) {
+  if (formatType == NumberFormatTypes.percent) {
+    return '${formatted}%';
+  } else if (company.showCurrencyCode || currency.symbol.isEmpty) {
     return '${formatted} ${currency.code}';
   } else if (swapCurrencySymbol) {
     return '${formatted} ${currency.symbol.trim()}';

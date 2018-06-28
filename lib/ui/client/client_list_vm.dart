@@ -32,6 +32,7 @@ class ClientListBuilder extends StatelessWidget {
 }
 
 class ClientListVM {
+  final AppState state;
   final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
   final bool isLoading;
@@ -41,6 +42,7 @@ class ClientListVM {
   final Function(BuildContext) onRefreshed;
 
   ClientListVM({
+    @required this.state,
     @required this.clientList,
     @required this.clientMap,
     @required this.isLoading,
@@ -64,6 +66,7 @@ class ClientListVM {
       }
 
     return ClientListVM(
+        state: store.state,
         clientList: memoizedClientList(store.state.clientState.map, store.state.clientState.list, store.state.clientListState),
         clientMap: store.state.clientState.map,
         isLoading: store.state.isLoading,

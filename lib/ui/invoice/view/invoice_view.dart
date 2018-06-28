@@ -31,6 +31,7 @@ class _InvoiceViewState extends State<InvoiceView> {
     var localization = AppLocalization.of(context);
     var store = StoreProvider.of<AppState>(context);
     var viewModel = widget.viewModel;
+    var appState = viewModel.appState;
     var invoice = viewModel.invoice;
     var client = viewModel.client;
 
@@ -39,9 +40,11 @@ class _InvoiceViewState extends State<InvoiceView> {
       var widgets = <Widget>[
         TwoValueHeader(
           label1: localization.totalAmount,
-          value1: invoice.amount,
+          value1: formatNumber(invoice.amount, appState,
+              clientId: invoice.clientId),
           label2: localization.balanceDue,
-          value2: invoice.balance,
+          value2: formatNumber(invoice.balance, appState,
+              clientId: invoice.clientId),
         ),
       ];
 
@@ -50,9 +53,17 @@ class _InvoiceViewState extends State<InvoiceView> {
             invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
-        InvoiceFields.partial: formatMoney(
-            invoice.partial, widget.viewModel.appState,
+        InvoiceFields.partial: formatNumber(invoice.partial, appState,
             clientId: invoice.clientId, zeroIsNull: true),
+        InvoiceFields.partialDueDate: invoice.partialDueDate,
+        InvoiceFields.poNumber: invoice.poNumber,
+        InvoiceFields.discount: formatNumber(
+            invoice.discount, widget.viewModel.appState,
+            clientId: invoice.clientId,
+            zeroIsNull: true,
+            formatType: invoice.isAmountDiscount
+                ? NumberFormatTypes.money
+                : NumberFormatTypes.percent),
       };
 
       List<Widget> fieldWidgets = [];
@@ -128,8 +139,11 @@ class _InvoiceViewState extends State<InvoiceView> {
       }
 
       invoice.invoiceItems.forEach((invoiceItem) {
-        widgets
-            .addAll([InvoiceItemListTile(invoiceItem), Divider(height: 1.0)]);
+        widgets.addAll([
+          InvoiceItemListTile(
+              invoice: invoice, invoiceItem: invoiceItem, state: appState),
+          Divider(height: 1.0)
+        ]);
       });
 
       return widgets;

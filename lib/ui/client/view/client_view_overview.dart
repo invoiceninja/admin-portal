@@ -18,9 +18,9 @@ class ClientOverview extends StatelessWidget {
       children: <Widget>[
         TwoValueHeader(
           label1: localization.paidToDate,
-          value1: client.paidToDate,
+          //value1: client.paidToDate,
           label2: localization.balanceDue,
-          value2: client.balance,
+          //value2: client.balance,
         ),
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)

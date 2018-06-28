@@ -4,8 +4,8 @@ class TwoValueHeader extends StatelessWidget {
   TwoValueHeader({this.label1, this.label2, this.value1, this.value2});
   final String label1;
   final String label2;
-  final double value1;
-  final double value2;
+  final String value1;
+  final String value2;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class TwoValueHeader extends StatelessWidget {
             height: 6.0,
           ),
           Text(
-            value1?.toStringAsFixed(2) ?? '',
+            value1 ?? '',
             style: TextStyle(
               fontSize: 26.0,
               fontWeight: FontWeight.bold,
@@ -47,7 +47,7 @@ class TwoValueHeader extends StatelessWidget {
             height: 6.0,
           ),
           Text(
-            value2?.toStringAsFixed(2) ?? '',
+            value2 ?? '',
             style: TextStyle(
               fontSize: 26.0,
               fontWeight: FontWeight.bold,
