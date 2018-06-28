@@ -30,9 +30,12 @@ abstract class SizeEntity implements Built<SizeEntity, SizeEntityBuilder> {
 
   factory SizeEntity() {
     return _$SizeEntity._(
+      id: 0,
       name: '',
     );
   }
+
+  int get id;
 
   String get name;
   

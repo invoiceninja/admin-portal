@@ -126,6 +126,8 @@ class _$FrequencyEntitySerializer
   Iterable serialize(Serializers serializers, FrequencyEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'date_interval',
@@ -147,6 +149,10 @@ class _$FrequencyEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -348,6 +354,8 @@ class FrequencyItemResponseBuilder
 
 class _$FrequencyEntity extends FrequencyEntity {
   @override
+  final int id;
+  @override
   final String name;
   @override
   final String dateInterval;
@@ -355,7 +363,8 @@ class _$FrequencyEntity extends FrequencyEntity {
   factory _$FrequencyEntity([void updates(FrequencyEntityBuilder b)]) =>
       (new FrequencyEntityBuilder()..update(updates)).build();
 
-  _$FrequencyEntity._({this.name, this.dateInterval}) : super._() {
+  _$FrequencyEntity._({this.id, this.name, this.dateInterval}) : super._() {
+    if (id == null) throw new BuiltValueNullFieldError('FrequencyEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('FrequencyEntity', 'name');
     if (dateInterval == null)
@@ -374,17 +383,21 @@ class _$FrequencyEntity extends FrequencyEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! FrequencyEntity) return false;
-    return name == other.name && dateInterval == other.dateInterval;
+    return id == other.id &&
+        name == other.name &&
+        dateInterval == other.dateInterval;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), dateInterval.hashCode));
+    return $jf(
+        $jc($jc($jc(0, id.hashCode), name.hashCode), dateInterval.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('FrequencyEntity')
+          ..add('id', id)
           ..add('name', name)
           ..add('dateInterval', dateInterval))
         .toString();
@@ -394,6 +407,10 @@ class _$FrequencyEntity extends FrequencyEntity {
 class FrequencyEntityBuilder
     implements Builder<FrequencyEntity, FrequencyEntityBuilder> {
   _$FrequencyEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -407,6 +424,7 @@ class FrequencyEntityBuilder
 
   FrequencyEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _dateInterval = _$v.dateInterval;
       _$v = null;
@@ -427,8 +445,8 @@ class FrequencyEntityBuilder
 
   @override
   _$FrequencyEntity build() {
-    final _$result =
-        _$v ?? new _$FrequencyEntity._(name: name, dateInterval: dateInterval);
+    final _$result = _$v ??
+        new _$FrequencyEntity._(id: id, name: name, dateInterval: dateInterval);
     replace(_$result);
     return _$result;
   }

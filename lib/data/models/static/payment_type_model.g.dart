@@ -126,6 +126,8 @@ class _$PaymentTypeEntitySerializer
   Iterable serialize(Serializers serializers, PaymentTypeEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
@@ -144,6 +146,10 @@ class _$PaymentTypeEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -345,12 +351,16 @@ class PaymentTypeItemResponseBuilder
 
 class _$PaymentTypeEntity extends PaymentTypeEntity {
   @override
+  final int id;
+  @override
   final String name;
 
   factory _$PaymentTypeEntity([void updates(PaymentTypeEntityBuilder b)]) =>
       (new PaymentTypeEntityBuilder()..update(updates)).build();
 
-  _$PaymentTypeEntity._({this.name}) : super._() {
+  _$PaymentTypeEntity._({this.id, this.name}) : super._() {
+    if (id == null)
+      throw new BuiltValueNullFieldError('PaymentTypeEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('PaymentTypeEntity', 'name');
   }
@@ -367,17 +377,19 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! PaymentTypeEntity) return false;
-    return name == other.name;
+    return id == other.id && name == other.name;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, name.hashCode));
+    return $jf($jc($jc(0, id.hashCode), name.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PaymentTypeEntity')..add('name', name))
+    return (newBuiltValueToStringHelper('PaymentTypeEntity')
+          ..add('id', id)
+          ..add('name', name))
         .toString();
   }
 }
@@ -385,6 +397,10 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
 class PaymentTypeEntityBuilder
     implements Builder<PaymentTypeEntity, PaymentTypeEntityBuilder> {
   _$PaymentTypeEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -394,6 +410,7 @@ class PaymentTypeEntityBuilder
 
   PaymentTypeEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _$v = null;
     }
@@ -413,7 +430,7 @@ class PaymentTypeEntityBuilder
 
   @override
   _$PaymentTypeEntity build() {
-    final _$result = _$v ?? new _$PaymentTypeEntity._(name: name);
+    final _$result = _$v ?? new _$PaymentTypeEntity._(id: id, name: name);
     replace(_$result);
     return _$result;
   }

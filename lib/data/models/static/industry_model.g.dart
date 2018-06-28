@@ -123,6 +123,8 @@ class _$IndustryEntitySerializer
   Iterable serialize(Serializers serializers, IndustryEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
@@ -141,6 +143,10 @@ class _$IndustryEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -338,12 +344,15 @@ class IndustryItemResponseBuilder
 
 class _$IndustryEntity extends IndustryEntity {
   @override
+  final int id;
+  @override
   final String name;
 
   factory _$IndustryEntity([void updates(IndustryEntityBuilder b)]) =>
       (new IndustryEntityBuilder()..update(updates)).build();
 
-  _$IndustryEntity._({this.name}) : super._() {
+  _$IndustryEntity._({this.id, this.name}) : super._() {
+    if (id == null) throw new BuiltValueNullFieldError('IndustryEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('IndustryEntity', 'name');
   }
@@ -360,17 +369,19 @@ class _$IndustryEntity extends IndustryEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! IndustryEntity) return false;
-    return name == other.name;
+    return id == other.id && name == other.name;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, name.hashCode));
+    return $jf($jc($jc(0, id.hashCode), name.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('IndustryEntity')..add('name', name))
+    return (newBuiltValueToStringHelper('IndustryEntity')
+          ..add('id', id)
+          ..add('name', name))
         .toString();
   }
 }
@@ -378,6 +389,10 @@ class _$IndustryEntity extends IndustryEntity {
 class IndustryEntityBuilder
     implements Builder<IndustryEntity, IndustryEntityBuilder> {
   _$IndustryEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -387,6 +402,7 @@ class IndustryEntityBuilder
 
   IndustryEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _$v = null;
     }
@@ -406,7 +422,7 @@ class IndustryEntityBuilder
 
   @override
   _$IndustryEntity build() {
-    final _$result = _$v ?? new _$IndustryEntity._(name: name);
+    final _$result = _$v ?? new _$IndustryEntity._(id: id, name: name);
     replace(_$result);
     return _$result;
   }

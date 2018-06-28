@@ -129,6 +129,8 @@ class _$InvoiceDesignEntitySerializer
   Iterable serialize(Serializers serializers, InvoiceDesignEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'javascript',
@@ -153,6 +155,10 @@ class _$InvoiceDesignEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -362,6 +368,8 @@ class InvoiceDesignItemResponseBuilder
 
 class _$InvoiceDesignEntity extends InvoiceDesignEntity {
   @override
+  final int id;
+  @override
   final String name;
   @override
   final String javascript;
@@ -371,8 +379,10 @@ class _$InvoiceDesignEntity extends InvoiceDesignEntity {
   factory _$InvoiceDesignEntity([void updates(InvoiceDesignEntityBuilder b)]) =>
       (new InvoiceDesignEntityBuilder()..update(updates)).build();
 
-  _$InvoiceDesignEntity._({this.name, this.javascript, this.pdfmake})
+  _$InvoiceDesignEntity._({this.id, this.name, this.javascript, this.pdfmake})
       : super._() {
+    if (id == null)
+      throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'name');
     if (javascript == null)
@@ -393,20 +403,23 @@ class _$InvoiceDesignEntity extends InvoiceDesignEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! InvoiceDesignEntity) return false;
-    return name == other.name &&
+    return id == other.id &&
+        name == other.name &&
         javascript == other.javascript &&
         pdfmake == other.pdfmake;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, name.hashCode), javascript.hashCode), pdfmake.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, id.hashCode), name.hashCode), javascript.hashCode),
+        pdfmake.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceDesignEntity')
+          ..add('id', id)
           ..add('name', name)
           ..add('javascript', javascript)
           ..add('pdfmake', pdfmake))
@@ -417,6 +430,10 @@ class _$InvoiceDesignEntity extends InvoiceDesignEntity {
 class InvoiceDesignEntityBuilder
     implements Builder<InvoiceDesignEntity, InvoiceDesignEntityBuilder> {
   _$InvoiceDesignEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -434,6 +451,7 @@ class InvoiceDesignEntityBuilder
 
   InvoiceDesignEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _javascript = _$v.javascript;
       _pdfmake = _$v.pdfmake;
@@ -457,7 +475,7 @@ class InvoiceDesignEntityBuilder
   _$InvoiceDesignEntity build() {
     final _$result = _$v ??
         new _$InvoiceDesignEntity._(
-            name: name, javascript: javascript, pdfmake: pdfmake);
+            id: id, name: name, javascript: javascript, pdfmake: pdfmake);
     replace(_$result);
     return _$result;
   }

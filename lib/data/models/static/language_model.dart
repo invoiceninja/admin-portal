@@ -32,15 +32,14 @@ abstract class LanguageEntity implements Built<LanguageEntity, LanguageEntityBui
 
   factory LanguageEntity() {
     return _$LanguageEntity._(
+      id: 0,
       name: '',
       locale: '',
     );
   }
 
-  @BuiltValueField(wireName: 'name')
+  int get id;
   String get name;
-
-  @BuiltValueField(wireName: 'locale')
   String get locale;
 
   LanguageEntity._();

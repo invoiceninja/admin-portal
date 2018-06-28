@@ -21,21 +21,17 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
 
   factory StaticState() {
     return _$StaticState._(
-      //currencyList: BuiltList<int>(),
-      //currencyMap: BuiltMap<int, CurrencyEntity>(),
-      /*
-      currencies: BuiltList<CurrencyEntity>(),
-        sizes: BuiltList<SizeEntity>(),
-        industries: BuiltList<IndustryEntity>(),
-        timezones: BuiltList<TimezoneEntity>(),
-        dateFormats: BuiltList<DateFormatEntity>(),
-        datetimeFormats: BuiltList<DatetimeFormatEntity>(),
-        languages: BuiltList<LanguageEntity>(),
-        paymentTypes: BuiltList<PaymentTypeEntity>(),
-        countries: BuiltList<CountryEntity>(),
-        invoiceStatus: BuiltList<InvoiceStatusEntity>(),
-        frequencies: BuiltList<FrequencyEntity>(),
-        */
+      currencyMap: BuiltMap<int, CurrencyEntity>(),
+      sizeMap: BuiltMap<int, SizeEntity>(),
+        industryMap: BuiltMap<int, IndustryEntity>(),
+        timezoneMap: BuiltMap<int, TimezoneEntity>(),
+        dateFormatMap: BuiltMap<int, DateFormatEntity>(),
+        datetimeFormatMap: BuiltMap<int, DatetimeFormatEntity>(),
+        languageMap: BuiltMap<int, LanguageEntity>(),
+        paymentTypeMap: BuiltMap<int, PaymentTypeEntity>(),
+        countryMap: BuiltMap<int, CountryEntity>(),
+        invoiceStatusMap: BuiltMap<int, InvoiceStatusEntity>(),
+        frequencyMap: BuiltMap<int, FrequencyEntity>(),
     );
   }
 

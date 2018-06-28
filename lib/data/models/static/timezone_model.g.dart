@@ -123,6 +123,8 @@ class _$TimezoneEntitySerializer
   Iterable serialize(Serializers serializers, TimezoneEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'location',
@@ -144,6 +146,10 @@ class _$TimezoneEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -345,6 +351,8 @@ class TimezoneItemResponseBuilder
 
 class _$TimezoneEntity extends TimezoneEntity {
   @override
+  final int id;
+  @override
   final String name;
   @override
   final String location;
@@ -352,7 +360,8 @@ class _$TimezoneEntity extends TimezoneEntity {
   factory _$TimezoneEntity([void updates(TimezoneEntityBuilder b)]) =>
       (new TimezoneEntityBuilder()..update(updates)).build();
 
-  _$TimezoneEntity._({this.name, this.location}) : super._() {
+  _$TimezoneEntity._({this.id, this.name, this.location}) : super._() {
+    if (id == null) throw new BuiltValueNullFieldError('TimezoneEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('TimezoneEntity', 'name');
     if (location == null)
@@ -371,17 +380,18 @@ class _$TimezoneEntity extends TimezoneEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! TimezoneEntity) return false;
-    return name == other.name && location == other.location;
+    return id == other.id && name == other.name && location == other.location;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), location.hashCode));
+    return $jf($jc($jc($jc(0, id.hashCode), name.hashCode), location.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('TimezoneEntity')
+          ..add('id', id)
           ..add('name', name)
           ..add('location', location))
         .toString();
@@ -391,6 +401,10 @@ class _$TimezoneEntity extends TimezoneEntity {
 class TimezoneEntityBuilder
     implements Builder<TimezoneEntity, TimezoneEntityBuilder> {
   _$TimezoneEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -404,6 +418,7 @@ class TimezoneEntityBuilder
 
   TimezoneEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _location = _$v.location;
       _$v = null;
@@ -425,7 +440,7 @@ class TimezoneEntityBuilder
   @override
   _$TimezoneEntity build() {
     final _$result =
-        _$v ?? new _$TimezoneEntity._(name: name, location: location);
+        _$v ?? new _$TimezoneEntity._(id: id, name: name, location: location);
     replace(_$result);
     return _$result;
   }

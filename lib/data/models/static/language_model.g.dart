@@ -123,6 +123,8 @@ class _$LanguageEntitySerializer
   Iterable serialize(Serializers serializers, LanguageEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'locale',
@@ -144,6 +146,10 @@ class _$LanguageEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -345,6 +351,8 @@ class LanguageItemResponseBuilder
 
 class _$LanguageEntity extends LanguageEntity {
   @override
+  final int id;
+  @override
   final String name;
   @override
   final String locale;
@@ -352,7 +360,8 @@ class _$LanguageEntity extends LanguageEntity {
   factory _$LanguageEntity([void updates(LanguageEntityBuilder b)]) =>
       (new LanguageEntityBuilder()..update(updates)).build();
 
-  _$LanguageEntity._({this.name, this.locale}) : super._() {
+  _$LanguageEntity._({this.id, this.name, this.locale}) : super._() {
+    if (id == null) throw new BuiltValueNullFieldError('LanguageEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('LanguageEntity', 'name');
     if (locale == null)
@@ -371,17 +380,18 @@ class _$LanguageEntity extends LanguageEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! LanguageEntity) return false;
-    return name == other.name && locale == other.locale;
+    return id == other.id && name == other.name && locale == other.locale;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), locale.hashCode));
+    return $jf($jc($jc($jc(0, id.hashCode), name.hashCode), locale.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('LanguageEntity')
+          ..add('id', id)
           ..add('name', name)
           ..add('locale', locale))
         .toString();
@@ -391,6 +401,10 @@ class _$LanguageEntity extends LanguageEntity {
 class LanguageEntityBuilder
     implements Builder<LanguageEntity, LanguageEntityBuilder> {
   _$LanguageEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -404,6 +418,7 @@ class LanguageEntityBuilder
 
   LanguageEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _locale = _$v.locale;
       _$v = null;
@@ -424,7 +439,8 @@ class LanguageEntityBuilder
 
   @override
   _$LanguageEntity build() {
-    final _$result = _$v ?? new _$LanguageEntity._(name: name, locale: locale);
+    final _$result =
+        _$v ?? new _$LanguageEntity._(id: id, name: name, locale: locale);
     replace(_$result);
     return _$result;
   }

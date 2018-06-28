@@ -32,11 +32,12 @@ abstract class PaymentTypeEntity implements Built<PaymentTypeEntity, PaymentType
 
   factory PaymentTypeEntity() {
     return _$PaymentTypeEntity._(
+      id: 0,
       name: '',
     );
   }
 
-  @BuiltValueField(wireName: 'name')
+  int get id;
   String get name;
 
   PaymentTypeEntity._();

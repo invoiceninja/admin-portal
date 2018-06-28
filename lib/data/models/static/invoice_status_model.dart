@@ -31,11 +31,12 @@ abstract class InvoiceStatusEntity implements Built<InvoiceStatusEntity, Invoice
 
   factory InvoiceStatusEntity() {
     return _$InvoiceStatusEntity._(
+      id: 0,
       name: '',
     );
   }
 
-  @BuiltValueField(wireName: 'name')
+  int get id;
   String get name;
 
   InvoiceStatusEntity._();

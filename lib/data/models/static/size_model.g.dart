@@ -114,6 +114,8 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
   Iterable serialize(Serializers serializers, SizeEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
@@ -132,6 +134,10 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -324,12 +330,15 @@ class SizeItemResponseBuilder
 
 class _$SizeEntity extends SizeEntity {
   @override
+  final int id;
+  @override
   final String name;
 
   factory _$SizeEntity([void updates(SizeEntityBuilder b)]) =>
       (new SizeEntityBuilder()..update(updates)).build();
 
-  _$SizeEntity._({this.name}) : super._() {
+  _$SizeEntity._({this.id, this.name}) : super._() {
+    if (id == null) throw new BuiltValueNullFieldError('SizeEntity', 'id');
     if (name == null) throw new BuiltValueNullFieldError('SizeEntity', 'name');
   }
 
@@ -344,23 +353,29 @@ class _$SizeEntity extends SizeEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! SizeEntity) return false;
-    return name == other.name;
+    return id == other.id && name == other.name;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, name.hashCode));
+    return $jf($jc($jc(0, id.hashCode), name.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SizeEntity')..add('name', name))
+    return (newBuiltValueToStringHelper('SizeEntity')
+          ..add('id', id)
+          ..add('name', name))
         .toString();
   }
 }
 
 class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
   _$SizeEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -370,6 +385,7 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
 
   SizeEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _$v = null;
     }
@@ -389,7 +405,7 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
 
   @override
   _$SizeEntity build() {
-    final _$result = _$v ?? new _$SizeEntity._(name: name);
+    final _$result = _$v ?? new _$SizeEntity._(id: id, name: name);
     replace(_$result);
     return _$result;
   }

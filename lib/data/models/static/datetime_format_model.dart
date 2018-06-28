@@ -31,11 +31,13 @@ abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, Datet
 
   factory DatetimeFormatEntity() {
     return _$DatetimeFormatEntity._(
+      id: 0,
       format: '',
       formatMoment: '',
     );
   }
-  
+
+  int get id;
   String get format;
 
   @BuiltValueField(wireName: 'format_moment')

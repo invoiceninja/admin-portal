@@ -31,10 +31,13 @@ abstract class TimezoneEntity implements Built<TimezoneEntity, TimezoneEntityBui
   
   factory TimezoneEntity() {
     return _$TimezoneEntity._(
+      id: 0,
       name: '',
       location: '',
     );
   }
+
+  int get id;
 
   String get name;
 

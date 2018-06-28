@@ -129,6 +129,8 @@ class _$InvoiceStatusEntitySerializer
   Iterable serialize(Serializers serializers, InvoiceStatusEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
@@ -147,6 +149,10 @@ class _$InvoiceStatusEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -348,12 +354,16 @@ class InvoiceStatusItemResponseBuilder
 
 class _$InvoiceStatusEntity extends InvoiceStatusEntity {
   @override
+  final int id;
+  @override
   final String name;
 
   factory _$InvoiceStatusEntity([void updates(InvoiceStatusEntityBuilder b)]) =>
       (new InvoiceStatusEntityBuilder()..update(updates)).build();
 
-  _$InvoiceStatusEntity._({this.name}) : super._() {
+  _$InvoiceStatusEntity._({this.id, this.name}) : super._() {
+    if (id == null)
+      throw new BuiltValueNullFieldError('InvoiceStatusEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('InvoiceStatusEntity', 'name');
   }
@@ -370,17 +380,18 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! InvoiceStatusEntity) return false;
-    return name == other.name;
+    return id == other.id && name == other.name;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, name.hashCode));
+    return $jf($jc($jc(0, id.hashCode), name.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceStatusEntity')
+          ..add('id', id)
           ..add('name', name))
         .toString();
   }
@@ -390,6 +401,10 @@ class InvoiceStatusEntityBuilder
     implements Builder<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
   _$InvoiceStatusEntity _$v;
 
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
@@ -398,6 +413,7 @@ class InvoiceStatusEntityBuilder
 
   InvoiceStatusEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _$v = null;
     }
@@ -417,7 +433,7 @@ class InvoiceStatusEntityBuilder
 
   @override
   _$InvoiceStatusEntity build() {
-    final _$result = _$v ?? new _$InvoiceStatusEntity._(name: name);
+    final _$result = _$v ?? new _$InvoiceStatusEntity._(id: id, name: name);
     replace(_$result);
     return _$result;
   }

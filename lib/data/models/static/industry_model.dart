@@ -30,10 +30,12 @@ abstract class IndustryEntity implements Built<IndustryEntity, IndustryEntityBui
   
   factory IndustryEntity() {
     return _$IndustryEntity._(
+      id: 0,
       name: '',
     );
   }
-  
+
+  int get id;
   String get name;
   
   IndustryEntity._();

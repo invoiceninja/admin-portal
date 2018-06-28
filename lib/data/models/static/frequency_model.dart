@@ -33,14 +33,14 @@ abstract class FrequencyEntity implements Built<FrequencyEntity, FrequencyEntity
 
   factory FrequencyEntity() {
     return _$FrequencyEntity._(
+      id: 0,
       name: '',
       dateInterval: '',
     );
   }
 
-  @BuiltValueField(wireName: 'name')
+  int get id;
   String get name;
-
   @BuiltValueField(wireName: 'date_interval')
   String get dateInterval;
 
