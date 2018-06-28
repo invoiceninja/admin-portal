@@ -9,6 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja/utils/keys.dart';
 
 class ProductScreen extends StatelessWidget {
   static final String route = '/product';
@@ -52,6 +53,7 @@ class ProductScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
+        key: new Key(ProductKeys.productScreenFABKeyString),
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
           store.dispatch(
