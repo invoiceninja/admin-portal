@@ -31,7 +31,7 @@ class ClientEditContacts extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: RaisedButton(
             elevation: 4.0,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).primaryColorDark,
             textColor: Theme.of(context).secondaryHeaderColor,
             child: Text(localization.addContact.toUpperCase()),
             onPressed: viewModel.onAddContactPressed,

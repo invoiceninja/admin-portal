@@ -53,17 +53,7 @@ class ClientScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () {
-          // TODO create factory
-          var client = ClientEntity()
-              .rebuild((b) => b..contacts.replace([ContactEntity().rebuild((b) => b
-              ..firstName = ''
-              ..lastName = ''
-              ..email = ''
-              ..phone = ''
-          )]));
-          store.dispatch(EditClient(client: client, context: context));
-        },
+        onPressed: () => store.dispatch(EditClient(client: ClientEntity(), context: context)),
         child: Icon(Icons.add, color: Colors.white,),
         tooltip: localization.newClient,
       ),

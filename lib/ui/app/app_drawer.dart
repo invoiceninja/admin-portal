@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/constants.dart';
+import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
-import 'package:invoiceninja/ui/client/client_screen.dart';
-import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
-import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
-import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -98,27 +94,44 @@ class AppDrawer extends StatelessWidget {
               icon: FontAwesomeIcons.tachometerAlt,
               title: AppLocalization.of(context).dashboard,
               onTap: () {
+                navigator.pop();
                 store.dispatch(ViewDashboard(context));
-              }),
+              },
+          ),
           DrawerTile(
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
             onTap: () {
+              navigator.pop();
               store.dispatch(ViewClientList(context));
+            },
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditClient(client: ClientEntity(), context: context));
             },
           ),
           DrawerTile(
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
             onTap: () {
+              navigator.pop();
               store.dispatch(ViewProductList(context));
+            },
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditProduct(product: ProductEntity(), context: context));
             },
           ),
           DrawerTile(
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
             onTap: () {
+              navigator.pop();
               store.dispatch(ViewInvoiceList(context));
+            },
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditInvoice(invoice: InvoiceEntity(), context: context));
             },
           ),
           DrawerTile(
@@ -149,11 +162,13 @@ class DrawerTile extends StatelessWidget {
     this.icon,
     this.title,
     this.onTap,
+    this.onCreateTap,
   });
 
   final IconData icon;
   final String title;
   final Function onTap;
+  final Function onCreateTap;
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +177,10 @@ class DrawerTile extends StatelessWidget {
       leading: Icon(icon, size: 22.0),
       title: Text(title),
       onTap: () => onTap(),
+      trailing: onCreateTap == null ? null : IconButton(
+        icon: Icon(Icons.add_circle_outline),
+        onPressed: onCreateTap,
+      ),
     );
   }
 }
