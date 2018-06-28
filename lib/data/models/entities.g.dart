@@ -546,7 +546,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'custom_invoice_taxes1',
       serializers.serialize(object.enableCustomInvoiceTaxes1,
           specifiedType: const FullType(bool)),
-      'custom_invoice_taxes1',
+      'custom_invoice_taxes2',
       serializers.serialize(object.enableCustomInvoiceTaxes2,
           specifiedType: const FullType(bool)),
     ];
@@ -697,7 +697,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.enableCustomInvoiceTaxes1 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'custom_invoice_taxes1':
+        case 'custom_invoice_taxes2':
           result.enableCustomInvoiceTaxes2 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;

@@ -21,6 +21,7 @@ AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
 AuthState userLoginRequestReducer(
     AuthState authState, UserLoginRequest action) {
   return authState.rebuild((b) => b
+    ..error = null
     ..url = action.url
     ..secret = action.secret
     ..email = action.email

@@ -265,7 +265,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'custom_invoice_taxes1')
   bool get enableCustomInvoiceTaxes1;
 
-  @BuiltValueField(wireName: 'custom_invoice_taxes1')
+  @BuiltValueField(wireName: 'custom_invoice_taxes2')
   bool get enableCustomInvoiceTaxes2;
 
   //@BuiltValueField(wireName: 'custom_fields')
