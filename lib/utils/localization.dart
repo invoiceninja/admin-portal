@@ -135,6 +135,7 @@ class AppLocalization {
       'due_date': 'Due Date',
       'partial_due_date': 'Partial Due Date',
       'status': 'Status',
+      'invoice_status_id': 'Invoice Status',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -280,6 +281,7 @@ class AppLocalization {
   String get dueDate => _localizedValues[locale.languageCode]['due_date'];
   String get partialDueDate => _localizedValues[locale.languageCode]['partial_due_date'];
   String get status => _localizedValues[locale.languageCode]['status'];
+  String get invoiceStatusId => _localizedValues[locale.languageCode]['invoice_status_id'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

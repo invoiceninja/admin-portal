@@ -48,10 +48,10 @@ class _InvoiceViewState extends State<InvoiceView> {
         InvoiceFields.invoiceStatusId: invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
-        InvoiceFields.partial: invoice.partial.toStringAsFixed(2),
+        InvoiceFields.partial: invoice.partial != 0 ? invoice.partial.toStringAsFixed(2) : null,
         InvoiceFields.partialDueDate: invoice.partialDueDate,
         InvoiceFields.poNumber: invoice.poNumber,
-        InvoiceFields.discount: invoice.discount.toStringAsFixed(2),
+        InvoiceFields.discount: invoice.discount != 0 ? invoice.discount.toStringAsFixed(2) : null,
       };
 
       List<Widget> fieldWidgets = [];

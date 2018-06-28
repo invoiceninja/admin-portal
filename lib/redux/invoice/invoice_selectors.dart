@@ -36,6 +36,5 @@ List<int> visibleInvoicesSelector(BuiltMap<int, InvoiceEntity> invoiceMap,
   return list;
 }
 
-String invoiceStatusSelector(InvoiceEntity invoice, StaticState staticState) {
-
-}
+String invoiceStatusSelector(InvoiceEntity invoice, StaticState staticState) =>
+    staticState.invoiceStatusMap[invoice.invoiceStatusId].name;

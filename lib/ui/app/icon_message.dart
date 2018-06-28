@@ -8,7 +8,7 @@ class IconMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[300],
+      color: Theme.of(context).primaryColorDark,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -16,7 +16,7 @@ class IconMessage extends StatelessWidget {
             Icon(
               Icons.info_outline,
               size: 18.0,
-              color: Colors.grey[800],
+              color: Colors.white,
             ),
             SizedBox(width: 10.0),
             Flexible(
@@ -25,7 +25,7 @@ class IconMessage extends StatelessWidget {
                 maxLines: null,
                 //keyboardType: TextInputType.multiline,
                 style: TextStyle(
-                  color: Colors.grey[800],
+                  color: Colors.white,
                 ),
               ),
             ),
