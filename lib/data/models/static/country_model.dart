@@ -48,6 +48,7 @@ abstract class CountryEntity implements Built<CountryEntity, CountryEntityBuilde
 
   factory CountryEntity() {
     return _$CountryEntity._(
+      id: 0,
       name: '',
       swapPostalCode: false,
       swapCurrencySymbol: false,
@@ -56,7 +57,7 @@ abstract class CountryEntity implements Built<CountryEntity, CountryEntityBuilde
     );
   }
 
-  @BuiltValueField(wireName: 'name')
+  int get id;
   String get name;
 
   @BuiltValueField(wireName: 'swap_postal_code')

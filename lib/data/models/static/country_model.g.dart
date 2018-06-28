@@ -122,6 +122,8 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
   Iterable serialize(Serializers serializers, CountryEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'swap_postal_code',
@@ -158,6 +160,10 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -368,6 +374,8 @@ class CountryItemResponseBuilder
 
 class _$CountryEntity extends CountryEntity {
   @override
+  final int id;
+  @override
   final String name;
   @override
   final bool swapPostalCode;
@@ -382,12 +390,14 @@ class _$CountryEntity extends CountryEntity {
       (new CountryEntityBuilder()..update(updates)).build();
 
   _$CountryEntity._(
-      {this.name,
+      {this.id,
+      this.name,
       this.swapPostalCode,
       this.swapCurrencySymbol,
       this.thousandSeparator,
       this.decimalSeparator})
       : super._() {
+    if (id == null) throw new BuiltValueNullFieldError('CountryEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('CountryEntity', 'name');
     if (swapPostalCode == null)
@@ -407,7 +417,8 @@ class _$CountryEntity extends CountryEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! CountryEntity) return false;
-    return name == other.name &&
+    return id == other.id &&
+        name == other.name &&
         swapPostalCode == other.swapPostalCode &&
         swapCurrencySymbol == other.swapCurrencySymbol &&
         thousandSeparator == other.thousandSeparator &&
@@ -418,7 +429,9 @@ class _$CountryEntity extends CountryEntity {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, name.hashCode), swapPostalCode.hashCode),
+            $jc(
+                $jc($jc($jc(0, id.hashCode), name.hashCode),
+                    swapPostalCode.hashCode),
                 swapCurrencySymbol.hashCode),
             thousandSeparator.hashCode),
         decimalSeparator.hashCode));
@@ -427,6 +440,7 @@ class _$CountryEntity extends CountryEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CountryEntity')
+          ..add('id', id)
           ..add('name', name)
           ..add('swapPostalCode', swapPostalCode)
           ..add('swapCurrencySymbol', swapCurrencySymbol)
@@ -439,6 +453,10 @@ class _$CountryEntity extends CountryEntity {
 class CountryEntityBuilder
     implements Builder<CountryEntity, CountryEntityBuilder> {
   _$CountryEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -468,6 +486,7 @@ class CountryEntityBuilder
 
   CountryEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _swapPostalCode = _$v.swapPostalCode;
       _swapCurrencySymbol = _$v.swapCurrencySymbol;
@@ -493,6 +512,7 @@ class CountryEntityBuilder
   _$CountryEntity build() {
     final _$result = _$v ??
         new _$CountryEntity._(
+            id: id,
             name: name,
             swapPostalCode: swapPostalCode,
             swapCurrencySymbol: swapCurrencySymbol,
