@@ -40,6 +40,7 @@ class ClientFields {
 abstract class ClientEntity extends Object with BaseEntity implements Built<ClientEntity, ClientEntityBuilder> {
 
   static int counter = 0;
+
   factory ClientEntity() {
     return _$ClientEntity._(
         id: --ClientEntity.counter,

@@ -1,3 +1,61 @@
+import 'package:intl/intl.dart';
+import 'package:intl/number_symbols_data.dart';
+import 'package:intl/number_symbols.dart';
+import 'package:invoiceninja/constants.dart';
+import 'package:invoiceninja/data/models/models.dart';
+
+String formatMoney(double value, {
+  CompanyEntity company,
+  CurrencyEntity currency,
+  CountryEntity country
+}) {
+
+  String thousandSeparator = currency.thousandSeparator;
+  String decimalSeparator = currency.decimalSeparator;
+  bool swapCurrencySymbol = currency.swapCurrencySymbol;
+
+  if (currency.id == kCurrencyEuro) {
+    swapCurrencySymbol = country.swapCurrencySymbol;
+    if (country.thousandSeparator.isNotEmpty) {
+      thousandSeparator = country.thousandSeparator;
+    }
+    if (country.decimalSeparator.isNotEmpty) {
+      decimalSeparator = country.decimalSeparator;
+    }
+  }
+
+  numberFormatSymbols['zz'] = new NumberSymbols(
+    NAME: "zz",
+    DECIMAL_SEP: decimalSeparator,
+    GROUP_SEP: thousandSeparator,
+    //GROUP_SEP: '\u00A0',
+    PERCENT: '%',
+    ZERO_DIGIT: '0',
+    PLUS_SIGN: '+',
+    MINUS_SIGN: '-',
+    EXP_SYMBOL: 'e',
+    PERMILL: '\u2030',
+    INFINITY: '\u221E',
+    NAN: 'NaN',
+    DECIMAL_PATTERN: '#,##0.###',
+    SCIENTIFIC_PATTERN: '#E0',
+    PERCENT_PATTERN: '#,##0%',
+    CURRENCY_PATTERN: '\u00A4#,##0.00',
+    DEF_CURRENCY_CODE: 'AUD',
+  );
+
+  var formatter = NumberFormat('###.0#', 'zz');
+  String formatted = formatter.format(value);
+
+  if (company.showCurrencyCode || currency.symbol.isEmpty) {
+    return '${formatted} ${currency.code}';
+  } else if (swapCurrencySymbol) {
+    return '${formatted} ${currency.symbol.trim()}';
+  } else {
+    return '${currency.symbol}${formatted}';
+  }
+}
+
 String cleanPhoneNumber(String phoneNumber) {
   return phoneNumber.replaceAll(RegExp(r'\D'), '');
 }

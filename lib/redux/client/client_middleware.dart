@@ -78,7 +78,7 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(ArchiveClientFailure(origClient));
     });
 
@@ -98,7 +98,7 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(DeleteClientFailure(origClient));
     });
 
@@ -118,7 +118,7 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(RestoreClientFailure(origClient));
     });
 
@@ -139,7 +139,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
       }
       action.completer.complete(null);
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(SaveClientFailure(error));
     });
 
@@ -175,7 +175,7 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
         store.dispatch(LoadProducts());
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(LoadClientsFailure(error));
     });
 

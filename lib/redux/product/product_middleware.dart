@@ -65,7 +65,7 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(ArchiveProductFailure(origProduct));
     });
 
@@ -85,7 +85,7 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(DeleteProductFailure(origProduct));
     });
 
@@ -105,7 +105,7 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(RestoreProductFailure(origProduct));
     });
 
@@ -126,7 +126,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
       }
       action.completer.complete(null);
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(SaveProductFailure(error));
     });
 
@@ -155,7 +155,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(LoadProductsFailure(error));
     });
 

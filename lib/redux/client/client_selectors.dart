@@ -27,7 +27,7 @@ List<int> dropdownClientsSelector(
     var clientB = clientMap[clientBId];
     return clientA.compareTo(clientB, ClientFields.name, true);
   });
-  print(list.toString());
+
   return list;
 }
 

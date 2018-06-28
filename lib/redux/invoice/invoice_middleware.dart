@@ -80,7 +80,7 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(ArchiveInvoiceFailure(origInvoice));
     });
 
@@ -100,7 +100,7 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(DeleteInvoiceFailure(origInvoice));
     });
 
@@ -120,7 +120,7 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(RestoreInvoiceFailure(origInvoice));
     });
 
@@ -140,7 +140,7 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
         action.completer.complete(null);
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(EmailInvoiceFailure(error));
     });
 
@@ -161,7 +161,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       }
       action.completer.complete(null);
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(SaveInvoiceFailure(error));
     });
 
@@ -196,7 +196,7 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
         store.dispatch(LoadClients());
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(LoadInvoicesFailure(error));
     });
 

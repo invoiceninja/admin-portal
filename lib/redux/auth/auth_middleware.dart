@@ -77,7 +77,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         store.dispatch(UserLoginFailure('The minimum version is v4.5'));
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(UserLoginFailure(error));
     });
 

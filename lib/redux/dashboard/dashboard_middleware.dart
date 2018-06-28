@@ -58,7 +58,7 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
         store.dispatch(LoadClients());
       }
     }).catchError((error) {
-      print(error);
+      print(error.toString());
       store.dispatch(LoadDashboardFailure(error));
     });
 

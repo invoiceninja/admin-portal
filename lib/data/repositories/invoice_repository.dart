@@ -53,9 +53,6 @@ class InvoiceRepository {
     var response = await webClient.post(
           auth.url + '/email_invoice?invoice_id=${invoice.id}', company.token, null);
 
-    print('== response ==');
-    print(response.toString());
-
     InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
         InvoiceItemResponse.serializer, response);
 
