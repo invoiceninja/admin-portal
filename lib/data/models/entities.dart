@@ -173,7 +173,6 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   String get name;
   String get token;
 
-  @nullable
   String get plan;
 
   @BuiltValueField(wireName: 'logo_url')
@@ -263,11 +262,11 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'convert_products')
   bool get convertProductExchangeRate;
 
-  //@BuiltValueField(wireName: 'custom_invoice_taxes1')
-  //bool get enableCustomInvoiceTaxes1;
+  @BuiltValueField(wireName: 'custom_invoice_taxes1')
+  bool get enableCustomInvoiceTaxes1;
 
-  //@BuiltValueField(wireName: 'custom_invoice_taxes1')
-  //bool get enableCustomInvoiceTaxes2;
+  @BuiltValueField(wireName: 'custom_invoice_taxes1')
+  bool get enableCustomInvoiceTaxes2;
 
   //@BuiltValueField(wireName: 'custom_fields')
   //@BuiltValueField(wireName: 'invoice_labels')
@@ -294,8 +293,8 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       defaultTaxRate1: 0.0,
       defaultTaxName2: '',
       defaultTaxRate2: 0.0,
-      //enableCustomInvoiceTaxes1: false,
-      //enableCustomInvoiceTaxes2: false,
+      enableCustomInvoiceTaxes1: false,
+      enableCustomInvoiceTaxes2: false,
       enabledModules: 0,
       enableInclusiveTaxes: false,
       enableInvoiceItemTaxes: false,

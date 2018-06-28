@@ -454,6 +454,8 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'token',
       serializers.serialize(object.token,
           specifiedType: const FullType(String)),
+      'plan',
+      serializers.serialize(object.plan, specifiedType: const FullType(String)),
       'logo_url',
       serializers.serialize(object.logoUrl,
           specifiedType: const FullType(String)),
@@ -541,13 +543,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'convert_products',
       serializers.serialize(object.convertProductExchangeRate,
           specifiedType: const FullType(bool)),
+      'custom_invoice_taxes1',
+      serializers.serialize(object.enableCustomInvoiceTaxes1,
+          specifiedType: const FullType(bool)),
+      'custom_invoice_taxes1',
+      serializers.serialize(object.enableCustomInvoiceTaxes2,
+          specifiedType: const FullType(bool)),
     ];
-    if (object.plan != null) {
-      result
-        ..add('plan')
-        ..add(serializers.serialize(object.plan,
-            specifiedType: const FullType(String)));
-    }
 
     return result;
   }
@@ -689,6 +691,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'convert_products':
           result.convertProductExchangeRate = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_invoice_taxes1':
+          result.enableCustomInvoiceTaxes1 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_invoice_taxes1':
+          result.enableCustomInvoiceTaxes2 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -1500,6 +1510,10 @@ class _$CompanyEntity extends CompanyEntity {
   final bool enableInclusiveTaxes;
   @override
   final bool convertProductExchangeRate;
+  @override
+  final bool enableCustomInvoiceTaxes1;
+  @override
+  final bool enableCustomInvoiceTaxes2;
 
   factory _$CompanyEntity([void updates(CompanyEntityBuilder b)]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
@@ -1536,12 +1550,16 @@ class _$CompanyEntity extends CompanyEntity {
       this.defaultPaymentTypeId,
       this.defaultTaskRate,
       this.enableInclusiveTaxes,
-      this.convertProductExchangeRate})
+      this.convertProductExchangeRate,
+      this.enableCustomInvoiceTaxes1,
+      this.enableCustomInvoiceTaxes2})
       : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
     if (token == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'token');
+    if (plan == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'plan');
     if (logoUrl == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'logoUrl');
     if (currencyId == null)
@@ -1611,6 +1629,12 @@ class _$CompanyEntity extends CompanyEntity {
     if (convertProductExchangeRate == null)
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'convertProductExchangeRate');
+    if (enableCustomInvoiceTaxes1 == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableCustomInvoiceTaxes1');
+    if (enableCustomInvoiceTaxes2 == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableCustomInvoiceTaxes2');
   }
 
   @override
@@ -1655,7 +1679,9 @@ class _$CompanyEntity extends CompanyEntity {
         defaultPaymentTypeId == other.defaultPaymentTypeId &&
         defaultTaskRate == other.defaultTaskRate &&
         enableInclusiveTaxes == other.enableInclusiveTaxes &&
-        convertProductExchangeRate == other.convertProductExchangeRate;
+        convertProductExchangeRate == other.convertProductExchangeRate &&
+        enableCustomInvoiceTaxes1 == other.enableCustomInvoiceTaxes1 &&
+        enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2;
   }
 
   @override
@@ -1678,26 +1704,26 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode),
-                                                                                languageId.hashCode),
-                                                                            defaultInvoiceFooter.hashCode),
-                                                                        showInvoiceItemTaxes.hashCode),
-                                                                    enableMilitaryTime.hashCode),
-                                                                defaultTaxName1.hashCode),
-                                                            defaultTaxRate1.hashCode),
-                                                        defaultTaxName2.hashCode),
-                                                    defaultTaxRate2.hashCode),
-                                                defaultQuoteTerms.hashCode),
-                                            showCurrencyCode.hashCode),
-                                        enableSecondTaxRate.hashCode),
-                                    startOfWeek.hashCode),
-                                financialYearStart.hashCode),
-                            enabledModules.hashCode),
-                        defaultPaymentTerms.hashCode),
-                    defaultPaymentTypeId.hashCode),
-                defaultTaskRate.hashCode),
-            enableInclusiveTaxes.hashCode),
-        convertProductExchangeRate.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode),
+                                                                                showInvoiceItemTaxes.hashCode),
+                                                                            enableMilitaryTime.hashCode),
+                                                                        defaultTaxName1.hashCode),
+                                                                    defaultTaxRate1.hashCode),
+                                                                defaultTaxName2.hashCode),
+                                                            defaultTaxRate2.hashCode),
+                                                        defaultQuoteTerms.hashCode),
+                                                    showCurrencyCode.hashCode),
+                                                enableSecondTaxRate.hashCode),
+                                            startOfWeek.hashCode),
+                                        financialYearStart.hashCode),
+                                    enabledModules.hashCode),
+                                defaultPaymentTerms.hashCode),
+                            defaultPaymentTypeId.hashCode),
+                        defaultTaskRate.hashCode),
+                    enableInclusiveTaxes.hashCode),
+                convertProductExchangeRate.hashCode),
+            enableCustomInvoiceTaxes1.hashCode),
+        enableCustomInvoiceTaxes2.hashCode));
   }
 
   @override
@@ -1734,7 +1760,9 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('defaultPaymentTypeId', defaultPaymentTypeId)
           ..add('defaultTaskRate', defaultTaskRate)
           ..add('enableInclusiveTaxes', enableInclusiveTaxes)
-          ..add('convertProductExchangeRate', convertProductExchangeRate))
+          ..add('convertProductExchangeRate', convertProductExchangeRate)
+          ..add('enableCustomInvoiceTaxes1', enableCustomInvoiceTaxes1)
+          ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2))
         .toString();
   }
 }
@@ -1894,6 +1922,16 @@ class CompanyEntityBuilder
   set convertProductExchangeRate(bool convertProductExchangeRate) =>
       _$this._convertProductExchangeRate = convertProductExchangeRate;
 
+  bool _enableCustomInvoiceTaxes1;
+  bool get enableCustomInvoiceTaxes1 => _$this._enableCustomInvoiceTaxes1;
+  set enableCustomInvoiceTaxes1(bool enableCustomInvoiceTaxes1) =>
+      _$this._enableCustomInvoiceTaxes1 = enableCustomInvoiceTaxes1;
+
+  bool _enableCustomInvoiceTaxes2;
+  bool get enableCustomInvoiceTaxes2 => _$this._enableCustomInvoiceTaxes2;
+  set enableCustomInvoiceTaxes2(bool enableCustomInvoiceTaxes2) =>
+      _$this._enableCustomInvoiceTaxes2 = enableCustomInvoiceTaxes2;
+
   CompanyEntityBuilder();
 
   CompanyEntityBuilder get _$this {
@@ -1930,6 +1968,8 @@ class CompanyEntityBuilder
       _defaultTaskRate = _$v.defaultTaskRate;
       _enableInclusiveTaxes = _$v.enableInclusiveTaxes;
       _convertProductExchangeRate = _$v.convertProductExchangeRate;
+      _enableCustomInvoiceTaxes1 = _$v.enableCustomInvoiceTaxes1;
+      _enableCustomInvoiceTaxes2 = _$v.enableCustomInvoiceTaxes2;
       _$v = null;
     }
     return this;
@@ -1981,7 +2021,9 @@ class CompanyEntityBuilder
             defaultPaymentTypeId: defaultPaymentTypeId,
             defaultTaskRate: defaultTaskRate,
             enableInclusiveTaxes: enableInclusiveTaxes,
-            convertProductExchangeRate: convertProductExchangeRate);
+            convertProductExchangeRate: convertProductExchangeRate,
+            enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
+            enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2);
     replace(_$result);
     return _$result;
   }
