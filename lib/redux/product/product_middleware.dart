@@ -35,11 +35,6 @@ Middleware<AppState> _viewProductList() {
     store.dispatch(LoadProducts());
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
 
-    if (action.context != null) {
-      NavigatorState navigator = Navigator.of(action.context);
-      navigator.pushReplacementNamed(ProductScreen.route);
-    }
-
     next(action);
   };
 }

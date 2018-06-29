@@ -41,11 +41,6 @@ Middleware<AppState> _viewInvoiceList() {
     store.dispatch(LoadInvoices());
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
 
-    if (action.context != null) {
-      NavigatorState navigator = Navigator.of(action.context);
-      navigator.pushReplacementNamed(InvoiceScreen.route);
-    }
-
     next(action);
   };
 }

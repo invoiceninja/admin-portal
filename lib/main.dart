@@ -89,11 +89,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
         title: 'Invoice Ninja',
         routes: {
-          InitScreen.route: (context) {
-            widget.store.dispatch(LoadStateRequest(context));
-            //widget.store.dispatch(LoadUserLogin());
-            return InitScreen();
-          },
+          InitScreen.route: (context) => InitScreen(),
           LoginScreen.route: (context) {
             return LoginScreen();
           },

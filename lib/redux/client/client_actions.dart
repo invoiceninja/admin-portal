@@ -5,10 +5,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
-class ViewClientList implements PersistUI {
-  final BuildContext context;
-  ViewClientList([this.context]);
-}
+class ViewClientList implements PersistUI {}
 
 class ViewClient implements PersistUI {
   final ClientEntity client;

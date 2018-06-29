@@ -9,6 +9,9 @@ import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja/ui/client/client_screen.dart';
+import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
+import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -101,10 +104,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
-            onTap: () {
-              navigator.pop();
-              store.dispatch(ViewClientList(context));
-            },
+            onTap: () => navigator.pushReplacementNamed(ClientScreen.route),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(EditClient(client: ClientEntity(), context: context));
@@ -113,10 +113,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
-            onTap: () {
-              navigator.pop();
-              store.dispatch(ViewProductList(context));
-            },
+            onTap: () => navigator.pushReplacementNamed(ProductScreen.route),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(EditProduct(product: ProductEntity(), context: context));
@@ -125,10 +122,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
-            onTap: () {
-              navigator.pop();
-              store.dispatch(ViewInvoiceList(context));
-            },
+            onTap: () => navigator.pushReplacementNamed(InvoiceScreen.route),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(EditInvoice(invoice: InvoiceEntity(), context: context));

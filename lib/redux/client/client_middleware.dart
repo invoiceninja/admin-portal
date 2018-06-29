@@ -39,11 +39,6 @@ Middleware<AppState> _viewClientList() {
     store.dispatch(LoadClients());
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
-    if (action.context != null) {
-      NavigatorState navigator = Navigator.of(action.context);
-      navigator.pushReplacementNamed(ClientScreen.route);
-    }
-
     next(action);
   };
 }
