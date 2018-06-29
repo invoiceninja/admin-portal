@@ -145,7 +145,7 @@ class _InvoiceViewState extends State<InvoiceView> {
           Divider(height: 1.0)
         ]);
       });
-
+      
       return widgets;
     }
 

@@ -78,6 +78,10 @@ abstract class ProductEntity extends Object with BaseEntity implements Built<Pro
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  String get listDisplayName {
+    return productKey;
+  }
+
   int compareTo(ProductEntity product, String sortField, bool sortAscending) {
     int response = 0;
     ProductEntity productA = sortAscending ? this : product;

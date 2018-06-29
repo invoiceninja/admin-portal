@@ -1,10 +1,13 @@
+import 'dart:math';
+
+import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
+import 'package:redux/redux.dart';
 
 class InvoiceEditItems extends StatelessWidget {
   InvoiceEditItems({
@@ -13,6 +16,12 @@ class InvoiceEditItems extends StatelessWidget {
   }) : super(key: key);
 
   final InvoiceEditItemsVM viewModel;
+
+  _showAddItemDialog(BuildContext context) {
+    showDialog(context: context, builder: (BuildContext context) {
+      return ItemSelector(viewModel.state);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,7 @@ class InvoiceEditItems extends StatelessWidget {
             color: Theme.of(context).primaryColorDark,
             textColor: Theme.of(context).secondaryHeaderColor,
             child: Text(localization.addItem.toUpperCase()),
-            onPressed: viewModel.onAddInvoiceItemPressed,
+            onPressed: () => _showAddItemDialog(context),
           ),
         )),
     );
@@ -190,6 +199,152 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class ItemSelector extends StatefulWidget {
+
+  ItemSelector(this.state);
+
+  final AppState state;
+
+  @override
+  _ItemSelectorState createState() => new _ItemSelectorState();
+}
+
+class _ItemSelectorState extends State<ItemSelector> {
+
+  List<int> _selectedIds = [];
+  final _textController = TextEditingController();
+  EntityType selectedEntityType = EntityType.product;
+
+  /*
+  @override
+  void initState() {
+    super.initState();
+    _textController.text = widget.initialValue;
+  }
+  */
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _headerRow() {
+      return Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            child: Icon(Icons.search),
+            /*
+                  child: DropdownButton(
+                    value: 'Products',
+                    onChanged: (value) {
+                      //
+                    },
+                    items: <String>['Products', 'Tasks', 'Expenses']
+                        .map((String value) {
+                      return new DropdownMenuItem<String>(
+                        value: value,
+                        child: new Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  */
+          ),
+          Expanded(
+            child: TextField(
+              controller: _textController,
+              //onChanged: (value) => widget.onFilterChanged(value),
+              autofocus: true,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                //hintText: localization.filter,
+              ),
+            ),
+          ),
+          _selectedIds.length > 0 ? Row(
+            mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: () {
+
+                  },
+                  child: Text('add'),
+                )
+              ],
+          ) :
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      );
+    }
+
+    _entityList() {
+      var localization = AppLocalization.of(context);
+      var state = widget.state.selectedCompanyState.productState;
+
+      return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: state.list
+              .getRange(0, min(6, state.list.length))
+              .map((entityId) {
+            var entity = state.map[entityId];
+            var filter =
+                widget.state.getUIState(selectedEntityType).dropdownFilter;
+            var subtitle = null;
+            var matchField = entity.matchesSearchField(filter);
+            if (matchField != null) {
+              var field = localization.lookup(matchField);
+              var value = entity.matchesSearchValue(filter);
+              subtitle = '$field: $value';
+            }
+            return ListTile(
+              dense: true,
+              leading: Checkbox(
+                value: _selectedIds.contains(entityId),
+                onChanged: (bool value) {
+                  setState(() {
+                    if (value) {
+                      _selectedIds.add(entityId);
+                    } else {
+                      _selectedIds.remove(entityId);
+                    }
+                  });
+                },
+              ),
+              title: Text(entity.listDisplayName),
+              subtitle: subtitle != null ? Text(subtitle) : null,
+              onTap: () {
+                _textController.text =
+                    state.map[entityId].listDisplayName;
+                //widget.onSelected(entityId);
+                Navigator.pop(context);
+              },
+            );
+          }).toList());
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          Material(
+            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              _headerRow(),
+              _entityList(),
+            ]),
+          ),
+          Expanded(child: Container()),
+        ],
+      ),
     );
   }
 }
