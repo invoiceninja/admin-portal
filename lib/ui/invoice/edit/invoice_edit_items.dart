@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
@@ -19,7 +18,7 @@ class InvoiceEditItems extends StatelessWidget {
 
   _showAddItemDialog(BuildContext context) {
     showDialog(context: context, builder: (BuildContext context) {
-      return ItemSelector(viewModel.state);
+      return InvoiceItemSelector(viewModel.state);
     });
   }
 
@@ -203,17 +202,17 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   }
 }
 
-class ItemSelector extends StatefulWidget {
+class InvoiceItemSelector extends StatefulWidget {
 
-  ItemSelector(this.state);
+  InvoiceItemSelector(this.state);
 
   final AppState state;
 
   @override
-  _ItemSelectorState createState() => new _ItemSelectorState();
+  _InvoiceItemSelectorState createState() => new _InvoiceItemSelectorState();
 }
 
-class _ItemSelectorState extends State<ItemSelector> {
+class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
 
   List<int> _selectedIds = [];
   final _textController = TextEditingController();
@@ -268,20 +267,26 @@ class _ItemSelectorState extends State<ItemSelector> {
               ),
             ),
           ),
-          _selectedIds.length > 0 ? Row(
+          Row(
             mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: () {
-
-                  },
-                  child: Text('add'),
-                )
-              ],
-          ) :
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () => Navigator.pop(context),
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  if (_textController.text.length > 0) {
+                    setState(() {
+                      _textController.text = '';
+                    });
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              _selectedIds.length > 0 ? IconButton(
+                icon: Icon(Icons.check),
+                onPressed: () => Navigator.pop(context),
+              ) : Container(),
+            ],
           )
         ],
       );
@@ -323,10 +328,17 @@ class _ItemSelectorState extends State<ItemSelector> {
               title: Text(entity.listDisplayName),
               subtitle: subtitle != null ? Text(subtitle) : null,
               onTap: () {
-                _textController.text =
-                    state.map[entityId].listDisplayName;
-                //widget.onSelected(entityId);
-                Navigator.pop(context);
+                if (_selectedIds.length > 0) {
+                  setState(() {
+                    if (_selectedIds.contains(entityId)) {
+                      _selectedIds.remove(entityId);
+                    } else {
+                      _selectedIds.add(entityId);
+                    }
+                  });
+                } else {
+                  Navigator.pop(context);
+                }
               },
             );
           }).toList());
