@@ -35,23 +35,15 @@ class InvoiceEditScreen extends StatelessWidget {
 class InvoiceEditVM {
   final AppState state;
   final InvoiceEntity invoice;
-  final Function(InvoiceEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
-  final Function() onAddInvoiceItemPressed;
-  final Function(int) onRemoveInvoiceItemPressed;
-  final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
   final Function onBackPressed;
   final bool isLoading;
 
   InvoiceEditVM({
     @required this.state,
     @required this.invoice,
-    @required this.onChanged,
     @required this.onSavePressed,
-    @required this.onAddInvoiceItemPressed,
-    @required this.onRemoveInvoiceItemPressed,
-    @required this.onChangedInvoiceItem,
     @required this.onBackPressed,
     @required this.onActionSelected,
     @required this.isLoading,
@@ -66,12 +58,6 @@ class InvoiceEditVM {
         isLoading: state.isLoading,
         invoice: invoice,
         onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
-        onAddInvoiceItemPressed: () => store.dispatch(AddInvoiceItem()),
-        onRemoveInvoiceItemPressed: (index) => store.dispatch(DeleteInvoiceItem(index)),
-        onChangedInvoiceItem: (invoiceItem, index) {
-          store.dispatch(UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
-        },
-        onChanged: (InvoiceEntity invoice) => store.dispatch(UpdateInvoice(invoice)),
         onSavePressed: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(

@@ -1,3 +1,4 @@
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -11,7 +12,7 @@ class InvoiceEditItems extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final InvoiceEditVM viewModel;
+  final InvoiceEditItemsVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class ItemEditDetails extends StatefulWidget {
 
   final int index;
   final InvoiceItemEntity invoiceItem;
-  final InvoiceEditVM viewModel;
+  final InvoiceEditItemsVM viewModel;
 
   @override
   ItemEditDetailsState createState() => ItemEditDetailsState();

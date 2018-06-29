@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items.dart';
+import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/save_icon_button.dart';
@@ -43,9 +44,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
     List<Widget> editors = [
       InvoiceEditDetailsScreen(),
-      InvoiceEditItems(
-        viewModel: viewModel,
-      ),
+      InvoiceEditItemsScreen(),
     ];
 
     return WillPopScope(
