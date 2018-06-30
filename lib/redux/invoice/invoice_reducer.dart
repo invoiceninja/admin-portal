@@ -31,6 +31,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, EditInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, UpdateInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, AddInvoiceItem>(_addInvoiceItem),
+  TypedReducer<InvoiceEntity, AddInvoiceItems>(_addInvoiceItems),
   TypedReducer<InvoiceEntity, DeleteInvoiceItem>(_removeInvoiceItem),
   TypedReducer<InvoiceEntity, UpdateInvoiceItem>(_updateInvoiceItem),
   TypedReducer<InvoiceEntity, SelectCompany>(_clearEditing),
@@ -47,6 +48,12 @@ InvoiceEntity _updateEditing(InvoiceEntity invoice, action) {
 InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
   return invoice.rebuild((b) => b
     ..invoiceItems.add(action.invoiceItem ?? InvoiceItemEntity())
+  );
+}
+
+InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
+  return invoice.rebuild((b) => b
+    ..invoiceItems.addAll(action.invoiceItems)
   );
 }
 

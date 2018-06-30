@@ -96,7 +96,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return InvoiceItemSelector(viewModel.state);
+                  return InvoiceItemSelector(
+                      state: viewModel.state,
+                    onItemsSelected: viewModel.onItemsAdded,
+                  );
                 });
           },
           child: Icon(Icons.add, color: Colors.white),

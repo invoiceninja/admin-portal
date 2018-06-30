@@ -1,13 +1,14 @@
+import 'package:invoiceninja/data/models/invoice_model.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 
 class InvoiceItemSelector extends StatefulWidget {
-  InvoiceItemSelector(this.state);
+  InvoiceItemSelector({this.state, this.onItemsSelected});
 
   final AppState state;
+  final Function(List<InvoiceItemEntity>) onItemsSelected;
 
   @override
   _InvoiceItemSelectorState createState() => new _InvoiceItemSelectorState();
@@ -24,6 +25,18 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
   void dispose() {
     _textController.dispose();
     super.dispose();
+  }
+
+  _onItemsSelected() {
+    List<InvoiceItemEntity> items = [];
+
+    _selectedIds.forEach((entityId) {
+      var product = widget.state.productState.map[entityId];
+      items.add(InvoiceItemEntity.fromProduct((product)));
+    });
+
+    widget.onItemsSelected(items);
+    Navigator.pop(context);
   }
 
   @override
@@ -85,7 +98,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
               _selectedIds.length > 0
                   ? IconButton(
                 icon: Icon(Icons.check),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  _onItemsSelected();
+                },
               )
                   : Container(),
             ],
@@ -141,7 +156,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                   }
                 });
               } else {
-                Navigator.pop(context);
+                _selectedIds.add(entityId);
+                _onItemsSelected();
               }
             },
           );

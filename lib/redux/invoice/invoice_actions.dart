@@ -60,6 +60,11 @@ class AddInvoiceItem implements PersistUI {
   AddInvoiceItem({this.invoiceItem});
 }
 
+class AddInvoiceItems implements PersistUI {
+  final List<InvoiceItemEntity> invoiceItems;
+  AddInvoiceItems(this.invoiceItems);
+}
+
 class UpdateInvoiceItem implements PersistUI {
   final int index;
   final InvoiceItemEntity invoiceItem;

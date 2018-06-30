@@ -37,6 +37,7 @@ class InvoiceEditVM {
   final InvoiceEntity invoice;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(List<InvoiceItemEntity>) onItemsAdded;
   final Function onBackPressed;
   final bool isLoading;
 
@@ -44,6 +45,7 @@ class InvoiceEditVM {
     @required this.state,
     @required this.invoice,
     @required this.onSavePressed,
+    @required this.onItemsAdded,
     @required this.onBackPressed,
     @required this.onActionSelected,
     @required this.isLoading,
@@ -82,6 +84,7 @@ class InvoiceEditVM {
                 */
           });
         },
+        onItemsAdded: (items) => store.dispatch(AddInvoiceItems(items)),
         onActionSelected: (BuildContext context, EntityAction action) {
           final Completer<Null> completer = new Completer<Null>();
           var message = '';
