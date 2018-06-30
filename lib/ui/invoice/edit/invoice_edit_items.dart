@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
-import 'package:redux/redux.dart';
 
 class InvoiceEditItems extends StatelessWidget {
   InvoiceEditItems({
@@ -17,9 +16,11 @@ class InvoiceEditItems extends StatelessWidget {
   final InvoiceEditItemsVM viewModel;
 
   _showAddItemDialog(BuildContext context) {
-    showDialog(context: context, builder: (BuildContext context) {
-      return InvoiceItemSelector(viewModel.state);
-    });
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return InvoiceItemSelector(viewModel.state);
+        });
   }
 
   @override
@@ -203,7 +204,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 }
 
 class InvoiceItemSelector extends StatefulWidget {
-
   InvoiceItemSelector(this.state);
 
   final AppState state;
@@ -213,10 +213,11 @@ class InvoiceItemSelector extends StatefulWidget {
 }
 
 class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
-
+  String _filter;
   List<int> _selectedIds = [];
+
   final _textController = TextEditingController();
-  EntityType selectedEntityType = EntityType.product;
+  EntityType _selectedEntityType = EntityType.product;
 
   /*
   @override
@@ -234,6 +235,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
 
   @override
   Widget build(BuildContext context) {
+    var localization = AppLocalization.of(context);
+
     _headerRow() {
       return Row(
         children: <Widget>[
@@ -259,11 +262,15 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
           Expanded(
             child: TextField(
               controller: _textController,
-              //onChanged: (value) => widget.onFilterChanged(value),
+              onChanged: (value) {
+                setState(() {
+                  _filter = value;
+                });
+              },
               autofocus: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                //hintText: localization.filter,
+                hintText: localization.filter,
               ),
             ),
           ),
@@ -275,17 +282,19 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                 onPressed: () {
                   if (_textController.text.length > 0) {
                     setState(() {
-                      _textController.text = '';
+                      _filter = _textController.text = '';
                     });
                   } else {
                     Navigator.pop(context);
                   }
                 },
               ),
-              _selectedIds.length > 0 ? IconButton(
-                icon: Icon(Icons.check),
-                onPressed: () => Navigator.pop(context),
-              ) : Container(),
+              _selectedIds.length > 0
+                  ? IconButton(
+                      icon: Icon(Icons.check),
+                      onPressed: () => Navigator.pop(context),
+                    )
+                  : Container(),
             ],
           )
         ],
@@ -296,52 +305,55 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
       var localization = AppLocalization.of(context);
       var state = widget.state.selectedCompanyState.productState;
 
-      return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: state.list
-              .getRange(0, min(6, state.list.length))
-              .map((entityId) {
-            var entity = state.map[entityId];
-            var filter =
-                widget.state.getUIState(selectedEntityType).dropdownFilter;
-            var subtitle = null;
-            var matchField = entity.matchesSearchField(filter);
-            if (matchField != null) {
-              var field = localization.lookup(matchField);
-              var value = entity.matchesSearchValue(filter);
-              subtitle = '$field: $value';
-            }
-            return ListTile(
-              dense: true,
-              leading: Checkbox(
-                value: _selectedIds.contains(entityId),
-                onChanged: (bool value) {
-                  setState(() {
-                    if (value) {
-                      _selectedIds.add(entityId);
-                    } else {
-                      _selectedIds.remove(entityId);
-                    }
-                  });
-                },
-              ),
-              title: Text(entity.listDisplayName),
-              subtitle: subtitle != null ? Text(subtitle) : null,
-              onTap: () {
-                if (_selectedIds.length > 0) {
-                  setState(() {
-                    if (_selectedIds.contains(entityId)) {
-                      _selectedIds.remove(entityId);
-                    } else {
-                      _selectedIds.add(entityId);
-                    }
-                  });
-                } else {
-                  Navigator.pop(context);
-                }
+      var matches = state.list
+          .where((entityId) => state.map[entityId].matchesSearch(_filter))
+          .toList();
+
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: matches.length,
+        itemBuilder: (BuildContext context, int index) {
+          int entityId = matches[index];
+          var entity = state.map[entityId];
+          var subtitle = null;
+          var matchField = entity.matchesSearchField(_filter);
+          if (matchField != null) {
+            var field = localization.lookup(matchField);
+            var value = entity.matchesSearchValue(_filter);
+            subtitle = '$field: $value';
+          }
+          return ListTile(
+            dense: true,
+            leading: Checkbox(
+              value: _selectedIds.contains(entityId),
+              onChanged: (bool value) {
+                setState(() {
+                  if (value) {
+                    _selectedIds.add(entityId);
+                  } else {
+                    _selectedIds.remove(entityId);
+                  }
+                });
               },
-            );
-          }).toList());
+            ),
+            title: Text(entity.listDisplayName),
+            subtitle: subtitle != null ? Text(subtitle) : null,
+            onTap: () {
+              if (_selectedIds.length > 0) {
+                setState(() {
+                  if (_selectedIds.contains(entityId)) {
+                    _selectedIds.remove(entityId);
+                  } else {
+                    _selectedIds.add(entityId);
+                  }
+                });
+              } else {
+                Navigator.pop(context);
+              }
+            },
+          );
+        },
+      );
     }
 
     return Padding(
