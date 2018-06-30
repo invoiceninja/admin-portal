@@ -136,6 +136,7 @@ class AppLocalization {
       'partial_due_date': 'Partial Due Date',
       'status': 'Status',
       'invoice_status_id': 'Invoice Status',
+      'click_plus_to_add_item': 'Click + to add an item',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -282,6 +283,7 @@ class AppLocalization {
   String get partialDueDate => _localizedValues[locale.languageCode]['partial_due_date'];
   String get status => _localizedValues[locale.languageCode]['status'];
   String get invoiceStatusId => _localizedValues[locale.languageCode]['invoice_status_id'];
+  String get clickPlusToAddItem => _localizedValues[locale.languageCode]['click_plus_to_add_item'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

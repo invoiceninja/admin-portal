@@ -46,7 +46,7 @@ InvoiceEntity _updateEditing(InvoiceEntity invoice, action) {
 
 InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
   return invoice.rebuild((b) => b
-    ..invoiceItems.add(InvoiceItemEntity())
+    ..invoiceItems.add(action.invoiceItem ?? InvoiceItemEntity())
   );
 }
 

@@ -55,7 +55,10 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
 }
 
 
-class AddInvoiceItem implements PersistUI {}
+class AddInvoiceItem implements PersistUI {
+  final InvoiceItemEntity invoiceItem;
+  AddInvoiceItem({this.invoiceItem});
+}
 
 class UpdateInvoiceItem implements PersistUI {
   final int index;
