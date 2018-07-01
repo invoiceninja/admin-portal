@@ -161,7 +161,7 @@ abstract class CalculateInvoiceTotal {
       if (discount != 0) {
         if (isAmountDiscount) {
           if (total != 0) {
-            lineTotal -= round(lineTotal / total * discount, 4)
+            lineTotal -= round(lineTotal / total * discount, 4);
           }
         }
       }
