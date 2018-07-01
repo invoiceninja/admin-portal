@@ -17,7 +17,7 @@ class SaveIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
-    print('isVisible: ${isVisible}');
+
     if (!isVisible) {
       return Container();
     }

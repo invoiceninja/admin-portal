@@ -45,7 +45,7 @@ class _ClientViewState extends State<ClientView>
     var store = StoreProvider.of<AppState>(context);
     var viewModel = widget.viewModel;
     var client = viewModel.client;
-    print('build : is deleted: ${client.isDeleted}');
+
     return WillPopScope(
       onWillPop: () async {
         viewModel.onBackPressed();

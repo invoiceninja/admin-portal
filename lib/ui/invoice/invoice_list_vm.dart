@@ -67,15 +67,20 @@ class InvoiceListVM {
       });
     }
 
+    final state = store.state;
+
     return InvoiceListVM(
-        state: store.state,
-        invoiceList: memoizedInvoiceList(store.state.invoiceState.map,
-            store.state.invoiceState.list, store.state.invoiceListState),
-        invoiceMap: store.state.invoiceState.map,
-        clientMap: store.state.clientState.map,
-        isLoading: store.state.isLoading,
-        isLoaded: store.state.invoiceState.isLoaded &&
-            store.state.clientState.isLoaded,
+        state: state,
+        invoiceList: memoizedInvoiceList(
+            state.invoiceState.map,
+            state.invoiceState.list,
+            state.clientState.map,
+            state.invoiceListState),
+        invoiceMap: state.invoiceState.map,
+        clientMap: state.clientState.map,
+        isLoading: state.isLoading,
+        isLoaded: state.invoiceState.isLoaded &&
+            state.clientState.isLoaded,
         onInvoiceTap: (context, invoice) {
           store.dispatch(ViewInvoice(invoice: invoice, context: context));
         },

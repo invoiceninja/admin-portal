@@ -9,14 +9,23 @@ ClientEntity invoiceClientSelector(
   return clientMap[invoice.clientId];
 }
 
-var memoizedInvoiceList = memo3((BuiltMap<int, InvoiceEntity> invoiceMap,
-        BuiltList<int> invoiceList, ListUIState invoiceListState) =>
-    visibleInvoicesSelector(invoiceMap, invoiceList, invoiceListState));
+var memoizedInvoiceList = memo4((BuiltMap<int, InvoiceEntity> invoiceMap,
+        BuiltList<int> invoiceList,
+        BuiltMap<int, ClientEntity> clientMap,
+        ListUIState invoiceListState) =>
+    visibleInvoicesSelector(invoiceMap, invoiceList, clientMap, invoiceListState));
 
-List<int> visibleInvoicesSelector(BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltList<int> invoiceList, ListUIState invoiceListState) {
+List<int> visibleInvoicesSelector(
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltList<int> invoiceList,
+    BuiltMap<int, ClientEntity> clientMap,
+    ListUIState invoiceListState) {
   var list = invoiceList.where((invoiceId) {
-    var invoice = invoiceMap[invoiceId];
+    final invoice = invoiceMap[invoiceId];
+    final client = clientMap[invoice.clientId];
+    if (client.isDeleted) {
+      return false;
+    }
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
       return false;
     }
@@ -27,8 +36,8 @@ List<int> visibleInvoicesSelector(BuiltMap<int, InvoiceEntity> invoiceMap,
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
-    return invoiceMap[invoiceAId].compareTo(
-        invoiceMap[invoiceBId] , invoiceListState.sortField, invoiceListState.sortAscending);
+    return invoiceMap[invoiceAId].compareTo(invoiceMap[invoiceBId],
+        invoiceListState.sortField, invoiceListState.sortAscending);
   });
 
   return list;
