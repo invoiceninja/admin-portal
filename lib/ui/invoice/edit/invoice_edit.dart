@@ -62,6 +62,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
           actions: <Widget>[
             SaveIconButton(
               isLoading: widget.viewModel.isLoading,
+              isDirty: invoice.isNew() || invoice != viewModel.origInvoice,
               onPressed: () {
                 if (!_formKey.currentState.validate()) {
                   return;

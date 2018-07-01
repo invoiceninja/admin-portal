@@ -3,8 +3,9 @@ import 'package:invoiceninja/utils/localization.dart';
 
 class SaveIconButton extends StatelessWidget {
 
-  SaveIconButton({this.isLoading, this.onPressed});
+  SaveIconButton({this.isLoading, this.isDirty, this.onPressed});
   final bool isLoading;
+  final bool isDirty;
   final Function onPressed;
 
   @override
@@ -27,7 +28,7 @@ class SaveIconButton extends StatelessWidget {
       tooltip: localization.save,
       icon: Icon(
         Icons.cloud_upload,
-        color: Colors.white,
+        color: isDirty ? Colors.yellowAccent : Colors.white,
       ),
     );
   }

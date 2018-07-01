@@ -34,6 +34,7 @@ class ProductEditScreen extends StatelessWidget {
 class ProductEditVM {
   final AppState state;
   final ProductEntity product;
+  final ProductEntity origProduct;
   final Function(ProductEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
@@ -44,6 +45,7 @@ class ProductEditVM {
   ProductEditVM({
     @required this.state,
     @required this.product,
+    @required this.origProduct,
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onBackPressed,
@@ -56,54 +58,55 @@ class ProductEditVM {
     final product = store.state.productUIState.selected;
 
     return ProductEditVM(
-      state: store.state,
-      isLoading: store.state.isLoading,
-      isDirty: product.isNew(),
-      product: product,
-      onChanged: (ProductEntity product) {
-        store.dispatch(UpdateProduct(product));
-      },
-      onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-      },
-      onSavePressed: (BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveProductRequest(completer: completer, product: product));
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-                message: product.isNew()
-                    ? AppLocalization.of(context).successfullyCreatedProduct
-                    : AppLocalization.of(context).successfullyUpdatedProduct,
-              ),
-              duration: Duration(seconds: 3)));
+        state: store.state,
+        isLoading: store.state.isLoading,
+        isDirty: product.isNew(),
+        product: product,
+        origProduct: store.state.productState.map[product.id],
+        onChanged: (ProductEntity product) {
+          store.dispatch(UpdateProduct(product));
+        },
+        onBackPressed: () {
+          store.dispatch(UpdateCurrentRoute(ProductScreen.route));
+        },
+        onSavePressed: (BuildContext context) {
+          final Completer<Null> completer = new Completer<Null>();
+          store.dispatch(
+              SaveProductRequest(completer: completer, product: product));
+          return completer.future.then((_) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: product.isNew()
+                      ? AppLocalization.of(context).successfullyCreatedProduct
+                      : AppLocalization.of(context).successfullyUpdatedProduct,
+                ),
+                duration: Duration(seconds: 3)));
+          });
+        },
+        onActionSelected: (BuildContext context, EntityAction action) {
+          final Completer<Null> completer = new Completer<Null>();
+          var message = '';
+          switch (action) {
+            case EntityAction.archive:
+              store.dispatch(ArchiveProductRequest(completer, product.id));
+              message = AppLocalization.of(context).successfullyArchivedProduct;
+              break;
+            case EntityAction.delete:
+              store.dispatch(DeleteProductRequest(completer, product.id));
+              message = AppLocalization.of(context).successfullyDeletedProduct;
+              break;
+            case EntityAction.restore:
+              store.dispatch(RestoreProductRequest(completer, product.id));
+              message = AppLocalization.of(context).successfullyRestoredProduct;
+              break;
+          }
+          return completer.future.then((_) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: message,
+                ),
+                duration: Duration(seconds: 3)));
+          });
         });
-      },
-      onActionSelected: (BuildContext context, EntityAction action) {
-        final Completer<Null> completer = new Completer<Null>();
-        var message = '';
-        switch (action) {
-          case EntityAction.archive:
-            store.dispatch(ArchiveProductRequest(completer, product.id));
-            message = AppLocalization.of(context).successfullyArchivedProduct;
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeleteProductRequest(completer, product.id));
-            message = AppLocalization.of(context).successfullyDeletedProduct;
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestoreProductRequest(completer, product.id));
-            message = AppLocalization.of(context).successfullyRestoredProduct;
-            break;
-        }
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-                message: message,
-              ),
-              duration: Duration(seconds: 3)));
-        });
-      }
-    );
   }
 }

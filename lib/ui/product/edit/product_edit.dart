@@ -74,6 +74,7 @@ class _ProductEditState extends State<ProductEdit> {
   @override
   Widget build(BuildContext context) {
     var viewModel = widget.viewModel;
+    final product = viewModel.product;
 
     return WillPopScope(
       onWillPop: () async {
@@ -89,6 +90,7 @@ class _ProductEditState extends State<ProductEdit> {
             Builder(builder: (BuildContext context) {
               return SaveIconButton(
                 isLoading: viewModel.isLoading,
+                isDirty: product.isNew() || product != viewModel.origProduct,
                 onPressed: () {
                   if (!_formKey.currentState.validate()) {
                     return;

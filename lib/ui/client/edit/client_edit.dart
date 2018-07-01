@@ -55,6 +55,7 @@ class _ClientEditState extends State<ClientEdit>
               : client.displayName), // Text(localizations.clientDetails),
           actions: <Widget>[
             SaveIconButton(
+              isDirty: client.isNew() || client != viewModel.origClient,
               isLoading: viewModel.isLoading,
               onPressed: () {
                 if (! _formKey.currentState.validate()) {

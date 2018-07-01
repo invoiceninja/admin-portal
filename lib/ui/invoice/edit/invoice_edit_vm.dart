@@ -35,6 +35,7 @@ class InvoiceEditScreen extends StatelessWidget {
 class InvoiceEditVM {
   final AppState state;
   final InvoiceEntity invoice;
+  final InvoiceEntity origInvoice;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(List<InvoiceItemEntity>) onItemsAdded;
@@ -44,6 +45,7 @@ class InvoiceEditVM {
   InvoiceEditVM({
     @required this.state,
     @required this.invoice,
+    @required this.origInvoice,
     @required this.onSavePressed,
     @required this.onItemsAdded,
     @required this.onBackPressed,
@@ -59,6 +61,7 @@ class InvoiceEditVM {
         state: state,
         isLoading: state.isLoading,
         invoice: invoice,
+        origInvoice: store.state.invoiceState.map[invoice.id],
         onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onSavePressed: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
