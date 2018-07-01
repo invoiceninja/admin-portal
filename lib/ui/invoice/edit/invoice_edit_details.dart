@@ -27,7 +27,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _discountController = TextEditingController();
   final _partialController = TextEditingController();
 
-  List<TextEditingController> _controllers = [];
+  List _controllers = [];
 
   @override
   void didChangeDependencies() {

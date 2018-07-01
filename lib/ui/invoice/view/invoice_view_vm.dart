@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
@@ -38,6 +40,7 @@ class InvoiceViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
   final Function(BuildContext) onClientPressed;
+  final Function onBackPressed;
   final bool isLoading;
   final bool isDirty;
 
@@ -47,6 +50,7 @@ class InvoiceViewVM {
     @required this.client,
     @required this.onActionSelected,
     @required this.onEditPressed,
+    @required this.onBackPressed,
     @required this.onClientPressed,
     @required this.isLoading,
     @required this.isDirty,
@@ -85,6 +89,7 @@ class InvoiceViewVM {
         onEditPressed: (BuildContext context) {
           store.dispatch(EditInvoice(invoice: invoice, context: context));
         },
+        onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onClientPressed: (BuildContext context) {
           store.dispatch(ViewClient(client: client, context: context));
         },

@@ -45,79 +45,85 @@ class _ClientViewState extends State<ClientView>
     var viewModel = widget.viewModel;
     var client = viewModel.client;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(client.displayName ??
-            ''), // Text(localizations.clientDetails),
-        bottom: TabBar(
-          controller: _controller,
-          //isScrollable: true,
-          tabs: [
-            Tab(
-              text: localization.overview,
-            ),
-            Tab(
-              text: localization.details,
-            ),
-          ],
-        ),
-        actions: client.isNew()
-            ? []
-            : [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    viewModel.onEditPressed(context);
-                  },
-                ),
-                ActionMenuButton(
-                  isLoading: viewModel.isLoading,
-                  entity: client,
-                  onSelected: viewModel.onActionSelected,
-                )
-              ],
-      ),
-      body: TabBarView(
-        controller: _controller,
-        children: <Widget>[
-          ClientOverview(client: client, state: viewModel.state),
-          ClientViewDetails(client: client),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-                  ListTile(
-                    dense: true,
-                    leading: Icon(Icons.add_circle_outline),
-                    title: Text(localization.invoice),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      store.dispatch(EditInvoice(
-                          invoice: InvoiceEntity()
-                              .rebuild((b) => b.clientId = client.id),
-                          context: context));
+    return WillPopScope(
+      onWillPop: () async {
+        viewModel.onBackPressed();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(client.displayName ??
+              ''), // Text(localizations.clientDetails),
+          bottom: TabBar(
+            controller: _controller,
+            //isScrollable: true,
+            tabs: [
+              Tab(
+                text: localization.overview,
+              ),
+              Tab(
+                text: localization.details,
+              ),
+            ],
+          ),
+          actions: client.isNew()
+              ? []
+              : [
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      viewModel.onEditPressed(context);
                     },
                   ),
-                  /*
-                  ListTile(
-                    dense: true,
-                    leading: Icon(Icons.add_circle_outline),
-                    title: Text(localization.payment),
-                    onTap: () {},
-                  ),
-                  */
-                ]),
-          );
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+                  ActionMenuButton(
+                    isLoading: viewModel.isLoading,
+                    entity: client,
+                    onSelected: viewModel.onActionSelected,
+                  )
+                ],
         ),
-        tooltip: localization.create,
+        body: TabBarView(
+          controller: _controller,
+          children: <Widget>[
+            ClientOverview(client: client, state: viewModel.state),
+            ClientViewDetails(client: client),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColorDark,
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => SimpleDialog(children: <Widget>[
+                    ListTile(
+                      dense: true,
+                      leading: Icon(Icons.add_circle_outline),
+                      title: Text(localization.invoice),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        store.dispatch(EditInvoice(
+                            invoice: InvoiceEntity()
+                                .rebuild((b) => b.clientId = client.id),
+                            context: context));
+                      },
+                    ),
+                    /*
+                    ListTile(
+                      dense: true,
+                      leading: Icon(Icons.add_circle_outline),
+                      title: Text(localization.payment),
+                      onTap: () {},
+                    ),
+                    */
+                  ]),
+            );
+          },
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          tooltip: localization.create,
+        ),
       ),
     );
   }

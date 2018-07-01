@@ -149,41 +149,47 @@ class _InvoiceViewState extends State<InvoiceView> {
       return widgets;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
-        actions: invoice.isNew()
-            ? []
-            : [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    viewModel.onEditPressed(context);
-                  },
-                ),
-                ActionMenuButton(
-                  customActions: [
-                    client.hasEmailAddress
-                        ? ActionMenuChoice(
-                            action: EntityAction.email,
-                            icon: Icons.send,
-                            label: AppLocalization.of(context).email,
-                          )
-                        : null,
-                    ActionMenuChoice(
-                      action: EntityAction.pdf,
-                      icon: Icons.picture_as_pdf,
-                      label: AppLocalization.of(context).pdf,
-                    ),
-                  ],
-                  isLoading: viewModel.isLoading,
-                  entity: invoice,
-                  onSelected: viewModel.onActionSelected,
-                )
-              ],
-      ),
-      body: ListView(
-        children: _buildView(),
+    return WillPopScope(
+      onWillPop: () async {
+        viewModel.onBackPressed();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
+          actions: invoice.isNew()
+              ? []
+              : [
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      viewModel.onEditPressed(context);
+                    },
+                  ),
+                  ActionMenuButton(
+                    customActions: [
+                      client.hasEmailAddress
+                          ? ActionMenuChoice(
+                              action: EntityAction.email,
+                              icon: Icons.send,
+                              label: AppLocalization.of(context).email,
+                            )
+                          : null,
+                      ActionMenuChoice(
+                        action: EntityAction.pdf,
+                        icon: Icons.picture_as_pdf,
+                        label: AppLocalization.of(context).pdf,
+                      ),
+                    ],
+                    isLoading: viewModel.isLoading,
+                    entity: invoice,
+                    onSelected: viewModel.onActionSelected,
+                  )
+                ],
+        ),
+        body: ListView(
+          children: _buildView(),
+        ),
       ),
     );
   }

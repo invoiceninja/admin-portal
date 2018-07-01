@@ -86,22 +86,22 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return getUIState(type).listUIState;
   }
 
-  ProductState get productState => this.selectedCompanyState.productState;
-  ProductUIState get productUIState => this.uiState.productUIState;
-  ListUIState get productListState => this.uiState.productUIState.listUIState;
+  ProductState get productState => selectedCompanyState.productState;
+  ProductUIState get productUIState => uiState.productUIState;
+  ListUIState get productListState => uiState.productUIState.listUIState;
 
-  ClientState get clientState => this.selectedCompanyState.clientState;
-  ClientUIState get clientUIState => this.uiState.clientUIState;
-  ListUIState get clientListState => this.uiState.clientUIState.listUIState;
+  ClientState get clientState => selectedCompanyState.clientState;
+  ClientUIState get clientUIState => uiState.clientUIState;
+  ListUIState get clientListState => uiState.clientUIState.listUIState;
 
-  InvoiceState get invoiceState => this.selectedCompanyState.invoiceState;
-  InvoiceUIState get invoiceUIState => this.uiState.invoiceUIState;
-  ListUIState get invoiceListState => this.uiState.invoiceUIState.listUIState;
+  InvoiceState get invoiceState => selectedCompanyState.invoiceState;
+  InvoiceUIState get invoiceUIState => uiState.invoiceUIState;
+  ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   @override
   String toString() {
-    return '';
+    //return '';
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
-    //return this.invoiceUIState.selected.toString();
+    return uiState.currentRoute;
   }
 }
