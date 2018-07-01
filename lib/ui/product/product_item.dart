@@ -53,6 +53,8 @@ class ProductItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
+              Text(formatNumber(product.cost, state),
+                  style: Theme.of(context).textTheme.title),
             ],
           ),
         ),
@@ -69,8 +71,6 @@ class ProductItem extends StatelessWidget {
             EntityStateLabel(product),
           ],
         ),
-        trailing: Text(formatNumber(product.cost, state),
-            style: Theme.of(context).textTheme.title),
       ),
     );
   }

@@ -56,6 +56,8 @@ class InvoiceItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
+              Text(formatNumber(invoice.amount, state, clientId: invoice.clientId),
+                  style: Theme.of(context).textTheme.title),
             ],
           ),
         ),
@@ -75,8 +77,6 @@ class InvoiceItem extends StatelessWidget {
             EntityStateLabel(invoice),
           ],
         ),
-        trailing: Text(formatNumber(invoice.amount, state, clientId: invoice.clientId),
-            style: Theme.of(context).textTheme.title),
       ),
     );
   }

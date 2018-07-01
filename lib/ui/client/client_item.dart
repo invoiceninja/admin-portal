@@ -35,16 +35,19 @@ class ClientItem extends StatelessWidget {
       //entityKey: clientItemKey,
       child: ListTile(
         onTap: onTap,
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Text(
-            client.displayName,
-            style: Theme.of(context).textTheme.title,
-          ),
+        title: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                client.displayName,
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+            Text(formatNumber(client.balance, state, clientId: client.id),
+                style: Theme.of(context).textTheme.title)
+          ],
         ),
-        subtitle: EntityStateLabel(client),
-        trailing: Text(formatNumber(client.balance, state, clientId: client.id),
-            style: Theme.of(context).textTheme.title),
+          subtitle: EntityStateLabel(client),
       ),
     );
   }
