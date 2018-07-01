@@ -166,7 +166,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
             onTap: () {
-              if (_selectedIds.length > 0) {
+              if (_selectedIds.isNotEmpty) {
                 _toggleEntity(entityId);
               } else {
                 _selectedIds.add(entityId);

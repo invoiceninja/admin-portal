@@ -6,12 +6,10 @@ final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, StopLoading>(_setLoaded),
 ]);
 
-bool _setLoading(bool state, action) {
+bool _setLoading(bool state, StartLoading action) {
   return true;
 }
 
-bool _setLoaded(bool state, action) {
+bool _setLoaded(bool state, StopLoading action) {
   return false;
 }
-
-
