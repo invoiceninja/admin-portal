@@ -26,6 +26,7 @@ abstract class InvoiceItemResponse implements Built<InvoiceItemResponse, Invoice
   static Serializer<InvoiceItemResponse> get serializer => _$invoiceItemResponseSerializer;
 }
 
+
 class InvoiceFields {
   static const String amount = 'amount';
   static const String balance = 'balance';

@@ -38,8 +38,8 @@ class AppDrawer extends StatelessWidget {
 
     final _multipleCompanies = Align(
       alignment: FractionalOffset.bottomLeft,
-      child: new DropdownButtonHideUnderline(
-        child: new DropdownButton<String>(
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
           isDense: true,
           value: viewModel.selectedCompanyIndex,
           items: viewModel.companies

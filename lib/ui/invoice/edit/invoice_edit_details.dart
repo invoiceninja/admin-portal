@@ -1,3 +1,4 @@
+import 'package:invoiceninja/data/models/invoice_model.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/entities.dart';
@@ -26,7 +27,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _discountController = TextEditingController();
   final _partialController = TextEditingController();
 
-  var _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
@@ -40,7 +41,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    var invoice = widget.viewModel.invoice;
+    final invoice = widget.viewModel.invoice;
     _invoiceNumberController.text = invoice.invoiceNumber;
     _invoiceDateController.text = invoice.invoiceDate;
     _poNumberController.text = invoice.poNumber;
@@ -66,10 +67,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     super.dispose();
   }
 
-  _onChanged() {
-    var invoice = widget.viewModel.invoice.rebuild((b) => b
+  void _onChanged() {
+    final invoice = widget.viewModel.invoice.rebuild((b) => b
       ..invoiceNumber = widget.viewModel.invoice.isNew()
-          ? null
+          ? ''
           : _invoiceNumberController.text.trim()
       ..poNumber = _poNumberController.text.trim()
       ..discount = double.tryParse(_discountController.text) ?? 0.0
@@ -81,9 +82,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var viewModel = widget.viewModel;
-    var invoice = viewModel.invoice;
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
 
     return ListView(
       children: <Widget>[
@@ -150,13 +151,40 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 labelText: localization.poNumber,
               ),
             ),
-            TextFormField(
-              autocorrect: false,
-              controller: _discountController,
-              decoration: InputDecoration(
-                labelText: localization.discount,
-              ),
-              keyboardType: TextInputType.number,
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Expanded(
+                  child: TextFormField(
+                    autocorrect: false,
+                    controller: _discountController,
+                    decoration: InputDecoration(
+                      labelText: localization.discount,
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                DropdownButtonHideUnderline(
+                  child: DropdownButton<bool>(
+                      value: invoice.isAmountDiscount,
+                      items: [
+                        DropdownMenuItem<bool>(
+                          child: Text(localization.percent),
+                          value: false,
+                        ),
+                        DropdownMenuItem<bool>(
+                          child: Text(localization.amount),
+                          value: true,
+                        )
+                      ],
+                      onChanged: (bool value) => viewModel
+                          .onChanged(invoice.rebuild((b) => b..isAmountDiscount = value)),
+                  ),
+                )
+              ],
             ),
           ],
         ),
