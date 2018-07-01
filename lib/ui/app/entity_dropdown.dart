@@ -45,11 +45,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
     super.dispose();
   }
 
-  _showOptions() {
+  void _showOptions() {
     widget.onFilterChanged('');
     var localization = AppLocalization.of(context);
 
-    _headerRow() {
+    Widget _headerRow() {
       return Row(
         children: <Widget>[
           Padding(
@@ -70,27 +70,27 @@ class _EntityDropdownState extends State<EntityDropdown> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
         ],
       );
     }
 
-    _entityList(store) {
+    Widget _entityList(Store<AppState> store) {
       return Column(
           mainAxisSize: MainAxisSize.min,
           children: widget.entityList
               .getRange(0, min(6, widget.entityList.length))
               .map((entityId) {
-            var entity = widget.entityMap[entityId];
-            var filter =
+            final entity = widget.entityMap[entityId];
+            final filter =
                 store.state.getUIState(widget.entityType).dropdownFilter;
-            var subtitle = null;
-            var matchField = entity.matchesSearchField(filter);
+            String subtitle;
+            final matchField = entity.matchesSearchField(filter);
             if (matchField != null) {
-              var field = localization.lookup(matchField);
-              var value = entity.matchesSearchValue(filter);
+              final field = localization.lookup(matchField);
+              final value = entity.matchesSearchValue(filter);
               subtitle = '$field: $value';
             }
             return ListTile(
@@ -141,7 +141,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
           controller: _textController,
           decoration: InputDecoration(
             labelText: widget.labelText,
-            suffixIcon: Icon(Icons.search),
+            suffixIcon: const Icon(Icons.search),
           ),
         ),
       ),

@@ -83,10 +83,10 @@ class AppDrawer extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: viewModel.companies.length > 1 && ! viewModel.isLoading
-                          ? _multipleCompanies
-                          : _singleCompany
-                    ),
+                        child: viewModel.companies.length > 1 &&
+                                !viewModel.isLoading
+                            ? _multipleCompanies
+                            : _singleCompany),
                   ],
                 ),
               ],
@@ -94,12 +94,12 @@ class AppDrawer extends StatelessWidget {
             color: Colors.white10,
           ),
           DrawerTile(
-              icon: FontAwesomeIcons.tachometerAlt,
-              title: AppLocalization.of(context).dashboard,
-              onTap: () {
-                navigator.pop();
-                store.dispatch(ViewDashboard(context));
-              },
+            icon: FontAwesomeIcons.tachometerAlt,
+            title: AppLocalization.of(context).dashboard,
+            onTap: () {
+              navigator.pop();
+              store.dispatch(ViewDashboard(context));
+            },
           ),
           DrawerTile(
             icon: FontAwesomeIcons.users,
@@ -107,7 +107,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () => navigator.pushReplacementNamed(ClientScreen.route),
             onCreateTap: () {
               navigator.pop();
-              store.dispatch(EditClient(client: ClientEntity(), context: context));
+              store.dispatch(
+                  EditClient(client: ClientEntity(), context: context));
             },
           ),
           DrawerTile(
@@ -116,7 +117,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () => navigator.pushReplacementNamed(ProductScreen.route),
             onCreateTap: () {
               navigator.pop();
-              store.dispatch(EditProduct(product: ProductEntity(), context: context));
+              store.dispatch(
+                  EditProduct(product: ProductEntity(), context: context));
             },
           ),
           DrawerTile(
@@ -125,7 +127,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () => navigator.pushReplacementNamed(InvoiceScreen.route),
             onCreateTap: () {
               navigator.pop();
-              store.dispatch(EditInvoice(invoice: InvoiceEntity(), context: context));
+              store.dispatch(
+                  EditInvoice(invoice: InvoiceEntity(), context: context));
             },
           ),
           DrawerTile(
@@ -171,10 +174,12 @@ class DrawerTile extends StatelessWidget {
       leading: Icon(icon, size: 22.0),
       title: Text(title),
       onTap: () => onTap(),
-      trailing: onCreateTap == null ? null : IconButton(
-        icon: Icon(Icons.add_circle_outline),
-        onPressed: onCreateTap,
-      ),
+      trailing: onCreateTap == null
+          ? null
+          : IconButton(
+              icon: Icon(Icons.add_circle_outline),
+              onPressed: onCreateTap,
+            ),
     );
   }
 }
