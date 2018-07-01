@@ -168,19 +168,19 @@ Middleware<AppState> _createLoadState(
                             isFirst = false;
                           });
                         }
-                      }).catchError((error) => _handleError(store, error, action.context));
-                    }).catchError((error) => _handleError(store, error, action.context));
-                  }).catchError((error) => _handleError(store, error, action.context));
-                }).catchError((error) => _handleError(store, error, action.context));
-              }).catchError((error) => _handleError(store, error, action.context));
-            }).catchError((error) => _handleError(store, error, action.context));
-          }).catchError((error) => _handleError(store, error, action.context));
-        }).catchError((error) => _handleError(store, error, action.context));
+                      }).catchError((Object error) => _handleError(store, error, action.context));
+                    }).catchError((Object error) => _handleError(store, error, action.context));
+                  }).catchError((Object error) => _handleError(store, error, action.context));
+                }).catchError((Object error) => _handleError(store, error, action.context));
+              }).catchError((Object error) => _handleError(store, error, action.context));
+            }).catchError((Object error) => _handleError(store, error, action.context));
+          }).catchError((Object error) => _handleError(store, error, action.context));
+        }).catchError((Object error) => _handleError(store, error, action.context));
       } else {
         store.dispatch(UserLogout());
         store.dispatch(LoadUserLogin(action.context));
       }
-    }).catchError((error) => _handleError(store, error, action.context));
+    }).catchError((Object error) => _handleError(store, error, action.context));
 
     next(action);
   };
@@ -217,7 +217,7 @@ List<String> _getRoutes(AppState state) {
   return routes;
 }
 
-_handleError(store, error, context) {
+void _handleError(Store<AppState> store, Object error, BuildContext context) {
   print(error);
   store.dispatch(UserLogout());
   store.dispatch(LoadUserLogin(context));
