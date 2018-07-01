@@ -1,9 +1,16 @@
+import 'dart:math';
+
 import 'package:intl/intl.dart';
 import 'package:intl/number_symbols_data.dart';
 import 'package:intl/number_symbols.dart';
 import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
+
+double round(double value, int precision) {
+  final int fac = pow(10, precision);
+  return (value * fac).round() / fac;
+}
 
 enum FormatNumberType {
   money, // $1,000.00

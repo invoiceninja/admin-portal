@@ -94,7 +94,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
         bottomNavigationBar: BottomAppBar(
           hasNotch: true,
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(14.0),
             child: Text(
               '${localization.total}: ${formatNumber(invoice.total, viewModel.state, clientId: viewModel.invoice.clientId)}',
               style: TextStyle(
@@ -116,7 +116,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   );
                 });
           },
-          child: Icon(Icons.add, color: Colors.white),
+          child: const Icon(Icons.add, color: Colors.white),
           tooltip: localization.addItem,
         ),
       ),

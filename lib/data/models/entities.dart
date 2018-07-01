@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/invoice/invoice_item.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 part 'entities.g.dart';
 
@@ -125,26 +128,103 @@ abstract class ConvertToInvoiceItem {
 
 abstract class CalculateInvoiceTotal {
   bool get isAmountDiscount;
+  double get taxRate1;
+  double get taxRate2;
   double get discount;
+  double get customValue1;
+  double get customValue2;
+  bool get customTaxes1;
+  bool get customTaxes2;
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
-  double get total {
+  double calculateTotal([bool useInclusiveTaxes = false]) {
+    double total = baseTotal;
+    double itemTax = 0.0;
+
+    invoiceItems.forEach((item) {
+      final double qty = round(item.qty, 4);
+      final double cost = round(item.cost, 4);
+      final double itemDiscount = round(item.discount, 2);
+      final double taxRate1 = round(item.taxRate1, 3);
+      final double taxRate2 = round(item.taxRate2, 3);
+
+      double lineTotal = qty * cost;
+
+      if (itemDiscount != 0) {
+        if (isAmountDiscount) {
+          lineTotal -= itemDiscount;
+        } else {
+          lineTotal -= round(lineTotal * itemDiscount / 100, 4);
+        }
+      }
+
+      if (discount != 0) {
+        if (isAmountDiscount) {
+          if (total != 0) {
+            lineTotal -= round(lineTotal / total * discount, 4)
+          }
+        }
+      }
+      if (taxRate1 != 0) {
+        itemTax += round(lineTotal * taxRate1 / 100, 2);
+      }
+      if (taxRate2 != 0) {
+        itemTax += round(lineTotal * taxRate2 / 100, 2);
+      }
+    });
+
+    if (discount != 0.0) {
+      if (isAmountDiscount) {
+        total -= round(discount, 2);
+      } else {
+        total -= round(total * discount / 100, 2);
+      }
+    }
+
+    if (customValue1 != 0.0 && customTaxes1) {
+      total += round(customValue1, 2);
+    }
+
+    if (customValue2 != 0.0 && customTaxes2) {
+      total += round(customValue2, 2);
+    }
+
+    if (! useInclusiveTaxes) {
+      final double taxAmount1 = round(total * taxRate1 / 100, 2);
+      final double taxAmount2 = round(total * taxRate1 / 100, 2);
+      total += itemTax + round(total + taxAmount1 + taxAmount2, 2);
+    }
+
+    if (customValue1 != 0.0 && ! customTaxes1) {
+      total += round(customValue1, 2);
+    }
+
+    if (customValue2 != 0.0 && ! customTaxes2) {
+      total += round(customValue2, 2);
+    }
+
+    return total;
+  }
+
+  double get baseTotal {
     var total = 0.0;
 
     invoiceItems.forEach((item) {
-      var lineTotal = item.qty * item.cost;
+      final double qty = round(item.qty, 4);
+      final double cost = round(item.cost, 4);
+      final double discount = round(item.discount, 2);
 
-      if (item.discount != 0) {
+      double lineTotal = qty * cost;
+
+      if (discount != 0) {
         if (isAmountDiscount) {
-          lineTotal -= item.discount;
+          lineTotal -= discount;
         } else {
-          lineTotal -= lineTotal * item.discount / 100;
-          //$lineTotal -= round($lineTotal * $discount / 100, 4);
+          lineTotal -= round(lineTotal * discount / 100, 4);
         }
       }
-      //$total += round($lineTotal, 2);
 
-      total += lineTotal;
+      total += round(lineTotal, 2);
     });
 
     return total;
