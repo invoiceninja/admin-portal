@@ -52,6 +52,7 @@ abstract class InvoiceUIState extends Object with EntityUIState implements Built
       listUIState: ListUIState(InvoiceFields.invoiceNumber),
       editing: InvoiceEntity(),
       dropdownFilter: '',
+      selectedId: 0,
     );
   }
 

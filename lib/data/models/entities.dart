@@ -69,8 +69,7 @@ abstract class BaseEntity {
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
 
-
-  String get key {
+  String get entityKey {
     return '__${entityType}__${id}__';
   }
 

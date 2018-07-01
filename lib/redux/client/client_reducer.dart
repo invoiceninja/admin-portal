@@ -45,16 +45,12 @@ final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, SelectCompany>(_clearEditing),
 ]);
 
-ClientEntity  _clearEditing(ClientEntity client, action) {
+ClientEntity  _clearEditing(ClientEntity client, dynamic action) {
   return ClientEntity();
 }
 
-ClientEntity _updateEditing(ClientEntity client, action) {
+ClientEntity _updateEditing(ClientEntity client, dynamic action) {
   return action.client;
-}
-
-ClientEntity _updateViewing(ClientEntity client, ViewClient action) {
-  return action.clientId;
 }
 
 ClientEntity _addContact(ClientEntity client, AddContact action) {
@@ -194,7 +190,6 @@ ClientState _restoreClientFailure(ClientState clientState, RestoreClientFailure 
   );
 }
 
-
 ClientState _addClient(
     ClientState clientState, AddClientSuccess action) {
   return clientState.rebuild((b) => b
@@ -222,8 +217,8 @@ ClientState _setLoadedClients(
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(Map.fromIterable(
         action.clients,
-        key: (item) => item.id,
-        value: (item) => item,
+        key: (dynamic item) => item.id,
+        value: (dynamic item) => item,
       ))
       ..list.replace(action.clients.map(
               (client) => client.id).toList())

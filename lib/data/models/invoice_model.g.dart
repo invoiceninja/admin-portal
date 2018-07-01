@@ -656,6 +656,8 @@ class _$InvitationEntitySerializer
   Iterable serialize(Serializers serializers, InvitationEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'key',
+      serializers.serialize(object.key, specifiedType: const FullType(String)),
       'link',
       serializers.serialize(object.link, specifiedType: const FullType(String)),
       'sent_date',
@@ -704,6 +706,10 @@ class _$InvitationEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'key':
+          result.key = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'link':
           result.link = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1947,6 +1953,8 @@ class InvoiceItemEntityBuilder
 
 class _$InvitationEntity extends InvitationEntity {
   @override
+  final String key;
+  @override
   final String link;
   @override
   final String sentDate;
@@ -1965,7 +1973,8 @@ class _$InvitationEntity extends InvitationEntity {
       (new InvitationEntityBuilder()..update(updates)).build();
 
   _$InvitationEntity._(
-      {this.link,
+      {this.key,
+      this.link,
       this.sentDate,
       this.viewedDate,
       this.id,
@@ -1973,6 +1982,8 @@ class _$InvitationEntity extends InvitationEntity {
       this.archivedAt,
       this.isDeleted})
       : super._() {
+    if (key == null)
+      throw new BuiltValueNullFieldError('InvitationEntity', 'key');
     if (link == null)
       throw new BuiltValueNullFieldError('InvitationEntity', 'link');
     if (sentDate == null)
@@ -1993,7 +2004,8 @@ class _$InvitationEntity extends InvitationEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! InvitationEntity) return false;
-    return link == other.link &&
+    return key == other.key &&
+        link == other.link &&
         sentDate == other.sentDate &&
         viewedDate == other.viewedDate &&
         id == other.id &&
@@ -2008,7 +2020,9 @@ class _$InvitationEntity extends InvitationEntity {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, link.hashCode), sentDate.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, key.hashCode), link.hashCode),
+                            sentDate.hashCode),
                         viewedDate.hashCode),
                     id.hashCode),
                 updatedAt.hashCode),
@@ -2019,6 +2033,7 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InvitationEntity')
+          ..add('key', key)
           ..add('link', link)
           ..add('sentDate', sentDate)
           ..add('viewedDate', viewedDate)
@@ -2033,6 +2048,10 @@ class _$InvitationEntity extends InvitationEntity {
 class InvitationEntityBuilder
     implements Builder<InvitationEntity, InvitationEntityBuilder> {
   _$InvitationEntity _$v;
+
+  String _key;
+  String get key => _$this._key;
+  set key(String key) => _$this._key = key;
 
   String _link;
   String get link => _$this._link;
@@ -2066,6 +2085,7 @@ class InvitationEntityBuilder
 
   InvitationEntityBuilder get _$this {
     if (_$v != null) {
+      _key = _$v.key;
       _link = _$v.link;
       _sentDate = _$v.sentDate;
       _viewedDate = _$v.viewedDate;
@@ -2093,6 +2113,7 @@ class InvitationEntityBuilder
   _$InvitationEntity build() {
     final _$result = _$v ??
         new _$InvitationEntity._(
+            key: key,
             link: link,
             sentDate: sentDate,
             viewedDate: viewedDate,

@@ -52,6 +52,7 @@ abstract class ProductUIState extends Object with EntityUIState implements Built
       listUIState: ListUIState(ProductFields.productKey),
       editing: ProductEntity(),
       dropdownFilter: '',
+      selectedId: 0,
     );
   }
 

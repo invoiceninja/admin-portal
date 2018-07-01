@@ -20,7 +20,7 @@ class DismissibleEntity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(entity.key),
+      key: Key(entity.entityKey),
       onDismissed: onDismissed,
       child: child,
       background: entity.isDeleted ? Container(
