@@ -124,13 +124,27 @@ abstract class ConvertToInvoiceItem {
 }
 
 abstract class CalculateInvoiceTotal {
+  bool get isAmountDiscount;
+  double get discount;
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
   double get total {
     var total = 0.0;
 
     invoiceItems.forEach((item) {
-      total += item.qty * item.cost;
+      var lineTotal = item.qty * item.cost;
+
+      if (item.discount != 0) {
+        if (isAmountDiscount) {
+          lineTotal -= item.discount;
+        } else {
+          lineTotal -= lineTotal * item.discount / 100;
+          //$lineTotal -= round($lineTotal * $discount / 100, 4);
+        }
+      }
+      //$total += round($lineTotal, 2);
+
+      total += lineTotal;
     });
 
     return total;

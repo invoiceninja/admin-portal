@@ -26,6 +26,13 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     super.dispose();
   }
 
+  _addBlankItem() {
+    widget.onItemsSelected([
+      InvoiceItemEntity()
+    ]);
+    Navigator.pop(context);
+  }
+
   _onItemsSelected() {
     List<InvoiceItemEntity> items = [];
 
@@ -112,11 +119,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
               _selectedIds.length > 0
                   ? IconButton(
                       icon: Icon(Icons.check),
-                      onPressed: () {
-                        _onItemsSelected();
-                      },
+                      onPressed: () => _onItemsSelected(),
                     )
-                  : Container(),
+                  : IconButton(
+                icon: Icon(Icons.add_circle_outline),
+                onPressed: () => _addBlankItem(),
+              ),
             ],
           )
         ],
