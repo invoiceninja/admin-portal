@@ -22,7 +22,7 @@ class ActionMenuButton extends StatelessWidget {
   ActionMenuButton({
     @required this.entity,
     @required this.onSelected,
-    @required this.isLoading,
+    this.isLoading = false,
     this.customActions,
   });
 

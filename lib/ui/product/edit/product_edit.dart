@@ -103,7 +103,6 @@ class _ProductEditState extends State<ProductEdit> {
             viewModel.product.isNew()
                 ? Container()
                 : ActionMenuButton(
-                    isLoading: viewModel.isLoading,
                     entity: viewModel.product,
                     onSelected: viewModel.onActionSelected,
                   )
