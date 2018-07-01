@@ -172,11 +172,19 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                       value: invoice.isAmountDiscount,
                       items: [
                         DropdownMenuItem<bool>(
-                          child: Text(localization.percent),
+                          child: Text(localization.percent,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                            ),
+                          ),
                           value: false,
                         ),
                         DropdownMenuItem<bool>(
-                          child: Text(localization.amount),
+                          child: Text(localization.amount,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                            ),
+                          ),
                           value: true,
                         )
                       ],

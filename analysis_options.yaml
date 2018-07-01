@@ -114,7 +114,7 @@ linter:
     - prefer_bool_in_asserts
     - prefer_collection_literals
     - prefer_conditional_assignment
-    - prefer_const_constructors
+    # - prefer_const_constructors
     - prefer_const_constructors_in_immutables
     - prefer_const_declarations
     - prefer_const_literals_to_create_immutables
