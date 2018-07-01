@@ -137,5 +137,8 @@ String formatAddress(
   return str;
 }
 
-String convertDateTimeToSqlDate(DateTime date) =>
-    date.toIso8601String().split('T').first;
+String convertDateTimeToSqlDate([DateTime date]) {
+  date = date ?? DateTime.now();
+  return date.toIso8601String().split('T').first;
+}
+

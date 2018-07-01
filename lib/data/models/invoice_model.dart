@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/models/product_model.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 part 'invoice_model.g.dart';
 
@@ -66,7 +67,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
         invoiceNumber: '',
         discount: 0.0,
         poNumber: '',
-        invoiceDate: '',
+        invoiceDate: convertDateTimeToSqlDate(),
         dueDate: '',
         terms: '',
         publicNotes: '',
