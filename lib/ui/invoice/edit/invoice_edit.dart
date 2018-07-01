@@ -5,6 +5,7 @@ import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_item_selector.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/save_icon_button.dart';
 
@@ -62,7 +63,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
             SaveIconButton(
               isLoading: widget.viewModel.isLoading,
               onPressed: () {
-                if (! _formKey.currentState.validate()) {
+                if (!_formKey.currentState.validate()) {
                   return;
                 }
 
@@ -90,6 +91,19 @@ class _InvoiceEditState extends State<InvoiceEdit>
             children: editors,
           ),
         ),
+        bottomNavigationBar: BottomAppBar(
+          hasNotch: true,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              '${localization.total}: ${formatNumber(invoice.total, viewModel.state, clientId: viewModel.invoice.clientId)}',
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
@@ -97,7 +111,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 context: context,
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
-                      state: viewModel.state,
+                    state: viewModel.state,
                     onItemsSelected: viewModel.onItemsAdded,
                   );
                 });

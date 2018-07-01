@@ -123,6 +123,21 @@ abstract class ConvertToInvoiceItem {
   InvoiceItemEntity get asInvoiceItem;
 }
 
+abstract class CalculateInvoiceTotal {
+  BuiltList<InvoiceItemEntity> get invoiceItems;
+
+  double get total {
+    var total = 0.0;
+
+    invoiceItems.forEach((item) {
+      total += item.qty * item.cost;
+    });
+
+    return total;
+  }
+}
+
+
 abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> {
 
   String get message;

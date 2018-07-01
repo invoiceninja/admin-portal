@@ -156,7 +156,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                 Text(entity.listDisplayCost(widget.state)),
               ],
             ),
-            subtitle: subtitle != null ? Text(subtitle, maxLines: 4) : null,
+            subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
             onTap: () {
               if (_selectedIds.length > 0) {
                 _toggleEntity(entityId);

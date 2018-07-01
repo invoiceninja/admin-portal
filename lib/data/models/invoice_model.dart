@@ -52,7 +52,7 @@ class InvoiceFields {
 }
 
 
-abstract class InvoiceEntity extends Object with BaseEntity 
+abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTotal
   implements Built<InvoiceEntity, InvoiceEntityBuilder> {
 
   static int counter = 0;
@@ -263,7 +263,6 @@ abstract class InvoiceEntity extends Object with BaseEntity
   InvoiceEntity._();
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
-
 
 abstract class InvoiceItemEntity extends Object with BaseEntity implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
 
