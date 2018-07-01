@@ -48,7 +48,7 @@ void main() {
 
       await driver.tap(find.text('LOGIN'));
 
-      await driver.waitFor(find.byType('DashboardScreen'));
+      await driver.waitFor(find.byType('DashboardScreen'), timeout: new Duration(seconds: 60));
     });
   });
 }

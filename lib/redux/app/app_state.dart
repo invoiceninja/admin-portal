@@ -100,8 +100,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    //return '';
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
-    return uiState.currentRoute;
+    return 'Route: ${uiState.currentRoute}';
   }
 }
