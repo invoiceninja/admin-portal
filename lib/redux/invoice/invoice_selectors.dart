@@ -27,10 +27,8 @@ List<int> visibleInvoicesSelector(BuiltMap<int, InvoiceEntity> invoiceMap,
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
-    var invoiceA = invoiceMap[invoiceAId];
-    var invoiceB = invoiceMap[invoiceBId];
-    return invoiceA.compareTo(
-        invoiceB, invoiceListState.sortField, invoiceListState.sortAscending);
+    return invoiceMap[invoiceAId].compareTo(
+        invoiceMap[invoiceBId] , invoiceListState.sortField, invoiceListState.sortAscending);
   });
 
   return list;

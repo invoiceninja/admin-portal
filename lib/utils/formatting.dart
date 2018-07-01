@@ -7,7 +7,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 
 enum FormatNumberType {
   money, // $1,000.00
-  percent, // $1,000.00%
+  percent, // 1,000.00%
   int, // 1,000
   double, // 1,000.00
   input, // 1000.00

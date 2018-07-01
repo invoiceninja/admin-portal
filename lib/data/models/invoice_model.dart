@@ -324,21 +324,6 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
 
   double get total => qty * cost;
 
-  factory InvoiceItemEntity.fromProduct(ProductEntity product) {
-    return InvoiceItemEntity().rebuild((b) => b
-        ..productKey = product.productKey
-        ..notes = product.notes
-        ..cost = product.cost
-        ..qty = 1.0
-        ..customValue1 = product.customValue1
-        ..customValue2 = product.customValue2
-        ..taxName1 = product.taxName1
-        ..taxRate1 = product.taxRate1
-        ..taxName2 = product.taxName2
-        ..taxRate2 = product.taxRate2
-    );
-  }
-
   InvoiceItemEntity._();
   static Serializer<InvoiceItemEntity> get serializer => _$invoiceItemEntitySerializer;
 }

@@ -3,6 +3,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/models/invoice_model.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 part 'product_model.g.dart';
 
@@ -33,7 +35,7 @@ class ProductFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class ProductEntity extends Object with BaseEntity implements Built<ProductEntity, ProductEntityBuilder> {
+abstract class ProductEntity extends Object with BaseEntity, ConvertToInvoiceItem implements Built<ProductEntity, ProductEntityBuilder> {
 
   static int counter = 0;
   factory ProductEntity() {
@@ -83,7 +85,24 @@ abstract class ProductEntity extends Object with BaseEntity implements Built<Pro
     return productKey;
   }
 
-  int compareTo(ProductEntity product, String sortField, bool sortAscending) {
+  String listDisplayCost(AppState state) => formatNumber(cost, state);
+
+  InvoiceItemEntity get asInvoiceItem {
+    return InvoiceItemEntity().rebuild((b) => b
+      ..productKey = productKey
+      ..notes = notes
+      ..cost = cost
+      ..qty = 1.0
+      ..customValue1 = customValue1
+      ..customValue2 = customValue2
+      ..taxName1 = taxName1
+      ..taxRate1 = taxRate1
+      ..taxName2 = taxName2
+      ..taxRate2 = taxRate2
+    );
+  }
+
+  int compareTo(ProductEntity product, [String sortField, bool sortAscending = true]) {
     int response = 0;
     ProductEntity productA = sortAscending ? this : product;
     ProductEntity productB = sortAscending ? product: this;
@@ -106,8 +125,39 @@ abstract class ProductEntity extends Object with BaseEntity implements Built<Pro
     }
 
     search = search.toLowerCase();
+    if (productKey.toLowerCase().contains(search)) {
+      return true;
+    }
+    if (notes.toLowerCase().contains(search)) {
+      return true;
+    }
 
-    return productKey.toLowerCase().contains(search) || notes.toLowerCase().contains(search);
+    return false;
+  }
+
+  String matchesSearchField(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+    search = search.toLowerCase();
+
+    if (notes.toLowerCase().contains(search)) {
+      return ProductFields.notes;
+    }
+
+    return null;
+  }
+
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    search = search.toLowerCase();
+    if (notes.toLowerCase().contains(search)) {
+      return notes;
+    }
+    return null;
   }
 
   ProductEntity._();

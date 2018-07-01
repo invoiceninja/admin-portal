@@ -3,7 +3,6 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
-
 class InvoiceItemSelector extends StatefulWidget {
   InvoiceItemSelector({this.state, this.onItemsSelected});
 
@@ -32,11 +31,23 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
 
     _selectedIds.forEach((entityId) {
       var product = widget.state.productState.map[entityId];
-      items.add(InvoiceItemEntity.fromProduct((product)));
+      items.add(product.asInvoiceItem);
     });
 
     widget.onItemsSelected(items);
     Navigator.pop(context);
+  }
+
+  _toggleEntity(entityId) {
+    setState(() {
+      _filter = '';
+      _textController.text = '';
+      if (_selectedIds.contains(entityId)) {
+        _selectedIds.remove(entityId);
+      } else {
+        _selectedIds.add(entityId);
+      }
+    });
   }
 
   @override
@@ -76,7 +87,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
               autofocus: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: localization.filter,
+                hintText: _selectedIds.length == 0
+                    ? localization.filter
+                    : localization.countSelected
+                        .replaceFirst(':count', '${_selectedIds.length}'),
               ),
             ),
           ),
@@ -97,11 +111,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
               ),
               _selectedIds.length > 0
                   ? IconButton(
-                icon: Icon(Icons.check),
-                onPressed: () {
-                  _onItemsSelected();
-                },
-              )
+                      icon: Icon(Icons.check),
+                      onPressed: () {
+                        _onItemsSelected();
+                      },
+                    )
                   : Container(),
             ],
           )
@@ -110,12 +124,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     }
 
     _entityList() {
-      var localization = AppLocalization.of(context);
       var state = widget.state.selectedCompanyState.productState;
-
       var matches = state.list
           .where((entityId) => state.map[entityId].matchesSearch(_filter))
           .toList();
+
+      matches.sort((idA, idB) => state.map[idA].compareTo(state.map[idB]));
 
       return ListView.builder(
         shrinkWrap: true,
@@ -126,35 +140,26 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
           var subtitle = null;
           var matchField = entity.matchesSearchField(_filter);
           if (matchField != null) {
-            var field = localization.lookup(matchField);
-            var value = entity.matchesSearchValue(_filter);
-            subtitle = '$field: $value';
+            subtitle = entity.matchesSearchValue(_filter);
           }
           return ListTile(
             dense: true,
             leading: Checkbox(
               value: _selectedIds.contains(entityId),
-              onChanged: (bool value) {
-                setState(() {
-                  if (value) {
-                    _selectedIds.add(entityId);
-                  } else {
-                    _selectedIds.remove(entityId);
-                  }
-                });
-              },
+              onChanged: (bool value) => _toggleEntity(entityId),
             ),
-            title: Text(entity.listDisplayName),
-            subtitle: subtitle != null ? Text(subtitle) : null,
+            title: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(entity.listDisplayName),
+                ),
+                Text(entity.listDisplayCost(widget.state)),
+              ],
+            ),
+            subtitle: subtitle != null ? Text(subtitle, maxLines: 4) : null,
             onTap: () {
               if (_selectedIds.length > 0) {
-                setState(() {
-                  if (_selectedIds.contains(entityId)) {
-                    _selectedIds.remove(entityId);
-                  } else {
-                    _selectedIds.add(entityId);
-                  }
-                });
+                _toggleEntity(entityId);
               } else {
                 _selectedIds.add(entityId);
                 _onItemsSelected();

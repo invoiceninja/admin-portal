@@ -2,6 +2,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/ui/invoice/invoice_item.dart';
 
 part 'entities.g.dart';
 
@@ -47,7 +49,6 @@ class EntityState extends EnumClass {
   static EntityState valueOf(String name) => _$valueOf(name);
 }
 
-
 abstract class BaseEntity {
 
   @nullable
@@ -66,6 +67,10 @@ abstract class BaseEntity {
   bool get isDeleted;
 
   String get listDisplayName {
+    return 'Error: not set';
+  }
+
+  String listDisplayCost(AppState state) {
     return 'Error: not set';
   }
 
@@ -114,7 +119,9 @@ abstract class BaseEntity {
   }
 }
 
-
+abstract class ConvertToInvoiceItem {
+  InvoiceItemEntity get asInvoiceItem;
+}
 
 abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> {
 
