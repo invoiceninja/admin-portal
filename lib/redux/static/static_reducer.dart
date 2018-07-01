@@ -1,3 +1,4 @@
+import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/redux/static/static_state.dart';
 import 'package:redux/redux.dart';
@@ -10,58 +11,58 @@ StaticState staticLoadedReducer(StaticState staticState, LoadStaticSuccess actio
   return StaticState().rebuild((b) => b
     ..currencyMap.addAll(Map.fromIterable(
       action.data.currencies,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..sizeMap.addAll(Map.fromIterable(
       action.data.sizes,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..industryMap.addAll(Map.fromIterable(
       action.data.industries,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..timezoneMap.addAll(Map.fromIterable(
       action.data.timezones,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..dateFormatMap.addAll(Map.fromIterable(
       action.data.dateFormats,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..datetimeFormatMap.addAll(Map.fromIterable(
       action.data.datetimeFormats,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..languageMap.addAll(Map.fromIterable(
       action.data.languages,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..paymentTypeMap.addAll(Map.fromIterable(
       action.data.paymentTypes,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..countryMap.addAll(Map.fromIterable(
       action.data.countries,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..invoiceStatusMap.addAll(Map.fromIterable(
       action.data.invoiceStatus,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
     ..frequencyMap.addAll(Map.fromIterable(
       action.data.frequencies,
-      key: (item) => item.id,
-      value: (item) => item,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
     ))
   );
 }
