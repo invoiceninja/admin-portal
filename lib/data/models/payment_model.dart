@@ -42,6 +42,11 @@ class PaymentFields {
 
 abstract class PaymentEntity extends Object with BaseEntity implements Built<PaymentEntity, PaymentEntityBuilder> {
 
+  @override
+  EntityType get entityType {
+    return EntityType.payment;
+  }
+
   static int counter = 0;
   factory PaymentEntity() {
     return _$PaymentEntity._(

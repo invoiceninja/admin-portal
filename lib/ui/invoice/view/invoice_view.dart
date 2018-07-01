@@ -1,3 +1,4 @@
+import 'package:invoiceninja/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,7 @@ class _InvoiceViewState extends State<InvoiceView> {
           Divider(height: 1.0)
         ]);
       });
-      
+
       return widgets;
     }
 
@@ -156,15 +157,14 @@ class _InvoiceViewState extends State<InvoiceView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
+          title:
+              Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
           actions: invoice.isNew()
               ? []
               : [
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      viewModel.onEditPressed(context);
-                    },
+                  EditIconButton(
+                    isVisible: !invoice.isDeleted,
+                    onPressed: () => viewModel.onEditPressed(context),
                   ),
                   ActionMenuButton(
                     customActions: [

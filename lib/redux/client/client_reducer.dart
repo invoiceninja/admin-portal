@@ -25,6 +25,9 @@ String filterClientDropdownReducer(String dropdownFilter, FilterClientDropdown a
 final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, SaveClientSuccess>(_updateEditing),
   TypedReducer<ClientEntity, AddClientSuccess>(_updateEditing),
+  TypedReducer<ClientEntity, RestoreClientSuccess>(_updateEditing),
+  TypedReducer<ClientEntity, ArchiveClientSuccess>(_updateEditing),
+  TypedReducer<ClientEntity, DeleteClientSuccess>(_updateEditing),
   TypedReducer<ClientEntity, ViewClient>(_updateEditing),
   TypedReducer<ClientEntity, EditClient>(_updateEditing),
   TypedReducer<ClientEntity, UpdateClient>(_updateEditing),

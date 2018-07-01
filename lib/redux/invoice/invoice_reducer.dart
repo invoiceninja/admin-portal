@@ -23,13 +23,15 @@ String filterClientDropdownReducer(String dropdownFilter, FilterInvoiceDropdown 
   return action.filter;
 }
 
-
 final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SaveInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, ViewInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, EditInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, UpdateInvoice>(_updateEditing),
+  TypedReducer<InvoiceEntity, RestoreInvoiceSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, ArchiveInvoiceSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, DeleteInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddInvoiceItem>(_addInvoiceItem),
   TypedReducer<InvoiceEntity, AddInvoiceItems>(_addInvoiceItems),
   TypedReducer<InvoiceEntity, DeleteInvoiceItem>(_removeInvoiceItem),

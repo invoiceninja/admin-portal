@@ -9,20 +9,18 @@ class DismissibleEntity extends StatelessWidget {
     this.entity,
     this.child,
     this.onDismissed,
-    this.onTap,});
+    this.onTap,
+  });
 
   final BaseEntity entity;
   final Widget child;
   final Function onDismissed;
   final Function onTap;
 
-  //static final _itemKey = (int id) => Key('__client_item_${id}__');
-  static final _itemKey = (int id) => Key('__item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: _itemKey(entity.id),
+      key: Key(entity.key),
       onDismissed: onDismissed,
       child: child,
       background: entity.isDeleted ? Container(

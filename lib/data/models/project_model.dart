@@ -40,6 +40,11 @@ class ProjectFields {
 
 abstract class ProjectEntity extends Object with BaseEntity implements Built<ProjectEntity, ProjectEntityBuilder> {
 
+  @override
+  EntityType get entityType {
+    return EntityType.project;
+  }
+
   static int counter = 0;
   factory ProjectEntity() {
     return _$ProjectEntity._(

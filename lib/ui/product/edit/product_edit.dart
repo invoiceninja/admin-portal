@@ -5,7 +5,7 @@ import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/ui/app/save_icon_button.dart';
+import 'package:invoiceninja/ui/app/buttons/save_icon_button.dart';
 import 'package:invoiceninja/utils/keys.dart';
 
 class ProductEdit extends StatefulWidget {
@@ -85,10 +85,11 @@ class _ProductEditState extends State<ProductEdit> {
         appBar: AppBar(
           title: Text(viewModel.product.isNew()
               ? AppLocalization.of(context).newProduct
-              : viewModel.product.productKey),
+              : viewModel.origProduct.productKey),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
               return SaveIconButton(
+                isVisible: !product.isDeleted,
                 isLoading: viewModel.isLoading,
                 isDirty: product.isNew() || product != viewModel.origProduct,
                 onPressed: () {

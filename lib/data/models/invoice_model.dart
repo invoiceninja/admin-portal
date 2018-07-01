@@ -57,6 +57,11 @@ class InvoiceFields {
 abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTotal
   implements Built<InvoiceEntity, InvoiceEntityBuilder> {
 
+  @override
+  EntityType get entityType {
+    return EntityType.invoice;
+  }
+
   static int counter = 0;
   factory InvoiceEntity() {
     return _$InvoiceEntity._(

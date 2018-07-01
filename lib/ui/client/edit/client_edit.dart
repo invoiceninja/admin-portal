@@ -5,7 +5,7 @@ import 'package:invoiceninja/ui/client/edit/client_edit_details.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_shipping_address.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/ui/app/save_icon_button.dart';
+import 'package:invoiceninja/ui/app/buttons/save_icon_button.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_contacts.dart';
 
 class ClientEdit extends StatefulWidget {
@@ -52,9 +52,10 @@ class _ClientEditState extends State<ClientEdit>
         appBar: AppBar(
           title: Text(client.isNew()
               ? localization.newClient
-              : client.displayName), // Text(localizations.clientDetails),
+              : viewModel.origClient.displayName), // Text(localizations.clientDetails),
           actions: <Widget>[
             SaveIconButton(
+              isVisible: !client.isDeleted,
               isDirty: client.isNew() || client != viewModel.origClient,
               isLoading: viewModel.isLoading,
               onPressed: () {

@@ -37,6 +37,11 @@ class ProductFields {
 
 abstract class ProductEntity extends Object with BaseEntity, ConvertToInvoiceItem implements Built<ProductEntity, ProductEntityBuilder> {
 
+  @override
+  EntityType get entityType {
+    return EntityType.product;
+  }
+
   static int counter = 0;
   factory ProductEntity() {
     return _$ProductEntity._(

@@ -5,6 +5,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_view_overview.dart';
@@ -44,7 +45,7 @@ class _ClientViewState extends State<ClientView>
     var store = StoreProvider.of<AppState>(context);
     var viewModel = widget.viewModel;
     var client = viewModel.client;
-
+    print('build : is deleted: ${client.isDeleted}');
     return WillPopScope(
       onWillPop: () async {
         viewModel.onBackPressed();
@@ -52,8 +53,8 @@ class _ClientViewState extends State<ClientView>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(client.displayName ??
-              ''), // Text(localizations.clientDetails),
+          title: Text(
+              client.displayName ?? ''), // Text(localizations.clientDetails),
           bottom: TabBar(
             controller: _controller,
             //isScrollable: true,
@@ -69,11 +70,9 @@ class _ClientViewState extends State<ClientView>
           actions: client.isNew()
               ? []
               : [
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      viewModel.onEditPressed(context);
-                    },
+                  EditIconButton(
+                    isVisible: !client.isDeleted,
+                    onPressed: () => viewModel.onEditPressed(context),
                   ),
                   ActionMenuButton(
                     isLoading: viewModel.isLoading,
@@ -94,7 +93,8 @@ class _ClientViewState extends State<ClientView>
           onPressed: () {
             showDialog(
               context: context,
-              builder: (BuildContext context) => SimpleDialog(children: <Widget>[
+              builder: (BuildContext context) =>
+                  SimpleDialog(children: <Widget>[
                     ListTile(
                       dense: true,
                       leading: Icon(Icons.add_circle_outline),

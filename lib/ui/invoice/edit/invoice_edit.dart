@@ -7,7 +7,7 @@ import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/ui/app/save_icon_button.dart';
+import 'package:invoiceninja/ui/app/buttons/save_icon_button.dart';
 
 class InvoiceEdit extends StatefulWidget {
   final InvoiceEditVM viewModel;
@@ -58,9 +58,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
         appBar: AppBar(
           title: Text(invoice.isNew()
               ? localization.newInvoice
-              : '${localization.invoice} ${invoice.invoiceNumber}'),
+              : '${localization.invoice} ${viewModel.origInvoice.invoiceNumber}'),
           actions: <Widget>[
             SaveIconButton(
+              isVisible: !invoice.isDeleted,
               isLoading: widget.viewModel.isLoading,
               isDirty: invoice.isNew() || invoice != viewModel.origInvoice,
               onPressed: () {

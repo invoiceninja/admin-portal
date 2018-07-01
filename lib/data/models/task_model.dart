@@ -41,6 +41,11 @@ class TaskFields {
 
 abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEntity, TaskEntityBuilder> {
 
+  @override
+  EntityType get entityType {
+    return EntityType.task;
+  }
+
   static int counter = 0;
   factory TaskEntity() {
     return _$TaskEntity._(

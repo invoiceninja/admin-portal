@@ -69,6 +69,15 @@ abstract class BaseEntity {
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
 
+
+  String get key {
+    return '__${entityType}__${id}__';
+  }
+
+  EntityType get entityType {
+    throw 'EntityType not set: ${this}';
+  }
+
   String get listDisplayName {
     return 'Error: not set';
   }

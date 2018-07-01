@@ -51,6 +51,11 @@ class VendorFields {
 
 abstract class VendorEntity extends Object with BaseEntity implements Built<VendorEntity, VendorEntityBuilder> {
 
+  @override
+  EntityType get entityType {
+    return EntityType.vendor;
+  }
+
   static int counter = 0;
   factory VendorEntity() {
     return _$VendorEntity._(

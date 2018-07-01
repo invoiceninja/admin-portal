@@ -39,6 +39,11 @@ class ClientFields {
 
 abstract class ClientEntity extends Object with BaseEntity implements Built<ClientEntity, ClientEntityBuilder> {
 
+  @override
+  EntityType get entityType {
+    return EntityType.client;
+  }
+
   static int counter = 0;
 
   factory ClientEntity() {

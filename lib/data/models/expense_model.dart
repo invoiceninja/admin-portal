@@ -58,6 +58,12 @@ class ExpenseFields {
 abstract class ExpenseEntity extends Object
     with BaseEntity
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
+
+  @override
+  EntityType get entityType {
+    return EntityType.expense;
+  }
+
   static int counter = 0;
   factory ExpenseEntity() {
     return _$ExpenseEntity._(

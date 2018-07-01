@@ -27,6 +27,9 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, AddProductSuccess>(_updateEditing),
   TypedReducer<ProductEntity, EditProduct>(_updateEditing),
   TypedReducer<ProductEntity, UpdateProduct>(_updateEditing),
+  TypedReducer<ProductEntity, RestoreProductSuccess>(_updateEditing),
+  TypedReducer<ProductEntity, ArchiveProductSuccess>(_updateEditing),
+  TypedReducer<ProductEntity, DeleteProductSuccess>(_updateEditing),
   TypedReducer<ProductEntity, SelectCompany>(_clearEditing),
 ]);
 

@@ -40,6 +40,11 @@ class CreditFields {
 
 abstract class CreditEntity extends Object with BaseEntity implements Built<CreditEntity, CreditEntityBuilder> {
 
+  @override
+  EntityType get entityType {
+    return EntityType.credit;
+  }
+
   static int counter = 0;
   factory CreditEntity() {
     return _$CreditEntity._(
