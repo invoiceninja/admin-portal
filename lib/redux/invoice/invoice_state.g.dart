@@ -94,6 +94,9 @@ class _$InvoiceUIStateSerializer
   Iterable serialize(Serializers serializers, InvoiceUIState object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'selectedId',
+      serializers.serialize(object.selectedId,
+          specifiedType: const FullType(int)),
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
@@ -101,10 +104,10 @@ class _$InvoiceUIStateSerializer
       serializers.serialize(object.dropdownFilter,
           specifiedType: const FullType(String)),
     ];
-    if (object.selected != null) {
+    if (object.editing != null) {
       result
-        ..add('selected')
-        ..add(serializers.serialize(object.selected,
+        ..add('editing')
+        ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(InvoiceEntity)));
     }
 
@@ -122,9 +125,13 @@ class _$InvoiceUIStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'selected':
-          result.selected.replace(serializers.deserialize(value,
+        case 'editing':
+          result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
+          break;
+        case 'selectedId':
+          result.selectedId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
@@ -257,7 +264,9 @@ class InvoiceStateBuilder
 
 class _$InvoiceUIState extends InvoiceUIState {
   @override
-  final InvoiceEntity selected;
+  final InvoiceEntity editing;
+  @override
+  final int selectedId;
   @override
   final ListUIState listUIState;
   @override
@@ -266,8 +275,11 @@ class _$InvoiceUIState extends InvoiceUIState {
   factory _$InvoiceUIState([void updates(InvoiceUIStateBuilder b)]) =>
       (new InvoiceUIStateBuilder()..update(updates)).build();
 
-  _$InvoiceUIState._({this.selected, this.listUIState, this.dropdownFilter})
+  _$InvoiceUIState._(
+      {this.editing, this.selectedId, this.listUIState, this.dropdownFilter})
       : super._() {
+    if (selectedId == null)
+      throw new BuiltValueNullFieldError('InvoiceUIState', 'selectedId');
     if (listUIState == null)
       throw new BuiltValueNullFieldError('InvoiceUIState', 'listUIState');
     if (dropdownFilter == null)
@@ -286,21 +298,25 @@ class _$InvoiceUIState extends InvoiceUIState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! InvoiceUIState) return false;
-    return selected == other.selected &&
+    return editing == other.editing &&
+        selectedId == other.selectedId &&
         listUIState == other.listUIState &&
         dropdownFilter == other.dropdownFilter;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, selected.hashCode), listUIState.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+            listUIState.hashCode),
         dropdownFilter.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceUIState')
-          ..add('selected', selected)
+          ..add('editing', editing)
+          ..add('selectedId', selectedId)
           ..add('listUIState', listUIState)
           ..add('dropdownFilter', dropdownFilter))
         .toString();
@@ -311,10 +327,14 @@ class InvoiceUIStateBuilder
     implements Builder<InvoiceUIState, InvoiceUIStateBuilder> {
   _$InvoiceUIState _$v;
 
-  InvoiceEntityBuilder _selected;
-  InvoiceEntityBuilder get selected =>
-      _$this._selected ??= new InvoiceEntityBuilder();
-  set selected(InvoiceEntityBuilder selected) => _$this._selected = selected;
+  InvoiceEntityBuilder _editing;
+  InvoiceEntityBuilder get editing =>
+      _$this._editing ??= new InvoiceEntityBuilder();
+  set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
+
+  int _selectedId;
+  int get selectedId => _$this._selectedId;
+  set selectedId(int selectedId) => _$this._selectedId = selectedId;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -331,7 +351,8 @@ class InvoiceUIStateBuilder
 
   InvoiceUIStateBuilder get _$this {
     if (_$v != null) {
-      _selected = _$v.selected?.toBuilder();
+      _editing = _$v.editing?.toBuilder();
+      _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _dropdownFilter = _$v.dropdownFilter;
       _$v = null;
@@ -356,14 +377,16 @@ class InvoiceUIStateBuilder
     try {
       _$result = _$v ??
           new _$InvoiceUIState._(
-              selected: _selected?.build(),
+              editing: _editing?.build(),
+              selectedId: selectedId,
               listUIState: listUIState.build(),
               dropdownFilter: dropdownFilter);
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'selected';
-        _selected?.build();
+        _$failedField = 'editing';
+        _editing?.build();
+
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {

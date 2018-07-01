@@ -42,14 +42,15 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
 abstract class ProductUIState extends Object with EntityUIState implements Built<ProductUIState, ProductUIStateBuilder> {
 
   @nullable
-  ProductEntity get selected;
+  ProductEntity get editing;
 
-  bool get isSelectedNew => selected.isNew();
+  @override
+  bool get isCreatingNew => editing.isNew();
 
   factory ProductUIState() {
     return _$ProductUIState._(
       listUIState: ListUIState(ProductFields.productKey),
-      selected: ProductEntity(),
+      editing: ProductEntity(),
       dropdownFilter: '',
     );
   }

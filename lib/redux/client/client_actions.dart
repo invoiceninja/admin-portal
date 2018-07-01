@@ -8,9 +8,9 @@ import 'package:invoiceninja/redux/app/app_actions.dart';
 class ViewClientList implements PersistUI {}
 
 class ViewClient implements PersistUI {
-  final ClientEntity client;
+  final int clientId;
   final BuildContext context;
-  ViewClient({this.client, this.context});
+  ViewClient({this.clientId, this.context});
 }
 
 class EditClient implements PersistUI {

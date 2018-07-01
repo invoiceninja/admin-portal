@@ -42,14 +42,15 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
 abstract class InvoiceUIState extends Object with EntityUIState implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
 
   @nullable
-  InvoiceEntity get selected;
+  InvoiceEntity get editing;
 
-  bool get isSelectedNew => selected.isNew();
+  @override
+  bool get isCreatingNew => editing.isNew();
 
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
       listUIState: ListUIState(InvoiceFields.invoiceNumber),
-      selected: InvoiceEntity(),
+      editing: InvoiceEntity(),
       dropdownFilter: '',
     );
   }

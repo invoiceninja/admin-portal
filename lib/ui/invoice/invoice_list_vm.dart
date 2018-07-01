@@ -82,7 +82,7 @@ class InvoiceListVM {
         isLoaded: state.invoiceState.isLoaded &&
             state.clientState.isLoaded,
         onInvoiceTap: (context, invoice) {
-          store.dispatch(ViewInvoice(invoice: invoice, context: context));
+          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, InvoiceEntity invoice,

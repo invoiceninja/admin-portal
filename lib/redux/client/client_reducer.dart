@@ -6,11 +6,12 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/client/client_state.dart';
 
-EntityUIState clientUIReducer(ClientUIState state, action) {
+EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(clientListReducer(state.listUIState, action))
-    ..selected.replace(editingReducer(state.selected, action))
+    ..editing.replace(editingReducer(state.editing, action))
     ..dropdownFilter = dropdownFilterReducer(state.dropdownFilter, action)
+    ..selectedId = selectedIdReducer(state.selectedId, action)
   );
 }
 
@@ -22,13 +23,20 @@ String filterClientDropdownReducer(String dropdownFilter, FilterClientDropdown a
   return action.filter;
 }
 
+Reducer<int> selectedIdReducer = combineReducers([
+  TypedReducer<int, ViewClient>(updateSelectedId),
+]);
+
+int updateSelectedId(int selectedId, ViewClient action) {
+  return action.clientId;
+}
+
 final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, SaveClientSuccess>(_updateEditing),
   TypedReducer<ClientEntity, AddClientSuccess>(_updateEditing),
   TypedReducer<ClientEntity, RestoreClientSuccess>(_updateEditing),
   TypedReducer<ClientEntity, ArchiveClientSuccess>(_updateEditing),
   TypedReducer<ClientEntity, DeleteClientSuccess>(_updateEditing),
-  TypedReducer<ClientEntity, ViewClient>(_updateEditing),
   TypedReducer<ClientEntity, EditClient>(_updateEditing),
   TypedReducer<ClientEntity, UpdateClient>(_updateEditing),
   TypedReducer<ClientEntity, AddContact>(_addContact),
@@ -43,6 +51,10 @@ ClientEntity  _clearEditing(ClientEntity client, action) {
 
 ClientEntity _updateEditing(ClientEntity client, action) {
   return action.client;
+}
+
+ClientEntity _updateViewing(ClientEntity client, ViewClient action) {
+  return action.clientId;
 }
 
 ClientEntity _addContact(ClientEntity client, AddContact action) {

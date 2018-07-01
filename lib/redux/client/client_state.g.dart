@@ -92,6 +92,9 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
   Iterable serialize(Serializers serializers, ClientUIState object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
+      'selectedId',
+      serializers.serialize(object.selectedId,
+          specifiedType: const FullType(int)),
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
@@ -99,10 +102,10 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
       serializers.serialize(object.dropdownFilter,
           specifiedType: const FullType(String)),
     ];
-    if (object.selected != null) {
+    if (object.editing != null) {
       result
-        ..add('selected')
-        ..add(serializers.serialize(object.selected,
+        ..add('editing')
+        ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(ClientEntity)));
     }
 
@@ -120,9 +123,13 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'selected':
-          result.selected.replace(serializers.deserialize(value,
+        case 'editing':
+          result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(ClientEntity)) as ClientEntity);
+          break;
+        case 'selectedId':
+          result.selectedId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
@@ -253,7 +260,9 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
 
 class _$ClientUIState extends ClientUIState {
   @override
-  final ClientEntity selected;
+  final ClientEntity editing;
+  @override
+  final int selectedId;
   @override
   final ListUIState listUIState;
   @override
@@ -262,8 +271,11 @@ class _$ClientUIState extends ClientUIState {
   factory _$ClientUIState([void updates(ClientUIStateBuilder b)]) =>
       (new ClientUIStateBuilder()..update(updates)).build();
 
-  _$ClientUIState._({this.selected, this.listUIState, this.dropdownFilter})
+  _$ClientUIState._(
+      {this.editing, this.selectedId, this.listUIState, this.dropdownFilter})
       : super._() {
+    if (selectedId == null)
+      throw new BuiltValueNullFieldError('ClientUIState', 'selectedId');
     if (listUIState == null)
       throw new BuiltValueNullFieldError('ClientUIState', 'listUIState');
     if (dropdownFilter == null)
@@ -281,21 +293,25 @@ class _$ClientUIState extends ClientUIState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! ClientUIState) return false;
-    return selected == other.selected &&
+    return editing == other.editing &&
+        selectedId == other.selectedId &&
         listUIState == other.listUIState &&
         dropdownFilter == other.dropdownFilter;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, selected.hashCode), listUIState.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+            listUIState.hashCode),
         dropdownFilter.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ClientUIState')
-          ..add('selected', selected)
+          ..add('editing', editing)
+          ..add('selectedId', selectedId)
           ..add('listUIState', listUIState)
           ..add('dropdownFilter', dropdownFilter))
         .toString();
@@ -306,10 +322,14 @@ class ClientUIStateBuilder
     implements Builder<ClientUIState, ClientUIStateBuilder> {
   _$ClientUIState _$v;
 
-  ClientEntityBuilder _selected;
-  ClientEntityBuilder get selected =>
-      _$this._selected ??= new ClientEntityBuilder();
-  set selected(ClientEntityBuilder selected) => _$this._selected = selected;
+  ClientEntityBuilder _editing;
+  ClientEntityBuilder get editing =>
+      _$this._editing ??= new ClientEntityBuilder();
+  set editing(ClientEntityBuilder editing) => _$this._editing = editing;
+
+  int _selectedId;
+  int get selectedId => _$this._selectedId;
+  set selectedId(int selectedId) => _$this._selectedId = selectedId;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -326,7 +346,8 @@ class ClientUIStateBuilder
 
   ClientUIStateBuilder get _$this {
     if (_$v != null) {
-      _selected = _$v.selected?.toBuilder();
+      _editing = _$v.editing?.toBuilder();
+      _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _dropdownFilter = _$v.dropdownFilter;
       _$v = null;
@@ -351,14 +372,16 @@ class ClientUIStateBuilder
     try {
       _$result = _$v ??
           new _$ClientUIState._(
-              selected: _selected?.build(),
+              editing: _editing?.build(),
+              selectedId: selectedId,
               listUIState: listUIState.build(),
               dropdownFilter: dropdownFilter);
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'selected';
-        _selected?.build();
+        _$failedField = 'editing';
+        _editing?.build();
+
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {

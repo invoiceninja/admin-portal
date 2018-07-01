@@ -72,7 +72,7 @@ class ClientListVM {
         isLoading: store.state.isLoading,
         isLoaded: store.state.clientState.isLoaded,
         onClientTap: (context, client) {
-          store.dispatch(ViewClient(client: client, context: context));
+          store.dispatch(ViewClient(clientId: client.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,

@@ -51,7 +51,8 @@ class ClientViewVM {
   });
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
-    final client = store.state.clientUIState.selected;
+    final state = store.state;
+    final client = state.clientState.map[state.clientUIState.selectedId];
 
     return ClientViewVM(
         state: store.state,

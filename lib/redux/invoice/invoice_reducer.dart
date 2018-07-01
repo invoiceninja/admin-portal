@@ -10,8 +10,9 @@ import 'package:invoiceninja/redux/invoice/invoice_state.dart';
 EntityUIState invoiceUIReducer(InvoiceUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(invoiceListReducer(state.listUIState, action))
-    ..selected.replace(editingReducer(state.selected, action))
+    ..editing.replace(editingReducer(state.editing, action))
     ..dropdownFilter = dropdownFilterReducer(state.dropdownFilter, action)
+    ..selectedId = selectedIdReducer(state.selectedId, action)
   );
 }
 
@@ -23,10 +24,17 @@ String filterClientDropdownReducer(String dropdownFilter, FilterInvoiceDropdown 
   return action.filter;
 }
 
+Reducer<int> selectedIdReducer = combineReducers([
+  TypedReducer<int, ViewInvoice>(updateSelectedId),
+]);
+
+int updateSelectedId(int selectedId, ViewInvoice action) {
+  return action.invoiceId;
+}
+
 final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SaveInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddInvoiceSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, ViewInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, EditInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, UpdateInvoice>(_updateEditing),
   TypedReducer<InvoiceEntity, RestoreInvoiceSuccess>(_updateEditing),

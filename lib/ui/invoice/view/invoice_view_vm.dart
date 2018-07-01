@@ -57,7 +57,8 @@ class InvoiceViewVM {
   });
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
-    final invoice = store.state.invoiceUIState.selected;
+    final state = store.state;
+    final invoice = state.invoiceState.map[state.invoiceUIState.selectedId];
     final client = store.state.clientState.map[invoice.clientId];
 
     Future<Null> _viewPdf(BuildContext context) async {
@@ -91,7 +92,7 @@ class InvoiceViewVM {
         },
         onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onClientPressed: (BuildContext context) {
-          store.dispatch(ViewClient(client: client, context: context));
+          store.dispatch(ViewClient(clientId: client.id, context: context));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
           final Completer<Null> completer = new Completer<Null>();

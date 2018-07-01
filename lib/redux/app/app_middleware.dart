@@ -197,7 +197,7 @@ List<String> _getRoutes(AppState state) {
       .forEach((part) {
     if (part == 'edit') {
       // Only restore new unsaved entities to prevent conflicts
-      bool isNew = state.getUIState(entityType).isSelectedNew;
+      final bool isNew = state.getUIState(entityType).isCreatingNew;
       if (isNew) {
         route += '/edit';
       } else if (entityType == EntityType.client) {

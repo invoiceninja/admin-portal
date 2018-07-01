@@ -8,9 +8,9 @@ import 'package:invoiceninja/redux/app/app_actions.dart';
 class ViewInvoiceList implements PersistUI {}
 
 class ViewInvoice implements PersistUI {
-  final InvoiceEntity invoice;
+  final int invoiceId;
   final BuildContext context;
-  ViewInvoice({this.invoice, this.context});
+  ViewInvoice({this.invoiceId, this.context});
 }
 
 class EditInvoice implements PersistUI {

@@ -9,7 +9,7 @@ import 'package:invoiceninja/redux/product/product_state.dart';
 EntityUIState productUIReducer(ProductUIState state, action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
-    ..selected.replace(editingReducer(state.selected, action))
+    ..editing.replace(editingReducer(state.editing, action))
     ..dropdownFilter = dropdownFilterReducer(state.dropdownFilter, action)
   );
 }
