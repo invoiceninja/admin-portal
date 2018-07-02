@@ -22,7 +22,7 @@ class AuthRepository {
       'password': password,
     };
 
-    final Future<dynamic> response = await webClient.post(url + '/login?include_static=true', '', json.encode(credentials));
+    final dynamic response = await webClient.post(url + '/login?include_static=true', '', json.encode(credentials));
     print(response);
     final LoginResponse loginResponse = serializers.deserializeWith(
         LoginResponse.serializer, response);

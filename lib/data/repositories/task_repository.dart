@@ -17,7 +17,7 @@ class TasksRepository {
 
   Future<BuiltList<TaskEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final Future<dynamic> response = await webClient.get(
+    final dynamic response = await webClient.get(
         auth.url + '/tasks?per_page=500', company.token);
 
     final TaskListResponse taskResponse = serializers.deserializeWith(

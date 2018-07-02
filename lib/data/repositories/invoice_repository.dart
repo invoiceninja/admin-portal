@@ -17,7 +17,7 @@ class InvoiceRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final Future<dynamic> response = await webClient.get(
+    final dynamic response = await webClient.get(
         auth.url + '/invoices?include=invitations', company.token);
 
     final InvoiceListResponse invoiceResponse = serializers.deserializeWith(
@@ -50,7 +50,7 @@ class InvoiceRepository {
 
   Future emailInvoice(CompanyEntity company, AuthState auth, InvoiceEntity invoice) async {
 
-    final Future<dynamic> response = await webClient.post(
+    final dynamic response = await webClient.post(
           auth.url + '/email_invoice?invoice_id=${invoice.id}', company.token, null);
 
     InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
