@@ -33,7 +33,7 @@ class InvoiceRepository {
 
     if (invoice.isNew()) {
       response = await webClient.post(
-          auth.url + '/invoices', company.token, json.encode(data));
+          auth.url + '/invoices?include=invitations', company.token, json.encode(data));
     } else {
       var url = auth.url + '/invoices/' + invoice.id.toString();
       if (action != null) {
