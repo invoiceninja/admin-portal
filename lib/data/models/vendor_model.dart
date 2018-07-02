@@ -149,7 +149,8 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
     
     return response;
   }
-  
+
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;
@@ -157,7 +158,7 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
 
     return name.contains(search);
   }
-  
+
   VendorEntity._();
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }

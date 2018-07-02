@@ -108,6 +108,7 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
     }
   }
 
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;

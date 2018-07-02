@@ -105,7 +105,8 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
     
     return response;
   }
-  
+
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;

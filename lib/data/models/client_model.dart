@@ -199,6 +199,7 @@ abstract class ClientEntity extends Object
   //String get last_login;
   //String get custom_messages;
 
+  @override
   String get listDisplayName {
     return displayName;
   }
@@ -333,6 +334,7 @@ abstract class ContactEntity extends Object
     return (firstName + ' ' + lastName).trim();
   }
 
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;
@@ -353,6 +355,7 @@ abstract class ContactEntity extends Object
     return false;
   }
 
+  @override
   String matchesSearchValue(String search) {
     if (search == null || search.isEmpty) {
       return null;

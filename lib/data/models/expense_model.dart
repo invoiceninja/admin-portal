@@ -167,6 +167,7 @@ abstract class ExpenseEntity extends Object
     return response;
   }
 
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;

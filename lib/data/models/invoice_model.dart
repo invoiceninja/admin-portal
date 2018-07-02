@@ -128,6 +128,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
 
+  @override
   double get discount;
 
   @BuiltValueField(wireName: 'po_number')
@@ -171,15 +172,18 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
 
+  @override
   @BuiltValueField(wireName: 'tax_rate1')
   double get taxRate1;
 
   @BuiltValueField(wireName: 'tax_name2')
   String get taxName2;
 
+  @override
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
 
+  @override
   @BuiltValueField(wireName: 'is_amount_discount')
   bool get isAmountDiscount;
 
@@ -197,15 +201,19 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   @BuiltValueField(wireName: 'auto_bill')
   bool get autoBill;
 
+  @override
   @BuiltValueField(wireName: 'custom_value1')
   double get customValue1;
 
+  @override
   @BuiltValueField(wireName: 'custom_value2')
   double get customValue2;
 
+  @override
   @BuiltValueField(wireName: 'custom_taxes1')
   bool get customTaxes1;
 
+  @override
   @BuiltValueField(wireName: 'custom_taxes2')
   bool get customTaxes2;
 
@@ -229,6 +237,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
 
   String get filename;
 
+  @override
   @BuiltValueField(wireName: 'invoice_items')
   BuiltList<InvoiceItemEntity> get invoiceItems;
 

@@ -93,12 +93,15 @@ abstract class ProductEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @override
   String get listDisplayName {
     return productKey;
   }
 
+  @override
   String listDisplayCost(AppState state) => formatNumber(cost, state);
 
+  @override
   InvoiceItemEntity get asInvoiceItem {
     return InvoiceItemEntity().rebuild((b) => b
       ..productKey = productKey

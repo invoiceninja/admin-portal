@@ -104,6 +104,7 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
     }
   }
 
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;

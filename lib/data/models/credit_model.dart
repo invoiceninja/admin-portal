@@ -94,7 +94,8 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
     
     return response;
   }
-  
+
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;
