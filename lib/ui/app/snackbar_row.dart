@@ -13,10 +13,10 @@ class SnackBarRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Icon(this.icon),
+        Icon(icon),
         Padding(
           padding: EdgeInsets.only(left: 10.0),
-          child: Text(this.message),
+          child: Text(message),
         )
       ],
     );

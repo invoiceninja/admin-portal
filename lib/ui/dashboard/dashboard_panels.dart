@@ -90,13 +90,13 @@ class ColorIcon extends StatelessWidget {
       width: 52.0,
       height: 52.0,
       child: Icon(
-        this.icon,
+        icon,
         color: Colors.white,
         size: 30.0,
       ),
       decoration: new BoxDecoration(
         shape: BoxShape.circle,
-        color: this.backgroundColor,
+        color: backgroundColor,
         //backgroundImage: new BackgroundImage(
         //image: new AssetImage('assets/cat.jpg'),
       ),
@@ -132,7 +132,7 @@ class DashboardRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(this.title, style: TextStyle()),
+                Text(title, style: TextStyle()),
                 Text(
                   formatNumber(amount, state,
                       formatNumberType: isMoney
@@ -146,7 +146,7 @@ class DashboardRow extends StatelessWidget {
               ],
             ),
           ),
-          trailing: ColorIcon(this.icon, this.color),
+          trailing: ColorIcon(icon, color),
         ),
       ),
     );
@@ -181,9 +181,9 @@ class DashboardColumn extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Center(child: ColorIcon(this.icon, this.color)),
+                Center(child: ColorIcon(icon, color)),
                 SizedBox(height: 18.0),
-                Text(this.title, style: TextStyle()),
+                Text(title, style: TextStyle()),
                 Text(
                   formatNumber(amount, state,
                       formatNumberType: isMoney

@@ -115,7 +115,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
 
-    _confirmDelete() {
+    void _confirmDelete() {
       showDialog<AlertDialog>(
         context: context,
         builder: (BuildContext context) => AlertDialog(

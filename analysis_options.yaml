@@ -43,6 +43,7 @@ analyzer:
 linter:
   rules:
     # - prefer_const_literals_to_create_immutables
+    # - avoid_classes_with_only_static_members
     # these rules are documented on and in the same order as
     # the Dart Lint rules page to make maintenance easier
     # https://github.com/dart-lang/linter/blob/master/example/all.yaml
@@ -57,7 +58,6 @@ linter:
     # - avoid_bool_literals_in_conditional_expressions # not yet tested
     # - avoid_catches_without_on_clauses # we do this commonly
     # - avoid_catching_errors # we do this commonly
-    - avoid_classes_with_only_static_members
     # - avoid_double_and_int_checks # only useful when targeting JS runtime
     - avoid_empty_else
     - avoid_field_initializers_in_const_classes

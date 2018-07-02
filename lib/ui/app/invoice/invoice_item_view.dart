@@ -22,7 +22,7 @@ class InvoiceItemListTile extends StatelessWidget {
 
     return ListTile(
       title: Text(invoiceItem.productKey),
-      subtitle: Text('${qty} x ${cost}\n${invoiceItem.notes}'),
+      subtitle: Text('$qty x $cost\n${invoiceItem.notes}'),
       trailing: Text(formatNumber(invoiceItem.total, state, clientId: invoice.clientId)),
     );
   }

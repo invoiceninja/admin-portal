@@ -44,20 +44,20 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
   CompanyState get selectedCompanyState {
-    switch (this.uiState.selectedCompanyIndex) {
+    switch (uiState.selectedCompanyIndex) {
       case 1:
-        return this.companyState1;
+        return companyState1;
       case 2:
-        return this.companyState2;
+        return companyState2;
       case 3:
-        return this.companyState3;
+        return companyState3;
       case 4:
-        return this.companyState4;
+        return companyState4;
       case 5:
-        return this.companyState5;
+        return companyState5;
     }
 
-    return this.companyState1;
+    return companyState1;
   }
 
   bool get isLoaded {
@@ -66,8 +66,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         && clientState.isLoaded;
   }
 
-  CompanyEntity get selectedCompany => this.selectedCompanyState.company;
-  DashboardState get dashboardState => this.selectedCompanyState.dashboardState;
+  CompanyEntity get selectedCompany => selectedCompanyState.company;
+  DashboardState get dashboardState => selectedCompanyState.dashboardState;
 
   EntityUIState getUIState(EntityType type) {
     switch (type) {

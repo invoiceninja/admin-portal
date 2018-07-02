@@ -35,7 +35,7 @@ class FileStorage {
     return file.delete();
   }
 
-  Future<bool> exisits() async {
+  Future<bool> exists() async {
     final file = await _getLocalFile();
 
     return file.exists();

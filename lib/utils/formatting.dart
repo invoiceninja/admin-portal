@@ -88,13 +88,13 @@ String formatNumber(
   }
 
   if (formatNumberType == FormatNumberType.percent) {
-    return '${formatted}%';
+    return '$formatted%';
   } else if (company.showCurrencyCode || currency.symbol.isEmpty) {
-    return '${formatted} ${currency.code}';
+    return '$formatted ${currency.code}';
   } else if (swapCurrencySymbol) {
-    return '${formatted} ${currency.symbol.trim()}';
+    return '$formatted ${currency.symbol.trim()}';
   } else {
-    return '${currency.symbol}${formatted}';
+    return '${currency.symbol}$formatted';
   }
 }
 

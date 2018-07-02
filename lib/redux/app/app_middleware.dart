@@ -189,7 +189,7 @@ Middleware<AppState> _createLoadState(
 List<String> _getRoutes(AppState state) {
   List<String> routes = [];
   var route = '';
-  EntityType entityType = null;
+  EntityType entityType;
 
   state.uiState.currentRoute
       .split('/')

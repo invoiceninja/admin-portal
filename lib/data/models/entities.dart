@@ -31,7 +31,7 @@ class EntityType extends EnumClass {
   const EntityType._(String name) : super(name);
 
   String get plural {
-    return this.toString() + 's';
+    return toString() + 's';
   }
 
   static BuiltSet<EntityType> get values => _$typeValues;

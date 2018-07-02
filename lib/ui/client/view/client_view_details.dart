@@ -43,7 +43,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
     var localization = AppLocalization.of(context);
     var client = widget.client;
 
-    _buildDetailsList() {
+    void _buildDetailsList() {
       var listTiles = <Widget>[];
 
       listTiles

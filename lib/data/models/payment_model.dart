@@ -82,7 +82,7 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   int get invoiceId;
 
   @BuiltValueField(wireName: 'invoice_number')
-  String get invoice_number;
+  String get invoiceNumber;
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;

@@ -65,11 +65,11 @@ class PersistenceRepository {
 
 
   Future<FileSystemEntity> delete() async {
-    return await fileStorage.exisits().then((exists) => exists ? fileStorage.delete() : null);
+    return await fileStorage.exists().then((exists) => exists ? fileStorage.delete() : null);
   }
 
   Future<bool> exists() async {
-    return await fileStorage.exisits();
+    return await fileStorage.exists();
   }
 }
 

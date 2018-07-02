@@ -24,7 +24,7 @@ class ProgressButton extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(left: 14.0, right: 14.0, top: 2.0),
-      child: this.isLoading
+      child: isLoading
           ? SizedBox(
         width: 100.0,
         child: Center(
@@ -39,7 +39,7 @@ class ProgressButton extends StatelessWidget {
         ),
       )
           : RaisedButton(
-        child: Text(this.label),
+        child: Text(label),
         padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
         //color: Colors.lightBlueAccent,
         //color: const Color(0xFF005090),

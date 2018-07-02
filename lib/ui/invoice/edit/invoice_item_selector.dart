@@ -61,7 +61,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
   Widget build(BuildContext context) {
     var localization = AppLocalization.of(context);
 
-    _headerRow() {
+    void _headerRow() {
       return Row(
         children: <Widget>[
           Padding(
@@ -131,7 +131,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
       );
     }
 
-    _entityList() {
+    void _entityList() {
       var state = widget.state.selectedCompanyState.productState;
       var matches = state.list
           .where((entityId) => state.map[entityId].matchesSearch(_filter))
