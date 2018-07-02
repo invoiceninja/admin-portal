@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -62,7 +63,8 @@ class InvoiceEditVM {
         isLoading: state.isLoading,
         invoice: invoice,
         origInvoice: store.state.invoiceState.map[invoice.id],
-        onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+        onBackPressed: () =>
+            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onSavePressed: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(
@@ -85,8 +87,11 @@ class InvoiceEditVM {
                 )));
                 */
           }).catchError((Object error) {
-            print('caught');
-            print(error.toString());
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
           });
         },
         onItemsAdded: (items) => store.dispatch(AddInvoiceItems(items)),
@@ -109,7 +114,7 @@ class InvoiceEditVM {
           }
           return completer.future.then((_) {
             Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
+                    content: SnackBarRow(
                   message: message,
                 )));
           });

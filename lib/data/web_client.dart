@@ -8,6 +8,19 @@ class WebClient {
 
   const WebClient();
 
+  String _parseError(String response) {
+    String error = response;
+
+    try {
+      final dynamic jsonResponse = json.decode(response);
+      error = jsonResponse['error'] ?? jsonResponse;
+    } catch(error) {
+      // do nothing
+    }
+
+    return error;
+  }
+
   Future<dynamic> get(String url, String token) async {
 
     if (! url.contains('?')) url += '?';
@@ -21,7 +34,7 @@ class WebClient {
     );
 
     if (response.statusCode >= 400) {
-      throw('An error occurred: ' + response.body);
+      throw _parseError(response.body);
     }
 
     final jsonResponse = json.decode(response.body);
@@ -42,7 +55,7 @@ class WebClient {
     );
 
     if (response.statusCode >= 400) {
-      throw('An error occurred: ' + response.body);
+      throw _parseError(response.body);
     }
 
     try {
@@ -65,7 +78,7 @@ class WebClient {
     );
 
     if (response.statusCode >= 400) {
-      throw('An error occurred: ' + response.body);
+      throw _parseError(response.body);
     }
 
     try {
