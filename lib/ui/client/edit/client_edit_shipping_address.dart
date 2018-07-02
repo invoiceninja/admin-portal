@@ -3,6 +3,7 @@ import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja/redux/static/static_selectors.dart';
 
 import '../../app/form_card.dart';
 
@@ -125,6 +126,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
           EntityDropdown(
             entityType: EntityType.country,
             entityMap: viewModel.countryMap,
+            entityList: memoizedCountryList(viewModel.countryMap),
             labelText: localization.country,
             initialValue: viewModel.countryMap[client.shippingCountryId]?.name,
             onSelected: (int countryId) => viewModel

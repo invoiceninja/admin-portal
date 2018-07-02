@@ -3,24 +3,14 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownClientList = memo3((
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList,
-    String filter) => dropdownClientsSelector(clientMap, clientList, filter)
-);
+var memoizedDropdownClientList = memo2(
+    (BuiltMap<int, ClientEntity> clientMap, BuiltList<int> clientList) =>
+        dropdownClientsSelector(clientMap, clientList));
 
 List<int> dropdownClientsSelector(
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList,
-    String filter) {
-
-  final list = clientList.where((clientId) {
-    final client = clientMap[clientId];
-    if (! client.isActive) {
-      return false;
-    }
-    return client.matchesSearch(filter);
-  }).toList();
+    BuiltMap<int, ClientEntity> clientMap, BuiltList<int> clientList) {
+  final list =
+      clientList.where((clientId) => clientMap[clientId].isActive).toList();
 
   list.sort((clientAId, clientBId) {
     final clientA = clientMap[clientAId];
@@ -31,21 +21,15 @@ List<int> dropdownClientsSelector(
   return list;
 }
 
+var memoizedClientList = memo3((BuiltMap<int, ClientEntity> clientMap,
+        BuiltList<int> clientList, ListUIState clientListState) =>
+    visibleClientsSelector(clientMap, clientList, clientListState));
 
-var memoizedClientList = memo3((
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList,
-    ListUIState clientListState) => visibleClientsSelector(clientMap, clientList, clientListState)
-);
-
-List<int> visibleClientsSelector(
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList,
-    ListUIState clientListState) {
-
+List<int> visibleClientsSelector(BuiltMap<int, ClientEntity> clientMap,
+    BuiltList<int> clientList, ListUIState clientListState) {
   final list = clientList.where((clientId) {
     final client = clientMap[clientId];
-    if (! client.matchesStates(clientListState.stateFilters)) {
+    if (!client.matchesStates(clientListState.stateFilters)) {
       return false;
     }
     return client.matchesSearch(clientListState.search);
@@ -54,7 +38,8 @@ List<int> visibleClientsSelector(
   list.sort((clientAId, clientBId) {
     final clientA = clientMap[clientAId];
     final clientB = clientMap[clientBId];
-    return clientA.compareTo(clientB, clientListState.sortField, clientListState.sortAscending);
+    return clientA.compareTo(
+        clientB, clientListState.sortField, clientListState.sortAscending);
   });
 
   return list;

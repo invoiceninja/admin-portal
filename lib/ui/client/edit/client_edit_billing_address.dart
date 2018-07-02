@@ -5,6 +5,7 @@ import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja/redux/static/static_selectors.dart';
 
 class ClientEditBillingAddress extends StatefulWidget {
   ClientEditBillingAddress({
@@ -125,6 +126,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
           EntityDropdown(
             entityType: EntityType.country,
             entityMap: viewModel.countryMap,
+            entityList: memoizedCountryList(viewModel.countryMap),
             labelText: localization.country,
             initialValue: viewModel.countryMap[client.countryId]?.name,
             onSelected: (int countryId) => viewModel

@@ -1,4 +1,5 @@
 import 'package:invoiceninja/data/models/invoice_model.dart';
+import 'package:invoiceninja/redux/client/client_selectors.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/entities.dart';
@@ -100,6 +101,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
                     initialValue:
                         viewModel.clientMap[invoice.clientId]?.displayName,
                     entityMap: viewModel.clientMap,
+                    entityList: memoizedDropdownClientList(viewModel.clientMap, viewModel.clientList),
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseSelectAClient
                         : null,

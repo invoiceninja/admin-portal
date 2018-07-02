@@ -12,6 +12,7 @@ class EntityDropdown extends StatefulWidget {
     @required this.entityType,
     @required this.labelText,
     @required this.entityMap,
+    @required this.entityList,
     @required this.onSelected,
     this.validator,
     this.initialValue,
@@ -19,6 +20,7 @@ class EntityDropdown extends StatefulWidget {
 
   final EntityType entityType;
   final BuiltMap<int, SelectableEntity> entityMap;
+  final List<int> entityList;
   final String labelText;
   final String initialValue;
   final Function(int) onSelected;
@@ -49,6 +51,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
         builder: (BuildContext context) {
           return EntityDropdownDialog(
             entityMap: widget.entityMap,
+            entityList: widget.entityList,
             onSelected: (entityId) {
               _textController.text = widget.entityMap[entityId].listDisplayName;
               widget.onSelected(entityId);
@@ -80,10 +83,12 @@ class _EntityDropdownState extends State<EntityDropdown> {
 class EntityDropdownDialog extends StatefulWidget {
   EntityDropdownDialog({
     @required this.entityMap,
+    @required this.entityList,
     @required this.onSelected,
   });
 
   final BuiltMap<int, SelectableEntity> entityMap;
+  final List<int> entityList;
   final Function(int) onSelected;
 
   @override
@@ -92,15 +97,6 @@ class EntityDropdownDialog extends StatefulWidget {
 
 class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
   String _filter;
-  List<int> _entityList;
-
-  @override
-  void initState() {
-    super.initState();
-    _entityList = widget.entityMap.keys.toList();
-    _entityList.sort((idA, idB) => widget.entityMap[idA].listDisplayName
-        .compareTo(widget.entityMap[idB].listDisplayName));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +135,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
     }
 
     Widget _createList() {
-      final matches = _entityList
+      final matches = widget.entityList
           .where((entityId) => widget.entityMap[entityId].matchesSearch(_filter))
           .toList();
 

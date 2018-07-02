@@ -33,12 +33,14 @@ class InvoiceEditDetailsVM {
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
   final BuiltMap<int, ClientEntity> clientMap;
+  final BuiltList<int> clientList;
 
   InvoiceEditDetailsVM({
     @required this.state,
     @required this.invoice,
     @required this.onChanged,
     @required this.clientMap,
+    @required this.clientList,
   });
 
   factory InvoiceEditDetailsVM.fromStore(Store<AppState> store) {
@@ -51,6 +53,7 @@ class InvoiceEditDetailsVM {
         onChanged: (InvoiceEntity invoice) =>
             store.dispatch(UpdateInvoice(invoice)),
         clientMap: state.clientState.map,
+        clientList: state.clientState.list,
     );
   }
 }
