@@ -36,7 +36,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       _phoneController,
     ];
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     var client = widget.viewModel.client;
     _nameController.text = client.name;
@@ -45,14 +45,14 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     _websiteController.text = client.website;
     _phoneController.text = client.workPhone;
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
+    _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
     });

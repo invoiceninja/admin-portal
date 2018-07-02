@@ -61,7 +61,7 @@ class DeleteContact {
   DeleteContact(this.index);
 }
 
-AppState reducer(AppState state, action) {
+AppState reducer(AppState state, dynamic action) {
   // In an actual app you'd most like want to
   // use built_value to rebuild the state
   if (action is UpdateClient) {

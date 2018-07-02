@@ -72,7 +72,7 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveClientFailure(origClient));
       if (action.completer != null) {

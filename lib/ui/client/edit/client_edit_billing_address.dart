@@ -38,7 +38,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
       _postalCodeController,
     ];
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     var client = widget.viewModel.client;
     _address1Controller.text = client.address1;
@@ -47,14 +47,14 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
     _stateController.text = client.state;
     _postalCodeController.text = client.postalCode;
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
+    _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
     });

@@ -21,7 +21,7 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 
 
 Middleware<AppState> _createViewDashboard() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     store.dispatch(LoadDashboard());
     store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
 
@@ -35,7 +35,7 @@ Middleware<AppState> _createViewDashboard() {
 }
 
 Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     AppState state = store.state;
 
     if (!state.dashboardState.isStale && !action.force) {
@@ -57,7 +57,7 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
       if (state.clientState.isStale) {
         store.dispatch(LoadClients());
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(LoadDashboardFailure(error));
     });

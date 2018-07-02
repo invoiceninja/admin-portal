@@ -7,7 +7,7 @@ import 'package:invoiceninja/redux/invoice/invoice_reducer.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 
-CompanyState companyReducer(CompanyState state, action) {
+CompanyState companyReducer(CompanyState state, dynamic action) {
 
   return state.rebuild((b) => b
       ..clientState.replace(clientsReducer(state.clientState, action))

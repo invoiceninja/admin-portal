@@ -38,21 +38,21 @@ class _ProductEditState extends State<ProductEdit> {
       _costController,
     ];
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     var product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
     _costController.text = formatNumber(product.cost, widget.viewModel.state, formatNumberType: FormatNumberType.input);
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
+    _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
     });

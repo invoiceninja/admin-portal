@@ -42,7 +42,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
       _partialController,
     ];
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final invoice = widget.viewModel.invoice;
     _invoiceNumberController.text = invoice.invoiceNumber;
@@ -55,14 +55,14 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
         invoice.partial, widget.viewModel.state,
         formatNumberType: FormatNumberType.input);
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
+    _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
     });

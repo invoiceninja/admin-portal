@@ -6,7 +6,7 @@ import 'package:invoiceninja/redux/product/product_reducer.dart';
 import 'package:invoiceninja/redux/invoice/invoice_reducer.dart';
 import 'package:redux/redux.dart';
 
-UIState uiReducer(UIState state, action) {
+UIState uiReducer(UIState state, dynamic action) {
 
   return state.rebuild((b) => b
     ..selectedCompanyIndex = selectedCompanyIndexReducer(state.selectedCompanyIndex, action)

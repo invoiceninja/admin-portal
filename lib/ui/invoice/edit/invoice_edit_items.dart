@@ -78,7 +78,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
       _qtyController,
     ];
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     var invoiceItem = widget.invoiceItem;
     _productKeyController.text = invoiceItem.productKey;
@@ -89,14 +89,14 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
     _qtyController.text = formatNumber(invoiceItem.qty, widget.viewModel.state,
         formatNumberType: FormatNumberType.input);
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
+    _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
     });

@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/product/product_state.dart';
 
-EntityUIState productUIReducer(ProductUIState state, action) {
+EntityUIState productUIReducer(ProductUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
@@ -33,11 +33,11 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, SelectCompany>(_clearEditing),
 ]);
 
-ProductEntity _clearEditing(ProductEntity client, action) {
+ProductEntity _clearEditing(ProductEntity client, dynamic action) {
   return ProductEntity();
 }
 
-ProductEntity _updateEditing(ProductEntity client, action) {
+ProductEntity _updateEditing(ProductEntity client, dynamic action) {
   return action.product;
 }
 

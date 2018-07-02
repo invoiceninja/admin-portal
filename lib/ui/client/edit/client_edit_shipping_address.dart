@@ -38,7 +38,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
       _shippingPostalCodeController,
     ];
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     var client = widget.viewModel.client;
     _shippingAddress1Controller.text = client.shippingAddress1;
@@ -47,14 +47,14 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
     _shippingStateController.text = client.shippingState;
     _shippingPostalCodeController.text = client.shippingPostalCode;
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
+    _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
     });

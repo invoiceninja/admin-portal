@@ -82,7 +82,7 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteProductFailure(origProduct));
       if (action.completer != null) {

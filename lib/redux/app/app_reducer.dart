@@ -7,7 +7,7 @@ import 'package:invoiceninja/redux/static/static_reducer.dart';
 import 'package:invoiceninja/redux/company/company_reducer.dart';
 
 // We create the State reducer by combining many smaller reducers into one!
-AppState appReducer(AppState state, action) {
+AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
     return AppState().rebuild((b) => b.authState.replace(state.authState));
   } else if (action is LoadStateSuccess) {

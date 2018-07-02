@@ -126,7 +126,7 @@ Middleware<AppState> _createLoadState(
   CompanyState company4State;
   CompanyState company5State;
 
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     authRepository.exists().then((exists) {
       if (exists) {
         authRepository.loadAuthState().then((state) {
@@ -233,7 +233,7 @@ Middleware<AppState> _createUserLoggedIn(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
     var state = store.state;
@@ -250,7 +250,7 @@ Middleware<AppState> _createUserLoggedIn(
 }
 
 Middleware<AppState> _createUIChange(PersistenceRepository uiRepository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
     uiRepository.saveUIState(store.state.uiState);
@@ -264,7 +264,7 @@ Middleware<AppState> _createDataLoaded(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     // first process the action so the data is in the state
     next(action);
 
@@ -300,7 +300,7 @@ Middleware<AppState> _createDeleteState(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();

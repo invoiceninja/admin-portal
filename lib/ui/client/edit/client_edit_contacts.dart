@@ -76,7 +76,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _phoneController,
     ];
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     var contact = widget.contact;
     _firstNameController.text = contact.firstName;
@@ -84,14 +84,14 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _emailController.text = contact.email;
     _phoneController.text = contact.phone;
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
+    _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
     });

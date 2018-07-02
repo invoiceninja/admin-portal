@@ -21,7 +21,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   ];
 }
 
-_saveAuthLocal(action) async {
+_saveAuthLocal(dynamic action) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('email', action.email);
   prefs.setString('url', action.url);
@@ -34,7 +34,7 @@ _saveAuthLocal(action) async {
   }
 }
 
-_loadAuthLocal(Store<AppState> store, action) async {
+_loadAuthLocal(Store<AppState> store, dynamic action) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   String email = prefs.getString('email') ?? Config.LOGIN_EMAIL;
@@ -47,7 +47,7 @@ _loadAuthLocal(Store<AppState> store, action) async {
 }
 
 Middleware<AppState> _createLoginInit() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     _loadAuthLocal(store, action);
 
     next(action);
@@ -55,7 +55,7 @@ Middleware<AppState> _createLoginInit() {
 }
 
 Middleware<AppState> _createLoginRequest(AuthRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .login(action.email, action.password, action.url, action.secret)
         .then((data) {
@@ -76,7 +76,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       } else {
         store.dispatch(UserLoginFailure('The minimum version is v4.5'));
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(UserLoginFailure(error.toString()));
     });
