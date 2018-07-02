@@ -15,7 +15,7 @@ class InvoiceItemSelector extends StatefulWidget {
 
 class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
   String _filter;
-  List<int> _selectedIds = [];
+  final List<int> _selectedIds = [];
 
   final _textController = TextEditingController();
   //EntityType _selectedEntityType = EntityType.product;

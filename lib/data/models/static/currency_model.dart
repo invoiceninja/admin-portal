@@ -1,6 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'currency_model.g.dart';
 
@@ -35,7 +37,7 @@ class CurrencyFields {
   static const String exchangeRate = 'exchangeRate';
 }
 
-abstract class CurrencyEntity implements Built<CurrencyEntity, CurrencyEntityBuilder> {
+abstract class CurrencyEntity extends Object with SelectableEntity implements Built<CurrencyEntity, CurrencyEntityBuilder> {
 
   factory CurrencyEntity() {
     return _$CurrencyEntity._(
@@ -51,8 +53,6 @@ abstract class CurrencyEntity implements Built<CurrencyEntity, CurrencyEntityBui
     );
   }
   CurrencyEntity._();
-
-  int get id;
 
   String get name;
 
@@ -75,6 +75,48 @@ abstract class CurrencyEntity implements Built<CurrencyEntity, CurrencyEntityBui
   @nullable
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
+
+  @override
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    search = search.toLowerCase();
+
+    if (name.toLowerCase().contains(search)) {
+      return true;
+    } else if (code.toLowerCase().contains(search)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    search = search.toLowerCase();
+
+    if (code.toLowerCase().contains(search)) {
+      return code;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return name;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
 
   static Serializer<CurrencyEntity> get serializer => _$currencyEntitySerializer;
 }

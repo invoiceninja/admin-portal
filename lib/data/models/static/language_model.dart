@@ -1,6 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'language_model.g.dart';
 
@@ -30,7 +32,7 @@ class LanguageFields {
   
 }
 
-abstract class LanguageEntity implements Built<LanguageEntity, LanguageEntityBuilder> {
+abstract class LanguageEntity extends Object with SelectableEntity implements Built<LanguageEntity, LanguageEntityBuilder> {
 
   factory LanguageEntity() {
     return _$LanguageEntity._(
@@ -41,9 +43,50 @@ abstract class LanguageEntity implements Built<LanguageEntity, LanguageEntityBui
   }
   LanguageEntity._();
 
-  int get id;
   String get name;
   String get locale;
+
+  @override
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    search = search.toLowerCase();
+
+    if (name.toLowerCase().contains(search)) {
+      return true;
+    } else if (locale.toLowerCase().contains(search)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    search = search.toLowerCase();
+
+    if (locale.toLowerCase().contains(search)) {
+      return locale;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return name;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
 
   static Serializer<LanguageEntity> get serializer => _$languageEntitySerializer;
 }
