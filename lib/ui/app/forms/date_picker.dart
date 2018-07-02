@@ -8,11 +8,13 @@ class DatePicker extends StatefulWidget {
     @required this.labelText,
     @required this.onSelected,
     @required this.selectedDate,
+    @required this.validator,
   });
 
   final String labelText;
   final String selectedDate;
   final Function(String) onSelected;
+  final Function validator;
 
   @override
   _DatePickerState createState() => new _DatePickerState();
@@ -54,6 +56,7 @@ class _DatePickerState extends State<DatePicker> {
       onTap: () => _showDatePicker(),
       child: IgnorePointer(
         child: TextFormField(
+          validator: widget.validator,
           controller: _textController,
           decoration: InputDecoration(
             labelText: widget.labelText,

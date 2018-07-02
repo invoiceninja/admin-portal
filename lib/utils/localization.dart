@@ -142,6 +142,7 @@ class AppLocalization {
       'percent': 'Percent',
       'edit': 'Edit',
       'dismiss': 'Dismiss',
+      'please_select_a_date': 'Please select a date',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -294,6 +295,7 @@ class AppLocalization {
   String get percent => _localizedValues[locale.languageCode]['percent'];
   String get edit => _localizedValues[locale.languageCode]['edit'];
   String get dismiss => _localizedValues[locale.languageCode]['dismiss'];
+  String get pleaseSelectADate => _localizedValues[locale.languageCode]['please_select_a_date'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

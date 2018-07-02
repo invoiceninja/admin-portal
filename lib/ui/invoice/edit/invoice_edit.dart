@@ -44,11 +44,6 @@ class _InvoiceEditState extends State<InvoiceEdit>
     var viewModel = widget.viewModel;
     var invoice = viewModel.invoice;
 
-    List<Widget> editors = [
-      InvoiceEditDetailsScreen(),
-      InvoiceEditItemsScreen(),
-    ];
-
     return WillPopScope(
       onWillPop: () async {
         viewModel.onBackPressed();
@@ -90,7 +85,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
           key: _formKey,
           child: TabBarView(
             controller: _controller,
-            children: editors,
+            children: <Widget>[
+              InvoiceEditDetailsScreen(),
+              InvoiceEditItemsScreen(),
+            ],
           ),
         ),
         bottomNavigationBar: BottomAppBar(
@@ -109,7 +107,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
-            showDialog(
+            showDialog<InvoiceItemSelector>(
                 context: context,
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
