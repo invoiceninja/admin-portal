@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'country_model.g.dart';
 
@@ -53,6 +54,8 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
     return _$CountryEntity._(
       id: 0,
       name: '',
+      iso2: '',
+      iso3: '',
       swapPostalCode: false,
       swapCurrencySymbol: false,
       thousandSeparator: '',
@@ -79,6 +82,13 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
   @BuiltValueField(wireName: 'decimal_separator')
   String get decimalSeparator;
 
+  @BuiltValueField(wireName: 'iso_3166_2')
+  String get iso2;
+
+  @BuiltValueField(wireName: 'iso_3166_3')
+  String get iso3;
+
+
   /*
   factory CountryEntity() {
     return _$CountryEntity._(
@@ -89,8 +99,6 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
       currencyCode: '',
       currencySubUnit: '',
       fullName: '',
-      iso_3166_2: '',
-      iso_3166_3: '',
       name: '',
       regionCode: '',
       subRegionCode: '',
@@ -123,12 +131,6 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
   @BuiltValueField(wireName: 'full_name')
   String get fullName;
 
-  @BuiltValueField(wireName: 'iso_3166_2')
-  String get iso_3166_2;
-
-  @BuiltValueField(wireName: 'iso_3166_3')
-  String get iso_3166_3;
-
   @BuiltValueField(wireName: 'region_code')
   String get regionCode;
 
@@ -138,6 +140,53 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
   @BuiltValueField(wireName: 'eea')
   bool get eea;
   */
+
+  @override
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    search = search.toLowerCase();
+
+    if (name.toLowerCase().contains(search)) {
+      return true;
+    } else if (iso2.toLowerCase().contains(search)) {
+      return true;
+    } else if (iso3.toLowerCase().contains(search)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    search = search.toLowerCase();
+    if (name.toLowerCase().contains(search)) {
+      return name;
+    } else if (iso2.toLowerCase().contains(search)) {
+      return iso2;
+    } else if (iso3.toLowerCase().contains(search)) {
+      return iso3;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return name;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
 
   static Serializer<CountryEntity> get serializer => _$countryEntitySerializer;
 }

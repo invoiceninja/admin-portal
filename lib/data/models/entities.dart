@@ -60,22 +60,12 @@ abstract class SelectableEntity {
   @nullable
   int get id;
 
-  bool matchesSearch(String search) {
-    return true;
-  }
+  bool matchesSearch(String search) => true;
+  String matchesSearchValue(String search) => null;
 
-  String matchesSearchValue(String search) {
-    return null;
-  }
+  String get listDisplayName => 'Error: listDisplayName not set';
 
-  String get listDisplayName {
-    return 'Error: not set';
-  }
-
-  String listDisplayCost(AppState state) {
-    return 'Error: not set';
-  }
-
+  String listDisplayCost(AppState state) => 'Error: listDisplayCost not set';
 }
 
 abstract class BaseEntity extends Object with SelectableEntity {
@@ -92,25 +82,13 @@ abstract class BaseEntity extends Object with SelectableEntity {
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
 
-  String get entityKey {
-    return '__${entityType}__${id}__';
-  }
+  String get entityKey => '__${entityType}__${id}__';
 
-  EntityType get entityType {
-    throw 'EntityType not set: ${this}';
-  }
+  EntityType get entityType => throw 'EntityType not set: ${this}';
 
-  bool get isNew {
-    return id == null || id < 0;
-  }
-
-  bool get isActive {
-    return archivedAt == null;
-  }
-
-  bool get isArchived {
-    return archivedAt != null && ! isDeleted;
-  }
+  bool get isNew => id == null || id < 0;
+  bool get isActive => archivedAt == null;
+  bool get isArchived => archivedAt != null && ! isDeleted;
 
   bool matchesStates(BuiltList<EntityState> states) {
     if (states.length == 0) {
