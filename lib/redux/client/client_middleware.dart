@@ -35,7 +35,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 }
 
 Middleware<AppState> _viewClientList() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     store.dispatch(LoadClients());
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
@@ -44,7 +44,7 @@ Middleware<AppState> _viewClientList() {
 }
 
 Middleware<AppState> _editClient() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
@@ -53,7 +53,7 @@ Middleware<AppState> _editClient() {
 }
 
 Middleware<AppState> _viewClient() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
@@ -62,12 +62,12 @@ Middleware<AppState> _viewClient() {
 }
 
 Middleware<AppState> _archiveClient(ClientRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     var origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.archive)
-        .then((client) {
+        .then((dynamic client) {
       store.dispatch(ArchiveClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -75,6 +75,9 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
     }).catchError((error) {
       print(error);
       store.dispatch(ArchiveClientFailure(origClient));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -82,19 +85,22 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _deleteClient(ClientRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     var origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.delete)
-        .then((client) {
+        .then((dynamic client) {
       store.dispatch(DeleteClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteClientFailure(origClient));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -102,19 +108,22 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _restoreClient(ClientRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     var origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.restore)
-        .then((client) {
+        .then((dynamic client) {
       store.dispatch(RestoreClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreClientFailure(origClient));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -122,20 +131,21 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _saveClient(ClientRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.client)
-        .then((client) {
+        .then((dynamic client) {
       if (action.client.isNew()) {
         store.dispatch(AddClientSuccess(client));
       } else {
         store.dispatch(SaveClientSuccess(client));
       }
       action.completer.complete(null);
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(SaveClientFailure(error));
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -143,7 +153,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _loadClients(ClientRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
 
     AppState state = store.state;
 
@@ -169,9 +179,12 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(LoadClientsFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);

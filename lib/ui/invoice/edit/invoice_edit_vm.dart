@@ -84,6 +84,9 @@ class InvoiceEditVM {
                       : AppLocalization.of(context).successfullyUpdatedInvoice,
                 )));
                 */
+          }).catchError((Object error) {
+            print('caught');
+            print(error.toString());
           });
         },
         onItemsAdded: (items) => store.dispatch(AddInvoiceItems(items)),

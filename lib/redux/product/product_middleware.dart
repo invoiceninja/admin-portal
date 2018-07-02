@@ -31,7 +31,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 }
 
 Middleware<AppState> _viewProductList() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     store.dispatch(LoadProducts());
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
 
@@ -40,7 +40,7 @@ Middleware<AppState> _viewProductList() {
 }
 
 Middleware<AppState> _editProduct() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
@@ -49,19 +49,22 @@ Middleware<AppState> _editProduct() {
 }
 
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     var origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.archive)
-        .then((product) {
+        .then((dynamic product) {
       store.dispatch(ArchiveProductSuccess(product));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+    }).catchError((dynamic error) {
       print(error);
       store.dispatch(ArchiveProductFailure(origProduct));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -69,12 +72,12 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _deleteProduct(ProductRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     var origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.delete)
-        .then((product) {
+        .then((dynamic product) {
       store.dispatch(DeleteProductSuccess(product));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -82,6 +85,9 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
     }).catchError((error) {
       print(error);
       store.dispatch(DeleteProductFailure(origProduct));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -89,19 +95,22 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _restoreProduct(ProductRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     var origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.restore)
-        .then((product) {
+        .then((dynamic product) {
       store.dispatch(RestoreProductSuccess(product));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreProductFailure(origProduct));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -109,20 +118,21 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _saveProduct(ProductRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.product)
-        .then((product) {
+        .then((dynamic product) {
       if (action.product.isNew()) {
         store.dispatch(AddProductSuccess(product));
       } else {
         store.dispatch(SaveProductSuccess(product));
       }
       action.completer.complete(null);
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(SaveProductFailure(error));
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -130,7 +140,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _loadProducts(ProductRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     AppState state = store.state;
 
     if (!state.productState.isStale && !action.force) {
@@ -149,9 +159,12 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(LoadProductsFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
