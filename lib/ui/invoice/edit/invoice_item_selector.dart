@@ -27,9 +27,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
   }
 
   void _addBlankItem() {
-    widget.onItemsSelected([
-      InvoiceItemEntity()
-    ]);
+    widget.onItemsSelected([InvoiceItemEntity()]);
     Navigator.pop(context);
   }
 
@@ -122,9 +120,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                       onPressed: () => _onItemsSelected(),
                     )
                   : IconButton(
-                icon: Icon(Icons.add_circle_outline),
-                onPressed: () => _addBlankItem(),
-              ),
+                      icon: Icon(Icons.add_circle_outline),
+                      onPressed: () => _addBlankItem(),
+                    ),
             ],
           )
         ],

@@ -79,7 +79,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
   }
 }
 
-
 class EntityDropdownDialog extends StatefulWidget {
   EntityDropdownDialog({
     @required this.entityMap,
@@ -136,7 +135,8 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
 
     Widget _createList() {
       final matches = widget.entityList
-          .where((entityId) => widget.entityMap[entityId].matchesSearch(_filter))
+          .where(
+              (entityId) => widget.entityMap[entityId].matchesSearch(_filter))
           .toList();
 
       return ListView.builder(
@@ -166,12 +166,10 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         child: Material(
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                _headerRow(),
-                _createList(),
-              ]),
+          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            _headerRow(),
+            _createList(),
+          ]),
         ),
       ),
     );
