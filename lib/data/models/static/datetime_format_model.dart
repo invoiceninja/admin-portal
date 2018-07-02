@@ -6,19 +6,21 @@ part 'datetime_format_model.g.dart';
 
 abstract class DatetimeFormatListResponse implements Built<DatetimeFormatListResponse, DatetimeFormatListResponseBuilder> {
 
+  factory DatetimeFormatListResponse([void updates(DatetimeFormatListResponseBuilder b)]) = _$DatetimeFormatListResponse;
+  DatetimeFormatListResponse._();
+
   BuiltList<DatetimeFormatEntity> get data;
 
-  DatetimeFormatListResponse._();
-  factory DatetimeFormatListResponse([void updates(DatetimeFormatListResponseBuilder b)]) = _$DatetimeFormatListResponse;
   static Serializer<DatetimeFormatListResponse> get serializer => _$datetimeFormatListResponseSerializer;
 }
 
 abstract class DatetimeFormatItemResponse implements Built<DatetimeFormatItemResponse, DatetimeFormatItemResponseBuilder> {
 
+  factory DatetimeFormatItemResponse([void updates(DatetimeFormatItemResponseBuilder b)]) = _$DatetimeFormatItemResponse;
+  DatetimeFormatItemResponse._();
+
   DatetimeFormatEntity get data;
 
-  DatetimeFormatItemResponse._();
-  factory DatetimeFormatItemResponse([void updates(DatetimeFormatItemResponseBuilder b)]) = _$DatetimeFormatItemResponse;
   static Serializer<DatetimeFormatItemResponse> get serializer => _$datetimeFormatItemResponseSerializer;
 }
 
@@ -36,6 +38,7 @@ abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, Datet
       formatMoment: '',
     );
   }
+  DatetimeFormatEntity._();
 
   int get id;
   String get format;
@@ -43,6 +46,5 @@ abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, Datet
   @BuiltValueField(wireName: 'format_moment')
   String get formatMoment;
   
-  DatetimeFormatEntity._();
   static Serializer<DatetimeFormatEntity> get serializer => _$datetimeFormatEntitySerializer;
 }

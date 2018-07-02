@@ -10,22 +10,26 @@ part 'product_model.g.dart';
 
 abstract class ProductListResponse
     implements Built<ProductListResponse, ProductListResponseBuilder> {
-  BuiltList<ProductEntity> get data;
 
-  ProductListResponse._();
   factory ProductListResponse([void updates(ProductListResponseBuilder b)]) =
       _$ProductListResponse;
+  ProductListResponse._();
+
+  BuiltList<ProductEntity> get data;
+
   static Serializer<ProductListResponse> get serializer =>
       _$productListResponseSerializer;
 }
 
 abstract class ProductItemResponse
     implements Built<ProductItemResponse, ProductItemResponseBuilder> {
-  ProductEntity get data;
 
-  ProductItemResponse._();
   factory ProductItemResponse([void updates(ProductItemResponseBuilder b)]) =
       _$ProductItemResponse;
+  ProductItemResponse._();
+
+  ProductEntity get data;
+
   static Serializer<ProductItemResponse> get serializer =>
       _$productItemResponseSerializer;
 }
@@ -44,10 +48,6 @@ class ProductFields {
 abstract class ProductEntity extends Object
     with BaseEntity, ConvertToInvoiceItem
     implements Built<ProductEntity, ProductEntityBuilder> {
-  @override
-  EntityType get entityType {
-    return EntityType.product;
-  }
 
   static int counter = 0;
   factory ProductEntity() {
@@ -66,6 +66,12 @@ abstract class ProductEntity extends Object
       archivedAt: 0,
       isDeleted: false,
     );
+  }
+  ProductEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.product;
   }
 
   @BuiltValueField(wireName: 'product_key')
@@ -178,6 +184,5 @@ abstract class ProductEntity extends Object
     return null;
   }
 
-  ProductEntity._();
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

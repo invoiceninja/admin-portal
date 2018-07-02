@@ -7,14 +7,6 @@ part 'list_ui_state.g.dart';
 
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
-  @nullable
-  String get search;
-
-  String get sortField;
-  bool get sortAscending;
-  BuiltList<EntityState> get stateFilters;
-  BuiltList<int> get statusFilters;
-
   factory ListUIState(String sortField) {
     return _$ListUIState._(
       sortField: sortField,
@@ -25,8 +17,16 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
       statusFilters: BuiltList<int>(),
     );
   }
-
   ListUIState._();
+
+  @nullable
+  String get search;
+
+  String get sortField;
+  bool get sortAscending;
+  BuiltList<EntityState> get stateFilters;
+  BuiltList<int> get statusFilters;
+
   //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;
   static Serializer<ListUIState> get serializer => _$listUIStateSerializer;
 }

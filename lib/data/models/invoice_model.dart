@@ -10,19 +10,21 @@ part 'invoice_model.g.dart';
 abstract class InvoiceListResponse implements Built<InvoiceListResponse, 
   InvoiceListResponseBuilder> {
 
+  factory InvoiceListResponse([void updates(InvoiceListResponseBuilder b)]) = _$InvoiceListResponse;
+  InvoiceListResponse._();
+
   BuiltList<InvoiceEntity> get data;
 
-  InvoiceListResponse._();
-  factory InvoiceListResponse([void updates(InvoiceListResponseBuilder b)]) = _$InvoiceListResponse;
   static Serializer<InvoiceListResponse> get serializer => _$invoiceListResponseSerializer;
 }
 
 abstract class InvoiceItemResponse implements Built<InvoiceItemResponse, InvoiceItemResponseBuilder> {
 
+  factory InvoiceItemResponse([void updates(InvoiceItemResponseBuilder b)]) = _$InvoiceItemResponse;
+  InvoiceItemResponse._();
+
   InvoiceEntity get data;
 
-  InvoiceItemResponse._();
-  factory InvoiceItemResponse([void updates(InvoiceItemResponseBuilder b)]) = _$InvoiceItemResponse;
   static Serializer<InvoiceItemResponse> get serializer => _$invoiceItemResponseSerializer;
 }
 
@@ -56,11 +58,6 @@ class InvoiceFields {
 
 abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTotal
   implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-
-  @override
-  EntityType get entityType {
-    return EntityType.invoice;
-  }
 
   static int counter = 0;
   factory InvoiceEntity() {
@@ -113,6 +110,12 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
         archivedAt: 0,
         isDeleted: false,
     );
+  }
+  InvoiceEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.invoice;
   }
 
   double get amount;
@@ -306,7 +309,6 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   String get invitationSilentLink => invitations.first?.silentLink;
   String get invitationDownloadLink => invitations.first?.downloadLink;
 
-  InvoiceEntity._();
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
 
@@ -334,6 +336,7 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
       isDeleted: false,
     );
   }
+  InvoiceItemEntity._();
 
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
@@ -369,7 +372,6 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
 
   double get total => qty * cost;
 
-  InvoiceItemEntity._();
   static Serializer<InvoiceItemEntity> get serializer => _$invoiceItemEntitySerializer;
 }
 
@@ -389,6 +391,7 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
       isDeleted: false,
     );
   }
+  InvitationEntity._();
 
   String get key;
 
@@ -403,6 +406,5 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
   String get silentLink => link + '?silent=true';
   String get downloadLink => link.replaceFirst('/view/', '/download/');
 
-  InvitationEntity._();
   static Serializer<InvitationEntity> get serializer => _$invitationEntitySerializer;
 }

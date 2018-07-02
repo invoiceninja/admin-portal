@@ -7,19 +7,21 @@ part 'vendor_model.g.dart';
 
 abstract class VendorListResponse implements Built<VendorListResponse, VendorListResponseBuilder> {
 
+  factory VendorListResponse([void updates(VendorListResponseBuilder b)]) = _$VendorListResponse;
+  VendorListResponse._();
+
   BuiltList<VendorEntity> get data;
 
-  VendorListResponse._();
-  factory VendorListResponse([void updates(VendorListResponseBuilder b)]) = _$VendorListResponse;
   static Serializer<VendorListResponse> get serializer => _$vendorListResponseSerializer;
 }
 
 abstract class VendorItemResponse implements Built<VendorItemResponse, VendorItemResponseBuilder> {
 
+  factory VendorItemResponse([void updates(VendorItemResponseBuilder b)]) = _$VendorItemResponse;
+  VendorItemResponse._();
+
   VendorEntity get data;
 
-  VendorItemResponse._();
-  factory VendorItemResponse([void updates(VendorItemResponseBuilder b)]) = _$VendorItemResponse;
   static Serializer<VendorItemResponse> get serializer => _$vendorItemResponseSerializer;
 }
 
@@ -51,11 +53,6 @@ class VendorFields {
 
 abstract class VendorEntity extends Object with BaseEntity implements Built<VendorEntity, VendorEntityBuilder> {
 
-  @override
-  EntityType get entityType {
-    return EntityType.vendor;
-  }
-
   static int counter = 0;
   factory VendorEntity() {
     return _$VendorEntity._(
@@ -84,6 +81,12 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
         archivedAt: 0,
         isDeleted: false,
     );
+  }
+  VendorEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.vendor;
   }
 
   String get name;
@@ -159,7 +162,6 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
     return name.contains(search);
   }
 
-  VendorEntity._();
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }
 
@@ -180,6 +182,7 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
         isDeleted: false,
     );
   }
+  VendorContactEntity._();
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;
@@ -194,6 +197,5 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
 
   String get phone;
 
-  VendorContactEntity._();
   static Serializer<VendorContactEntity> get serializer => _$vendorContactEntitySerializer;
 }

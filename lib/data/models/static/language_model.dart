@@ -6,19 +6,21 @@ part 'language_model.g.dart';
 
 abstract class LanguageListResponse implements Built<LanguageListResponse, LanguageListResponseBuilder> {
 
+  factory LanguageListResponse([void updates(LanguageListResponseBuilder b)]) = _$LanguageListResponse;
+  LanguageListResponse._();
+
   BuiltList<LanguageEntity> get data;
 
-  LanguageListResponse._();
-  factory LanguageListResponse([void updates(LanguageListResponseBuilder b)]) = _$LanguageListResponse;
   static Serializer<LanguageListResponse> get serializer => _$languageListResponseSerializer;
 }
 
 abstract class LanguageItemResponse implements Built<LanguageItemResponse, LanguageItemResponseBuilder> {
 
+  factory LanguageItemResponse([void updates(LanguageItemResponseBuilder b)]) = _$LanguageItemResponse;
+  LanguageItemResponse._();
+
   LanguageEntity get data;
 
-  LanguageItemResponse._();
-  factory LanguageItemResponse([void updates(LanguageItemResponseBuilder b)]) = _$LanguageItemResponse;
   static Serializer<LanguageItemResponse> get serializer => _$languageItemResponseSerializer;
 }
 
@@ -37,12 +39,12 @@ abstract class LanguageEntity implements Built<LanguageEntity, LanguageEntityBui
       locale: '',
     );
   }
+  LanguageEntity._();
 
   int get id;
   String get name;
   String get locale;
 
-  LanguageEntity._();
   static Serializer<LanguageEntity> get serializer => _$languageEntitySerializer;
 }
 

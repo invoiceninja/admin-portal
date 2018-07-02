@@ -7,22 +7,28 @@ part 'expense_model.g.dart';
 
 abstract class ExpenseListResponse
     implements Built<ExpenseListResponse, ExpenseListResponseBuilder> {
-  BuiltList<ExpenseEntity> get data;
 
-  ExpenseListResponse._();
   factory ExpenseListResponse([void updates(ExpenseListResponseBuilder b)]) =
       _$ExpenseListResponse;
+
+  ExpenseListResponse._();
+
+  BuiltList<ExpenseEntity> get data;
+
   static Serializer<ExpenseListResponse> get serializer =>
       _$expenseListResponseSerializer;
 }
 
 abstract class ExpenseItemResponse
     implements Built<ExpenseItemResponse, ExpenseItemResponseBuilder> {
-  ExpenseEntity get data;
 
-  ExpenseItemResponse._();
   factory ExpenseItemResponse([void updates(ExpenseItemResponseBuilder b)]) =
       _$ExpenseItemResponse;
+
+  ExpenseItemResponse._();
+
+  ExpenseEntity get data;
+
   static Serializer<ExpenseItemResponse> get serializer =>
       _$expenseItemResponseSerializer;
 }
@@ -59,11 +65,6 @@ abstract class ExpenseEntity extends Object
     with BaseEntity
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
 
-  @override
-  EntityType get entityType {
-    return EntityType.expense;
-  }
-
   static int counter = 0;
   factory ExpenseEntity() {
     return _$ExpenseEntity._(
@@ -90,6 +91,12 @@ abstract class ExpenseEntity extends Object
       customValue2: '',
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
     );
+  }
+  ExpenseEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.expense;
   }
 
   @BuiltValueField(wireName: 'private_notes')
@@ -176,18 +183,19 @@ abstract class ExpenseEntity extends Object
     return privateNotes.contains(search);
   }
 
-  ExpenseEntity._();
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 
 abstract class ExpenseCategoryEntity extends Object
     with BaseEntity
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
-  String get name;
 
-  ExpenseCategoryEntity._();
   factory ExpenseCategoryEntity([void updates(ExpenseCategoryEntityBuilder b)]) =
       _$ExpenseCategoryEntity;
+  ExpenseCategoryEntity._();
+
+  String get name;
+
   static Serializer<ExpenseCategoryEntity> get serializer =>
       _$expenseCategoryEntitySerializer;
 }

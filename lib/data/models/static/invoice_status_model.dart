@@ -6,19 +6,21 @@ part 'invoice_status_model.g.dart';
 
 abstract class InvoiceStatusListResponse implements Built<InvoiceStatusListResponse, InvoiceStatusListResponseBuilder> {
 
+  factory InvoiceStatusListResponse([void updates(InvoiceStatusListResponseBuilder b)]) = _$InvoiceStatusListResponse;
+  InvoiceStatusListResponse._();
+
   BuiltList<InvoiceStatusEntity> get data;
 
-  InvoiceStatusListResponse._();
-  factory InvoiceStatusListResponse([void updates(InvoiceStatusListResponseBuilder b)]) = _$InvoiceStatusListResponse;
   static Serializer<InvoiceStatusListResponse> get serializer => _$invoiceStatusListResponseSerializer;
 }
 
 abstract class InvoiceStatusItemResponse implements Built<InvoiceStatusItemResponse, InvoiceStatusItemResponseBuilder> {
 
+  factory InvoiceStatusItemResponse([void updates(InvoiceStatusItemResponseBuilder b)]) = _$InvoiceStatusItemResponse;
+  InvoiceStatusItemResponse._();
+
   InvoiceStatusEntity get data;
 
-  InvoiceStatusItemResponse._();
-  factory InvoiceStatusItemResponse([void updates(InvoiceStatusItemResponseBuilder b)]) = _$InvoiceStatusItemResponse;
   static Serializer<InvoiceStatusItemResponse> get serializer => _$invoiceStatusItemResponseSerializer;
 }
 
@@ -35,11 +37,11 @@ abstract class InvoiceStatusEntity implements Built<InvoiceStatusEntity, Invoice
       name: '',
     );
   }
+  InvoiceStatusEntity._();
 
   int get id;
   String get name;
 
-  InvoiceStatusEntity._();
   static Serializer<InvoiceStatusEntity> get serializer => _$invoiceStatusEntitySerializer;
 }
 

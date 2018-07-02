@@ -7,19 +7,21 @@ part 'project_model.g.dart';
 
 abstract class ProjectListResponse implements Built<ProjectListResponse, ProjectListResponseBuilder> {
 
+  factory ProjectListResponse([void updates(ProjectListResponseBuilder b)]) = _$ProjectListResponse;
+  ProjectListResponse._();
+
   BuiltList<ProjectEntity> get data;
 
-  ProjectListResponse._();
-  factory ProjectListResponse([void updates(ProjectListResponseBuilder b)]) = _$ProjectListResponse;
   static Serializer<ProjectListResponse> get serializer => _$projectListResponseSerializer;
 }
 
 abstract class ProjectItemResponse implements Built<ProjectItemResponse, ProjectItemResponseBuilder> {
 
+  factory ProjectItemResponse([void updates(ProjectItemResponseBuilder b)]) = _$ProjectItemResponse;
+  ProjectItemResponse._();
+
   ProjectEntity get data;
 
-  ProjectItemResponse._();
-  factory ProjectItemResponse([void updates(ProjectItemResponseBuilder b)]) = _$ProjectItemResponse;
   static Serializer<ProjectItemResponse> get serializer => _$projectItemResponseSerializer;
 }
 
@@ -40,11 +42,6 @@ class ProjectFields {
 
 abstract class ProjectEntity extends Object with BaseEntity implements Built<ProjectEntity, ProjectEntityBuilder> {
 
-  @override
-  EntityType get entityType {
-    return EntityType.project;
-  }
-
   static int counter = 0;
   factory ProjectEntity() {
     return _$ProjectEntity._(
@@ -62,6 +59,12 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
         archivedAt: 0,
         isDeleted: false,
     );
+  }
+  ProjectEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.project;
   }
 
   String get name;
@@ -113,6 +116,5 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
     return name.contains(search);
   }
 
-  ProjectEntity._();
   static Serializer<ProjectEntity> get serializer => _$projectEntitySerializer;
 }

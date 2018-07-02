@@ -7,19 +7,21 @@ part 'payment_model.g.dart';
 
 abstract class PaymentListResponse implements Built<PaymentListResponse, PaymentListResponseBuilder> {
 
+  factory PaymentListResponse([void updates(PaymentListResponseBuilder b)]) = _$PaymentListResponse;
+  PaymentListResponse._();
+
   BuiltList<PaymentEntity> get data;
 
-  PaymentListResponse._();
-  factory PaymentListResponse([void updates(PaymentListResponseBuilder b)]) = _$PaymentListResponse;
   static Serializer<PaymentListResponse> get serializer => _$paymentListResponseSerializer;
 }
 
 abstract class PaymentItemResponse implements Built<PaymentItemResponse, PaymentItemResponseBuilder> {
 
+  factory PaymentItemResponse([void updates(PaymentItemResponseBuilder b)]) = _$PaymentItemResponse;
+  PaymentItemResponse._();
+
   PaymentEntity get data;
 
-  PaymentItemResponse._();
-  factory PaymentItemResponse([void updates(PaymentItemResponseBuilder b)]) = _$PaymentItemResponse;
   static Serializer<PaymentItemResponse> get serializer => _$paymentItemResponseSerializer;
 }
 
@@ -42,11 +44,6 @@ class PaymentFields {
 
 abstract class PaymentEntity extends Object with BaseEntity implements Built<PaymentEntity, PaymentEntityBuilder> {
 
-  @override
-  EntityType get entityType {
-    return EntityType.payment;
-  }
-
   static int counter = 0;
   factory PaymentEntity() {
     return _$PaymentEntity._(
@@ -65,6 +62,12 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       archivedAt: 0,
       isDeleted: false,
     );
+  }
+  PaymentEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.payment;
   }
 
   double get amount;
@@ -115,6 +118,5 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
     return privateNotes.contains(search);
   }
   
-  PaymentEntity._();
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
 }

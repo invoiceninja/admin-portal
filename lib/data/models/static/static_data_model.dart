@@ -19,19 +19,21 @@ part 'static_data_model.g.dart';
 
 abstract class StaticDataListResponse implements Built<StaticDataListResponse, StaticDataListResponseBuilder> {
 
+  factory StaticDataListResponse([void updates(StaticDataListResponseBuilder b)]) = _$StaticDataListResponse;
+  StaticDataListResponse._();
+
   BuiltList<StaticDataEntity> get data;
 
-  StaticDataListResponse._();
-  factory StaticDataListResponse([void updates(StaticDataListResponseBuilder b)]) = _$StaticDataListResponse;
   static Serializer<StaticDataListResponse> get serializer => _$staticDataListResponseSerializer;
 }
 
 abstract class StaticDataItemResponse implements Built<StaticDataItemResponse, StaticDataItemResponseBuilder> {
 
+  factory StaticDataItemResponse([void updates(StaticDataItemResponseBuilder b)]) = _$StaticDataItemResponse;
+  StaticDataItemResponse._();
+
   StaticDataEntity get data;
 
-  StaticDataItemResponse._();
-  factory StaticDataItemResponse([void updates(StaticDataItemResponseBuilder b)]) = _$StaticDataItemResponse;
   static Serializer<StaticDataItemResponse> get serializer => _$staticDataItemResponseSerializer;
 }
 
@@ -71,8 +73,8 @@ abstract class StaticDataEntity implements Built<StaticDataEntity, StaticDataEnt
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
       frequencies: BuiltList<FrequencyEntity>(),
     );
-
   }
+  StaticDataEntity._();
 
   BuiltList<CurrencyEntity> get currencies;
 
@@ -98,7 +100,6 @@ abstract class StaticDataEntity implements Built<StaticDataEntity, StaticDataEnt
 
   BuiltList<FrequencyEntity> get frequencies;
 
-  StaticDataEntity._();
   static Serializer<StaticDataEntity> get serializer => _$staticDataEntitySerializer;
 }
 

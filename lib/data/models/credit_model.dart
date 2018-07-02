@@ -7,19 +7,21 @@ part 'credit_model.g.dart';
 
 abstract class CreditListResponse implements Built<CreditListResponse, CreditListResponseBuilder> {
 
+  factory CreditListResponse([void updates(CreditListResponseBuilder b)]) = _$CreditListResponse;
+  CreditListResponse._();
+
   BuiltList<CreditEntity> get data;
 
-  CreditListResponse._();
-  factory CreditListResponse([void updates(CreditListResponseBuilder b)]) = _$CreditListResponse;
   static Serializer<CreditListResponse> get serializer => _$creditListResponseSerializer;
 }
 
 abstract class CreditItemResponse implements Built<CreditItemResponse, CreditItemResponseBuilder> {
 
+  factory CreditItemResponse([void updates(CreditItemResponseBuilder b)]) = _$CreditItemResponse;
+  CreditItemResponse._();
+
   CreditEntity get data;
 
-  CreditItemResponse._();
-  factory CreditItemResponse([void updates(CreditItemResponseBuilder b)]) = _$CreditItemResponse;
   static Serializer<CreditItemResponse> get serializer => _$creditItemResponseSerializer;
 }
 
@@ -40,11 +42,6 @@ class CreditFields {
 
 abstract class CreditEntity extends Object with BaseEntity implements Built<CreditEntity, CreditEntityBuilder> {
 
-  @override
-  EntityType get entityType {
-    return EntityType.credit;
-  }
-
   static int counter = 0;
   factory CreditEntity() {
     return _$CreditEntity._(
@@ -60,6 +57,12 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
       archivedAt: 0,
       isDeleted: false,
     );
+  }
+  CreditEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.credit;
   }
 
   double get amount;
@@ -104,6 +107,5 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
     return publicNotes.contains(search);
   }
   
-  CreditEntity._();
   static Serializer<CreditEntity> get serializer => _$creditEntitySerializer;
 }
