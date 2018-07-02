@@ -89,7 +89,7 @@ class AddClientSuccess implements StopLoading, PersistData, PersistUI {
 }
 
 class SaveClientFailure implements StopLoading {
-  final String error;
+  final Object error;
   SaveClientFailure (this.error);
 }
 

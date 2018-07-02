@@ -97,7 +97,7 @@ class AddInvoiceSuccess implements StopLoading, PersistData, PersistUI {
 }
 
 class SaveInvoiceFailure implements StopLoading {
-  final String error;
+  final Object error;
   SaveInvoiceFailure (this.error);
 }
 

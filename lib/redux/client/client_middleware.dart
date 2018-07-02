@@ -136,7 +136,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
         .saveData(
             store.state.selectedCompany, store.state.authState, action.client)
         .then((dynamic client) {
-      if (action.client.isNew()) {
+      if (action.client.isNew) {
         store.dispatch(AddClientSuccess(client));
       } else {
         store.dispatch(SaveClientSuccess(client));

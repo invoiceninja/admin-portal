@@ -123,7 +123,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
         .saveData(
             store.state.selectedCompany, store.state.authState, action.product)
         .then((dynamic product) {
-      if (action.product.isNew()) {
+      if (action.product.isNew) {
         store.dispatch(AddProductSuccess(product));
       } else {
         store.dispatch(SaveProductSuccess(product));
