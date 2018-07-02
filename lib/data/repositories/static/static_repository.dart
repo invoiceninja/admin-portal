@@ -15,7 +15,7 @@ class StaticRepository {
 
   Future<StaticDataEntity> loadList(CompanyEntity company, AuthState auth) async {
 
-    final response = await webClient.get(
+    final Future<dynamic> response = await webClient.get(
         auth.url + '/static', company.token);
 
     StaticDataItemResponse staticDataResponse = serializers.deserializeWith(

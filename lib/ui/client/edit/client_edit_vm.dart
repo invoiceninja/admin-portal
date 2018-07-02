@@ -79,7 +79,7 @@ class ClientEditVM {
               Navigator.of(context).pop();
               Navigator
                   .of(context)
-                  .push(MaterialPageRoute(builder: (_) => ClientViewScreen()));
+                  .push<ClientViewScreen>(MaterialPageRoute(builder: (_) => ClientViewScreen()));
             } else {
               Navigator.of(context).pop();
             }

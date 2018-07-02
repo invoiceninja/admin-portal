@@ -17,7 +17,7 @@ class PaymentsRepository {
 
   Future<BuiltList<PaymentEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final response = await webClient.get(
+    final Future<dynamic> response = await webClient.get(
         auth.url + '/payments?per_page=500', company.token);
 
     PaymentListResponse paymentResponse = serializers.deserializeWith(
@@ -29,7 +29,7 @@ class PaymentsRepository {
   Future saveData(CompanyEntity company, AuthState auth, PaymentEntity payment, [EntityAction action]) async {
 
     var data = serializers.serializeWith(PaymentEntity.serializer, payment);
-    var response;
+    Future<dynamic> response;
 
     if (payment.isNew) {
       response = await webClient.post(

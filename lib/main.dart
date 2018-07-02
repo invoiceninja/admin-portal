@@ -39,7 +39,7 @@ void main() {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         ..addAll([
-          LoggingMiddleware.printer(),
+          LoggingMiddleware<dynamic>.printer(),
         ]));
 
   runApp(InvoiceNinjaApp(store: store));

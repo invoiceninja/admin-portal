@@ -17,7 +17,7 @@ class ProductRepository {
 
   Future<BuiltList<ProductEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final response = await webClient.get(
+    final Future<dynamic> response = await webClient.get(
         auth.url + '/products', company.token);
 
     ProductListResponse productResponse = serializers.deserializeWith(
@@ -29,7 +29,7 @@ class ProductRepository {
   Future saveData(CompanyEntity company, AuthState auth, ProductEntity product, [EntityAction action]) async {
 
     var data = serializers.serializeWith(ProductEntity.serializer, product);
-    var response;
+    Future<dynamic> response;
 
     if (product.isNew) {
       response = await webClient.post(

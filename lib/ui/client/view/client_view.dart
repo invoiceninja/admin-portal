@@ -91,7 +91,7 @@ class _ClientViewState extends State<ClientView>
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
-            showDialog(
+            showDialog<SimpleDialog>(
               context: context,
               builder: (BuildContext context) =>
                   SimpleDialog(children: <Widget>[

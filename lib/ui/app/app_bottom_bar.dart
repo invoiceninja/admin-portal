@@ -40,7 +40,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _filterController = Scaffold.of(context).showBottomSheet((context) {
+      _filterController = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return StoreConnector<AppState, BuiltList<EntityState>>(
           //distinct: true,
           converter: (Store<AppState> store) => store.state.getListState(widget.entityType).stateFilters,
@@ -95,7 +95,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _sortController  = Scaffold.of(context).showBottomSheet((context) {
+      _sortController  = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return StoreConnector<AppState, ListUIState>(
           //distinct: true,
           converter: (Store<AppState> store) => store.state.getListState(widget.entityType),

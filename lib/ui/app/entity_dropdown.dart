@@ -103,7 +103,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
           }).toList());
     }
 
-    showDialog(
+    showDialog<Padding>(
         context: context,
         builder: (BuildContext context) {
           return Padding(

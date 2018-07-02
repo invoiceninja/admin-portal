@@ -36,8 +36,8 @@ String formatNumber(
   ClientEntity client = state.selectedCompanyState.clientState.map[clientId];
 
   //var countryId = client?.countryId ?? company.countryId;
-  var currencyId;
-  var countryId = client?.countryId ?? 1;
+  int currencyId;
+  int countryId = client?.countryId ?? 1;
 
   if (client != null && client.currencyId > 0) {
     currencyId = client.currencyId;
@@ -73,7 +73,7 @@ String formatNumber(
     MINUS_SIGN: '-',
   );
 
-  var formatter;
+  NumberFormat formatter;
   String formatted;
 
   if (formatNumberType == FormatNumberType.int) {

@@ -96,7 +96,7 @@ AppState reducer(AppState state, dynamic action) {
 void main() {
   final store =
       Store<AppState>(reducer, initialState: AppState.init(), middleware: [
-    LoggingMiddleware.printer(),
+    LoggingMiddleware<dynamic>.printer(),
   ]);
 
   runApp(MyApp(store: store));

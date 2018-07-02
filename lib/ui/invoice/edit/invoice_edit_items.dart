@@ -120,7 +120,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
     var localization = AppLocalization.of(context);
 
     _confirmDelete() {
-      showDialog(
+      showDialog<AlertDialog>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
               semanticLabel: localization.areYouSure,

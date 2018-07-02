@@ -17,7 +17,7 @@ class CreditsRepository {
 
   Future<BuiltList<CreditEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final response = await webClient.get(
+    final Future<dynamic> response = await webClient.get(
         auth.url + '/credits?per_page=500', company.token);
 
     CreditListResponse creditResponse = serializers.deserializeWith(
@@ -29,7 +29,7 @@ class CreditsRepository {
   Future saveData(CompanyEntity company, AuthState auth, CreditEntity credit, [EntityAction action]) async {
 
     var data = serializers.serializeWith(CreditEntity.serializer, credit);
-    var response;
+    Future<dynamic> response;
 
     if (credit.isNew) {
       response = await webClient.post(

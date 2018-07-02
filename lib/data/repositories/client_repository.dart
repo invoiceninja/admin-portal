@@ -17,7 +17,7 @@ class ClientRepository {
 
   Future<BuiltList<ClientEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final response = await webClient.get(
+    final Future<dynamic> response = await webClient.get(
         auth.url + '/clients', company.token);
 
     ClientListResponse clientResponse = serializers.deserializeWith(
@@ -29,7 +29,7 @@ class ClientRepository {
   Future saveData(CompanyEntity company, AuthState auth, ClientEntity client, [EntityAction action]) async {
 
     var data = serializers.serializeWith(ClientEntity.serializer, client);
-    var response;
+    Future<dynamic> response;
 
     if (client.isNew) {
       response = await webClient.post(

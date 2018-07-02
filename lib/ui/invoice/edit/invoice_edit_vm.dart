@@ -74,7 +74,7 @@ class InvoiceEditVM {
               Navigator.of(context).pop();
               Navigator
                   .of(context)
-                  .push(MaterialPageRoute(builder: (_) => InvoiceViewScreen()));
+                  .push<InvoiceViewScreen>(MaterialPageRoute(builder: (_) => InvoiceViewScreen()));
             } else {
               Navigator.of(context).pop();
             }

@@ -63,8 +63,8 @@ class InvoiceViewVM {
 
     Future<Null> _viewPdf(BuildContext context) async {
       var localization = AppLocalization.of(context);
-      var url;
-      var useWebView;
+      String url;
+      bool useWebView;
 
       if (Theme.of(context).platform == TargetPlatform.iOS) {
         url = invoice.invitationSilentLink;
@@ -96,7 +96,7 @@ class InvoiceViewVM {
         },
         onActionSelected: (BuildContext context, EntityAction action) {
           final Completer<Null> completer = new Completer<Null>();
-          var message;
+          String message;
           switch (action) {
             case EntityAction.pdf:
               _viewPdf(context);

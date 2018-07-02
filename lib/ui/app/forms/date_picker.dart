@@ -8,7 +8,7 @@ class DatePicker extends StatefulWidget {
     @required this.labelText,
     @required this.onSelected,
     @required this.selectedDate,
-    @required this.validator,
+    this.validator,
   });
 
   final String labelText;

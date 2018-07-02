@@ -37,7 +37,7 @@ class WebClient {
       throw _parseError(response.body);
     }
 
-    final jsonResponse = json.decode(response.body);
+    final dynamic jsonResponse = json.decode(response.body);
 
     //print(jsonResponse);
 
@@ -59,7 +59,7 @@ class WebClient {
     }
 
     try {
-      final jsonResponse = json.decode(response.body);
+      final dynamic jsonResponse = json.decode(response.body);
       return jsonResponse;
     } catch (exception) {
       print(response.body);
@@ -82,7 +82,7 @@ class WebClient {
     }
 
     try {
-      final jsonResponse = json.decode(response.body);
+      final dynamic jsonResponse = json.decode(response.body);
       return jsonResponse;
     } catch (exception) {
       print(response.body);
