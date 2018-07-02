@@ -56,13 +56,13 @@ class SaveProductRequest implements StartLoading {
   SaveProductRequest({this.product, this.completer});
 }
 
-class SaveProductSuccess implements StopLoading, PersistData {
+class SaveProductSuccess implements StopLoading, PersistData, PersistUI {
   final ProductEntity product;
 
   SaveProductSuccess(this.product);
 }
 
-class AddProductSuccess implements StopLoading, PersistData {
+class AddProductSuccess implements StopLoading, PersistData, PersistUI {
   final ProductEntity product;
   AddProductSuccess(this.product);
 }

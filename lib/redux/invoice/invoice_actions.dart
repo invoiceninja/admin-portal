@@ -85,13 +85,13 @@ class SaveInvoiceRequest implements StartLoading {
   SaveInvoiceRequest({this.completer, this.invoice});
 }
 
-class SaveInvoiceSuccess implements StopLoading, PersistData {
+class SaveInvoiceSuccess implements StopLoading, PersistData, PersistUI {
   final InvoiceEntity invoice;
 
   SaveInvoiceSuccess(this.invoice);
 }
 
-class AddInvoiceSuccess implements StopLoading, PersistData {
+class AddInvoiceSuccess implements StopLoading, PersistData, PersistUI {
   final InvoiceEntity invoice;
   AddInvoiceSuccess(this.invoice);
 }

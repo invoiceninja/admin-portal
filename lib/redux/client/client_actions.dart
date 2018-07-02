@@ -77,10 +77,15 @@ class SaveClientRequest implements StartLoading {
   SaveClientRequest({this.completer, this.client});
 }
 
-class SaveClientSuccess implements StopLoading, PersistData {
+class SaveClientSuccess implements StopLoading, PersistData, PersistUI {
   final ClientEntity client;
 
   SaveClientSuccess(this.client);
+}
+
+class AddClientSuccess implements StopLoading, PersistData, PersistUI {
+  final ClientEntity client;
+  AddClientSuccess(this.client);
 }
 
 class SaveClientFailure implements StopLoading {
@@ -138,10 +143,6 @@ class RestoreClientFailure implements StopLoading {
   RestoreClientFailure(this.client);
 }
 
-class AddClientSuccess implements StopLoading, PersistData {
-  final ClientEntity client;
-  AddClientSuccess(this.client);
-}
 
 
 
