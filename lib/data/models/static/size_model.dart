@@ -6,19 +6,21 @@ part 'size_model.g.dart';
 
 abstract class SizeListResponse implements Built<SizeListResponse, SizeListResponseBuilder> {
 
+  factory SizeListResponse([void updates(SizeListResponseBuilder b)]) = _$SizeListResponse;
+  SizeListResponse._();
+
   BuiltList<SizeEntity> get data;
 
-  SizeListResponse._();
-  factory SizeListResponse([void updates(SizeListResponseBuilder b)]) = _$SizeListResponse;
   static Serializer<SizeListResponse> get serializer => _$sizeListResponseSerializer;
 }
 
 abstract class SizeItemResponse implements Built<SizeItemResponse, SizeItemResponseBuilder> {
 
+  factory SizeItemResponse([void updates(SizeItemResponseBuilder b)]) = _$SizeItemResponse;
+  SizeItemResponse._();
+
   SizeEntity get data;
 
-  SizeItemResponse._();
-  factory SizeItemResponse([void updates(SizeItemResponseBuilder b)]) = _$SizeItemResponse;
   static Serializer<SizeItemResponse> get serializer => _$sizeItemResponseSerializer;
 }
 
@@ -34,11 +36,11 @@ abstract class SizeEntity implements Built<SizeEntity, SizeEntityBuilder> {
       name: '',
     );
   }
+  SizeEntity._();
 
   int get id;
 
   String get name;
   
-  SizeEntity._();
   static Serializer<SizeEntity> get serializer => _$sizeEntitySerializer;
 }

@@ -111,7 +111,7 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
 
 Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origInvoice = store.state.invoiceState.map[action.invoiceId];
+    final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origInvoice, EntityAction.restore)
@@ -134,7 +134,7 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
 
 Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origInvoice = store.state.invoiceState.map[action.invoiceId];
+    final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .emailInvoice(store.state.selectedCompany, store.state.authState,
         origInvoice)

@@ -6,19 +6,21 @@ part 'invoice_design_model.g.dart';
 
 abstract class InvoiceDesignListResponse implements Built<InvoiceDesignListResponse, InvoiceDesignListResponseBuilder> {
 
+  factory InvoiceDesignListResponse([void updates(InvoiceDesignListResponseBuilder b)]) = _$InvoiceDesignListResponse;
+  InvoiceDesignListResponse._();
+
   BuiltList<InvoiceDesignEntity> get data;
 
-  InvoiceDesignListResponse._();
-  factory InvoiceDesignListResponse([void updates(InvoiceDesignListResponseBuilder b)]) = _$InvoiceDesignListResponse;
   static Serializer<InvoiceDesignListResponse> get serializer => _$invoiceDesignListResponseSerializer;
 }
 
 abstract class InvoiceDesignItemResponse implements Built<InvoiceDesignItemResponse, InvoiceDesignItemResponseBuilder> {
 
+  factory InvoiceDesignItemResponse([void updates(InvoiceDesignItemResponseBuilder b)]) = _$InvoiceDesignItemResponse;
+  InvoiceDesignItemResponse._();
+
   InvoiceDesignEntity get data;
 
-  InvoiceDesignItemResponse._();
-  factory InvoiceDesignItemResponse([void updates(InvoiceDesignItemResponseBuilder b)]) = _$InvoiceDesignItemResponse;
   static Serializer<InvoiceDesignItemResponse> get serializer => _$invoiceDesignItemResponseSerializer;
 }
 
@@ -28,7 +30,6 @@ class InvoiceDesignFields {
   static const String pdfmake = 'pdfmake';
   
 }
-
 
 abstract class InvoiceDesignEntity implements Built<InvoiceDesignEntity, InvoiceDesignEntityBuilder> {
 
@@ -40,6 +41,7 @@ abstract class InvoiceDesignEntity implements Built<InvoiceDesignEntity, Invoice
       pdfmake: '',
     );
   }
+  InvoiceDesignEntity._();
 
 
   int get id;
@@ -47,7 +49,6 @@ abstract class InvoiceDesignEntity implements Built<InvoiceDesignEntity, Invoice
   String get javascript;
   String get pdfmake;
  
-  InvoiceDesignEntity._();
   static Serializer<InvoiceDesignEntity> get serializer => _$invoiceDesignEntitySerializer;
 }
 

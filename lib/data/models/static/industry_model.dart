@@ -6,19 +6,21 @@ part 'industry_model.g.dart';
 
 abstract class IndustryListResponse implements Built<IndustryListResponse, IndustryListResponseBuilder> {
 
+  factory IndustryListResponse([void updates(IndustryListResponseBuilder b)]) = _$IndustryListResponse;
+  IndustryListResponse._();
+
   BuiltList<IndustryEntity> get data;
 
-  IndustryListResponse._();
-  factory IndustryListResponse([void updates(IndustryListResponseBuilder b)]) = _$IndustryListResponse;
   static Serializer<IndustryListResponse> get serializer => _$industryListResponseSerializer;
 }
 
 abstract class IndustryItemResponse implements Built<IndustryItemResponse, IndustryItemResponseBuilder> {
 
+  factory IndustryItemResponse([void updates(IndustryItemResponseBuilder b)]) = _$IndustryItemResponse;
+  IndustryItemResponse._();
+
   IndustryEntity get data;
 
-  IndustryItemResponse._();
-  factory IndustryItemResponse([void updates(IndustryItemResponseBuilder b)]) = _$IndustryItemResponse;
   static Serializer<IndustryItemResponse> get serializer => _$industryItemResponseSerializer;
 }
 
@@ -34,10 +36,10 @@ abstract class IndustryEntity implements Built<IndustryEntity, IndustryEntityBui
       name: '',
     );
   }
+  IndustryEntity._();
 
   int get id;
   String get name;
   
-  IndustryEntity._();
   static Serializer<IndustryEntity> get serializer => _$industryEntitySerializer;
 }

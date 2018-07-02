@@ -104,7 +104,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     Widget _headerRow() {
       return Row(

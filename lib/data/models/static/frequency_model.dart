@@ -6,19 +6,21 @@ part 'frequency_model.g.dart';
 
 abstract class FrequencyListResponse implements Built<FrequencyListResponse, FrequencyListResponseBuilder> {
 
+  factory FrequencyListResponse([void updates(FrequencyListResponseBuilder b)]) = _$FrequencyListResponse;
+  FrequencyListResponse._();
+
   BuiltList<FrequencyEntity> get data;
 
-  FrequencyListResponse._();
-  factory FrequencyListResponse([void updates(FrequencyListResponseBuilder b)]) = _$FrequencyListResponse;
   static Serializer<FrequencyListResponse> get serializer => _$frequencyListResponseSerializer;
 }
 
 abstract class FrequencyItemResponse implements Built<FrequencyItemResponse, FrequencyItemResponseBuilder> {
 
+  factory FrequencyItemResponse([void updates(FrequencyItemResponseBuilder b)]) = _$FrequencyItemResponse;
+  FrequencyItemResponse._();
+
   FrequencyEntity get data;
 
-  FrequencyItemResponse._();
-  factory FrequencyItemResponse([void updates(FrequencyItemResponseBuilder b)]) = _$FrequencyItemResponse;
   static Serializer<FrequencyItemResponse> get serializer => _$frequencyItemResponseSerializer;
 }
 
@@ -38,13 +40,13 @@ abstract class FrequencyEntity implements Built<FrequencyEntity, FrequencyEntity
       dateInterval: '',
     );
   }
+  FrequencyEntity._();
 
   int get id;
   String get name;
   @BuiltValueField(wireName: 'date_interval')
   String get dateInterval;
 
-  FrequencyEntity._();
   static Serializer<FrequencyEntity> get serializer => _$frequencyEntitySerializer;
 }
 

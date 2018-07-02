@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     // Create a test client to show initially
-    ClientEntity _client = ClientEntity(
+    final ClientEntity _client = ClientEntity(
         name: 'Acme Client',
         contacts: [ContactEntity(email: 'test@example.com')]);
 
@@ -63,12 +63,12 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
                 _formKey.currentState.save();
 
-                var clientState = _clientKey.currentState;
-                var contactsState = _contactsKey.currentState;
+                final clientState = _clientKey.currentState;
+                final contactsState = _contactsKey.currentState;
 
                 // If the user never views a tab the state can be null
                 // in which case we'll use the current value
-                ClientEntity client = ClientEntity(
+                final ClientEntity client = ClientEntity(
                   name: clientState?.name ?? _client.name,
                   contacts: contactsState?.getContacts() ?? _client.contacts,
                 );
@@ -168,7 +168,7 @@ class ContactsPageState extends State<ContactsPage>
   @override
   void initState() {
     super.initState();
-    var client = widget.client;
+    final client = widget.client;
     _contacts = client.contacts.toList();
     _contactKeys = client.contacts
         .map((contact) => GlobalKey<ContactFormState>())
@@ -192,7 +192,7 @@ class ContactsPageState extends State<ContactsPage>
 
   void _onRemovePressed(GlobalKey<ContactFormState> key) {
     setState(() {
-      var index = _contactKeys.indexOf(key);
+      final index = _contactKeys.indexOf(key);
       _contactKeys.removeAt(index);
       _contacts.removeAt(index);
     });
@@ -200,7 +200,7 @@ class ContactsPageState extends State<ContactsPage>
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> items = [];
+    final List<Widget> items = [];
 
     for (var i = 0; i < _contacts.length; i++) {
       final contact = _contacts[i];

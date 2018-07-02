@@ -8,19 +8,21 @@ part 'task_model.g.dart';
 
 abstract class TaskListResponse implements Built<TaskListResponse, TaskListResponseBuilder> {
 
+  factory TaskListResponse([void updates(TaskListResponseBuilder b)]) = _$TaskListResponse;
+  TaskListResponse._();
+
   BuiltList<TaskEntity> get data;
 
-  TaskListResponse._();
-  factory TaskListResponse([void updates(TaskListResponseBuilder b)]) = _$TaskListResponse;
   static Serializer<TaskListResponse> get serializer => _$taskListResponseSerializer;
 }
 
 abstract class TaskItemResponse implements Built<TaskItemResponse, TaskItemResponseBuilder> {
 
+  factory TaskItemResponse([void updates(TaskItemResponseBuilder b)]) = _$TaskItemResponse;
+  TaskItemResponse._();
+
   TaskEntity get data;
 
-  TaskItemResponse._();
-  factory TaskItemResponse([void updates(TaskItemResponseBuilder b)]) = _$TaskItemResponse;
   static Serializer<TaskItemResponse> get serializer => _$taskItemResponseSerializer;
 }
 
@@ -42,10 +44,6 @@ class TaskFields {
 
 abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEntity, TaskEntityBuilder> {
 
-  @override
-  EntityType get entityType {
-    return EntityType.task;
-  }
 
   static int counter = 0;
   factory TaskEntity() {
@@ -65,6 +63,12 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
         archivedAt: 0,
         isDeleted: false,
     );
+  }
+  TaskEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.task;
   }
 
   String get description;
@@ -137,6 +141,5 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
     return '';
   }
 
-  TaskEntity._();
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }

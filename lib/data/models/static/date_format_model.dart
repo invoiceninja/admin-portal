@@ -16,10 +16,11 @@ abstract class DateFormatListResponse implements Built<DateFormatListResponse, D
 
 abstract class DateFormatItemResponse implements Built<DateFormatItemResponse, DateFormatItemResponseBuilder> {
 
+  factory DateFormatItemResponse([void updates(DateFormatItemResponseBuilder b)]) = _$DateFormatItemResponse;
+  DateFormatItemResponse._();
+
   DateFormatEntity get data;
 
-  DateFormatItemResponse._();
-  factory DateFormatItemResponse([void updates(DateFormatItemResponseBuilder b)]) = _$DateFormatItemResponse;
   static Serializer<DateFormatItemResponse> get serializer => _$dateFormatItemResponseSerializer;
 }
 
@@ -39,6 +40,7 @@ abstract class DateFormatEntity implements Built<DateFormatEntity, DateFormatEnt
       formatMoment: '',
     );
   }
+  DateFormatEntity._();
 
   int get id;
 
@@ -50,6 +52,5 @@ abstract class DateFormatEntity implements Built<DateFormatEntity, DateFormatEnt
   @BuiltValueField(wireName: 'format_moment')
   String get formatMoment;
   
-  DateFormatEntity._();
   static Serializer<DateFormatEntity> get serializer => _$dateFormatEntitySerializer;
 }

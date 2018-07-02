@@ -21,7 +21,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
   Future<Null> _launched;
 
   Future<Null> _launchURL(BuildContext context, String url) async {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
@@ -40,11 +40,11 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var client = widget.client;
+    final localization = AppLocalization.of(context);
+    final client = widget.client;
 
     List<Widget> _buildDetailsList() {
-      var listTiles = <Widget>[];
+      final listTiles = <Widget>[];
 
       listTiles
           .add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
@@ -122,8 +122,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      var billingAddress = formatAddress(object: client);
-      var shippingAddress = formatAddress(object: client, isShipping: true);
+      final billingAddress = formatAddress(object: client);
+      final shippingAddress = formatAddress(object: client, isShipping: true);
 
       if (billingAddress.isNotEmpty) {
         listTiles.add(AppListTile(

@@ -114,7 +114,7 @@ ProductState _archiveProductFailure(ProductState productState, ArchiveProductFai
 }
 
 ProductState _deleteProductRequest(ProductState productState, DeleteProductRequest action) {
-  var product = productState.map[action.productId].rebuild((b) => b
+  final product = productState.map[action.productId].rebuild((b) => b
     ..archivedAt = DateTime.now().millisecondsSinceEpoch
     ..isDeleted = true
   );

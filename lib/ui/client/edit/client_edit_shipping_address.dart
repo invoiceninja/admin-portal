@@ -42,7 +42,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
 
     _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    var client = widget.viewModel.client;
+    final client = widget.viewModel.client;
     _shippingAddress1Controller.text = client.shippingAddress1;
     _shippingAddress2Controller.text = client.shippingAddress2;
     _shippingCityController.text = client.shippingCity;

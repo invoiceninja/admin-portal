@@ -27,8 +27,8 @@ class ClientList extends StatelessWidget {
       child: ListView.builder(
           itemCount: viewModel.clientList.length,
           itemBuilder: (BuildContext context, index) {
-            var clientId = viewModel.clientList[index];
-            var client = viewModel.clientMap[clientId];
+            final clientId = viewModel.clientList[index];
+            final client = viewModel.clientMap[clientId];
             return Column(children: <Widget>[
               ClientItem(
                 filter: viewModel.filter,

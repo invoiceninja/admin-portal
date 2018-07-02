@@ -6,19 +6,21 @@ part 'timezone_model.g.dart';
 
 abstract class TimezoneListResponse implements Built<TimezoneListResponse, TimezoneListResponseBuilder> {
 
+  factory TimezoneListResponse([void updates(TimezoneListResponseBuilder b)]) = _$TimezoneListResponse;
+  TimezoneListResponse._();
+
   BuiltList<TimezoneEntity> get data;
 
-  TimezoneListResponse._();
-  factory TimezoneListResponse([void updates(TimezoneListResponseBuilder b)]) = _$TimezoneListResponse;
   static Serializer<TimezoneListResponse> get serializer => _$timezoneListResponseSerializer;
 }
 
 abstract class TimezoneItemResponse implements Built<TimezoneItemResponse, TimezoneItemResponseBuilder> {
 
+  factory TimezoneItemResponse([void updates(TimezoneItemResponseBuilder b)]) = _$TimezoneItemResponse;
+  TimezoneItemResponse._();
+
   TimezoneEntity get data;
 
-  TimezoneItemResponse._();
-  factory TimezoneItemResponse([void updates(TimezoneItemResponseBuilder b)]) = _$TimezoneItemResponse;
   static Serializer<TimezoneItemResponse> get serializer => _$timezoneItemResponseSerializer;
 }
 
@@ -36,6 +38,7 @@ abstract class TimezoneEntity implements Built<TimezoneEntity, TimezoneEntityBui
       location: '',
     );
   }
+  TimezoneEntity._();
 
   int get id;
 
@@ -43,6 +46,5 @@ abstract class TimezoneEntity implements Built<TimezoneEntity, TimezoneEntityBui
 
   String get location;
   
-  TimezoneEntity._();
   static Serializer<TimezoneEntity> get serializer => _$timezoneEntitySerializer;
 }
