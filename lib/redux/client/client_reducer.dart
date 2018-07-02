@@ -24,12 +24,9 @@ String filterClientDropdownReducer(String dropdownFilter, FilterClientDropdown a
 }
 
 Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewClient>(updateSelectedId),
+  TypedReducer<int, ViewClient>((int selectedId, dynamic action) => action.clientId),
+  TypedReducer<int, AddClientSuccess>((int selectedId, dynamic action) => action.client.id),
 ]);
-
-int updateSelectedId(int selectedId, ViewClient action) {
-  return action.clientId;
-}
 
 final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, SaveClientSuccess>(_updateEditing),

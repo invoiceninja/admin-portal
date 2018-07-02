@@ -25,12 +25,10 @@ String filterClientDropdownReducer(String dropdownFilter, FilterInvoiceDropdown 
 }
 
 Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewInvoice>(updateSelectedId),
+  TypedReducer<int, ViewInvoice>((int selectedId, dynamic action) => action.invoiceId),
+  TypedReducer<int, AddInvoiceSuccess>((int selectedId, dynamic action) => action.invoice.id),
 ]);
 
-int updateSelectedId(int selectedId, ViewInvoice action) {
-  return action.invoiceId;
-}
 
 final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SaveInvoiceSuccess>(_updateEditing),
