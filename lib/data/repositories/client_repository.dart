@@ -29,7 +29,7 @@ class ClientRepository {
   Future saveData(CompanyEntity company, AuthState auth, ClientEntity client, [EntityAction action]) async {
 
     final data = serializers.serializeWith(ClientEntity.serializer, client);
-    Future<dynamic> response;
+    dynamic response;
 
     if (client.isNew) {
       response = await webClient.post(

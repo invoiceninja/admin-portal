@@ -27,7 +27,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
   final _discountController = TextEditingController();
   final _partialController = TextEditingController();
 
-  List _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   bool get wantKeepAlive => true;

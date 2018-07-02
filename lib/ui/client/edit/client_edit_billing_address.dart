@@ -25,7 +25,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   final _stateController = TextEditingController();
   final _postalCodeController = TextEditingController();
 
-  var _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {

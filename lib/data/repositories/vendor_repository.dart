@@ -29,7 +29,7 @@ class VendorRepository {
   Future saveData(CompanyEntity company, AuthState auth, VendorEntity vendor, [EntityAction action]) async {
 
     final data = serializers.serializeWith(VendorEntity.serializer, vendor);
-    Future<dynamic> response;
+    dynamic response;
 
     if (vendor.isNew) {
       response = await webClient.post(

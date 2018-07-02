@@ -29,7 +29,7 @@ class ProductRepository {
   Future saveData(CompanyEntity company, AuthState auth, ProductEntity product, [EntityAction action]) async {
 
     final data = serializers.serializeWith(ProductEntity.serializer, product);
-    Future<dynamic> response;
+    dynamic response;
 
     if (product.isNew) {
       response = await webClient.post(

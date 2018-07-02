@@ -29,7 +29,7 @@ class InvoiceRepository {
   Future saveData(CompanyEntity company, AuthState auth, InvoiceEntity invoice, [EntityAction action]) async {
 
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
-    Future<dynamic> response;
+    dynamic response;
 
     if (invoice.isNew) {
       response = await webClient.post(

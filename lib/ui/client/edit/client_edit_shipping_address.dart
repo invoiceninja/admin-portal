@@ -25,7 +25,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
   final _shippingStateController = TextEditingController();
   final _shippingPostalCodeController = TextEditingController();
 
-  var _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {

@@ -29,7 +29,7 @@ class TasksRepository {
   Future saveData(CompanyEntity company, AuthState auth, TaskEntity task, [EntityAction action]) async {
 
     final data = serializers.serializeWith(TaskEntity.serializer, task);
-    Future<dynamic> response;
+    dynamic response;
 
     if (task.isNew) {
       response = await webClient.post(

@@ -29,7 +29,7 @@ class ProjectsRepository {
   Future saveData(CompanyEntity company, AuthState auth, ProjectEntity project, [EntityAction action]) async {
 
     final data = serializers.serializeWith(ProjectEntity.serializer, project);
-    Future<dynamic> response;
+    dynamic response;
 
     if (project.isNew) {
       response = await webClient.post(

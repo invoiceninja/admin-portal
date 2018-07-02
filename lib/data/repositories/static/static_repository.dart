@@ -23,6 +23,4 @@ class StaticRepository {
 
     return staticDataResponse.data;
   }
-
-  
 }

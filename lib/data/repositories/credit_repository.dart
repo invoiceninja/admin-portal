@@ -29,7 +29,7 @@ class CreditsRepository {
   Future saveData(CompanyEntity company, AuthState auth, CreditEntity credit, [EntityAction action]) async {
 
     final data = serializers.serializeWith(CreditEntity.serializer, credit);
-    Future<dynamic> response;
+    dynamic response;
 
     if (credit.isNew) {
       response = await webClient.post(
