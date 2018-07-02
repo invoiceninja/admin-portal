@@ -9,7 +9,7 @@ class TwoValueHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _value1() {
+    Widget _value1() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -33,7 +33,7 @@ class TwoValueHeader extends StatelessWidget {
       );
     }
 
-    void _value2() {
+    Widget _value2() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,

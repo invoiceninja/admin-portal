@@ -56,7 +56,7 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       paymentDate: '',
       paymentTypeId: 0,
       invoiceId: 0,
-      invoice_number: '',
+      invoiceNumber: '',
       privateNotes: '',
       exchangeRate: 0.0,
       exchangeCurrencyId: 0,

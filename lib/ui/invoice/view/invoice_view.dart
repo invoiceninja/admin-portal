@@ -36,7 +36,7 @@ class _InvoiceViewState extends State<InvoiceView> {
     var invoice = viewModel.invoice;
     var client = viewModel.client;
 
-    void _buildView() {
+    List<Widget> _buildView() {
       var invoice = widget.viewModel.invoice;
       var widgets = <Widget>[
         TwoValueHeader(

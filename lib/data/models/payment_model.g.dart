@@ -138,7 +138,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.invoiceId,
           specifiedType: const FullType(int)),
       'invoice_number',
-      serializers.serialize(object.invoice_number,
+      serializers.serialize(object.invoiceNumber,
           specifiedType: const FullType(String)),
       'private_notes',
       serializers.serialize(object.privateNotes,
@@ -210,7 +210,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
               specifiedType: const FullType(int)) as int;
           break;
         case 'invoice_number':
-          result.invoice_number = serializers.deserialize(value,
+          result.invoiceNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
@@ -441,7 +441,7 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final int invoiceId;
   @override
-  final String invoice_number;
+  final String invoiceNumber;
   @override
   final String privateNotes;
   @override
@@ -466,7 +466,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.paymentDate,
       this.paymentTypeId,
       this.invoiceId,
-      this.invoice_number,
+      this.invoiceNumber,
       this.privateNotes,
       this.exchangeRate,
       this.exchangeCurrencyId,
@@ -486,8 +486,8 @@ class _$PaymentEntity extends PaymentEntity {
       throw new BuiltValueNullFieldError('PaymentEntity', 'paymentTypeId');
     if (invoiceId == null)
       throw new BuiltValueNullFieldError('PaymentEntity', 'invoiceId');
-    if (invoice_number == null)
-      throw new BuiltValueNullFieldError('PaymentEntity', 'invoice_number');
+    if (invoiceNumber == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'invoiceNumber');
     if (privateNotes == null)
       throw new BuiltValueNullFieldError('PaymentEntity', 'privateNotes');
     if (exchangeRate == null)
@@ -512,7 +512,7 @@ class _$PaymentEntity extends PaymentEntity {
         paymentDate == other.paymentDate &&
         paymentTypeId == other.paymentTypeId &&
         invoiceId == other.invoiceId &&
-        invoice_number == other.invoice_number &&
+        invoiceNumber == other.invoiceNumber &&
         privateNotes == other.privateNotes &&
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
@@ -542,7 +542,7 @@ class _$PaymentEntity extends PaymentEntity {
                                                 paymentDate.hashCode),
                                             paymentTypeId.hashCode),
                                         invoiceId.hashCode),
-                                    invoice_number.hashCode),
+                                    invoiceNumber.hashCode),
                                 privateNotes.hashCode),
                             exchangeRate.hashCode),
                         exchangeCurrencyId.hashCode),
@@ -560,7 +560,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('paymentDate', paymentDate)
           ..add('paymentTypeId', paymentTypeId)
           ..add('invoiceId', invoiceId)
-          ..add('invoice_number', invoice_number)
+          ..add('invoiceNumber', invoiceNumber)
           ..add('privateNotes', privateNotes)
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
@@ -597,10 +597,10 @@ class PaymentEntityBuilder
   int get invoiceId => _$this._invoiceId;
   set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
 
-  String _invoice_number;
-  String get invoice_number => _$this._invoice_number;
-  set invoice_number(String invoice_number) =>
-      _$this._invoice_number = invoice_number;
+  String _invoiceNumber;
+  String get invoiceNumber => _$this._invoiceNumber;
+  set invoiceNumber(String invoiceNumber) =>
+      _$this._invoiceNumber = invoiceNumber;
 
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
@@ -640,7 +640,7 @@ class PaymentEntityBuilder
       _paymentDate = _$v.paymentDate;
       _paymentTypeId = _$v.paymentTypeId;
       _invoiceId = _$v.invoiceId;
-      _invoice_number = _$v.invoice_number;
+      _invoiceNumber = _$v.invoiceNumber;
       _privateNotes = _$v.privateNotes;
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
@@ -673,7 +673,7 @@ class PaymentEntityBuilder
             paymentDate: paymentDate,
             paymentTypeId: paymentTypeId,
             invoiceId: invoiceId,
-            invoice_number: invoice_number,
+            invoiceNumber: invoiceNumber,
             privateNotes: privateNotes,
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,
