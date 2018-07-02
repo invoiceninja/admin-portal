@@ -10,18 +10,19 @@ part 'product_state.g.dart';
 
 abstract class ProductState implements Built<ProductState, ProductStateBuilder> {
 
-  @nullable
-  int get lastUpdated;
-
-  BuiltMap<int, ProductEntity> get map;
-  BuiltList<int> get list;
-
   factory ProductState() {
     return _$ProductState._(
       map: BuiltMap<int, ProductEntity>(),
       list: BuiltList<int>(),
     );
   }
+  ProductState._();
+
+  @nullable
+  int get lastUpdated;
+
+  BuiltMap<int, ProductEntity> get map;
+  BuiltList<int> get list;
 
   bool get isStale {
     if (! isLoaded) {
@@ -35,17 +36,10 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
     return lastUpdated != null;
   }
 
-  ProductState._();
   static Serializer<ProductState> get serializer => _$productStateSerializer;
 }
 
 abstract class ProductUIState extends Object with EntityUIState implements Built<ProductUIState, ProductUIStateBuilder> {
-
-  @nullable
-  ProductEntity get editing;
-
-  @override
-  bool get isCreatingNew => editing.isNew;
 
   factory ProductUIState() {
     return _$ProductUIState._(
@@ -55,7 +49,13 @@ abstract class ProductUIState extends Object with EntityUIState implements Built
       selectedId: 0,
     );
   }
-
   ProductUIState._();
+
+  @nullable
+  ProductEntity get editing;
+
+  @override
+  bool get isCreatingNew => editing.isNew;
+
   static Serializer<ProductUIState> get serializer => _$productUIStateSerializer;
 }

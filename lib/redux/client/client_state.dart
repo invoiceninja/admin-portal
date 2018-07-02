@@ -10,18 +10,19 @@ part 'client_state.g.dart';
 
 abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 
-  @nullable
-  int get lastUpdated;
-
-  BuiltMap<int, ClientEntity> get map;
-  BuiltList<int> get list;
-
   factory ClientState() {
     return _$ClientState._(
       map: BuiltMap<int, ClientEntity>(),
       list: BuiltList<int>(),
     );
   }
+  ClientState._();
+
+  @nullable
+  int get lastUpdated;
+
+  BuiltMap<int, ClientEntity> get map;
+  BuiltList<int> get list;
 
   bool get isStale {
     if (! isLoaded) {
@@ -35,17 +36,10 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
     return lastUpdated != null;
   }
 
-  ClientState._();
   static Serializer<ClientState> get serializer => _$clientStateSerializer;
 }
 
 abstract class ClientUIState extends Object with EntityUIState implements Built<ClientUIState, ClientUIStateBuilder> {
-
-  @nullable
-  ClientEntity get editing;
-
-  @override
-  bool get isCreatingNew => editing.isNew;
 
   factory ClientUIState() {
     return _$ClientUIState._(
@@ -55,7 +49,13 @@ abstract class ClientUIState extends Object with EntityUIState implements Built<
       selectedId: 0,
     );
   }
-
   ClientUIState._();
+
+  @nullable
+  ClientEntity get editing;
+
+  @override
+  bool get isCreatingNew => editing.isNew;
+
   static Serializer<ClientUIState> get serializer => _$clientUIStateSerializer;
 }

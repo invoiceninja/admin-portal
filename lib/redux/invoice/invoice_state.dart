@@ -10,18 +10,19 @@ part 'invoice_state.g.dart';
 
 abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> {
 
-  @nullable
-  int get lastUpdated;
-
-  BuiltMap<int, InvoiceEntity> get map;
-  BuiltList<int> get list;
-
   factory InvoiceState() {
     return _$InvoiceState._(
       map: BuiltMap<int, InvoiceEntity>(),
       list: BuiltList<int>(),
     );
   }
+  InvoiceState._();
+
+  @nullable
+  int get lastUpdated;
+
+  BuiltMap<int, InvoiceEntity> get map;
+  BuiltList<int> get list;
 
   bool get isStale {
     if (! isLoaded) {
@@ -35,17 +36,10 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
     return lastUpdated != null;
   }
 
-  InvoiceState._();
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
 }
 
 abstract class InvoiceUIState extends Object with EntityUIState implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
-
-  @nullable
-  InvoiceEntity get editing;
-
-  @override
-  bool get isCreatingNew => editing.isNew;
 
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
@@ -55,7 +49,13 @@ abstract class InvoiceUIState extends Object with EntityUIState implements Built
       selectedId: 0,
     );
   }
-
   InvoiceUIState._();
+
+  @nullable
+  InvoiceEntity get editing;
+
+  @override
+  bool get isCreatingNew => editing.isNew;
+
   static Serializer<InvoiceUIState> get serializer => _$invoiceUIStateSerializer;
 }

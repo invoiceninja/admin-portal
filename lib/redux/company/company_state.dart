@@ -9,12 +9,6 @@ import 'package:built_value/serializer.dart';
 part 'company_state.g.dart';
 
 abstract class CompanyState implements Built<CompanyState, CompanyStateBuilder> {
-  @nullable
-  CompanyEntity get company;
-  DashboardState get dashboardState;
-  ProductState get productState;
-  ClientState get clientState;
-  InvoiceState get invoiceState;
 
   factory CompanyState() {
     return _$CompanyState._(
@@ -24,8 +18,15 @@ abstract class CompanyState implements Built<CompanyState, CompanyStateBuilder> 
       invoiceState: InvoiceState(),
     );
   }
-
   CompanyState._();
+
+  @nullable
+  CompanyEntity get company;
+  DashboardState get dashboardState;
+  ProductState get productState;
+  ClientState get clientState;
+  InvoiceState get invoiceState;
+
   //factory CompanyState([void updates(CompanyStateBuilder b)]) = _$CompanyState;
   static Serializer<CompanyState> get serializer => _$companyStateSerializer;
 }
