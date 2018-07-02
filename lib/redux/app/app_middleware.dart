@@ -145,7 +145,7 @@ Middleware<AppState> _createLoadState(
                       company4State = state;
                       company5Repository.loadCompanyState().then((state) {
                         company5State = state;
-                        AppState appState = AppState().rebuild((b) => b
+                        final AppState appState = AppState().rebuild((b) => b
                           ..authState.replace(authState)
                           ..uiState.replace(uiState)
                           ..staticState.replace(staticState)
@@ -157,7 +157,7 @@ Middleware<AppState> _createLoadState(
                         store.dispatch(LoadStateSuccess(appState));
                         if (uiState.currentRoute != LoginScreen.route &&
                             authState.url.isNotEmpty) {
-                          NavigatorState navigator = Navigator.of(action.context);
+                          final NavigatorState navigator = Navigator.of(action.context);
                           bool isFirst = true;
                           _getRoutes(appState).forEach((route) {
                             if (isFirst) {
@@ -204,7 +204,7 @@ List<String> _getRoutes(AppState state) {
         route += '/view';
       }
     } else {
-      if (entityType == null) {
+      if (part != 'dashboard' && entityType == null) {
         entityType = EntityType.valueOf(part);
       }
 
