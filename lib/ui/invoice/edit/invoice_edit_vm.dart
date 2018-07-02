@@ -78,14 +78,6 @@ class InvoiceEditVM {
             } else {
               Navigator.of(context).pop();
             }
-            /*
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: invoice.isNew()
-                      ? AppLocalization.of(context).successfullyCreatedInvoice
-                      : AppLocalization.of(context).successfullyUpdatedInvoice,
-                )));
-                */
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
                 context: context,

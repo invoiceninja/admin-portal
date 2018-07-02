@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -80,6 +81,12 @@ class ProductEditVM {
                       ? AppLocalization.of(context).successfullyCreatedProduct
                       : AppLocalization.of(context).successfullyUpdatedProduct,
                 )));
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
           });
         },
         onActionSelected: (BuildContext context, EntityAction action) {
@@ -103,7 +110,8 @@ class ProductEditVM {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: message,
-                )));
+                )
+            ));
           });
         });
   }

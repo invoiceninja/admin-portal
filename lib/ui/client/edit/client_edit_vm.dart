@@ -6,6 +6,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
@@ -82,14 +83,12 @@ class ClientEditVM {
             } else {
               Navigator.of(context).pop();
             }
-            /*
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: client.isNew()
-                      ? AppLocalization.of(context).successfullyCreatedClient
-                      : AppLocalization.of(context).successfullyUpdatedClient,
-                )));
-            */
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
           });
         });
   }
