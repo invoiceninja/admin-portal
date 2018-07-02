@@ -141,6 +141,7 @@ class AppLocalization {
       'total': 'Total',
       'percent': 'Percent',
       'edit': 'Edit',
+      'dismiss': 'Dismiss',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -292,6 +293,7 @@ class AppLocalization {
   String get total => _localizedValues[locale.languageCode]['total'];
   String get percent => _localizedValues[locale.languageCode]['percent'];
   String get edit => _localizedValues[locale.languageCode]['edit'];
+  String get dismiss => _localizedValues[locale.languageCode]['dismiss'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ErrorDialog extends StatelessWidget {
-
   ErrorDialog(this.error);
   final Object error;
 
@@ -15,11 +14,24 @@ class ErrorDialog extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Material(
-            child: Column(
-              children: <Widget>[
-                Text(localization.anErrorOccurred),
-                Text(error.toString()),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(localization.anErrorOccurred,
+                      style: Theme.of(context).textTheme.title),
+                  SizedBox(height: 20.0),
+                  Text(error.toString()),
+                  SizedBox(height: 40.0),
+                  RaisedButton(
+                    textColor: Colors.white,
+                    color: Theme.of(context).primaryColorDark,
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(localization.dismiss),
+                  )
+                ],
+              ),
             ),
           ),
           Expanded(child: Container()),
