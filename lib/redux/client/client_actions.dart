@@ -161,8 +161,3 @@ class FilterClientsByState implements PersistUI {
 
   FilterClientsByState(this.state);
 }
-
-class FilterClientDropdown {
-  final String filter;
-  FilterClientDropdown(this.filter);
-}

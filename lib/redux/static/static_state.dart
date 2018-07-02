@@ -7,14 +7,8 @@ part 'static_state.g.dart';
 
 abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   BuiltMap<int, CurrencyEntity> get currencyMap;
-  BuiltList<int> get currencyList;
-
   BuiltMap<int, CountryEntity> get countryMap;
-  BuiltList<int> get countryList;
-
   BuiltMap<int, LanguageEntity> get languageMap;
-  BuiltList<int> get languageList;
-
   BuiltMap<int, SizeEntity> get sizeMap;
   BuiltMap<int, IndustryEntity> get industryMap;
   BuiltMap<int, TimezoneEntity> get timezoneMap;
@@ -28,7 +22,6 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   factory StaticState() {
     return _$StaticState._(
       currencyMap: BuiltMap<int, CurrencyEntity>(),
-
       sizeMap: BuiltMap<int, SizeEntity>(),
       industryMap: BuiltMap<int, IndustryEntity>(),
       timezoneMap: BuiltMap<int, TimezoneEntity>(),

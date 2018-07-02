@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'payment_model.g.dart';
 
@@ -114,7 +115,26 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
 
     return privateNotes.contains(search);
   }
-  
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return invoiceNumber;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
+
   PaymentEntity._();
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
 }

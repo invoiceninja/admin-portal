@@ -10,17 +10,8 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(clientListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..dropdownFilter = dropdownFilterReducer(state.dropdownFilter, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
   );
-}
-
-Reducer<String> dropdownFilterReducer = combineReducers([
-  TypedReducer<String, FilterClientDropdown>(filterClientDropdownReducer),
-]);
-
-String filterClientDropdownReducer(String dropdownFilter, FilterClientDropdown action) {
-  return action.filter;
 }
 
 Reducer<int> selectedIdReducer = combineReducers([

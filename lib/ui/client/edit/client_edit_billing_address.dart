@@ -123,7 +123,6 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
           ),
           EntityDropdown(
             entityType: EntityType.country,
-            entityList: viewModel.countryList.toList(),
             entityMap: viewModel.countryMap,
             labelText: localization.country,
             onSelected: (int countryId) {

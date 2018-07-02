@@ -5,5 +5,4 @@ abstract class EntityUIState {
   bool get isCreatingNew;
   int get selectedId;
   ListUIState get listUIState;
-  String get dropdownFilter;
 }

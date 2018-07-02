@@ -32,16 +32,12 @@ class InvoiceEditDetailsVM {
   final AppState state;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
-  final Function(String) onEntityFilterChanged;
-  final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
 
   InvoiceEditDetailsVM({
     @required this.state,
     @required this.invoice,
     @required this.onChanged,
-    @required this.onEntityFilterChanged,
-    @required this.clientList,
     @required this.clientMap,
   });
 
@@ -54,10 +50,7 @@ class InvoiceEditDetailsVM {
         invoice: invoice,
         onChanged: (InvoiceEntity invoice) =>
             store.dispatch(UpdateInvoice(invoice)),
-        clientList: memoizedDropdownClientList(state.clientState.map,
-            state.clientState.list, state.clientUIState.dropdownFilter),
         clientMap: state.clientState.map,
-        onEntityFilterChanged: (String filter) =>
-            store.dispatch(FilterClientDropdown(filter)));
+    );
   }
 }

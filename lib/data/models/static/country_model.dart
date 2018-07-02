@@ -58,7 +58,6 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
     );
   }
 
-  int get id;
   String get name;
 
   @BuiltValueField(wireName: 'swap_postal_code')

@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'vendor_model.g.dart';
 
@@ -159,6 +160,25 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
     return name.contains(search);
   }
 
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return name;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
+
   VendorEntity._();
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }
@@ -193,6 +213,34 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
   bool get isPrimary;
 
   String get phone;
+
+  @override
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return '';
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
 
   VendorContactEntity._();
   static Serializer<VendorContactEntity> get serializer => _$vendorContactEntitySerializer;

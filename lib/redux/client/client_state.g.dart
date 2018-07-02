@@ -98,9 +98,6 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
-      'dropdownFilter',
-      serializers.serialize(object.dropdownFilter,
-          specifiedType: const FullType(String)),
     ];
     if (object.editing != null) {
       result
@@ -134,10 +131,6 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ListUIState)) as ListUIState);
-          break;
-        case 'dropdownFilter':
-          result.dropdownFilter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -265,21 +258,16 @@ class _$ClientUIState extends ClientUIState {
   final int selectedId;
   @override
   final ListUIState listUIState;
-  @override
-  final String dropdownFilter;
 
   factory _$ClientUIState([void updates(ClientUIStateBuilder b)]) =>
       (new ClientUIStateBuilder()..update(updates)).build();
 
-  _$ClientUIState._(
-      {this.editing, this.selectedId, this.listUIState, this.dropdownFilter})
+  _$ClientUIState._({this.editing, this.selectedId, this.listUIState})
       : super._() {
     if (selectedId == null)
       throw new BuiltValueNullFieldError('ClientUIState', 'selectedId');
     if (listUIState == null)
       throw new BuiltValueNullFieldError('ClientUIState', 'listUIState');
-    if (dropdownFilter == null)
-      throw new BuiltValueNullFieldError('ClientUIState', 'dropdownFilter');
   }
 
   @override
@@ -295,16 +283,13 @@ class _$ClientUIState extends ClientUIState {
     if (other is! ClientUIState) return false;
     return editing == other.editing &&
         selectedId == other.selectedId &&
-        listUIState == other.listUIState &&
-        dropdownFilter == other.dropdownFilter;
+        listUIState == other.listUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
-            listUIState.hashCode),
-        dropdownFilter.hashCode));
+    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+        listUIState.hashCode));
   }
 
   @override
@@ -312,8 +297,7 @@ class _$ClientUIState extends ClientUIState {
     return (newBuiltValueToStringHelper('ClientUIState')
           ..add('editing', editing)
           ..add('selectedId', selectedId)
-          ..add('listUIState', listUIState)
-          ..add('dropdownFilter', dropdownFilter))
+          ..add('listUIState', listUIState))
         .toString();
   }
 }
@@ -337,11 +321,6 @@ class ClientUIStateBuilder
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
-  String _dropdownFilter;
-  String get dropdownFilter => _$this._dropdownFilter;
-  set dropdownFilter(String dropdownFilter) =>
-      _$this._dropdownFilter = dropdownFilter;
-
   ClientUIStateBuilder();
 
   ClientUIStateBuilder get _$this {
@@ -349,7 +328,6 @@ class ClientUIStateBuilder
       _editing = _$v.editing?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
-      _dropdownFilter = _$v.dropdownFilter;
       _$v = null;
     }
     return this;
@@ -374,8 +352,7 @@ class ClientUIStateBuilder
           new _$ClientUIState._(
               editing: _editing?.build(),
               selectedId: selectedId,
-              listUIState: listUIState.build(),
-              dropdownFilter: dropdownFilter);
+              listUIState: listUIState.build());
     } catch (_) {
       String _$failedField;
       try {

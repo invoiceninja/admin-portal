@@ -99,12 +99,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
                     labelText: localization.client,
                     initialValue:
                         viewModel.clientMap[invoice.clientId]?.displayName,
-                    entityList: viewModel.clientList,
                     entityMap: viewModel.clientMap,
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseSelectAClient
                         : null,
-                    onFilterChanged: viewModel.onEntityFilterChanged,
                     onSelected: (clientId) {
                       viewModel.onChanged(
                           invoice.rebuild((b) => b..clientId = clientId));

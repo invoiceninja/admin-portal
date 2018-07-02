@@ -43,7 +43,6 @@ class ClientEditVM {
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
   final BuiltMap<int, CountryEntity> countryMap;
-  final BuiltList<int> countryList;
 
   ClientEditVM({
     @required this.isLoading,
@@ -56,7 +55,6 @@ class ClientEditVM {
     @required this.onSavePressed,
     @required this.onBackPressed,
     @required this.countryMap,
-    @required this.countryList,
   });
 
   factory ClientEditVM.fromStore(Store<AppState> store) {
@@ -66,7 +64,6 @@ class ClientEditVM {
     return ClientEditVM(
         client: client,
         origClient: state.clientState.map[client.id],
-        countryList: state.staticState.countryList,
         countryMap: state.staticState.countryMap,
         isLoading: state.isLoading,
         onBackPressed: () =>
