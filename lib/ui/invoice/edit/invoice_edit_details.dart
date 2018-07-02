@@ -20,7 +20,7 @@ class InvoiceEditDetails extends StatefulWidget {
   InvoiceEditDetailsState createState() => new InvoiceEditDetailsState();
 }
 
-class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
+class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKeepAliveClientMixin {
   final _invoiceNumberController = TextEditingController();
   final _invoiceDateController = TextEditingController();
   final _poNumberController = TextEditingController();
@@ -28,6 +28,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _partialController = TextEditingController();
 
   List _controllers = [];
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void didChangeDependencies() {
@@ -98,6 +101,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         viewModel.clientMap[invoice.clientId]?.displayName,
                     entityList: viewModel.clientList,
                     entityMap: viewModel.clientMap,
+                    validator: (String val) => val.trim().isEmpty
+                        ? AppLocalization.of(context).pleaseSelectAClient
+                        : null,
                     onFilterChanged: viewModel.onEntityFilterChanged,
                     onSelected: (clientId) {
                       viewModel.onChanged(

@@ -15,6 +15,7 @@ class EntityDropdown extends StatefulWidget {
     @required this.entityMap,
     @required this.onFilterChanged,
     @required this.onSelected,
+    this.validator,
     this.initialValue,
   });
 
@@ -25,6 +26,7 @@ class EntityDropdown extends StatefulWidget {
   final String initialValue;
   final Function(String) onFilterChanged;
   final Function(int) onSelected;
+  final Function validator;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -138,6 +140,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
       onTap: () => _showOptions(),
       child: IgnorePointer(
         child: TextFormField(
+          validator: widget.validator,
           controller: _textController,
           decoration: InputDecoration(
             labelText: widget.labelText,
