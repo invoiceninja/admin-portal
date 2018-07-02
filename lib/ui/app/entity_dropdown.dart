@@ -168,7 +168,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Material(
             child: Column(
