@@ -164,9 +164,8 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
     }
 
     search = search.toLowerCase();
-    if (name.toLowerCase().contains(search)) {
-      return name;
-    } else if (iso2.toLowerCase().contains(search)) {
+
+    if (iso2.toLowerCase().contains(search)) {
       return iso2;
     } else if (iso3.toLowerCase().contains(search)) {
       return iso3;
