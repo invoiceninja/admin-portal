@@ -72,7 +72,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
 
   void _onChanged() {
     final invoice = widget.viewModel.invoice.rebuild((b) => b
-      ..invoiceNumber = widget.viewModel.invoice.isNew()
+      ..invoiceNumber = widget.viewModel.invoice.isNew
           ? ''
           : _invoiceNumberController.text.trim()
       ..poNumber = _poNumberController.text.trim()
@@ -93,7 +93,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            invoice.isNew()
+            invoice.isNew
                 ? EntityDropdown(
                     entityType: EntityType.client,
                     labelText: localization.client,

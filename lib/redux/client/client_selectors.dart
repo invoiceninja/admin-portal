@@ -16,7 +16,7 @@ List<int> dropdownClientsSelector(
 
   var list = clientList.where((clientId) {
     var client = clientMap[clientId];
-    if (! client.isActive()) {
+    if (! client.isActive) {
       return false;
     }
     return client.matchesSearch(filter);

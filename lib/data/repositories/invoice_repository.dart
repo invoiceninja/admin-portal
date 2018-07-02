@@ -31,7 +31,7 @@ class InvoiceRepository {
     var data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     var response;
 
-    if (invoice.isNew()) {
+    if (invoice.isNew) {
       response = await webClient.post(
           auth.url + '/invoices?include=invitations', company.token, json.encode(data));
     } else {

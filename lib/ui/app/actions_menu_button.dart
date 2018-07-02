@@ -60,7 +60,7 @@ class ActionMenuButton extends StatelessWidget {
       actions.add(PopupMenuDivider());
     }
     
-    if (entity.isArchived() || entity.isDeleted) {
+    if (entity.isArchived || entity.isDeleted) {
       actions.add(PopupMenuItem<EntityAction>(
         value: EntityAction.restore,
         child: Row(
@@ -73,7 +73,7 @@ class ActionMenuButton extends StatelessWidget {
       ));
     }
 
-    if (entity.isActive()) {
+    if (entity.isActive) {
       actions.add(PopupMenuItem<EntityAction>(
         value: EntityAction.archive,
         child: Row(
@@ -86,7 +86,7 @@ class ActionMenuButton extends StatelessWidget {
       ));
     }
 
-    if (entity.isActive() || entity.isArchived()) {
+    if (entity.isActive || entity.isArchived) {
       actions.add(PopupMenuItem<EntityAction>(
         value: EntityAction.delete,
         child: Row(

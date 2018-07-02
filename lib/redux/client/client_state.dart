@@ -45,7 +45,7 @@ abstract class ClientUIState extends Object with EntityUIState implements Built<
   ClientEntity get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew();
+  bool get isCreatingNew => editing.isNew;
 
   factory ClientUIState() {
     return _$ClientUIState._(

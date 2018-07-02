@@ -31,7 +31,7 @@ class ClientRepository {
     var data = serializers.serializeWith(ClientEntity.serializer, client);
     var response;
 
-    if (client.isNew()) {
+    if (client.isNew) {
       response = await webClient.post(
           auth.url + '/clients', company.token, json.encode(data));
     } else {

@@ -31,7 +31,7 @@ class PaymentsRepository {
     var data = serializers.serializeWith(PaymentEntity.serializer, payment);
     var response;
 
-    if (payment.isNew()) {
+    if (payment.isNew) {
       response = await webClient.post(
           auth.url + '/payments', company.token, json.encode(data));
     } else {

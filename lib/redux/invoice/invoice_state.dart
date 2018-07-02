@@ -45,7 +45,7 @@ abstract class InvoiceUIState extends Object with EntityUIState implements Built
   InvoiceEntity get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew();
+  bool get isCreatingNew => editing.isNew;
 
   factory InvoiceUIState() {
     return _$InvoiceUIState._(

@@ -84,7 +84,7 @@ class InvoiceViewVM {
     return InvoiceViewVM(
         appState: store.state,
         isLoading: store.state.isLoading,
-        isDirty: invoice.isNew(),
+        isDirty: invoice.isNew,
         invoice: invoice,
         client: client,
         onEditPressed: (BuildContext context) {

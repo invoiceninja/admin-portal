@@ -159,7 +159,7 @@ class _InvoiceViewState extends State<InvoiceView> {
         appBar: AppBar(
           title:
               Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
-          actions: invoice.isNew()
+          actions: invoice.isNew
               ? []
               : [
                   EditIconButton(

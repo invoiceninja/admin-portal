@@ -51,14 +51,14 @@ class _InvoiceEditState extends State<InvoiceEdit>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(invoice.isNew()
+          title: Text(invoice.isNew
               ? localization.newInvoice
               : '${localization.invoice} ${viewModel.origInvoice.invoiceNumber}'),
           actions: <Widget>[
             SaveIconButton(
               isVisible: !invoice.isDeleted,
               isLoading: widget.viewModel.isLoading,
-              isDirty: invoice.isNew() || invoice != viewModel.origInvoice,
+              isDirty: invoice.isNew || invoice != viewModel.origInvoice,
               onPressed: () {
                 if (!_formKey.currentState.validate()) {
                   return;

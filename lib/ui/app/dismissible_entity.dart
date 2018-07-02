@@ -33,7 +33,7 @@ class DismissibleEntity extends StatelessWidget {
           child: const ListTile(
               leading:
               const Icon(Icons.delete, color: Colors.white, size: 36.0))),
-      secondaryBackground: entity.isArchived() || entity.isDeleted ? Container(
+      secondaryBackground: entity.isArchived || entity.isDeleted ? Container(
         color: Colors.blue,
         child: const ListTile(
             trailing:

@@ -83,7 +83,7 @@ class _ProductEditState extends State<ProductEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(viewModel.product.isNew()
+          title: Text(viewModel.product.isNew
               ? AppLocalization.of(context).newProduct
               : viewModel.origProduct.productKey),
           actions: <Widget>[
@@ -91,7 +91,7 @@ class _ProductEditState extends State<ProductEdit> {
               return SaveIconButton(
                 isVisible: !product.isDeleted,
                 isLoading: viewModel.isLoading,
-                isDirty: product.isNew() || product != viewModel.origProduct,
+                isDirty: product.isNew || product != viewModel.origProduct,
                 onPressed: () {
                   if (!_formKey.currentState.validate()) {
                     return;
@@ -101,7 +101,7 @@ class _ProductEditState extends State<ProductEdit> {
                 },
               );
             }),
-            viewModel.product.isNew()
+            viewModel.product.isNew
                 ? Container()
                 : ActionMenuButton(
                     entity: viewModel.product,

@@ -61,7 +61,7 @@ class ProductEditVM {
     return ProductEditVM(
         state: store.state,
         isLoading: store.state.isLoading,
-        isDirty: product.isNew(),
+        isDirty: product.isNew,
         product: product,
         origProduct: store.state.productState.map[product.id],
         onChanged: (ProductEntity product) {
@@ -77,7 +77,7 @@ class ProductEditVM {
           return completer.future.then((_) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
-                  message: product.isNew()
+                  message: product.isNew
                       ? AppLocalization.of(context).successfullyCreatedProduct
                       : AppLocalization.of(context).successfullyUpdatedProduct,
                 )));

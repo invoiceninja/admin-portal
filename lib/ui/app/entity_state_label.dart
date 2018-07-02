@@ -14,7 +14,7 @@ class EntityStateLabel extends StatelessWidget {
     return entity.isDeleted
         ? Text(localization.deleted,
             style: TextStyle(color: Colors.red, fontSize: 14.0))
-        : entity.isArchived()
+        : entity.isArchived
             ? Text(localization.archived,
                 style: TextStyle(color: Colors.orange, fontSize: 14.0))
             : Container();

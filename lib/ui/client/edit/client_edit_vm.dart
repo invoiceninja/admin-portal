@@ -75,7 +75,7 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((_) {
-            if (client.isNew()) {
+            if (client.isNew) {
               Navigator.of(context).pop();
               Navigator
                   .of(context)

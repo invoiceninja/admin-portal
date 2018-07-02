@@ -45,7 +45,7 @@ abstract class ProductUIState extends Object with EntityUIState implements Built
   ProductEntity get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew();
+  bool get isCreatingNew => editing.isNew;
 
   factory ProductUIState() {
     return _$ProductUIState._(

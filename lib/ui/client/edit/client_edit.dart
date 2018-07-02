@@ -50,13 +50,13 @@ class _ClientEditState extends State<ClientEdit>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(client.isNew()
+          title: Text(client.isNew
               ? localization.newClient
               : viewModel.origClient.displayName), // Text(localizations.clientDetails),
           actions: <Widget>[
             SaveIconButton(
               isVisible: !client.isDeleted,
-              isDirty: client.isNew() || client != viewModel.origClient,
+              isDirty: client.isNew || client != viewModel.origClient,
               isLoading: viewModel.isLoading,
               onPressed: () {
                 if (! _formKey.currentState.validate()) {

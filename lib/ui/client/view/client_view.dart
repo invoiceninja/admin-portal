@@ -67,7 +67,7 @@ class _ClientViewState extends State<ClientView>
               ),
             ],
           ),
-          actions: client.isNew()
+          actions: client.isNew
               ? []
               : [
                   EditIconButton(

@@ -93,16 +93,16 @@ abstract class BaseEntity {
     return null;
   }
 
-  bool isNew() {
-    return this.id == null || this.id < 0;
+  bool get isNew {
+    return id == null || id < 0;
   }
 
-  bool isActive() {
-    return this.archivedAt == null;
+  bool get isActive {
+    return archivedAt == null;
   }
 
-  bool isArchived() {
-    return this.archivedAt != null && ! isDeleted;
+  bool get isArchived {
+    return archivedAt != null && ! isDeleted;
   }
 
   bool matchesStates(BuiltList<EntityState> states) {
@@ -110,11 +110,11 @@ abstract class BaseEntity {
       return true;
     }
 
-    if (states.contains(EntityState.active) && isActive()) {
+    if (states.contains(EntityState.active) && isActive) {
       return true;
     }
 
-    if (states.contains(EntityState.archived) && isArchived()) {
+    if (states.contains(EntityState.archived) && isArchived) {
       return true;
     }
 

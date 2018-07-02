@@ -31,7 +31,7 @@ class ExpenseRepository {
     var data = serializers.serializeWith(ExpenseEntity.serializer, expense);
     var response;
 
-    if (expense.isNew()) {
+    if (expense.isNew) {
       response = await webClient.post(
           auth.url + '/expenses', company.token, json.encode(data));
     } else {

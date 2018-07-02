@@ -70,7 +70,7 @@ class InvoiceEditVM {
           store.dispatch(
               SaveInvoiceRequest(completer: completer, invoice: invoice));
           return completer.future.then((_) {
-            if (invoice.isNew()) {
+            if (invoice.isNew) {
               Navigator.of(context).pop();
               Navigator
                   .of(context)

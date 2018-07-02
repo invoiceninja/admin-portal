@@ -57,7 +57,7 @@ class ClientViewVM {
     return ClientViewVM(
         state: store.state,
         isLoading: store.state.isLoading,
-        isDirty: client.isNew(),
+        isDirty: client.isNew,
         client: client,
         onEditPressed: (BuildContext context) {
           store.dispatch(EditClient(client: client, context: context));

@@ -31,7 +31,7 @@ class VendorRepository {
     var data = serializers.serializeWith(VendorEntity.serializer, vendor);
     var response;
 
-    if (vendor.isNew()) {
+    if (vendor.isNew) {
       response = await webClient.post(
           auth.url + '/vendors', company.token, json.encode(data));
     } else {

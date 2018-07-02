@@ -31,7 +31,7 @@ class TasksRepository {
     var data = serializers.serializeWith(TaskEntity.serializer, task);
     var response;
 
-    if (task.isNew()) {
+    if (task.isNew) {
       response = await webClient.post(
           auth.url + '/tasks', company.token, json.encode(data));
     } else {
