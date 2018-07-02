@@ -13,7 +13,8 @@ class ProductItem extends StatelessWidget {
   final GestureTapCallback onTap;
   //final ValueChanged<bool> onCheckboxChanged;
   final ProductEntity product;
-
+  final String filter;
+  
   static final productItemKey = (int id) => Key('__product_item_${id}__');
 
   ProductItem({
@@ -22,6 +23,7 @@ class ProductItem extends StatelessWidget {
     @required this.onTap,
     //@required this.onCheckboxChanged,
     @required this.product,
+    @required this.filter,
   });
 
   @override
@@ -61,13 +63,13 @@ class ProductItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            product.notes.isNotEmpty
-                ? Text(
-                    product.notes,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Container(),
+            Text(
+              filter != null && filter.isNotEmpty
+                  ? product.matchesSearchValue(filter) ?? ''
+                  : product.notes ?? '',
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
             EntityStateLabel(product),
           ],
         ),

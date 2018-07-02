@@ -125,7 +125,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
-            onTap: () => store.dispatch(ViewProductList(context)),
+            onTap: () => store.dispatch(ViewInvoiceList(context)),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(

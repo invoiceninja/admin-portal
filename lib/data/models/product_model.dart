@@ -8,22 +8,26 @@ import 'package:invoiceninja/utils/formatting.dart';
 
 part 'product_model.g.dart';
 
-abstract class ProductListResponse implements Built<ProductListResponse, ProductListResponseBuilder> {
-
+abstract class ProductListResponse
+    implements Built<ProductListResponse, ProductListResponseBuilder> {
   BuiltList<ProductEntity> get data;
 
   ProductListResponse._();
-  factory ProductListResponse([updates(ProductListResponseBuilder b)]) = _$ProductListResponse;
-  static Serializer<ProductListResponse> get serializer => _$productListResponseSerializer;
+  factory ProductListResponse([updates(ProductListResponseBuilder b)]) =
+      _$ProductListResponse;
+  static Serializer<ProductListResponse> get serializer =>
+      _$productListResponseSerializer;
 }
 
-abstract class ProductItemResponse implements Built<ProductItemResponse, ProductItemResponseBuilder> {
-
+abstract class ProductItemResponse
+    implements Built<ProductItemResponse, ProductItemResponseBuilder> {
   ProductEntity get data;
 
   ProductItemResponse._();
-  factory ProductItemResponse([updates(ProductItemResponseBuilder b)]) = _$ProductItemResponse;
-  static Serializer<ProductItemResponse> get serializer => _$productItemResponseSerializer;
+  factory ProductItemResponse([updates(ProductItemResponseBuilder b)]) =
+      _$ProductItemResponse;
+  static Serializer<ProductItemResponse> get serializer =>
+      _$productItemResponseSerializer;
 }
 
 class ProductFields {
@@ -33,10 +37,13 @@ class ProductFields {
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
+  static const String customValue1 = 'customValue1';
+  static const String customValue2 = 'customValue2';
 }
 
-abstract class ProductEntity extends Object with BaseEntity, ConvertToInvoiceItem implements Built<ProductEntity, ProductEntityBuilder> {
-
+abstract class ProductEntity extends Object
+    with BaseEntity, ConvertToInvoiceItem
+    implements Built<ProductEntity, ProductEntityBuilder> {
   @override
   EntityType get entityType {
     return EntityType.product;
@@ -45,44 +52,44 @@ abstract class ProductEntity extends Object with BaseEntity, ConvertToInvoiceIte
   static int counter = 0;
   factory ProductEntity() {
     return _$ProductEntity._(
-        id: --ProductEntity.counter,
-        productKey: '',
-        notes: '',
-        cost: 0.0,
-        taxName1: '',
-        taxRate1: 0.0,
-        taxName2: '',
-        taxRate2: 0.0,
-        customValue1: '',
-        customValue2: '',
-        updatedAt: 0,
-        archivedAt: 0,
-        isDeleted: false,
+      id: --ProductEntity.counter,
+      productKey: '',
+      notes: '',
+      cost: 0.0,
+      taxName1: '',
+      taxRate1: 0.0,
+      taxName2: '',
+      taxRate2: 0.0,
+      customValue1: '',
+      customValue2: '',
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
 
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
-  
+
   String get notes;
-  
+
   double get cost;
-  
+
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
-  
+
   @BuiltValueField(wireName: 'tax_rate1')
   double get taxRate1;
-  
+
   @BuiltValueField(wireName: 'tax_name2')
   String get taxName2;
-  
+
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
-  
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
-  
+
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
@@ -103,14 +110,14 @@ abstract class ProductEntity extends Object with BaseEntity, ConvertToInvoiceIte
       ..taxName1 = taxName1
       ..taxRate1 = taxRate1
       ..taxName2 = taxName2
-      ..taxRate2 = taxRate2
-    );
+      ..taxRate2 = taxRate2);
   }
 
-  int compareTo(ProductEntity product, [String sortField, bool sortAscending = true]) {
+  int compareTo(ProductEntity product,
+      [String sortField, bool sortAscending = true]) {
     int response = 0;
     ProductEntity productA = sortAscending ? this : product;
-    ProductEntity productB = sortAscending ? product: this;
+    ProductEntity productB = sortAscending ? product : this;
 
     switch (sortField) {
       case ProductFields.cost:
@@ -118,7 +125,9 @@ abstract class ProductEntity extends Object with BaseEntity, ConvertToInvoiceIte
     }
 
     if (response == 0) {
-      return productA.productKey.toLowerCase().compareTo(productB.productKey.toLowerCase());
+      return productA.productKey
+          .toLowerCase()
+          .compareTo(productB.productKey.toLowerCase());
     } else {
       return response;
     }
@@ -130,27 +139,20 @@ abstract class ProductEntity extends Object with BaseEntity, ConvertToInvoiceIte
     }
 
     search = search.toLowerCase();
+
     if (productKey.toLowerCase().contains(search)) {
       return true;
-    }
-    if (notes.toLowerCase().contains(search)) {
+    } else if (notes.toLowerCase().contains(search)) {
+      return true;
+    } else if (customValue1.isNotEmpty &&
+        customValue1.toLowerCase().contains(search)) {
+      return true;
+    } else if (customValue2.isNotEmpty &&
+        customValue2.toLowerCase().contains(search)) {
       return true;
     }
 
     return false;
-  }
-
-  String matchesSearchField(String search) {
-    if (search == null || search.isEmpty) {
-      return null;
-    }
-    search = search.toLowerCase();
-
-    if (notes.toLowerCase().contains(search)) {
-      return ProductFields.notes;
-    }
-
-    return null;
   }
 
   String matchesSearchValue(String search) {
@@ -161,6 +163,12 @@ abstract class ProductEntity extends Object with BaseEntity, ConvertToInvoiceIte
     search = search.toLowerCase();
     if (notes.toLowerCase().contains(search)) {
       return notes;
+    } else if (customValue1.isNotEmpty &&
+        customValue1.toLowerCase().contains(search)) {
+      return customValue1;
+    } else if (customValue2.isNotEmpty &&
+        customValue2.toLowerCase().contains(search)) {
+      return customValue2;
     }
     return null;
   }

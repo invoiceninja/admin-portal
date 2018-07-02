@@ -42,6 +42,7 @@ analyzer:
 
 linter:
   rules:
+    # - prefer_const_literals_to_create_immutables
     # these rules are documented on and in the same order as
     # the Dart Lint rules page to make maintenance easier
     # https://github.com/dart-lang/linter/blob/master/example/all.yaml
@@ -117,7 +118,6 @@ linter:
     # - prefer_const_constructors
     - prefer_const_constructors_in_immutables
     - prefer_const_declarations
-    - prefer_const_literals_to_create_immutables
     # - prefer_constructors_over_static_methods # not yet tested
     - prefer_contains
     # - prefer_equal_for_default_values # not supported by built_value

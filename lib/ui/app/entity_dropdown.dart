@@ -88,13 +88,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             final entity = widget.entityMap[entityId];
             final filter =
                 store.state.getUIState(widget.entityType).dropdownFilter;
-            String subtitle;
-            final matchField = entity.matchesSearchField(filter);
-            if (matchField != null) {
-              final field = localization.lookup(matchField);
-              final value = entity.matchesSearchValue(filter);
-              subtitle = '$field: $value';
-            }
+            final String subtitle = entity.matchesSearchValue(filter);
             return ListTile(
               dense: true,
               title: Text(entity.listDisplayName),

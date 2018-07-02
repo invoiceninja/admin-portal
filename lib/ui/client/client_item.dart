@@ -14,6 +14,7 @@ class ClientItem extends StatelessWidget {
   final GestureTapCallback onTap;
   //final ValueChanged<bool> onCheckboxChanged;
   final ClientEntity client;
+  final String filter;
 
   static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
@@ -23,6 +24,7 @@ class ClientItem extends StatelessWidget {
     @required this.onTap,
     //@required this.onCheckboxChanged,
     @required this.client,
+    @required this.filter,
   });
 
   @override
@@ -47,7 +49,18 @@ class ClientItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.title)
           ],
         ),
-          subtitle: EntityStateLabel(client),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                filter != null && filter.isNotEmpty
+                    ? client.matchesSearchValue(filter) : '',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              EntityStateLabel(client),
+            ],
+          ),
       ),
     );
   }

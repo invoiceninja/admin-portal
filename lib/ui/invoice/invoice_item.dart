@@ -14,6 +14,7 @@ class InvoiceItem extends StatelessWidget {
   final InvoiceEntity invoice;
   final ClientEntity client;
   final AppState state;
+  final String filter;
 
   InvoiceItem({
     @required this.onDismissed,
@@ -22,6 +23,7 @@ class InvoiceItem extends StatelessWidget {
     @required this.invoice,
     @required this.client,
     @required this.state,
+    @required this.filter,
   });
 
   @override
@@ -62,16 +64,13 @@ class InvoiceItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(invoice.invoiceNumber),
-            /*
-            invoice.notes.isNotEmpty
-                ? Text(
-                    invoice.notes,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Container(),
-                */
+            Text(
+              filter != null && filter.isNotEmpty
+                  ? invoice.matchesSearchValue(filter) ?? ''
+                  : invoice.privateNotes ?? '',
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
             EntityStateLabel(invoice),
           ],
         ),

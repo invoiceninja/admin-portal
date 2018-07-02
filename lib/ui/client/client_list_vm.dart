@@ -35,6 +35,7 @@ class ClientListVM {
   final AppState state;
   final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
+  final String filter;
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, ClientEntity) onClientTap;
@@ -47,6 +48,7 @@ class ClientListVM {
     @required this.clientMap,
     @required this.isLoading,
     @required this.isLoaded,
+    @required this.filter,
     @required this.onClientTap,
     @required this.onDismissed,
     @required this.onRefreshed,
@@ -70,6 +72,7 @@ class ClientListVM {
         clientMap: store.state.clientState.map,
         isLoading: store.state.isLoading,
         isLoaded: store.state.clientState.isLoaded,
+        filter: store.state.clientListState.search,
         onClientTap: (context, client) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },

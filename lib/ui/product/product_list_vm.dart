@@ -34,6 +34,7 @@ class ProductListVM {
   final AppState state;
   final List<int> productList;
   final BuiltMap<int, ProductEntity> productMap;
+  final String filter;
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
@@ -44,6 +45,7 @@ class ProductListVM {
     @required this.state,
     @required this.productList,
     @required this.productMap,
+    @required this.filter,
     @required this.isLoading,
     @required this.isLoaded,
     @required this.onProductTap,
@@ -69,6 +71,7 @@ class ProductListVM {
         productMap: store.state.productState.map,
         isLoading: store.state.isLoading,
         isLoaded: store.state.productState.isLoaded,
+        filter: store.state.productUIState.listUIState.search,
         onProductTap: (context, product) {
           store.dispatch(EditProduct(product: product, context: context));
         },

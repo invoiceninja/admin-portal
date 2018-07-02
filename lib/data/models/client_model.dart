@@ -5,22 +5,26 @@ import 'package:invoiceninja/data/models/entities.dart';
 
 part 'client_model.g.dart';
 
-abstract class ClientListResponse implements Built<ClientListResponse, ClientListResponseBuilder> {
-
+abstract class ClientListResponse
+    implements Built<ClientListResponse, ClientListResponseBuilder> {
   BuiltList<ClientEntity> get data;
 
   ClientListResponse._();
-  factory ClientListResponse([updates(ClientListResponseBuilder b)]) = _$ClientListResponse;
-  static Serializer<ClientListResponse> get serializer => _$clientListResponseSerializer;
+  factory ClientListResponse([updates(ClientListResponseBuilder b)]) =
+      _$ClientListResponse;
+  static Serializer<ClientListResponse> get serializer =>
+      _$clientListResponseSerializer;
 }
 
-abstract class ClientItemResponse implements Built<ClientItemResponse, ClientItemResponseBuilder> {
-
+abstract class ClientItemResponse
+    implements Built<ClientItemResponse, ClientItemResponseBuilder> {
   ClientEntity get data;
 
   ClientItemResponse._();
-  factory ClientItemResponse([updates(ClientItemResponseBuilder b)]) = _$ClientItemResponse;
-  static Serializer<ClientItemResponse> get serializer => _$clientItemResponseSerializer;
+  factory ClientItemResponse([updates(ClientItemResponseBuilder b)]) =
+      _$ClientItemResponse;
+  static Serializer<ClientItemResponse> get serializer =>
+      _$clientItemResponseSerializer;
 }
 
 class ClientFields {
@@ -36,9 +40,9 @@ class ClientFields {
   static const String workPhone = 'workPhone';
 }
 
-
-abstract class ClientEntity extends Object with BaseEntity implements Built<ClientEntity, ClientEntityBuilder> {
-
+abstract class ClientEntity extends Object
+    with BaseEntity
+    implements Built<ClientEntity, ClientEntityBuilder> {
   @override
   EntityType get entityType {
     return EntityType.client;
@@ -48,47 +52,46 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
 
   factory ClientEntity() {
     return _$ClientEntity._(
-        id: --ClientEntity.counter,
-        name: '',
-        displayName: '',
-        balance: 0.0,
-        paidToDate: 0.0,
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        postalCode: '',
-        countryId: 0,
-        workPhone: '',
-        privateNotes: '',
-        publicNotes: '',
-        website: '',
-        industryId: 0,
-        sizeId: 0,
-        paymentTerms: 0,
-        vatNumber: '',
-        idNumber: '',
-        languageId: 0,
-        currencyId: 0,
-        invoiceNumberCounter: 0,
-        quoteNumberCounter: 0,
-        taskRate: 0.0,
-        shippingAddress1: '',
-        shippingAddress2: '',
-        shippingCity: '',
-        shippingState: '',
-        shippingPostalCode: '',
-        shippingCountryId: 0,
-        showTasksInPortal: false,
-        sendReminders: false,
-        creditNumberCounter: 0,
-        customValue1: '',
-        customValue2: '',
-        contacts: BuiltList<ContactEntity>(),
-        
-        updatedAt: 0,
-        archivedAt: 0,
-        isDeleted: false,
+      id: --ClientEntity.counter,
+      name: '',
+      displayName: '',
+      balance: 0.0,
+      paidToDate: 0.0,
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      countryId: 0,
+      workPhone: '',
+      privateNotes: '',
+      publicNotes: '',
+      website: '',
+      industryId: 0,
+      sizeId: 0,
+      paymentTerms: 0,
+      vatNumber: '',
+      idNumber: '',
+      languageId: 0,
+      currencyId: 0,
+      invoiceNumberCounter: 0,
+      quoteNumberCounter: 0,
+      taskRate: 0.0,
+      shippingAddress1: '',
+      shippingAddress2: '',
+      shippingCity: '',
+      shippingState: '',
+      shippingPostalCode: '',
+      shippingCountryId: 0,
+      showTasksInPortal: false,
+      sendReminders: false,
+      creditNumberCounter: 0,
+      customValue1: '',
+      customValue2: '',
+      contacts: BuiltList<ContactEntity>(),
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
 
@@ -200,12 +203,13 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     return displayName;
   }
 
-  bool get hasEmailAddress => contacts.where((contact) => contact.email?.isNotEmpty).length > 0;
+  bool get hasEmailAddress =>
+      contacts.where((contact) => contact.email?.isNotEmpty).length > 0;
 
   int compareTo(ClientEntity client, String sortField, bool sortAscending) {
     int response = 0;
     ClientEntity clientA = sortAscending ? this : client;
-    ClientEntity clientB = sortAscending ? client: this;
+    ClientEntity clientB = sortAscending ? client : this;
 
     switch (sortField) {
       case ClientFields.balance:
@@ -213,7 +217,9 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     }
 
     if (response == 0) {
-      return clientA.displayName.toLowerCase().compareTo(clientB.displayName.toLowerCase());
+      return clientA.displayName
+          .toLowerCase()
+          .compareTo(clientB.displayName.toLowerCase());
     } else {
       return response;
     }
@@ -242,34 +248,9 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     return false;
   }
 
-  String matchesSearchField(String search) {
-    if (search == null || search.isEmpty) {
-      return null;
-    }
-    search = search.toLowerCase();
-    if (displayName.toLowerCase().contains(search)) {
-      return null;
-    }
-    if (vatNumber.toLowerCase().contains(search)) {
-      return ClientFields.vatNumber;
-    }
-    if (idNumber.toLowerCase().contains(search)) {
-      return ClientFields.idNumber;
-    }
-    if (workPhone.toLowerCase().contains(search)) {
-      return ClientFields.workPhone;
-    }
-    var contact = contacts.where((contact) => contact.matchesSearch(search)).first;
-    if (contact != null) {
-      return contact.matchesSearchField(search);
-    }
-
-    return null;
-  }
-
   String matchesSearchValue(String search) {
     if (search == null || search.isEmpty) {
-      return null;
+      return '';
     }
 
     search = search.toLowerCase();
@@ -282,18 +263,19 @@ abstract class ClientEntity extends Object with BaseEntity implements Built<Clie
     if (workPhone.toLowerCase().contains(search)) {
       return workPhone;
     }
-    var contact = contacts.where((contact) => contact.matchesSearch(search)).first;
+    final contact = contacts.firstWhere(
+        (contact) => contact.matchesSearch(search),
+        orElse: () => null);
     if (contact != null) {
       return contact.matchesSearchValue(search);
     }
 
-    return null;
+    return '';
   }
 
   ClientEntity._();
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
-
 
 class ContactFields {
   static const String firstName = 'firstName';
@@ -302,24 +284,24 @@ class ContactFields {
   static const String phone = 'phone';
 }
 
-abstract class ContactEntity extends Object with BaseEntity implements Built<ContactEntity, ContactEntityBuilder> {
-
+abstract class ContactEntity extends Object
+    with BaseEntity
+    implements Built<ContactEntity, ContactEntityBuilder> {
   static int counter = 0;
   factory ContactEntity() {
     return _$ContactEntity._(
-        id: --ContactEntity.counter,
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        contactKey: '',
-        isPrimary: false,
-        customValue1: '',
-        customValue2: '',
-        
-        updatedAt: 0,
-        archivedAt: 0,
-        isDeleted: false,
+      id: --ContactEntity.counter,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      contactKey: '',
+      isPrimary: false,
+      customValue1: '',
+      customValue2: '',
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
 
@@ -345,7 +327,7 @@ abstract class ContactEntity extends Object with BaseEntity implements Built<Con
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  String fullName () {
+  String fullName() {
     return (firstName + ' ' + lastName).trim();
   }
 
@@ -367,22 +349,6 @@ abstract class ContactEntity extends Object with BaseEntity implements Built<Con
       return true;
     }
     return false;
-  }
-
-  String matchesSearchField(String search) {
-    if (search == null || search.isEmpty) {
-      return null;
-    }
-    search = search.toLowerCase();
-    if (fullName().toLowerCase().contains(search)) {
-      return ClientFields.contact;
-    } else if (email.toLowerCase().contains(search)) {
-      return ContactFields.email;
-    } else if (phone.toLowerCase().contains(search)) {
-      return ContactFields.phone;
-    }
-
-    return null;
   }
 
   String matchesSearchValue(String search) {

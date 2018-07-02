@@ -36,6 +36,7 @@ class InvoiceListVM {
   final List<int> invoiceList;
   final BuiltMap<int, InvoiceEntity> invoiceMap;
   final BuiltMap<int, ClientEntity> clientMap;
+  final String filter;
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, InvoiceEntity) onInvoiceTap;
@@ -49,6 +50,7 @@ class InvoiceListVM {
     @required this.clientMap,
     @required this.isLoading,
     @required this.isLoaded,
+    @required this.filter,
     @required this.onInvoiceTap,
     @required this.onDismissed,
     @required this.onRefreshed,
@@ -80,6 +82,7 @@ class InvoiceListVM {
         isLoading: state.isLoading,
         isLoaded: state.invoiceState.isLoaded &&
             state.clientState.isLoaded,
+        filter: state.invoiceListState.search,
         onInvoiceTap: (context, invoice) {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         },

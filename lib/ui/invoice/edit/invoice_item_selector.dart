@@ -145,11 +145,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
         itemBuilder: (BuildContext context, int index) {
           int entityId = matches[index];
           var entity = state.map[entityId];
-          var subtitle = null;
-          var matchField = entity.matchesSearchField(_filter);
-          if (matchField != null) {
-            subtitle = entity.matchesSearchValue(_filter);
-          }
+          final String subtitle = entity.matchesSearchValue(_filter);
           return ListTile(
             dense: true,
             leading: Checkbox(

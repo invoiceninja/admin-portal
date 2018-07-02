@@ -89,10 +89,6 @@ abstract class BaseEntity {
     return true;
   }
 
-  String matchesSearchField(String search) {
-    return null;
-  }
-
   String matchesSearchValue(String search) {
     return null;
   }
