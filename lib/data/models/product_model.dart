@@ -133,6 +133,7 @@ abstract class ProductEntity extends Object
     }
   }
 
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;
@@ -155,6 +156,7 @@ abstract class ProductEntity extends Object
     return false;
   }
 
+  @override
   String matchesSearchValue(String search) {
     if (search == null || search.isEmpty) {
       return null;

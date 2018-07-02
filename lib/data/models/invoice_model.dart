@@ -255,12 +255,42 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
     }
   }
 
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;
     }
 
-    return invoiceNumber.contains(search);
+    if (invoiceNumber.toLowerCase().contains(search)) {
+      return true;
+    } else if (customTextValue1.isNotEmpty &&
+        customTextValue1.toLowerCase().contains(search)) {
+      return true;
+    } else if (customTextValue2.isNotEmpty &&
+        customTextValue2.toLowerCase().contains(search)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    search = search.toLowerCase();
+    if (invoiceNumber.toLowerCase().contains(search)) {
+      return invoiceNumber;
+    } else if (customTextValue1.isNotEmpty &&
+        customTextValue1.toLowerCase().contains(search)) {
+      return customTextValue1;
+    } else if (customTextValue2.isNotEmpty &&
+        customTextValue2.toLowerCase().contains(search)) {
+      return customTextValue2;
+    }
+    return null;
   }
 
   String get invitationLink => invitations.first?.link;

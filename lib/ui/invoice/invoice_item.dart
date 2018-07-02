@@ -67,7 +67,7 @@ class InvoiceItem extends StatelessWidget {
             Text(
               filter != null && filter.isNotEmpty
                   ? invoice.matchesSearchValue(filter) ?? ''
-                  : invoice.privateNotes ?? '',
+                  : invoice.invoiceNumber,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
