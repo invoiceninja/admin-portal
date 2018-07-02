@@ -123,9 +123,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               },
             ),
             DatePicker(
-              validator: (String val) => val.trim().isEmpty
-                  ? AppLocalization.of(context).pleaseSelectADate
-                  : null,
               labelText: localization.dueDate,
               selectedDate: invoice.dueDate,
               onSelected: (date) {
