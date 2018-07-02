@@ -63,7 +63,7 @@ Middleware<AppState> _viewClientList() {
 
 Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origClient = store.state.clientState.map[action.clientId];
+    final origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.archive)

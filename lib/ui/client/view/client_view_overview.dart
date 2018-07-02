@@ -15,7 +15,7 @@ class ClientOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     return ListView(
       children: <Widget>[

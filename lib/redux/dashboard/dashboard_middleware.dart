@@ -36,7 +36,7 @@ Middleware<AppState> _createViewDashboard() {
 
 Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    AppState state = store.state;
+    final state = store.state;
 
     if (!state.dashboardState.isStale && !action.force) {
       next(action);

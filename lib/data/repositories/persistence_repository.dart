@@ -20,12 +20,12 @@ class PersistenceRepository {
 
 
   Future<File> saveCompanyState(CompanyState state) async {
-    var data = serializers.serializeWith(CompanyState.serializer, state);
+    final data = serializers.serializeWith(CompanyState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
   Future<CompanyState> loadCompanyState() async {
-    String data = await fileStorage.load();
+    final String data = await fileStorage.load();
     return serializers.deserializeWith(CompanyState.serializer, json.decode(data));
     //return compute(_deserialize, data);
   }
@@ -37,18 +37,18 @@ class PersistenceRepository {
   }
 
   Future<AuthState> loadAuthState() async {
-    String data = await fileStorage.load();
+    final String data = await fileStorage.load();
     return serializers.deserializeWith(AuthState.serializer, json.decode(data));
   }
 
 
   Future<File> saveStaticState(StaticState state) async {
-    var data = serializers.serializeWith(StaticState.serializer, state);
+    final data = serializers.serializeWith(StaticState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
   Future<StaticState> loadStaticState() async {
-    String data = await fileStorage.load();
+    final String data = await fileStorage.load();
     return serializers.deserializeWith(StaticState.serializer, json.decode(data));
   }
 

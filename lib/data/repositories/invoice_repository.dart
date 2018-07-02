@@ -53,7 +53,7 @@ class InvoiceRepository {
     final Future<dynamic> response = await webClient.post(
           auth.url + '/email_invoice?invoice_id=${invoice.id}', company.token, null);
 
-    InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
+    final InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
         InvoiceItemResponse.serializer, response);
 
     return invoiceResponse.data;

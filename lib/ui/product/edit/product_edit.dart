@@ -40,7 +40,7 @@ class _ProductEditState extends State<ProductEdit> {
 
     _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    var product = widget.viewModel.product;
+    final product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
     _costController.text = formatNumber(product.cost, widget.viewModel.state, formatNumberType: FormatNumberType.input);

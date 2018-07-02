@@ -190,7 +190,7 @@ class _ClientPageState extends State<ClientPage> {
 
   @override
   void didChangeDependencies() {
-    var store = StoreProvider.of<AppState>(context);
+    final store = StoreProvider.of<AppState>(context);
     _nameController.removeListener(_onChanged);
     _nameController.text = store.state.client.name;
     _nameController.addListener(_onChanged);
@@ -289,8 +289,8 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   void _onChanged() {
-    var store = StoreProvider.of<AppState>(context);
-    var email = _emailController.text.trim();
+    final store = StoreProvider.of<AppState>(context);
+    final email = _emailController.text.trim();
     if (email != widget.contact.email) {
       store.dispatch(UpdateContact(email: email, index: widget.index));
     }
@@ -298,7 +298,7 @@ class _ContactFormState extends State<ContactForm> {
 
   @override
   Widget build(BuildContext context) {
-    var store = StoreProvider.of<AppState>(context);
+    final store = StoreProvider.of<AppState>(context);
 
     return FormCard(
       children: <Widget>[

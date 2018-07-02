@@ -29,7 +29,7 @@ class InvoiceEditItems extends StatelessWidget {
       );
     }
 
-    var invoiceItems = invoice.invoiceItems.map((invoiceItem) =>
+    final invoiceItems = invoice.invoiceItems.map((invoiceItem) =>
         ItemEditDetails(
             viewModel: viewModel,
             key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
@@ -117,7 +117,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     void _confirmDelete() {
       showDialog<AlertDialog>(

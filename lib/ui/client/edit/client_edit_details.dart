@@ -28,7 +28,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
 
   @override
   void didChangeDependencies() {
-    List<TextEditingController> _controllers = [
+    final List<TextEditingController> _controllers = [
       _nameController,
       _idNumberController,
       _vatNumberController,

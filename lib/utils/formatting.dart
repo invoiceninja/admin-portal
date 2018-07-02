@@ -32,8 +32,8 @@ String formatNumber(
     return null;
   }
 
-  CompanyEntity company = state.selectedCompany;
-  ClientEntity client = state.selectedCompanyState.clientState.map[clientId];
+  final CompanyEntity company = state.selectedCompany;
+  final ClientEntity client = state.selectedCompanyState.clientState.map[clientId];
 
   //var countryId = client?.countryId ?? company.countryId;
   int currencyId;
@@ -114,13 +114,13 @@ String formatAddress(
     {dynamic object, bool isShipping = false, String delimiter = '\n'}) {
   var str = '';
 
-  String address1 =
+  final String address1 =
       (isShipping ? object.shippingAddress1 : object.address1) ?? '';
-  String address2 =
+  final String address2 =
       (isShipping ? object.shippingAddress2 : object.address2) ?? '';
-  String city = (isShipping ? object.city : object.city) ?? '';
-  String state = (isShipping ? object.state : object.state) ?? '';
-  String postalCode =
+  final String city = (isShipping ? object.city : object.city) ?? '';
+  final String state = (isShipping ? object.state : object.state) ?? '';
+  final String postalCode =
       (isShipping ? object.postalCode : object.postalCode) ?? '';
 
   if (address1.isNotEmpty) {

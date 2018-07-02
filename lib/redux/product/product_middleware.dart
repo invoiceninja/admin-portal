@@ -50,7 +50,7 @@ Middleware<AppState> _viewProductList() {
 
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origProduct = store.state.productState.map[action.productId];
+    final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.archive)
@@ -96,7 +96,7 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
 
 Middleware<AppState> _restoreProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origProduct = store.state.productState.map[action.productId];
+    final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.restore)

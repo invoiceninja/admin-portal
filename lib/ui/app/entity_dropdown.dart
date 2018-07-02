@@ -49,7 +49,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   void _showOptions() {
     widget.onFilterChanged('');
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     Widget _headerRow() {
       return Row(

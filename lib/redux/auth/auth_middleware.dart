@@ -22,7 +22,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 }
 
 void _saveAuthLocal(dynamic action) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('email', action.email);
   prefs.setString('url', action.url);
 
@@ -35,7 +35,7 @@ void _saveAuthLocal(dynamic action) async {
 }
 
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   final String email = prefs.getString('email') ?? Config.LOGIN_EMAIL;
   final String password = prefs.getString('password') ?? Config.LOGIN_PASSWORD;
@@ -86,7 +86,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
 }
 
 bool _isVersionSupported(String version) {
-  var parts = version.split('.');
+  final parts = version.split('.');
 
   final int major = int.parse(parts[0]);
   final int minor = int.parse(parts[1]);

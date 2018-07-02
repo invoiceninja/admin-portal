@@ -250,7 +250,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   //String get custom_messages;
 
   int compareTo(InvoiceEntity invoice, String sortField, bool sortAscending) {
-    int response = 0;
+    final response = 0;
     final InvoiceEntity invoiceA = sortAscending ? this : invoice;
     final InvoiceEntity invoiceB = sortAscending ? invoice: this;
 
