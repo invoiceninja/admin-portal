@@ -21,7 +21,7 @@ class EntityDropdown extends StatefulWidget {
 
   final EntityType entityType;
   final List<int> entityList;
-  final BuiltMap<int, BaseEntity> entityMap;
+  final BuiltMap<int, SelectableEntity> entityMap;
   final String labelText;
   final String initialValue;
   final Function(String) onFilterChanged;

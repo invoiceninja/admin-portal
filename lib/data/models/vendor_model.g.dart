@@ -175,12 +175,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -198,6 +192,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -292,10 +292,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
                       BuiltList, const [const FullType(VendorContactEntity)]))
               as BuiltList);
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -307,6 +303,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -345,12 +345,6 @@ class _$VendorContactEntitySerializer
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -368,6 +362,12 @@ class _$VendorContactEntitySerializer
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -404,10 +404,6 @@ class _$VendorContactEntitySerializer
           result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -419,6 +415,10 @@ class _$VendorContactEntitySerializer
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -648,13 +648,13 @@ class _$VendorEntity extends VendorEntity {
   @override
   final BuiltList<VendorContactEntity> vendorContacts;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$VendorEntity([void updates(VendorEntityBuilder b)]) =>
       (new VendorEntityBuilder()..update(updates)).build();
@@ -679,10 +679,10 @@ class _$VendorEntity extends VendorEntity {
       this.customValue1,
       this.customValue2,
       this.vendorContacts,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('VendorEntity', 'name');
@@ -754,10 +754,10 @@ class _$VendorEntity extends VendorEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         vendorContacts == other.vendorContacts &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -796,10 +796,10 @@ class _$VendorEntity extends VendorEntity {
                                 customValue1.hashCode),
                             customValue2.hashCode),
                         vendorContacts.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -824,10 +824,10 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('vendorContacts', vendorContacts)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -914,10 +914,6 @@ class VendorEntityBuilder
   set vendorContacts(ListBuilder<VendorContactEntity> vendorContacts) =>
       _$this._vendorContacts = vendorContacts;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -929,6 +925,10 @@ class VendorEntityBuilder
   bool _isDeleted;
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   VendorEntityBuilder();
 
@@ -953,10 +953,10 @@ class VendorEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _vendorContacts = _$v.vendorContacts?.toBuilder();
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -998,10 +998,10 @@ class VendorEntityBuilder
               customValue1: customValue1,
               customValue2: customValue2,
               vendorContacts: vendorContacts.build(),
-              id: id,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
-              isDeleted: isDeleted);
+              isDeleted: isDeleted,
+              id: id);
     } catch (_) {
       String _$failedField;
       try {
@@ -1030,13 +1030,13 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String phone;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$VendorContactEntity([void updates(VendorContactEntityBuilder b)]) =>
       (new VendorContactEntityBuilder()..update(updates)).build();
@@ -1047,10 +1047,10 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.email,
       this.isPrimary,
       this.phone,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (firstName == null)
       throw new BuiltValueNullFieldError('VendorContactEntity', 'firstName');
@@ -1081,10 +1081,10 @@ class _$VendorContactEntity extends VendorContactEntity {
         email == other.email &&
         isPrimary == other.isPrimary &&
         phone == other.phone &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -1101,10 +1101,10 @@ class _$VendorContactEntity extends VendorContactEntity {
                                 email.hashCode),
                             isPrimary.hashCode),
                         phone.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -1115,10 +1115,10 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('email', email)
           ..add('isPrimary', isPrimary)
           ..add('phone', phone)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -1147,10 +1147,6 @@ class VendorContactEntityBuilder
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1163,6 +1159,10 @@ class VendorContactEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
   VendorContactEntityBuilder();
 
   VendorContactEntityBuilder get _$this {
@@ -1172,10 +1172,10 @@ class VendorContactEntityBuilder
       _email = _$v.email;
       _isPrimary = _$v.isPrimary;
       _phone = _$v.phone;
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -1201,10 +1201,10 @@ class VendorContactEntityBuilder
             email: email,
             isPrimary: isPrimary,
             phone: phone,
-            id: id,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
-            isDeleted: isDeleted);
+            isDeleted: isDeleted,
+            id: id);
     replace(_$result);
     return _$result;
   }

@@ -30,6 +30,26 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       serializers.serialize(object.currencyMap,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(int), const FullType(CurrencyEntity)])),
+      'currencyList',
+      serializers.serialize(object.currencyList,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(int)])),
+      'countryMap',
+      serializers.serialize(object.countryMap,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(int), const FullType(CountryEntity)])),
+      'countryList',
+      serializers.serialize(object.countryList,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(int)])),
+      'languageMap',
+      serializers.serialize(object.languageMap,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(int), const FullType(LanguageEntity)])),
+      'languageList',
+      serializers.serialize(object.languageList,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(int)])),
       'sizeMap',
       serializers.serialize(object.sizeMap,
           specifiedType: const FullType(BuiltMap,
@@ -52,18 +72,10 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
             const FullType(int),
             const FullType(DatetimeFormatEntity)
           ])),
-      'languageMap',
-      serializers.serialize(object.languageMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(int), const FullType(LanguageEntity)])),
       'paymentTypeMap',
       serializers.serialize(object.paymentTypeMap,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(int), const FullType(PaymentTypeEntity)])),
-      'countryMap',
-      serializers.serialize(object.countryMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(int), const FullType(CountryEntity)])),
       'invoiceStatusMap',
       serializers.serialize(object.invoiceStatusMap,
           specifiedType: const FullType(BuiltMap, const [
@@ -96,6 +108,38 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
                 const FullType(int),
                 const FullType(CurrencyEntity)
               ])) as BuiltMap);
+          break;
+        case 'currencyList':
+          result.currencyList.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(int)]))
+              as BuiltList);
+          break;
+        case 'countryMap':
+          result.countryMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(CountryEntity)
+              ])) as BuiltMap);
+          break;
+        case 'countryList':
+          result.countryList.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(int)]))
+              as BuiltList);
+          break;
+        case 'languageMap':
+          result.languageMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(LanguageEntity)
+              ])) as BuiltMap);
+          break;
+        case 'languageList':
+          result.languageList.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(int)]))
+              as BuiltList);
           break;
         case 'sizeMap':
           result.sizeMap.replace(serializers.deserialize(value,
@@ -132,25 +176,11 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
                 const FullType(DatetimeFormatEntity)
               ])) as BuiltMap);
           break;
-        case 'languageMap':
-          result.languageMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
-                const FullType(LanguageEntity)
-              ])) as BuiltMap);
-          break;
         case 'paymentTypeMap':
           result.paymentTypeMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(PaymentTypeEntity)
-              ])) as BuiltMap);
-          break;
-        case 'countryMap':
-          result.countryMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
-                const FullType(CountryEntity)
               ])) as BuiltMap);
           break;
         case 'invoiceStatusMap':
@@ -178,6 +208,16 @@ class _$StaticState extends StaticState {
   @override
   final BuiltMap<int, CurrencyEntity> currencyMap;
   @override
+  final BuiltList<int> currencyList;
+  @override
+  final BuiltMap<int, CountryEntity> countryMap;
+  @override
+  final BuiltList<int> countryList;
+  @override
+  final BuiltMap<int, LanguageEntity> languageMap;
+  @override
+  final BuiltList<int> languageList;
+  @override
   final BuiltMap<int, SizeEntity> sizeMap;
   @override
   final BuiltMap<int, IndustryEntity> industryMap;
@@ -188,11 +228,7 @@ class _$StaticState extends StaticState {
   @override
   final BuiltMap<int, DatetimeFormatEntity> datetimeFormatMap;
   @override
-  final BuiltMap<int, LanguageEntity> languageMap;
-  @override
   final BuiltMap<int, PaymentTypeEntity> paymentTypeMap;
-  @override
-  final BuiltMap<int, CountryEntity> countryMap;
   @override
   final BuiltMap<int, InvoiceStatusEntity> invoiceStatusMap;
   @override
@@ -203,19 +239,32 @@ class _$StaticState extends StaticState {
 
   _$StaticState._(
       {this.currencyMap,
+      this.currencyList,
+      this.countryMap,
+      this.countryList,
+      this.languageMap,
+      this.languageList,
       this.sizeMap,
       this.industryMap,
       this.timezoneMap,
       this.dateFormatMap,
       this.datetimeFormatMap,
-      this.languageMap,
       this.paymentTypeMap,
-      this.countryMap,
       this.invoiceStatusMap,
       this.frequencyMap})
       : super._() {
     if (currencyMap == null)
       throw new BuiltValueNullFieldError('StaticState', 'currencyMap');
+    if (currencyList == null)
+      throw new BuiltValueNullFieldError('StaticState', 'currencyList');
+    if (countryMap == null)
+      throw new BuiltValueNullFieldError('StaticState', 'countryMap');
+    if (countryList == null)
+      throw new BuiltValueNullFieldError('StaticState', 'countryList');
+    if (languageMap == null)
+      throw new BuiltValueNullFieldError('StaticState', 'languageMap');
+    if (languageList == null)
+      throw new BuiltValueNullFieldError('StaticState', 'languageList');
     if (sizeMap == null)
       throw new BuiltValueNullFieldError('StaticState', 'sizeMap');
     if (industryMap == null)
@@ -226,12 +275,8 @@ class _$StaticState extends StaticState {
       throw new BuiltValueNullFieldError('StaticState', 'dateFormatMap');
     if (datetimeFormatMap == null)
       throw new BuiltValueNullFieldError('StaticState', 'datetimeFormatMap');
-    if (languageMap == null)
-      throw new BuiltValueNullFieldError('StaticState', 'languageMap');
     if (paymentTypeMap == null)
       throw new BuiltValueNullFieldError('StaticState', 'paymentTypeMap');
-    if (countryMap == null)
-      throw new BuiltValueNullFieldError('StaticState', 'countryMap');
     if (invoiceStatusMap == null)
       throw new BuiltValueNullFieldError('StaticState', 'invoiceStatusMap');
     if (frequencyMap == null)
@@ -250,14 +295,17 @@ class _$StaticState extends StaticState {
     if (identical(other, this)) return true;
     if (other is! StaticState) return false;
     return currencyMap == other.currencyMap &&
+        currencyList == other.currencyList &&
+        countryMap == other.countryMap &&
+        countryList == other.countryList &&
+        languageMap == other.languageMap &&
+        languageList == other.languageList &&
         sizeMap == other.sizeMap &&
         industryMap == other.industryMap &&
         timezoneMap == other.timezoneMap &&
         dateFormatMap == other.dateFormatMap &&
         datetimeFormatMap == other.datetimeFormatMap &&
-        languageMap == other.languageMap &&
         paymentTypeMap == other.paymentTypeMap &&
-        countryMap == other.countryMap &&
         invoiceStatusMap == other.invoiceStatusMap &&
         frequencyMap == other.frequencyMap;
   }
@@ -273,15 +321,25 @@ class _$StaticState extends StaticState {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, currencyMap.hashCode),
-                                            sizeMap.hashCode),
-                                        industryMap.hashCode),
-                                    timezoneMap.hashCode),
-                                dateFormatMap.hashCode),
-                            datetimeFormatMap.hashCode),
-                        languageMap.hashCode),
-                    paymentTypeMap.hashCode),
-                countryMap.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            0,
+                                                            currencyMap
+                                                                .hashCode),
+                                                        currencyList.hashCode),
+                                                    countryMap.hashCode),
+                                                countryList.hashCode),
+                                            languageMap.hashCode),
+                                        languageList.hashCode),
+                                    sizeMap.hashCode),
+                                industryMap.hashCode),
+                            timezoneMap.hashCode),
+                        dateFormatMap.hashCode),
+                    datetimeFormatMap.hashCode),
+                paymentTypeMap.hashCode),
             invoiceStatusMap.hashCode),
         frequencyMap.hashCode));
   }
@@ -290,14 +348,17 @@ class _$StaticState extends StaticState {
   String toString() {
     return (newBuiltValueToStringHelper('StaticState')
           ..add('currencyMap', currencyMap)
+          ..add('currencyList', currencyList)
+          ..add('countryMap', countryMap)
+          ..add('countryList', countryList)
+          ..add('languageMap', languageMap)
+          ..add('languageList', languageList)
           ..add('sizeMap', sizeMap)
           ..add('industryMap', industryMap)
           ..add('timezoneMap', timezoneMap)
           ..add('dateFormatMap', dateFormatMap)
           ..add('datetimeFormatMap', datetimeFormatMap)
-          ..add('languageMap', languageMap)
           ..add('paymentTypeMap', paymentTypeMap)
-          ..add('countryMap', countryMap)
           ..add('invoiceStatusMap', invoiceStatusMap)
           ..add('frequencyMap', frequencyMap))
         .toString();
@@ -312,6 +373,36 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       _$this._currencyMap ??= new MapBuilder<int, CurrencyEntity>();
   set currencyMap(MapBuilder<int, CurrencyEntity> currencyMap) =>
       _$this._currencyMap = currencyMap;
+
+  ListBuilder<int> _currencyList;
+  ListBuilder<int> get currencyList =>
+      _$this._currencyList ??= new ListBuilder<int>();
+  set currencyList(ListBuilder<int> currencyList) =>
+      _$this._currencyList = currencyList;
+
+  MapBuilder<int, CountryEntity> _countryMap;
+  MapBuilder<int, CountryEntity> get countryMap =>
+      _$this._countryMap ??= new MapBuilder<int, CountryEntity>();
+  set countryMap(MapBuilder<int, CountryEntity> countryMap) =>
+      _$this._countryMap = countryMap;
+
+  ListBuilder<int> _countryList;
+  ListBuilder<int> get countryList =>
+      _$this._countryList ??= new ListBuilder<int>();
+  set countryList(ListBuilder<int> countryList) =>
+      _$this._countryList = countryList;
+
+  MapBuilder<int, LanguageEntity> _languageMap;
+  MapBuilder<int, LanguageEntity> get languageMap =>
+      _$this._languageMap ??= new MapBuilder<int, LanguageEntity>();
+  set languageMap(MapBuilder<int, LanguageEntity> languageMap) =>
+      _$this._languageMap = languageMap;
+
+  ListBuilder<int> _languageList;
+  ListBuilder<int> get languageList =>
+      _$this._languageList ??= new ListBuilder<int>();
+  set languageList(ListBuilder<int> languageList) =>
+      _$this._languageList = languageList;
 
   MapBuilder<int, SizeEntity> _sizeMap;
   MapBuilder<int, SizeEntity> get sizeMap =>
@@ -343,23 +434,11 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
           MapBuilder<int, DatetimeFormatEntity> datetimeFormatMap) =>
       _$this._datetimeFormatMap = datetimeFormatMap;
 
-  MapBuilder<int, LanguageEntity> _languageMap;
-  MapBuilder<int, LanguageEntity> get languageMap =>
-      _$this._languageMap ??= new MapBuilder<int, LanguageEntity>();
-  set languageMap(MapBuilder<int, LanguageEntity> languageMap) =>
-      _$this._languageMap = languageMap;
-
   MapBuilder<int, PaymentTypeEntity> _paymentTypeMap;
   MapBuilder<int, PaymentTypeEntity> get paymentTypeMap =>
       _$this._paymentTypeMap ??= new MapBuilder<int, PaymentTypeEntity>();
   set paymentTypeMap(MapBuilder<int, PaymentTypeEntity> paymentTypeMap) =>
       _$this._paymentTypeMap = paymentTypeMap;
-
-  MapBuilder<int, CountryEntity> _countryMap;
-  MapBuilder<int, CountryEntity> get countryMap =>
-      _$this._countryMap ??= new MapBuilder<int, CountryEntity>();
-  set countryMap(MapBuilder<int, CountryEntity> countryMap) =>
-      _$this._countryMap = countryMap;
 
   MapBuilder<int, InvoiceStatusEntity> _invoiceStatusMap;
   MapBuilder<int, InvoiceStatusEntity> get invoiceStatusMap =>
@@ -378,14 +457,17 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   StaticStateBuilder get _$this {
     if (_$v != null) {
       _currencyMap = _$v.currencyMap?.toBuilder();
+      _currencyList = _$v.currencyList?.toBuilder();
+      _countryMap = _$v.countryMap?.toBuilder();
+      _countryList = _$v.countryList?.toBuilder();
+      _languageMap = _$v.languageMap?.toBuilder();
+      _languageList = _$v.languageList?.toBuilder();
       _sizeMap = _$v.sizeMap?.toBuilder();
       _industryMap = _$v.industryMap?.toBuilder();
       _timezoneMap = _$v.timezoneMap?.toBuilder();
       _dateFormatMap = _$v.dateFormatMap?.toBuilder();
       _datetimeFormatMap = _$v.datetimeFormatMap?.toBuilder();
-      _languageMap = _$v.languageMap?.toBuilder();
       _paymentTypeMap = _$v.paymentTypeMap?.toBuilder();
-      _countryMap = _$v.countryMap?.toBuilder();
       _invoiceStatusMap = _$v.invoiceStatusMap?.toBuilder();
       _frequencyMap = _$v.frequencyMap?.toBuilder();
       _$v = null;
@@ -411,14 +493,17 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       _$result = _$v ??
           new _$StaticState._(
               currencyMap: currencyMap.build(),
+              currencyList: currencyList.build(),
+              countryMap: countryMap.build(),
+              countryList: countryList.build(),
+              languageMap: languageMap.build(),
+              languageList: languageList.build(),
               sizeMap: sizeMap.build(),
               industryMap: industryMap.build(),
               timezoneMap: timezoneMap.build(),
               dateFormatMap: dateFormatMap.build(),
               datetimeFormatMap: datetimeFormatMap.build(),
-              languageMap: languageMap.build(),
               paymentTypeMap: paymentTypeMap.build(),
-              countryMap: countryMap.build(),
               invoiceStatusMap: invoiceStatusMap.build(),
               frequencyMap: frequencyMap.build());
     } catch (_) {
@@ -426,6 +511,16 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       try {
         _$failedField = 'currencyMap';
         currencyMap.build();
+        _$failedField = 'currencyList';
+        currencyList.build();
+        _$failedField = 'countryMap';
+        countryMap.build();
+        _$failedField = 'countryList';
+        countryList.build();
+        _$failedField = 'languageMap';
+        languageMap.build();
+        _$failedField = 'languageList';
+        languageList.build();
         _$failedField = 'sizeMap';
         sizeMap.build();
         _$failedField = 'industryMap';
@@ -436,12 +531,8 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         dateFormatMap.build();
         _$failedField = 'datetimeFormatMap';
         datetimeFormatMap.build();
-        _$failedField = 'languageMap';
-        languageMap.build();
         _$failedField = 'paymentTypeMap';
         paymentTypeMap.build();
-        _$failedField = 'countryMap';
-        countryMap.build();
         _$failedField = 'invoiceStatusMap';
         invoiceStatusMap.build();
         _$failedField = 'frequencyMap';

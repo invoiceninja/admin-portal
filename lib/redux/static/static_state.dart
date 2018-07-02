@@ -6,32 +6,39 @@ import 'package:invoiceninja/data/models/models.dart';
 part 'static_state.g.dart';
 
 abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
-
   BuiltMap<int, CurrencyEntity> get currencyMap;
+  BuiltList<int> get currencyList;
+
+  BuiltMap<int, CountryEntity> get countryMap;
+  BuiltList<int> get countryList;
+
+  BuiltMap<int, LanguageEntity> get languageMap;
+  BuiltList<int> get languageList;
+
   BuiltMap<int, SizeEntity> get sizeMap;
   BuiltMap<int, IndustryEntity> get industryMap;
   BuiltMap<int, TimezoneEntity> get timezoneMap;
   BuiltMap<int, DateFormatEntity> get dateFormatMap;
   BuiltMap<int, DatetimeFormatEntity> get datetimeFormatMap;
-  BuiltMap<int, LanguageEntity> get languageMap;
   BuiltMap<int, PaymentTypeEntity> get paymentTypeMap;
-  BuiltMap<int, CountryEntity> get countryMap;
   BuiltMap<int, InvoiceStatusEntity> get invoiceStatusMap;
   BuiltMap<int, FrequencyEntity> get frequencyMap;
+
 
   factory StaticState() {
     return _$StaticState._(
       currencyMap: BuiltMap<int, CurrencyEntity>(),
+
       sizeMap: BuiltMap<int, SizeEntity>(),
-        industryMap: BuiltMap<int, IndustryEntity>(),
-        timezoneMap: BuiltMap<int, TimezoneEntity>(),
-        dateFormatMap: BuiltMap<int, DateFormatEntity>(),
-        datetimeFormatMap: BuiltMap<int, DatetimeFormatEntity>(),
-        languageMap: BuiltMap<int, LanguageEntity>(),
-        paymentTypeMap: BuiltMap<int, PaymentTypeEntity>(),
-        countryMap: BuiltMap<int, CountryEntity>(),
-        invoiceStatusMap: BuiltMap<int, InvoiceStatusEntity>(),
-        frequencyMap: BuiltMap<int, FrequencyEntity>(),
+      industryMap: BuiltMap<int, IndustryEntity>(),
+      timezoneMap: BuiltMap<int, TimezoneEntity>(),
+      dateFormatMap: BuiltMap<int, DateFormatEntity>(),
+      datetimeFormatMap: BuiltMap<int, DatetimeFormatEntity>(),
+      languageMap: BuiltMap<int, LanguageEntity>(),
+      paymentTypeMap: BuiltMap<int, PaymentTypeEntity>(),
+      countryMap: BuiltMap<int, CountryEntity>(),
+      invoiceStatusMap: BuiltMap<int, InvoiceStatusEntity>(),
+      frequencyMap: BuiltMap<int, FrequencyEntity>(),
     );
   }
 

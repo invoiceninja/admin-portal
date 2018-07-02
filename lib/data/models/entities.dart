@@ -28,6 +28,10 @@ class EntityType extends EnumClass {
   static const EntityType credit = _$credit;
   static const EntityType payment = _$payment;
 
+  static const EntityType country = _$country;
+  static const EntityType currency = _$currency;
+  static const EntityType language = _$language;
+
   const EntityType._(String name) : super(name);
 
   String get plural {
@@ -52,10 +56,29 @@ class EntityState extends EnumClass {
   static EntityState valueOf(String name) => _$valueOf(name);
 }
 
-abstract class BaseEntity {
-
+abstract class SelectableEntity {
   @nullable
   int get id;
+
+  bool matchesSearch(String search) {
+    return true;
+  }
+
+  String matchesSearchValue(String search) {
+    return null;
+  }
+
+  String get listDisplayName {
+    return 'Error: not set';
+  }
+
+  String listDisplayCost(AppState state) {
+    return 'Error: not set';
+  }
+
+}
+
+abstract class BaseEntity extends Object with SelectableEntity {
 
   @nullable
   @BuiltValueField(wireName: 'updated_at')
@@ -75,22 +98,6 @@ abstract class BaseEntity {
 
   EntityType get entityType {
     throw 'EntityType not set: ${this}';
-  }
-
-  String get listDisplayName {
-    return 'Error: not set';
-  }
-
-  String listDisplayCost(AppState state) {
-    return 'Error: not set';
-  }
-
-  bool matchesSearch(String search) {
-    return true;
-  }
-
-  String matchesSearchValue(String search) {
-    return null;
   }
 
   bool get isNew {
