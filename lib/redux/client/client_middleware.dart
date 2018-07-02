@@ -109,7 +109,7 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 
 Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origClient = store.state.clientState.map[action.clientId];
+    final origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.restore)

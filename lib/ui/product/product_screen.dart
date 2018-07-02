@@ -12,7 +12,7 @@ import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja/utils/keys.dart';
 
 class ProductScreen extends StatelessWidget {
-  static final String route = '/product';
+  static const String route = '/product';
 
   @override
   Widget build(BuildContext context) {

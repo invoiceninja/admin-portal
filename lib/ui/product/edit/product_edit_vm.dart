@@ -14,7 +14,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
 class ProductEditScreen extends StatelessWidget {
-  static final String route = '/product/edit';
+  static const String route = '/product/edit';
   ProductEditScreen({Key key}) : super(key: key);
 
   @override

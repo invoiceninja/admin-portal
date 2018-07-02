@@ -77,7 +77,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     return ListView(shrinkWrap: true, children: <Widget>[
       FormCard(

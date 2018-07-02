@@ -28,8 +28,8 @@ class ProductList extends StatelessWidget {
           shrinkWrap: true,
           itemCount: viewModel.productList.length,
           itemBuilder: (BuildContext context, index) {
-            var productId = viewModel.productList[index];
-            var product = viewModel.productMap[productId];
+            final productId = viewModel.productList[index];
+            final product = viewModel.productMap[productId];
             return Column(children: <Widget>[
               ProductItem(
                 filter: viewModel.filter,

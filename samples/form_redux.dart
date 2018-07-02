@@ -205,8 +205,8 @@ class _ClientPageState extends State<ClientPage> {
   }
 
   void _onChanged() {
-    var name = _nameController.text.trim();
-    var store = StoreProvider.of<AppState>(context);
+    final name = _nameController.text.trim();
+    final store = StoreProvider.of<AppState>(context);
     if (name != store.state.client.name) {
       store.dispatch(UpdateClient(name));
     }

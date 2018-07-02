@@ -18,7 +18,7 @@ class StaticRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/static', company.token);
 
-    StaticDataItemResponse staticDataResponse = serializers.deserializeWith(
+    final StaticDataItemResponse staticDataResponse = serializers.deserializeWith(
         StaticDataItemResponse.serializer, response);
 
     return staticDataResponse.data;

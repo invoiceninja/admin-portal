@@ -44,7 +44,7 @@ List<int> visibleClientsSelector(
     ListUIState clientListState) {
 
   var list = clientList.where((clientId) {
-    var client = clientMap[clientId];
+    final client = clientMap[clientId];
     if (! client.matchesStates(clientListState.stateFilters)) {
       return false;
     }

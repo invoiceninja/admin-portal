@@ -42,7 +42,7 @@ class CreditsRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    CreditItemResponse creditResponse = serializers.deserializeWith(
+    final CreditItemResponse creditResponse = serializers.deserializeWith(
         CreditItemResponse.serializer, response);
 
     return creditResponse.data;

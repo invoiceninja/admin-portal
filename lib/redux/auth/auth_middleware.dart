@@ -37,10 +37,10 @@ void _saveAuthLocal(dynamic action) async {
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  String email = prefs.getString('email') ?? Config.LOGIN_EMAIL;
-  String password = prefs.getString('password') ?? Config.LOGIN_PASSWORD;
-  String url = prefs.getString('url') ?? Config.LOGIN_URL;
-  String secret = prefs.getString('secret') ?? Config.LOGIN_SECRET;
+  final String email = prefs.getString('email') ?? Config.LOGIN_EMAIL;
+  final String password = prefs.getString('password') ?? Config.LOGIN_PASSWORD;
+  final String url = prefs.getString('url') ?? Config.LOGIN_URL;
+  final String secret = prefs.getString('secret') ?? Config.LOGIN_SECRET;
 
   store.dispatch(UserLoginLoaded(email, password, url, secret));
   Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);

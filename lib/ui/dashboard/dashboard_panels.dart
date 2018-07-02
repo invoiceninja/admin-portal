@@ -29,7 +29,7 @@ class DashboardPanels extends StatelessWidget {
       return LoadingIndicator();
     }
 
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),

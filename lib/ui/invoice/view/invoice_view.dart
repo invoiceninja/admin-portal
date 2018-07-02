@@ -29,16 +29,16 @@ class InvoiceView extends StatefulWidget {
 class _InvoiceViewState extends State<InvoiceView> {
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var store = StoreProvider.of<AppState>(context);
-    var viewModel = widget.viewModel;
-    var appState = viewModel.appState;
-    var invoice = viewModel.invoice;
-    var client = viewModel.client;
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final viewModel = widget.viewModel;
+    final appState = viewModel.appState;
+    final invoice = viewModel.invoice;
+    final client = viewModel.client;
 
     List<Widget> _buildView() {
-      var invoice = widget.viewModel.invoice;
-      var widgets = <Widget>[
+      final invoice = widget.viewModel.invoice;
+      final widgets = <Widget>[
         TwoValueHeader(
           label1: localization.totalAmount,
           value1: formatNumber(invoice.amount, appState,

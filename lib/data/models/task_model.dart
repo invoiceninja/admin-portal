@@ -93,8 +93,8 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
 
   int compareTo(TaskEntity task, String sortField, bool sortAscending) {
     int response = 0;
-    TaskEntity taskA = sortAscending ? this : task;
-    TaskEntity taskB = sortAscending ? task: this;
+    final TaskEntity taskA = sortAscending ? this : task;
+    final TaskEntity taskB = sortAscending ? task: this;
 
     switch (sortField) {
       case TaskFields.duration:

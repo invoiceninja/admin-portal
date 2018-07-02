@@ -13,7 +13,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
 class ClientViewScreen extends StatelessWidget {
-  static final String route = '/client/view';
+  static const String route = '/client/view';
   ClientViewScreen({Key key}) : super(key: key);
 
   @override

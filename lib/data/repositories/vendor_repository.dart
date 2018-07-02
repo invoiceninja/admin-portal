@@ -42,7 +42,7 @@ class VendorRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    VendorItemResponse vendorResponse = serializers.deserializeWith(
+    final VendorItemResponse vendorResponse = serializers.deserializeWith(
         VendorItemResponse.serializer, response);
 
     return vendorResponse.data;

@@ -187,7 +187,7 @@ Middleware<AppState> _createLoadState(
 }
 
 List<String> _getRoutes(AppState state) {
-  List<String> routes = [];
+  final List<String> routes = [];
   var route = '';
   EntityType entityType;
 

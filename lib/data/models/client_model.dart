@@ -209,8 +209,8 @@ abstract class ClientEntity extends Object
 
   int compareTo(ClientEntity client, String sortField, bool sortAscending) {
     int response = 0;
-    ClientEntity clientA = sortAscending ? this : client;
-    ClientEntity clientB = sortAscending ? client : this;
+    final ClientEntity clientA = sortAscending ? this : client;
+    final ClientEntity clientB = sortAscending ? client : this;
 
     switch (sortField) {
       case ClientFields.balance:

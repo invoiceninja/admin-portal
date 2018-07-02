@@ -95,12 +95,12 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   
   int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
     int response = 0;
-    PaymentEntity creditA = sortAscending ? this : credit;
-    PaymentEntity creditB = sortAscending ? credit: this;
+    final PaymentEntity paymentA = sortAscending ? this : credit;
+    final PaymentEntity paymentB = sortAscending ? credit: this;
 
     switch (sortField) {
       case PaymentFields.amount:
-        response = creditA.amount.compareTo(creditB.amount);
+        response = paymentA.amount.compareTo(paymentB.amount);
     }
     
     return response;

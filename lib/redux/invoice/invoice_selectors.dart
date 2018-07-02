@@ -20,7 +20,7 @@ List<int> visibleInvoicesSelector(
     BuiltList<int> invoiceList,
     BuiltMap<int, ClientEntity> clientMap,
     ListUIState invoiceListState) {
-  var list = invoiceList.where((invoiceId) {
+  final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId];
     if (client.isDeleted) {

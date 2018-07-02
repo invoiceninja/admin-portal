@@ -56,7 +56,7 @@ void main() {
       // The `timeline` object contains all the performance data recorded during
       // the scrolling session. It can be digested into a handful of useful
       // aggregate numbers, such as "average frame build time".
-      TimelineSummary summary = new TimelineSummary.summarize(timeline);
+      final TimelineSummary summary = new TimelineSummary.summarize(timeline);
 
       // The following line saves the timeline summary to a JSON file.
       summary.writeSummaryToFile('scrolling_performance', pretty: true);

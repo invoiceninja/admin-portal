@@ -84,8 +84,8 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
   
   int compareTo(CreditEntity credit, String sortField, bool sortAscending) {
     int response = 0;
-    CreditEntity creditA = sortAscending ? this : credit;
-    CreditEntity creditB = sortAscending ? credit: this;
+    final CreditEntity creditA = sortAscending ? this : credit;
+    final CreditEntity creditB = sortAscending ? credit: this;
 
     switch (sortField) {
       case CreditFields.amount:

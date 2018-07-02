@@ -40,9 +40,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var viewModel = widget.viewModel;
-    var invoice = viewModel.invoice;
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
 
     return WillPopScope(
       onWillPop: () async {

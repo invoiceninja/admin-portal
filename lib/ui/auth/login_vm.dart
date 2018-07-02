@@ -14,7 +14,7 @@ import 'package:invoiceninja/redux/auth/auth_state.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key key}) : super(key: key);
 
-  static final String route = '/login';
+  static const String route = '/login';
 
   @override
   Widget build(BuildContext context) {

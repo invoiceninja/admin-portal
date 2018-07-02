@@ -28,7 +28,7 @@ class ActionMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<PopupMenuEntry<EntityAction>> actions = [];
+    final List<PopupMenuEntry<EntityAction>> actions = [];
 
     if (isLoading) {
       return IconButton(

@@ -59,7 +59,7 @@ class PersistenceRepository {
   }
 
   Future<UIState> loadUIState() async {
-    String data = await fileStorage.load();
+    final String data = await fileStorage.load();
     return serializers.deserializeWith(UIState.serializer, json.decode(data));
   }
 

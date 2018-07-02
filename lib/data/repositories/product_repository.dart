@@ -20,7 +20,7 @@ class ProductRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/products', company.token);
 
-    ProductListResponse productResponse = serializers.deserializeWith(
+    final ProductListResponse productResponse = serializers.deserializeWith(
         ProductListResponse.serializer, response);
 
     return productResponse.data;

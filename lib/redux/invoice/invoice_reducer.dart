@@ -175,7 +175,7 @@ InvoiceState _deleteInvoiceFailure(InvoiceState invoiceState, DeleteInvoiceFailu
 
 
 InvoiceState _restoreInvoiceRequest(InvoiceState invoiceState, RestoreInvoiceRequest action) {
-  var invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
+  final invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
     ..archivedAt = null
     ..isDeleted = false
   );

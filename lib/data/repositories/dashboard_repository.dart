@@ -17,7 +17,7 @@ class DashboardRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/dashboard', company.token);
 
-    DashboardResponse dashboardResponse = serializers.deserializeWith(
+    final DashboardResponse dashboardResponse = serializers.deserializeWith(
         DashboardResponse.serializer, response);
 
     return dashboardResponse.data;

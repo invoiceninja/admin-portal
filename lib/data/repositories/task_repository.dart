@@ -42,7 +42,7 @@ class TasksRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    TaskItemResponse taskResponse = serializers.deserializeWith(
+    final TaskItemResponse taskResponse = serializers.deserializeWith(
         TaskItemResponse.serializer, response);
 
     return taskResponse.data;

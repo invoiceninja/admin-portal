@@ -156,8 +156,8 @@ abstract class ExpenseEntity extends Object
 
   int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {
     int response = 0;
-    ExpenseEntity creditA = sortAscending ? this : expense;
-    ExpenseEntity creditB = sortAscending ? expense : this;
+    final ExpenseEntity creditA = sortAscending ? this : expense;
+    final ExpenseEntity creditB = sortAscending ? expense : this;
 
     switch (sortField) {
       case ExpenseFields.amount:

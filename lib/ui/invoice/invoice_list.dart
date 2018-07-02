@@ -28,8 +28,8 @@ class InvoiceList extends StatelessWidget {
           shrinkWrap: true,
           itemCount: viewModel.invoiceList.length,
           itemBuilder: (BuildContext context, index) {
-            var invoiceId = viewModel.invoiceList[index];
-            var invoice = viewModel.invoiceMap[invoiceId];
+            final invoiceId = viewModel.invoiceList[index];
+            final invoice = viewModel.invoiceMap[invoiceId];
             return Column(children: <Widget>[
               InvoiceItem(
                 filter: viewModel.filter,

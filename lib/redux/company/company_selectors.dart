@@ -2,7 +2,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 
 List<CompanyEntity> companiesSelector(AppState state) {
-  List<CompanyEntity> list = [];
+  final List<CompanyEntity> list = [];
 
   if (state.companyState1.company != null) {
     list.add(state.companyState1.company);

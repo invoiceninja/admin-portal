@@ -119,8 +119,8 @@ abstract class ProductEntity extends Object
   int compareTo(ProductEntity product,
       [String sortField, bool sortAscending = true]) {
     int response = 0;
-    ProductEntity productA = sortAscending ? this : product;
-    ProductEntity productB = sortAscending ? product : this;
+    final ProductEntity productA = sortAscending ? this : product;
+    final ProductEntity productB = sortAscending ? product : this;
 
     switch (sortField) {
       case ProductFields.cost:

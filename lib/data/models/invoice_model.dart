@@ -248,8 +248,8 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
 
   int compareTo(InvoiceEntity invoice, String sortField, bool sortAscending) {
     int response = 0;
-    InvoiceEntity invoiceA = sortAscending ? this : invoice;
-    InvoiceEntity invoiceB = sortAscending ? invoice: this;
+    final InvoiceEntity invoiceA = sortAscending ? this : invoice;
+    final InvoiceEntity invoiceB = sortAscending ? invoice: this;
 
     /*
     switch (sortField) {

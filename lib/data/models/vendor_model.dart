@@ -139,8 +139,8 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
 
   int compareTo(VendorEntity vendor, String sortField, bool sortAscending) {
     int response = 0;
-    VendorEntity vendorA = sortAscending ? this : vendor;
-    VendorEntity vendorB = sortAscending ? vendor: this;
+    final VendorEntity vendorA = sortAscending ? this : vendor;
+    final VendorEntity vendorB = sortAscending ? vendor: this;
 
     switch (sortField) {
       case VendorFields.name:

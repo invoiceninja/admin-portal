@@ -28,7 +28,7 @@ class PaymentsRepository {
 
   Future saveData(CompanyEntity company, AuthState auth, PaymentEntity payment, [EntityAction action]) async {
 
-    var data = serializers.serializeWith(PaymentEntity.serializer, payment);
+    final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     Future<dynamic> response;
 
     if (payment.isNew) {

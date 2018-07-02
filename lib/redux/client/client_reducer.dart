@@ -166,7 +166,7 @@ ClientState _deleteClientFailure(ClientState clientState, DeleteClientFailure ac
 
 
 ClientState _restoreClientRequest(ClientState clientState, RestoreClientRequest action) {
-  var client = clientState.map[action.clientId].rebuild((b) => b
+  final client = clientState.map[action.clientId].rebuild((b) => b
     ..archivedAt = null
     ..isDeleted = false
   );

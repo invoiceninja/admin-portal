@@ -41,10 +41,10 @@ class _ClientViewState extends State<ClientView>
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var store = StoreProvider.of<AppState>(context);
-    var viewModel = widget.viewModel;
-    var client = viewModel.client;
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final viewModel = widget.viewModel;
+    final client = viewModel.client;
 
     return WillPopScope(
       onWillPop: () async {

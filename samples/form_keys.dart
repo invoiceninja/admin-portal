@@ -203,8 +203,8 @@ class ContactsPageState extends State<ContactsPage>
     List<Widget> items = [];
 
     for (var i = 0; i < _contacts.length; i++) {
-      var contact = _contacts[i];
-      var contactKey = _contactKeys[i];
+      final contact = _contacts[i];
+      final contactKey = _contactKeys[i];
       items.add(ContactForm(
         contact: contact,
         key: contactKey,

@@ -88,7 +88,7 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
 
 Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origInvoice = store.state.invoiceState.map[action.invoiceId];
+    final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origInvoice, EntityAction.delete)

@@ -42,7 +42,7 @@ class InvoiceRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
+    final InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
         InvoiceItemResponse.serializer, response);
 
     return invoiceResponse.data;

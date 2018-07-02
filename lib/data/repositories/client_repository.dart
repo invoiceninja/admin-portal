@@ -20,7 +20,7 @@ class ClientRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/clients', company.token);
 
-    ClientListResponse clientResponse = serializers.deserializeWith(
+    final ClientListResponse clientResponse = serializers.deserializeWith(
         ClientListResponse.serializer, response);
 
     return clientResponse.data;

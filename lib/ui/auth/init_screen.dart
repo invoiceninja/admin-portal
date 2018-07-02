@@ -5,7 +5,7 @@ import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 
 class InitScreen extends StatelessWidget {
-  static final String route = '/';
+  static const String route = '/';
 
   @override
   Widget build(BuildContext context) {

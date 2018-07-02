@@ -89,8 +89,8 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
 
   int compareTo(ProjectEntity project, String sortField, bool sortAscending) {
     int response = 0;
-    ProjectEntity projectA = sortAscending ? this : project;
-    ProjectEntity projectB = sortAscending ? project: this; 
+    final ProjectEntity projectA = sortAscending ? this : project;
+    final ProjectEntity projectB = sortAscending ? project: this;
 
     switch (sortField) {
       case ProjectFields.taskRate:

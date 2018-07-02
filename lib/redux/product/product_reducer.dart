@@ -139,7 +139,7 @@ ProductState _deleteProductFailure(ProductState productState, DeleteProductFailu
 
 
 ProductState _restoreProductRequest(ProductState productState, RestoreProductRequest action) {
-  var product = productState.map[action.productId].rebuild((b) => b
+  final product = productState.map[action.productId].rebuild((b) => b
     ..archivedAt = null
     ..isDeleted = false
   );

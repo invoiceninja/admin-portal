@@ -73,7 +73,7 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
 
 Middleware<AppState> _deleteProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origProduct = store.state.productState.map[action.productId];
+    final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.delete)

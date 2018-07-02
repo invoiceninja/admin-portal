@@ -26,8 +26,8 @@ List<int> visibleProductsSelector(
   }).toList();
 
   list.sort((productAId, productBId) {
-    var productA = productMap[productAId];
-    var productB = productMap[productBId];
+    final productA = productMap[productAId];
+    final  productB = productMap[productBId];
     return productA.compareTo(productB, productListState.sortField, productListState.sortAscending);
   });
 

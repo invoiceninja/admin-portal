@@ -73,7 +73,7 @@ class _ProductEditState extends State<ProductEdit> {
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = widget.viewModel;
+    final viewModel = widget.viewModel;
     final product = viewModel.product;
 
     return WillPopScope(

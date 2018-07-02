@@ -61,8 +61,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   }
 
   void _onChanged() {
-    var viewModel = widget.viewModel;
-    var client = viewModel.client.rebuild((b) => b
+    final viewModel = widget.viewModel;
+    final client = viewModel.client.rebuild((b) => b
         ..name = _nameController.text.trim()
         ..idNumber = _idNumberController.text.trim()
         ..vatNumber = _vatNumberController.text.trim()

@@ -26,7 +26,7 @@ Middleware<AppState> _createViewDashboard() {
     store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
 
     if (action.context != null) {
-      NavigatorState navigator = Navigator.of(action.context);
+      final NavigatorState navigator = Navigator.of(action.context);
       navigator.pushReplacementNamed(DashboardScreen.route);
     }
 

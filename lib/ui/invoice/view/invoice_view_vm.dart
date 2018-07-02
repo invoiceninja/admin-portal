@@ -15,7 +15,7 @@ import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
-  static final String route = '/invoice/view';
+  static const String route = '/invoice/view';
   InvoiceViewScreen({Key key}) : super(key: key);
 
   @override

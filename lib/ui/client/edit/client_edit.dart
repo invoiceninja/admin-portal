@@ -39,9 +39,9 @@ class _ClientEditState extends State<ClientEdit>
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var viewModel = widget.viewModel;
-    var client = viewModel.client;
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final client = viewModel.client;
 
     return WillPopScope(
       onWillPop: () async {

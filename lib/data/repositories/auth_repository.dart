@@ -24,7 +24,7 @@ class AuthRepository {
 
     final Future<dynamic> response = await webClient.post(url + '/login?include_static=true', '', json.encode(credentials));
     print(response);
-    LoginResponse loginResponse = serializers.deserializeWith(
+    final LoginResponse loginResponse = serializers.deserializeWith(
         LoginResponse.serializer, response);
 
     if (loginResponse.error != null) {

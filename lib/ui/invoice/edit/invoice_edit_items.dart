@@ -15,8 +15,8 @@ class InvoiceEditItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var invoice = viewModel.invoice;
+    final localization = AppLocalization.of(context);
+    final invoice = viewModel.invoice;
 
     if (invoice.invoiceItems.length == 0) {
       return Center(

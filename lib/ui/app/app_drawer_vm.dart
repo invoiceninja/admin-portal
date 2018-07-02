@@ -42,7 +42,7 @@ class AppDrawerVM {
 });
 
   static AppDrawerVM fromStore(Store<AppState> store) {
-    AppState state = store.state;
+    final AppState state = store.state;
 
     return AppDrawerVM(
       isLoading: state.isLoading,

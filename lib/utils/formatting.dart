@@ -37,7 +37,7 @@ String formatNumber(
 
   //var countryId = client?.countryId ?? company.countryId;
   int currencyId;
-  int countryId = client?.countryId ?? 1;
+  final int countryId = client?.countryId ?? 1;
 
   if (client != null && client.currencyId > 0) {
     currencyId = client.currencyId;
