@@ -120,7 +120,6 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
             child: TextField(
               onChanged: (value) {
                 setState(() {
-                  print('setting filter to $value');
                   _filter = value;
                 });
               },
@@ -140,7 +139,6 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
     }
 
     Widget _createList() {
-      print('matching $_filter');
       final matches = _entityList
           .where((entityId) => widget.entityMap[entityId].matchesSearch(_filter))
           .toList();
