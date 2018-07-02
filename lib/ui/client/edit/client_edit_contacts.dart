@@ -65,7 +65,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  var _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {

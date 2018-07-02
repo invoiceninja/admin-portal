@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/data/models/entities.dart';
 
 part 'country_model.g.dart';
 
@@ -46,7 +47,7 @@ class CountryFields {
 }
 
 
-abstract class CountryEntity implements Built<CountryEntity, CountryEntityBuilder> {
+abstract class CountryEntity extends Object with SelectableEntity implements Built<CountryEntity, CountryEntityBuilder> {
 
   factory CountryEntity() {
     return _$CountryEntity._(
@@ -60,7 +61,6 @@ abstract class CountryEntity implements Built<CountryEntity, CountryEntityBuilde
   }
   CountryEntity._();
 
-  int get id;
   String get name;
 
   @BuiltValueField(wireName: 'swap_postal_code')

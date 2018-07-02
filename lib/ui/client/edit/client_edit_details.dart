@@ -24,7 +24,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   final _websiteController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  var _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {

@@ -11,7 +11,6 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(invoiceListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..dropdownFilter = dropdownFilterReducer(state.dropdownFilter, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
   );
 }

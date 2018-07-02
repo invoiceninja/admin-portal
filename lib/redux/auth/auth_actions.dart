@@ -39,7 +39,7 @@ class UserLoginRequest implements StartLoading {
 class UserLoginSuccess implements StopLoading {}
 
 class UserLoginFailure implements StopLoading {
-  final String error;
+  final Object error;
 
   UserLoginFailure(this.error);
 }

@@ -10,7 +10,6 @@ EntityUIState productUIReducer(ProductUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..dropdownFilter = dropdownFilterReducer(state.dropdownFilter, action)
   );
 }
 

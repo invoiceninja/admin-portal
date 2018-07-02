@@ -225,12 +225,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(ContactEntity)])),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -248,6 +242,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -410,10 +410,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
                       BuiltList, const [const FullType(ContactEntity)]))
               as BuiltList);
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -425,6 +421,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -468,12 +468,6 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -491,6 +485,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -539,10 +539,6 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -554,6 +550,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -817,13 +817,13 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<ContactEntity> contacts;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$ClientEntity([void updates(ClientEntityBuilder b)]) =>
       (new ClientEntityBuilder()..update(updates)).build();
@@ -865,10 +865,10 @@ class _$ClientEntity extends ClientEntity {
       this.customValue1,
       this.customValue2,
       this.contacts,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('ClientEntity', 'name');
@@ -992,10 +992,10 @@ class _$ClientEntity extends ClientEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         contacts == other.contacts &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -1034,10 +1034,10 @@ class _$ClientEntity extends ClientEntity {
                                 customValue1.hashCode),
                             customValue2.hashCode),
                         contacts.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -1079,10 +1079,10 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('contacts', contacts)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -1247,10 +1247,6 @@ class ClientEntityBuilder
   set contacts(ListBuilder<ContactEntity> contacts) =>
       _$this._contacts = contacts;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1262,6 +1258,10 @@ class ClientEntityBuilder
   bool _isDeleted;
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   ClientEntityBuilder();
 
@@ -1303,10 +1303,10 @@ class ClientEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _contacts = _$v.contacts?.toBuilder();
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -1365,10 +1365,10 @@ class ClientEntityBuilder
               customValue1: customValue1,
               customValue2: customValue2,
               contacts: contacts.build(),
-              id: id,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
-              isDeleted: isDeleted);
+              isDeleted: isDeleted,
+              id: id);
     } catch (_) {
       String _$failedField;
       try {
@@ -1403,13 +1403,13 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String customValue2;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$ContactEntity([void updates(ContactEntityBuilder b)]) =>
       (new ContactEntityBuilder()..update(updates)).build();
@@ -1423,10 +1423,10 @@ class _$ContactEntity extends ContactEntity {
       this.isPrimary,
       this.customValue1,
       this.customValue2,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (firstName == null)
       throw new BuiltValueNullFieldError('ContactEntity', 'firstName');
@@ -1465,10 +1465,10 @@ class _$ContactEntity extends ContactEntity {
         isPrimary == other.isPrimary &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -1491,10 +1491,10 @@ class _$ContactEntity extends ContactEntity {
                                 isPrimary.hashCode),
                             customValue1.hashCode),
                         customValue2.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -1508,10 +1508,10 @@ class _$ContactEntity extends ContactEntity {
           ..add('isPrimary', isPrimary)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -1552,10 +1552,6 @@ class ContactEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1567,6 +1563,10 @@ class ContactEntityBuilder
   bool _isDeleted;
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   ContactEntityBuilder();
 
@@ -1580,10 +1580,10 @@ class ContactEntityBuilder
       _isPrimary = _$v.isPrimary;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -1612,10 +1612,10 @@ class ContactEntityBuilder
             isPrimary: isPrimary,
             customValue1: customValue1,
             customValue2: customValue2,
-            id: id,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
-            isDeleted: isDeleted);
+            isDeleted: isDeleted,
+            id: id);
     replace(_$result);
     return _$result;
   }

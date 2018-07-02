@@ -17,7 +17,7 @@ class ExpenseRepository {
 
   Future<BuiltList<ExpenseEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final Future<dynamic> response = await webClient.get(
+    final dynamic response = await webClient.get(
         auth.url + '/expenses?per_page=500', company.token);
 
     final ExpenseListResponse expenseResponse = serializers.deserializeWith(
@@ -29,7 +29,7 @@ class ExpenseRepository {
   Future saveData(CompanyEntity company, AuthState auth, ExpenseEntity expense, [EntityAction action]) async {
 
     final data = serializers.serializeWith(ExpenseEntity.serializer, expense);
-    Future<dynamic> response;
+    dynamic response;
 
     if (expense.isNew) {
       response = await webClient.post(

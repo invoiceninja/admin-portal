@@ -255,12 +255,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -278,6 +272,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -466,10 +466,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
                       BuiltList, const [const FullType(InvitationEntity)]))
               as BuiltList);
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -481,6 +477,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -535,12 +535,6 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -558,6 +552,12 @@ class _$InvoiceItemEntitySerializer
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -622,10 +622,6 @@ class _$InvoiceItemEntitySerializer
           result.discount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -637,6 +633,10 @@ class _$InvoiceItemEntitySerializer
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -667,12 +667,6 @@ class _$InvitationEntitySerializer
       serializers.serialize(object.viewedDate,
           specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -690,6 +684,12 @@ class _$InvitationEntitySerializer
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -722,10 +722,6 @@ class _$InvitationEntitySerializer
           result.viewedDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -737,6 +733,10 @@ class _$InvitationEntitySerializer
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -1012,13 +1012,13 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<InvitationEntity> invitations;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$InvoiceEntity([void updates(InvoiceEntityBuilder b)]) =>
       (new InvoiceEntityBuilder()..update(updates)).build();
@@ -1066,10 +1066,10 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.filename,
       this.invoiceItems,
       this.invitations,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (amount == null)
       throw new BuiltValueNullFieldError('InvoiceEntity', 'amount');
@@ -1210,10 +1210,10 @@ class _$InvoiceEntity extends InvoiceEntity {
         filename == other.filename &&
         invoiceItems == other.invoiceItems &&
         invitations == other.invitations &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -1252,10 +1252,10 @@ class _$InvoiceEntity extends InvoiceEntity {
                                 filename.hashCode),
                             invoiceItems.hashCode),
                         invitations.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -1303,10 +1303,10 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('filename', filename)
           ..add('invoiceItems', invoiceItems)
           ..add('invitations', invitations)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -1496,10 +1496,6 @@ class InvoiceEntityBuilder
   set invitations(ListBuilder<InvitationEntity> invitations) =>
       _$this._invitations = invitations;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1511,6 +1507,10 @@ class InvoiceEntityBuilder
   bool _isDeleted;
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   InvoiceEntityBuilder();
 
@@ -1558,10 +1558,10 @@ class InvoiceEntityBuilder
       _filename = _$v.filename;
       _invoiceItems = _$v.invoiceItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -1626,10 +1626,10 @@ class InvoiceEntityBuilder
               filename: filename,
               invoiceItems: invoiceItems.build(),
               invitations: invitations.build(),
-              id: id,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
-              isDeleted: isDeleted);
+              isDeleted: isDeleted,
+              id: id);
     } catch (_) {
       String _$failedField;
       try {
@@ -1674,13 +1674,13 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double discount;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$InvoiceItemEntity([void updates(InvoiceItemEntityBuilder b)]) =>
       (new InvoiceItemEntityBuilder()..update(updates)).build();
@@ -1698,10 +1698,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.customValue1,
       this.customValue2,
       this.discount,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (productKey == null)
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'productKey');
@@ -1754,10 +1754,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         discount == other.discount &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -1792,10 +1792,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                 customValue1.hashCode),
                             customValue2.hashCode),
                         discount.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -1813,10 +1813,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('discount', discount)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -1874,10 +1874,6 @@ class InvoiceItemEntityBuilder
   double get discount => _$this._discount;
   set discount(double discount) => _$this._discount = discount;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1889,6 +1885,10 @@ class InvoiceItemEntityBuilder
   bool _isDeleted;
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   InvoiceItemEntityBuilder();
 
@@ -1906,10 +1906,10 @@ class InvoiceItemEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _discount = _$v.discount;
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -1942,10 +1942,10 @@ class InvoiceItemEntityBuilder
             customValue1: customValue1,
             customValue2: customValue2,
             discount: discount,
-            id: id,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
-            isDeleted: isDeleted);
+            isDeleted: isDeleted,
+            id: id);
     replace(_$result);
     return _$result;
   }
@@ -1961,13 +1961,13 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String viewedDate;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$InvitationEntity([void updates(InvitationEntityBuilder b)]) =>
       (new InvitationEntityBuilder()..update(updates)).build();
@@ -1977,10 +1977,10 @@ class _$InvitationEntity extends InvitationEntity {
       this.link,
       this.sentDate,
       this.viewedDate,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (key == null)
       throw new BuiltValueNullFieldError('InvitationEntity', 'key');
@@ -2008,10 +2008,10 @@ class _$InvitationEntity extends InvitationEntity {
         link == other.link &&
         sentDate == other.sentDate &&
         viewedDate == other.viewedDate &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -2024,10 +2024,10 @@ class _$InvitationEntity extends InvitationEntity {
                         $jc($jc($jc(0, key.hashCode), link.hashCode),
                             sentDate.hashCode),
                         viewedDate.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -2037,10 +2037,10 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('link', link)
           ..add('sentDate', sentDate)
           ..add('viewedDate', viewedDate)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -2065,10 +2065,6 @@ class InvitationEntityBuilder
   String get viewedDate => _$this._viewedDate;
   set viewedDate(String viewedDate) => _$this._viewedDate = viewedDate;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -2081,6 +2077,10 @@ class InvitationEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
   InvitationEntityBuilder();
 
   InvitationEntityBuilder get _$this {
@@ -2089,10 +2089,10 @@ class InvitationEntityBuilder
       _link = _$v.link;
       _sentDate = _$v.sentDate;
       _viewedDate = _$v.viewedDate;
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -2117,10 +2117,10 @@ class InvitationEntityBuilder
             link: link,
             sentDate: sentDate,
             viewedDate: viewedDate,
-            id: id,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
-            isDeleted: isDeleted);
+            isDeleted: isDeleted,
+            id: id);
     replace(_$result);
     return _$result;
   }

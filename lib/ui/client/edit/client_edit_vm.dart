@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -41,6 +42,7 @@ class ClientEditVM {
   final Function(ContactEntity, int) onChangedContact;
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
+  final BuiltMap<int, CountryEntity> countryMap;
 
   ClientEditVM({
     @required this.isLoading,
@@ -52,15 +54,18 @@ class ClientEditVM {
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onBackPressed,
+    @required this.countryMap,
   });
 
   factory ClientEditVM.fromStore(Store<AppState> store) {
-    final client = store.state.clientUIState.editing;
+    final state = store.state;
+    final client = state.clientUIState.editing;
 
     return ClientEditVM(
         client: client,
-        origClient: store.state.clientState.map[client.id],
-        isLoading: store.state.isLoading,
+        origClient: state.clientState.map[client.id],
+        countryMap: state.staticState.countryMap,
+        isLoading: state.isLoading,
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
         onAddContactPressed: () => store.dispatch(AddContact()),

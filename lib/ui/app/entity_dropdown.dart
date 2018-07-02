@@ -11,20 +11,16 @@ class EntityDropdown extends StatefulWidget {
   EntityDropdown({
     @required this.entityType,
     @required this.labelText,
-    @required this.entityList,
     @required this.entityMap,
-    @required this.onFilterChanged,
     @required this.onSelected,
     this.validator,
     this.initialValue,
   });
 
   final EntityType entityType;
-  final List<int> entityList;
-  final BuiltMap<int, BaseEntity> entityMap;
+  final BuiltMap<int, SelectableEntity> entityMap;
   final String labelText;
   final String initialValue;
-  final Function(String) onFilterChanged;
   final Function(int) onSelected;
   final Function validator;
 
@@ -34,21 +30,24 @@ class EntityDropdown extends StatefulWidget {
 
 class _EntityDropdownState extends State<EntityDropdown> {
   final _textController = TextEditingController();
+  final _filterController = TextEditingController();
+  List<int> _entityList;
 
   @override
   void initState() {
     super.initState();
     _textController.text = widget.initialValue;
+    _entityList = widget.entityMap.keys.toList();
   }
 
   @override
   void dispose() {
     _textController.dispose();
+    _filterController.dispose();
     super.dispose();
   }
 
   void _showOptions() {
-    widget.onFilterChanged('');
     final localization = AppLocalization.of(context);
 
     Widget _headerRow() {
@@ -63,7 +62,10 @@ class _EntityDropdownState extends State<EntityDropdown> {
           ),
           Expanded(
             child: TextField(
-              onChanged: (value) => widget.onFilterChanged(value),
+              controller: _filterController,
+              onChanged: (value) {
+
+              },
               autofocus: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -79,15 +81,14 @@ class _EntityDropdownState extends State<EntityDropdown> {
       );
     }
 
-    Widget _entityList(Store<AppState> store) {
+    Widget _createList(Store<AppState> store) {
       return Column(
           mainAxisSize: MainAxisSize.min,
-          children: widget.entityList
-              .getRange(0, min(6, widget.entityList.length))
+          children: _entityList
+              .getRange(0, min(6, _entityList.length))
               .map((entityId) {
             final entity = widget.entityMap[entityId];
-            final filter =
-                store.state.getUIState(widget.entityType).dropdownFilter;
+            final filter = _filterController.text;
             final String subtitle = entity.matchesSearchValue(filter);
             return ListTile(
               dense: true,
@@ -117,7 +118,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           _headerRow(),
-                          _entityList(store),
+                          _createList(store),
                         ]),
                   ),
                   Expanded(child: Container()),

@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'expense_model.g.dart';
 
@@ -183,6 +184,25 @@ abstract class ExpenseEntity extends Object
     return privateNotes.contains(search);
   }
 
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return publicNotes;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
+
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 
@@ -193,6 +213,34 @@ abstract class ExpenseCategoryEntity extends Object
   factory ExpenseCategoryEntity([void updates(ExpenseCategoryEntityBuilder b)]) =
       _$ExpenseCategoryEntity;
   ExpenseCategoryEntity._();
+
+  @override
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return '';
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
 
   String get name;
 

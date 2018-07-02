@@ -17,7 +17,7 @@ class ProjectsRepository {
 
   Future<BuiltList<ProjectEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
-    final Future<dynamic> response = await webClient.get(
+    final dynamic response = await webClient.get(
         auth.url + '/projects?per_page=500', company.token);
 
     final ProjectListResponse projectResponse = serializers.deserializeWith(
@@ -29,7 +29,7 @@ class ProjectsRepository {
   Future saveData(CompanyEntity company, AuthState auth, ProjectEntity project, [EntityAction action]) async {
 
     final data = serializers.serializeWith(ProjectEntity.serializer, project);
-    Future<dynamic> response;
+    dynamic response;
 
     if (project.isNew) {
       response = await webClient.post(

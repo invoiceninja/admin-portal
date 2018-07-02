@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/models/product_model.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 
 part 'invoice_model.g.dart';
@@ -305,6 +306,16 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
     return null;
   }
 
+  @override
+  String get listDisplayName {
+    return invoiceNumber;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
+
   String get invitationLink => invitations.first?.link;
   String get invitationSilentLink => invitations.first?.silentLink;
   String get invitationDownloadLink => invitations.first?.downloadLink;
@@ -372,6 +383,34 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
 
   double get total => qty * cost;
 
+  @override
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return '';
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
+
   static Serializer<InvoiceItemEntity> get serializer => _$invoiceItemEntitySerializer;
 }
 
@@ -405,6 +444,34 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
 
   String get silentLink => link + '?silent=true';
   String get downloadLink => link.replaceFirst('/view/', '/download/');
+
+  @override
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return '';
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
 
   static Serializer<InvitationEntity> get serializer => _$invitationEntitySerializer;
 }

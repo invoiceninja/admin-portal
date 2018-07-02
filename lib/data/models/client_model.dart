@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'client_model.g.dart';
 
@@ -281,6 +282,11 @@ abstract class ClientEntity extends Object
     return '';
   }
 
+  @override
+  String listDisplayCost(AppState state) {
+    return 'Error: not set';
+  }
+
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
 
@@ -378,6 +384,16 @@ abstract class ContactEntity extends Object
     }
 
     return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return fullName();
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
   }
 
   static Serializer<ContactEntity> get serializer => _$contactEntitySerializer;

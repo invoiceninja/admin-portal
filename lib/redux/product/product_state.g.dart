@@ -100,9 +100,6 @@ class _$ProductUIStateSerializer
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
-      'dropdownFilter',
-      serializers.serialize(object.dropdownFilter,
-          specifiedType: const FullType(String)),
     ];
     if (object.editing != null) {
       result
@@ -136,10 +133,6 @@ class _$ProductUIStateSerializer
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ListUIState)) as ListUIState);
-          break;
-        case 'dropdownFilter':
-          result.dropdownFilter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -269,21 +262,16 @@ class _$ProductUIState extends ProductUIState {
   final int selectedId;
   @override
   final ListUIState listUIState;
-  @override
-  final String dropdownFilter;
 
   factory _$ProductUIState([void updates(ProductUIStateBuilder b)]) =>
       (new ProductUIStateBuilder()..update(updates)).build();
 
-  _$ProductUIState._(
-      {this.editing, this.selectedId, this.listUIState, this.dropdownFilter})
+  _$ProductUIState._({this.editing, this.selectedId, this.listUIState})
       : super._() {
     if (selectedId == null)
       throw new BuiltValueNullFieldError('ProductUIState', 'selectedId');
     if (listUIState == null)
       throw new BuiltValueNullFieldError('ProductUIState', 'listUIState');
-    if (dropdownFilter == null)
-      throw new BuiltValueNullFieldError('ProductUIState', 'dropdownFilter');
   }
 
   @override
@@ -300,16 +288,13 @@ class _$ProductUIState extends ProductUIState {
     if (other is! ProductUIState) return false;
     return editing == other.editing &&
         selectedId == other.selectedId &&
-        listUIState == other.listUIState &&
-        dropdownFilter == other.dropdownFilter;
+        listUIState == other.listUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
-            listUIState.hashCode),
-        dropdownFilter.hashCode));
+    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+        listUIState.hashCode));
   }
 
   @override
@@ -317,8 +302,7 @@ class _$ProductUIState extends ProductUIState {
     return (newBuiltValueToStringHelper('ProductUIState')
           ..add('editing', editing)
           ..add('selectedId', selectedId)
-          ..add('listUIState', listUIState)
-          ..add('dropdownFilter', dropdownFilter))
+          ..add('listUIState', listUIState))
         .toString();
   }
 }
@@ -342,11 +326,6 @@ class ProductUIStateBuilder
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
-  String _dropdownFilter;
-  String get dropdownFilter => _$this._dropdownFilter;
-  set dropdownFilter(String dropdownFilter) =>
-      _$this._dropdownFilter = dropdownFilter;
-
   ProductUIStateBuilder();
 
   ProductUIStateBuilder get _$this {
@@ -354,7 +333,6 @@ class ProductUIStateBuilder
       _editing = _$v.editing?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
-      _dropdownFilter = _$v.dropdownFilter;
       _$v = null;
     }
     return this;
@@ -379,8 +357,7 @@ class ProductUIStateBuilder
           new _$ProductUIState._(
               editing: _editing?.build(),
               selectedId: selectedId,
-              listUIState: listUIState.build(),
-              dropdownFilter: dropdownFilter);
+              listUIState: listUIState.build());
     } catch (_) {
       String _$failedField;
       try {

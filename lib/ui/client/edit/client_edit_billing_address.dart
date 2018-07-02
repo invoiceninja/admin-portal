@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -25,7 +27,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   final _stateController = TextEditingController();
   final _postalCodeController = TextEditingController();
 
-  var _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
@@ -78,6 +80,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
 
     return ListView(shrinkWrap: true, children: <Widget>[
       FormCard(
@@ -117,6 +120,14 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
               labelText: localization.postalCode,
             ),
             keyboardType: TextInputType.phone,
+          ),
+          EntityDropdown(
+            entityType: EntityType.country,
+            entityMap: viewModel.countryMap,
+            labelText: localization.country,
+            onSelected: (int countryId) {
+              //
+            },
           ),
         ],
       )

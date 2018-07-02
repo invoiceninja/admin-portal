@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'task_model.g.dart';
 
@@ -119,6 +120,25 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
     }
 
     return description.contains(search);
+  }
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return description;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
   }
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;

@@ -89,7 +89,7 @@ class AddClientSuccess implements StopLoading, PersistData, PersistUI {
 }
 
 class SaveClientFailure implements StopLoading {
-  final String error;
+  final Object error;
   SaveClientFailure (this.error);
 }
 
@@ -160,9 +160,4 @@ class FilterClientsByState implements PersistUI {
   final EntityState state;
 
   FilterClientsByState(this.state);
-}
-
-class FilterClientDropdown {
-  final String filter;
-  FilterClientDropdown(this.filter);
 }

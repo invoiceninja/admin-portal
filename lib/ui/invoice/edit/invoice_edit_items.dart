@@ -64,7 +64,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
   final _costController = TextEditingController();
   final _qtyController = TextEditingController();
 
-  var _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   bool get wantKeepAlive => true;

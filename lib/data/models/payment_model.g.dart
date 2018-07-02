@@ -150,12 +150,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.exchangeCurrencyId,
           specifiedType: const FullType(int)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -173,6 +167,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -225,10 +225,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           result.exchangeCurrencyId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -240,6 +236,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -449,13 +449,13 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final int exchangeCurrencyId;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$PaymentEntity([void updates(PaymentEntityBuilder b)]) =>
       (new PaymentEntityBuilder()..update(updates)).build();
@@ -470,10 +470,10 @@ class _$PaymentEntity extends PaymentEntity {
       this.privateNotes,
       this.exchangeRate,
       this.exchangeCurrencyId,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (amount == null)
       throw new BuiltValueNullFieldError('PaymentEntity', 'amount');
@@ -516,10 +516,10 @@ class _$PaymentEntity extends PaymentEntity {
         privateNotes == other.privateNotes &&
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -546,10 +546,10 @@ class _$PaymentEntity extends PaymentEntity {
                                 privateNotes.hashCode),
                             exchangeRate.hashCode),
                         exchangeCurrencyId.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -564,10 +564,10 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('privateNotes', privateNotes)
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -615,10 +615,6 @@ class PaymentEntityBuilder
   set exchangeCurrencyId(int exchangeCurrencyId) =>
       _$this._exchangeCurrencyId = exchangeCurrencyId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -630,6 +626,10 @@ class PaymentEntityBuilder
   bool _isDeleted;
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   PaymentEntityBuilder();
 
@@ -644,10 +644,10 @@ class PaymentEntityBuilder
       _privateNotes = _$v.privateNotes;
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -677,10 +677,10 @@ class PaymentEntityBuilder
             privateNotes: privateNotes,
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,
-            id: id,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
-            isDeleted: isDeleted);
+            isDeleted: isDeleted,
+            id: id);
     replace(_$result);
     return _$result;
   }

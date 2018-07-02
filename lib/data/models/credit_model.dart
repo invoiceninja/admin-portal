@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'credit_model.g.dart';
 
@@ -106,6 +107,26 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
 
     return publicNotes.contains(search);
   }
-  
+
+  @override
+  String matchesSearchValue(String search) {
+    if (search == null || search.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return publicNotes;
+  }
+
+  @override
+  String listDisplayCost(AppState state) {
+    return '';
+  }
+
+
   static Serializer<CreditEntity> get serializer => _$creditEntitySerializer;
 }

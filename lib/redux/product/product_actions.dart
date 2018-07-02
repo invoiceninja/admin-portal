@@ -68,7 +68,7 @@ class AddProductSuccess implements StopLoading, PersistData, PersistUI {
 }
 
 class SaveProductFailure implements StopLoading {
-  final String error;
+  final Object error;
   SaveProductFailure (this.error);
 }
 

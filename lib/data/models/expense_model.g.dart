@@ -189,12 +189,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(ExpenseCategoryEntity)])),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -212,6 +206,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -314,10 +314,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
                       BuiltList, const [const FullType(ExpenseCategoryEntity)]))
               as BuiltList);
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -329,6 +325,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -354,12 +354,6 @@ class _$ExpenseCategoryEntitySerializer
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
-    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -377,6 +371,12 @@ class _$ExpenseCategoryEntitySerializer
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
     }
 
     return result;
@@ -398,10 +398,6 @@ class _$ExpenseCategoryEntitySerializer
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -413,6 +409,10 @@ class _$ExpenseCategoryEntitySerializer
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -646,13 +646,13 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final BuiltList<ExpenseCategoryEntity> expenseCategories;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$ExpenseEntity([void updates(ExpenseEntityBuilder b)]) =>
       (new ExpenseEntityBuilder()..update(updates)).build();
@@ -679,10 +679,10 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.customValue1,
       this.customValue2,
       this.expenseCategories,
-      this.id,
       this.updatedAt,
       this.archivedAt,
-      this.isDeleted})
+      this.isDeleted,
+      this.id})
       : super._() {
     if (privateNotes == null)
       throw new BuiltValueNullFieldError('ExpenseEntity', 'privateNotes');
@@ -761,10 +761,10 @@ class _$ExpenseEntity extends ExpenseEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         expenseCategories == other.expenseCategories &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
@@ -803,10 +803,10 @@ class _$ExpenseEntity extends ExpenseEntity {
                                 customValue1.hashCode),
                             customValue2.hashCode),
                         expenseCategories.hashCode),
-                    id.hashCode),
-                updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -833,10 +833,10 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('expenseCategories', expenseCategories)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -937,10 +937,6 @@ class ExpenseEntityBuilder
   set expenseCategories(ListBuilder<ExpenseCategoryEntity> expenseCategories) =>
       _$this._expenseCategories = expenseCategories;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -952,6 +948,10 @@ class ExpenseEntityBuilder
   bool _isDeleted;
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   ExpenseEntityBuilder();
 
@@ -978,10 +978,10 @@ class ExpenseEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _expenseCategories = _$v.expenseCategories?.toBuilder();
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -1025,10 +1025,10 @@ class ExpenseEntityBuilder
               customValue1: customValue1,
               customValue2: customValue2,
               expenseCategories: expenseCategories.build(),
-              id: id,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
-              isDeleted: isDeleted);
+              isDeleted: isDeleted,
+              id: id);
     } catch (_) {
       String _$failedField;
       try {
@@ -1049,20 +1049,20 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   final String name;
   @override
-  final int id;
-  @override
   final int updatedAt;
   @override
   final int archivedAt;
   @override
   final bool isDeleted;
+  @override
+  final int id;
 
   factory _$ExpenseCategoryEntity(
           [void updates(ExpenseCategoryEntityBuilder b)]) =>
       (new ExpenseCategoryEntityBuilder()..update(updates)).build();
 
   _$ExpenseCategoryEntity._(
-      {this.name, this.id, this.updatedAt, this.archivedAt, this.isDeleted})
+      {this.name, this.updatedAt, this.archivedAt, this.isDeleted, this.id})
       : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'name');
@@ -1081,28 +1081,30 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
     if (identical(other, this)) return true;
     if (other is! ExpenseCategoryEntity) return false;
     return name == other.name &&
-        id == other.id &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted;
+        isDeleted == other.isDeleted &&
+        id == other.id;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, name.hashCode), id.hashCode), updatedAt.hashCode),
-            archivedAt.hashCode),
-        isDeleted.hashCode));
+        $jc(
+            $jc($jc($jc(0, name.hashCode), updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ExpenseCategoryEntity')
           ..add('name', name)
-          ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted))
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
         .toString();
   }
 }
@@ -1114,10 +1116,6 @@ class ExpenseCategoryEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
-
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
 
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
@@ -1131,15 +1129,19 @@ class ExpenseCategoryEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
   ExpenseCategoryEntityBuilder();
 
   ExpenseCategoryEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
-      _id = _$v.id;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -1161,10 +1163,10 @@ class ExpenseCategoryEntityBuilder
     final _$result = _$v ??
         new _$ExpenseCategoryEntity._(
             name: name,
-            id: id,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
-            isDeleted: isDeleted);
+            isDeleted: isDeleted,
+            id: id);
     replace(_$result);
     return _$result;
   }

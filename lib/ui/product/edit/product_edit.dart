@@ -27,7 +27,7 @@ class _ProductEditState extends State<ProductEdit> {
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
 
-  var _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {

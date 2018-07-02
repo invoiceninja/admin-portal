@@ -45,7 +45,6 @@ abstract class ClientUIState extends Object with EntityUIState implements Built<
     return _$ClientUIState._(
       listUIState: ListUIState(ClientFields.name),
       editing: ClientEntity(),
-      dropdownFilter: '',
       selectedId: 0,
     );
   }
