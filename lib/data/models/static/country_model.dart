@@ -8,19 +8,21 @@ part 'country_model.g.dart';
 
 abstract class CountryListResponse implements Built<CountryListResponse, CountryListResponseBuilder> {
 
+  factory CountryListResponse([void updates(CountryListResponseBuilder b)]) = _$CountryListResponse;
+  CountryListResponse._();
+
   BuiltList<CountryEntity> get data;
 
-  CountryListResponse._();
-  factory CountryListResponse([void updates(CountryListResponseBuilder b)]) = _$CountryListResponse;
   static Serializer<CountryListResponse> get serializer => _$countryListResponseSerializer;
 }
 
 abstract class CountryItemResponse implements Built<CountryItemResponse, CountryItemResponseBuilder> {
 
+  factory CountryItemResponse([void updates(CountryItemResponseBuilder b)]) = _$CountryItemResponse;
+  CountryItemResponse._();
+
   CountryEntity get data;
 
-  CountryItemResponse._();
-  factory CountryItemResponse([void updates(CountryItemResponseBuilder b)]) = _$CountryItemResponse;
   static Serializer<CountryItemResponse> get serializer => _$countryItemResponseSerializer;
 }
 
@@ -60,6 +62,7 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
       decimalSeparator: '',
     );
   }
+  CountryEntity._();
 
   String get name;
 
@@ -185,8 +188,6 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
     return '';
   }
 
-
-  CountryEntity._();
   static Serializer<CountryEntity> get serializer => _$countryEntitySerializer;
 }
 

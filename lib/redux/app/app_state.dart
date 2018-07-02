@@ -15,15 +15,6 @@ import 'package:built_value/serializer.dart';
 part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
-  bool get isLoading;
-  AuthState get authState;
-  StaticState get staticState;
-  UIState get uiState;
-  CompanyState get companyState1;
-  CompanyState get companyState2;
-  CompanyState get companyState3;
-  CompanyState get companyState4;
-  CompanyState get companyState5;
 
   factory AppState() {
     return _$AppState._(
@@ -38,8 +29,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       uiState: UIState(),
     );
   }
-
   AppState._();
+
+  bool get isLoading;
+  AuthState get authState;
+  StaticState get staticState;
+  UIState get uiState;
+  CompanyState get companyState1;
+  CompanyState get companyState2;
+  CompanyState get companyState3;
+  CompanyState get companyState4;
+  CompanyState get companyState5;
+
   //factory AppState([void updates(AppStateBuilder b)]) = _$AppState;
   static Serializer<AppState> get serializer => _$appStateSerializer;
 

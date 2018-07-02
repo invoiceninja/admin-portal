@@ -34,10 +34,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
   }
 
   void _onItemsSelected() {
-    List<InvoiceItemEntity> items = [];
+    final List<InvoiceItemEntity> items = [];
 
     _selectedIds.forEach((entityId) {
-      var product = widget.state.productState.map[entityId];
+      final product = widget.state.productState.map[entityId];
       items.add(product.asInvoiceItem);
     });
 
@@ -143,8 +143,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
-          int entityId = matches[index];
-          var entity = state.map[entityId];
+          final int entityId = matches[index];
+          final entity = state.map[entityId];
           final String subtitle = entity.matchesSearchValue(_filter);
           return ListTile(
             dense: true,

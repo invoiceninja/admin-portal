@@ -6,19 +6,21 @@ part 'payment_type_model.g.dart';
 
 abstract class PaymentTypeListResponse implements Built<PaymentTypeListResponse, PaymentTypeListResponseBuilder> {
 
+  factory PaymentTypeListResponse([void updates(PaymentTypeListResponseBuilder b)]) = _$PaymentTypeListResponse;
+  PaymentTypeListResponse._();
+
   BuiltList<PaymentTypeEntity> get data;
 
-  PaymentTypeListResponse._();
-  factory PaymentTypeListResponse([void updates(PaymentTypeListResponseBuilder b)]) = _$PaymentTypeListResponse;
   static Serializer<PaymentTypeListResponse> get serializer => _$paymentTypeListResponseSerializer;
 }
 
 abstract class PaymentTypeItemResponse implements Built<PaymentTypeItemResponse, PaymentTypeItemResponseBuilder> {
 
+  factory PaymentTypeItemResponse([void updates(PaymentTypeItemResponseBuilder b)]) = _$PaymentTypeItemResponse;
+  PaymentTypeItemResponse._();
+
   PaymentTypeEntity get data;
 
-  PaymentTypeItemResponse._();
-  factory PaymentTypeItemResponse([void updates(PaymentTypeItemResponseBuilder b)]) = _$PaymentTypeItemResponse;
   static Serializer<PaymentTypeItemResponse> get serializer => _$paymentTypeItemResponseSerializer;
 }
 
@@ -36,11 +38,11 @@ abstract class PaymentTypeEntity implements Built<PaymentTypeEntity, PaymentType
       name: '',
     );
   }
+  PaymentTypeEntity._();
 
   int get id;
   String get name;
 
-  PaymentTypeEntity._();
   static Serializer<PaymentTypeEntity> get serializer => _$paymentTypeEntitySerializer;
 }
 

@@ -23,8 +23,8 @@ List<int> dropdownClientsSelector(
   }).toList();
 
   list.sort((clientAId, clientBId) {
-    var clientA = clientMap[clientAId];
-    var clientB = clientMap[clientBId];
+    final clientA = clientMap[clientAId];
+    final clientB = clientMap[clientBId];
     return clientA.compareTo(clientB, ClientFields.name, true);
   });
 
@@ -43,7 +43,7 @@ List<int> visibleClientsSelector(
     BuiltList<int> clientList,
     ListUIState clientListState) {
 
-  var list = clientList.where((clientId) {
+  final list = clientList.where((clientId) {
     final client = clientMap[clientId];
     if (! client.matchesStates(clientListState.stateFilters)) {
       return false;

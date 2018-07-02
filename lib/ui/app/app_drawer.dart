@@ -57,8 +57,8 @@ class AppDrawer extends StatelessWidget {
       ),
     );
 
-    Store<AppState> store = StoreProvider.of<AppState>(context);
-    NavigatorState navigator = Navigator.of(context);
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
+    final NavigatorState navigator = Navigator.of(context);
 
     return Drawer(
       child: ListView(

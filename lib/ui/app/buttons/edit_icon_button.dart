@@ -12,7 +12,7 @@ class EditIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     if (!isVisible) {
       return Container();

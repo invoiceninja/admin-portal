@@ -7,17 +7,19 @@ part 'dashboard_state.g.dart';
 
 abstract class DashboardState implements Built<DashboardState, DashboardStateBuilder> {
 
+  factory DashboardState() {
+    return _$DashboardState._(
+      data: null,
+    );
+  }
+  DashboardState._();
+
   @nullable
   int get lastUpdated;
 
   @nullable
   DashboardEntity get data;
 
-  factory DashboardState() {
-    return _$DashboardState._(
-      data: null,
-    );
-  }
 
   bool get isStale {
     if (! isLoaded) {
@@ -31,6 +33,5 @@ abstract class DashboardState implements Built<DashboardState, DashboardStateBui
     return lastUpdated != null;
   }
 
-  DashboardState._();
   static Serializer<DashboardState> get serializer => _$dashboardStateSerializer;
 }

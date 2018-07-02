@@ -133,7 +133,7 @@ ClientState _archiveClientFailure(ClientState clientState, ArchiveClientFailure 
 }
 
 ClientState _deleteClientRequest(ClientState clientState, DeleteClientRequest action) {
-  var client = clientState.map[action.clientId].rebuild((b) => b
+  final client = clientState.map[action.clientId].rebuild((b) => b
     ..archivedAt = DateTime.now().millisecondsSinceEpoch
     ..isDeleted = true
   );

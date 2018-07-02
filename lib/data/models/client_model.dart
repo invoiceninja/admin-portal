@@ -8,22 +8,25 @@ part 'client_model.g.dart';
 
 abstract class ClientListResponse
     implements Built<ClientListResponse, ClientListResponseBuilder> {
-  BuiltList<ClientEntity> get data;
 
-  ClientListResponse._();
   factory ClientListResponse([void updates(ClientListResponseBuilder b)]) =
       _$ClientListResponse;
+  ClientListResponse._();
+
+  BuiltList<ClientEntity> get data;
+
   static Serializer<ClientListResponse> get serializer =>
       _$clientListResponseSerializer;
 }
 
 abstract class ClientItemResponse
     implements Built<ClientItemResponse, ClientItemResponseBuilder> {
-  ClientEntity get data;
-
-  ClientItemResponse._();
   factory ClientItemResponse([void updates(ClientItemResponseBuilder b)]) =
       _$ClientItemResponse;
+  ClientItemResponse._();
+
+  ClientEntity get data;
+
   static Serializer<ClientItemResponse> get serializer =>
       _$clientItemResponseSerializer;
 }
@@ -44,10 +47,6 @@ class ClientFields {
 abstract class ClientEntity extends Object
     with BaseEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  @override
-  EntityType get entityType {
-    return EntityType.client;
-  }
 
   static int counter = 0;
 
@@ -94,6 +93,12 @@ abstract class ClientEntity extends Object
       archivedAt: 0,
       isDeleted: false,
     );
+  }
+  ClientEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.client;
   }
 
   @BuiltValueField(wireName: 'name')
@@ -282,7 +287,6 @@ abstract class ClientEntity extends Object
     return 'Error: not set';
   }
 
-  ClientEntity._();
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
 
@@ -296,7 +300,9 @@ class ContactFields {
 abstract class ContactEntity extends Object
     with BaseEntity
     implements Built<ContactEntity, ContactEntityBuilder> {
+
   static int counter = 0;
+
   factory ContactEntity() {
     return _$ContactEntity._(
       id: --ContactEntity.counter,
@@ -313,6 +319,7 @@ abstract class ContactEntity extends Object
       isDeleted: false,
     );
   }
+  ContactEntity._();
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;
@@ -389,6 +396,5 @@ abstract class ContactEntity extends Object
     return '';
   }
 
-  ContactEntity._();
   static Serializer<ContactEntity> get serializer => _$contactEntitySerializer;
 }

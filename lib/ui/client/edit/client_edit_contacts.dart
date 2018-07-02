@@ -78,7 +78,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
     _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    var contact = widget.contact;
+    final contact = widget.contact;
     _firstNameController.text = contact.firstName;
     _lastNameController.text = contact.lastName;
     _emailController.text = contact.email;
@@ -113,7 +113,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     void _confirmDelete() {
       showDialog<AlertDialog>(

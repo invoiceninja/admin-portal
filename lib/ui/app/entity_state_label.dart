@@ -9,7 +9,7 @@ class EntityStateLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     return entity.isDeleted
         ? Text(localization.deleted,
