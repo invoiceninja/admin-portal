@@ -49,7 +49,7 @@ class _InvoiceViewState extends State<InvoiceView> {
         ),
       ];
 
-      Map<String, String> fields = {
+      final Map<String, String> fields = {
         InvoiceFields.invoiceStatusId:
             invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
@@ -67,7 +67,7 @@ class _InvoiceViewState extends State<InvoiceView> {
                 : FormatNumberType.percent),
       };
 
-      List<Widget> fieldWidgets = [];
+      final List<Widget> fieldWidgets = [];
       fields.forEach((field, value) {
         if (value != null && value.isNotEmpty) {
           fieldWidgets.add(Column(

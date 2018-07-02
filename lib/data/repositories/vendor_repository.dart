@@ -20,7 +20,7 @@ class VendorRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/vendors?per_page=500', company.token);
 
-    VendorListResponse vendorResponse = serializers.deserializeWith(
+    final VendorListResponse vendorResponse = serializers.deserializeWith(
         VendorListResponse.serializer, response);
 
     return vendorResponse.data;
@@ -28,7 +28,7 @@ class VendorRepository {
 
   Future saveData(CompanyEntity company, AuthState auth, VendorEntity vendor, [EntityAction action]) async {
 
-    var data = serializers.serializeWith(VendorEntity.serializer, vendor);
+    final data = serializers.serializeWith(VendorEntity.serializer, vendor);
     Future<dynamic> response;
 
     if (vendor.isNew) {

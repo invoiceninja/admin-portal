@@ -20,7 +20,7 @@ class CreditsRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/credits?per_page=500', company.token);
 
-    CreditListResponse creditResponse = serializers.deserializeWith(
+    final CreditListResponse creditResponse = serializers.deserializeWith(
         CreditListResponse.serializer, response);
 
     return creditResponse.data;
@@ -28,7 +28,7 @@ class CreditsRepository {
 
   Future saveData(CompanyEntity company, AuthState auth, CreditEntity credit, [EntityAction action]) async {
 
-    var data = serializers.serializeWith(CreditEntity.serializer, credit);
+    final data = serializers.serializeWith(CreditEntity.serializer, credit);
     Future<dynamic> response;
 
     if (credit.isNew) {

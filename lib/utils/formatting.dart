@@ -47,8 +47,8 @@ String formatNumber(
     currencyId = kCurrencyUSDollar;
   }
 
-  CurrencyEntity currency = state.staticState.currencyMap[currencyId];
-  CountryEntity country = state.staticState.countryMap[countryId];
+  final CurrencyEntity currency = state.staticState.currencyMap[currencyId];
+  final CountryEntity country = state.staticState.countryMap[countryId];
 
   String thousandSeparator = currency.thousandSeparator;
   String decimalSeparator = currency.decimalSeparator;

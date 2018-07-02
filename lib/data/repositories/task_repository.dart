@@ -20,7 +20,7 @@ class TasksRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/tasks?per_page=500', company.token);
 
-    TaskListResponse taskResponse = serializers.deserializeWith(
+    final TaskListResponse taskResponse = serializers.deserializeWith(
         TaskListResponse.serializer, response);
 
     return taskResponse.data;
@@ -28,7 +28,7 @@ class TasksRepository {
 
   Future saveData(CompanyEntity company, AuthState auth, TaskEntity task, [EntityAction action]) async {
 
-    var data = serializers.serializeWith(TaskEntity.serializer, task);
+    final data = serializers.serializeWith(TaskEntity.serializer, task);
     Future<dynamic> response;
 
     if (task.isNew) {

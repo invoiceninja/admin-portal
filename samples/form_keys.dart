@@ -176,7 +176,7 @@ class ContactsPageState extends State<ContactsPage>
   }
 
   List<ContactEntity> getContacts() {
-    List<ContactEntity> contacts = [];
+    final List<ContactEntity> contacts = [];
     _contactKeys.forEach((contactKey) {
       contacts.add(contactKey.currentState.getContact());
     });

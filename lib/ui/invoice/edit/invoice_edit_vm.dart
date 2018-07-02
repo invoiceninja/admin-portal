@@ -55,7 +55,7 @@ class InvoiceEditVM {
   });
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
-    AppState state = store.state;
+    final AppState state = store.state;
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditVM(

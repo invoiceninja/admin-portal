@@ -40,7 +40,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
 
     _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    var client = widget.viewModel.client;
+    final client = widget.viewModel.client;
     _address1Controller.text = client.address1;
     _address2Controller.text = client.address2;
     _cityController.text = client.city;
@@ -63,7 +63,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   }
 
   void _onChanged() {
-    var client = widget.viewModel.client.rebuild((b) => b
+    final client = widget.viewModel.client.rebuild((b) => b
       ..address1 = _address1Controller.text.trim()
         ..address2 = _address2Controller.text.trim()
         ..city = _cityController.text.trim()

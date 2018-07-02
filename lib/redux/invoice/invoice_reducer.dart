@@ -129,7 +129,7 @@ final invoicesReducer = combineReducers<InvoiceState>([
 ]);
 
 InvoiceState _archiveInvoiceRequest(InvoiceState invoiceState, ArchiveInvoiceRequest action) {
-  var invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
+  final invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
     ..archivedAt = DateTime.now().millisecondsSinceEpoch
   );
 
@@ -151,7 +151,7 @@ InvoiceState _archiveInvoiceFailure(InvoiceState invoiceState, ArchiveInvoiceFai
 }
 
 InvoiceState _deleteInvoiceRequest(InvoiceState invoiceState, DeleteInvoiceRequest action) {
-  var invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
+  final invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
     ..archivedAt = DateTime.now().millisecondsSinceEpoch
     ..isDeleted = true
   );

@@ -20,7 +20,7 @@ void main() {
 
     test('measure', () async {
       // Record the performance timeline of things that happen inside the closure
-      Timeline timeline = await driver.traceAction(() async {
+      final Timeline timeline = await driver.traceAction(() async {
 
         //SerializableFinder email = find.byValueKey('email');
 

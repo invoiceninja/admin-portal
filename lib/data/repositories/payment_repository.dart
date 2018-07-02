@@ -20,7 +20,7 @@ class PaymentsRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/payments?per_page=500', company.token);
 
-    PaymentListResponse paymentResponse = serializers.deserializeWith(
+    final PaymentListResponse paymentResponse = serializers.deserializeWith(
         PaymentListResponse.serializer, response);
 
     return paymentResponse.data;
@@ -42,7 +42,7 @@ class PaymentsRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    PaymentItemResponse paymentResponse = serializers.deserializeWith(
+    final PaymentItemResponse paymentResponse = serializers.deserializeWith(
         PaymentItemResponse.serializer, response);
 
     return paymentResponse.data;

@@ -236,7 +236,7 @@ Middleware<AppState> _createUserLoggedIn(
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
-    var state = store.state;
+    final state = store.state;
 
     authRepository.saveAuthState(state.authState);
     uiRepository.saveUIState(state.uiState);
@@ -268,7 +268,7 @@ Middleware<AppState> _createDataLoaded(
     // first process the action so the data is in the state
     next(action);
 
-    AppState state = store.state;
+    final AppState state = store.state;
 
     switch (state.uiState.selectedCompanyIndex) {
       case 1:

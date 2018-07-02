@@ -20,7 +20,7 @@ class ExpenseRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/expenses?per_page=500', company.token);
 
-    ExpenseListResponse expenseResponse = serializers.deserializeWith(
+    final ExpenseListResponse expenseResponse = serializers.deserializeWith(
         ExpenseListResponse.serializer, response);
 
     return expenseResponse.data;
@@ -42,7 +42,7 @@ class ExpenseRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    ExpenseItemResponse expenseResponse = serializers.deserializeWith(
+    final ExpenseItemResponse expenseResponse = serializers.deserializeWith(
         ExpenseItemResponse.serializer, response);
 
     return expenseResponse.data;

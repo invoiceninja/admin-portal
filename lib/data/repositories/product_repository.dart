@@ -28,7 +28,7 @@ class ProductRepository {
 
   Future saveData(CompanyEntity company, AuthState auth, ProductEntity product, [EntityAction action]) async {
 
-    var data = serializers.serializeWith(ProductEntity.serializer, product);
+    final data = serializers.serializeWith(ProductEntity.serializer, product);
     Future<dynamic> response;
 
     if (product.isNew) {
@@ -42,7 +42,7 @@ class ProductRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    ProductItemResponse productResponse = serializers.deserializeWith(
+    final ProductItemResponse productResponse = serializers.deserializeWith(
         ProductItemResponse.serializer, response);
 
     return productResponse.data;

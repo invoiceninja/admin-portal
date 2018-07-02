@@ -6,10 +6,11 @@ part 'date_format_model.g.dart';
 
 abstract class DateFormatListResponse implements Built<DateFormatListResponse, DateFormatListResponseBuilder> {
 
+  factory DateFormatListResponse([void updates(DateFormatListResponseBuilder b)]) = _$DateFormatListResponse;
+  DateFormatListResponse._();
+
   BuiltList<DateFormatEntity> get data;
 
-  DateFormatListResponse._();
-  factory DateFormatListResponse([void updates(DateFormatListResponseBuilder b)]) = _$DateFormatListResponse;
   static Serializer<DateFormatListResponse> get serializer => _$dateFormatListResponseSerializer;
 }
 

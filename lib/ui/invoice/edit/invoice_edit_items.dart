@@ -80,7 +80,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
 
     _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    var invoiceItem = widget.invoiceItem;
+    final invoiceItem = widget.invoiceItem;
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
     _costController.text = formatNumber(
@@ -105,7 +105,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
   }
 
   void _onChanged() {
-    var invoiceItem = widget.invoiceItem.rebuild((b) => b
+    final invoiceItem = widget.invoiceItem.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()
       ..cost = double.tryParse(_costController.text) ?? 0.0

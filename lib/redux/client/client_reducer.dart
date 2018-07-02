@@ -120,7 +120,7 @@ final clientsReducer = combineReducers<ClientState>([
 ]);
 
 ClientState _archiveClientRequest(ClientState clientState, ArchiveClientRequest action) {
-  var client = clientState.map[action.clientId].rebuild((b) => b
+  final client = clientState.map[action.clientId].rebuild((b) => b
     ..archivedAt = DateTime.now().millisecondsSinceEpoch
   );
 

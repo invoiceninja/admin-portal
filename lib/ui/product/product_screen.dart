@@ -16,8 +16,8 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var store = StoreProvider.of<AppState>(context);
-    var localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final localization = AppLocalization.of(context);
 
     return Scaffold(
       appBar: AppBar(

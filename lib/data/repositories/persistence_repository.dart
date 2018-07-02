@@ -32,7 +32,7 @@ class PersistenceRepository {
 
 
   Future<File> saveAuthState(AuthState state) async {
-    var data = serializers.serializeWith(AuthState.serializer, state);
+    final data = serializers.serializeWith(AuthState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
@@ -54,7 +54,7 @@ class PersistenceRepository {
 
 
   Future<File> saveUIState(UIState state) async {
-    var data = serializers.serializeWith(UIState.serializer, state);
+    final data = serializers.serializeWith(UIState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 

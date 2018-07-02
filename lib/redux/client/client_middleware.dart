@@ -86,7 +86,7 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
 
 Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origClient = store.state.clientState.map[action.clientId];
+    final origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.delete)
@@ -155,7 +155,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 Middleware<AppState> _loadClients(ClientRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
 
-    AppState state = store.state;
+    final AppState state = store.state;
 
     if (!state.clientState.isStale && !action.force) {
       next(action);

@@ -15,9 +15,9 @@ class ClientEditContacts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
-    var client = viewModel.client;
-    var contacts = client.contacts.map((contact) => ContactEditDetails(
+    final localization = AppLocalization.of(context);
+    final client = viewModel.client;
+    final contacts = client.contacts.map((contact) => ContactEditDetails(
         viewModel: viewModel,
         key: Key('__${EntityType.contact}_${contact.id}__'),
         isRemoveVisible: client.contacts.length > 1,

@@ -61,7 +61,7 @@ class _ProductEditState extends State<ProductEdit> {
   }
 
   void _onChanged() {
-    var product = widget.viewModel.product.rebuild((b) => b
+    final product = widget.viewModel.product.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()
       ..cost = double.tryParse(_costController.text) ?? 0.0

@@ -65,7 +65,7 @@ Middleware<AppState> _editInvoice() {
 
 Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    var origInvoice = store.state.invoiceState.map[action.invoiceId];
+    final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origInvoice, EntityAction.archive)
@@ -180,7 +180,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
 Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
 
-    AppState state = store.state;
+    final AppState state = store.state;
 
     if (!state.invoiceState.isStale && !action.force) {
       next(action);

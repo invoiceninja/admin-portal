@@ -30,7 +30,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
   }
 
   Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
     if (snapshot.hasError) {
       return new Text('${localization.error}: ${snapshot.error}');
     } else {
@@ -49,7 +49,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
       listTiles
           .add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
 
-      var contacts = client.contacts;
+      final contacts = client.contacts;
       contacts.forEach((contact) {
         if ((contact.email ?? '').isNotEmpty) {
           listTiles.add(AppListTile(

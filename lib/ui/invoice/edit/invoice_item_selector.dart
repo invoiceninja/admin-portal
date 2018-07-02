@@ -59,7 +59,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     Widget _headerRow() {
       return Row(
@@ -132,8 +132,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     }
 
     Widget _entityList() {
-      var state = widget.state.selectedCompanyState.productState;
-      var matches = state.list
+      final state = widget.state.selectedCompanyState.productState;
+      final matches = state.list
           .where((entityId) => state.map[entityId].matchesSearch(_filter))
           .toList();
 

@@ -14,8 +14,8 @@ List<int> dropdownClientsSelector(
     BuiltList<int> clientList,
     String filter) {
 
-  var list = clientList.where((clientId) {
-    var client = clientMap[clientId];
+  final list = clientList.where((clientId) {
+    final client = clientMap[clientId];
     if (! client.isActive) {
       return false;
     }
@@ -52,8 +52,8 @@ List<int> visibleClientsSelector(
   }).toList();
 
   list.sort((clientAId, clientBId) {
-    var clientA = clientMap[clientAId];
-    var clientB = clientMap[clientBId];
+    final clientA = clientMap[clientAId];
+    final clientB = clientMap[clientBId];
     return clientA.compareTo(clientB, clientListState.sortField, clientListState.sortAscending);
   });
 

@@ -62,7 +62,7 @@ class InvoiceViewVM {
     final client = store.state.clientState.map[invoice.clientId];
 
     Future<Null> _viewPdf(BuildContext context) async {
-      var localization = AppLocalization.of(context);
+      final localization = AppLocalization.of(context);
       String url;
       bool useWebView;
 

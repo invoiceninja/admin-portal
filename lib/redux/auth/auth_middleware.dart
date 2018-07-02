@@ -88,8 +88,8 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
 bool _isVersionSupported(String version) {
   var parts = version.split('.');
 
-  int major = int.parse(parts[0]);
-  int minor = int.parse(parts[1]);
+  final int major = int.parse(parts[0]);
+  final int minor = int.parse(parts[1]);
 
   return true;
 

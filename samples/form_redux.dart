@@ -233,8 +233,8 @@ class ContactsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
-      var client = store.state.client;
-      var contacts = client.contacts.map((contact) => ContactForm(
+      final client = store.state.client;
+      final contacts = client.contacts.map((contact) => ContactForm(
           contact: contact,
           //key: Key('__contact_${contact.id}__'),
           index: store.state.client.contacts.indexOf(contact)));

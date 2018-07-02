@@ -38,7 +38,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
 
     _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    var client = widget.viewModel.client;
+    final client = widget.viewModel.client;
     _nameController.text = client.name;
     _idNumberController.text = client.idNumber;
     _vatNumberController.text = client.vatNumber;
@@ -76,7 +76,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     return ListView(
       shrinkWrap: true,

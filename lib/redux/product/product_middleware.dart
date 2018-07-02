@@ -141,7 +141,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    AppState state = store.state;
+    final AppState state = store.state;
 
     if (!state.productState.isStale && !action.force) {
       next(action);

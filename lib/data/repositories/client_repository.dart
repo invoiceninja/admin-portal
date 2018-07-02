@@ -28,7 +28,7 @@ class ClientRepository {
 
   Future saveData(CompanyEntity company, AuthState auth, ClientEntity client, [EntityAction action]) async {
 
-    var data = serializers.serializeWith(ClientEntity.serializer, client);
+    final data = serializers.serializeWith(ClientEntity.serializer, client);
     Future<dynamic> response;
 
     if (client.isNew) {
@@ -42,7 +42,7 @@ class ClientRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    ClientItemResponse clientResponse = serializers.deserializeWith(
+    final ClientItemResponse clientResponse = serializers.deserializeWith(
         ClientItemResponse.serializer, response);
 
     return clientResponse.data;

@@ -20,7 +20,7 @@ class InvoiceRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/invoices?include=invitations', company.token);
 
-    InvoiceListResponse invoiceResponse = serializers.deserializeWith(
+    final InvoiceListResponse invoiceResponse = serializers.deserializeWith(
         InvoiceListResponse.serializer, response);
 
     return invoiceResponse.data;
@@ -28,7 +28,7 @@ class InvoiceRepository {
 
   Future saveData(CompanyEntity company, AuthState auth, InvoiceEntity invoice, [EntityAction action]) async {
 
-    var data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
+    final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     Future<dynamic> response;
 
     if (invoice.isNew) {

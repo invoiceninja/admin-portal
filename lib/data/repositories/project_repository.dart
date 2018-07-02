@@ -20,7 +20,7 @@ class ProjectsRepository {
     final Future<dynamic> response = await webClient.get(
         auth.url + '/projects?per_page=500', company.token);
 
-    ProjectListResponse projectResponse = serializers.deserializeWith(
+    final ProjectListResponse projectResponse = serializers.deserializeWith(
         ProjectListResponse.serializer, response);
 
     return projectResponse.data;
@@ -42,7 +42,7 @@ class ProjectsRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    ProjectItemResponse projectResponse = serializers.deserializeWith(
+    final ProjectItemResponse projectResponse = serializers.deserializeWith(
         ProjectItemResponse.serializer, response);
 
     return projectResponse.data;

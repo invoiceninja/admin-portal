@@ -14,8 +14,8 @@ List<int> visibleProductsSelector(
     BuiltList<int> productList,
     ListUIState productListState) {
 
-  var list = productList.where((productId) {
-    var product = productMap[productId];
+  final list = productList.where((productId) {
+    final product = productMap[productId];
     if (! product.matchesStates(productListState.stateFilters)) {
       return false;
     }
