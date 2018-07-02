@@ -22,7 +22,7 @@ abstract class StaticDataListResponse implements Built<StaticDataListResponse, S
   BuiltList<StaticDataEntity> get data;
 
   StaticDataListResponse._();
-  factory StaticDataListResponse([updates(StaticDataListResponseBuilder b)]) = _$StaticDataListResponse;
+  factory StaticDataListResponse([void updates(StaticDataListResponseBuilder b)]) = _$StaticDataListResponse;
   static Serializer<StaticDataListResponse> get serializer => _$staticDataListResponseSerializer;
 }
 
@@ -31,7 +31,7 @@ abstract class StaticDataItemResponse implements Built<StaticDataItemResponse, S
   StaticDataEntity get data;
 
   StaticDataItemResponse._();
-  factory StaticDataItemResponse([updates(StaticDataItemResponseBuilder b)]) = _$StaticDataItemResponse;
+  factory StaticDataItemResponse([void updates(StaticDataItemResponseBuilder b)]) = _$StaticDataItemResponse;
   static Serializer<StaticDataItemResponse> get serializer => _$staticDataItemResponseSerializer;
 }
 

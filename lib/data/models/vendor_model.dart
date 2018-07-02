@@ -10,7 +10,7 @@ abstract class VendorListResponse implements Built<VendorListResponse, VendorLis
   BuiltList<VendorEntity> get data;
 
   VendorListResponse._();
-  factory VendorListResponse([updates(VendorListResponseBuilder b)]) = _$VendorListResponse;
+  factory VendorListResponse([void updates(VendorListResponseBuilder b)]) = _$VendorListResponse;
   static Serializer<VendorListResponse> get serializer => _$vendorListResponseSerializer;
 }
 
@@ -19,7 +19,7 @@ abstract class VendorItemResponse implements Built<VendorItemResponse, VendorIte
   VendorEntity get data;
 
   VendorItemResponse._();
-  factory VendorItemResponse([updates(VendorItemResponseBuilder b)]) = _$VendorItemResponse;
+  factory VendorItemResponse([void updates(VendorItemResponseBuilder b)]) = _$VendorItemResponse;
   static Serializer<VendorItemResponse> get serializer => _$vendorItemResponseSerializer;
 }
 

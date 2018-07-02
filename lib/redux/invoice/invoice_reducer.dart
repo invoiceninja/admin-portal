@@ -224,8 +224,8 @@ InvoiceState _setLoadedInvoices(
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(Map.fromIterable(
         action.invoices,
-        key: (item) => item.id,
-        value: (item) => item,
+        key: (dynamic item) => item.id,
+        value: (dynamic item) => item,
       ))
       ..list.replace(action.invoices.map(
               (invoice) => invoice.id).toList())

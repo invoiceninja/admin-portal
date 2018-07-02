@@ -10,7 +10,7 @@ abstract class TaskListResponse implements Built<TaskListResponse, TaskListRespo
   BuiltList<TaskEntity> get data;
 
   TaskListResponse._();
-  factory TaskListResponse([updates(TaskListResponseBuilder b)]) = _$TaskListResponse;
+  factory TaskListResponse([void updates(TaskListResponseBuilder b)]) = _$TaskListResponse;
   static Serializer<TaskListResponse> get serializer => _$taskListResponseSerializer;
 }
 
@@ -19,7 +19,7 @@ abstract class TaskItemResponse implements Built<TaskItemResponse, TaskItemRespo
   TaskEntity get data;
 
   TaskItemResponse._();
-  factory TaskItemResponse([updates(TaskItemResponseBuilder b)]) = _$TaskItemResponse;
+  factory TaskItemResponse([void updates(TaskItemResponseBuilder b)]) = _$TaskItemResponse;
   static Serializer<TaskItemResponse> get serializer => _$taskItemResponseSerializer;
 }
 

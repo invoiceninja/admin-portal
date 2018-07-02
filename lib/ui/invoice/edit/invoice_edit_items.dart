@@ -104,7 +104,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
     super.dispose();
   }
 
-  _onChanged() {
+  void _onChanged() {
     var invoiceItem = widget.invoiceItem.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()

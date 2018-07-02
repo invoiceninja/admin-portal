@@ -26,14 +26,14 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     super.dispose();
   }
 
-  _addBlankItem() {
+  void _addBlankItem() {
     widget.onItemsSelected([
       InvoiceItemEntity()
     ]);
     Navigator.pop(context);
   }
 
-  _onItemsSelected() {
+  void _onItemsSelected() {
     List<InvoiceItemEntity> items = [];
 
     _selectedIds.forEach((entityId) {
@@ -45,7 +45,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     Navigator.pop(context);
   }
 
-  _toggleEntity(entityId) {
+  void _toggleEntity(int entityId) {
     setState(() {
       _filter = '';
       _textController.text = '';

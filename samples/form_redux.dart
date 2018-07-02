@@ -204,7 +204,7 @@ class _ClientPageState extends State<ClientPage> {
     super.dispose();
   }
 
-  _onChanged() {
+  void _onChanged() {
     var name = _nameController.text.trim();
     var store = StoreProvider.of<AppState>(context);
     if (name != store.state.client.name) {
@@ -288,7 +288,7 @@ class _ContactFormState extends State<ContactForm> {
     super.dispose();
   }
 
-  _onChanged() {
+  void _onChanged() {
     var store = StoreProvider.of<AppState>(context);
     var email = _emailController.text.trim();
     if (email != widget.contact.email) {

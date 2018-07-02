@@ -13,7 +13,7 @@ abstract class ProductListResponse
   BuiltList<ProductEntity> get data;
 
   ProductListResponse._();
-  factory ProductListResponse([updates(ProductListResponseBuilder b)]) =
+  factory ProductListResponse([void updates(ProductListResponseBuilder b)]) =
       _$ProductListResponse;
   static Serializer<ProductListResponse> get serializer =>
       _$productListResponseSerializer;
@@ -24,7 +24,7 @@ abstract class ProductItemResponse
   ProductEntity get data;
 
   ProductItemResponse._();
-  factory ProductItemResponse([updates(ProductItemResponseBuilder b)]) =
+  factory ProductItemResponse([void updates(ProductItemResponseBuilder b)]) =
       _$ProductItemResponse;
   static Serializer<ProductItemResponse> get serializer =>
       _$productItemResponseSerializer;

@@ -37,7 +37,7 @@ class _DatePickerState extends State<DatePicker> {
     super.dispose();
   }
 
-  _showDatePicker() async {
+  void _showDatePicker() async {
     final DateTime selectedDate = await showDatePicker(
         context: context,
         initialDate: widget.selectedDate != null && widget.selectedDate.isNotEmpty ? DateTime.tryParse(widget.selectedDate) : DateTime.now(),

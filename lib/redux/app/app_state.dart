@@ -40,7 +40,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   AppState._();
-  //factory AppState([updates(AppStateBuilder b)]) = _$AppState;
+  //factory AppState([void updates(AppStateBuilder b)]) = _$AppState;
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
   CompanyState get selectedCompanyState {

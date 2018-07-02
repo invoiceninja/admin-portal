@@ -9,7 +9,7 @@ abstract class DatetimeFormatListResponse implements Built<DatetimeFormatListRes
   BuiltList<DatetimeFormatEntity> get data;
 
   DatetimeFormatListResponse._();
-  factory DatetimeFormatListResponse([updates(DatetimeFormatListResponseBuilder b)]) = _$DatetimeFormatListResponse;
+  factory DatetimeFormatListResponse([void updates(DatetimeFormatListResponseBuilder b)]) = _$DatetimeFormatListResponse;
   static Serializer<DatetimeFormatListResponse> get serializer => _$datetimeFormatListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class DatetimeFormatItemResponse implements Built<DatetimeFormatItemRes
   DatetimeFormatEntity get data;
 
   DatetimeFormatItemResponse._();
-  factory DatetimeFormatItemResponse([updates(DatetimeFormatItemResponseBuilder b)]) = _$DatetimeFormatItemResponse;
+  factory DatetimeFormatItemResponse([void updates(DatetimeFormatItemResponseBuilder b)]) = _$DatetimeFormatItemResponse;
   static Serializer<DatetimeFormatItemResponse> get serializer => _$datetimeFormatItemResponseSerializer;
 }
 

@@ -9,7 +9,7 @@ abstract class PaymentTypeListResponse implements Built<PaymentTypeListResponse,
   BuiltList<PaymentTypeEntity> get data;
 
   PaymentTypeListResponse._();
-  factory PaymentTypeListResponse([updates(PaymentTypeListResponseBuilder b)]) = _$PaymentTypeListResponse;
+  factory PaymentTypeListResponse([void updates(PaymentTypeListResponseBuilder b)]) = _$PaymentTypeListResponse;
   static Serializer<PaymentTypeListResponse> get serializer => _$paymentTypeListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class PaymentTypeItemResponse implements Built<PaymentTypeItemResponse,
   PaymentTypeEntity get data;
 
   PaymentTypeItemResponse._();
-  factory PaymentTypeItemResponse([updates(PaymentTypeItemResponseBuilder b)]) = _$PaymentTypeItemResponse;
+  factory PaymentTypeItemResponse([void updates(PaymentTypeItemResponseBuilder b)]) = _$PaymentTypeItemResponse;
   static Serializer<PaymentTypeItemResponse> get serializer => _$paymentTypeItemResponseSerializer;
 }
 

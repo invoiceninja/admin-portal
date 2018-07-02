@@ -183,14 +183,14 @@ class ContactsPageState extends State<ContactsPage>
     return contacts;
   }
 
-  _onAddPressed() {
+  void _onAddPressed() {
     setState(() {
       _contacts.add(ContactEntity());
       _contactKeys.add(GlobalKey<ContactFormState>());
     });
   }
 
-  _onRemovePressed(GlobalKey<ContactFormState> key) {
+  void _onRemovePressed(GlobalKey<ContactFormState> key) {
     setState(() {
       var index = _contactKeys.indexOf(key);
       _contactKeys.removeAt(index);

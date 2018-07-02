@@ -9,7 +9,7 @@ abstract class IndustryListResponse implements Built<IndustryListResponse, Indus
   BuiltList<IndustryEntity> get data;
 
   IndustryListResponse._();
-  factory IndustryListResponse([updates(IndustryListResponseBuilder b)]) = _$IndustryListResponse;
+  factory IndustryListResponse([void updates(IndustryListResponseBuilder b)]) = _$IndustryListResponse;
   static Serializer<IndustryListResponse> get serializer => _$industryListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class IndustryItemResponse implements Built<IndustryItemResponse, Indus
   IndustryEntity get data;
 
   IndustryItemResponse._();
-  factory IndustryItemResponse([updates(IndustryItemResponseBuilder b)]) = _$IndustryItemResponse;
+  factory IndustryItemResponse([void updates(IndustryItemResponseBuilder b)]) = _$IndustryItemResponse;
   static Serializer<IndustryItemResponse> get serializer => _$industryItemResponseSerializer;
 }
 

@@ -9,7 +9,7 @@ abstract class FrequencyListResponse implements Built<FrequencyListResponse, Fre
   BuiltList<FrequencyEntity> get data;
 
   FrequencyListResponse._();
-  factory FrequencyListResponse([updates(FrequencyListResponseBuilder b)]) = _$FrequencyListResponse;
+  factory FrequencyListResponse([void updates(FrequencyListResponseBuilder b)]) = _$FrequencyListResponse;
   static Serializer<FrequencyListResponse> get serializer => _$frequencyListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class FrequencyItemResponse implements Built<FrequencyItemResponse, Fre
   FrequencyEntity get data;
 
   FrequencyItemResponse._();
-  factory FrequencyItemResponse([updates(FrequencyItemResponseBuilder b)]) = _$FrequencyItemResponse;
+  factory FrequencyItemResponse([void updates(FrequencyItemResponseBuilder b)]) = _$FrequencyItemResponse;
   static Serializer<FrequencyItemResponse> get serializer => _$frequencyItemResponseSerializer;
 }
 

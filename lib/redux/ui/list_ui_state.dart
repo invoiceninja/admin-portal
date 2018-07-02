@@ -15,7 +15,7 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   BuiltList<EntityState> get stateFilters;
   BuiltList<int> get statusFilters;
 
-  factory ListUIState(sortField) {
+  factory ListUIState(String sortField) {
     return _$ListUIState._(
       sortField: sortField,
       sortAscending: true,
@@ -27,6 +27,6 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   }
 
   ListUIState._();
-  //factory EntityUIState([updates(EntityUIStateBuilder b)]) = _$listUIState;
+  //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;
   static Serializer<ListUIState> get serializer => _$listUIStateSerializer;
 }

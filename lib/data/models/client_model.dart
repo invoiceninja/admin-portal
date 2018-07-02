@@ -10,7 +10,7 @@ abstract class ClientListResponse
   BuiltList<ClientEntity> get data;
 
   ClientListResponse._();
-  factory ClientListResponse([updates(ClientListResponseBuilder b)]) =
+  factory ClientListResponse([void updates(ClientListResponseBuilder b)]) =
       _$ClientListResponse;
   static Serializer<ClientListResponse> get serializer =>
       _$clientListResponseSerializer;
@@ -21,7 +21,7 @@ abstract class ClientItemResponse
   ClientEntity get data;
 
   ClientItemResponse._();
-  factory ClientItemResponse([updates(ClientItemResponseBuilder b)]) =
+  factory ClientItemResponse([void updates(ClientItemResponseBuilder b)]) =
       _$ClientItemResponse;
   static Serializer<ClientItemResponse> get serializer =>
       _$clientItemResponseSerializer;

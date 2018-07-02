@@ -27,6 +27,6 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   }
 
   AuthState._();
-  //factory AuthState([updates(AuthStateBuilder b)]) = _$AuthState;
+  //factory AuthState([void updates(AuthStateBuilder b)]) = _$AuthState;
   static Serializer<AuthState> get serializer => _$authStateSerializer;
 }

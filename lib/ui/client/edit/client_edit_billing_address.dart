@@ -62,7 +62,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
     super.dispose();
   }
 
-  _onChanged() {
+  void _onChanged() {
     var client = widget.viewModel.client.rebuild((b) => b
       ..address1 = _address1Controller.text.trim()
         ..address2 = _address2Controller.text.trim()

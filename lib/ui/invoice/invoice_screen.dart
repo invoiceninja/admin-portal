@@ -29,7 +29,7 @@ class InvoiceScreen extends StatelessWidget {
         actions: [
           AppSearchButton(
             entityType: EntityType.invoice,
-            onSearchPressed: (value) {
+            onSearchPressed: (String value) {
               store.dispatch(SearchInvoices(value));
             },
           ),

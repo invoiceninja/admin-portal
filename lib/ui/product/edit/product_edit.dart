@@ -60,7 +60,7 @@ class _ProductEditState extends State<ProductEdit> {
     super.dispose();
   }
 
-  _onChanged() {
+  void _onChanged() {
     var product = widget.viewModel.product.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()

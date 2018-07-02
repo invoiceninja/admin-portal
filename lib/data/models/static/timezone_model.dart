@@ -9,7 +9,7 @@ abstract class TimezoneListResponse implements Built<TimezoneListResponse, Timez
   BuiltList<TimezoneEntity> get data;
 
   TimezoneListResponse._();
-  factory TimezoneListResponse([updates(TimezoneListResponseBuilder b)]) = _$TimezoneListResponse;
+  factory TimezoneListResponse([void updates(TimezoneListResponseBuilder b)]) = _$TimezoneListResponse;
   static Serializer<TimezoneListResponse> get serializer => _$timezoneListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class TimezoneItemResponse implements Built<TimezoneItemResponse, Timez
   TimezoneEntity get data;
 
   TimezoneItemResponse._();
-  factory TimezoneItemResponse([updates(TimezoneItemResponseBuilder b)]) = _$TimezoneItemResponse;
+  factory TimezoneItemResponse([void updates(TimezoneItemResponseBuilder b)]) = _$TimezoneItemResponse;
   static Serializer<TimezoneItemResponse> get serializer => _$timezoneItemResponseSerializer;
 }
 

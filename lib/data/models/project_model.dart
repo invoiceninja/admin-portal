@@ -10,7 +10,7 @@ abstract class ProjectListResponse implements Built<ProjectListResponse, Project
   BuiltList<ProjectEntity> get data;
 
   ProjectListResponse._();
-  factory ProjectListResponse([updates(ProjectListResponseBuilder b)]) = _$ProjectListResponse;
+  factory ProjectListResponse([void updates(ProjectListResponseBuilder b)]) = _$ProjectListResponse;
   static Serializer<ProjectListResponse> get serializer => _$projectListResponseSerializer;
 }
 
@@ -19,7 +19,7 @@ abstract class ProjectItemResponse implements Built<ProjectItemResponse, Project
   ProjectEntity get data;
 
   ProjectItemResponse._();
-  factory ProjectItemResponse([updates(ProjectItemResponseBuilder b)]) = _$ProjectItemResponse;
+  factory ProjectItemResponse([void updates(ProjectItemResponseBuilder b)]) = _$ProjectItemResponse;
   static Serializer<ProjectItemResponse> get serializer => _$projectItemResponseSerializer;
 }
 

@@ -114,7 +114,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           : AppLocalization.of(context).descending)
                           : null,
                       groupValue: listUIState.sortField,
-                      onChanged: (value) {
+                      onChanged: (String value) {
                         widget.onSelectedSortField(value);
                       },
                       value: sortField,

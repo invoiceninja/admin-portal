@@ -60,7 +60,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     super.dispose();
   }
 
-  _onChanged() {
+  void _onChanged() {
     var viewModel = widget.viewModel;
     var client = viewModel.client.rebuild((b) => b
         ..name = _nameController.text.trim()

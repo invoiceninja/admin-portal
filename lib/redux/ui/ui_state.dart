@@ -26,7 +26,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   UIState._();
-  //factory UIState([updates(UIStateBuilder b)]) = _$UIState;
+  //factory UIState([void updates(UIStateBuilder b)]) = _$UIState;
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 }
 

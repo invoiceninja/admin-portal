@@ -10,7 +10,7 @@ abstract class CreditListResponse implements Built<CreditListResponse, CreditLis
   BuiltList<CreditEntity> get data;
 
   CreditListResponse._();
-  factory CreditListResponse([updates(CreditListResponseBuilder b)]) = _$CreditListResponse;
+  factory CreditListResponse([void updates(CreditListResponseBuilder b)]) = _$CreditListResponse;
   static Serializer<CreditListResponse> get serializer => _$creditListResponseSerializer;
 }
 
@@ -19,7 +19,7 @@ abstract class CreditItemResponse implements Built<CreditItemResponse, CreditIte
   CreditEntity get data;
 
   CreditItemResponse._();
-  factory CreditItemResponse([updates(CreditItemResponseBuilder b)]) = _$CreditItemResponse;
+  factory CreditItemResponse([void updates(CreditItemResponseBuilder b)]) = _$CreditItemResponse;
   static Serializer<CreditItemResponse> get serializer => _$creditItemResponseSerializer;
 }
 

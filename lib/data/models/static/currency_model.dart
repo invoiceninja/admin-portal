@@ -9,7 +9,7 @@ abstract class CurrencyListResponse implements Built<CurrencyListResponse, Curre
   BuiltList<CurrencyEntity> get data;
 
   CurrencyListResponse._();
-  factory CurrencyListResponse([updates(CurrencyListResponseBuilder b)]) = _$CurrencyListResponse;
+  factory CurrencyListResponse([void updates(CurrencyListResponseBuilder b)]) = _$CurrencyListResponse;
   static Serializer<CurrencyListResponse> get serializer => _$currencyListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class CurrencyItemResponse implements Built<CurrencyItemResponse, Curre
   CurrencyEntity get data;
 
   CurrencyItemResponse._();
-  factory CurrencyItemResponse([updates(CurrencyItemResponseBuilder b)]) = _$CurrencyItemResponse;
+  factory CurrencyItemResponse([void updates(CurrencyItemResponseBuilder b)]) = _$CurrencyItemResponse;
   static Serializer<CurrencyItemResponse> get serializer => _$currencyItemResponseSerializer;
 }
 

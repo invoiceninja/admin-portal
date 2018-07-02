@@ -30,7 +30,7 @@ class ProductScreen extends StatelessWidget {
         actions: [
           AppSearchButton(
             entityType: EntityType.product,
-            onSearchPressed: (value) {
+            onSearchPressed: (String value) {
               store.dispatch(SearchProducts(value));
             },
           ),

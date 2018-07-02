@@ -9,7 +9,7 @@ abstract class LanguageListResponse implements Built<LanguageListResponse, Langu
   BuiltList<LanguageEntity> get data;
 
   LanguageListResponse._();
-  factory LanguageListResponse([updates(LanguageListResponseBuilder b)]) = _$LanguageListResponse;
+  factory LanguageListResponse([void updates(LanguageListResponseBuilder b)]) = _$LanguageListResponse;
   static Serializer<LanguageListResponse> get serializer => _$languageListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class LanguageItemResponse implements Built<LanguageItemResponse, Langu
   LanguageEntity get data;
 
   LanguageItemResponse._();
-  factory LanguageItemResponse([updates(LanguageItemResponseBuilder b)]) = _$LanguageItemResponse;
+  factory LanguageItemResponse([void updates(LanguageItemResponseBuilder b)]) = _$LanguageItemResponse;
   static Serializer<LanguageItemResponse> get serializer => _$languageItemResponseSerializer;
 }
 

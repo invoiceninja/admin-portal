@@ -9,7 +9,7 @@ abstract class InvoiceStatusListResponse implements Built<InvoiceStatusListRespo
   BuiltList<InvoiceStatusEntity> get data;
 
   InvoiceStatusListResponse._();
-  factory InvoiceStatusListResponse([updates(InvoiceStatusListResponseBuilder b)]) = _$InvoiceStatusListResponse;
+  factory InvoiceStatusListResponse([void updates(InvoiceStatusListResponseBuilder b)]) = _$InvoiceStatusListResponse;
   static Serializer<InvoiceStatusListResponse> get serializer => _$invoiceStatusListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class InvoiceStatusItemResponse implements Built<InvoiceStatusItemRespo
   InvoiceStatusEntity get data;
 
   InvoiceStatusItemResponse._();
-  factory InvoiceStatusItemResponse([updates(InvoiceStatusItemResponseBuilder b)]) = _$InvoiceStatusItemResponse;
+  factory InvoiceStatusItemResponse([void updates(InvoiceStatusItemResponseBuilder b)]) = _$InvoiceStatusItemResponse;
   static Serializer<InvoiceStatusItemResponse> get serializer => _$invoiceStatusItemResponseSerializer;
 }
 

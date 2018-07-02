@@ -26,6 +26,6 @@ abstract class CompanyState implements Built<CompanyState, CompanyStateBuilder> 
   }
 
   CompanyState._();
-  //factory CompanyState([updates(CompanyStateBuilder b)]) = _$CompanyState;
+  //factory CompanyState([void updates(CompanyStateBuilder b)]) = _$CompanyState;
   static Serializer<CompanyState> get serializer => _$companyStateSerializer;
 }

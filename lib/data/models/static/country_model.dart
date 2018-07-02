@@ -9,7 +9,7 @@ abstract class CountryListResponse implements Built<CountryListResponse, Country
   BuiltList<CountryEntity> get data;
 
   CountryListResponse._();
-  factory CountryListResponse([updates(CountryListResponseBuilder b)]) = _$CountryListResponse;
+  factory CountryListResponse([void updates(CountryListResponseBuilder b)]) = _$CountryListResponse;
   static Serializer<CountryListResponse> get serializer => _$countryListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class CountryItemResponse implements Built<CountryItemResponse, Country
   CountryEntity get data;
 
   CountryItemResponse._();
-  factory CountryItemResponse([updates(CountryItemResponseBuilder b)]) = _$CountryItemResponse;
+  factory CountryItemResponse([void updates(CountryItemResponseBuilder b)]) = _$CountryItemResponse;
   static Serializer<CountryItemResponse> get serializer => _$countryItemResponseSerializer;
 }
 

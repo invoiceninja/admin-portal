@@ -10,7 +10,7 @@ abstract class ExpenseListResponse
   BuiltList<ExpenseEntity> get data;
 
   ExpenseListResponse._();
-  factory ExpenseListResponse([updates(ExpenseListResponseBuilder b)]) =
+  factory ExpenseListResponse([void updates(ExpenseListResponseBuilder b)]) =
       _$ExpenseListResponse;
   static Serializer<ExpenseListResponse> get serializer =>
       _$expenseListResponseSerializer;
@@ -21,7 +21,7 @@ abstract class ExpenseItemResponse
   ExpenseEntity get data;
 
   ExpenseItemResponse._();
-  factory ExpenseItemResponse([updates(ExpenseItemResponseBuilder b)]) =
+  factory ExpenseItemResponse([void updates(ExpenseItemResponseBuilder b)]) =
       _$ExpenseItemResponse;
   static Serializer<ExpenseItemResponse> get serializer =>
       _$expenseItemResponseSerializer;
@@ -185,7 +185,7 @@ abstract class ExpenseCategoryEntity extends Object
   String get name;
 
   ExpenseCategoryEntity._();
-  factory ExpenseCategoryEntity([updates(ExpenseCategoryEntityBuilder b)]) =
+  factory ExpenseCategoryEntity([void updates(ExpenseCategoryEntityBuilder b)]) =
       _$ExpenseCategoryEntity;
   static Serializer<ExpenseCategoryEntity> get serializer =>
       _$expenseCategoryEntitySerializer;

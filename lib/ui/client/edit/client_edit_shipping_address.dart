@@ -62,7 +62,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
     super.dispose();
   }
 
-  _onChanged() {
+  void _onChanged() {
     var client = widget.viewModel.client.rebuild((b) => b
       ..shippingAddress1 = _shippingAddress1Controller.text.trim()
       ..shippingAddress2 = _shippingAddress2Controller.text.trim()

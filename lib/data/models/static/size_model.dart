@@ -9,7 +9,7 @@ abstract class SizeListResponse implements Built<SizeListResponse, SizeListRespo
   BuiltList<SizeEntity> get data;
 
   SizeListResponse._();
-  factory SizeListResponse([updates(SizeListResponseBuilder b)]) = _$SizeListResponse;
+  factory SizeListResponse([void updates(SizeListResponseBuilder b)]) = _$SizeListResponse;
   static Serializer<SizeListResponse> get serializer => _$sizeListResponseSerializer;
 }
 
@@ -18,7 +18,7 @@ abstract class SizeItemResponse implements Built<SizeItemResponse, SizeItemRespo
   SizeEntity get data;
 
   SizeItemResponse._();
-  factory SizeItemResponse([updates(SizeItemResponseBuilder b)]) = _$SizeItemResponse;
+  factory SizeItemResponse([void updates(SizeItemResponseBuilder b)]) = _$SizeItemResponse;
   static Serializer<SizeItemResponse> get serializer => _$sizeItemResponseSerializer;
 }
 

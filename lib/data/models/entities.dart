@@ -242,7 +242,7 @@ abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> 
   String get message;
 
   ErrorMessage._();
-  factory ErrorMessage([updates(ErrorMessageBuilder b)]) = _$ErrorMessage;
+  factory ErrorMessage([void updates(ErrorMessageBuilder b)]) = _$ErrorMessage;
   static Serializer<ErrorMessage> get serializer => _$errorMessageSerializer;
 }
 
@@ -255,7 +255,7 @@ abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilde
   ErrorMessage get error;
 
   LoginResponse._();
-  factory LoginResponse([updates(LoginResponseBuilder b)]) = _$LoginResponse;
+  factory LoginResponse([void updates(LoginResponseBuilder b)]) = _$LoginResponse;
   static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
 }
 
@@ -266,7 +266,7 @@ abstract class LoginResponseData implements Built<LoginResponseData, LoginRespon
   StaticData get static;
 
   LoginResponseData._();
-  factory LoginResponseData([updates(LoginResponseDataBuilder b)]) = _$LoginResponseData;
+  factory LoginResponseData([void updates(LoginResponseDataBuilder b)]) = _$LoginResponseData;
   static Serializer<LoginResponseData> get serializer => _$loginResponseDataSerializer;
 }
 
@@ -285,7 +285,7 @@ abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
   BuiltList<FrequencyEntity> get frequencies;
 
   StaticData._();
-  factory StaticData([updates(StaticDataBuilder b)]) = _$StaticData;
+  factory StaticData([void updates(StaticDataBuilder b)]) = _$StaticData;
   static Serializer<StaticData> get serializer => _$staticDataSerializer;
 }
 
@@ -441,7 +441,7 @@ abstract class DashboardResponse implements Built<DashboardResponse, DashboardRe
   DashboardEntity get data;
 
   DashboardResponse._();
-  factory DashboardResponse([updates(DashboardResponseBuilder b)]) = _$DashboardResponse;
+  factory DashboardResponse([void updates(DashboardResponseBuilder b)]) = _$DashboardResponse;
   static Serializer<DashboardResponse> get serializer => _$dashboardResponseSerializer;
 }
 
@@ -473,6 +473,6 @@ abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntity
   int get activeClients;
 
   DashboardEntity._();
-  factory DashboardEntity([updates(DashboardEntityBuilder b)]) = _$DashboardEntity;
+  factory DashboardEntity([void updates(DashboardEntityBuilder b)]) = _$DashboardEntity;
   static Serializer<DashboardEntity> get serializer => _$dashboardEntitySerializer;
 }

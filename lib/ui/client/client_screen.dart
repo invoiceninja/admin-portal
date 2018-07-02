@@ -29,7 +29,7 @@ class ClientScreen extends StatelessWidget {
         actions: [
           AppSearchButton(
             entityType: EntityType.client,
-            onSearchPressed: (value) {
+            onSearchPressed: (String value) {
               store.dispatch(SearchClients(value));
             },
           ),
