@@ -34,15 +34,6 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   ];
 }
 
-Middleware<AppState> _viewClientList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    store.dispatch(LoadClients());
-    store.dispatch(UpdateCurrentRoute(ClientScreen.route));
-
-    next(action);
-  };
-}
-
 Middleware<AppState> _editClient() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
@@ -58,6 +49,15 @@ Middleware<AppState> _viewClient() {
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
     Navigator.of(action.context).pushNamed(ClientViewScreen.route);
+  };
+}
+
+Middleware<AppState> _viewClientList() {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(ClientScreen.route));
+    Navigator.of(action.context).pushReplacementNamed(ClientScreen.route);
   };
 }
 

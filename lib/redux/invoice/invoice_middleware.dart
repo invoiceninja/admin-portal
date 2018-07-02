@@ -36,21 +36,21 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   ];
 }
 
-Middleware<AppState> _viewInvoiceList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    store.dispatch(LoadInvoices());
-    store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
-
-    next(action);
-  };
-}
-
 Middleware<AppState> _viewInvoice() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
     Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
+  };
+}
+
+Middleware<AppState> _viewInvoiceList() {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
+    Navigator.of(action.context).pushReplacementNamed(InvoiceScreen.route);
   };
 }
 

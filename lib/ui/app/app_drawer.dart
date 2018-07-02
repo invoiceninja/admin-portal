@@ -8,6 +8,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
@@ -104,7 +105,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
-            onTap: () => navigator.pushReplacementNamed(ClientScreen.route),
+            onTap: () => store.dispatch(ViewClientList(context)),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(
@@ -114,7 +115,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
-            onTap: () => navigator.pushReplacementNamed(ProductScreen.route),
+            onTap: () => store.dispatch(ViewProductList(context)),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(
@@ -124,7 +125,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
-            onTap: () => navigator.pushReplacementNamed(InvoiceScreen.route),
+            onTap: () => store.dispatch(ViewProductList(context)),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(

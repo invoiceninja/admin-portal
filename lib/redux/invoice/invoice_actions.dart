@@ -5,7 +5,10 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
-class ViewInvoiceList implements PersistUI {}
+class ViewInvoiceList implements PersistUI {
+  final BuildContext context;
+  ViewInvoiceList(this.context);
+}
 
 class ViewInvoice implements PersistUI {
   final int invoiceId;

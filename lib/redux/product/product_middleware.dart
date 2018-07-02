@@ -30,21 +30,21 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   ];
 }
 
-Middleware<AppState> _viewProductList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    store.dispatch(LoadProducts());
-    store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-
-    next(action);
-  };
-}
-
 Middleware<AppState> _editProduct() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
     Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+  };
+}
+
+Middleware<AppState> _viewProductList() {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(ProductScreen.route));
+    Navigator.of(action.context).pushReplacementNamed(ProductScreen.route);
   };
 }
 

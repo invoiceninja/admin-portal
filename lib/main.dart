@@ -20,7 +20,6 @@ import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/redux/app/app_reducer.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/auth/auth_middleware.dart';
-import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
@@ -94,22 +93,22 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             return LoginScreen();
           },
           DashboardScreen.route: (context) {
-            widget.store.dispatch(ViewDashboard());
+            widget.store.dispatch(LoadDashboard());
             return DashboardScreen();
           },
           ProductScreen.route: (context) {
-            widget.store.dispatch(ViewProductList());
+            widget.store.dispatch(LoadProducts());
             return ProductScreen();
           },
           ProductEditScreen.route: (context) => ProductEditScreen(),
           ClientScreen.route: (context) {
-            widget.store.dispatch(ViewClientList());
+            widget.store.dispatch(LoadClients());
             return ClientScreen();
           },
           ClientViewScreen.route: (context) => ClientViewScreen(),
           ClientEditScreen.route: (context) => ClientEditScreen(),
           InvoiceScreen.route: (context) {
-            widget.store.dispatch(ViewInvoiceList());
+            widget.store.dispatch(LoadInvoices());
             return InvoiceScreen();
           },
           InvoiceViewScreen.route: (context) => InvoiceViewScreen(),

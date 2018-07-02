@@ -4,7 +4,10 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 
-class ViewProductList implements PersistUI {}
+class ViewProductList implements PersistUI {
+  final BuildContext context;
+  ViewProductList(this.context);
+}
 
 class EditProduct implements PersistUI {
   final ProductEntity product;
