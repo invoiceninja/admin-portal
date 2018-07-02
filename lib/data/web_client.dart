@@ -9,16 +9,17 @@ class WebClient {
   const WebClient();
 
   String _parseError(String response) {
-    String error = response;
+    dynamic message = response;
 
     try {
       final dynamic jsonResponse = json.decode(response);
-      error = jsonResponse['error'] ?? jsonResponse;
+      message = jsonResponse['error'] ?? jsonResponse;
+      message = message['message'] ?? message;
     } catch(error) {
       // do nothing
     }
 
-    return error;
+    return message.toString();
   }
 
   Future<dynamic> get(String url, String token) async {
@@ -53,11 +54,11 @@ class WebClient {
         'Content-Type': 'application/json',
       },
     );
-
+    print('== 1 == ${_parseError(response.body)}');
     if (response.statusCode >= 400) {
       throw _parseError(response.body);
     }
-
+    print('== 2 ==');
     try {
       final dynamic jsonResponse = json.decode(response.body);
       return jsonResponse;
