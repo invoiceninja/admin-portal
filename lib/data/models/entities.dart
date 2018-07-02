@@ -13,6 +13,8 @@ part 'entities.g.dart';
 
 
 class EntityType extends EnumClass {
+  const EntityType._(String name) : super(name);
+
   static Serializer<EntityType> get serializer => _$entityTypeSerializer;
 
   static const EntityType invoice = _$invoice;
@@ -28,8 +30,6 @@ class EntityType extends EnumClass {
   static const EntityType credit = _$credit;
   static const EntityType payment = _$payment;
 
-  const EntityType._(String name) : super(name);
-
   String get plural {
     return toString() + 's';
   }
@@ -40,13 +40,14 @@ class EntityType extends EnumClass {
 
 
 class EntityState extends EnumClass {
+
+  const EntityState._(String name) : super(name);
+
   static Serializer<EntityState> get serializer => _$entityStateSerializer;
 
   static const EntityState active = _$active;
   static const EntityState archived = _$archived;
   static const EntityState deleted = _$deleted;
-
-  const EntityState._(String name) : super(name);
 
   static BuiltSet<EntityState> get values => _$values;
   static EntityState valueOf(String name) => _$valueOf(name);
@@ -239,38 +240,44 @@ abstract class CalculateInvoiceTotal {
 
 abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> {
 
+  factory ErrorMessage([void updates(ErrorMessageBuilder b)]) = _$ErrorMessage;
+  ErrorMessage._();
+
   String get message;
 
-  ErrorMessage._();
-  factory ErrorMessage([void updates(ErrorMessageBuilder b)]) = _$ErrorMessage;
   static Serializer<ErrorMessage> get serializer => _$errorMessageSerializer;
 }
 
 
 abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilder> {
 
+  factory LoginResponse([void updates(LoginResponseBuilder b)]) = _$LoginResponse;
+  LoginResponse._();
+
   LoginResponseData get data;
 
   @nullable
   ErrorMessage get error;
 
-  LoginResponse._();
-  factory LoginResponse([void updates(LoginResponseBuilder b)]) = _$LoginResponse;
   static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
 }
 
 abstract class LoginResponseData implements Built<LoginResponseData, LoginResponseDataBuilder> {
 
+  factory LoginResponseData([void updates(LoginResponseDataBuilder b)]) = _$LoginResponseData;
+  LoginResponseData._();
+
   BuiltList<CompanyEntity> get accounts;
   String get version;
   StaticData get static;
 
-  LoginResponseData._();
-  factory LoginResponseData([void updates(LoginResponseDataBuilder b)]) = _$LoginResponseData;
   static Serializer<LoginResponseData> get serializer => _$loginResponseDataSerializer;
 }
 
 abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
+
+  factory StaticData([void updates(StaticDataBuilder b)]) = _$StaticData;
+  StaticData._();
 
   BuiltList<CurrencyEntity> get currencies;
   BuiltList<SizeEntity> get sizes;
@@ -284,12 +291,50 @@ abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
   BuiltList<FrequencyEntity> get frequencies;
 
-  StaticData._();
-  factory StaticData([void updates(StaticDataBuilder b)]) = _$StaticData;
   static Serializer<StaticData> get serializer => _$staticDataSerializer;
 }
 
 abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {
+
+  factory CompanyEntity() {
+    return _$CompanyEntity._(
+      name: '',
+      token: '',
+      plan: '',
+      logoUrl: '',
+      convertProductExchangeRate: false,
+      currencyId: 1,
+      dateFormatId: 1,
+      datetimeFormatId: 1,
+      defaultInvoiceDesignId: 1,
+      defaultInvoiceFooter: '',
+      defaultInvoiceTerms: '',
+      defaultPaymentTerms: 0,
+      defaultPaymentTypeId: 0,
+      defaultQuoteDesignId: 1,
+      defaultQuoteTerms: '',
+      defaultTaskRate: 0.0,
+      defaultTaxName1: '',
+      defaultTaxRate1: 0.0,
+      defaultTaxName2: '',
+      defaultTaxRate2: 0.0,
+      enableCustomInvoiceTaxes1: false,
+      enableCustomInvoiceTaxes2: false,
+      enabledModules: 0,
+      enableInclusiveTaxes: false,
+      enableInvoiceItemTaxes: false,
+      enableInvoiceTaxes: true,
+      enableMilitaryTime: false,
+      enableSecondTaxRate: false,
+      financialYearStart: 1,
+      languageId: 1,
+      showCurrencyCode: false,
+      showInvoiceItemTaxes: false,
+      startOfWeek: 1,
+      timezoneId: 1,
+    );
+  }
+  CompanyEntity._();
 
   String get name;
   String get token;
@@ -392,61 +437,25 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   //@BuiltValueField(wireName: 'custom_fields')
   //@BuiltValueField(wireName: 'invoice_labels')
 
-  factory CompanyEntity() {
-    return _$CompanyEntity._(
-      name: '',
-      token: '',
-      plan: '',
-      logoUrl: '',
-      convertProductExchangeRate: false,
-      currencyId: 1,
-      dateFormatId: 1,
-      datetimeFormatId: 1,
-      defaultInvoiceDesignId: 1,
-      defaultInvoiceFooter: '',
-      defaultInvoiceTerms: '',
-      defaultPaymentTerms: 0,
-      defaultPaymentTypeId: 0,
-      defaultQuoteDesignId: 1,
-      defaultQuoteTerms: '',
-      defaultTaskRate: 0.0,
-      defaultTaxName1: '',
-      defaultTaxRate1: 0.0,
-      defaultTaxName2: '',
-      defaultTaxRate2: 0.0,
-      enableCustomInvoiceTaxes1: false,
-      enableCustomInvoiceTaxes2: false,
-      enabledModules: 0,
-      enableInclusiveTaxes: false,
-      enableInvoiceItemTaxes: false,
-      enableInvoiceTaxes: true,
-      enableMilitaryTime: false,
-      enableSecondTaxRate: false,
-      financialYearStart: 1,
-      languageId: 1,
-      showCurrencyCode: false,
-      showInvoiceItemTaxes: false,
-      startOfWeek: 1,
-      timezoneId: 1,
-    );
-  }
-
-  CompanyEntity._();
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 
 
 abstract class DashboardResponse implements Built<DashboardResponse, DashboardResponseBuilder> {
 
+  factory DashboardResponse([void updates(DashboardResponseBuilder b)]) = _$DashboardResponse;
+  DashboardResponse._();
+
   DashboardEntity get data;
 
-  DashboardResponse._();
-  factory DashboardResponse([void updates(DashboardResponseBuilder b)]) = _$DashboardResponse;
   static Serializer<DashboardResponse> get serializer => _$dashboardResponseSerializer;
 }
 
 
 abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntityBuilder> {
+
+  factory DashboardEntity([void updates(DashboardEntityBuilder b)]) = _$DashboardEntity;
+  DashboardEntity._();
 
   @nullable
   double get paidToDate;
@@ -472,7 +481,5 @@ abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntity
   @nullable
   int get activeClients;
 
-  DashboardEntity._();
-  factory DashboardEntity([void updates(DashboardEntityBuilder b)]) = _$DashboardEntity;
   static Serializer<DashboardEntity> get serializer => _$dashboardEntitySerializer;
 }
