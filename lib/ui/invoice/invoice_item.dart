@@ -15,8 +15,6 @@ class InvoiceItem extends StatelessWidget {
   final ClientEntity client;
   final AppState state;
 
-  static final invoiceItemKey = (int id) => Key('__invoice_item_${id}__');
-
   InvoiceItem({
     @required this.onDismissed,
     @required this.onTap,

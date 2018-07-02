@@ -88,8 +88,7 @@ class ClientEditVM {
                   message: client.isNew()
                       ? AppLocalization.of(context).successfullyCreatedClient
                       : AppLocalization.of(context).successfullyUpdatedClient,
-                ),
-                duration: Duration(seconds: 3)));
+                )));
             */
           });
         });

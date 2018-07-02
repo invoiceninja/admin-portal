@@ -85,8 +85,7 @@ class ClientViewVM {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: message,
-                ),
-                duration: Duration(seconds: 3)));
+                )));
           });
         });
   }

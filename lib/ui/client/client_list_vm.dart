@@ -60,8 +60,7 @@ class ClientListVM {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
                 message: AppLocalization.of(context).refreshComplete,
-              ),
-              duration: Duration(seconds: 3)));
+              )));
         });
       }
 
@@ -100,8 +99,7 @@ class ClientListVM {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: message,
-                ),
-                duration: Duration(seconds: 3)));
+                )));
           });
         });
   }

@@ -200,7 +200,7 @@ List<String> _getRoutes(AppState state) {
       final bool isNew = state.getUIState(entityType).isCreatingNew;
       if (isNew) {
         route += '/edit';
-      } else if (entityType == EntityType.client) {
+      } else if (entityType != EntityType.product) {
         route += '/view';
       }
     } else {

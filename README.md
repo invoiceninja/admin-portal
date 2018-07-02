@@ -43,7 +43,7 @@ The architecture is based off these two projects:
 - [inKino](https://github.com/roughike/inKino) - [Iiro Krankka](https://twitter.com/koorankka)
 
 ## Developer Notes
-- Run `cp .env.dart.example .env.dart` when setting up the app to create the config file.
+- Run `cp lib/.env.dart.example lib/.env.dart` when setting up the app to create the config file.
 - Run `flutter packages pub run build_runner build` to regenerate the model files
 
 ## Contributions

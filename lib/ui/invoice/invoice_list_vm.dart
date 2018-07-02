@@ -62,8 +62,7 @@ class InvoiceListVM {
         Scaffold.of(context).showSnackBar(SnackBar(
             content: SnackBarRow(
               message: AppLocalization.of(context).refreshComplete,
-            ),
-            duration: Duration(seconds: 3)));
+            )));
       });
     }
 
@@ -110,8 +109,7 @@ class InvoiceListVM {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: message,
-                ),
-                duration: Duration(seconds: 3)));
+                )));
           });
         });
   }

@@ -79,8 +79,7 @@ class ProductEditVM {
                   message: product.isNew()
                       ? AppLocalization.of(context).successfullyCreatedProduct
                       : AppLocalization.of(context).successfullyUpdatedProduct,
-                ),
-                duration: Duration(seconds: 3)));
+                )));
           });
         },
         onActionSelected: (BuildContext context, EntityAction action) {
@@ -104,8 +103,7 @@ class ProductEditVM {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: message,
-                ),
-                duration: Duration(seconds: 3)));
+                )));
           });
         });
   }

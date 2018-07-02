@@ -82,8 +82,7 @@ class InvoiceEditVM {
                   message: invoice.isNew()
                       ? AppLocalization.of(context).successfullyCreatedInvoice
                       : AppLocalization.of(context).successfullyUpdatedInvoice,
-                ),
-                duration: Duration(seconds: 3)));
+                )));
                 */
           });
         },
@@ -109,8 +108,7 @@ class InvoiceEditVM {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: message,
-                ),
-                duration: Duration(seconds: 3)));
+                )));
           });
         });
   }
