@@ -176,7 +176,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Material(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[

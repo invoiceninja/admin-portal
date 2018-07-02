@@ -126,7 +126,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
             entityType: EntityType.country,
             entityMap: viewModel.countryMap,
             labelText: localization.country,
-            initialValue: viewModel.countryMap[client.countryId]?.name,
+            initialValue: viewModel.countryMap[client.shippingCountryId]?.name,
             onSelected: (int countryId) => viewModel
                 .onChanged(client.rebuild((b) => b..shippingCountryId = countryId)),
           ),
