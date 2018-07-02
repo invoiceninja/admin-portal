@@ -81,6 +81,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final client = viewModel.client;
 
     return ListView(shrinkWrap: true, children: <Widget>[
       FormCard(
@@ -125,9 +126,9 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
             entityType: EntityType.country,
             entityMap: viewModel.countryMap,
             labelText: localization.country,
-            onSelected: (int countryId) {
-              //
-            },
+            initialValue: viewModel.countryMap[client.countryId]?.name,
+            onSelected: (int countryId) => viewModel
+                .onChanged(client.rebuild((b) => b..countryId = countryId)),
           ),
         ],
       )
