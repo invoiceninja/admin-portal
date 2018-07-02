@@ -30,101 +30,30 @@ class EntityDropdown extends StatefulWidget {
 
 class _EntityDropdownState extends State<EntityDropdown> {
   final _textController = TextEditingController();
-  final _filterController = TextEditingController();
-  List<int> _entityList;
 
   @override
   void initState() {
     super.initState();
     _textController.text = widget.initialValue;
-    _entityList = widget.entityMap.keys.toList();
   }
 
   @override
   void dispose() {
     _textController.dispose();
-    _filterController.dispose();
     super.dispose();
   }
 
   void _showOptions() {
-    var localization = AppLocalization.of(context);
-
-    Widget _headerRow() {
-      return Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: Icon(
-              Icons.search,
-              color: Colors.grey,
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              controller: _filterController,
-              onChanged: (value) {
-
-              },
-              autofocus: true,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: localization.filter,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.pop(context),
-          )
-        ],
-      );
-    }
-
-    Widget _createList(Store<AppState> store) {
-      return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: _entityList
-              .getRange(0, min(6, _entityList.length))
-              .map((entityId) {
-            final entity = widget.entityMap[entityId];
-            final filter = _filterController.text;
-            final String subtitle = entity.matchesSearchValue(filter);
-            return ListTile(
-              dense: true,
-              title: Text(entity.listDisplayName),
-              subtitle: subtitle != null ? Text(subtitle) : null,
-              onTap: () {
-                _textController.text =
-                    widget.entityMap[entityId].listDisplayName;
-                widget.onSelected(entityId);
-                Navigator.pop(context);
-              },
-            );
-          }).toList());
-    }
-
-    showDialog<Padding>(
+    showDialog<EntityDropdownDialog>(
         context: context,
         builder: (BuildContext context) {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: StoreBuilder(
-                builder: (BuildContext context, Store<AppState> store) {
-              return Column(
-                children: <Widget>[
-                  Material(
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          _headerRow(),
-                          _createList(store),
-                        ]),
-                  ),
-                  Expanded(child: Container()),
-                ],
-              );
-            }),
+          return EntityDropdownDialog(
+            entityMap: widget.entityMap,
+            onSelected: (entityId) {
+              _textController.text = widget.entityMap[entityId].listDisplayName;
+              widget.onSelected(entityId);
+              Navigator.pop(context);
+            },
           );
         });
   }
@@ -142,6 +71,117 @@ class _EntityDropdownState extends State<EntityDropdown> {
             suffixIcon: const Icon(Icons.search),
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+class EntityDropdownDialog extends StatefulWidget {
+  EntityDropdownDialog({
+    @required this.entityMap,
+    @required this.onSelected,
+  });
+
+  final BuiltMap<int, SelectableEntity> entityMap;
+  final Function(int) onSelected;
+
+  @override
+  _EntityDropdownDialogState createState() => new _EntityDropdownDialogState();
+}
+
+class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
+  String _filter;
+  List<int> _entityList;
+
+  @override
+  void initState() {
+    super.initState();
+    _entityList = widget.entityMap.keys.toList();
+    _entityList.sort((idA, idB) => widget.entityMap[idA].listDisplayName
+        .compareTo(widget.entityMap[idB].listDisplayName));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var localization = AppLocalization.of(context);
+
+    Widget _headerRow() {
+      return Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            child: Icon(
+              Icons.search,
+              color: Colors.grey,
+            ),
+          ),
+          Expanded(
+            child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  print('setting filter to $value');
+                  _filter = value;
+                });
+              },
+              autofocus: true,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: localization.filter,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      );
+    }
+
+    Widget _createList() {
+      print('matching $_filter');
+      final matches = _entityList
+          .where((entityId) => widget.entityMap[entityId].matchesSearch(_filter))
+          .toList();
+
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: matches.length,
+        itemBuilder: (BuildContext context, int index) {
+          final int entityId = matches[index];
+          final entity = widget.entityMap[entityId];
+          final String subtitle = entity.matchesSearchValue(_filter);
+          return ListTile(
+            dense: true,
+            title: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(entity.listDisplayName),
+                ),
+              ],
+            ),
+            subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
+            onTap: () => widget.onSelected(entityId),
+          );
+        },
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          Material(
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _headerRow(),
+                  _createList(),
+                ]),
+          ),
+          Expanded(child: Container()),
+        ],
       ),
     );
   }

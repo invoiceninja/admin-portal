@@ -130,6 +130,10 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       'swap_currency_symbol',
       serializers.serialize(object.swapCurrencySymbol,
           specifiedType: const FullType(bool)),
+      'iso_3166_2',
+      serializers.serialize(object.iso2, specifiedType: const FullType(String)),
+      'iso_3166_3',
+      serializers.serialize(object.iso3, specifiedType: const FullType(String)),
     ];
     if (object.thousandSeparator != null) {
       result
@@ -182,6 +186,14 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
           break;
         case 'decimal_separator':
           result.decimalSeparator = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'iso_3166_2':
+          result.iso2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'iso_3166_3':
+          result.iso3 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -388,6 +400,10 @@ class _$CountryEntity extends CountryEntity {
   @override
   final String decimalSeparator;
   @override
+  final String iso2;
+  @override
+  final String iso3;
+  @override
   final int id;
 
   factory _$CountryEntity([void updates(CountryEntityBuilder b)]) =>
@@ -399,6 +415,8 @@ class _$CountryEntity extends CountryEntity {
       this.swapCurrencySymbol,
       this.thousandSeparator,
       this.decimalSeparator,
+      this.iso2,
+      this.iso3,
       this.id})
       : super._() {
     if (name == null)
@@ -407,6 +425,10 @@ class _$CountryEntity extends CountryEntity {
       throw new BuiltValueNullFieldError('CountryEntity', 'swapPostalCode');
     if (swapCurrencySymbol == null)
       throw new BuiltValueNullFieldError('CountryEntity', 'swapCurrencySymbol');
+    if (iso2 == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'iso2');
+    if (iso3 == null)
+      throw new BuiltValueNullFieldError('CountryEntity', 'iso3');
   }
 
   @override
@@ -425,6 +447,8 @@ class _$CountryEntity extends CountryEntity {
         swapCurrencySymbol == other.swapCurrencySymbol &&
         thousandSeparator == other.thousandSeparator &&
         decimalSeparator == other.decimalSeparator &&
+        iso2 == other.iso2 &&
+        iso3 == other.iso3 &&
         id == other.id;
   }
 
@@ -433,10 +457,14 @@ class _$CountryEntity extends CountryEntity {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, name.hashCode), swapPostalCode.hashCode),
-                    swapCurrencySymbol.hashCode),
-                thousandSeparator.hashCode),
-            decimalSeparator.hashCode),
+                $jc(
+                    $jc(
+                        $jc($jc($jc(0, name.hashCode), swapPostalCode.hashCode),
+                            swapCurrencySymbol.hashCode),
+                        thousandSeparator.hashCode),
+                    decimalSeparator.hashCode),
+                iso2.hashCode),
+            iso3.hashCode),
         id.hashCode));
   }
 
@@ -448,6 +476,8 @@ class _$CountryEntity extends CountryEntity {
           ..add('swapCurrencySymbol', swapCurrencySymbol)
           ..add('thousandSeparator', thousandSeparator)
           ..add('decimalSeparator', decimalSeparator)
+          ..add('iso2', iso2)
+          ..add('iso3', iso3)
           ..add('id', id))
         .toString();
   }
@@ -481,6 +511,14 @@ class CountryEntityBuilder
   set decimalSeparator(String decimalSeparator) =>
       _$this._decimalSeparator = decimalSeparator;
 
+  String _iso2;
+  String get iso2 => _$this._iso2;
+  set iso2(String iso2) => _$this._iso2 = iso2;
+
+  String _iso3;
+  String get iso3 => _$this._iso3;
+  set iso3(String iso3) => _$this._iso3 = iso3;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -494,6 +532,8 @@ class CountryEntityBuilder
       _swapCurrencySymbol = _$v.swapCurrencySymbol;
       _thousandSeparator = _$v.thousandSeparator;
       _decimalSeparator = _$v.decimalSeparator;
+      _iso2 = _$v.iso2;
+      _iso3 = _$v.iso3;
       _id = _$v.id;
       _$v = null;
     }
@@ -520,6 +560,8 @@ class CountryEntityBuilder
             swapCurrencySymbol: swapCurrencySymbol,
             thousandSeparator: thousandSeparator,
             decimalSeparator: decimalSeparator,
+            iso2: iso2,
+            iso3: iso3,
             id: id);
     replace(_$result);
     return _$result;
