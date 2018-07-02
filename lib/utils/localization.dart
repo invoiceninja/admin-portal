@@ -144,6 +144,10 @@ class AppLocalization {
       'dismiss': 'Dismiss',
       'please_select_a_date': 'Please select a date',
       'please_select_a_client': 'Please select a client',
+      'task_rate': 'Task Rate',
+      'settings': 'Settings',
+      'language': 'Language',
+      'currency': 'Currency',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -298,6 +302,10 @@ class AppLocalization {
   String get dismiss => _localizedValues[locale.languageCode]['dismiss'];
   String get pleaseSelectADate => _localizedValues[locale.languageCode]['please_select_a_date'];
   String get pleaseSelectAClient => _localizedValues[locale.languageCode]['please_select_a_client'];
+  String get taskRate => _localizedValues[locale.languageCode]['task_rate'];
+  String get settings => _localizedValues[locale.languageCode]['settings'];
+  String get language => _localizedValues[locale.languageCode]['language'];
+  String get currency => _localizedValues[locale.languageCode]['currency'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

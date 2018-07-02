@@ -123,8 +123,6 @@ class _$CurrencyEntitySerializer
   Iterable serialize(Serializers serializers, CurrencyEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'symbol',
@@ -151,6 +149,12 @@ class _$CurrencyEntitySerializer
         ..add(serializers.serialize(object.exchangeRate,
             specifiedType: const FullType(double)));
     }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
 
     return result;
   }
@@ -166,10 +170,6 @@ class _$CurrencyEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -201,6 +201,10 @@ class _$CurrencyEntitySerializer
         case 'exchange_rate':
           result.exchangeRate = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -395,8 +399,6 @@ class CurrencyItemResponseBuilder
 
 class _$CurrencyEntity extends CurrencyEntity {
   @override
-  final int id;
-  @override
   final String name;
   @override
   final String symbol;
@@ -412,22 +414,23 @@ class _$CurrencyEntity extends CurrencyEntity {
   final bool swapCurrencySymbol;
   @override
   final double exchangeRate;
+  @override
+  final int id;
 
   factory _$CurrencyEntity([void updates(CurrencyEntityBuilder b)]) =>
       (new CurrencyEntityBuilder()..update(updates)).build();
 
   _$CurrencyEntity._(
-      {this.id,
-      this.name,
+      {this.name,
       this.symbol,
       this.precision,
       this.thousandSeparator,
       this.decimalSeparator,
       this.code,
       this.swapCurrencySymbol,
-      this.exchangeRate})
+      this.exchangeRate,
+      this.id})
       : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('CurrencyEntity', 'id');
     if (name == null)
       throw new BuiltValueNullFieldError('CurrencyEntity', 'name');
     if (symbol == null)
@@ -457,15 +460,15 @@ class _$CurrencyEntity extends CurrencyEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! CurrencyEntity) return false;
-    return id == other.id &&
-        name == other.name &&
+    return name == other.name &&
         symbol == other.symbol &&
         precision == other.precision &&
         thousandSeparator == other.thousandSeparator &&
         decimalSeparator == other.decimalSeparator &&
         code == other.code &&
         swapCurrencySymbol == other.swapCurrencySymbol &&
-        exchangeRate == other.exchangeRate;
+        exchangeRate == other.exchangeRate &&
+        id == other.id;
   }
 
   @override
@@ -476,20 +479,19 @@ class _$CurrencyEntity extends CurrencyEntity {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, id.hashCode), name.hashCode),
-                                symbol.hashCode),
-                            precision.hashCode),
-                        thousandSeparator.hashCode),
-                    decimalSeparator.hashCode),
-                code.hashCode),
-            swapCurrencySymbol.hashCode),
-        exchangeRate.hashCode));
+                            $jc($jc($jc(0, name.hashCode), symbol.hashCode),
+                                precision.hashCode),
+                            thousandSeparator.hashCode),
+                        decimalSeparator.hashCode),
+                    code.hashCode),
+                swapCurrencySymbol.hashCode),
+            exchangeRate.hashCode),
+        id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CurrencyEntity')
-          ..add('id', id)
           ..add('name', name)
           ..add('symbol', symbol)
           ..add('precision', precision)
@@ -497,7 +499,8 @@ class _$CurrencyEntity extends CurrencyEntity {
           ..add('decimalSeparator', decimalSeparator)
           ..add('code', code)
           ..add('swapCurrencySymbol', swapCurrencySymbol)
-          ..add('exchangeRate', exchangeRate))
+          ..add('exchangeRate', exchangeRate)
+          ..add('id', id))
         .toString();
   }
 }
@@ -505,10 +508,6 @@ class _$CurrencyEntity extends CurrencyEntity {
 class CurrencyEntityBuilder
     implements Builder<CurrencyEntity, CurrencyEntityBuilder> {
   _$CurrencyEntity _$v;
-
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -545,11 +544,14 @@ class CurrencyEntityBuilder
   double get exchangeRate => _$this._exchangeRate;
   set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
 
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
   CurrencyEntityBuilder();
 
   CurrencyEntityBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
       _name = _$v.name;
       _symbol = _$v.symbol;
       _precision = _$v.precision;
@@ -558,6 +560,7 @@ class CurrencyEntityBuilder
       _code = _$v.code;
       _swapCurrencySymbol = _$v.swapCurrencySymbol;
       _exchangeRate = _$v.exchangeRate;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -578,7 +581,6 @@ class CurrencyEntityBuilder
   _$CurrencyEntity build() {
     final _$result = _$v ??
         new _$CurrencyEntity._(
-            id: id,
             name: name,
             symbol: symbol,
             precision: precision,
@@ -586,7 +588,8 @@ class CurrencyEntityBuilder
             decimalSeparator: decimalSeparator,
             code: code,
             swapCurrencySymbol: swapCurrencySymbol,
-            exchangeRate: exchangeRate);
+            exchangeRate: exchangeRate,
+            id: id);
     replace(_$result);
     return _$result;
   }

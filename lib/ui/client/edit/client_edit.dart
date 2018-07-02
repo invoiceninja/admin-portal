@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_details.dart';
+import 'package:invoiceninja/ui/client/edit/client_edit_settings.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_shipping_address.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -28,7 +29,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 4);
+    _controller = new TabController(vsync: this, length: 5);
   }
 
   @override
@@ -77,6 +78,9 @@ class _ClientEditState extends State<ClientEdit>
                 text: localization.contacts,
               ),
               Tab(
+                text: localization.settings,
+              ),
+              Tab(
                 text: localization.billingAddress,
               ),
               Tab(
@@ -94,6 +98,9 @@ class _ClientEditState extends State<ClientEdit>
                 viewModel: widget.viewModel,
               ),
               ClientEditContacts(
+                viewModel: widget.viewModel,
+              ),
+              ClientEditSettings(
                 viewModel: widget.viewModel,
               ),
               ClientEditBillingAddress(
