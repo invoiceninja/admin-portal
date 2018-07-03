@@ -9,14 +9,14 @@ import 'package:invoiceninja/utils/formatting.dart';
 
 class TaxRateDropdown extends StatefulWidget {
   const TaxRateDropdown({
-    @required this.taxRates,
+    @required this.state,
     @required this.labelText,
     @required this.onSelected,
     this.initialTaxName = '',
     this.initialTaxRate = 0.0,
   });
 
-  final BuiltList<TaxRateEntity> taxRates;
+  final AppState state;
   final String labelText;
   final Function(TaxRateEntity) onSelected;
   final String initialTaxName;
@@ -28,11 +28,24 @@ class TaxRateDropdown extends StatefulWidget {
 
 class _TaxRateDropdownState extends State<TaxRateDropdown> {
   final _textController = TextEditingController();
+  TaxRateEntity _selectedTaxRate;
 
   @override
   void initState() {
     super.initState();
-    _textController.text = widget.initialTaxName;
+    final taxRates = widget.state.selectedCompany.taxRates;
+
+    if (widget.initialTaxRate != 0) {
+      _selectedTaxRate = taxRates.firstWhere(
+              (taxRate) =>
+          taxRate.name == widget.initialTaxName &&
+              taxRate.rate == widget.initialTaxRate,
+          orElse: () => TaxRateEntity().rebuild((b) => b
+            ..rate = widget.initialTaxRate
+            ..name = widget.initialTaxName));
+    }
+    
+    _textController.text = _formatTaxRate(_selectedTaxRate, widget.state);
   }
 
   @override
@@ -41,21 +54,17 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     super.dispose();
   }
 
+  String _formatTaxRate(TaxRateEntity taxRate, AppState state) {
+    return '${formatNumber(taxRate.rate, state,
+        formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
+  }
+
   @override
   Widget build(BuildContext context) {
-    TaxRateEntity selectedTaxRate;
-    if (widget.initialTaxRate != 0) {
-      selectedTaxRate = widget.taxRates.firstWhere(
-          (taxRate) =>
-              taxRate.name == widget.initialTaxName &&
-              taxRate.rate == widget.initialTaxRate,
-          orElse: () => TaxRateEntity().rebuild((b) => b
-            ..rate = widget.initialTaxRate
-            ..name = widget.initialTaxName));
-    }
+    final taxRates = widget.state.selectedCompany.taxRates;
 
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
-      final options = widget.taxRates
+      final options = taxRates
           .where(
               (taxRate) => taxRate.archivedAt == null && !taxRate.isInclusive)
           .map((taxRate) => PopupMenuItem<TaxRateEntity>(
@@ -80,14 +89,12 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
 
       return PopupMenuButton<TaxRateEntity>(
         padding: EdgeInsets.zero,
-        initialValue: selectedTaxRate,
+        initialValue: _selectedTaxRate,
         onSelected: (taxRate) {
           if (taxRate.rate == 0) {
             _textController.text = '';
           } else {
-            _textController.text =
-            '${formatNumber(taxRate.rate, store.state,
-                formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
+            _textController.text = _formatTaxRate(taxRate, store.state);
           }
           widget.onSelected(taxRate);
         },

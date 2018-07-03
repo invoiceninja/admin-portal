@@ -88,6 +88,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
+    final company = viewModel.state.selectedCompany;
 
     return ListView(
       children: <Widget>[
@@ -205,26 +206,26 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 )
               ],
             ),
-            TaxRateDropdown(
+            company.enableInvoiceTaxes ? TaxRateDropdown(
               onSelected: (taxRate) =>
                   viewModel.onChanged(invoice.rebuild((b) => b
                     ..taxRate1 = taxRate.rate
                     ..taxName1 = taxRate.name)),
               labelText: localization.tax,
-              taxRates: viewModel.state.selectedCompany.taxRates,
+              state: viewModel.state,
               initialTaxName: invoice.taxName1,
               initialTaxRate: invoice.taxRate1,
-            ),
-            TaxRateDropdown(
+            ) : Container(),
+            company.enableInvoiceTaxes && company.enableSecondTaxRate ? TaxRateDropdown(
               onSelected: (taxRate) =>
                   viewModel.onChanged(invoice.rebuild((b) => b
                     ..taxRate2 = taxRate.rate
                     ..taxName2 = taxRate.name)),
               labelText: localization.tax,
-              taxRates: viewModel.state.selectedCompany.taxRates,
+              state: viewModel.state,
               initialTaxName: invoice.taxName2,
               initialTaxRate: invoice.taxRate2,
-            ),
+            ) : Container(),
           ],
         ),
       ],
