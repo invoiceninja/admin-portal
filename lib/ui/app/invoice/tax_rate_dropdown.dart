@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -43,7 +42,9 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
           ..rate = widget.initialTaxRate
           ..name = widget.initialTaxName));
 
-    _textController.text = _formatTaxRate(_selectedTaxRate, widget.state);
+    if (_selectedTaxRate.rate != 0) {
+      _textController.text = _formatTaxRate(_selectedTaxRate, widget.state);
+    }
   }
 
   @override

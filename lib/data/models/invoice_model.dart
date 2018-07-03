@@ -172,6 +172,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   @BuiltValueField(wireName: 'recurring_invoice_id')
   int get recurringInvoiceId;
 
+  @override
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
 
@@ -179,6 +180,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   @BuiltValueField(wireName: 'tax_rate1')
   double get taxRate1;
 
+  @override
   @BuiltValueField(wireName: 'tax_name2')
   String get taxName2;
 

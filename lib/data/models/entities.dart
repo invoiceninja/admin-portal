@@ -118,6 +118,8 @@ abstract class ConvertToInvoiceItem {
 
 abstract class CalculateInvoiceTotal {
   bool get isAmountDiscount;
+  String get taxName1;
+  String get taxName2;
   double get taxRate1;
   double get taxRate2;
   double get discount;
@@ -129,6 +131,7 @@ abstract class CalculateInvoiceTotal {
 
   Map<String, double> calculateTaxes() {
     double total = baseTotal;
+    double taxAmount;
     final map = <String, double>{};
 
     invoiceItems.forEach((item) {
@@ -139,7 +142,6 @@ abstract class CalculateInvoiceTotal {
       final double taxRate2 = round(item.taxRate2, 3);
 
       double lineTotal = qty * cost;
-      double itemTax;
 
       if (itemDiscount != 0) {
         if (isAmountDiscount) {
@@ -158,12 +160,12 @@ abstract class CalculateInvoiceTotal {
       }
 
       if (taxRate1 != 0) {
-        itemTax = round(lineTotal * taxRate1 / 100, 2);
-        map.update(item.taxName1, (value) => value + itemTax, ifAbsent: () => itemTax);
+        taxAmount = round(lineTotal * taxRate1 / 100, 2);
+        map.update(item.taxName1, (value) => value + taxAmount, ifAbsent: () => taxAmount);
       }
       if (taxRate2 != 0) {
-        itemTax = round(lineTotal * taxRate2 / 100, 2);
-        map.update(item.taxName2, (value) => value + itemTax, ifAbsent: () => itemTax);
+        taxAmount = round(lineTotal * taxRate2 / 100, 2);
+        map.update(item.taxName2, (value) => value + taxAmount, ifAbsent: () => taxAmount);
       }
     });
 
@@ -181,6 +183,17 @@ abstract class CalculateInvoiceTotal {
 
     if (customValue2 != 0.0 && customTaxes2) {
       total += round(customValue2, 2);
+    }
+
+
+    if (taxRate1 != 0) {
+      taxAmount = round(total * taxRate1 / 100, 2);
+      map.update(taxName1, (value) => value + taxAmount, ifAbsent: () => taxAmount);
+    }
+
+    if (taxRate2 != 0) {
+      taxAmount = round(total * taxRate2 / 100, 2);
+      map.update(taxName2, (value) => value + taxAmount, ifAbsent: () => taxAmount);
     }
 
     return map;
