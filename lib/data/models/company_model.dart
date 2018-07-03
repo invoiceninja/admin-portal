@@ -171,5 +171,4 @@ abstract class TaxRateEntity extends Object with SelectableEntity implements Bui
   @nullable
   @BuiltValueField(wireName: 'archived_at')
   int get archivedAt;
-
 }

@@ -1,7 +1,11 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/data/models/company_model.dart';
+import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:redux/redux.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 class TaxRateDropdown extends StatefulWidget {
   const TaxRateDropdown({
@@ -50,29 +54,43 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
             ..name = widget.initialTaxName));
     }
 
-    return PopupMenuButton<TaxRateEntity>(
-      padding: EdgeInsets.zero,
-      initialValue: selectedTaxRate,
-      onSelected: (taxRate) {
-        _textController.text = taxRate.name;
-      },
-      child: InkWell(
-        child: IgnorePointer(
-          child: TextFormField(
-            controller: _textController,
-            decoration: InputDecoration(
-              labelText: widget.labelText,
-              suffixIcon: const Icon(Icons.arrow_drop_down),
+    return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
+      return PopupMenuButton<TaxRateEntity>(
+        padding: EdgeInsets.zero,
+        initialValue: selectedTaxRate,
+        onSelected: (taxRate) {
+          _textController.text =
+              '${formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
+        },
+        child: InkWell(
+          child: IgnorePointer(
+            child: TextFormField(
+              controller: _textController,
+              decoration: InputDecoration(
+                labelText: widget.labelText,
+                suffixIcon: const Icon(Icons.arrow_drop_down),
+              ),
             ),
           ),
         ),
-      ),
-      itemBuilder: (BuildContext context) => widget.taxRates
-          .map((taxRate) => PopupMenuItem<TaxRateEntity>(
-                value: taxRate,
-                child: Text(taxRate.name),
-              ))
-          .toList(),
-    );
+        itemBuilder: (BuildContext context) => widget.taxRates
+            .where((taxRate) => taxRate.archivedAt == null && ! taxRate.isInclusive)
+            .map((taxRate) => PopupMenuItem<TaxRateEntity>(
+                  value: taxRate,
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 70.0,
+                        child: Text(formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)),
+                      ),
+                      Text(taxRate.name),
+                    ],
+                  ),
+                  //child: Text(
+                      //'${formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)} ${taxRate.name}'),
+                ))
+            .toList(),
+      );
+    });
   }
 }
