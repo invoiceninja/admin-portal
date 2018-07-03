@@ -38,6 +38,6 @@ class FileStorage {
   Future<bool> exists() async {
     final file = await _getLocalFile();
 
-    return file.exists();
+    return file.existsSync();
   }
 }
