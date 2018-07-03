@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/ui/invoice/invoice_item.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 
 part 'entities.g.dart';
