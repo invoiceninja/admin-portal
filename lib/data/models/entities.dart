@@ -181,7 +181,7 @@ abstract class CalculateInvoiceTotal {
 
     if (! useInclusiveTaxes) {
       final double taxAmount1 = round(total * taxRate1 / 100, 2);
-      final double taxAmount2 = round(total * taxRate1 / 100, 2);
+      final double taxAmount2 = round(total * taxRate2 / 100, 2);
 
       total += itemTax + taxAmount1 + taxAmount2;
     }

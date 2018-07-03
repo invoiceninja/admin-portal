@@ -70,8 +70,6 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
                     Text(taxRate.name),
                   ],
                 ),
-                //child: Text(
-                //'${formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)} ${taxRate.name}'),
               ))
           .toList();
 
@@ -84,8 +82,13 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
         padding: EdgeInsets.zero,
         initialValue: selectedTaxRate,
         onSelected: (taxRate) {
-          _textController.text =
-              '${formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
+          if (taxRate.rate == 0) {
+            _textController.text = '';
+          } else {
+            _textController.text =
+            '${formatNumber(taxRate.rate, store.state,
+                formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
+          }
           widget.onSelected(taxRate);
         },
         child: InkWell(
