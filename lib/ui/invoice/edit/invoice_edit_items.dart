@@ -21,7 +21,8 @@ class InvoiceEditItems extends StatelessWidget {
 
     if (invoice.invoiceItems.isEmpty) {
       return Center(
-        child: Text(localization.clickPlusToAddItem,
+        child: Text(
+          localization.clickPlusToAddItem,
           style: TextStyle(
             color: Colors.grey,
             fontSize: 20.0,
@@ -64,6 +65,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
   final _qtyController = TextEditingController();
+  final _discountController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -74,20 +76,26 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       _notesController,
       _costController,
       _qtyController,
+      _discountController,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
+    final state = widget.viewModel.state;
     final invoiceItem = widget.invoiceItem;
+
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
-    _costController.text = formatNumber(
-        invoiceItem.cost, widget.viewModel.state,
+    _costController.text = formatNumber(invoiceItem.cost, state,
         formatNumberType: FormatNumberType.input);
-    _qtyController.text = formatNumber(invoiceItem.qty, widget.viewModel.state,
+    _qtyController.text = formatNumber(invoiceItem.qty, state,
+        formatNumberType: FormatNumberType.input);
+    _discountController.text = formatNumber(invoiceItem.discount, state,
         formatNumberType: FormatNumberType.input);
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -107,7 +115,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()
       ..cost = double.tryParse(_costController.text) ?? 0.0
-      ..qty = double.tryParse(_qtyController.text) ?? 0.0);
+      ..qty = double.tryParse(_qtyController.text) ?? 0.0
+      ..discount = double.tryParse(_discountController.text) ?? 0.0);
+
     if (invoiceItem != widget.invoiceItem) {
       widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
     }
@@ -176,26 +186,40 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             labelText: localization.quantity,
           ),
         ),
-        company.enableInvoiceTaxes ? TaxRateDropdown(
-          onSelected: (taxRate) =>
-              viewModel.onChangedInvoiceItem(invoiceItem.rebuild((b) => b
-                ..taxRate1 = taxRate.rate
-                ..taxName1 = taxRate.name), widget.index),
-          labelText: localization.tax,
-          state: viewModel.state,
-          initialTaxName: invoiceItem.taxName1,
-          initialTaxRate: invoiceItem.taxRate1,
-        ) : Container(),
-        company.enableInvoiceTaxes && company.enableSecondTaxRate ? TaxRateDropdown(
-          onSelected: (taxRate) =>
-              viewModel.onChangedInvoiceItem(invoiceItem.rebuild((b) => b
-                ..taxRate2 = taxRate.rate
-                ..taxName2 = taxRate.name), widget.index),
-          labelText: localization.tax,
-          state: viewModel.state,
-          initialTaxName: invoiceItem.taxName2,
-          initialTaxRate: invoiceItem.taxRate2,
-        ) : Container(),
+        TextFormField(
+          autocorrect: false,
+          controller: _discountController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: localization.discount,
+          ),
+        ),
+        company.enableInvoiceTaxes
+            ? TaxRateDropdown(
+                onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                    invoiceItem.rebuild((b) => b
+                      ..taxRate1 = taxRate.rate
+                      ..taxName1 = taxRate.name),
+                    widget.index),
+                labelText: localization.tax,
+                state: viewModel.state,
+                initialTaxName: invoiceItem.taxName1,
+                initialTaxRate: invoiceItem.taxRate1,
+              )
+            : Container(),
+        company.enableInvoiceTaxes && company.enableSecondTaxRate
+            ? TaxRateDropdown(
+                onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                    invoiceItem.rebuild((b) => b
+                      ..taxRate2 = taxRate.rate
+                      ..taxName2 = taxRate.name),
+                    widget.index),
+                labelText: localization.tax,
+                state: viewModel.state,
+                initialTaxName: invoiceItem.taxName2,
+                initialTaxRate: invoiceItem.taxRate2,
+              )
+            : Container(),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -217,4 +241,3 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     );
   }
 }
-
