@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FormCard extends StatelessWidget {
 
-  FormCard({
+  const FormCard({
     Key key,
     @required this.children,
   }) : super(key: key);

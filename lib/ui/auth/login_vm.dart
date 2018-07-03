@@ -12,7 +12,7 @@ import 'package:invoiceninja/ui/auth/login.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key key}) : super(key: key);
 
   static const String route = '/login';
 

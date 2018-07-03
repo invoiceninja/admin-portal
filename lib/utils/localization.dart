@@ -12,7 +12,7 @@ class AppLocalization {
     return Localizations.of<AppLocalization>(context, AppLocalization);
   }
 
-  static Map<String, Map<String, String>> _localizedValues = {
+  static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'billing_address': 'Billing Address',
       'shipping_address': 'Shipping Address',

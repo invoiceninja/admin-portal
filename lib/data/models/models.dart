@@ -1,3 +1,7 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
 export 'package:invoiceninja/data/models/entities.dart';
 export 'package:invoiceninja/data/models/product_model.dart';
 export 'package:invoiceninja/data/models/client_model.dart';
@@ -21,9 +25,6 @@ export 'package:invoiceninja/data/models/static/country_model.dart';
 export 'package:invoiceninja/data/models/static/invoice_design_model.dart';
 export 'package:invoiceninja/data/models/static/invoice_status_model.dart';
 export 'package:invoiceninja/data/models/static/frequency_model.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 
 part 'models.g.dart';
 

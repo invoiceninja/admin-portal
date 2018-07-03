@@ -8,11 +8,7 @@ import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
-import 'package:invoiceninja/ui/client/client_screen.dart';
-import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
-import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -21,7 +17,7 @@ import 'package:redux/redux.dart';
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
 
-  AppDrawer({
+  const AppDrawer({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -156,7 +152,7 @@ class AppDrawer extends StatelessWidget {
 }
 
 class DrawerTile extends StatelessWidget {
-  DrawerTile({
+  const DrawerTile({
     this.icon,
     this.title,
     this.onTap,

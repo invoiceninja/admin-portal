@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class SaveIconButton extends StatelessWidget {
-  SaveIconButton({
+  const SaveIconButton({
     this.isLoading,
     this.isDirty,
     this.onPressed,

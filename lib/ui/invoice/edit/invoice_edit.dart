@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_item_selector.dart';
@@ -12,7 +11,7 @@ import 'package:invoiceninja/ui/app/buttons/save_icon_button.dart';
 class InvoiceEdit extends StatefulWidget {
   final InvoiceEditVM viewModel;
 
-  InvoiceEdit({
+  const InvoiceEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

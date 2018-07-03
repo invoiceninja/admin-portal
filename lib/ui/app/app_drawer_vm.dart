@@ -11,7 +11,7 @@ import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
 class AppDrawerBuilder extends StatelessWidget {
-  AppDrawerBuilder({Key key}) : super(key: key);
+  const AppDrawerBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

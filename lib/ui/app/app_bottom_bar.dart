@@ -16,7 +16,7 @@ class AppBottomBar extends StatefulWidget {
   final Function(List<int>) onSelectedStatus;
   final Function(EntityState, bool) onSelectedState;
 
-  AppBottomBar(
+  const AppBottomBar(
       {this.sortFields,
         this.onSelectedSortField,
         this.entityType,

@@ -14,7 +14,7 @@ import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
 class ClientViewScreen extends StatelessWidget {
   static const String route = '/client/view';
-  ClientViewScreen({Key key}) : super(key: key);
+  const ClientViewScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

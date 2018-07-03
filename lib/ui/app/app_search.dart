@@ -11,7 +11,7 @@ class AppSearch extends StatelessWidget {
   final String search;
   final Function(String) onSearchChanged;
 
-  AppSearch({
+  const AppSearch({
     this.entityType,
     this.search,
     this.onSearchChanged,

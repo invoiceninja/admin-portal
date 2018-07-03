@@ -17,7 +17,7 @@ class ProductItem extends StatelessWidget {
   
   static final productItemKey = (int id) => Key('__product_item_${id}__');
 
-  ProductItem({
+  const ProductItem({
     @required this.state,
     @required this.onDismissed,
     @required this.onTap,

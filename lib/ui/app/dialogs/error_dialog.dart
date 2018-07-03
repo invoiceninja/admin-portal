@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ErrorDialog extends StatelessWidget {
-  ErrorDialog(this.error);
+  const ErrorDialog(this.error);
   final Object error;
 
   @override

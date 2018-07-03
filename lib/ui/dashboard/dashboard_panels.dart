@@ -10,7 +10,7 @@ import 'package:invoiceninja/utils/localization.dart';
 class DashboardPanels extends StatelessWidget {
   final DashboardVM viewModel;
 
-  DashboardPanels({
+  const DashboardPanels({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -80,7 +80,7 @@ class DashboardPanels extends StatelessWidget {
 }
 
 class ColorIcon extends StatelessWidget {
-  ColorIcon(this.icon, this.backgroundColor);
+  const ColorIcon(this.icon, this.backgroundColor);
   final IconData icon;
   final Color backgroundColor;
 
@@ -105,7 +105,7 @@ class ColorIcon extends StatelessWidget {
 }
 
 class DashboardRow extends StatelessWidget {
-  DashboardRow(
+  const DashboardRow(
       {@required this.state,
       @required this.title,
       @required this.icon,
@@ -154,7 +154,7 @@ class DashboardRow extends StatelessWidget {
 }
 
 class DashboardColumn extends StatelessWidget {
-  DashboardColumn(
+  const DashboardColumn(
       {@required this.state,
       @required this.title,
       @required this.icon,

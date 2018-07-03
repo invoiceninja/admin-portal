@@ -3,7 +3,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class EntityStateLabel extends StatelessWidget {
-  EntityStateLabel(this.entity);
+  const EntityStateLabel(this.entity);
 
   final BaseEntity entity;
 

@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'dart:core';
 import 'dart:convert';
-import 'package:built_collection/built_collection.dart';
+import 'dart:core';
 import 'package:invoiceninja/data/models/serializers.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/web_client.dart';
@@ -28,7 +27,7 @@ class AuthRepository {
         LoginResponse.serializer, response);
 
     if (loginResponse.error != null) {
-      throw (loginResponse.error.message);
+      throw loginResponse.error.message;
     }
 
     return loginResponse.data;

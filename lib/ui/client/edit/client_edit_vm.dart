@@ -15,7 +15,7 @@ import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
   static const String route = '/client/edit';
-  ClientEditScreen({Key key}) : super(key: key);
+  const ClientEditScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

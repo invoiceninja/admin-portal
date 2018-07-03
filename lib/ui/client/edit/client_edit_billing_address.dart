@@ -8,7 +8,7 @@ import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/redux/static/static_selectors.dart';
 
 class ClientEditBillingAddress extends StatefulWidget {
-  ClientEditBillingAddress({
+  const ClientEditBillingAddress({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

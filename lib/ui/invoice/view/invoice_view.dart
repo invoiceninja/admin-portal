@@ -17,7 +17,7 @@ import 'package:invoiceninja/utils/localization.dart';
 class InvoiceView extends StatefulWidget {
   final InvoiceViewVM viewModel;
 
-  InvoiceView({
+  const InvoiceView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

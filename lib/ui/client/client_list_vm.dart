@@ -15,7 +15,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/client/client_actions.dart';
 
 class ClientListBuilder extends StatelessWidget {
-  ClientListBuilder({Key key}) : super(key: key);
+  const ClientListBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

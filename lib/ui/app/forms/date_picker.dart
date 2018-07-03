@@ -4,7 +4,7 @@ import 'package:invoiceninja/utils/formatting.dart';
 
 class DatePicker extends StatefulWidget {
 
-  DatePicker({
+  const DatePicker({
     @required this.labelText,
     @required this.onSelected,
     @required this.selectedDate,

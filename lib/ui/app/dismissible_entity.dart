@@ -5,7 +5,7 @@ import 'package:invoiceninja/data/models/models.dart';
 
 class DismissibleEntity extends StatelessWidget {
 
-  DismissibleEntity({
+  const DismissibleEntity({
     this.entity,
     this.child,
     this.onDismissed,

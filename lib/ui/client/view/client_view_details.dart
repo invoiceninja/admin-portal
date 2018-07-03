@@ -9,7 +9,7 @@ import 'package:invoiceninja/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClientViewDetails extends StatefulWidget {
-  ClientViewDetails({this.client});
+  const ClientViewDetails({this.client});
 
   final ClientEntity client;
 
@@ -102,7 +102,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      if (listTiles.length > 0) {
+      if (listTiles.isNotEmpty) {
         listTiles.add(Divider());
       }
 
@@ -162,7 +162,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
 }
 
 class AppListTile extends StatelessWidget {
-  AppListTile({
+  const AppListTile({
     this.icon,
     this.title,
     this.subtitle,

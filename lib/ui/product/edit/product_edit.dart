@@ -11,7 +11,7 @@ import 'package:invoiceninja/utils/keys.dart';
 class ProductEdit extends StatefulWidget {
   final ProductEditVM viewModel;
 
-  ProductEdit({
+  const ProductEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -123,7 +123,7 @@ class _ProductEditState extends State<ProductEdit> {
                       //border: InputBorder.none,
                       labelText: AppLocalization.of(context).product,
                     ),
-                    validator: (val) => val.isEmpty || val.trim().length == 0
+                    validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseEnterAProductKey
                         : null,
                   ),

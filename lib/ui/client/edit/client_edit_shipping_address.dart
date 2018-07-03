@@ -8,7 +8,7 @@ import 'package:invoiceninja/redux/static/static_selectors.dart';
 import '../../app/form_card.dart';
 
 class ClientEditShippingAddress extends StatefulWidget {
-  ClientEditShippingAddress({
+  const ClientEditShippingAddress({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

@@ -1,4 +1,3 @@
-import 'package:invoiceninja/data/models/invoice_model.dart';
 import 'package:invoiceninja/redux/client/client_selectors.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class InvoiceEditDetails extends StatefulWidget {
-  InvoiceEditDetails({
+  const InvoiceEditDetails({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

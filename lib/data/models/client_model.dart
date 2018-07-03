@@ -212,7 +212,7 @@ abstract class ClientEntity extends Object
   }
 
   bool get hasEmailAddress =>
-      contacts.where((contact) => contact.email?.isNotEmpty).length > 0;
+      contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
 
   int compareTo(ClientEntity client, String sortField, bool sortAscending) {
     int response = 0;
@@ -255,7 +255,7 @@ abstract class ClientEntity extends Object
     if (workPhone.toLowerCase().contains(search)) {
       return true;
     }
-    if (contacts.where((contact) => contact.matchesSearch(search)).length > 0) {
+    if (contacts.where((contact) => contact.matchesSearch(search)).isNotEmpty) {
       return true;
     }
     return false;

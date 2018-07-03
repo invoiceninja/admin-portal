@@ -7,7 +7,7 @@ import 'package:invoiceninja/ui/product/product_list_vm.dart';
 class ProductList extends StatelessWidget {
   final ProductListVM viewModel;
 
-  ProductList({
+  const ProductList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

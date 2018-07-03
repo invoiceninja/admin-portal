@@ -6,7 +6,7 @@ class ProgressButton extends StatelessWidget {
   final bool isDirty;
   final Function onPressed;
 
-  ProgressButton({
+  const ProgressButton({
     Key key,
     @required this.label,
     @required this.isLoading,
