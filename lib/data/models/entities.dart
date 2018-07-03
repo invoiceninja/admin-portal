@@ -127,6 +127,65 @@ abstract class CalculateInvoiceTotal {
   bool get customTaxes2;
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
+  Map<String, double> calculateTaxes() {
+    double total = baseTotal;
+    final map = <String, double>{};
+
+    invoiceItems.forEach((item) {
+      final double qty = round(item.qty, 4);
+      final double cost = round(item.cost, 4);
+      final double itemDiscount = round(item.discount, 2);
+      final double taxRate1 = round(item.taxRate1, 3);
+      final double taxRate2 = round(item.taxRate2, 3);
+
+      double lineTotal = qty * cost;
+      double itemTax;
+
+      if (itemDiscount != 0) {
+        if (isAmountDiscount) {
+          lineTotal -= itemDiscount;
+        } else {
+          lineTotal -= round(lineTotal * itemDiscount / 100, 4);
+        }
+      }
+
+      if (discount != 0) {
+        if (isAmountDiscount) {
+          if (total != 0) {
+            lineTotal -= round(lineTotal / total * discount, 4);
+          }
+        }
+      }
+
+      if (taxRate1 != 0) {
+        itemTax = round(lineTotal * taxRate1 / 100, 2);
+        map.update(item.taxName1, (value) => value + itemTax, ifAbsent: () => itemTax);
+      }
+      if (taxRate2 != 0) {
+        itemTax = round(lineTotal * taxRate2 / 100, 2);
+        map.update(item.taxName2, (value) => value + itemTax, ifAbsent: () => itemTax);
+      }
+    });
+
+    if (discount != 0.0) {
+      if (isAmountDiscount) {
+        total -= round(discount, 2);
+      } else {
+        total -= round(total * discount / 100, 2);
+      }
+    }
+
+    if (customValue1 != 0.0 && customTaxes1) {
+      total += round(customValue1, 2);
+    }
+
+    if (customValue2 != 0.0 && customTaxes2) {
+      total += round(customValue2, 2);
+    }
+
+    return map;
+  }
+
   double calculateTotal([bool useInclusiveTaxes = false]) {
     double total = baseTotal;
     double itemTax = 0.0;

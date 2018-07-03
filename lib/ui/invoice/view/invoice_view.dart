@@ -32,7 +32,7 @@ class _InvoiceViewState extends State<InvoiceView> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
-    final appState = viewModel.appState;
+    final appState = viewModel.state;
     final invoice = viewModel.invoice;
     final client = viewModel.client;
 
@@ -59,7 +59,7 @@ class _InvoiceViewState extends State<InvoiceView> {
         InvoiceFields.partialDueDate: invoice.partialDueDate,
         InvoiceFields.poNumber: invoice.poNumber,
         InvoiceFields.discount: formatNumber(
-            invoice.discount, widget.viewModel.appState,
+            invoice.discount, widget.viewModel.state,
             clientId: invoice.clientId,
             zeroIsNull: true,
             formatNumberType: invoice.isAmountDiscount
@@ -145,6 +145,32 @@ class _InvoiceViewState extends State<InvoiceView> {
               invoice: invoice, invoiceItem: invoiceItem, state: appState),
           Divider(height: 1.0)
         ]);
+      });
+
+      widgets.addAll([
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
+        ),
+        Divider(height: 1.0),
+      ]);
+
+      invoice.calculateTaxes().forEach((taxName, taxAmount) {
+        widgets.add(Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text(taxName),
+              SizedBox(
+                width: 80.0,
+                child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(formatNumber(taxAmount, viewModel.state, clientId: invoice.clientId))),
+              ),
+            ],
+          ),
+        ));
       });
 
       return widgets;
