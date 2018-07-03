@@ -46,6 +46,7 @@ class ProductScreen extends StatelessWidget {
         sortFields: [
           ProductFields.productKey,
           ProductFields.cost,
+          ProductFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterProductsByState(state));

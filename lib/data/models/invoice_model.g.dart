@@ -255,6 +255,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -466,6 +472,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
                       BuiltList, const [const FullType(InvitationEntity)]))
               as BuiltList);
           break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -535,6 +545,12 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -622,6 +638,10 @@ class _$InvoiceItemEntitySerializer
           result.discount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -667,6 +687,12 @@ class _$InvitationEntitySerializer
       serializers.serialize(object.viewedDate,
           specifiedType: const FullType(String)),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -721,6 +747,10 @@ class _$InvitationEntitySerializer
         case 'viewed_date':
           result.viewedDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
@@ -1012,6 +1042,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<InvitationEntity> invitations;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -1066,6 +1098,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.filename,
       this.invoiceItems,
       this.invitations,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -1210,6 +1243,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         filename == other.filename &&
         invoiceItems == other.invoiceItems &&
         invitations == other.invitations &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -1236,22 +1270,22 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), invoiceTypeId.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode),
-                                                                                hasTasks.hashCode),
-                                                                            autoBill.hashCode),
-                                                                        customValue1.hashCode),
-                                                                    customValue2.hashCode),
-                                                                customTaxes1.hashCode),
-                                                            customTaxes2.hashCode),
-                                                        hasExpenses.hashCode),
-                                                    quoteInvoiceId.hashCode),
-                                                customTextValue1.hashCode),
-                                            customTextValue2.hashCode),
-                                        isQuote.hashCode),
-                                    isPublic.hashCode),
-                                filename.hashCode),
-                            invoiceItems.hashCode),
-                        invitations.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), invoiceTypeId.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode),
+                                                                                autoBill.hashCode),
+                                                                            customValue1.hashCode),
+                                                                        customValue2.hashCode),
+                                                                    customTaxes1.hashCode),
+                                                                customTaxes2.hashCode),
+                                                            hasExpenses.hashCode),
+                                                        quoteInvoiceId.hashCode),
+                                                    customTextValue1.hashCode),
+                                                customTextValue2.hashCode),
+                                            isQuote.hashCode),
+                                        isPublic.hashCode),
+                                    filename.hashCode),
+                                invoiceItems.hashCode),
+                            invitations.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -1303,6 +1337,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('filename', filename)
           ..add('invoiceItems', invoiceItems)
           ..add('invitations', invitations)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -1496,6 +1531,10 @@ class InvoiceEntityBuilder
   set invitations(ListBuilder<InvitationEntity> invitations) =>
       _$this._invitations = invitations;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1558,6 +1597,7 @@ class InvoiceEntityBuilder
       _filename = _$v.filename;
       _invoiceItems = _$v.invoiceItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -1626,6 +1666,7 @@ class InvoiceEntityBuilder
               filename: filename,
               invoiceItems: invoiceItems.build(),
               invitations: invitations.build(),
+              createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
@@ -1674,6 +1715,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double discount;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -1698,6 +1741,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.customValue1,
       this.customValue2,
       this.discount,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -1754,6 +1798,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         discount == other.discount &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -1778,20 +1823,23 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    productKey
+                                                                    $jc(
+                                                                        0,
+                                                                        productKey
+                                                                            .hashCode),
+                                                                    notes
                                                                         .hashCode),
-                                                                notes.hashCode),
-                                                            cost.hashCode),
-                                                        qty.hashCode),
-                                                    taxName1.hashCode),
-                                                taxRate1.hashCode),
-                                            taxName2.hashCode),
-                                        taxRate2.hashCode),
-                                    invoiceItemTypeId.hashCode),
-                                customValue1.hashCode),
-                            customValue2.hashCode),
-                        discount.hashCode),
+                                                                cost.hashCode),
+                                                            qty.hashCode),
+                                                        taxName1.hashCode),
+                                                    taxRate1.hashCode),
+                                                taxName2.hashCode),
+                                            taxRate2.hashCode),
+                                        invoiceItemTypeId.hashCode),
+                                    customValue1.hashCode),
+                                customValue2.hashCode),
+                            discount.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -1813,6 +1861,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('discount', discount)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -1874,6 +1923,10 @@ class InvoiceItemEntityBuilder
   double get discount => _$this._discount;
   set discount(double discount) => _$this._discount = discount;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1906,6 +1959,7 @@ class InvoiceItemEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _discount = _$v.discount;
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -1942,6 +1996,7 @@ class InvoiceItemEntityBuilder
             customValue1: customValue1,
             customValue2: customValue2,
             discount: discount,
+            createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
@@ -1961,6 +2016,8 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String viewedDate;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -1977,6 +2034,7 @@ class _$InvitationEntity extends InvitationEntity {
       this.link,
       this.sentDate,
       this.viewedDate,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -2008,6 +2066,7 @@ class _$InvitationEntity extends InvitationEntity {
         link == other.link &&
         sentDate == other.sentDate &&
         viewedDate == other.viewedDate &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -2021,9 +2080,11 @@ class _$InvitationEntity extends InvitationEntity {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, key.hashCode), link.hashCode),
-                            sentDate.hashCode),
-                        viewedDate.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, key.hashCode), link.hashCode),
+                                sentDate.hashCode),
+                            viewedDate.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -2037,6 +2098,7 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('link', link)
           ..add('sentDate', sentDate)
           ..add('viewedDate', viewedDate)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -2065,6 +2127,10 @@ class InvitationEntityBuilder
   String get viewedDate => _$this._viewedDate;
   set viewedDate(String viewedDate) => _$this._viewedDate = viewedDate;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -2089,6 +2155,7 @@ class InvitationEntityBuilder
       _link = _$v.link;
       _sentDate = _$v.sentDate;
       _viewedDate = _$v.viewedDate;
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -2117,6 +2184,7 @@ class InvitationEntityBuilder
             link: link,
             sentDate: sentDate,
             viewedDate: viewedDate,
+            createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,

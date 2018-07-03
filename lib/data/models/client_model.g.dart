@@ -225,6 +225,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(ContactEntity)])),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -410,6 +416,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
                       BuiltList, const [const FullType(ContactEntity)]))
               as BuiltList);
           break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -468,6 +478,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -538,6 +554,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
@@ -817,6 +837,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<ContactEntity> contacts;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -865,6 +887,7 @@ class _$ClientEntity extends ClientEntity {
       this.customValue1,
       this.customValue2,
       this.contacts,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -992,6 +1015,7 @@ class _$ClientEntity extends ClientEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         contacts == other.contacts &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -1018,22 +1042,22 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode),
-                                                                                invoiceNumberCounter.hashCode),
-                                                                            quoteNumberCounter.hashCode),
-                                                                        taskRate.hashCode),
-                                                                    shippingAddress1.hashCode),
-                                                                shippingAddress2.hashCode),
-                                                            shippingCity.hashCode),
-                                                        shippingState.hashCode),
-                                                    shippingPostalCode.hashCode),
-                                                shippingCountryId.hashCode),
-                                            showTasksInPortal.hashCode),
-                                        sendReminders.hashCode),
-                                    creditNumberCounter.hashCode),
-                                customValue1.hashCode),
-                            customValue2.hashCode),
-                        contacts.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode),
+                                                                                quoteNumberCounter.hashCode),
+                                                                            taskRate.hashCode),
+                                                                        shippingAddress1.hashCode),
+                                                                    shippingAddress2.hashCode),
+                                                                shippingCity.hashCode),
+                                                            shippingState.hashCode),
+                                                        shippingPostalCode.hashCode),
+                                                    shippingCountryId.hashCode),
+                                                showTasksInPortal.hashCode),
+                                            sendReminders.hashCode),
+                                        creditNumberCounter.hashCode),
+                                    customValue1.hashCode),
+                                customValue2.hashCode),
+                            contacts.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -1079,6 +1103,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('contacts', contacts)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -1247,6 +1272,10 @@ class ClientEntityBuilder
   set contacts(ListBuilder<ContactEntity> contacts) =>
       _$this._contacts = contacts;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1303,6 +1332,7 @@ class ClientEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _contacts = _$v.contacts?.toBuilder();
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -1365,6 +1395,7 @@ class ClientEntityBuilder
               customValue1: customValue1,
               customValue2: customValue2,
               contacts: contacts.build(),
+              createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
@@ -1403,6 +1434,8 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String customValue2;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -1423,6 +1456,7 @@ class _$ContactEntity extends ContactEntity {
       this.isPrimary,
       this.customValue1,
       this.customValue2,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -1465,6 +1499,7 @@ class _$ContactEntity extends ContactEntity {
         isPrimary == other.isPrimary &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -1483,14 +1518,16 @@ class _$ContactEntity extends ContactEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, firstName.hashCode),
-                                                lastName.hashCode),
-                                            email.hashCode),
-                                        phone.hashCode),
-                                    contactKey.hashCode),
-                                isPrimary.hashCode),
-                            customValue1.hashCode),
-                        customValue2.hashCode),
+                                            $jc(
+                                                $jc($jc(0, firstName.hashCode),
+                                                    lastName.hashCode),
+                                                email.hashCode),
+                                            phone.hashCode),
+                                        contactKey.hashCode),
+                                    isPrimary.hashCode),
+                                customValue1.hashCode),
+                            customValue2.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -1508,6 +1545,7 @@ class _$ContactEntity extends ContactEntity {
           ..add('isPrimary', isPrimary)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -1552,6 +1590,10 @@ class ContactEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1580,6 +1622,7 @@ class ContactEntityBuilder
       _isPrimary = _$v.isPrimary;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -1612,6 +1655,7 @@ class ContactEntityBuilder
             isPrimary: isPrimary,
             customValue1: customValue1,
             customValue2: customValue2,
+            createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,

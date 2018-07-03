@@ -148,6 +148,8 @@ class AppLocalization {
       'settings': 'Settings',
       'language': 'Language',
       'currency': 'Currency',
+      'created_at': 'Created',
+      'updated_at': 'Updated',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -306,6 +308,8 @@ class AppLocalization {
   String get settings => _localizedValues[locale.languageCode]['settings'];
   String get language => _localizedValues[locale.languageCode]['language'];
   String get currency => _localizedValues[locale.languageCode]['currency'];
+  String get createdAt => _localizedValues[locale.languageCode]['created_at'];
+  String get updatedAt => _localizedValues[locale.languageCode]['updated_at'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

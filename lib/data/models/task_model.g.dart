@@ -142,6 +142,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -216,6 +222,10 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
@@ -439,6 +449,8 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String customValue2;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -460,6 +472,7 @@ class _$TaskEntity extends TaskEntity {
       this.isRunning,
       this.customValue1,
       this.customValue2,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -505,6 +518,7 @@ class _$TaskEntity extends TaskEntity {
         isRunning == other.isRunning &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -525,16 +539,20 @@ class _$TaskEntity extends TaskEntity {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc(0,
-                                                        description.hashCode),
-                                                    duration.hashCode),
-                                                invoiceId.hashCode),
-                                            clientId.hashCode),
-                                        projectId.hashCode),
-                                    timeLog.hashCode),
-                                isRunning.hashCode),
-                            customValue1.hashCode),
-                        customValue2.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            0,
+                                                            description
+                                                                .hashCode),
+                                                        duration.hashCode),
+                                                    invoiceId.hashCode),
+                                                clientId.hashCode),
+                                            projectId.hashCode),
+                                        timeLog.hashCode),
+                                    isRunning.hashCode),
+                                customValue1.hashCode),
+                            customValue2.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -553,6 +571,7 @@ class _$TaskEntity extends TaskEntity {
           ..add('isRunning', isRunning)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -600,6 +619,10 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -629,6 +652,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _isRunning = _$v.isRunning;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -662,6 +686,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
             isRunning: isRunning,
             customValue1: customValue1,
             customValue2: customValue2,
+            createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,

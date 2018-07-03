@@ -175,6 +175,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -292,6 +298,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
                       BuiltList, const [const FullType(VendorContactEntity)]))
               as BuiltList);
           break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -345,6 +355,12 @@ class _$VendorContactEntitySerializer
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -403,6 +419,10 @@ class _$VendorContactEntitySerializer
         case 'phone':
           result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
@@ -648,6 +668,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final BuiltList<VendorContactEntity> vendorContacts;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -679,6 +701,7 @@ class _$VendorEntity extends VendorEntity {
       this.customValue1,
       this.customValue2,
       this.vendorContacts,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -754,6 +777,7 @@ class _$VendorEntity extends VendorEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         vendorContacts == other.vendorContacts &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -780,22 +804,22 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode),
-                                                                                address2.hashCode),
-                                                                            city.hashCode),
-                                                                        state.hashCode),
-                                                                    postalCode.hashCode),
-                                                                countryId.hashCode),
-                                                            workPhone.hashCode),
-                                                        privateNotes.hashCode),
-                                                    lastLogin.hashCode),
-                                                website.hashCode),
-                                            vatNumber.hashCode),
-                                        idNumber.hashCode),
-                                    currencyId.hashCode),
-                                customValue1.hashCode),
-                            customValue2.hashCode),
-                        vendorContacts.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode),
+                                                                                city.hashCode),
+                                                                            state.hashCode),
+                                                                        postalCode.hashCode),
+                                                                    countryId.hashCode),
+                                                                workPhone.hashCode),
+                                                            privateNotes.hashCode),
+                                                        lastLogin.hashCode),
+                                                    website.hashCode),
+                                                vatNumber.hashCode),
+                                            idNumber.hashCode),
+                                        currencyId.hashCode),
+                                    customValue1.hashCode),
+                                customValue2.hashCode),
+                            vendorContacts.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -824,6 +848,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('vendorContacts', vendorContacts)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -914,6 +939,10 @@ class VendorEntityBuilder
   set vendorContacts(ListBuilder<VendorContactEntity> vendorContacts) =>
       _$this._vendorContacts = vendorContacts;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -953,6 +982,7 @@ class VendorEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _vendorContacts = _$v.vendorContacts?.toBuilder();
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -998,6 +1028,7 @@ class VendorEntityBuilder
               customValue1: customValue1,
               customValue2: customValue2,
               vendorContacts: vendorContacts.build(),
+              createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
@@ -1030,6 +1061,8 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String phone;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -1047,6 +1080,7 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.email,
       this.isPrimary,
       this.phone,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -1081,6 +1115,7 @@ class _$VendorContactEntity extends VendorContactEntity {
         email == other.email &&
         isPrimary == other.isPrimary &&
         phone == other.phone &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -1096,11 +1131,13 @@ class _$VendorContactEntity extends VendorContactEntity {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, firstName.hashCode),
-                                    lastName.hashCode),
-                                email.hashCode),
-                            isPrimary.hashCode),
-                        phone.hashCode),
+                                $jc(
+                                    $jc($jc(0, firstName.hashCode),
+                                        lastName.hashCode),
+                                    email.hashCode),
+                                isPrimary.hashCode),
+                            phone.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -1115,6 +1152,7 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('email', email)
           ..add('isPrimary', isPrimary)
           ..add('phone', phone)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -1147,6 +1185,10 @@ class VendorContactEntityBuilder
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -1172,6 +1214,7 @@ class VendorContactEntityBuilder
       _email = _$v.email;
       _isPrimary = _$v.isPrimary;
       _phone = _$v.phone;
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -1201,6 +1244,7 @@ class VendorContactEntityBuilder
             email: email,
             isPrimary: isPrimary,
             phone: phone,
+            createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,

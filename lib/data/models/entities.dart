@@ -71,6 +71,10 @@ abstract class SelectableEntity {
 abstract class BaseEntity extends Object with SelectableEntity {
 
   @nullable
+  @BuiltValueField(wireName: 'created_at')
+  int get createdAt;
+
+  @nullable
   @BuiltValueField(wireName: 'updated_at')
   int get updatedAt;
 

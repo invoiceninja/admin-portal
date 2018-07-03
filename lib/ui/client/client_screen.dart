@@ -45,6 +45,7 @@ class ClientScreen extends StatelessWidget {
         sortFields: [
           ClientFields.name,
           ClientFields.balance,
+          ClientFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterClientsByState(state));

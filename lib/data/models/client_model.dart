@@ -37,6 +37,7 @@ class ClientFields {
   static const String vatNumber = 'vatNumber';
   static const String idNumber = 'idNumber';
   static const String paidToDate = 'paidToDate';
+  static const String createdAt = 'createdAt';
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
@@ -221,6 +222,10 @@ abstract class ClientEntity extends Object
     switch (sortField) {
       case ClientFields.balance:
         response = clientA.balance.compareTo(clientB.balance);
+        break;
+      case ClientFields.updatedAt:
+        response = clientA.updatedAt.compareTo(clientB.updatedAt);
+        break;
     }
 
     if (response == 0) {

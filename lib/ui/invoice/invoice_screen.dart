@@ -45,6 +45,7 @@ class InvoiceScreen extends StatelessWidget {
         sortFields: [
           InvoiceFields.invoiceNumber,
           InvoiceFields.invoiceDate,
+          InvoiceFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterInvoicesByState(state));

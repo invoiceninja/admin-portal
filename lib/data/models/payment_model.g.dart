@@ -150,6 +150,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.exchangeCurrencyId,
           specifiedType: const FullType(int)),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.updatedAt != null) {
       result
         ..add('updated_at')
@@ -223,6 +229,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'exchange_currency_id':
           result.exchangeCurrencyId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'updated_at':
@@ -449,6 +459,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final int exchangeCurrencyId;
   @override
+  final int createdAt;
+  @override
   final int updatedAt;
   @override
   final int archivedAt;
@@ -470,6 +482,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.privateNotes,
       this.exchangeRate,
       this.exchangeCurrencyId,
+      this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
@@ -516,6 +529,7 @@ class _$PaymentEntity extends PaymentEntity {
         privateNotes == other.privateNotes &&
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
+        createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
@@ -536,16 +550,18 @@ class _$PaymentEntity extends PaymentEntity {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc(0, amount.hashCode),
-                                                    transactionReference
-                                                        .hashCode),
-                                                paymentDate.hashCode),
-                                            paymentTypeId.hashCode),
-                                        invoiceId.hashCode),
-                                    invoiceNumber.hashCode),
-                                privateNotes.hashCode),
-                            exchangeRate.hashCode),
-                        exchangeCurrencyId.hashCode),
+                                                    $jc(
+                                                        $jc(0, amount.hashCode),
+                                                        transactionReference
+                                                            .hashCode),
+                                                    paymentDate.hashCode),
+                                                paymentTypeId.hashCode),
+                                            invoiceId.hashCode),
+                                        invoiceNumber.hashCode),
+                                    privateNotes.hashCode),
+                                exchangeRate.hashCode),
+                            exchangeCurrencyId.hashCode),
+                        createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
             isDeleted.hashCode),
@@ -564,6 +580,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('privateNotes', privateNotes)
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
+          ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
@@ -615,6 +632,10 @@ class PaymentEntityBuilder
   set exchangeCurrencyId(int exchangeCurrencyId) =>
       _$this._exchangeCurrencyId = exchangeCurrencyId;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -644,6 +665,7 @@ class PaymentEntityBuilder
       _privateNotes = _$v.privateNotes;
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
+      _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
@@ -677,6 +699,7 @@ class PaymentEntityBuilder
             privateNotes: privateNotes,
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,
+            createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,

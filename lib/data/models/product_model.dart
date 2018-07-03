@@ -10,7 +10,6 @@ part 'product_model.g.dart';
 
 abstract class ProductListResponse
     implements Built<ProductListResponse, ProductListResponseBuilder> {
-
   factory ProductListResponse([void updates(ProductListResponseBuilder b)]) =
       _$ProductListResponse;
   ProductListResponse._();
@@ -23,7 +22,6 @@ abstract class ProductListResponse
 
 abstract class ProductItemResponse
     implements Built<ProductItemResponse, ProductItemResponseBuilder> {
-
   factory ProductItemResponse([void updates(ProductItemResponseBuilder b)]) =
       _$ProductItemResponse;
   ProductItemResponse._();
@@ -48,7 +46,6 @@ class ProductFields {
 abstract class ProductEntity extends Object
     with BaseEntity, ConvertToInvoiceItem
     implements Built<ProductEntity, ProductEntityBuilder> {
-
   static int counter = 0;
   factory ProductEntity() {
     return _$ProductEntity._(
@@ -131,6 +128,10 @@ abstract class ProductEntity extends Object
     switch (sortField) {
       case ProductFields.cost:
         response = productA.cost.compareTo(productB.cost);
+        break;
+      case ProductFields.updatedAt:
+        response = productA.updatedAt.compareTo(productB.updatedAt);
+        break;
     }
 
     if (response == 0) {
