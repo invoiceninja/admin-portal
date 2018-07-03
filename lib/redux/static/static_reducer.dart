@@ -1,4 +1,3 @@
-import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/redux/static/static_state.dart';
 import 'package:redux/redux.dart';

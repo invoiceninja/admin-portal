@@ -24,7 +24,8 @@ class WebClient {
 
   Future<dynamic> get(String url, String token) async {
 
-    if (! url.contains('?')) url += '?';
+    if (! url.contains('?')) 
+      url += '?';
     url += '&per_page=$kMaxRecordsPerApiPage';
 
     final http.Response response = await http.Client().get(
