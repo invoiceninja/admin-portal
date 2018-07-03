@@ -13,7 +13,7 @@ class LoginView extends StatefulWidget {
   final AuthState authState;
   final Function(BuildContext, String, String, String, String) onLoginPressed;
 
-  LoginView({
+  const LoginView({
     Key key,
     @required this.isDirty,
     @required this.isLoading,

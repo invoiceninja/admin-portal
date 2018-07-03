@@ -19,7 +19,7 @@ class ActionMenuButton extends StatelessWidget {
   final Function(BuildContext, EntityAction) onSelected;
   final bool isLoading;
 
-  ActionMenuButton({
+  const ActionMenuButton({
     @required this.entity,
     @required this.onSelected,
     this.isLoading = false,

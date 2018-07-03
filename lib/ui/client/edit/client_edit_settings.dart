@@ -9,7 +9,7 @@ import 'package:invoiceninja/ui/app/form_card.dart';
 import 'package:invoiceninja/redux/static/static_selectors.dart';
 
 class ClientEditSettings extends StatefulWidget {
-  ClientEditSettings({
+  const ClientEditSettings({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

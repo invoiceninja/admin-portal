@@ -16,7 +16,7 @@ class InvoiceItem extends StatelessWidget {
   final AppState state;
   final String filter;
 
-  InvoiceItem({
+  const InvoiceItem({
     @required this.onDismissed,
     @required this.onTap,
     //@required this.onCheckboxChanged,

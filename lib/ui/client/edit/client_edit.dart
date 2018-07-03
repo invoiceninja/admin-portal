@@ -12,7 +12,7 @@ import 'package:invoiceninja/ui/client/edit/client_edit_contacts.dart';
 class ClientEdit extends StatefulWidget {
   final ClientEditVM viewModel;
 
-  ClientEdit({
+  const ClientEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

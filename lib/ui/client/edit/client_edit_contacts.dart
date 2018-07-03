@@ -6,7 +6,7 @@ import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientEditContacts extends StatelessWidget {
-  ClientEditContacts({
+  const ClientEditContacts({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -42,7 +42,7 @@ class ClientEditContacts extends StatelessWidget {
 }
 
 class ContactEditDetails extends StatefulWidget {
-  ContactEditDetails({
+  const ContactEditDetails({
     Key key,
     @required this.index,
     @required this.contact,

@@ -4,7 +4,7 @@ class SnackBarRow extends StatelessWidget {
   final String message;
   final IconData icon;
 
-  SnackBarRow({
+  const SnackBarRow({
     this.message,
     this.icon = Icons.check_circle,
   });

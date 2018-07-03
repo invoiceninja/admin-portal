@@ -18,7 +18,7 @@ class ClientItem extends StatelessWidget {
 
   static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
-  ClientItem({
+  const ClientItem({
     @required this.state,
     @required this.onDismissed,
     @required this.onTap,

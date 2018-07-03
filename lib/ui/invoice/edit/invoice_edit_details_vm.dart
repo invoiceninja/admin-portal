@@ -9,7 +9,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 
 class InvoiceEditDetailsScreen extends StatelessWidget {
-  InvoiceEditDetailsScreen({Key key}) : super(key: key);
+  const InvoiceEditDetailsScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

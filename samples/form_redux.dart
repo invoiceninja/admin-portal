@@ -105,7 +105,7 @@ void main() {
 class MyApp extends StatefulWidget {
   final Store<AppState> store;
 
-  MyApp({Key key, this.store}) : super(key: key);
+  const MyApp({Key key, this.store}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -260,7 +260,7 @@ class ContactsPage extends StatelessWidget {
 }
 
 class ContactForm extends StatefulWidget {
-  ContactForm({Key key, @required this.contact, @required this.index})
+  const ContactForm({Key key, @required this.contact, @required this.index})
       : super(key: key);
 
   final int index;
@@ -333,7 +333,7 @@ class _ContactFormState extends State<ContactForm> {
 
 // Helper widget to make the form look a bit nicer
 class FormCard extends StatelessWidget {
-  FormCard({
+  const FormCard({
     Key key,
     @required this.children,
   }) : super(key: key);

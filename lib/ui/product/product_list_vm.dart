@@ -14,7 +14,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 
 class ProductListBuilder extends StatelessWidget {
-  ProductListBuilder({Key key}) : super(key: key);
+  const ProductListBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

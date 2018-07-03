@@ -11,7 +11,7 @@ import 'package:invoiceninja/ui/app/buttons/save_icon_button.dart';
 class InvoiceEdit extends StatefulWidget {
   final InvoiceEditVM viewModel;
 
-  InvoiceEdit({
+  const InvoiceEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

@@ -11,7 +11,7 @@ class AppSearchButton extends StatelessWidget {
   final EntityType entityType;
   final Function onSearchPressed;
 
-  AppSearchButton({
+  const AppSearchButton({
     this.entityType,
     this.onSearchPressed,
   });

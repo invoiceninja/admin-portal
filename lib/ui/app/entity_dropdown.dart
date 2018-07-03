@@ -4,7 +4,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class EntityDropdown extends StatefulWidget {
-  EntityDropdown({
+  const EntityDropdown({
     @required this.entityType,
     @required this.labelText,
     @required this.entityMap,
@@ -76,7 +76,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 }
 
 class EntityDropdownDialog extends StatefulWidget {
-  EntityDropdownDialog({
+  const EntityDropdownDialog({
     @required this.entityMap,
     @required this.entityList,
     @required this.onSelected,

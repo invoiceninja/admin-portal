@@ -5,7 +5,7 @@ import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 
 class ClientEditDetails extends StatefulWidget {
-  ClientEditDetails({
+  const ClientEditDetails({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

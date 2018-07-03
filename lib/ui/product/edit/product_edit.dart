@@ -11,7 +11,7 @@ import 'package:invoiceninja/utils/keys.dart';
 class ProductEdit extends StatefulWidget {
   final ProductEditVM viewModel;
 
-  ProductEdit({
+  const ProductEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

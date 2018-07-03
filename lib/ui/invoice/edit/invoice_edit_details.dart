@@ -9,7 +9,7 @@ import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class InvoiceEditDetails extends StatefulWidget {
-  InvoiceEditDetails({
+  const InvoiceEditDetails({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

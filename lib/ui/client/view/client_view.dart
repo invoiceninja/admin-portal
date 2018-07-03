@@ -14,7 +14,7 @@ import 'package:invoiceninja/utils/localization.dart';
 class ClientView extends StatefulWidget {
   final ClientViewVM viewModel;
 
-  ClientView({
+  const ClientView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

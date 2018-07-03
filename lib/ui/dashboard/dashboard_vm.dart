@@ -13,7 +13,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
 
 class DashboardBuilder extends StatelessWidget {
-  DashboardBuilder({Key key}) : super(key: key);
+  const DashboardBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -15,7 +15,7 @@ import 'package:invoiceninja/ui/app/snackbar_row.dart';
 
 class ProductEditScreen extends StatelessWidget {
   static const String route = '/product/edit';
-  ProductEditScreen({Key key}) : super(key: key);
+  const ProductEditScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

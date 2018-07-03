@@ -8,7 +8,7 @@ import 'package:invoiceninja/ui/app/two_value_header.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientOverview extends StatelessWidget {
-  ClientOverview({this.client, this.state});
+  const ClientOverview({this.client, this.state});
 
   final AppState state;
   final ClientEntity client;

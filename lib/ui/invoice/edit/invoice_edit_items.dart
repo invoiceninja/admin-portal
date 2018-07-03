@@ -6,7 +6,7 @@ import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 
 class InvoiceEditItems extends StatelessWidget {
-  InvoiceEditItems({
+  const InvoiceEditItems({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -43,7 +43,7 @@ class InvoiceEditItems extends StatelessWidget {
 }
 
 class ItemEditDetails extends StatefulWidget {
-  ItemEditDetails({
+  const ItemEditDetails({
     Key key,
     @required this.index,
     @required this.invoiceItem,

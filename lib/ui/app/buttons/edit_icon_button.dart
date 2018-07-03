@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class EditIconButton extends StatelessWidget {
-  EditIconButton({
+  const EditIconButton({
     this.onPressed,
     this.isVisible,
   });

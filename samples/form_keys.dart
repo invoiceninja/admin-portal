@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
 // Display the client's details, currently just their name
 class ClientPage extends StatefulWidget {
-  ClientPage({
+  const ClientPage({
     Key key,
     @required this.client,
   }) : super(key: key);
@@ -146,7 +146,7 @@ class ClientPageState extends State<ClientPage>
 
 // Displays the list of contacts with a button to add more
 class ContactsPage extends StatefulWidget {
-  ContactsPage({
+  const ContactsPage({
     Key key,
     @required this.client,
   }) : super(key: key);
@@ -231,7 +231,7 @@ class ContactsPageState extends State<ContactsPage>
 
 // Displays an individual contact 
 class ContactForm extends StatefulWidget {
-  ContactForm({
+  const ContactForm({
     Key key,
     @required this.contact,
     @required this.onRemovePressed,
@@ -287,7 +287,7 @@ class ContactFormState extends State<ContactForm> {
 
 // Helper widget to make the form look a bit nicer
 class FormCard extends StatelessWidget {
-  FormCard({this.children});
+  const FormCard({this.children});
   final List<Widget> children;
 
   @override

@@ -5,7 +5,7 @@ import 'package:invoiceninja/redux/app/app_state.dart';
 
 class InvoiceItemListTile extends StatelessWidget {
 
-  InvoiceItemListTile({
+  const InvoiceItemListTile({
     @required this.invoice,
     @required this.invoiceItem,
     @required this.state,

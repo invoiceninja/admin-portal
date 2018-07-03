@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
-  InvoiceItemSelector({this.state, this.onItemsSelected});
+  const InvoiceItemSelector({this.state, this.onItemsSelected});
 
   final AppState state;
   final Function(List<InvoiceItemEntity>) onItemsSelected;

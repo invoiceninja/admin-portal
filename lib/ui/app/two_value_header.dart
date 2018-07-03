@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TwoValueHeader extends StatelessWidget {
-  TwoValueHeader({this.label1, this.label2, this.value1, this.value2});
+  const TwoValueHeader({this.label1, this.label2, this.value1, this.value2});
   final String label1;
   final String label2;
   final String value1;

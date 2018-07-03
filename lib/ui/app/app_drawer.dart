@@ -17,7 +17,7 @@ import 'package:redux/redux.dart';
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
 
-  AppDrawer({
+  const AppDrawer({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -152,7 +152,7 @@ class AppDrawer extends StatelessWidget {
 }
 
 class DrawerTile extends StatelessWidget {
-  DrawerTile({
+  const DrawerTile({
     this.icon,
     this.title,
     this.onTap,

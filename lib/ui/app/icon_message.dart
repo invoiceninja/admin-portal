@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class IconMessage extends StatelessWidget {
 
-  IconMessage(this.text);
+  const IconMessage(this.text);
   final String text;
 
   @override
