@@ -132,7 +132,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     Widget _entityList() {
       final state = widget.state.selectedCompanyState.productState;
       final matches = state.list
-          .where((entityId) => state.map[entityId].matchesSearch(_filter))
+          .where((entityId) {
+              final entity = state.map[entityId];
+              return entity.isActive && entity.matchesSearch(_filter);
+          })
           .toList();
 
       matches.sort((idA, idB) => state.map[idA].compareTo(state.map[idB]));
