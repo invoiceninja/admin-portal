@@ -158,8 +158,17 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
 
 abstract class TaxRateEntity extends Object with SelectableEntity implements Built<TaxRateEntity, TaxRateEntityBuilder> {
 
-  factory TaxRateEntity([void updates(TaxRateEntityBuilder b)]) = _$TaxRateEntity;
+  static int counter = 0;
+  factory TaxRateEntity() {
+    return _$TaxRateEntity._(
+      id: --TaxRateEntity.counter,
+      name: '',
+      rate: 0.0,
+      isInclusive: false,
+    );
+  }
   TaxRateEntity._();
+
   static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
 
   String get name;

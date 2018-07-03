@@ -40,7 +40,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       _partialController,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final invoice = widget.viewModel.invoice;
     _invoiceNumberController.text = invoice.invoiceNumber;
@@ -53,7 +54,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         invoice.partial, widget.viewModel.state,
         formatNumberType: FormatNumberType.input);
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -98,7 +100,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialValue:
                         viewModel.clientMap[invoice.clientId]?.displayName,
                     entityMap: viewModel.clientMap,
-                    entityList: memoizedDropdownClientList(viewModel.clientMap, viewModel.clientList),
+                    entityList: memoizedDropdownClientList(
+                        viewModel.clientMap, viewModel.clientList),
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseSelectAClient
                         : null,
@@ -175,41 +178,56 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 ),
                 DropdownButtonHideUnderline(
                   child: DropdownButton<bool>(
-                      value: invoice.isAmountDiscount,
-                      items: [
-                        DropdownMenuItem<bool>(
-                          child: Text(localization.percent,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                            ),
+                    value: invoice.isAmountDiscount,
+                    items: [
+                      DropdownMenuItem<bool>(
+                        child: Text(
+                          localization.percent,
+                          style: TextStyle(
+                            color: Colors.grey[600],
                           ),
-                          value: false,
                         ),
-                        DropdownMenuItem<bool>(
-                          child: Text(localization.amount,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                            ),
+                        value: false,
+                      ),
+                      DropdownMenuItem<bool>(
+                        child: Text(
+                          localization.amount,
+                          style: TextStyle(
+                            color: Colors.grey[600],
                           ),
-                          value: true,
-                        )
-                      ],
-                      onChanged: (bool value) => viewModel
-                          .onChanged(invoice.rebuild((b) => b..isAmountDiscount = value)),
+                        ),
+                        value: true,
+                      )
+                    ],
+                    onChanged: (bool value) => viewModel.onChanged(
+                        invoice.rebuild((b) => b..isAmountDiscount = value)),
                   ),
                 )
               ],
             ),
             TaxRateDropdown(
-              onSelected: (taxRate) => () {},
+              onSelected: (taxRate) =>
+                  viewModel.onChanged(invoice.rebuild((b) => b
+                    ..taxRate1 = taxRate.rate
+                    ..taxName1 = taxRate.name)),
               labelText: localization.tax,
               taxRates: viewModel.state.selectedCompany.taxRates,
-              //initialValue: invoice.ta,
-            )
+              initialTaxName: invoice.taxName1,
+              initialTaxRate: invoice.taxRate1,
+            ),
+            TaxRateDropdown(
+              onSelected: (taxRate) =>
+                  viewModel.onChanged(invoice.rebuild((b) => b
+                    ..taxRate2 = taxRate.rate
+                    ..taxName2 = taxRate.name)),
+              labelText: localization.tax,
+              taxRates: viewModel.state.selectedCompany.taxRates,
+              initialTaxName: invoice.taxName2,
+              initialTaxRate: invoice.taxRate2,
+            ),
           ],
         ),
       ],
     );
   }
 }
-

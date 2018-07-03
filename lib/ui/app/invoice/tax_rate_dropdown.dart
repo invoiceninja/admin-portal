@@ -55,12 +55,38 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     }
 
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
+      final options = widget.taxRates
+          .where(
+              (taxRate) => taxRate.archivedAt == null && !taxRate.isInclusive)
+          .map((taxRate) => PopupMenuItem<TaxRateEntity>(
+                value: taxRate,
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 70.0,
+                      child: Text(formatNumber(taxRate.rate, store.state,
+                          formatNumberType: FormatNumberType.percent)),
+                    ),
+                    Text(taxRate.name),
+                  ],
+                ),
+                //child: Text(
+                //'${formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)} ${taxRate.name}'),
+              ))
+          .toList();
+
+      options.insert(0, PopupMenuItem<TaxRateEntity>(
+        value: TaxRateEntity(),
+        child: Container(),
+      ));
+
       return PopupMenuButton<TaxRateEntity>(
         padding: EdgeInsets.zero,
         initialValue: selectedTaxRate,
         onSelected: (taxRate) {
           _textController.text =
               '${formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
+          widget.onSelected(taxRate);
         },
         child: InkWell(
           child: IgnorePointer(
@@ -73,23 +99,7 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
             ),
           ),
         ),
-        itemBuilder: (BuildContext context) => widget.taxRates
-            .where((taxRate) => taxRate.archivedAt == null && ! taxRate.isInclusive)
-            .map((taxRate) => PopupMenuItem<TaxRateEntity>(
-                  value: taxRate,
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 70.0,
-                        child: Text(formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)),
-                      ),
-                      Text(taxRate.name),
-                    ],
-                  ),
-                  //child: Text(
-                      //'${formatNumber(taxRate.rate, store.state, formatNumberType: FormatNumberType.percent)} ${taxRate.name}'),
-                ))
-            .toList(),
+        itemBuilder: (BuildContext context) => options,
       );
     });
   }
