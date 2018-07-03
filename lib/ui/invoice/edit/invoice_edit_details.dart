@@ -1,4 +1,5 @@
 import 'package:invoiceninja/redux/client/client_selectors.dart';
+import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/entities.dart';
@@ -199,9 +200,16 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 )
               ],
             ),
+            TaxRateDropdown(
+              onSelected: (taxRate) => () {},
+              labelText: localization.tax,
+              taxRates: viewModel.state.selectedCompany.taxRates,
+              //initialValue: invoice.ta,
+            )
           ],
         ),
       ],
     );
   }
 }
+

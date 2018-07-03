@@ -150,6 +150,7 @@ class AppLocalization {
       'currency': 'Currency',
       'created_at': 'Created',
       'updated_at': 'Updated',
+      'tax': 'Tax',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -310,6 +311,7 @@ class AppLocalization {
   String get currency => _localizedValues[locale.languageCode]['currency'];
   String get createdAt => _localizedValues[locale.languageCode]['created_at'];
   String get updatedAt => _localizedValues[locale.languageCode]['updated_at'];
+  String get tax => _localizedValues[locale.languageCode]['tax'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
