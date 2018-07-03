@@ -1,3 +1,4 @@
+import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -115,6 +116,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final invoiceItem = widget.invoiceItem;
+    final company = viewModel.state.selectedCompany;
 
     void _confirmDelete() {
       showDialog<AlertDialog>(
@@ -172,6 +176,26 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             labelText: localization.quantity,
           ),
         ),
+        company.enableInvoiceTaxes ? TaxRateDropdown(
+          onSelected: (taxRate) =>
+              viewModel.onChangedInvoiceItem(invoiceItem.rebuild((b) => b
+                ..taxRate1 = taxRate.rate
+                ..taxName1 = taxRate.name), widget.index),
+          labelText: localization.tax,
+          state: viewModel.state,
+          initialTaxName: invoiceItem.taxName1,
+          initialTaxRate: invoiceItem.taxRate1,
+        ) : Container(),
+        company.enableInvoiceTaxes && company.enableSecondTaxRate ? TaxRateDropdown(
+          onSelected: (taxRate) =>
+              viewModel.onChangedInvoiceItem(invoiceItem.rebuild((b) => b
+                ..taxRate2 = taxRate.rate
+                ..taxName2 = taxRate.name), widget.index),
+          labelText: localization.tax,
+          state: viewModel.state,
+          initialTaxName: invoiceItem.taxName2,
+          initialTaxRate: invoiceItem.taxRate2,
+        ) : Container(),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[

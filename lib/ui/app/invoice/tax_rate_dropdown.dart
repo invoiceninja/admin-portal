@@ -35,16 +35,14 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     super.initState();
     final taxRates = widget.state.selectedCompany.taxRates;
 
-    if (widget.initialTaxRate != 0) {
-      _selectedTaxRate = taxRates.firstWhere(
-              (taxRate) =>
-          taxRate.name == widget.initialTaxName &&
-              taxRate.rate == widget.initialTaxRate,
-          orElse: () => TaxRateEntity().rebuild((b) => b
-            ..rate = widget.initialTaxRate
-            ..name = widget.initialTaxName));
-    }
-    
+    _selectedTaxRate = taxRates.firstWhere(
+        (taxRate) =>
+            taxRate.name == widget.initialTaxName &&
+            taxRate.rate == widget.initialTaxRate,
+        orElse: () => TaxRateEntity().rebuild((b) => b
+          ..rate = widget.initialTaxRate
+          ..name = widget.initialTaxName));
+
     _textController.text = _formatTaxRate(_selectedTaxRate, widget.state);
   }
 
@@ -82,10 +80,12 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
               ))
           .toList();
 
-      options.insert(0, PopupMenuItem<TaxRateEntity>(
-        value: TaxRateEntity(),
-        child: Container(),
-      ));
+      options.insert(
+          0,
+          PopupMenuItem<TaxRateEntity>(
+            value: TaxRateEntity(),
+            child: Container(),
+          ));
 
       return PopupMenuButton<TaxRateEntity>(
         padding: EdgeInsets.zero,
