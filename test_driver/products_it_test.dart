@@ -7,10 +7,10 @@ import 'package:invoiceninja/utils/keys.dart';
 class Constants {
   static String newProductKey = 'Example Test Driver Product';
   static String newProductNotes = 'Example Test Driver Notes';
-  static String newProductCost = '100.50';
+  static String newProductCost = '100.5';
   static String updatedProductKey =  'Updated Example Test Driver Product';
   static String updatedProductNotes = 'Updated Example Test Driver Notes';
-  static String updatedProductCost = '200.50';
+  static String updatedProductCost = '200.5';
   static String saveToolTip = 'Save';
   static String backToolTip = 'Back';
   static String deleteToolTip = 'Delete';
@@ -104,7 +104,7 @@ void main() {
 
       await driver.tap(find.byTooltip(Constants.backToolTip));
     });
-
+  
     test('Edit a existing product', () async {
       await driver.tap(find.text(Constants.newProductKey));
 
