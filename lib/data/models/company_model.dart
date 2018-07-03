@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
@@ -42,6 +43,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       showInvoiceItemTaxes: false,
       startOfWeek: 1,
       timezoneId: 1,
+      taxRates: BuiltList<TaxRateEntity>(),
     );
   }
   CompanyEntity._();
@@ -144,6 +146,9 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'custom_invoice_taxes2')
   bool get enableCustomInvoiceTaxes2;
 
+  @BuiltValueField(wireName: 'tax_rates')
+  BuiltList<TaxRateEntity> get taxRates;
+
   //@BuiltValueField(wireName: 'custom_fields')
   //@BuiltValueField(wireName: 'invoice_labels')
 
@@ -153,8 +158,8 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
 
 abstract class TaxRateEntity extends Object with SelectableEntity implements Built<TaxRateEntity, TaxRateEntityBuilder> {
 
-  TaxRateEntity._();
   factory TaxRateEntity([void updates(TaxRateEntityBuilder b)]) = _$TaxRateEntity;
+  TaxRateEntity._();
   static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
 
   String get name;

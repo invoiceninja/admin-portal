@@ -129,6 +129,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'custom_invoice_taxes2',
       serializers.serialize(object.enableCustomInvoiceTaxes2,
           specifiedType: const FullType(bool)),
+      'tax_rates',
+      serializers.serialize(object.taxRates,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(TaxRateEntity)])),
     ];
 
     return result;
@@ -281,6 +285,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.enableCustomInvoiceTaxes2 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'tax_rates':
+          result.taxRates.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(TaxRateEntity)]))
+              as BuiltList);
+          break;
       }
     }
 
@@ -429,6 +439,8 @@ class _$CompanyEntity extends CompanyEntity {
   final bool enableCustomInvoiceTaxes1;
   @override
   final bool enableCustomInvoiceTaxes2;
+  @override
+  final BuiltList<TaxRateEntity> taxRates;
 
   factory _$CompanyEntity([void updates(CompanyEntityBuilder b)]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
@@ -467,7 +479,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.enableInclusiveTaxes,
       this.convertProductExchangeRate,
       this.enableCustomInvoiceTaxes1,
-      this.enableCustomInvoiceTaxes2})
+      this.enableCustomInvoiceTaxes2,
+      this.taxRates})
       : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
@@ -550,6 +563,8 @@ class _$CompanyEntity extends CompanyEntity {
     if (enableCustomInvoiceTaxes2 == null)
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableCustomInvoiceTaxes2');
+    if (taxRates == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'taxRates');
   }
 
   @override
@@ -596,7 +611,8 @@ class _$CompanyEntity extends CompanyEntity {
         enableInclusiveTaxes == other.enableInclusiveTaxes &&
         convertProductExchangeRate == other.convertProductExchangeRate &&
         enableCustomInvoiceTaxes1 == other.enableCustomInvoiceTaxes1 &&
-        enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2;
+        enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2 &&
+        taxRates == other.taxRates;
   }
 
   @override
@@ -619,26 +635,26 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode),
-                                                                                showInvoiceItemTaxes.hashCode),
-                                                                            enableMilitaryTime.hashCode),
-                                                                        defaultTaxName1.hashCode),
-                                                                    defaultTaxRate1.hashCode),
-                                                                defaultTaxName2.hashCode),
-                                                            defaultTaxRate2.hashCode),
-                                                        defaultQuoteTerms.hashCode),
-                                                    showCurrencyCode.hashCode),
-                                                enableSecondTaxRate.hashCode),
-                                            startOfWeek.hashCode),
-                                        financialYearStart.hashCode),
-                                    enabledModules.hashCode),
-                                defaultPaymentTerms.hashCode),
-                            defaultPaymentTypeId.hashCode),
-                        defaultTaskRate.hashCode),
-                    enableInclusiveTaxes.hashCode),
-                convertProductExchangeRate.hashCode),
-            enableCustomInvoiceTaxes1.hashCode),
-        enableCustomInvoiceTaxes2.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode),
+                                                                                enableMilitaryTime.hashCode),
+                                                                            defaultTaxName1.hashCode),
+                                                                        defaultTaxRate1.hashCode),
+                                                                    defaultTaxName2.hashCode),
+                                                                defaultTaxRate2.hashCode),
+                                                            defaultQuoteTerms.hashCode),
+                                                        showCurrencyCode.hashCode),
+                                                    enableSecondTaxRate.hashCode),
+                                                startOfWeek.hashCode),
+                                            financialYearStart.hashCode),
+                                        enabledModules.hashCode),
+                                    defaultPaymentTerms.hashCode),
+                                defaultPaymentTypeId.hashCode),
+                            defaultTaskRate.hashCode),
+                        enableInclusiveTaxes.hashCode),
+                    convertProductExchangeRate.hashCode),
+                enableCustomInvoiceTaxes1.hashCode),
+            enableCustomInvoiceTaxes2.hashCode),
+        taxRates.hashCode));
   }
 
   @override
@@ -677,7 +693,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('enableInclusiveTaxes', enableInclusiveTaxes)
           ..add('convertProductExchangeRate', convertProductExchangeRate)
           ..add('enableCustomInvoiceTaxes1', enableCustomInvoiceTaxes1)
-          ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2))
+          ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2)
+          ..add('taxRates', taxRates))
         .toString();
   }
 }
@@ -847,6 +864,12 @@ class CompanyEntityBuilder
   set enableCustomInvoiceTaxes2(bool enableCustomInvoiceTaxes2) =>
       _$this._enableCustomInvoiceTaxes2 = enableCustomInvoiceTaxes2;
 
+  ListBuilder<TaxRateEntity> _taxRates;
+  ListBuilder<TaxRateEntity> get taxRates =>
+      _$this._taxRates ??= new ListBuilder<TaxRateEntity>();
+  set taxRates(ListBuilder<TaxRateEntity> taxRates) =>
+      _$this._taxRates = taxRates;
+
   CompanyEntityBuilder();
 
   CompanyEntityBuilder get _$this {
@@ -885,6 +908,7 @@ class CompanyEntityBuilder
       _convertProductExchangeRate = _$v.convertProductExchangeRate;
       _enableCustomInvoiceTaxes1 = _$v.enableCustomInvoiceTaxes1;
       _enableCustomInvoiceTaxes2 = _$v.enableCustomInvoiceTaxes2;
+      _taxRates = _$v.taxRates?.toBuilder();
       _$v = null;
     }
     return this;
@@ -903,42 +927,56 @@ class CompanyEntityBuilder
 
   @override
   _$CompanyEntity build() {
-    final _$result = _$v ??
-        new _$CompanyEntity._(
-            name: name,
-            token: token,
-            plan: plan,
-            logoUrl: logoUrl,
-            currencyId: currencyId,
-            timezoneId: timezoneId,
-            dateFormatId: dateFormatId,
-            datetimeFormatId: datetimeFormatId,
-            defaultInvoiceTerms: defaultInvoiceTerms,
-            enableInvoiceTaxes: enableInvoiceTaxes,
-            enableInvoiceItemTaxes: enableInvoiceItemTaxes,
-            defaultInvoiceDesignId: defaultInvoiceDesignId,
-            defaultQuoteDesignId: defaultQuoteDesignId,
-            languageId: languageId,
-            defaultInvoiceFooter: defaultInvoiceFooter,
-            showInvoiceItemTaxes: showInvoiceItemTaxes,
-            enableMilitaryTime: enableMilitaryTime,
-            defaultTaxName1: defaultTaxName1,
-            defaultTaxRate1: defaultTaxRate1,
-            defaultTaxName2: defaultTaxName2,
-            defaultTaxRate2: defaultTaxRate2,
-            defaultQuoteTerms: defaultQuoteTerms,
-            showCurrencyCode: showCurrencyCode,
-            enableSecondTaxRate: enableSecondTaxRate,
-            startOfWeek: startOfWeek,
-            financialYearStart: financialYearStart,
-            enabledModules: enabledModules,
-            defaultPaymentTerms: defaultPaymentTerms,
-            defaultPaymentTypeId: defaultPaymentTypeId,
-            defaultTaskRate: defaultTaskRate,
-            enableInclusiveTaxes: enableInclusiveTaxes,
-            convertProductExchangeRate: convertProductExchangeRate,
-            enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
-            enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2);
+    _$CompanyEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$CompanyEntity._(
+              name: name,
+              token: token,
+              plan: plan,
+              logoUrl: logoUrl,
+              currencyId: currencyId,
+              timezoneId: timezoneId,
+              dateFormatId: dateFormatId,
+              datetimeFormatId: datetimeFormatId,
+              defaultInvoiceTerms: defaultInvoiceTerms,
+              enableInvoiceTaxes: enableInvoiceTaxes,
+              enableInvoiceItemTaxes: enableInvoiceItemTaxes,
+              defaultInvoiceDesignId: defaultInvoiceDesignId,
+              defaultQuoteDesignId: defaultQuoteDesignId,
+              languageId: languageId,
+              defaultInvoiceFooter: defaultInvoiceFooter,
+              showInvoiceItemTaxes: showInvoiceItemTaxes,
+              enableMilitaryTime: enableMilitaryTime,
+              defaultTaxName1: defaultTaxName1,
+              defaultTaxRate1: defaultTaxRate1,
+              defaultTaxName2: defaultTaxName2,
+              defaultTaxRate2: defaultTaxRate2,
+              defaultQuoteTerms: defaultQuoteTerms,
+              showCurrencyCode: showCurrencyCode,
+              enableSecondTaxRate: enableSecondTaxRate,
+              startOfWeek: startOfWeek,
+              financialYearStart: financialYearStart,
+              enabledModules: enabledModules,
+              defaultPaymentTerms: defaultPaymentTerms,
+              defaultPaymentTypeId: defaultPaymentTypeId,
+              defaultTaskRate: defaultTaskRate,
+              enableInclusiveTaxes: enableInclusiveTaxes,
+              convertProductExchangeRate: convertProductExchangeRate,
+              enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
+              enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2,
+              taxRates: taxRates.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'taxRates';
+        taxRates.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'CompanyEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

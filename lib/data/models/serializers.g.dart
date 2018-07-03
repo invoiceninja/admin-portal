@@ -96,6 +96,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(TaskEntity.serializer)
       ..add(TaskItemResponse.serializer)
       ..add(TaskListResponse.serializer)
+      ..add(TaxRateEntity.serializer)
       ..add(TimezoneEntity.serializer)
       ..add(TimezoneItemResponse.serializer)
       ..add(TimezoneListResponse.serializer)
@@ -257,6 +258,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(TaskEntity)]),
           () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(TaxRateEntity)]),
+          () => new ListBuilder<TaxRateEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TimezoneEntity)]),
           () => new ListBuilder<TimezoneEntity>())
       ..addBuilderFactory(
@@ -294,10 +298,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
               const [const FullType(int), const FullType(DateFormatEntity)]),
           () => new MapBuilder<int, DateFormatEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(int),
-            const FullType(DatetimeFormatEntity)
-          ]),
+          const FullType(BuiltMap,
+              const [const FullType(int), const FullType(DatetimeFormatEntity)]),
           () => new MapBuilder<int, DatetimeFormatEntity>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
