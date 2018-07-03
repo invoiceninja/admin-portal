@@ -83,7 +83,11 @@ String formatNumber(
   } else if (formatNumberType == FormatNumberType.input) {
     return NumberFormat('#.####', 'custom').format(value);
   } else {
-    formatter = NumberFormat('#,##0.00##', 'custom');
+    if (formatNumberType == FormatNumberType.percent) {
+      formatter = NumberFormat('#,##0.####', 'custom');
+    } else {
+      formatter = NumberFormat('#,##0.00##', 'custom');
+    }
     formatted = formatter.format(value);
   }
 
