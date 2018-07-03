@@ -84,7 +84,7 @@ class _LoginState extends State<LoginView> {
                 decoration: InputDecoration(
                     labelText: AppLocalization.of(context).email),
                 keyboardType: TextInputType.emailAddress,
-                validator: (val) => val.isEmpty || val.trim().length == 0
+                validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? AppLocalization.of(context).pleaseEnterYourEmail
                     : null,
               ),
@@ -94,7 +94,7 @@ class _LoginState extends State<LoginView> {
                 autocorrect: false,
                 decoration: InputDecoration(
                     labelText: AppLocalization.of(context).password),
-                validator: (val) => val.isEmpty || val.trim().length == 0
+                validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? AppLocalization.of(context).pleaseEnterYourPassword
                     : null,
                 obscureText: true,
@@ -105,7 +105,7 @@ class _LoginState extends State<LoginView> {
                 autocorrect: false,
                 decoration:
                     InputDecoration(labelText: AppLocalization.of(context).url),
-                validator: (val) => val.isEmpty || val.trim().length == 0
+                validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? AppLocalization.of(context).pleaseEnterYourUrl
                     : null,
                 keyboardType: TextInputType.url,

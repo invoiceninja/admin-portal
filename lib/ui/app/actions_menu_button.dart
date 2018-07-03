@@ -56,7 +56,7 @@ class ActionMenuButton extends StatelessWidget {
       }
     });
 
-    if (actions.length > 0) {
+    if (actions.isNotEmpty) {
       actions.add(PopupMenuDivider());
     }
     

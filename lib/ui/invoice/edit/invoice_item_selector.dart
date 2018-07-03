@@ -92,7 +92,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
               autofocus: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: _selectedIds.length == 0
+                hintText: _selectedIds.isEmpty
                     ? localization.filter
                     : localization.countSelected
                         .replaceFirst(':count', '${_selectedIds.length}'),
@@ -105,7 +105,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
               IconButton(
                 icon: Icon(Icons.close),
                 onPressed: () {
-                  if (_textController.text.length > 0) {
+                  if (_textController.text.isNotEmpty) {
                     setState(() {
                       _filter = _textController.text = '';
                     });
@@ -114,7 +114,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                   }
                 },
               ),
-              _selectedIds.length > 0
+              _selectedIds.isNotEmpty
                   ? IconButton(
                       icon: Icon(Icons.check),
                       onPressed: () => _onItemsSelected(),

@@ -123,7 +123,7 @@ class _ProductEditState extends State<ProductEdit> {
                       //border: InputBorder.none,
                       labelText: AppLocalization.of(context).product,
                     ),
-                    validator: (val) => val.isEmpty || val.trim().length == 0
+                    validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseEnterAProductKey
                         : null,
                   ),

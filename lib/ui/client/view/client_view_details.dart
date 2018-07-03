@@ -102,7 +102,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      if (listTiles.length > 0) {
+      if (listTiles.isNotEmpty) {
         listTiles.add(Divider());
       }
 

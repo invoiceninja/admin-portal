@@ -18,7 +18,7 @@ class InvoiceEditItems extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final invoice = viewModel.invoice;
 
-    if (invoice.invoiceItems.length == 0) {
+    if (invoice.invoiceItems.isEmpty) {
       return Center(
         child: Text(localization.clickPlusToAddItem,
           style: TextStyle(
