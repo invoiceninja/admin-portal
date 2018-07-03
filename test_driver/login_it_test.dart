@@ -27,6 +27,19 @@ void main() {
     });
 
     test('No input provided by user test', () async {
+
+      await driver.tap(find.byValueKey(LoginKeys.emailKeyString));
+      await driver.enterText('');
+
+      await driver.tap(find.byValueKey(LoginKeys.passwordKeyString));
+      await driver.enterText('');
+
+      await driver.tap(find.byValueKey(LoginKeys.urlKeyString));
+      await driver.enterText('');
+
+      await driver.tap(find.byValueKey(LoginKeys.secretKeyString));
+      await driver.enterText('');
+
       await driver.tap(find.text('LOGIN'));
       await driver.waitFor(find.text('Please enter your email'));
       await driver.waitFor(find.text('Please enter your password'));
@@ -34,7 +47,7 @@ void main() {
 
     test('Details filled by user and login', () async {
 
-      await driver.tap(find.byValueKey(LoginKeys.emailKeyString), timeout: new Duration(seconds: 60));
+      await driver.tap(find.byValueKey(LoginKeys.emailKeyString));
       await driver.enterText(loginEmail);
 
       await driver.tap(find.byValueKey(LoginKeys.passwordKeyString));
