@@ -20,7 +20,7 @@ class InvoiceEditDetails extends StatefulWidget {
   InvoiceEditDetailsState createState() => new InvoiceEditDetailsState();
 }
 
-class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKeepAliveClientMixin {
+class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _invoiceNumberController = TextEditingController();
   final _invoiceDateController = TextEditingController();
   final _poNumberController = TextEditingController();
@@ -28,9 +28,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
   final _partialController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void didChangeDependencies() {

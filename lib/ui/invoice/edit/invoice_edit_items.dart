@@ -58,16 +58,13 @@ class ItemEditDetails extends StatefulWidget {
   ItemEditDetailsState createState() => ItemEditDetailsState();
 }
 
-class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliveClientMixin {
+class ItemEditDetailsState extends State<ItemEditDetails> {
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
   final _qtyController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void didChangeDependencies() {
