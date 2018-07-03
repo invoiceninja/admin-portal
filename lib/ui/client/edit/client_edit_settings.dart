@@ -24,7 +24,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   final _taskRateController = TextEditingController();
 
-  List<TextEditingController> _controllers = [];
+  final List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
