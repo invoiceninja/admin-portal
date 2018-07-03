@@ -64,7 +64,7 @@ class WebClient {
       return jsonResponse;
     } catch (exception) {
       print(response.body);
-      throw('An error occurred');
+      throw 'An error occurred';
     }
   }
 
@@ -87,7 +87,7 @@ class WebClient {
       return jsonResponse;
     } catch (exception) {
       print(response.body);
-      throw('An error occurred');
+      throw 'An error occurred';
     }
   }
 }

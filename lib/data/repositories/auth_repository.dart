@@ -27,7 +27,7 @@ class AuthRepository {
         LoginResponse.serializer, response);
 
     if (loginResponse.error != null) {
-      throw (loginResponse.error.message);
+      throw loginResponse.error.message;
     }
 
     return loginResponse.data;
