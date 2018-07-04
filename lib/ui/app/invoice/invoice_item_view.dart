@@ -35,7 +35,20 @@ class InvoiceItemListTile extends StatelessWidget {
             formatNumberType: FormatNumberType.percent);
       }
     }
-    subtitle += '\n${invoiceItem.notes}';
+
+    final List<String> parts = [];
+    if (invoiceItem.customValue1.isNotEmpty) {
+      parts.add(invoiceItem.customValue1);
+    }
+    if (invoiceItem.customValue2.isNotEmpty) {
+      parts.add(invoiceItem.customValue2);
+    }
+    if (invoiceItem.notes.isNotEmpty) {
+      parts.add(invoiceItem.notes);
+    }
+    if (parts.isNotEmpty) {
+      subtitle += '\n' + parts.join(' | ');
+    }
 
     return Container(
       color: Theme.of(context).canvasColor,

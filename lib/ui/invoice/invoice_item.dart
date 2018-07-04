@@ -10,7 +10,6 @@ import '../app/entity_state_label.dart';
 class InvoiceItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  //final ValueChanged<bool> onCheckboxChanged;
   final InvoiceEntity invoice;
   final ClientEntity client;
   final AppState state;
@@ -19,7 +18,6 @@ class InvoiceItem extends StatelessWidget {
   const InvoiceItem({
     @required this.onDismissed,
     @required this.onTap,
-    //@required this.onCheckboxChanged,
     @required this.invoice,
     @required this.client,
     @required this.state,
@@ -34,16 +32,6 @@ class InvoiceItem extends StatelessWidget {
       onTap: onTap,
       child: ListTile(
         onTap: onTap,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.invoiceItemCheckbox(invoice.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -51,8 +39,6 @@ class InvoiceItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  //invoice.invoiceNumber,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
