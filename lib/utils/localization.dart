@@ -337,7 +337,7 @@ class AppLocalization {
 
 
   String lookup(String key) {    
-    return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? 'Missing: ' + key;
+    return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? key;
   }
 }
 

@@ -35,6 +35,7 @@ class _InvoiceViewState extends State<InvoiceView> {
     final state = viewModel.state;
     final invoice = viewModel.invoice;
     final client = viewModel.client;
+    final company = state.selectedCompany;
 
     List<Widget> _buildView() {
       final invoice = widget.viewModel.invoice;
@@ -66,6 +67,15 @@ class _InvoiceViewState extends State<InvoiceView> {
                 ? FormatNumberType.money
                 : FormatNumberType.percent),
       };
+
+      if (invoice.customTextValue1.isNotEmpty) {
+        final label1 = company.getCustomFieldLabel(CustomFieldType.invoice1);
+        fields[label1] = invoice.customTextValue1;
+      }
+      if (invoice.customTextValue2.isNotEmpty) {
+        final label2 = company.getCustomFieldLabel(CustomFieldType.invoice2);
+        fields[label2] = invoice.customTextValue2;
+      }
 
       final List<Widget> fieldWidgets = [];
       fields.forEach((field, value) {
