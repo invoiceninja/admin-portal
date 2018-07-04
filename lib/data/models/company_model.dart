@@ -5,6 +5,8 @@ import 'package:invoiceninja/data/models/entities.dart';
 
 part 'company_model.g.dart';
 
+
+
 abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {
 
   factory CompanyEntity() {
@@ -44,6 +46,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       startOfWeek: 1,
       timezoneId: 1,
       taxRates: BuiltList<TaxRateEntity>(),
+      customFields: BuiltMap<String, String>(),
     );
   }
   CompanyEntity._();
@@ -152,8 +155,22 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'tax_rates')
   BuiltList<TaxRateEntity> get taxRates;
 
-  //@BuiltValueField(wireName: 'custom_fields')
+  @BuiltValueField(wireName: 'custom_fields')
+  BuiltMap<String, String> get customFields;
+
   //@BuiltValueField(wireName: 'invoice_labels')
+
+  String getCustomFieldLabel(String field) => customFields[field].split('|').first;
+
+  List<String> getCustomFieldValues(String field) {
+    final values = customFields[field];
+
+    if (!values.contains('|')) {
+      return [];
+    } else {
+      return values.split('|').last.split(',');
+    }
+  }
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

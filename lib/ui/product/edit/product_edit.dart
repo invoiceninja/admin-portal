@@ -1,3 +1,5 @@
+import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -27,6 +29,8 @@ class _ProductEditState extends State<ProductEdit> {
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -37,6 +41,8 @@ class _ProductEditState extends State<ProductEdit> {
       _productKeyController,
       _notesController,
       _costController,
+      _custom1Controller,
+      _custom2Controller,
     ];
 
     _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
@@ -45,6 +51,8 @@ class _ProductEditState extends State<ProductEdit> {
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
     _costController.text = formatNumber(product.cost, widget.viewModel.state, formatNumberType: FormatNumberType.input);
+    _custom1Controller.text = product.customValue1;
+    _custom2Controller.text = product.customValue2;
 
     _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -66,6 +74,8 @@ class _ProductEditState extends State<ProductEdit> {
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()
       ..cost = double.tryParse(_costController.text) ?? 0.0
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
     );
     if (product != widget.viewModel.product) {
       widget.viewModel.onChanged(product);
@@ -137,6 +147,16 @@ class _ProductEditState extends State<ProductEdit> {
                     decoration: InputDecoration(
                       labelText: localization.notes,
                     ),
+                  ),
+                  CustomField(
+                    controller: _custom1Controller,
+                    labelText: company.getCustomFieldLabel(CustomFieldType.product1),
+                    options: company.getCustomFieldValues(CustomFieldType.product1),
+                  ),
+                  CustomField(
+                    controller: _custom2Controller,
+                    labelText: company.getCustomFieldLabel(CustomFieldType.product2),
+                    options: company.getCustomFieldValues(CustomFieldType.product2),
                   ),
                   TextFormField(
                     key: Key(ProductKeys.productEditCostFieldKeyString),

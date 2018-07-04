@@ -103,6 +103,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Route: ${uiState.currentRoute}';
-    return 'Inclusiv: ${selectedCompany?.enableInclusiveTaxes}';
+    if (selectedCompany?.customFields != null) {
+      return 'Custom Fields: ${selectedCompany?.customFields[CustomFieldType.product1]}';
+    }
+
+    return '';
   }
 }

@@ -184,6 +184,26 @@ abstract class DashboardResponse implements Built<DashboardResponse, DashboardRe
   static Serializer<DashboardResponse> get serializer => _$dashboardResponseSerializer;
 }
 
+class CustomFieldType {
+  static const String product1 = 'product1';
+  static const String product2 = 'product2';
+  static const String client1 = 'client1';
+  static const String client2 = 'client2';
+  static const String contact1 = 'contact1';
+  static const String contact2 = 'contact2';
+  static const String task1 = 'task1';
+  static const String task2 = 'task2';
+  static const String project1 = 'project1';
+  static const String project2 = 'project2';
+  static const String expense1 = 'expense1';
+  static const String expense2 = 'expense2';
+  static const String vendor1 = 'vendor1';
+  static const String vendor2 = 'vendor2';
+  static const String invoice1 = 'invoice_text1';
+  static const String invoice2 = 'invoice_text2';
+  static const String surcharge1 = 'invoice1';
+  static const String surcharge2 = 'invoice2';
+}
 
 abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntityBuilder> {
 
