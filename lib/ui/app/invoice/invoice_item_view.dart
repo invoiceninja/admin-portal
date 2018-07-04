@@ -37,11 +37,14 @@ class InvoiceItemListTile extends StatelessWidget {
     }
     subtitle += '\n${invoiceItem.notes}';
 
-    return ListTile(
-      title: Text(invoiceItem.productKey),
-      subtitle: Text(subtitle),
-      trailing: Text(
-          formatNumber(invoiceItem.total, state, clientId: invoice.clientId)),
+    return Container(
+      color: Theme.of(context).canvasColor,
+      child: ListTile(
+        title: Text(invoiceItem.productKey),
+        subtitle: Text(subtitle),
+        trailing: Text(
+            formatNumber(invoiceItem.total, state, clientId: invoice.clientId)),
+      ),
     );
   }
 }

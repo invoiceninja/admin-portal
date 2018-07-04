@@ -97,11 +97,14 @@ class _InvoiceViewState extends State<InvoiceView> {
         Divider(
           height: 1.0,
         ),
-        ListTile(
-          title: Text(client?.displayName ?? ''),
-          leading: Icon(FontAwesomeIcons.users, size: 18.0),
-          trailing: Icon(Icons.navigate_next),
-          onTap: () => viewModel.onClientPressed(context),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(client?.displayName ?? ''),
+            leading: Icon(FontAwesomeIcons.users, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () => viewModel.onClientPressed(context),
+          ),
         ),
         Divider(height: 1.0),
         Container(
@@ -109,15 +112,18 @@ class _InvoiceViewState extends State<InvoiceView> {
           height: 12.0,
         ),
         Divider(height: 1.0),
-        Padding(
-          padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-          child: IgnorePointer(
-            child: GridView.count(
-              shrinkWrap: true,
-              primary: true,
-              crossAxisCount: 2,
-              children: fieldWidgets,
-              childAspectRatio: 3.5,
+        Container(
+          color: Theme.of(context).canvasColor,
+          child: Padding(
+            padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
+            child: IgnorePointer(
+              child: GridView.count(
+                shrinkWrap: true,
+                primary: true,
+                crossAxisCount: 2,
+                children: fieldWidgets,
+                childAspectRatio: 3.5,
+              ),
             ),
           ),
         ),
@@ -156,22 +162,29 @@ class _InvoiceViewState extends State<InvoiceView> {
       ]);
 
       invoice.calculateTaxes(state.selectedCompany.enableInclusiveTaxes).forEach((taxName, taxAmount) {
-        widgets.add(Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Text(taxName),
-              SizedBox(
-                width: 80.0,
-                child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(formatNumber(taxAmount, viewModel.state, clientId: invoice.clientId))),
-              ),
-            ],
+        widgets.add(Container(
+          color: Theme.of(context).canvasColor,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(taxName),
+                SizedBox(
+                  width: 80.0,
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(formatNumber(taxAmount, viewModel.state, clientId: invoice.clientId))),
+                ),
+              ],
+            ),
           ),
         ));
       });
+
+      widgets.addAll([
+        Divider(height: 1.0),
+      ]);
 
       return widgets;
     }
@@ -213,8 +226,11 @@ class _InvoiceViewState extends State<InvoiceView> {
                   )
                 ],
         ),
-        body: ListView(
-          children: _buildView(),
+        body: Container(
+          color: Theme.of(context).backgroundColor,
+          child: ListView(
+            children: _buildView(),
+          ),
         ),
       ),
     );

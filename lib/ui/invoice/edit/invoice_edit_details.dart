@@ -117,6 +117,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     decoration: InputDecoration(
                       labelText: localization.invoiceNumber,
                     ),
+                    validator: (String val) => val.trim().isEmpty
+                        ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
+                        : null,
                   ),
             DatePicker(
               validator: (String val) => val.trim().isEmpty
@@ -206,26 +209,30 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 )
               ],
             ),
-            company.enableInvoiceTaxes ? TaxRateDropdown(
-              onSelected: (taxRate) =>
-                  viewModel.onChanged(invoice.rebuild((b) => b
-                    ..taxRate1 = taxRate.rate
-                    ..taxName1 = taxRate.name)),
-              labelText: localization.tax,
-              state: viewModel.state,
-              initialTaxName: invoice.taxName1,
-              initialTaxRate: invoice.taxRate1,
-            ) : Container(),
-            company.enableInvoiceTaxes && company.enableSecondTaxRate ? TaxRateDropdown(
-              onSelected: (taxRate) =>
-                  viewModel.onChanged(invoice.rebuild((b) => b
-                    ..taxRate2 = taxRate.rate
-                    ..taxName2 = taxRate.name)),
-              labelText: localization.tax,
-              state: viewModel.state,
-              initialTaxName: invoice.taxName2,
-              initialTaxRate: invoice.taxRate2,
-            ) : Container(),
+            company.enableInvoiceTaxes
+                ? TaxRateDropdown(
+                    onSelected: (taxRate) =>
+                        viewModel.onChanged(invoice.rebuild((b) => b
+                          ..taxRate1 = taxRate.rate
+                          ..taxName1 = taxRate.name)),
+                    labelText: localization.tax,
+                    state: viewModel.state,
+                    initialTaxName: invoice.taxName1,
+                    initialTaxRate: invoice.taxRate1,
+                  )
+                : Container(),
+            company.enableInvoiceTaxes && company.enableSecondTaxRate
+                ? TaxRateDropdown(
+                    onSelected: (taxRate) =>
+                        viewModel.onChanged(invoice.rebuild((b) => b
+                          ..taxRate2 = taxRate.rate
+                          ..taxName2 = taxRate.name)),
+                    labelText: localization.tax,
+                    state: viewModel.state,
+                    initialTaxName: invoice.taxName2,
+                    initialTaxRate: invoice.taxRate2,
+                  )
+                : Container(),
           ],
         ),
       ],
