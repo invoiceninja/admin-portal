@@ -30,15 +30,49 @@ class InvoiceEditItems extends StatelessWidget {
     }
 
     final invoiceItems = invoice.invoiceItems.map((invoiceItem) =>
-        ItemEditDetails(
-            viewModel: viewModel,
-            key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
-            invoiceItem: invoiceItem,
-            index: invoice.invoiceItems.indexOf(invoiceItem)));
-
-    return ListView(
-      children: invoiceItems.toList(),
+      ItemEditDetails(
+          viewModel: viewModel,
+          key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
+          invoiceItem: invoiceItem,
+          index: invoice.invoiceItems.indexOf(invoiceItem)
+      )
     );
+
+    return ScrollToBottomListView(invoiceItems.toList());
+  }
+}
+
+class ScrollToBottomListView extends StatefulWidget {
+
+  final List<ItemEditDetails> invoiceItemList;
+
+  const ScrollToBottomListView(this.invoiceItemList);
+
+  @override
+  State createState() => ScrollToBottomListViewState();
+}
+
+class ScrollToBottomListViewState extends State<ScrollToBottomListView> {
+
+  ScrollController scrollcontroller = ScrollController();
+
+  @override
+  void didUpdateWidget(ScrollToBottomListView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    scrollcontroller.animateTo(
+      scrollcontroller.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: widget.invoiceItemList,
+      controller: scrollcontroller
+      );
   }
 }
 
@@ -196,4 +230,3 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
     );
   }
 }
-
