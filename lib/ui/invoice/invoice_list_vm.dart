@@ -42,6 +42,7 @@ class InvoiceListVM {
   final Function(BuildContext, InvoiceEntity) onInvoiceTap;
   final Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
+  final Function onClearClientFilterPressed;
 
   InvoiceListVM({
     @required this.state,
@@ -54,6 +55,7 @@ class InvoiceListVM {
     @required this.onInvoiceTap,
     @required this.onDismissed,
     @required this.onRefreshed,
+    @required this.onClearClientFilterPressed,
   });
 
   static InvoiceListVM fromStore(Store<AppState> store) {
@@ -87,6 +89,7 @@ class InvoiceListVM {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
+        onClearClientFilterPressed: () => store.dispatch(FilterInvoicesByClient()),
         onDismissed: (BuildContext context, InvoiceEntity invoice,
             DismissDirection direction) {
           final Completer<Null> completer = new Completer<Null>();
