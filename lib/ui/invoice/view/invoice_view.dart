@@ -1,3 +1,4 @@
+import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -41,6 +42,7 @@ class _InvoiceViewState extends State<InvoiceView> {
       final invoice = widget.viewModel.invoice;
       final widgets = <Widget>[
         TwoValueHeader(
+          backgroundColor: InvoiceStatusColors.colors[invoice.invoiceStatusId][200],
           label1: localization.totalAmount,
           value1:
               formatNumber(invoice.amount, state, clientId: invoice.clientId),

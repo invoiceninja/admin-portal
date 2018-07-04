@@ -1,3 +1,4 @@
+import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -68,7 +69,22 @@ class InvoiceItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                Text(invoiceStatusSelector(invoice, state.staticState)),
+                /*
+                Chip(
+                  label: Text(invoiceStatusSelector(invoice, state.staticState),
+                      style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                  backgroundColor:
+                      InvoiceStatusColors.colors[invoice.invoiceStatusId],
+                  shape: RoundedRectangleBorder(),
+                  padding: EdgeInsets.all(0.0),
+                  //labelPadding: EdgeInsets.all(0.0),
+                ),
+                */
+                Text(invoiceStatusSelector(invoice, state.staticState),
+                    style: TextStyle(
+                      color:
+                          InvoiceStatusColors.colors[invoice.invoiceStatusId],
+                    )),
               ],
             ),
             EntityStateLabel(invoice),
@@ -78,3 +94,4 @@ class InvoiceItem extends StatelessWidget {
     );
   }
 }
+

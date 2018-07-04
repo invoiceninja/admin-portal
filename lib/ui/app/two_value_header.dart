@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class TwoValueHeader extends StatelessWidget {
-  const TwoValueHeader({this.label1, this.label2, this.value1, this.value2});
+  const TwoValueHeader({
+    this.backgroundColor,
+    this.label1,
+    this.label2,
+    this.value1,
+    this.value2,
+  });
+
+  final Color backgroundColor;
   final String label1;
   final String label2;
   final String value1;
@@ -58,7 +66,7 @@ class TwoValueHeader extends StatelessWidget {
     }
 
     return Container(
-      color: Theme.of(context).backgroundColor,
+      color: backgroundColor ?? Theme.of(context).backgroundColor,
       child: Padding(
         padding: EdgeInsets.all(14.0),
         child: Card(
