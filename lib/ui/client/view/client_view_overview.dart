@@ -34,11 +34,14 @@ class ClientOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
-        ListTile(
-          title: Text(localization.invoices),
-          leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
-          trailing: Icon(Icons.navigate_next),
-          onTap: () => viewModel.onInvoicesPressed(context),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(localization.invoices),
+            leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () => viewModel.onInvoicesPressed(context),
+          ),
         ),
         Divider(
           height: 1.0,

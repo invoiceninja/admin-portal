@@ -52,6 +52,7 @@ class _ClientViewState extends State<ClientView>
         return true;
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           title: Text(
               client.displayName ?? ''), // Text(localizations.clientDetails),

@@ -152,11 +152,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
       return listTiles;
     }
 
-    return Padding(
-      padding: EdgeInsets.all(12.0),
-      child: ListView(
-        children: _buildDetailsList(),
-      ),
+    return ListView(
+      children: _buildDetailsList(),
     );
   }
 }
@@ -180,18 +177,21 @@ class AppListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
-      leading: Icon(icon),
-      title: Text(title),
-      subtitle: subtitle == null ? Container() : Text(subtitle),
-      dense: dense,
-      onTap: onTap,
-      onLongPress: () {
-        Clipboard.setData(ClipboardData(text: copyValue ?? title));
-        Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text(AppLocalization.of(context).copiedToClipboard)));
-      },
+    return Material(
+      color: Theme.of(context).canvasColor,
+      child: ListTile(
+        contentPadding: EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
+        leading: Icon(icon),
+        title: Text(title),
+        subtitle: subtitle == null ? Container() : Text(subtitle),
+        dense: dense,
+        onTap: onTap,
+        onLongPress: () {
+          Clipboard.setData(ClipboardData(text: copyValue ?? title));
+          Scaffold.of(context).showSnackBar(
+              SnackBar(content: Text(AppLocalization.of(context).copiedToClipboard)));
+        },
+      ),
     );
   }
 }

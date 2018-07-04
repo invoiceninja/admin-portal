@@ -1,3 +1,4 @@
+import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,9 @@ class InvoiceItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(invoice.amount, state, clientId: invoice.clientId),
+              Text(
+                  formatNumber(invoice.amount, state,
+                      clientId: invoice.clientId),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -54,12 +57,19 @@ class InvoiceItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            searchMatch == null
-                ? Text(invoice.invoiceNumber)
-                : Text(
-              searchMatch,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: searchMatch == null
+                      ? Text(invoice.invoiceNumber)
+                      : Text(
+                          searchMatch,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                ),
+                Text(invoiceStatusSelector(invoice, state.staticState)),
+              ],
             ),
             EntityStateLabel(invoice),
           ],
