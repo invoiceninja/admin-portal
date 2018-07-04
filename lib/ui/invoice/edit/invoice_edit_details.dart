@@ -1,4 +1,5 @@
 import 'package:invoiceninja/redux/client/client_selectors.dart';
+import 'package:invoiceninja/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _poNumberController = TextEditingController();
   final _discountController = TextEditingController();
   final _partialController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -38,8 +41,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       _poNumberController,
       _discountController,
       _partialController,
+      _custom1Controller,
+      _custom2Controller,
     ];
-
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
@@ -53,6 +57,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     _partialController.text = formatNumber(
         invoice.partial, widget.viewModel.state,
         formatNumberType: FormatNumberType.input);
+    _custom1Controller.text = invoice.customTextValue1;
+    _custom2Controller.text = invoice.customTextValue2;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -77,7 +83,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           : _invoiceNumberController.text.trim()
       ..poNumber = _poNumberController.text.trim()
       ..discount = double.tryParse(_discountController.text) ?? 0.0
-      ..partial = double.tryParse(_partialController.text) ?? 0.0);
+      ..partial = double.tryParse(_partialController.text) ?? 0.0
+      ..customTextValue1 = _custom1Controller.text.trim()
+      ..customTextValue2 = _custom2Controller.text.trim()
+    );
     if (invoice != widget.viewModel.invoice) {
       widget.viewModel.onChanged(invoice);
     }
@@ -208,6 +217,16 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   ),
                 )
               ],
+            ),
+            CustomField(
+              controller: _custom1Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.invoice1),
+              options: company.getCustomFieldValues(CustomFieldType.invoice1),
+            ),
+            CustomField(
+              controller: _custom2Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.invoice2),
+              options: company.getCustomFieldValues(CustomFieldType.invoice2),
             ),
             company.enableInvoiceTaxes
                 ? TaxRateDropdown(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
@@ -23,6 +25,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   final _vatNumberController = TextEditingController();
   final _websiteController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
 
   final List<TextEditingController> _controllers = [];
 
@@ -34,6 +38,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       _vatNumberController,
       _websiteController,
       _phoneController,
+      _custom1Controller,
+      _custom2Controller,
     ];
 
     _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
@@ -44,6 +50,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     _vatNumberController.text = client.vatNumber;
     _websiteController.text = client.website;
     _phoneController.text = client.workPhone;
+    _custom1Controller.text = client.customValue1;
+    _custom2Controller.text = client.customValue2;
 
     _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -68,6 +76,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
         ..vatNumber = _vatNumberController.text.trim()
         ..website = _websiteController.text.trim()
         ..workPhone = _phoneController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
     );
     if (client != viewModel.client) {
       viewModel.onChanged(client);
@@ -77,6 +87,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final company = viewModel.state.selectedCompany;
 
     return ListView(
       shrinkWrap: true,
@@ -118,6 +130,16 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                 labelText: localization.phone,
               ),
               keyboardType: TextInputType.phone,
+            ),
+            CustomField(
+              controller: _custom1Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.client1),
+              options: company.getCustomFieldValues(CustomFieldType.client1),
+            ),
+            CustomField(
+              controller: _custom2Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.client2),
+              options: company.getCustomFieldValues(CustomFieldType.client2),
             ),
           ],
         ),

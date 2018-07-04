@@ -1,3 +1,4 @@
+import 'package:invoiceninja/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
@@ -66,6 +67,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   final _costController = TextEditingController();
   final _qtyController = TextEditingController();
   final _discountController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -77,6 +80,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       _costController,
       _qtyController,
       _discountController,
+      _custom1Controller,
+      _custom2Controller,
     ];
 
     _controllers
@@ -93,6 +98,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         formatNumberType: FormatNumberType.input);
     _discountController.text = formatNumber(invoiceItem.discount, state,
         formatNumberType: FormatNumberType.input);
+    _custom1Controller.text = invoiceItem.customValue1;
+    _custom2Controller.text = invoiceItem.customValue2;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -116,8 +123,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..notes = _notesController.text.trim()
       ..cost = double.tryParse(_costController.text) ?? 0.0
       ..qty = double.tryParse(_qtyController.text) ?? 0.0
-      ..discount = double.tryParse(_discountController.text) ?? 0.0);
-
+      ..discount = double.tryParse(_discountController.text) ?? 0.0
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+    );
     if (invoiceItem != widget.invoiceItem) {
       widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
     }
@@ -169,6 +178,16 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
           decoration: InputDecoration(
             labelText: localization.description,
           ),
+        ),
+        CustomField(
+          controller: _custom1Controller,
+          labelText: company.getCustomFieldLabel(CustomFieldType.product1),
+          options: company.getCustomFieldValues(CustomFieldType.product1),
+        ),
+        CustomField(
+          controller: _custom2Controller,
+          labelText: company.getCustomFieldLabel(CustomFieldType.product2),
+          options: company.getCustomFieldValues(CustomFieldType.product2),
         ),
         TextFormField(
           autocorrect: false,

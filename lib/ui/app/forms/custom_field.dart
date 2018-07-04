@@ -25,6 +25,7 @@ class CustomField extends StatelessWidget {
         autocorrect: false,
         controller: controller,
         keyboardType: TextInputType.text,
+        maxLines: 2,
         decoration: InputDecoration(
           labelText: labelText,
         ),
