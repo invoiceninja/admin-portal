@@ -160,7 +160,15 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
 
   //@BuiltValueField(wireName: 'invoice_labels')
 
-  String getCustomFieldLabel(String field) => customFields[field].split('|').first;
+  String getCustomFieldLabel(String field) {
+    if (customFields.containsKey(field)) {
+      return customFields[field]
+          .split('|')
+          .first;
+    } else {
+      return '';
+    }
+  }
 
   List<String> getCustomFieldValues(String field) {
     final values = customFields[field];

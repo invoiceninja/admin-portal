@@ -160,7 +160,6 @@ class _ProductEditState extends State<ProductEdit> {
                   ),
                   TextFormField(
                     key: Key(ProductKeys.productEditCostFieldKeyString),
-                    autocorrect: false,
                     controller: _costController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(

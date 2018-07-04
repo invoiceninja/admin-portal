@@ -30,6 +30,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _partialController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _surcharge1Controller = TextEditingController();
+  final _surcharge2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -43,6 +45,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       _partialController,
       _custom1Controller,
       _custom2Controller,
+      _surcharge1Controller,
+      _surcharge2Controller,
     ];
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
@@ -59,6 +63,12 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         formatNumberType: FormatNumberType.input);
     _custom1Controller.text = invoice.customTextValue1;
     _custom2Controller.text = invoice.customTextValue2;
+    _surcharge1Controller.text = formatNumber(
+        invoice.customValue1, widget.viewModel.state,
+        formatNumberType: FormatNumberType.input);
+    _surcharge2Controller.text = formatNumber(
+        invoice.customValue2, widget.viewModel.state,
+        formatNumberType: FormatNumberType.input);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -86,6 +96,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       ..partial = double.tryParse(_partialController.text) ?? 0.0
       ..customTextValue1 = _custom1Controller.text.trim()
       ..customTextValue2 = _custom2Controller.text.trim()
+      ..customValue1 = double.tryParse(_surcharge1Controller.text) ?? 0.0
+      ..customValue2 = double.tryParse(_surcharge2Controller.text) ?? 0.0
     );
     if (invoice != widget.viewModel.invoice) {
       widget.viewModel.onChanged(invoice);
@@ -149,7 +161,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               },
             ),
             TextFormField(
-              autocorrect: false,
               controller: _partialController,
               decoration: InputDecoration(
                 labelText: localization.partial,
@@ -178,7 +189,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               children: <Widget>[
                 Expanded(
                   child: TextFormField(
-                    autocorrect: false,
                     controller: _discountController,
                     decoration: InputDecoration(
                       labelText: localization.discount,
@@ -228,6 +238,20 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               labelText: company.getCustomFieldLabel(CustomFieldType.invoice2),
               options: company.getCustomFieldValues(CustomFieldType.invoice2),
             ),
+            company.getCustomFieldLabel(CustomFieldType.surcharge1).isNotEmpty ? TextFormField(
+              controller: _surcharge1Controller,
+              decoration: InputDecoration(
+                labelText: company.getCustomFieldLabel(CustomFieldType.surcharge1),
+              ),
+              keyboardType: TextInputType.number,
+            ) : Container(),
+            company.getCustomFieldLabel(CustomFieldType.surcharge2).isNotEmpty ? TextFormField(
+              controller: _surcharge2Controller,
+              decoration: InputDecoration(
+                labelText: company.getCustomFieldLabel(CustomFieldType.surcharge2),
+              ),
+              keyboardType: TextInputType.number,
+            ) : Container(),
             company.enableInvoiceTaxes
                 ? TaxRateDropdown(
                     onSelected: (taxRate) =>

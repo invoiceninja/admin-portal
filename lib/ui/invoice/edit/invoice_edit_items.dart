@@ -190,7 +190,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
           options: company.getCustomFieldValues(CustomFieldType.product2),
         ),
         TextFormField(
-          autocorrect: false,
           controller: _costController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
@@ -198,7 +197,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
           ),
         ),
         TextFormField(
-          autocorrect: false,
           controller: _qtyController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
@@ -206,7 +204,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
           ),
         ),
         TextFormField(
-          autocorrect: false,
           controller: _discountController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(

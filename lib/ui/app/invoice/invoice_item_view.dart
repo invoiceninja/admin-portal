@@ -47,7 +47,7 @@ class InvoiceItemListTile extends StatelessWidget {
       parts.add(invoiceItem.notes);
     }
     if (parts.isNotEmpty) {
-      subtitle += '\n' + parts.join(' | ');
+      subtitle += '\n' + parts.join(' • ');
     }
 
     return Container(

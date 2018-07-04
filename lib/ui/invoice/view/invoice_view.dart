@@ -42,11 +42,11 @@ class _InvoiceViewState extends State<InvoiceView> {
       final widgets = <Widget>[
         TwoValueHeader(
           label1: localization.totalAmount,
-          value1: formatNumber(invoice.amount, state,
-              clientId: invoice.clientId),
+          value1:
+              formatNumber(invoice.amount, state, clientId: invoice.clientId),
           label2: localization.balanceDue,
-          value2: formatNumber(invoice.balance, state,
-              clientId: invoice.clientId),
+          value2:
+              formatNumber(invoice.balance, state, clientId: invoice.clientId),
         ),
       ];
 
@@ -171,26 +171,57 @@ class _InvoiceViewState extends State<InvoiceView> {
         Divider(height: 1.0),
       ]);
 
-      invoice.calculateTaxes(state.selectedCompany.enableInclusiveTaxes).forEach((taxName, taxAmount) {
-        widgets.add(Container(
+      Widget surchargeRow(String label, double amount) {
+        return Container(
           color: Theme.of(context).canvasColor,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(left: 16.0, top: 12.0, right: 16.0, bottom: 12.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text(taxName),
+                Text(label),
                 SizedBox(
                   width: 80.0,
                   child: Align(
                       alignment: Alignment.centerRight,
-                      child: Text(formatNumber(taxAmount, viewModel.state, clientId: invoice.clientId))),
+                      child: Text(formatNumber(amount, viewModel.state,
+                          clientId: invoice.clientId))),
                 ),
               ],
             ),
           ),
-        ));
+        );
+      }
+
+      if (invoice.customValue1 != 0 && company.enableCustomInvoiceTaxes1) {
+        widgets.add(surchargeRow(
+            company.getCustomFieldLabel(CustomFieldType.surcharge1),
+            invoice.customValue1));
+      }
+
+      if (invoice.customValue2 != 0 && company.enableCustomInvoiceTaxes2) {
+        widgets.add(surchargeRow(
+            company.getCustomFieldLabel(CustomFieldType.surcharge2),
+            invoice.customValue2));
+      }
+
+      invoice
+          .calculateTaxes(company.enableInclusiveTaxes)
+          .forEach((taxName, taxAmount) {
+        widgets.add(surchargeRow(taxName, taxAmount));
       });
+
+      if (invoice.customValue1 != 0 && !company.enableCustomInvoiceTaxes1) {
+        widgets.add(surchargeRow(
+            company.getCustomFieldLabel(CustomFieldType.surcharge1),
+            invoice.customValue1));
+      }
+
+      if (invoice.customValue2 != 0 && !company.enableCustomInvoiceTaxes2) {
+        widgets.add(surchargeRow(
+            company.getCustomFieldLabel(CustomFieldType.surcharge2),
+            invoice.customValue2));
+      }
 
       widgets.addAll([
         Divider(height: 1.0),
