@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja/utils/localization.dart';
 
 import '../app/entity_state_label.dart';
 
@@ -28,6 +29,7 @@ class InvoiceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final searchMatch = filter != null && filter.isNotEmpty
         ? invoice.matchesSearchValue(filter)
         : null;
@@ -80,10 +82,10 @@ class InvoiceItem extends StatelessWidget {
                   //labelPadding: EdgeInsets.all(0.0),
                 ),
                 */
-                Text(invoiceStatusSelector(invoice, state.staticState),
+                Text(invoice.isPastDue ? localization.pastDue : invoiceStatusSelector(invoice, state.staticState),
                     style: TextStyle(
                       color:
-                          InvoiceStatusColors.colors[invoice.invoiceStatusId],
+                          invoice.isPastDue ? Colors.red : InvoiceStatusColors.colors[invoice.invoiceStatusId],
                     )),
               ],
             ),

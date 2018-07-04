@@ -321,6 +321,10 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
     return '';
   }
 
+  bool get isPastDue {
+    return ! isDeleted && isPublic && balance > 0 && DateTime.tryParse(dueDate).isBefore(DateTime.now());
+  }
+
   String get invitationLink => invitations.first?.link;
   String get invitationSilentLink => invitations.first?.silentLink;
   String get invitationDownloadLink => invitations.first?.downloadLink;

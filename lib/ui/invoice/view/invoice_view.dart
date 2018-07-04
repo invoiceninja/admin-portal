@@ -42,7 +42,9 @@ class _InvoiceViewState extends State<InvoiceView> {
       final invoice = widget.viewModel.invoice;
       final widgets = <Widget>[
         TwoValueHeader(
-          backgroundColor: InvoiceStatusColors.colors[invoice.invoiceStatusId][200],
+          backgroundColor: (invoice.isPastDue
+              ? Colors.red
+              : InvoiceStatusColors.colors[invoice.invoiceStatusId])[200],
           label1: localization.totalAmount,
           value1:
               formatNumber(invoice.amount, state, clientId: invoice.clientId),
@@ -53,8 +55,9 @@ class _InvoiceViewState extends State<InvoiceView> {
       ];
 
       final Map<String, String> fields = {
-        InvoiceFields.invoiceStatusId:
-            invoiceStatusSelector(invoice, store.state.staticState),
+        InvoiceFields.invoiceStatusId: invoice.isPastDue
+            ? localization.pastDue
+            : invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
         InvoiceFields.partial: formatNumber(invoice.partial, state,
@@ -177,7 +180,8 @@ class _InvoiceViewState extends State<InvoiceView> {
         return Container(
           color: Theme.of(context).canvasColor,
           child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, top: 12.0, right: 16.0, bottom: 12.0),
+            padding: const EdgeInsets.only(
+                left: 16.0, top: 12.0, right: 16.0, bottom: 12.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
