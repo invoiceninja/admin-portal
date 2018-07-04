@@ -26,6 +26,10 @@ class InvoiceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final searchMatch = filter != null && filter.isNotEmpty
+        ? invoice.matchesSearchValue(filter)
+        : null;
+
     return DismissibleEntity(
       entity: invoice,
       onDismissed: onDismissed,
@@ -50,10 +54,10 @@ class InvoiceItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              filter != null && filter.isNotEmpty
-                  ? invoice.matchesSearchValue(filter) ?? ''
-                  : invoice.invoiceNumber,
+            searchMatch == null
+                ? Text(invoice.invoiceNumber)
+                : Text(
+              searchMatch,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),

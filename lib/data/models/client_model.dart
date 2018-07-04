@@ -265,7 +265,7 @@ abstract class ClientEntity extends Object
   @override
   String matchesSearchValue(String search) {
     if (search == null || search.isEmpty) {
-      return '';
+      return null;
     }
 
     search = search.toLowerCase();
@@ -285,7 +285,7 @@ abstract class ClientEntity extends Object
       return contact.matchesSearchValue(search);
     }
 
-    return '';
+    return null;
   }
 
   @override

@@ -28,6 +28,10 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final searchMatch = filter != null && filter.isNotEmpty
+        ? product.matchesSearchValue(filter)
+        : null;
+
     return DismissibleEntity(
       entity: product,
       onDismissed: onDismissed,
@@ -64,9 +68,7 @@ class ProductItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              filter != null && filter.isNotEmpty
-                  ? product.matchesSearchValue(filter) ?? ''
-                  : product.notes ?? '',
+              searchMatch ?? product.notes,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),

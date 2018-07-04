@@ -30,6 +30,9 @@ class ClientItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //var localization = AppLocalization.of(context);
+    final searchMatch = filter != null && filter.isNotEmpty
+        ? client.matchesSearchValue(filter)
+        : null;
 
     return DismissibleEntity(
       onDismissed: onDismissed,
@@ -49,18 +52,19 @@ class ClientItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.title)
           ],
         ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                filter != null && filter.isNotEmpty
-                    ? client.matchesSearchValue(filter) : '',
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-              EntityStateLabel(client),
-            ],
-          ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            searchMatch == null
+                ? Container()
+                : Text(
+                    searchMatch,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+            EntityStateLabel(client),
+          ],
+        ),
       ),
     );
   }
