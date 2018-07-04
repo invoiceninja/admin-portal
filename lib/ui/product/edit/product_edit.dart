@@ -1,3 +1,4 @@
+import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -73,8 +74,10 @@ class _ProductEditState extends State<ProductEdit> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final product = viewModel.product;
+    final company = viewModel.state.selectedCompany;
 
     return WillPopScope(
       onWillPop: () async {
@@ -84,7 +87,7 @@ class _ProductEditState extends State<ProductEdit> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(viewModel.product.isNew
-              ? AppLocalization.of(context).newProduct
+              ? localization.newProduct
               : viewModel.origProduct.productKey),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
@@ -121,10 +124,10 @@ class _ProductEditState extends State<ProductEdit> {
                     autocorrect: false,
                     decoration: InputDecoration(
                       //border: InputBorder.none,
-                      labelText: AppLocalization.of(context).product,
+                      labelText: localization.product,
                     ),
                     validator: (val) => val.isEmpty || val.trim().isEmpty
-                        ? AppLocalization.of(context).pleaseEnterAProductKey
+                        ? localization.pleaseEnterAProductKey
                         : null,
                   ),
                   TextFormField(
@@ -132,7 +135,7 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _notesController,
                     maxLines: 4,
                     decoration: InputDecoration(
-                      labelText: AppLocalization.of(context).notes,
+                      labelText: localization.notes,
                     ),
                   ),
                   TextFormField(
@@ -141,9 +144,33 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _costController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: AppLocalization.of(context).cost,
+                      labelText: localization.cost,
                     ),
                   ),
+                  company.enableInvoiceItemTaxes
+                      ? TaxRateDropdown(
+                    onSelected: (taxRate) =>
+                        viewModel.onChanged(product.rebuild((b) => b
+                          ..taxRate1 = taxRate.rate
+                          ..taxName1 = taxRate.name)),
+                    labelText: localization.tax,
+                    state: viewModel.state,
+                    initialTaxName: product.taxName1,
+                    initialTaxRate: product.taxRate1,
+                  )
+                      : Container(),
+                  company.enableInvoiceItemTaxes && company.enableSecondTaxRate
+                      ? TaxRateDropdown(
+                    onSelected: (taxRate) =>
+                        viewModel.onChanged(product.rebuild((b) => b
+                          ..taxRate2 = taxRate.rate
+                          ..taxName2 = taxRate.name)),
+                    labelText: localization.tax,
+                    state: viewModel.state,
+                    initialTaxName: product.taxName2,
+                    initialTaxRate: product.taxRate2,
+                  )
+                      : Container(),
                 ],
               ),
             ],
