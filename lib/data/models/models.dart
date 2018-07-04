@@ -5,6 +5,7 @@ import 'package:built_value/serializer.dart';
 export 'package:invoiceninja/data/models/entities.dart';
 export 'package:invoiceninja/data/models/product_model.dart';
 export 'package:invoiceninja/data/models/client_model.dart';
+export 'package:invoiceninja/data/models/company_model.dart';
 export 'package:invoiceninja/data/models/credit_model.dart';
 export 'package:invoiceninja/data/models/project_model.dart';
 export 'package:invoiceninja/data/models/payment_model.dart';

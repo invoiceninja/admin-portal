@@ -94,7 +94,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                   .onChanged(client.rebuild((b) => b..languageId = languageId)),
             ),
             TextFormField(
-              autocorrect: false,
               controller: _taskRateController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(

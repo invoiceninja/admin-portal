@@ -11,6 +11,10 @@ class WebClient {
   String _parseError(String response) {
     dynamic message = response;
 
+    if (response.contains('DOCTYPE html')) {
+      return 'An error occurred';
+    }
+    
     try {
       final dynamic jsonResponse = json.decode(response);
       message = jsonResponse['error'] ?? jsonResponse;
@@ -55,11 +59,11 @@ class WebClient {
         'Content-Type': 'application/json',
       },
     );
-    print('== 1 == ${_parseError(response.body)}');
+
     if (response.statusCode >= 400) {
       throw _parseError(response.body);
     }
-    print('== 2 ==');
+
     try {
       final dynamic jsonResponse = json.decode(response.body);
       return jsonResponse;

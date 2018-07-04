@@ -1,3 +1,5 @@
+import 'package:invoiceninja/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,8 @@ class InvoiceEditItems extends StatelessWidget {
 
     if (invoice.invoiceItems.isEmpty) {
       return Center(
-        child: Text(localization.clickPlusToAddItem,
+        child: Text(
+          localization.clickPlusToAddItem,
           style: TextStyle(
             color: Colors.grey,
             fontSize: 20.0,
@@ -92,16 +95,16 @@ class ItemEditDetails extends StatefulWidget {
   ItemEditDetailsState createState() => ItemEditDetailsState();
 }
 
-class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliveClientMixin {
+class ItemEditDetailsState extends State<ItemEditDetails> {
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
   final _qtyController = TextEditingController();
+  final _discountController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void didChangeDependencies() {
@@ -110,20 +113,30 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
       _notesController,
       _costController,
       _qtyController,
+      _discountController,
+      _custom1Controller,
+      _custom2Controller,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
+    final state = widget.viewModel.state;
     final invoiceItem = widget.invoiceItem;
+
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
-    _costController.text = formatNumber(
-        invoiceItem.cost, widget.viewModel.state,
+    _costController.text = formatNumber(invoiceItem.cost, state,
         formatNumberType: FormatNumberType.input);
-    _qtyController.text = formatNumber(invoiceItem.qty, widget.viewModel.state,
+    _qtyController.text = formatNumber(invoiceItem.qty, state,
         formatNumberType: FormatNumberType.input);
+    _discountController.text = formatNumber(invoiceItem.discount, state,
+        formatNumberType: FormatNumberType.input);
+    _custom1Controller.text = invoiceItem.customValue1;
+    _custom2Controller.text = invoiceItem.customValue2;
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -143,7 +156,11 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()
       ..cost = double.tryParse(_costController.text) ?? 0.0
-      ..qty = double.tryParse(_qtyController.text) ?? 0.0);
+      ..qty = double.tryParse(_qtyController.text) ?? 0.0
+      ..discount = double.tryParse(_discountController.text) ?? 0.0
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+    );
     if (invoiceItem != widget.invoiceItem) {
       widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
     }
@@ -152,6 +169,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final invoiceItem = widget.invoiceItem;
+    final company = viewModel.state.selectedCompany;
 
     void _confirmDelete() {
       showDialog<AlertDialog>(
@@ -193,8 +213,17 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
             labelText: localization.description,
           ),
         ),
+        CustomField(
+          controller: _custom1Controller,
+          labelText: company.getCustomFieldLabel(CustomFieldType.product1),
+          options: company.getCustomFieldValues(CustomFieldType.product1),
+        ),
+        CustomField(
+          controller: _custom2Controller,
+          labelText: company.getCustomFieldLabel(CustomFieldType.product2),
+          options: company.getCustomFieldValues(CustomFieldType.product2),
+        ),
         TextFormField(
-          autocorrect: false,
           controller: _costController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
@@ -202,13 +231,45 @@ class ItemEditDetailsState extends State<ItemEditDetails> with AutomaticKeepAliv
           ),
         ),
         TextFormField(
-          autocorrect: false,
           controller: _qtyController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: localization.quantity,
           ),
         ),
+        TextFormField(
+          controller: _discountController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: localization.discount,
+          ),
+        ),
+        company.enableInvoiceTaxes
+            ? TaxRateDropdown(
+                onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                    invoiceItem.rebuild((b) => b
+                      ..taxRate1 = taxRate.rate
+                      ..taxName1 = taxRate.name),
+                    widget.index),
+                labelText: localization.tax,
+                state: viewModel.state,
+                initialTaxName: invoiceItem.taxName1,
+                initialTaxRate: invoiceItem.taxRate1,
+              )
+            : Container(),
+        company.enableInvoiceTaxes && company.enableSecondTaxRate
+            ? TaxRateDropdown(
+                onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                    invoiceItem.rebuild((b) => b
+                      ..taxRate2 = taxRate.rate
+                      ..taxName2 = taxRate.name),
+                    widget.index),
+                labelText: localization.tax,
+                state: viewModel.state,
+                initialTaxName: invoiceItem.taxName2,
+                initialTaxRate: invoiceItem.taxRate2,
+              )
+            : Container(),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[

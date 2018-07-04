@@ -82,7 +82,7 @@ class ClientListVM {
           final Completer<Null> completer = new Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
-            if (client.isArchived) {
+            if (client.isDeleted || client.isArchived) {
               store.dispatch(RestoreClientRequest(completer, client.id));
               message = AppLocalization.of(context).successfullyRestoredClient;
             } else {
@@ -90,7 +90,7 @@ class ClientListVM {
               message = AppLocalization.of(context).successfullyArchivedClient;
             }
           } else if (direction == DismissDirection.startToEnd) {
-            if (client.isArchived || client.isDeleted) {
+            if (client.isDeleted) {
               store.dispatch(RestoreClientRequest(completer, client.id));
               message = AppLocalization.of(context).successfullyRestoredClient;
             } else {

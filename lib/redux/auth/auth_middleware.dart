@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/.env.dart';
+import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/redux/app/app_actions.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
@@ -74,7 +75,8 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
 
         action.completer.complete(null);
       } else {
-        store.dispatch(UserLoginFailure('The minimum version is v4.5'));
+        store.dispatch(UserLoginFailure(
+            'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion'));
       }
     }).catchError((Object error) {
       print(error);
@@ -91,8 +93,5 @@ bool _isVersionSupported(String version) {
   final int major = int.parse(parts[0]);
   final int minor = int.parse(parts[1]);
 
-  return true;
-
-  // TODO enable before release
-  //return major >= 4 && minor >= 5;
+  return major >= kMinMajorAppVersion && minor >= kMinMinorAppVersion;
 }

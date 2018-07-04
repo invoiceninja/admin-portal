@@ -1,4 +1,6 @@
 import 'package:invoiceninja/redux/client/client_selectors.dart';
+import 'package:invoiceninja/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/entities.dart';
@@ -20,17 +22,18 @@ class InvoiceEditDetails extends StatefulWidget {
   InvoiceEditDetailsState createState() => new InvoiceEditDetailsState();
 }
 
-class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKeepAliveClientMixin {
+class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _invoiceNumberController = TextEditingController();
   final _invoiceDateController = TextEditingController();
   final _poNumberController = TextEditingController();
   final _discountController = TextEditingController();
   final _partialController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
+  final _surcharge1Controller = TextEditingController();
+  final _surcharge2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void didChangeDependencies() {
@@ -40,9 +43,13 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
       _poNumberController,
       _discountController,
       _partialController,
+      _custom1Controller,
+      _custom2Controller,
+      _surcharge1Controller,
+      _surcharge2Controller,
     ];
-
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final invoice = widget.viewModel.invoice;
     _invoiceNumberController.text = invoice.invoiceNumber;
@@ -54,8 +61,17 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
     _partialController.text = formatNumber(
         invoice.partial, widget.viewModel.state,
         formatNumberType: FormatNumberType.input);
+    _custom1Controller.text = invoice.customTextValue1;
+    _custom2Controller.text = invoice.customTextValue2;
+    _surcharge1Controller.text = formatNumber(
+        invoice.customValue1, widget.viewModel.state,
+        formatNumberType: FormatNumberType.input);
+    _surcharge2Controller.text = formatNumber(
+        invoice.customValue2, widget.viewModel.state,
+        formatNumberType: FormatNumberType.input);
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -77,7 +93,12 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
           : _invoiceNumberController.text.trim()
       ..poNumber = _poNumberController.text.trim()
       ..discount = double.tryParse(_discountController.text) ?? 0.0
-      ..partial = double.tryParse(_partialController.text) ?? 0.0);
+      ..partial = double.tryParse(_partialController.text) ?? 0.0
+      ..customTextValue1 = _custom1Controller.text.trim()
+      ..customTextValue2 = _custom2Controller.text.trim()
+      ..customValue1 = double.tryParse(_surcharge1Controller.text) ?? 0.0
+      ..customValue2 = double.tryParse(_surcharge2Controller.text) ?? 0.0
+    );
     if (invoice != widget.viewModel.invoice) {
       widget.viewModel.onChanged(invoice);
     }
@@ -88,6 +109,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
+    final company = viewModel.state.selectedCompany;
 
     return ListView(
       children: <Widget>[
@@ -100,7 +122,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
                     initialValue:
                         viewModel.clientMap[invoice.clientId]?.displayName,
                     entityMap: viewModel.clientMap,
-                    entityList: memoizedDropdownClientList(viewModel.clientMap, viewModel.clientList),
+                    entityList: memoizedDropdownClientList(
+                        viewModel.clientMap, viewModel.clientList),
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseSelectAClient
                         : null,
@@ -115,6 +138,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
                     decoration: InputDecoration(
                       labelText: localization.invoiceNumber,
                     ),
+                    validator: (String val) => val.trim().isEmpty
+                        ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
+                        : null,
                   ),
             DatePicker(
               validator: (String val) => val.trim().isEmpty
@@ -135,7 +161,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
               },
             ),
             TextFormField(
-              autocorrect: false,
               controller: _partialController,
               decoration: InputDecoration(
                 labelText: localization.partial,
@@ -164,7 +189,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
               children: <Widget>[
                 Expanded(
                   child: TextFormField(
-                    autocorrect: false,
                     controller: _discountController,
                     decoration: InputDecoration(
                       labelText: localization.discount,
@@ -177,31 +201,81 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> with AutomaticKe
                 ),
                 DropdownButtonHideUnderline(
                   child: DropdownButton<bool>(
-                      value: invoice.isAmountDiscount,
-                      items: [
-                        DropdownMenuItem<bool>(
-                          child: Text(localization.percent,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                            ),
+                    value: invoice.isAmountDiscount,
+                    items: [
+                      DropdownMenuItem<bool>(
+                        child: Text(
+                          localization.percent,
+                          style: TextStyle(
+                            color: Colors.grey[600],
                           ),
-                          value: false,
                         ),
-                        DropdownMenuItem<bool>(
-                          child: Text(localization.amount,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                            ),
+                        value: false,
+                      ),
+                      DropdownMenuItem<bool>(
+                        child: Text(
+                          localization.amount,
+                          style: TextStyle(
+                            color: Colors.grey[600],
                           ),
-                          value: true,
-                        )
-                      ],
-                      onChanged: (bool value) => viewModel
-                          .onChanged(invoice.rebuild((b) => b..isAmountDiscount = value)),
+                        ),
+                        value: true,
+                      )
+                    ],
+                    onChanged: (bool value) => viewModel.onChanged(
+                        invoice.rebuild((b) => b..isAmountDiscount = value)),
                   ),
                 )
               ],
             ),
+            CustomField(
+              controller: _custom1Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.invoice1),
+              options: company.getCustomFieldValues(CustomFieldType.invoice1),
+            ),
+            CustomField(
+              controller: _custom2Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.invoice2),
+              options: company.getCustomFieldValues(CustomFieldType.invoice2),
+            ),
+            company.getCustomFieldLabel(CustomFieldType.surcharge1).isNotEmpty ? TextFormField(
+              controller: _surcharge1Controller,
+              decoration: InputDecoration(
+                labelText: company.getCustomFieldLabel(CustomFieldType.surcharge1),
+              ),
+              keyboardType: TextInputType.number,
+            ) : Container(),
+            company.getCustomFieldLabel(CustomFieldType.surcharge2).isNotEmpty ? TextFormField(
+              controller: _surcharge2Controller,
+              decoration: InputDecoration(
+                labelText: company.getCustomFieldLabel(CustomFieldType.surcharge2),
+              ),
+              keyboardType: TextInputType.number,
+            ) : Container(),
+            company.enableInvoiceTaxes
+                ? TaxRateDropdown(
+                    onSelected: (taxRate) =>
+                        viewModel.onChanged(invoice.rebuild((b) => b
+                          ..taxRate1 = taxRate.rate
+                          ..taxName1 = taxRate.name)),
+                    labelText: localization.tax,
+                    state: viewModel.state,
+                    initialTaxName: invoice.taxName1,
+                    initialTaxRate: invoice.taxRate1,
+                  )
+                : Container(),
+            company.enableInvoiceTaxes && company.enableSecondTaxRate
+                ? TaxRateDropdown(
+                    onSelected: (taxRate) =>
+                        viewModel.onChanged(invoice.rebuild((b) => b
+                          ..taxRate2 = taxRate.rate
+                          ..taxName2 = taxRate.name)),
+                    labelText: localization.tax,
+                    state: viewModel.state,
+                    initialTaxName: invoice.taxName2,
+                    initialTaxRate: invoice.taxRate2,
+                  )
+                : Container(),
           ],
         ),
       ],

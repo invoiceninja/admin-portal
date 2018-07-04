@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/data/models/mixins/invoice_mixin.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 
@@ -172,6 +173,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   @BuiltValueField(wireName: 'recurring_invoice_id')
   int get recurringInvoiceId;
 
+  @override
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
 
@@ -179,6 +181,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   @BuiltValueField(wireName: 'tax_rate1')
   double get taxRate1;
 
+  @override
   @BuiltValueField(wireName: 'tax_name2')
   String get taxName2;
 

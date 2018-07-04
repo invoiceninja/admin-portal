@@ -313,3 +313,17 @@ Middleware<AppState> _createDeleteState(
     next(action);
   };
 }
+
+/*
+Future<bool> _checkLastLoadWasSuccesfull() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final initialized = prefs.getBool('initialized');
+  prefs.setBool('initialized', false);
+  return initialized;
+}
+
+void _setLastLoadWasSuccesfull() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('initialized', true);
+}
+*/

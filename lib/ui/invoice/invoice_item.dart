@@ -10,7 +10,6 @@ import '../app/entity_state_label.dart';
 class InvoiceItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  //final ValueChanged<bool> onCheckboxChanged;
   final InvoiceEntity invoice;
   final ClientEntity client;
   final AppState state;
@@ -19,7 +18,6 @@ class InvoiceItem extends StatelessWidget {
   const InvoiceItem({
     @required this.onDismissed,
     @required this.onTap,
-    //@required this.onCheckboxChanged,
     @required this.invoice,
     @required this.client,
     @required this.state,
@@ -28,22 +26,16 @@ class InvoiceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final searchMatch = filter != null && filter.isNotEmpty
+        ? invoice.matchesSearchValue(filter)
+        : null;
+
     return DismissibleEntity(
       entity: invoice,
       onDismissed: onDismissed,
       onTap: onTap,
       child: ListTile(
         onTap: onTap,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.invoiceItemCheckbox(invoice.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -51,8 +43,6 @@ class InvoiceItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  //invoice.invoiceNumber,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
@@ -64,10 +54,10 @@ class InvoiceItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              filter != null && filter.isNotEmpty
-                  ? invoice.matchesSearchValue(filter) ?? ''
-                  : invoice.invoiceNumber,
+            searchMatch == null
+                ? Text(invoice.invoiceNumber)
+                : Text(
+              searchMatch,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),

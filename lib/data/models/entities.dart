@@ -3,7 +3,6 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/utils/formatting.dart';
 
 part 'entities.g.dart';
 
@@ -116,112 +115,6 @@ abstract class ConvertToInvoiceItem {
   InvoiceItemEntity get asInvoiceItem;
 }
 
-abstract class CalculateInvoiceTotal {
-  bool get isAmountDiscount;
-  double get taxRate1;
-  double get taxRate2;
-  double get discount;
-  double get customValue1;
-  double get customValue2;
-  bool get customTaxes1;
-  bool get customTaxes2;
-  BuiltList<InvoiceItemEntity> get invoiceItems;
-
-  double calculateTotal([bool useInclusiveTaxes = false]) {
-    double total = baseTotal;
-    double itemTax = 0.0;
-
-    invoiceItems.forEach((item) {
-      final double qty = round(item.qty, 4);
-      final double cost = round(item.cost, 4);
-      final double itemDiscount = round(item.discount, 2);
-      final double taxRate1 = round(item.taxRate1, 3);
-      final double taxRate2 = round(item.taxRate2, 3);
-
-      double lineTotal = qty * cost;
-
-      if (itemDiscount != 0) {
-        if (isAmountDiscount) {
-          lineTotal -= itemDiscount;
-        } else {
-          lineTotal -= round(lineTotal * itemDiscount / 100, 4);
-        }
-      }
-
-      if (discount != 0) {
-        if (isAmountDiscount) {
-          if (total != 0) {
-            lineTotal -= round(lineTotal / total * discount, 4);
-          }
-        }
-      }
-      if (taxRate1 != 0) {
-        itemTax += round(lineTotal * taxRate1 / 100, 2);
-      }
-      if (taxRate2 != 0) {
-        itemTax += round(lineTotal * taxRate2 / 100, 2);
-      }
-    });
-
-    if (discount != 0.0) {
-      if (isAmountDiscount) {
-        total -= round(discount, 2);
-      } else {
-        total -= round(total * discount / 100, 2);
-      }
-    }
-
-    if (customValue1 != 0.0 && customTaxes1) {
-      total += round(customValue1, 2);
-    }
-
-    if (customValue2 != 0.0 && customTaxes2) {
-      total += round(customValue2, 2);
-    }
-
-    if (! useInclusiveTaxes) {
-      final double taxAmount1 = round(total * taxRate1 / 100, 2);
-      final double taxAmount2 = round(total * taxRate1 / 100, 2);
-
-      total += itemTax + taxAmount1 + taxAmount2;
-    }
-
-    if (customValue1 != 0.0 && ! customTaxes1) {
-      total += round(customValue1, 2);
-    }
-
-    if (customValue2 != 0.0 && ! customTaxes2) {
-      total += round(customValue2, 2);
-    }
-
-    return total;
-  }
-
-  double get baseTotal {
-    var total = 0.0;
-
-    invoiceItems.forEach((item) {
-      final double qty = round(item.qty, 4);
-      final double cost = round(item.cost, 4);
-      final double discount = round(item.discount, 2);
-
-      double lineTotal = qty * cost;
-
-      if (discount != 0) {
-        if (isAmountDiscount) {
-          lineTotal -= discount;
-        } else {
-          lineTotal -= round(lineTotal * discount / 100, 4);
-        }
-      }
-
-      total += round(lineTotal, 2);
-    });
-
-    return total;
-  }
-}
-
 
 abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> {
 
@@ -279,151 +172,6 @@ abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
   static Serializer<StaticData> get serializer => _$staticDataSerializer;
 }
 
-abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {
-
-  factory CompanyEntity() {
-    return _$CompanyEntity._(
-      name: '',
-      token: '',
-      plan: '',
-      logoUrl: '',
-      convertProductExchangeRate: false,
-      currencyId: 1,
-      dateFormatId: 1,
-      datetimeFormatId: 1,
-      defaultInvoiceDesignId: 1,
-      defaultInvoiceFooter: '',
-      defaultInvoiceTerms: '',
-      defaultPaymentTerms: 0,
-      defaultPaymentTypeId: 0,
-      defaultQuoteDesignId: 1,
-      defaultQuoteTerms: '',
-      defaultTaskRate: 0.0,
-      defaultTaxName1: '',
-      defaultTaxRate1: 0.0,
-      defaultTaxName2: '',
-      defaultTaxRate2: 0.0,
-      enableCustomInvoiceTaxes1: false,
-      enableCustomInvoiceTaxes2: false,
-      enabledModules: 0,
-      enableInclusiveTaxes: false,
-      enableInvoiceItemTaxes: false,
-      enableInvoiceTaxes: true,
-      enableMilitaryTime: false,
-      enableSecondTaxRate: false,
-      financialYearStart: 1,
-      languageId: 1,
-      showCurrencyCode: false,
-      showInvoiceItemTaxes: false,
-      startOfWeek: 1,
-      timezoneId: 1,
-    );
-  }
-  CompanyEntity._();
-
-  String get name;
-  String get token;
-
-  String get plan;
-
-  @BuiltValueField(wireName: 'logo_url')
-  String get logoUrl;
-
-  @BuiltValueField(wireName: 'currency_id')
-  int get currencyId;
-
-  @BuiltValueField(wireName: 'timezone_id')
-  int get timezoneId;
-
-  @BuiltValueField(wireName: 'date_format_id')
-  int get dateFormatId;
-
-  @BuiltValueField(wireName: 'datetime_format_id')
-  int get datetimeFormatId;
-
-  @BuiltValueField(wireName: 'invoice_terms')
-  String get defaultInvoiceTerms;
-
-  @BuiltValueField(wireName: 'invoice_taxes')
-  bool get enableInvoiceTaxes;
-
-  @BuiltValueField(wireName: 'invoice_item_taxes')
-  bool get enableInvoiceItemTaxes;
-
-  @BuiltValueField(wireName: 'invoice_design_id')
-  int get defaultInvoiceDesignId;
-
-  @BuiltValueField(wireName: 'quote_design_id')
-  int get defaultQuoteDesignId;
-
-  @BuiltValueField(wireName: 'language_id')
-  int get languageId;
-
-  @BuiltValueField(wireName: 'invoice_footer')
-  String get defaultInvoiceFooter;
-
-  @BuiltValueField(wireName: 'show_item_taxes')
-  bool get showInvoiceItemTaxes;
-
-  @BuiltValueField(wireName: 'military_time')
-  bool get enableMilitaryTime;
-
-  @BuiltValueField(wireName: 'tax_name1')
-  String get defaultTaxName1;
-
-  @BuiltValueField(wireName: 'tax_rate1')
-  double get defaultTaxRate1;
-
-  @BuiltValueField(wireName: 'tax_name2')
-  String get defaultTaxName2;
-
-  @BuiltValueField(wireName: 'tax_rate2')
-  double get defaultTaxRate2;
-
-  @BuiltValueField(wireName: 'quote_terms')
-  String get defaultQuoteTerms;
-
-  @BuiltValueField(wireName: 'show_currency_code')
-  bool get showCurrencyCode;
-
-  @BuiltValueField(wireName: 'enable_second_tax_rate')
-  bool get enableSecondTaxRate;
-
-  @BuiltValueField(wireName: 'start_of_week')
-  int get startOfWeek;
-
-  @BuiltValueField(wireName: 'financial_year_start')
-  int get financialYearStart;
-
-  @BuiltValueField(wireName: 'enabled_modules')
-  int get enabledModules;
-
-  @BuiltValueField(wireName: 'payment_terms')
-  int get defaultPaymentTerms;
-
-  @BuiltValueField(wireName: 'payment_type_id')
-  int get defaultPaymentTypeId;
-
-  @BuiltValueField(wireName: 'task_rate')
-  double get defaultTaskRate;
-
-  @BuiltValueField(wireName: 'inclusive_taxes')
-  bool get enableInclusiveTaxes;
-
-  @BuiltValueField(wireName: 'convert_products')
-  bool get convertProductExchangeRate;
-
-  @BuiltValueField(wireName: 'custom_invoice_taxes1')
-  bool get enableCustomInvoiceTaxes1;
-
-  @BuiltValueField(wireName: 'custom_invoice_taxes2')
-  bool get enableCustomInvoiceTaxes2;
-
-  //@BuiltValueField(wireName: 'custom_fields')
-  //@BuiltValueField(wireName: 'invoice_labels')
-
-  static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
-}
 
 
 abstract class DashboardResponse implements Built<DashboardResponse, DashboardResponseBuilder> {
@@ -436,6 +184,26 @@ abstract class DashboardResponse implements Built<DashboardResponse, DashboardRe
   static Serializer<DashboardResponse> get serializer => _$dashboardResponseSerializer;
 }
 
+class CustomFieldType {
+  static const String product1 = 'product1';
+  static const String product2 = 'product2';
+  static const String client1 = 'client1';
+  static const String client2 = 'client2';
+  static const String contact1 = 'contact1';
+  static const String contact2 = 'contact2';
+  static const String task1 = 'task1';
+  static const String task2 = 'task2';
+  static const String project1 = 'project1';
+  static const String project2 = 'project2';
+  static const String expense1 = 'expense1';
+  static const String expense2 = 'expense2';
+  static const String vendor1 = 'vendor1';
+  static const String vendor2 = 'vendor2';
+  static const String invoice1 = 'invoice_text1';
+  static const String invoice2 = 'invoice_text2';
+  static const String surcharge1 = 'invoice1';
+  static const String surcharge2 = 'invoice2';
+}
 
 abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntityBuilder> {
 

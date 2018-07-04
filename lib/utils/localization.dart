@@ -150,6 +150,9 @@ class AppLocalization {
       'currency': 'Currency',
       'created_at': 'Created',
       'updated_at': 'Updated',
+      'tax': 'Tax',
+      'please_enter_an_invoice_number': 'Please enter an invoice number',
+      'please_enter_a_quote_number': 'Please enter a quote number',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -310,6 +313,9 @@ class AppLocalization {
   String get currency => _localizedValues[locale.languageCode]['currency'];
   String get createdAt => _localizedValues[locale.languageCode]['created_at'];
   String get updatedAt => _localizedValues[locale.languageCode]['updated_at'];
+  String get tax => _localizedValues[locale.languageCode]['tax'];
+  String get pleaseEnterAnInvoiceNumber => _localizedValues[locale.languageCode]['please_enter_an_invoice_number'];
+  String get pleaseEnterAQuoteNumber => _localizedValues[locale.languageCode]['please_enter_a_quote_number'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
@@ -331,7 +337,7 @@ class AppLocalization {
 
 
   String lookup(String key) {    
-    return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? 'Missing: ' + key;
+    return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? key;
   }
 }
 

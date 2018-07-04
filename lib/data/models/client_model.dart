@@ -8,9 +8,9 @@ part 'client_model.g.dart';
 
 abstract class ClientListResponse
     implements Built<ClientListResponse, ClientListResponseBuilder> {
-
   factory ClientListResponse([void updates(ClientListResponseBuilder b)]) =
       _$ClientListResponse;
+
   ClientListResponse._();
 
   BuiltList<ClientEntity> get data;
@@ -23,6 +23,7 @@ abstract class ClientItemResponse
     implements Built<ClientItemResponse, ClientItemResponseBuilder> {
   factory ClientItemResponse([void updates(ClientItemResponseBuilder b)]) =
       _$ClientItemResponse;
+
   ClientItemResponse._();
 
   ClientEntity get data;
@@ -48,7 +49,6 @@ class ClientFields {
 abstract class ClientEntity extends Object
     with BaseEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-
   static int counter = 0;
 
   factory ClientEntity() {
@@ -95,6 +95,7 @@ abstract class ClientEntity extends Object
       isDeleted: false,
     );
   }
+
   ClientEntity._();
 
   @override
@@ -264,7 +265,7 @@ abstract class ClientEntity extends Object
   @override
   String matchesSearchValue(String search) {
     if (search == null || search.isEmpty) {
-      return '';
+      return null;
     }
 
     search = search.toLowerCase();
@@ -284,7 +285,7 @@ abstract class ClientEntity extends Object
       return contact.matchesSearchValue(search);
     }
 
-    return '';
+    return null;
   }
 
   @override
@@ -305,7 +306,6 @@ class ContactFields {
 abstract class ContactEntity extends Object
     with BaseEntity
     implements Built<ContactEntity, ContactEntityBuilder> {
-
   static int counter = 0;
 
   factory ContactEntity() {
@@ -324,6 +324,7 @@ abstract class ContactEntity extends Object
       isDeleted: false,
     );
   }
+
   ContactEntity._();
 
   @BuiltValueField(wireName: 'first_name')

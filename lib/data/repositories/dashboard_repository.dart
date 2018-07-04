@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:core';
+import 'package:invoiceninja/data/models/company_model.dart';
 import 'package:invoiceninja/data/models/serializers.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/data/models/entities.dart';

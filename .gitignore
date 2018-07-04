@@ -8,5 +8,7 @@
 
 build/
 
+.android/
+.ios/
 .flutter-plugins
 .env.dart

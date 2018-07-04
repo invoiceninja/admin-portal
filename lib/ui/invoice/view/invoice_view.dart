@@ -32,20 +32,21 @@ class _InvoiceViewState extends State<InvoiceView> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
-    final appState = viewModel.appState;
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
     final client = viewModel.client;
+    final company = state.selectedCompany;
 
     List<Widget> _buildView() {
       final invoice = widget.viewModel.invoice;
       final widgets = <Widget>[
         TwoValueHeader(
           label1: localization.totalAmount,
-          value1: formatNumber(invoice.amount, appState,
-              clientId: invoice.clientId),
+          value1:
+              formatNumber(invoice.amount, state, clientId: invoice.clientId),
           label2: localization.balanceDue,
-          value2: formatNumber(invoice.balance, appState,
-              clientId: invoice.clientId),
+          value2:
+              formatNumber(invoice.balance, state, clientId: invoice.clientId),
         ),
       ];
 
@@ -54,18 +55,27 @@ class _InvoiceViewState extends State<InvoiceView> {
             invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
-        InvoiceFields.partial: formatNumber(invoice.partial, appState,
+        InvoiceFields.partial: formatNumber(invoice.partial, state,
             clientId: invoice.clientId, zeroIsNull: true),
         InvoiceFields.partialDueDate: invoice.partialDueDate,
         InvoiceFields.poNumber: invoice.poNumber,
         InvoiceFields.discount: formatNumber(
-            invoice.discount, widget.viewModel.appState,
+            invoice.discount, widget.viewModel.state,
             clientId: invoice.clientId,
             zeroIsNull: true,
             formatNumberType: invoice.isAmountDiscount
                 ? FormatNumberType.money
                 : FormatNumberType.percent),
       };
+
+      if (invoice.customTextValue1.isNotEmpty) {
+        final label1 = company.getCustomFieldLabel(CustomFieldType.invoice1);
+        fields[label1] = invoice.customTextValue1;
+      }
+      if (invoice.customTextValue2.isNotEmpty) {
+        final label2 = company.getCustomFieldLabel(CustomFieldType.invoice2);
+        fields[label2] = invoice.customTextValue2;
+      }
 
       final List<Widget> fieldWidgets = [];
       fields.forEach((field, value) {
@@ -97,11 +107,14 @@ class _InvoiceViewState extends State<InvoiceView> {
         Divider(
           height: 1.0,
         ),
-        ListTile(
-          title: Text(client?.displayName ?? ''),
-          leading: Icon(FontAwesomeIcons.users, size: 18.0),
-          trailing: Icon(Icons.navigate_next),
-          onTap: () => viewModel.onClientPressed(context),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(client?.displayName ?? ''),
+            leading: Icon(FontAwesomeIcons.users, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () => viewModel.onClientPressed(context),
+          ),
         ),
         Divider(height: 1.0),
         Container(
@@ -109,15 +122,18 @@ class _InvoiceViewState extends State<InvoiceView> {
           height: 12.0,
         ),
         Divider(height: 1.0),
-        Padding(
-          padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-          child: IgnorePointer(
-            child: GridView.count(
-              shrinkWrap: true,
-              primary: true,
-              crossAxisCount: 2,
-              children: fieldWidgets,
-              childAspectRatio: 3.5,
+        Container(
+          color: Theme.of(context).canvasColor,
+          child: Padding(
+            padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
+            child: IgnorePointer(
+              child: GridView.count(
+                shrinkWrap: true,
+                primary: true,
+                crossAxisCount: 2,
+                children: fieldWidgets,
+                childAspectRatio: 3.5,
+              ),
             ),
           ),
         ),
@@ -142,10 +158,74 @@ class _InvoiceViewState extends State<InvoiceView> {
       invoice.invoiceItems.forEach((invoiceItem) {
         widgets.addAll([
           InvoiceItemListTile(
-              invoice: invoice, invoiceItem: invoiceItem, state: appState),
+              invoice: invoice, invoiceItem: invoiceItem, state: state),
           Divider(height: 1.0)
         ]);
       });
+
+      widgets.addAll([
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
+        ),
+        Divider(height: 1.0),
+      ]);
+
+      Widget surchargeRow(String label, double amount) {
+        return Container(
+          color: Theme.of(context).canvasColor,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16.0, top: 12.0, right: 16.0, bottom: 12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(label),
+                SizedBox(
+                  width: 80.0,
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(formatNumber(amount, viewModel.state,
+                          clientId: invoice.clientId))),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+
+      if (invoice.customValue1 != 0 && company.enableCustomInvoiceTaxes1) {
+        widgets.add(surchargeRow(
+            company.getCustomFieldLabel(CustomFieldType.surcharge1),
+            invoice.customValue1));
+      }
+
+      if (invoice.customValue2 != 0 && company.enableCustomInvoiceTaxes2) {
+        widgets.add(surchargeRow(
+            company.getCustomFieldLabel(CustomFieldType.surcharge2),
+            invoice.customValue2));
+      }
+
+      invoice
+          .calculateTaxes(company.enableInclusiveTaxes)
+          .forEach((taxName, taxAmount) {
+        widgets.add(surchargeRow(taxName, taxAmount));
+      });
+
+      if (invoice.customValue1 != 0 && !company.enableCustomInvoiceTaxes1) {
+        widgets.add(surchargeRow(
+            company.getCustomFieldLabel(CustomFieldType.surcharge1),
+            invoice.customValue1));
+      }
+
+      if (invoice.customValue2 != 0 && !company.enableCustomInvoiceTaxes2) {
+        widgets.add(surchargeRow(
+            company.getCustomFieldLabel(CustomFieldType.surcharge2),
+            invoice.customValue2));
+      }
+
+      widgets.addAll([
+        Divider(height: 1.0),
+      ]);
 
       return widgets;
     }
@@ -187,8 +267,11 @@ class _InvoiceViewState extends State<InvoiceView> {
                   )
                 ],
         ),
-        body: ListView(
-          children: _buildView(),
+        body: Container(
+          color: Theme.of(context).backgroundColor,
+          child: ListView(
+            children: _buildView(),
+          ),
         ),
       ),
     );

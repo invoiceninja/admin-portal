@@ -35,9 +35,8 @@ String formatNumber(
   final CompanyEntity company = state.selectedCompany;
   final ClientEntity client = state.selectedCompanyState.clientState.map[clientId];
 
-  //var countryId = client?.countryId ?? company.countryId;
+  final countryId = client?.countryId ?? company.countryId;
   int currencyId;
-  final int countryId = client?.countryId ?? 1;
 
   if (client != null && client.currencyId > 0) {
     currencyId = client.currencyId;
@@ -83,7 +82,11 @@ String formatNumber(
   } else if (formatNumberType == FormatNumberType.input) {
     return NumberFormat('#.####', 'custom').format(value);
   } else {
-    formatter = NumberFormat('#,##0.00##', 'custom');
+    if (formatNumberType == FormatNumberType.percent) {
+      formatter = NumberFormat('#,##0.####', 'custom');
+    } else {
+      formatter = NumberFormat('#,##0.00##', 'custom');
+    }
     formatted = formatter.format(value);
   }
 
@@ -118,10 +121,10 @@ String formatAddress(
       (isShipping ? object.shippingAddress1 : object.address1) ?? '';
   final String address2 =
       (isShipping ? object.shippingAddress2 : object.address2) ?? '';
-  final String city = (isShipping ? object.city : object.city) ?? '';
-  final String state = (isShipping ? object.state : object.state) ?? '';
+  final String city = (isShipping ? object.shippingCity : object.city) ?? '';
+  final String state = (isShipping ? object.shippingState : object.state) ?? '';
   final String postalCode =
-      (isShipping ? object.postalCode : object.postalCode) ?? '';
+      (isShipping ? object.shippingPostalCode : object.postalCode) ?? '';
 
   if (address1.isNotEmpty) {
     str += address1 + delimiter;
