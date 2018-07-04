@@ -20,7 +20,7 @@ The project is under active development, for the time being we recommend using t
 - [x] Dashboard
 - [x] Clients
 - [x] Products
-- [ ] Invoices
+- [x] Invoices
 - [ ] Payments
 - [ ] Quotes
 - [ ] Recurring
