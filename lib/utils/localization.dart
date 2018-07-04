@@ -123,7 +123,7 @@ class AppLocalization {
       'quote_date': 'Quote Date',
       'valid_until': 'Valid Until',
       'items': 'Items',
-      'partial': 'Partial/Deposit',
+      'partial_deposit': 'Partial/Deposit',
       'description': 'Description',
       'unit_cost': 'Unit Cost',
       'quantity': 'Quantity',
@@ -155,6 +155,12 @@ class AppLocalization {
       'please_enter_a_quote_number': 'Please enter a quote number',
       'clients_invoices': ':client\'s invoices',
       'past_due': 'Past Due',
+      'draft': 'Draft',
+      'sent': 'Sent',
+      'viewed': 'Viewed',
+      'approved': 'Approved',
+      'partial': 'Partial',
+      'paid': 'Paid',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -288,7 +294,7 @@ class AppLocalization {
   String get quoteDate => _localizedValues[locale.languageCode]['quote_date'];
   String get validUntil => _localizedValues[locale.languageCode]['valid_until'];
   String get items => _localizedValues[locale.languageCode]['items'];
-  String get partial => _localizedValues[locale.languageCode]['partial'];
+  String get partialDeposit => _localizedValues[locale.languageCode]['partial_deposit'];
   String get description => _localizedValues[locale.languageCode]['description'];
   String get unitCost => _localizedValues[locale.languageCode]['unit_cost'];
   String get quantity => _localizedValues[locale.languageCode]['quantity'];
@@ -320,6 +326,12 @@ class AppLocalization {
   String get pleaseEnterAQuoteNumber => _localizedValues[locale.languageCode]['please_enter_a_quote_number'];
   String get clientsInvoices => _localizedValues[locale.languageCode]['clients_invoices'];
   String get pastDue => _localizedValues[locale.languageCode]['past_due'];
+  String get draft => _localizedValues[locale.languageCode]['draft'];
+  String get sent => _localizedValues[locale.languageCode]['sent'];
+  String get viewed => _localizedValues[locale.languageCode]['viewed'];
+  String get approved => _localizedValues[locale.languageCode]['approved'];
+  String get partial => _localizedValues[locale.languageCode]['partial'];
+  String get paid => _localizedValues[locale.languageCode]['paid'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

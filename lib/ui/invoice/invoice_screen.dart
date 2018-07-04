@@ -1,3 +1,4 @@
+import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja/ui/app/app_search.dart';
 import 'package:invoiceninja/ui/app/app_search_button.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -50,6 +51,32 @@ class InvoiceScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterInvoicesByState(state));
         },
+        statuses: [
+          InvoiceStatusEntity().rebuild((b) => b
+            ..id = 1
+            ..name = localization.draft,
+          ),
+          InvoiceStatusEntity().rebuild((b) => b
+            ..id = 2
+            ..name = localization.sent,
+          ),
+          InvoiceStatusEntity().rebuild((b) => b
+            ..id = 3
+            ..name = localization.viewed,
+          ),
+          InvoiceStatusEntity().rebuild((b) => b
+            ..id = 5
+            ..name = localization.partial,
+          ),
+          InvoiceStatusEntity().rebuild((b) => b
+            ..id = 6
+            ..name = localization.paid,
+          ),
+          InvoiceStatusEntity().rebuild((b) => b
+            ..id = -1
+            ..name = localization.pastDue,
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(

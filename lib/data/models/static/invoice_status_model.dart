@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/data/models/entities.dart';
 
 part 'invoice_status_model.g.dart';
 
@@ -29,7 +30,7 @@ class InvoiceStatusFields {
   
 }
 
-abstract class InvoiceStatusEntity implements Built<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
+abstract class InvoiceStatusEntity extends Object with EntityStatus implements Built<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
 
   factory InvoiceStatusEntity() {
     return _$InvoiceStatusEntity._(
@@ -38,9 +39,6 @@ abstract class InvoiceStatusEntity implements Built<InvoiceStatusEntity, Invoice
     );
   }
   InvoiceStatusEntity._();
-
-  int get id;
-  String get name;
 
   static Serializer<InvoiceStatusEntity> get serializer => _$invoiceStatusEntitySerializer;
 }

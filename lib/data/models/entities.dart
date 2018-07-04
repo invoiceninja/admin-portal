@@ -52,6 +52,11 @@ class EntityState extends EnumClass {
   static EntityState valueOf(String name) => _$valueOf(name);
 }
 
+abstract class EntityStatus {
+  int get id;
+  String get name;
+}
+
 abstract class SelectableEntity {
   @nullable
   int get id;

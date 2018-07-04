@@ -1,3 +1,4 @@
+
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -12,17 +13,18 @@ class AppBottomBar extends StatefulWidget {
   final List<String> sortFields;
   final Function(String) onSelectedSortField;
   final EntityType entityType;
-  final BuiltList<int> selectedStatuses;
-  final Function(List<int>) onSelectedStatus;
+  final BuiltList<int> selectedStates;
   final Function(EntityState, bool) onSelectedState;
+  final List<EntityStatus> statuses;
 
   const AppBottomBar(
       {this.sortFields,
         this.onSelectedSortField,
         this.entityType,
-        this.selectedStatuses,
+        this.selectedStates,
         this.onSelectedState,
-        this.onSelectedStatus});
+        this.statuses,
+      });
 
   @override
   _AppBottomBarState createState() => new _AppBottomBarState();
@@ -30,17 +32,18 @@ class AppBottomBar extends StatefulWidget {
 
 class _AppBottomBarState extends State<AppBottomBar> {
   PersistentBottomSheetController _sortController;
-  PersistentBottomSheetController _filterController;
+  PersistentBottomSheetController _filterStateController;
+  PersistentBottomSheetController _filterStatusController;
 
   @override
   Widget build(BuildContext context) {
-    final _showFilterSheet = () {
-      if (_filterController != null) {
-        _filterController.close();
+    final _showFilterStateSheet = () {
+      if (_filterStateController != null) {
+        _filterStateController.close();
         return;
       }
 
-      _filterController = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+      _filterStateController = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return StoreConnector<AppState, BuiltList<EntityState>>(
           //distinct: true,
           converter: (Store<AppState> store) => store.state.getListState(widget.entityType).stateFilters,
@@ -85,8 +88,47 @@ class _AppBottomBarState extends State<AppBottomBar> {
         );
       });
 
-      _filterController.closed.whenComplete(() {
-        _filterController = null;
+      _filterStateController.closed.whenComplete(() {
+        _filterStateController = null;
+      });
+    };
+
+    final _showFilterStatusSheet = () {
+      if (_filterStatusController != null) {
+        _filterStatusController.close();
+        return;
+      }
+
+      _filterStatusController = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+        return StoreConnector<AppState, BuiltList<int>>(
+          converter: (Store<AppState> store) => store.state.getListState(widget.entityType).statusFilters,
+          builder: (BuildContext context, stateFilters) {
+            return Container(
+              color: Theme.of(context).backgroundColor,
+              child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                Column(
+                  children: widget.statuses.map((status) {
+                    return CheckboxListTile(
+                      key: Key(status.toString()),
+                      title: Text(AppLocalization.of(context).lookup(status.name)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      //value: statusFilters.contains(status),
+                      value: true,
+                      dense: true,
+                      onChanged: (value) {
+                        //widget.onSelectedState(status, value);
+                      },
+                    );
+                  }).toList(),
+                ),
+              ]),
+            );
+          },
+        );
+      });
+
+      _filterStatusController.closed.whenComplete(() {
+        _filterStatusController = null;
       });
     };
 
@@ -143,7 +185,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
           IconButton(
             tooltip: AppLocalization.of(context).filter,
             icon: Icon(Icons.filter_list),
-            onPressed: _showFilterSheet,
+            onPressed: _showFilterStateSheet,
+          ),
+          IconButton(
+            tooltip: AppLocalization.of(context).filter,
+            icon: Icon(Icons.filter),
+            onPressed: _showFilterStatusSheet,
           ),
         ],
       ),

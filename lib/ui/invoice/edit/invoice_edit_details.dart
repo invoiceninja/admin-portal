@@ -163,7 +163,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             TextFormField(
               controller: _partialController,
               decoration: InputDecoration(
-                labelText: localization.partial,
+                labelText: localization.partialDeposit,
               ),
               keyboardType: TextInputType.number,
             ),
