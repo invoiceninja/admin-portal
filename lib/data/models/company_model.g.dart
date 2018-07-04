@@ -3,7 +3,7 @@
 part of 'company_model.dart';
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line
@@ -44,6 +44,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           specifiedType: const FullType(int)),
       'timezone_id',
       serializers.serialize(object.timezoneId,
+          specifiedType: const FullType(int)),
+      'country_id',
+      serializers.serialize(object.countryId,
           specifiedType: const FullType(int)),
       'date_format_id',
       serializers.serialize(object.dateFormatId,
@@ -171,6 +174,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'timezone_id':
           result.timezoneId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'country_id':
+          result.countryId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'date_format_id':
@@ -384,6 +391,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final int timezoneId;
   @override
+  final int countryId;
+  @override
   final int dateFormatId;
   @override
   final int datetimeFormatId;
@@ -452,6 +461,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.logoUrl,
       this.currencyId,
       this.timezoneId,
+      this.countryId,
       this.dateFormatId,
       this.datetimeFormatId,
       this.defaultInvoiceTerms,
@@ -494,6 +504,8 @@ class _$CompanyEntity extends CompanyEntity {
       throw new BuiltValueNullFieldError('CompanyEntity', 'currencyId');
     if (timezoneId == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'timezoneId');
+    if (countryId == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'countryId');
     if (dateFormatId == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'dateFormatId');
     if (datetimeFormatId == null)
@@ -584,6 +596,7 @@ class _$CompanyEntity extends CompanyEntity {
         logoUrl == other.logoUrl &&
         currencyId == other.currencyId &&
         timezoneId == other.timezoneId &&
+        countryId == other.countryId &&
         dateFormatId == other.dateFormatId &&
         datetimeFormatId == other.datetimeFormatId &&
         defaultInvoiceTerms == other.defaultInvoiceTerms &&
@@ -635,7 +648,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode),
                                                                                 enableMilitaryTime.hashCode),
                                                                             defaultTaxName1.hashCode),
                                                                         defaultTaxRate1.hashCode),
@@ -666,6 +679,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('logoUrl', logoUrl)
           ..add('currencyId', currencyId)
           ..add('timezoneId', timezoneId)
+          ..add('countryId', countryId)
           ..add('dateFormatId', dateFormatId)
           ..add('datetimeFormatId', datetimeFormatId)
           ..add('defaultInvoiceTerms', defaultInvoiceTerms)
@@ -726,6 +740,10 @@ class CompanyEntityBuilder
   int _timezoneId;
   int get timezoneId => _$this._timezoneId;
   set timezoneId(int timezoneId) => _$this._timezoneId = timezoneId;
+
+  int _countryId;
+  int get countryId => _$this._countryId;
+  set countryId(int countryId) => _$this._countryId = countryId;
 
   int _dateFormatId;
   int get dateFormatId => _$this._dateFormatId;
@@ -880,6 +898,7 @@ class CompanyEntityBuilder
       _logoUrl = _$v.logoUrl;
       _currencyId = _$v.currencyId;
       _timezoneId = _$v.timezoneId;
+      _countryId = _$v.countryId;
       _dateFormatId = _$v.dateFormatId;
       _datetimeFormatId = _$v.datetimeFormatId;
       _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
@@ -937,6 +956,7 @@ class CompanyEntityBuilder
               logoUrl: logoUrl,
               currencyId: currencyId,
               timezoneId: timezoneId,
+              countryId: countryId,
               dateFormatId: dateFormatId,
               datetimeFormatId: datetimeFormatId,
               defaultInvoiceTerms: defaultInvoiceTerms,

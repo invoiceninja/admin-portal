@@ -62,6 +62,9 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'timezone_id')
   int get timezoneId;
 
+  @BuiltValueField(wireName: 'country_id')
+  int get countryId;
+
   @BuiltValueField(wireName: 'date_format_id')
   int get dateFormatId;
 

@@ -32,7 +32,7 @@ class _InvoiceViewState extends State<InvoiceView> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
-    final appState = viewModel.state;
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
     final client = viewModel.client;
 
@@ -41,10 +41,10 @@ class _InvoiceViewState extends State<InvoiceView> {
       final widgets = <Widget>[
         TwoValueHeader(
           label1: localization.totalAmount,
-          value1: formatNumber(invoice.amount, appState,
+          value1: formatNumber(invoice.amount, state,
               clientId: invoice.clientId),
           label2: localization.balanceDue,
-          value2: formatNumber(invoice.balance, appState,
+          value2: formatNumber(invoice.balance, state,
               clientId: invoice.clientId),
         ),
       ];
@@ -54,7 +54,7 @@ class _InvoiceViewState extends State<InvoiceView> {
             invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
-        InvoiceFields.partial: formatNumber(invoice.partial, appState,
+        InvoiceFields.partial: formatNumber(invoice.partial, state,
             clientId: invoice.clientId, zeroIsNull: true),
         InvoiceFields.partialDueDate: invoice.partialDueDate,
         InvoiceFields.poNumber: invoice.poNumber,
@@ -142,7 +142,7 @@ class _InvoiceViewState extends State<InvoiceView> {
       invoice.invoiceItems.forEach((invoiceItem) {
         widgets.addAll([
           InvoiceItemListTile(
-              invoice: invoice, invoiceItem: invoiceItem, state: appState),
+              invoice: invoice, invoiceItem: invoiceItem, state: state),
           Divider(height: 1.0)
         ]);
       });
@@ -155,7 +155,7 @@ class _InvoiceViewState extends State<InvoiceView> {
         Divider(height: 1.0),
       ]);
 
-      invoice.calculateTaxes().forEach((taxName, taxAmount) {
+      invoice.calculateTaxes(state.selectedCompany.enableInclusiveTaxes).forEach((taxName, taxAmount) {
         widgets.add(Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(

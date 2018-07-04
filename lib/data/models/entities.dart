@@ -129,7 +129,17 @@ abstract class CalculateInvoiceTotal {
   bool get customTaxes2;
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
-  Map<String, double> calculateTaxes() {
+  double _calculateTaxAmount(double amount, double rate, bool useInclusiveTaxes) {
+    double taxAmount;
+    if (useInclusiveTaxes) {
+      taxAmount = amount - (amount / (1 + (rate / 100)));
+    } else {
+      taxAmount = amount * rate / 100;
+    }
+    return round(taxAmount, 2);
+  }
+
+  Map<String, double> calculateTaxes(bool useInclusiveTaxes) {
     double total = baseTotal;
     double taxAmount;
     final map = <String, double>{};
@@ -160,11 +170,11 @@ abstract class CalculateInvoiceTotal {
       }
 
       if (taxRate1 != 0) {
-        taxAmount = round(lineTotal * taxRate1 / 100, 2);
+        taxAmount = _calculateTaxAmount(lineTotal, taxRate1, useInclusiveTaxes);
         map.update(item.taxName1, (value) => value + taxAmount, ifAbsent: () => taxAmount);
       }
       if (taxRate2 != 0) {
-        taxAmount = round(lineTotal * taxRate2 / 100, 2);
+        taxAmount = _calculateTaxAmount(lineTotal, taxRate2, useInclusiveTaxes);
         map.update(item.taxName2, (value) => value + taxAmount, ifAbsent: () => taxAmount);
       }
     });
@@ -187,19 +197,19 @@ abstract class CalculateInvoiceTotal {
 
 
     if (taxRate1 != 0) {
-      taxAmount = round(total * taxRate1 / 100, 2);
+      taxAmount = _calculateTaxAmount(total, taxRate1, useInclusiveTaxes);
       map.update(taxName1, (value) => value + taxAmount, ifAbsent: () => taxAmount);
     }
 
     if (taxRate2 != 0) {
-      taxAmount = round(total * taxRate2 / 100, 2);
+      taxAmount = _calculateTaxAmount(total, taxRate2, useInclusiveTaxes);
       map.update(taxName2, (value) => value + taxAmount, ifAbsent: () => taxAmount);
     }
 
     return map;
   }
 
-  double calculateTotal([bool useInclusiveTaxes = false]) {
+  double calculateTotal(bool useInclusiveTaxes) {
     double total = baseTotal;
     double itemTax = 0.0;
 
