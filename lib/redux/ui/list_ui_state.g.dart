@@ -47,6 +47,12 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
         ..add(serializers.serialize(object.search,
             specifiedType: const FullType(String)));
     }
+    if (object.filterClientId != null) {
+      result
+        ..add('filterClientId')
+        ..add(serializers.serialize(object.filterClientId,
+            specifiedType: const FullType(int)));
+    }
 
     return result;
   }
@@ -65,6 +71,10 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
         case 'search':
           result.search = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'filterClientId':
+          result.filterClientId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'sortField':
           result.sortField = serializers.deserialize(value,
@@ -97,6 +107,8 @@ class _$ListUIState extends ListUIState {
   @override
   final String search;
   @override
+  final int filterClientId;
+  @override
   final String sortField;
   @override
   final bool sortAscending;
@@ -110,6 +122,7 @@ class _$ListUIState extends ListUIState {
 
   _$ListUIState._(
       {this.search,
+      this.filterClientId,
       this.sortField,
       this.sortAscending,
       this.stateFilters,
@@ -137,6 +150,7 @@ class _$ListUIState extends ListUIState {
     if (identical(other, this)) return true;
     if (other is! ListUIState) return false;
     return search == other.search &&
+        filterClientId == other.filterClientId &&
         sortField == other.sortField &&
         sortAscending == other.sortAscending &&
         stateFilters == other.stateFilters &&
@@ -147,7 +161,9 @@ class _$ListUIState extends ListUIState {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, search.hashCode), sortField.hashCode),
+            $jc(
+                $jc($jc($jc(0, search.hashCode), filterClientId.hashCode),
+                    sortField.hashCode),
                 sortAscending.hashCode),
             stateFilters.hashCode),
         statusFilters.hashCode));
@@ -157,6 +173,7 @@ class _$ListUIState extends ListUIState {
   String toString() {
     return (newBuiltValueToStringHelper('ListUIState')
           ..add('search', search)
+          ..add('filterClientId', filterClientId)
           ..add('sortField', sortField)
           ..add('sortAscending', sortAscending)
           ..add('stateFilters', stateFilters)
@@ -171,6 +188,11 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   String _search;
   String get search => _$this._search;
   set search(String search) => _$this._search = search;
+
+  int _filterClientId;
+  int get filterClientId => _$this._filterClientId;
+  set filterClientId(int filterClientId) =>
+      _$this._filterClientId = filterClientId;
 
   String _sortField;
   String get sortField => _$this._sortField;
@@ -198,6 +220,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   ListUIStateBuilder get _$this {
     if (_$v != null) {
       _search = _$v.search;
+      _filterClientId = _$v.filterClientId;
       _sortField = _$v.sortField;
       _sortAscending = _$v.sortAscending;
       _stateFilters = _$v.stateFilters?.toBuilder();
@@ -225,6 +248,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
       _$result = _$v ??
           new _$ListUIState._(
               search: search,
+              filterClientId: filterClientId,
               sortField: sortField,
               sortAscending: sortAscending,
               stateFilters: stateFilters.build(),

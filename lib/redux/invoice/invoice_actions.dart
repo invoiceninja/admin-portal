@@ -184,6 +184,12 @@ class FilterInvoicesByState implements PersistUI {
   FilterInvoicesByState(this.state);
 }
 
+class FilterInvoicesByClient implements PersistUI {
+  final int clientId;
+
+  FilterInvoicesByClient(this.clientId);
+}
+
 class FilterInvoiceDropdown {
   final String filter;
   FilterInvoiceDropdown(this.filter);

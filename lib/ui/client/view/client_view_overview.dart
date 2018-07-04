@@ -1,21 +1,24 @@
-import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/app/icon_message.dart';
 import 'package:invoiceninja/ui/app/two_value_header.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class ClientOverview extends StatelessWidget {
-  const ClientOverview({this.client, this.state});
+  const ClientOverview({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
 
-  final AppState state;
-  final ClientEntity client;
+  final ClientViewVM viewModel;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final client = viewModel.client;
+    final state = viewModel.state;
 
     return ListView(
       children: <Widget>[
@@ -35,11 +38,12 @@ class ClientOverview extends StatelessWidget {
           title: Text(localization.invoices),
           leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
           trailing: Icon(Icons.navigate_next),
-          onTap: () {},
+          onTap: () => viewModel.onInvoicesPressed(context),
         ),
         Divider(
           height: 1.0,
         ),
+        /*
         ListTile(
           title: Text(localization.payments),
           leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
@@ -94,6 +98,7 @@ class ClientOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
+        */
       ],
     );
   }

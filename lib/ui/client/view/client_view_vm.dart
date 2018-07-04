@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/utils/localization.dart';
@@ -37,6 +38,7 @@ class ClientViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
+  final Function(BuildContext) onInvoicesPressed;
   final bool isLoading;
   final bool isDirty;
 
@@ -45,6 +47,7 @@ class ClientViewVM {
     @required this.client,
     @required this.onActionSelected,
     @required this.onEditPressed,
+    @required this.onInvoicesPressed,
     @required this.onBackPressed,
     @required this.isLoading,
     @required this.isDirty,
@@ -61,6 +64,10 @@ class ClientViewVM {
         client: client,
         onEditPressed: (BuildContext context) {
           store.dispatch(EditClient(client: client, context: context));
+        },
+        onInvoicesPressed: (BuildContext context) {
+          store.dispatch(FilterInvoicesByClient(client.id));
+          store.dispatch(ViewInvoiceList(context));
         },
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),

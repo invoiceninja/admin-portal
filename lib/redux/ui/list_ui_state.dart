@@ -22,6 +22,9 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   @nullable
   String get search;
 
+  @nullable
+  int get filterClientId;
+
   String get sortField;
   bool get sortAscending;
   BuiltList<EntityState> get stateFilters;

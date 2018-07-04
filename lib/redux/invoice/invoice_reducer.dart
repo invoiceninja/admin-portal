@@ -79,19 +79,26 @@ InvoiceEntity _updateInvoiceItem(InvoiceEntity invoice, UpdateInvoiceItem action
 final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortInvoices>(_sortInvoices),
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
+  TypedReducer<ListUIState, FilterInvoicesByClient>(_filterInvoicesByClient),
   TypedReducer<ListUIState, SearchInvoices>(_searchInvoices),
 ]);
 
 ListUIState _filterInvoicesByState(ListUIState invoiceListState, FilterInvoicesByState action) {
   if (invoiceListState.stateFilters.contains(action.state)) {
     return invoiceListState.rebuild((b) => b
-        ..stateFilters.remove(action.state)
+      ..stateFilters.remove(action.state)
     );
   } else {
     return invoiceListState.rebuild((b) => b
-        ..stateFilters.add(action.state)
+      ..stateFilters.add(action.state)
     );
   }
+}
+
+ListUIState _filterInvoicesByClient(ListUIState invoiceListState, FilterInvoicesByClient action) {
+  return invoiceListState.rebuild((b) => b
+      ..filterClientId = action.clientId
+  );
 }
 
 ListUIState _searchInvoices(ListUIState invoiceListState, SearchInvoices action) {

@@ -13,7 +13,8 @@ var memoizedInvoiceList = memo4((BuiltMap<int, InvoiceEntity> invoiceMap,
         BuiltList<int> invoiceList,
         BuiltMap<int, ClientEntity> clientMap,
         ListUIState invoiceListState) =>
-    visibleInvoicesSelector(invoiceMap, invoiceList, clientMap, invoiceListState));
+    visibleInvoicesSelector(
+        invoiceMap, invoiceList, clientMap, invoiceListState));
 
 List<int> visibleInvoicesSelector(
     BuiltMap<int, InvoiceEntity> invoiceMap,
@@ -30,6 +31,10 @@ List<int> visibleInvoicesSelector(
       return false;
     }
     if (!invoice.matchesSearch(invoiceListState.search)) {
+      return false;
+    }
+    if (invoiceListState.filterClientId != null &&
+        invoice.clientId != invoiceListState.filterClientId) {
       return false;
     }
     return true;
