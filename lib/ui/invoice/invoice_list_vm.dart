@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja/redux/client/client_actions.dart';
 import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/utils/localization.dart';
+import 'package:path/path.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/invoice/invoice_list.dart';
@@ -43,6 +45,7 @@ class InvoiceListVM {
   final Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
   final Function onClearClientFilterPressed;
+  final Function(BuildContext) onViewClientFilterPressed;
 
   InvoiceListVM({
     @required this.state,
@@ -56,6 +59,7 @@ class InvoiceListVM {
     @required this.onDismissed,
     @required this.onRefreshed,
     @required this.onClearClientFilterPressed,
+    @required this.onViewClientFilterPressed,
   });
 
   static InvoiceListVM fromStore(Store<AppState> store) {
@@ -64,7 +68,7 @@ class InvoiceListVM {
       store.dispatch(LoadInvoices(completer, true));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
-            content: SnackBarRow(
+                content: SnackBarRow(
               message: AppLocalization.of(context).refreshComplete,
             )));
       });
@@ -82,14 +86,18 @@ class InvoiceListVM {
         invoiceMap: state.invoiceState.map,
         clientMap: state.clientState.map,
         isLoading: state.isLoading,
-        isLoaded: state.invoiceState.isLoaded &&
-            state.clientState.isLoaded,
+        isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
         filter: state.invoiceListState.search,
         onInvoiceTap: (context, invoice) {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onClearClientFilterPressed: () => store.dispatch(FilterInvoicesByClient()),
+        onClearClientFilterPressed: () =>
+            store.dispatch(FilterInvoicesByClient()),
+        onViewClientFilterPressed: (BuildContext context) => store.dispatch(
+            ViewClient(
+                clientId: state.invoiceListState.filterClientId,
+                context: context)),
         onDismissed: (BuildContext context, InvoiceEntity invoice,
             DismissDirection direction) {
           final Completer<Null> completer = new Completer<Null>();
@@ -113,7 +121,7 @@ class InvoiceListVM {
           }
           return completer.future.then((_) {
             Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
+                    content: SnackBarRow(
                   message: message,
                 )));
           });

@@ -38,27 +38,31 @@ class InvoiceList extends StatelessWidget {
               ? Material(
                   color: Colors.orangeAccent,
                   elevation: 6.0,
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(width: 18.0),
-                      Expanded(
-                        child: Text(
-                          localization.clientsInvoices.replaceFirst(
-                              ':client', filteredClient.displayName),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
+                  child: InkWell(
+                    onTap: () =>
+                        viewModel.onViewClientFilterPressed(context),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(width: 18.0),
+                        Expanded(
+                          child: Text(
+                            localization.clientsInvoices.replaceFirst(
+                                ':client', filteredClient.displayName),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => viewModel.onClearClientFilterPressed(),
-                      )
-                    ],
+                        IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => viewModel.onClearClientFilterPressed(),
+                        )
+                      ],
+                    ),
                   ),
                 )
               : Container(),

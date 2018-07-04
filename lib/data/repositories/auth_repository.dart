@@ -22,7 +22,7 @@ class AuthRepository {
     };
 
     final dynamic response = await webClient.post(url + '/login?include=tax_rates&include_static=true', '', json.encode(credentials));
-    print(response);
+
     final LoginResponse loginResponse = serializers.deserializeWith(
         LoginResponse.serializer, response);
 
