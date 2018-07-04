@@ -1,5 +1,7 @@
 
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 
@@ -20,7 +22,9 @@ class DismissibleEntity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(entity.entityKey),
+      // TODO fix this properly https://github.com/flutter/flutter/issues/11825
+      //key: Key(entity.entityKey),
+      key: new Key(entity.entityKey + Random().nextInt(100000).toString()),
       onDismissed: onDismissed,
       child: child,
       background: entity.isDeleted ? Container(
@@ -44,5 +48,6 @@ class DismissibleEntity extends StatelessWidget {
               trailing:
               const Icon(Icons.archive, color: Colors.white, size: 36.0))),
     );
+
   }
 }

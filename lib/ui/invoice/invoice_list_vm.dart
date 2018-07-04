@@ -92,7 +92,7 @@ class InvoiceListVM {
           final Completer<Null> completer = new Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
-            if (invoice.isArchived) {
+            if (invoice.isDeleted || invoice.isArchived) {
               store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
               message = AppLocalization.of(context).successfullyRestoredInvoice;
             } else {
@@ -100,7 +100,7 @@ class InvoiceListVM {
               message = AppLocalization.of(context).successfullyArchivedInvoice;
             }
           } else if (direction == DismissDirection.startToEnd) {
-            if (invoice.isArchived || invoice.isDeleted) {
+            if (invoice.isDeleted) {
               store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
               message = AppLocalization.of(context).successfullyRestoredInvoice;
             } else {

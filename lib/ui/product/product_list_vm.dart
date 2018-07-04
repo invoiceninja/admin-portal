@@ -81,7 +81,7 @@ class ProductListVM {
           final Completer<Null> completer = new Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
-            if (product.isArchived) {
+            if (product.isDeleted || product.isArchived) {
               store.dispatch(RestoreProductRequest(completer, product.id));
               message = AppLocalization.of(context).successfullyRestoredProduct;
             } else {
@@ -89,7 +89,7 @@ class ProductListVM {
               message = AppLocalization.of(context).successfullyArchivedProduct;
             }
           } else if (direction == DismissDirection.startToEnd) {
-            if (product.isArchived || product.isDeleted) {
+            if (product.isDeleted) {
               store.dispatch(RestoreProductRequest(completer, product.id));
               message = AppLocalization.of(context).successfullyRestoredProduct;
             } else {
