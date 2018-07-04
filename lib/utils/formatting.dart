@@ -121,10 +121,10 @@ String formatAddress(
       (isShipping ? object.shippingAddress1 : object.address1) ?? '';
   final String address2 =
       (isShipping ? object.shippingAddress2 : object.address2) ?? '';
-  final String city = (isShipping ? object.city : object.city) ?? '';
-  final String state = (isShipping ? object.state : object.state) ?? '';
+  final String city = (isShipping ? object.shippingCity : object.city) ?? '';
+  final String state = (isShipping ? object.shippingState : object.state) ?? '';
   final String postalCode =
-      (isShipping ? object.postalCode : object.postalCode) ?? '';
+      (isShipping ? object.shippingPostalCode : object.postalCode) ?? '';
 
   if (address1.isNotEmpty) {
     str += address1 + delimiter;
