@@ -22,7 +22,7 @@ class InvoiceEditItems extends StatefulWidget {
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
 
-  var InvoiceItemEntity dialogInvoiceItem;
+  InvoiceItemEntity dialogInvoiceItem;
 
   void _showInvoiceItemEditor(InvoiceItemEntity invoiceItem, BuildContext context) {
     showDialog<ItemEditDetails>(
