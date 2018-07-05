@@ -51,6 +51,9 @@ class InvoiceScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterInvoicesByState(state));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterInvoicesByStatus(status));
+        },
         statuses: [
           InvoiceStatusEntity().rebuild((b) => b
             ..id = 1

@@ -208,8 +208,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => new ListBuilder<EntityState>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(int)]),
-          () => new ListBuilder<int>())
+          const FullType(BuiltList, const [const FullType(EntityStatus)]),
+          () => new ListBuilder<EntityStatus>())
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(ExpenseCategoryEntity)]),

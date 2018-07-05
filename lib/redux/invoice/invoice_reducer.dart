@@ -79,6 +79,7 @@ InvoiceEntity _updateInvoiceItem(InvoiceEntity invoice, UpdateInvoiceItem action
 final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortInvoices>(_sortInvoices),
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
+  TypedReducer<ListUIState, FilterInvoicesByStatus>(_filterInvoicesByStatus),
   TypedReducer<ListUIState, FilterInvoicesByClient>(_filterInvoicesByClient),
   TypedReducer<ListUIState, SearchInvoices>(_searchInvoices),
 ]);
@@ -91,6 +92,18 @@ ListUIState _filterInvoicesByState(ListUIState invoiceListState, FilterInvoicesB
   } else {
     return invoiceListState.rebuild((b) => b
       ..stateFilters.add(action.state)
+    );
+  }
+}
+
+ListUIState _filterInvoicesByStatus(ListUIState invoiceListState, FilterInvoicesByStatus action) {
+  if (invoiceListState.statusFilters.contains(action.status)) {
+    return invoiceListState.rebuild((b) => b
+      ..statusFilters.remove(action.status)
+    );
+  } else {
+    return invoiceListState.rebuild((b) => b
+      ..statusFilters.add(action.status)
     );
   }
 }

@@ -10,20 +10,20 @@ import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
 
+  final EntityType entityType;
   final List<String> sortFields;
   final Function(String) onSelectedSortField;
-  final EntityType entityType;
-  final BuiltList<int> selectedStates;
   final Function(EntityState, bool) onSelectedState;
   final List<EntityStatus> statuses;
+  final Function(EntityStatus, bool) onSelectedStatus;
 
   const AppBottomBar(
       {this.sortFields,
         this.onSelectedSortField,
         this.entityType,
-        this.selectedStates,
         this.onSelectedState,
         this.statuses,
+        this.onSelectedStatus,
       });
 
   @override
@@ -65,22 +65,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     );
                   }).toList(),
                 ),
-                /*
-            Column(
-                mainAxisSize: MainAxisSize.min,
-                children: sortFields.map((sortField) {
-                  return CheckboxListTile(
-                    dense: true,
-                    title:
-                        Text(AppLocalization.of(context).lookup(sortField)),
-                    groupValue: selectedSortField,
-                    onChanged: (value) {
-                      this.onSelectedSortField(value);
-                    },
-                    value: sortField,
-                  );
-                }).toList()),
-                */
               ]),
             );
 
@@ -100,9 +84,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
       }
 
       _filterStatusController = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
-        return StoreConnector<AppState, BuiltList<int>>(
+        return StoreConnector<AppState, BuiltList<EntityStatus>>(
           converter: (Store<AppState> store) => store.state.getListState(widget.entityType).statusFilters,
-          builder: (BuildContext context, stateFilters) {
+          builder: (BuildContext context, statusFilters) {
             return Container(
               color: Theme.of(context).backgroundColor,
               child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -112,11 +96,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       key: Key(status.toString()),
                       title: Text(AppLocalization.of(context).lookup(status.name)),
                       controlAffinity: ListTileControlAffinity.leading,
-                      //value: statusFilters.contains(status),
-                      value: true,
+                      value: statusFilters.contains(status),
                       dense: true,
                       onChanged: (value) {
-                        //widget.onSelectedState(status, value);
+                        widget.onSelectedStatus(status, value);
                       },
                     );
                   }).toList(),

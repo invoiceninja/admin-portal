@@ -39,7 +39,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
       'statusFilters',
       serializers.serialize(object.statusFilters,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(int)])),
+              const FullType(BuiltList, const [const FullType(EntityStatus)])),
     ];
     if (object.search != null) {
       result
@@ -92,8 +92,8 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           break;
         case 'statusFilters':
           result.statusFilters.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(int)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(EntityStatus)]))
               as BuiltList);
           break;
       }
@@ -115,7 +115,7 @@ class _$ListUIState extends ListUIState {
   @override
   final BuiltList<EntityState> stateFilters;
   @override
-  final BuiltList<int> statusFilters;
+  final BuiltList<EntityStatus> statusFilters;
 
   factory _$ListUIState([void updates(ListUIStateBuilder b)]) =>
       (new ListUIStateBuilder()..update(updates)).build();
@@ -209,10 +209,10 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   set stateFilters(ListBuilder<EntityState> stateFilters) =>
       _$this._stateFilters = stateFilters;
 
-  ListBuilder<int> _statusFilters;
-  ListBuilder<int> get statusFilters =>
-      _$this._statusFilters ??= new ListBuilder<int>();
-  set statusFilters(ListBuilder<int> statusFilters) =>
+  ListBuilder<EntityStatus> _statusFilters;
+  ListBuilder<EntityStatus> get statusFilters =>
+      _$this._statusFilters ??= new ListBuilder<EntityStatus>();
+  set statusFilters(ListBuilder<EntityStatus> statusFilters) =>
       _$this._statusFilters = statusFilters;
 
   ListUIStateBuilder();

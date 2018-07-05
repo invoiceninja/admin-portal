@@ -184,6 +184,12 @@ class FilterInvoicesByState implements PersistUI {
   FilterInvoicesByState(this.state);
 }
 
+class FilterInvoicesByStatus implements PersistUI {
+  final EntityStatus status;
+
+  FilterInvoicesByStatus(this.status);
+}
+
 class FilterInvoicesByClient implements PersistUI {
   final int clientId;
 
