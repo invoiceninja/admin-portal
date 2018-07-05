@@ -25,7 +25,6 @@ class ProductList extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.builder(
-          shrinkWrap: true,
           itemCount: viewModel.productList.length,
           itemBuilder: (BuildContext context, index) {
             final productId = viewModel.productList[index];
