@@ -45,6 +45,7 @@ abstract class InvoiceUIState extends Object with EntityUIState implements Built
     return _$InvoiceUIState._(
       listUIState: ListUIState(InvoiceFields.invoiceNumber),
       editing: InvoiceEntity(),
+      editingItem: InvoiceItemEntity(),
       selectedId: 0,
     );
   }
@@ -52,6 +53,9 @@ abstract class InvoiceUIState extends Object with EntityUIState implements Built
 
   @nullable
   InvoiceEntity get editing;
+
+  @nullable
+  InvoiceItemEntity get editingItem;
 
   @override
   bool get isCreatingNew => editing.isNew;

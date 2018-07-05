@@ -37,6 +37,7 @@ class InvoiceEditScreen extends StatelessWidget {
 class InvoiceEditVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
+  final InvoiceItemEntity invoiceItem;
   final InvoiceEntity origInvoice;
   final BuiltMap<int, ProductEntity> productMap;
   final Function(BuildContext) onSavePressed;
@@ -48,6 +49,7 @@ class InvoiceEditVM {
   InvoiceEditVM({
     @required this.company,
     @required this.invoice,
+    @required this.invoiceItem,
     @required this.origInvoice,
     @required this.productMap,
     @required this.onSavePressed,
@@ -66,6 +68,7 @@ class InvoiceEditVM {
         isLoading: state.isLoading,
         productMap: state.selectedCompanyState.productState.map,
         invoice: invoice,
+        invoiceItem: state.invoiceUIState.editingItem,
         origInvoice: store.state.invoiceState.map[invoice.id],
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),

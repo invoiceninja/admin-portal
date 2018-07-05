@@ -25,10 +25,20 @@ class _InvoiceEditState extends State<InvoiceEdit>
   TabController _controller;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  static const kDetailsScreen = 0;
+  static const kItemScreen = 1;
+
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 2);
+
+    final invoice = widget.viewModel.invoice;
+    final invoiceItem = widget.viewModel.invoiceItem;
+
+    final index =
+        invoice.invoiceItems.contains(invoiceItem) ? kItemScreen : kDetailsScreen;
+    _controller =
+        TabController(vsync: this, length: 2, initialIndex: index);
   }
 
   @override

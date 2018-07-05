@@ -107,6 +107,12 @@ class _$InvoiceUIStateSerializer
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(InvoiceEntity)));
     }
+    if (object.editingItem != null) {
+      result
+        ..add('editingItem')
+        ..add(serializers.serialize(object.editingItem,
+            specifiedType: const FullType(InvoiceItemEntity)));
+    }
 
     return result;
   }
@@ -125,6 +131,11 @@ class _$InvoiceUIStateSerializer
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
+          break;
+        case 'editingItem':
+          result.editingItem.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(InvoiceItemEntity))
+              as InvoiceItemEntity);
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
@@ -259,6 +270,8 @@ class _$InvoiceUIState extends InvoiceUIState {
   @override
   final InvoiceEntity editing;
   @override
+  final InvoiceItemEntity editingItem;
+  @override
   final int selectedId;
   @override
   final ListUIState listUIState;
@@ -266,7 +279,8 @@ class _$InvoiceUIState extends InvoiceUIState {
   factory _$InvoiceUIState([void updates(InvoiceUIStateBuilder b)]) =>
       (new InvoiceUIStateBuilder()..update(updates)).build();
 
-  _$InvoiceUIState._({this.editing, this.selectedId, this.listUIState})
+  _$InvoiceUIState._(
+      {this.editing, this.editingItem, this.selectedId, this.listUIState})
       : super._() {
     if (selectedId == null)
       throw new BuiltValueNullFieldError('InvoiceUIState', 'selectedId');
@@ -287,13 +301,16 @@ class _$InvoiceUIState extends InvoiceUIState {
     if (identical(other, this)) return true;
     if (other is! InvoiceUIState) return false;
     return editing == other.editing &&
+        editingItem == other.editingItem &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, editing.hashCode), editingItem.hashCode),
+            selectedId.hashCode),
         listUIState.hashCode));
   }
 
@@ -301,6 +318,7 @@ class _$InvoiceUIState extends InvoiceUIState {
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceUIState')
           ..add('editing', editing)
+          ..add('editingItem', editingItem)
           ..add('selectedId', selectedId)
           ..add('listUIState', listUIState))
         .toString();
@@ -315,6 +333,12 @@ class InvoiceUIStateBuilder
   InvoiceEntityBuilder get editing =>
       _$this._editing ??= new InvoiceEntityBuilder();
   set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
+
+  InvoiceItemEntityBuilder _editingItem;
+  InvoiceItemEntityBuilder get editingItem =>
+      _$this._editingItem ??= new InvoiceItemEntityBuilder();
+  set editingItem(InvoiceItemEntityBuilder editingItem) =>
+      _$this._editingItem = editingItem;
 
   int _selectedId;
   int get selectedId => _$this._selectedId;
@@ -331,6 +355,7 @@ class InvoiceUIStateBuilder
   InvoiceUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
+      _editingItem = _$v.editingItem?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
@@ -356,6 +381,7 @@ class InvoiceUIStateBuilder
       _$result = _$v ??
           new _$InvoiceUIState._(
               editing: _editing?.build(),
+              editingItem: _editingItem?.build(),
               selectedId: selectedId,
               listUIState: listUIState.build());
     } catch (_) {
@@ -363,6 +389,8 @@ class InvoiceUIStateBuilder
       try {
         _$failedField = 'editing';
         _editing?.build();
+        _$failedField = 'editingItem';
+        _editingItem?.build();
 
         _$failedField = 'listUIState';
         listUIState.build();

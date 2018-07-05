@@ -38,7 +38,7 @@ class InvoiceViewVM {
   final InvoiceEntity invoice;
   final ClientEntity client;
   final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext) onEditPressed;
+  final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
   final Function(BuildContext) onClientPressed;
   final Function onBackPressed;
   final bool isLoading;
@@ -87,8 +87,8 @@ class InvoiceViewVM {
         isDirty: invoice.isNew,
         invoice: invoice,
         client: client,
-        onEditPressed: (BuildContext context) {
-          store.dispatch(EditInvoice(invoice: invoice, context: context));
+        onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
+          store.dispatch(EditInvoice(invoice: invoice, context: context, invoiceItem: invoiceItem));
         },
         onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onClientPressed: (BuildContext context) {

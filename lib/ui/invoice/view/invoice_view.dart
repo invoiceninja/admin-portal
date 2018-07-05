@@ -151,7 +151,10 @@ class _InvoiceViewState extends State<InvoiceView> {
       invoice.invoiceItems.forEach((invoiceItem) {
         widgets.addAll([
           InvoiceItemListTile(
-              invoice: invoice, invoiceItem: invoiceItem),
+              invoice: invoice,
+              invoiceItem: invoiceItem,
+              onTap: () => viewModel.onEditPressed(context, invoiceItem),
+          ),
         ]);
       });
 

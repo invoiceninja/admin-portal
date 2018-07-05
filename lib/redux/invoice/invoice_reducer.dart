@@ -1,5 +1,3 @@
-
-import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/invoice_model.dart';
 import 'package:invoiceninja/redux/company/company_actions.dart';
 import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
@@ -12,8 +10,17 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(invoiceListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
+    ..editingItem.replace(editingItemReducer(state.editingItem, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
   );
+}
+
+final editingItemReducer = combineReducers<InvoiceItemEntity>([
+  TypedReducer<InvoiceItemEntity, EditInvoice>(editInvoiceItem),
+]);
+
+InvoiceItemEntity editInvoiceItem(InvoiceItemEntity invoiceItem, EditInvoice action) {
+  return action.invoiceItem ?? InvoiceItemEntity();
 }
 
 Reducer<String> dropdownFilterReducer = combineReducers([

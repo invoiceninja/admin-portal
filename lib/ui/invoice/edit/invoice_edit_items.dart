@@ -8,7 +8,7 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 
-class InvoiceEditItems extends StatelessWidget {
+class InvoiceEditItems extends StatefulWidget {
   const InvoiceEditItems({
     Key key,
     @required this.viewModel,
@@ -17,22 +17,44 @@ class InvoiceEditItems extends StatelessWidget {
   final InvoiceEditItemsVM viewModel;
 
   @override
+  _InvoiceEditItemsState createState() => new _InvoiceEditItemsState();
+}
+
+class _InvoiceEditItemsState extends State<InvoiceEditItems> {
+
+  void _showInvoiceItemEditor(InvoiceItemEntity invoiceItem, BuildContext context) {
+    showDialog<ItemEditDetails>(
+        context: context,
+        builder: (BuildContext context) {
+          return ItemEditDetails(
+            viewModel: widget.viewModel,
+            key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
+            invoiceItem: invoiceItem,
+            index: widget.viewModel.invoice.invoiceItems.indexOf(invoiceItem),
+          );
+        });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+    final invoiceItem = invoice.invoiceItems.contains(viewModel.invoiceItem) ? viewModel.invoiceItem : null;
+
+    if (invoiceItem != null) {
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        _showInvoiceItemEditor(invoiceItem, context);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-
-    void _showInvoiceItemEditor(InvoiceItemEntity invoiceItem) {
-      showDialog<ItemEditDetails>(
-          context: context,
-          builder: (BuildContext context) {
-            return ItemEditDetails(
-              viewModel: viewModel,
-              key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
-              invoiceItem: invoiceItem,
-              index: invoice.invoiceItems.indexOf(invoiceItem),
-            );
-          });
-    }
 
     if (invoice.invoiceItems.isEmpty) {
       return Center(
@@ -50,7 +72,7 @@ class InvoiceEditItems extends StatelessWidget {
         invoice.invoiceItems.map((invoiceItem) => InvoiceItemListTile(
               invoice: invoice,
               invoiceItem: invoiceItem,
-              onTap: () => _showInvoiceItemEditor(invoiceItem),
+              onTap: () => _showInvoiceItemEditor(invoiceItem, context),
             ));
 
     return Padding(
@@ -177,7 +199,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     onPressed: () {
                       widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
                       Navigator.pop(context); // confirmation dialog
-                      Navigator.pop(context); // invoice item editor 
+                      Navigator.pop(context); // invoice item editor
                     })
               ],
             ),
