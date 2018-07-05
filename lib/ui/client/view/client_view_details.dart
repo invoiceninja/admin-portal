@@ -70,8 +70,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             copyValue: contact.phone,
             subtitle: localization.phone,
             onTap: () => setState(() {
-                  _launched =
-                      _launchURL(context, 'sms:' + cleanPhoneNumber(contact.phone));
+                  _launched = _launchURL(
+                      context, 'sms:' + cleanPhoneNumber(contact.phone));
                   //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
                 }),
           ));
@@ -95,15 +95,20 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           title: client.workPhone,
           subtitle: localization.phone,
           onTap: () => setState(() {
-                _launched =
-                    _launchURL(context, 'sms:' + cleanPhoneNumber(client.workPhone));
+                _launched = _launchURL(
+                    context, 'sms:' + cleanPhoneNumber(client.workPhone));
                 //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
               }),
         ));
       }
 
       if (listTiles.isNotEmpty) {
-        listTiles.add(Divider());
+        listTiles.add(
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+        );
       }
 
       if ((client.vatNumber ?? '').isNotEmpty) {
@@ -131,9 +136,11 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             title: billingAddress,
             subtitle: localization.billingAddress,
             onTap: () {
-              _launched = _launchURL(context, getMapURL(context) +
-                  Uri.encodeFull(
-                      formatAddress(object: client, delimiter: ',')));
+              _launched = _launchURL(
+                  context,
+                  getMapURL(context) +
+                      Uri.encodeFull(
+                          formatAddress(object: client, delimiter: ',')));
             }));
       }
 
@@ -143,9 +150,11 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             title: shippingAddress,
             subtitle: localization.shippingAddress,
             onTap: () {
-              _launched = _launchURL(context, getMapURL(context) +
-                  Uri.encodeFull(formatAddress(
-                      object: client, delimiter: ',', isShipping: true)));
+              _launched = _launchURL(
+                  context,
+                  getMapURL(context) +
+                      Uri.encodeFull(formatAddress(
+                          object: client, delimiter: ',', isShipping: true)));
             }));
       }
 
@@ -188,8 +197,8 @@ class AppListTile extends StatelessWidget {
         onTap: onTap,
         onLongPress: () {
           Clipboard.setData(ClipboardData(text: copyValue ?? title));
-          Scaffold.of(context).showSnackBar(
-              SnackBar(content: Text(AppLocalization.of(context).copiedToClipboard)));
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(AppLocalization.of(context).copiedToClipboard)));
         },
       ),
     );

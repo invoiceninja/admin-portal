@@ -30,9 +30,6 @@ class ClientOverview extends StatelessWidget {
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)
             : Container(),
-        Divider(
-          height: 1.0,
-        ),
         Material(
           color: Theme.of(context).canvasColor,
           child: ListTile(
@@ -41,9 +38,6 @@ class ClientOverview extends StatelessWidget {
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onInvoicesPressed(context),
           ),
-        ),
-        Divider(
-          height: 1.0,
         ),
         /*
         ListTile(

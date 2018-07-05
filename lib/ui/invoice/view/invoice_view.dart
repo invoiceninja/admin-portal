@@ -104,9 +104,6 @@ class _InvoiceViewState extends State<InvoiceView> {
       });
 
       widgets.addAll([
-        Divider(
-          height: 1.0,
-        ),
         Material(
           color: Theme.of(context).canvasColor,
           child: ListTile(
@@ -116,12 +113,10 @@ class _InvoiceViewState extends State<InvoiceView> {
             onTap: () => viewModel.onClientPressed(context),
           ),
         ),
-        Divider(height: 1.0),
         Container(
           color: Theme.of(context).backgroundColor,
           height: 12.0,
         ),
-        Divider(height: 1.0),
         Container(
           color: Theme.of(context).canvasColor,
           child: Padding(
@@ -137,12 +132,10 @@ class _InvoiceViewState extends State<InvoiceView> {
             ),
           ),
         ),
-        Divider(height: 1.0),
         Container(
           color: Theme.of(context).backgroundColor,
           height: 12.0,
         ),
-        Divider(height: 1.0),
       ]);
 
       if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
@@ -159,7 +152,6 @@ class _InvoiceViewState extends State<InvoiceView> {
         widgets.addAll([
           InvoiceItemListTile(
               invoice: invoice, invoiceItem: invoiceItem),
-          Divider(height: 1.0)
         ]);
       });
 
@@ -168,7 +160,6 @@ class _InvoiceViewState extends State<InvoiceView> {
           color: Theme.of(context).backgroundColor,
           height: 12.0,
         ),
-        Divider(height: 1.0),
       ]);
 
       Widget surchargeRow(String label, double amount) {
@@ -223,10 +214,6 @@ class _InvoiceViewState extends State<InvoiceView> {
             company.getCustomFieldLabel(CustomFieldType.surcharge2),
             invoice.customValue2));
       }
-
-      widgets.addAll([
-        Divider(height: 1.0),
-      ]);
 
       return widgets;
     }
