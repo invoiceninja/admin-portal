@@ -32,7 +32,6 @@ class ClientList extends StatelessWidget {
             return Column(children: <Widget>[
               ClientItem(
                 filter: viewModel.filter,
-                state: viewModel.state,
                 client: client,
                 onDismissed: (DismissDirection direction) =>
                     viewModel.onDismissed(context, client, direction),

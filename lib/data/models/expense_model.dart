@@ -197,6 +197,9 @@ abstract class ExpenseEntity extends Object
     return publicNotes;
   }
 
+  @override
+  double get listDisplayAmount => 0.0;
+
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 

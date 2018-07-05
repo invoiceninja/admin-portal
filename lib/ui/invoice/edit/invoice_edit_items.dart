@@ -136,7 +136,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoiceItem = widget.invoiceItem;
-    final company = viewModel.state.selectedCompany;
+    final company = viewModel.company;
 
     void _confirmDelete() {
       showDialog<AlertDialog>(
@@ -211,26 +211,26 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         ),
         company.enableInvoiceTaxes
             ? TaxRateDropdown(
+                taxRates: company.taxRates,
                 onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
                     invoiceItem.rebuild((b) => b
                       ..taxRate1 = taxRate.rate
                       ..taxName1 = taxRate.name),
                     widget.index),
                 labelText: localization.tax,
-                state: viewModel.state,
                 initialTaxName: invoiceItem.taxName1,
                 initialTaxRate: invoiceItem.taxRate1,
               )
             : Container(),
         company.enableInvoiceTaxes && company.enableSecondTaxRate
             ? TaxRateDropdown(
+                taxRates: company.taxRates,
                 onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
                     invoiceItem.rebuild((b) => b
                       ..taxRate2 = taxRate.rate
                       ..taxName2 = taxRate.name),
                     widget.index),
                 labelText: localization.tax,
-                state: viewModel.state,
                 initialTaxName: invoiceItem.taxName2,
                 initialTaxRate: invoiceItem.taxRate2,
               )

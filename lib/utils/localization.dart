@@ -161,6 +161,12 @@ class AppLocalization {
       'approved': 'Approved',
       'partial': 'Partial',
       'paid': 'Paid',
+      'invoice_status_1': 'Draft',
+      'invoice_status_2': 'Sent',
+      'invoice_status_3': 'Viewed',
+      'invoice_status_4': 'Approved',
+      'invoice_status_5': 'Partial',
+      'invoice_status_6': 'Paid',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -332,6 +338,13 @@ class AppLocalization {
   String get approved => _localizedValues[locale.languageCode]['approved'];
   String get partial => _localizedValues[locale.languageCode]['partial'];
   String get paid => _localizedValues[locale.languageCode]['paid'];
+  String get invoiceStatus1 => _localizedValues[locale.languageCode]['invoice_status_1'];
+  String get invoiceStatus2 => _localizedValues[locale.languageCode]['invoice_status_2'];
+  String get invoiceStatus3 => _localizedValues[locale.languageCode]['invoice_status_3'];
+  String get invoiceStatus4 => _localizedValues[locale.languageCode]['invoice_status_4'];
+  String get invoiceStatus5 => _localizedValues[locale.languageCode]['invoice_status_5'];
+  String get invoiceStatus6 => _localizedValues[locale.languageCode]['invoice_status_6'];
+
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

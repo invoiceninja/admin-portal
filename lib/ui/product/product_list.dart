@@ -33,7 +33,6 @@ class ProductList extends StatelessWidget {
             return Column(children: <Widget>[
               ProductItem(
                 filter: viewModel.filter,
-                state: viewModel.state,
                 product: product,
                 onDismissed: (DismissDirection direction) =>
                     viewModel.onDismissed(context, product, direction),

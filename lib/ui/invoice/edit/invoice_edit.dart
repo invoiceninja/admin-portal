@@ -95,7 +95,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
-              '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.state.selectedCompany.enableInclusiveTaxes), context, clientId: viewModel.invoice.clientId)}',
+              '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.enableInclusiveTaxes), context, clientId: viewModel.invoice.clientId)}',
               style: TextStyle(
                 fontSize: 18.0,
               ),
@@ -110,7 +110,6 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 context: context,
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
-                    state: viewModel.state,
                     onItemsSelected: viewModel.onItemsAdded,
                   );
                 });

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -33,7 +34,7 @@ class InvoiceListBuilder extends StatelessWidget {
 }
 
 class InvoiceListVM {
-  final AppState state;
+  final ListUIState listState;
   final List<int> invoiceList;
   final BuiltMap<int, InvoiceEntity> invoiceMap;
   final BuiltMap<int, ClientEntity> clientMap;
@@ -47,7 +48,7 @@ class InvoiceListVM {
   final Function(BuildContext) onViewClientFilterPressed;
 
   InvoiceListVM({
-    @required this.state,
+    @required this.listState,
     @required this.invoiceList,
     @required this.invoiceMap,
     @required this.clientMap,
@@ -76,7 +77,7 @@ class InvoiceListVM {
     final state = store.state;
 
     return InvoiceListVM(
-        state: state,
+        listState: state.invoiceListState,
         invoiceList: memoizedInvoiceList(
             state.invoiceState.map,
             state.invoiceState.list,

@@ -1,4 +1,3 @@
-import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:invoiceninja/ui/app/dismissible_entity.dart';
 import '../app/entity_state_label.dart';
 
 class ClientItem extends StatelessWidget {
-  final AppState state;
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   //final ValueChanged<bool> onCheckboxChanged;
@@ -19,7 +17,6 @@ class ClientItem extends StatelessWidget {
   static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
   const ClientItem({
-    @required this.state,
     @required this.onDismissed,
     @required this.onTap,
     //@required this.onCheckboxChanged,

@@ -1,19 +1,16 @@
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/invoice_model.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class InvoiceItemListTile extends StatelessWidget {
   const InvoiceItemListTile({
     @required this.invoice,
     @required this.invoiceItem,
-    @required this.state,
   });
 
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
-  final AppState state;
 
   @override
   Widget build(BuildContext context) {

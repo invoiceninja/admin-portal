@@ -124,7 +124,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.state.selectedCompany;
+    final company = viewModel.company;
 
     void _confirmDelete() {
       showDialog<AlertDialog>(

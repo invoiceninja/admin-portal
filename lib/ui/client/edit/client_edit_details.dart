@@ -88,7 +88,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.state.selectedCompany;
+    final company = viewModel.company;
 
     return ListView(
       shrinkWrap: true,

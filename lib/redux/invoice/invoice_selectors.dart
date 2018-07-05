@@ -1,4 +1,3 @@
-import 'package:invoiceninja/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
@@ -50,6 +49,3 @@ List<int> visibleInvoicesSelector(
 
   return list;
 }
-
-String invoiceStatusSelector(InvoiceEntity invoice, StaticState staticState) =>
-    staticState.invoiceStatusMap[invoice.invoiceStatusId].name;

@@ -26,13 +26,13 @@ class InvoiceEditItemsScreen extends StatelessWidget {
 }
 
 class InvoiceEditItemsVM {
-  final AppState state;
+  final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(int) onRemoveInvoiceItemPressed;
   final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
 
   InvoiceEditItemsVM({
-    @required this.state,
+    @required this.company,
     @required this.invoice,
     @required this.onRemoveInvoiceItemPressed,
     @required this.onChangedInvoiceItem,
@@ -43,7 +43,7 @@ class InvoiceEditItemsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditItemsVM(
-        state: state,
+        company: state.selectedCompany,
         invoice: invoice,
         onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteInvoiceItem(index)),

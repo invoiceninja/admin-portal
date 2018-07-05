@@ -87,7 +87,7 @@ class _ProductEditState extends State<ProductEdit> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final product = viewModel.product;
-    final company = viewModel.state.selectedCompany;
+    final company = viewModel.company;
 
     return WillPopScope(
       onWillPop: () async {
@@ -168,24 +168,24 @@ class _ProductEditState extends State<ProductEdit> {
                   ),
                   company.enableInvoiceItemTaxes
                       ? TaxRateDropdown(
+                    taxRates: company.taxRates,
                     onSelected: (taxRate) =>
                         viewModel.onChanged(product.rebuild((b) => b
                           ..taxRate1 = taxRate.rate
                           ..taxName1 = taxRate.name)),
                     labelText: localization.tax,
-                    state: viewModel.state,
                     initialTaxName: product.taxName1,
                     initialTaxRate: product.taxRate1,
                   )
                       : Container(),
                   company.enableInvoiceItemTaxes && company.enableSecondTaxRate
                       ? TaxRateDropdown(
+                    taxRates: company.taxRates,
                     onSelected: (taxRate) =>
                         viewModel.onChanged(product.rebuild((b) => b
                           ..taxRate2 = taxRate.rate
                           ..taxName2 = taxRate.name)),
                     labelText: localization.tax,
-                    state: viewModel.state,
                     initialTaxName: product.taxName2,
                     initialTaxRate: product.taxRate2,
                   )

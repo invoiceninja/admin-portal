@@ -24,10 +24,10 @@ class InvoiceList extends StatelessWidget {
 
   Widget _buildListView(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final listState = viewModel.state.invoiceListState;
+    final listState = viewModel.listState;
     final filteredClientId = listState.filterClientId;
     final filteredClient = filteredClientId != null
-        ? viewModel.state.clientState.map[filteredClientId]
+        ? viewModel.clientMap[filteredClientId]
         : null;
 
     return RefreshIndicator(
@@ -80,7 +80,6 @@ class InvoiceList extends StatelessWidget {
                     onDismissed: (DismissDirection direction) =>
                         viewModel.onDismissed(context, invoice, direction),
                     onTap: () => viewModel.onInvoiceTap(context, invoice),
-                    state: viewModel.state,
                   ),
                   Divider(
                     height: 1.0,

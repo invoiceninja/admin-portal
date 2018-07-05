@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -8,14 +9,14 @@ import 'package:invoiceninja/utils/formatting.dart';
 
 class TaxRateDropdown extends StatefulWidget {
   const TaxRateDropdown({
-    @required this.state,
+    @required this.taxRates,
     @required this.labelText,
     @required this.onSelected,
     this.initialTaxName = '',
     this.initialTaxRate = 0.0,
   });
 
-  final AppState state;
+  final BuiltList<TaxRateEntity> taxRates;
   final String labelText;
   final Function(TaxRateEntity) onSelected;
   final String initialTaxName;
@@ -30,21 +31,22 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
   TaxRateEntity _selectedTaxRate;
 
   @override
-  void initState() {
-    super.initState();
-    final taxRates = widget.state.selectedCompany.taxRates;
+  void didChangeDependencies() {
+    final taxRates = widget.taxRates;
 
     _selectedTaxRate = taxRates.firstWhere(
-        (taxRate) =>
-            taxRate.name == widget.initialTaxName &&
+            (taxRate) =>
+        taxRate.name == widget.initialTaxName &&
             taxRate.rate == widget.initialTaxRate,
         orElse: () => TaxRateEntity().rebuild((b) => b
           ..rate = widget.initialTaxRate
           ..name = widget.initialTaxName));
 
     if (_selectedTaxRate.rate != 0) {
-      _textController.text = _formatTaxRate(_selectedTaxRate, widget.state);
+      _textController.text = _formatTaxRate(_selectedTaxRate);
     }
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -53,14 +55,14 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     super.dispose();
   }
 
-  String _formatTaxRate(TaxRateEntity taxRate, AppState state) {
+  String _formatTaxRate(TaxRateEntity taxRate) {
     return '${formatNumber(taxRate.rate, context,
         formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
   }
 
   @override
   Widget build(BuildContext context) {
-    final taxRates = widget.state.selectedCompany.taxRates;
+    final taxRates = widget.taxRates;
 
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final options = taxRates
@@ -95,7 +97,7 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
           if (taxRate.rate == 0) {
             _textController.text = '';
           } else {
-            _textController.text = _formatTaxRate(taxRate, store.state);
+            _textController.text = _formatTaxRate(taxRate);
           }
           widget.onSelected(taxRate);
         },

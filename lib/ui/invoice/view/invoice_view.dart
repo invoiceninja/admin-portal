@@ -3,11 +3,8 @@ import 'package:invoiceninja/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja/ui/app/icon_message.dart';
 import 'package:invoiceninja/ui/app/invoice/invoice_item_view.dart';
@@ -31,12 +28,10 @@ class _InvoiceViewState extends State<InvoiceView> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
     final invoice = viewModel.invoice;
     final client = viewModel.client;
-    final company = state.selectedCompany;
+    final company = viewModel.company;
 
     List<Widget> _buildView() {
       final invoice = widget.viewModel.invoice;
@@ -57,7 +52,7 @@ class _InvoiceViewState extends State<InvoiceView> {
       final Map<String, String> fields = {
         InvoiceFields.invoiceStatusId: invoice.isPastDue
             ? localization.pastDue
-            : invoiceStatusSelector(invoice, store.state.staticState),
+            : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
         InvoiceFields.partial: formatNumber(invoice.partial, context,
@@ -163,7 +158,7 @@ class _InvoiceViewState extends State<InvoiceView> {
       invoice.invoiceItems.forEach((invoiceItem) {
         widgets.addAll([
           InvoiceItemListTile(
-              invoice: invoice, invoiceItem: invoiceItem, state: state),
+              invoice: invoice, invoiceItem: invoiceItem),
           Divider(height: 1.0)
         ]);
       });

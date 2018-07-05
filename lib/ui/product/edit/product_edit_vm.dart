@@ -33,7 +33,7 @@ class ProductEditScreen extends StatelessWidget {
 }
 
 class ProductEditVM {
-  final AppState state;
+  final CompanyEntity company;
   final ProductEntity product;
   final ProductEntity origProduct;
   final Function(ProductEntity) onChanged;
@@ -44,7 +44,7 @@ class ProductEditVM {
   final bool isDirty;
 
   ProductEditVM({
-    @required this.state,
+    @required this.company,
     @required this.product,
     @required this.origProduct,
     @required this.onChanged,
@@ -56,14 +56,15 @@ class ProductEditVM {
   });
 
   factory ProductEditVM.fromStore(Store<AppState> store) {
-    final product = store.state.productUIState.editing;
+    final state = store.state;
+    final product = state.productUIState.editing;
 
     return ProductEditVM(
-        state: store.state,
-        isLoading: store.state.isLoading,
+        company: state.selectedCompany,
+        isLoading: state.isLoading,
         isDirty: product.isNew,
         product: product,
-        origProduct: store.state.productState.map[product.id],
+        origProduct: state.productState.map[product.id],
         onChanged: (ProductEntity product) {
           store.dispatch(UpdateProduct(product));
         },

@@ -33,7 +33,7 @@ class ClientEditScreen extends StatelessWidget {
 }
 
 class ClientEditVM {
-  final AppState state;
+  final CompanyEntity company;
   final bool isLoading;
   final ClientEntity client;
   final ClientEntity origClient;
@@ -48,7 +48,7 @@ class ClientEditVM {
   final BuiltMap<int, CurrencyEntity> currencyMap;
 
   ClientEditVM({
-    @required this.state,
+    @required this.company,
     @required this.isLoading,
     @required this.client,
     @required this.origClient,
@@ -68,7 +68,7 @@ class ClientEditVM {
     final client = state.clientUIState.editing;
 
     return ClientEditVM(
-        state: state,
+        company: state.selectedCompany,
         client: client,
         origClient: state.clientState.map[client.id],
         countryMap: state.staticState.countryMap,

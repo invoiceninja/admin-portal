@@ -1,4 +1,3 @@
-import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,6 @@ class DashboardPanels extends StatelessWidget {
           padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
           children: <Widget>[
             DashboardRow(
-                state: viewModel.state,
                 title: localization.totalRevenue,
                 color: Color(0xFF117CC1),
                 icon: Icons.show_chart,
@@ -49,26 +47,22 @@ class DashboardPanels extends StatelessWidget {
                   icon: Icons.email,
                   color: Color(0xFF44AF69),
                   title: localization.averageInvoice,
-                  state: viewModel.state,
                 ),
                 DashboardColumn(
                   amount: viewModel.dashboardState.data.balances,
                   icon: Icons.schedule,
                   color: Color(0xFFF8333C),
                   title: localization.outstanding,
-                  state: viewModel.state,
                 ),
               ],
             ),
             DashboardRow(
-                state: viewModel.state,
                 title: localization.invoicesSent,
                 color: Color(0xFFFCAB10),
                 icon: Icons.send,
                 isMoney: false,
                 amount: viewModel.dashboardState.data.invoicesSent.toDouble()),
             DashboardRow(
-                state: viewModel.state,
                 title: localization.activeClients,
                 color: Color(0xFFDBD5B5),
                 icon: Icons.people,
@@ -105,15 +99,13 @@ class ColorIcon extends StatelessWidget {
 }
 
 class DashboardRow extends StatelessWidget {
-  const DashboardRow(
-      {@required this.state,
+  const DashboardRow({
       @required this.title,
       @required this.icon,
       @required this.amount,
       @required this.color,
       this.isMoney = true});
 
-  final AppState state;
   final String title;
   final IconData icon;
   final num amount;
@@ -154,15 +146,13 @@ class DashboardRow extends StatelessWidget {
 }
 
 class DashboardColumn extends StatelessWidget {
-  const DashboardColumn(
-      {@required this.state,
+  const DashboardColumn({
       @required this.title,
       @required this.icon,
       @required this.amount,
       @required this.color,
       this.isMoney = true});
 
-  final AppState state;
   final String title;
   final IconData icon;
   final num amount;

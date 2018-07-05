@@ -27,14 +27,14 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
 }
 
 class InvoiceEditDetailsVM {
-  final AppState state;
+  final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
   final BuiltMap<int, ClientEntity> clientMap;
   final BuiltList<int> clientList;
 
   InvoiceEditDetailsVM({
-    @required this.state,
+    @required this.company,
     @required this.invoice,
     @required this.onChanged,
     @required this.clientMap,
@@ -46,7 +46,7 @@ class InvoiceEditDetailsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditDetailsVM(
-        state: state,
+        company: state.selectedCompany,
         invoice: invoice,
         onChanged: (InvoiceEntity invoice) =>
             store.dispatch(UpdateInvoice(invoice)),

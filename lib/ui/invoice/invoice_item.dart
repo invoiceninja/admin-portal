@@ -1,10 +1,8 @@
 import 'package:invoiceninja/constants.dart';
-import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
@@ -15,7 +13,6 @@ class InvoiceItem extends StatelessWidget {
   final GestureTapCallback onTap;
   final InvoiceEntity invoice;
   final ClientEntity client;
-  final AppState state;
   final String filter;
 
   const InvoiceItem({
@@ -23,7 +20,6 @@ class InvoiceItem extends StatelessWidget {
     @required this.onTap,
     @required this.invoice,
     @required this.client,
-    @required this.state,
     @required this.filter,
   });
 
@@ -82,7 +78,7 @@ class InvoiceItem extends StatelessWidget {
                   //labelPadding: EdgeInsets.all(0.0),
                 ),
                 */
-                Text(invoice.isPastDue ? localization.pastDue : invoiceStatusSelector(invoice, state.staticState),
+                Text(invoice.isPastDue ? localization.pastDue : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
                     style: TextStyle(
                       color:
                           invoice.isPastDue ? Colors.red : InvoiceStatusColors.colors[invoice.invoiceStatusId],
