@@ -58,7 +58,7 @@ class WebClient {
         'X-Ninja-Token': token,
         'Content-Type': 'application/json',
       },
-    );
+    ).timeout(const Duration(seconds: 10));
 
     if (response.statusCode >= 400) {
       throw _parseError(response.body);
