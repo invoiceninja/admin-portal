@@ -175,7 +175,7 @@ class DashboardColumn extends StatelessWidget {
                 SizedBox(height: 18.0),
                 Text(title, style: TextStyle()),
                 Text(
-                  formatNumber(amount, context,
+                  formatNumber(isMoney ? round(amount, 2) : amount, context,
                       formatNumberType: isMoney
                           ? FormatNumberType.money
                           : FormatNumberType.int),
