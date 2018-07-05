@@ -7,8 +7,10 @@ class InvoiceItemListTile extends StatelessWidget {
   const InvoiceItemListTile({
     @required this.invoice,
     @required this.invoiceItem,
+    @required this.onTap,
   });
 
+  final Function onTap;
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
 
@@ -48,13 +50,27 @@ class InvoiceItemListTile extends StatelessWidget {
     }
 
     return Container(
-      color: Theme.of(context).canvasColor,
-      child: ListTile(
-        title: Text(invoiceItem.productKey),
-        subtitle: Text(subtitle),
-        trailing: Text(
-            formatNumber(invoiceItem.total, context, clientId: invoice.clientId)),
-      ),
+        color: Theme.of(context).canvasColor,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                  onTap: () => onTap(),
+                  title: Row(
+                    children: <Widget>[
+                      Expanded(child: Text(invoiceItem.productKey)),
+                      Text(formatNumber(invoiceItem.total, context,
+                          clientId: invoice.clientId)),
+                    ],
+                  ),
+                  subtitle: Text(subtitle),
+                  trailing: Icon(Icons.navigate_next),
+              ),
+              Divider(height: 1.0,),
+            ],
+          ),
+        )
     );
   }
 }

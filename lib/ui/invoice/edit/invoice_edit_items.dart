@@ -1,4 +1,5 @@
 import 'package:invoiceninja/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja/utils/formatting.dart';
@@ -20,6 +21,19 @@ class InvoiceEditItems extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final invoice = viewModel.invoice;
 
+    void _showInvoiceItemEditor(InvoiceItemEntity invoiceItem) {
+      showDialog<ItemEditDetails>(
+          context: context,
+          builder: (BuildContext context) {
+            return ItemEditDetails(
+              viewModel: viewModel,
+              key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
+              invoiceItem: invoiceItem,
+              index: invoice.invoiceItems.indexOf(invoiceItem),
+            );
+          });
+    }
+
     if (invoice.invoiceItems.isEmpty) {
       return Center(
         child: Text(
@@ -32,15 +46,24 @@ class InvoiceEditItems extends StatelessWidget {
       );
     }
 
-    final invoiceItems = invoice.invoiceItems.map((invoiceItem) =>
-        ItemEditDetails(
-            viewModel: viewModel,
-            key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
-            invoiceItem: invoiceItem,
-            index: invoice.invoiceItems.indexOf(invoiceItem)));
+    final invoiceItems =
+        invoice.invoiceItems.map((invoiceItem) => InvoiceItemListTile(
+              invoice: invoice,
+              invoiceItem: invoiceItem,
+              onTap: () => _showInvoiceItemEditor(invoiceItem),
+            ));
 
-    return ListView(
-      children: invoiceItems.toList(),
+    return Padding(
+      padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+      child: Column(
+        children: <Widget>[
+          Divider(height: 1.0),
+          ListView(
+            shrinkWrap: true,
+            children: invoiceItems.toList(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -124,8 +147,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..qty = double.tryParse(_qtyController.text) ?? 0.0
       ..discount = double.tryParse(_discountController.text) ?? 0.0
       ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-    );
+      ..customValue2 = _custom2Controller.text.trim());
     if (invoiceItem != widget.invoiceItem) {
       widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
     }
@@ -154,105 +176,122 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
                       widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
-                      Navigator.pop(context);
+                      Navigator.pop(context); // confirmation dialog
+                      Navigator.pop(context); // invoice item editor 
                     })
               ],
             ),
       );
     }
 
-    return FormCard(
-      children: <Widget>[
-        TextFormField(
-          autocorrect: false,
-          controller: _productKeyController,
-          decoration: InputDecoration(
-            labelText: localization.product,
-          ),
-        ),
-        TextFormField(
-          autocorrect: false,
-          controller: _notesController,
-          maxLines: 4,
-          decoration: InputDecoration(
-            labelText: localization.description,
-          ),
-        ),
-        CustomField(
-          controller: _custom1Controller,
-          labelText: company.getCustomFieldLabel(CustomFieldType.product1),
-          options: company.getCustomFieldValues(CustomFieldType.product1),
-        ),
-        CustomField(
-          controller: _custom2Controller,
-          labelText: company.getCustomFieldLabel(CustomFieldType.product2),
-          options: company.getCustomFieldValues(CustomFieldType.product2),
-        ),
-        TextFormField(
-          controller: _costController,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            labelText: localization.unitCost,
-          ),
-        ),
-        TextFormField(
-          controller: _qtyController,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            labelText: localization.quantity,
-          ),
-        ),
-        TextFormField(
-          controller: _discountController,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            labelText: localization.discount,
-          ),
-        ),
-        company.enableInvoiceTaxes
-            ? TaxRateDropdown(
-                taxRates: company.taxRates,
-                onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                    invoiceItem.rebuild((b) => b
-                      ..taxRate1 = taxRate.rate
-                      ..taxName1 = taxRate.name),
-                    widget.index),
-                labelText: localization.tax,
-                initialTaxName: invoiceItem.taxName1,
-                initialTaxRate: invoiceItem.taxRate1,
-              )
-            : Container(),
-        company.enableInvoiceTaxes && company.enableSecondTaxRate
-            ? TaxRateDropdown(
-                taxRates: company.taxRates,
-                onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                    invoiceItem.rebuild((b) => b
-                      ..taxRate2 = taxRate.rate
-                      ..taxName2 = taxRate.name),
-                    widget.index),
-                labelText: localization.tax,
-                initialTaxName: invoiceItem.taxName2,
-                initialTaxRate: invoiceItem.taxRate2,
-              )
-            : Container(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 14.0),
-              child: FlatButton(
-                child: Text(
-                  localization.remove,
-                  style: TextStyle(
-                    color: Colors.grey[600],
+    return SingleChildScrollView(
+      child: FormCard(
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: TextFormField(
+                    autocorrect: false,
+                    controller: _productKeyController,
+                    decoration: InputDecoration(
+                      labelText: localization.product,
+                    ),
                   ),
                 ),
-                onPressed: _confirmDelete,
               ),
-            )
-          ],
-        ),
-      ],
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+          TextFormField(
+            autocorrect: false,
+            controller: _notesController,
+            maxLines: 4,
+            decoration: InputDecoration(
+              labelText: localization.description,
+            ),
+          ),
+          CustomField(
+            controller: _custom1Controller,
+            labelText: company.getCustomFieldLabel(CustomFieldType.product1),
+            options: company.getCustomFieldValues(CustomFieldType.product1),
+          ),
+          CustomField(
+            controller: _custom2Controller,
+            labelText: company.getCustomFieldLabel(CustomFieldType.product2),
+            options: company.getCustomFieldValues(CustomFieldType.product2),
+          ),
+          TextFormField(
+            controller: _costController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: localization.unitCost,
+            ),
+          ),
+          TextFormField(
+            controller: _qtyController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: localization.quantity,
+            ),
+          ),
+          TextFormField(
+            controller: _discountController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: localization.discount,
+            ),
+          ),
+          company.enableInvoiceTaxes
+              ? TaxRateDropdown(
+                  taxRates: company.taxRates,
+                  onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                      invoiceItem.rebuild((b) => b
+                        ..taxRate1 = taxRate.rate
+                        ..taxName1 = taxRate.name),
+                      widget.index),
+                  labelText: localization.tax,
+                  initialTaxName: invoiceItem.taxName1,
+                  initialTaxRate: invoiceItem.taxRate1,
+                )
+              : Container(),
+          company.enableInvoiceTaxes && company.enableSecondTaxRate
+              ? TaxRateDropdown(
+                  taxRates: company.taxRates,
+                  onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                      invoiceItem.rebuild((b) => b
+                        ..taxRate2 = taxRate.rate
+                        ..taxName2 = taxRate.name),
+                      widget.index),
+                  labelText: localization.tax,
+                  initialTaxName: invoiceItem.taxName2,
+                  initialTaxRate: invoiceItem.taxRate2,
+                )
+              : Container(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 14.0),
+                child: FlatButton(
+                  child: Text(
+                    localization.remove,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  onPressed: _confirmDelete,
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
