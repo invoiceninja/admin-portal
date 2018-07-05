@@ -182,7 +182,7 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
   }
 
   @override
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
 
   static Serializer<CountryEntity> get serializer => _$countryEntitySerializer;
 }

@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 part 'credit_model.g.dart';
 
@@ -122,7 +123,10 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
   }
 
   @override
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<CreditEntity> get serializer => _$creditEntitySerializer;
 }

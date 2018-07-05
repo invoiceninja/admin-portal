@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 part 'payment_model.g.dart';
 
@@ -133,7 +134,10 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   }
 
   @override
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
 }

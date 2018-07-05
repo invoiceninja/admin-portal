@@ -83,7 +83,7 @@ abstract class LanguageEntity extends Object with SelectableEntity implements Bu
   }
 
   @override
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
 
   static Serializer<LanguageEntity> get serializer => _$languageEntitySerializer;
 }

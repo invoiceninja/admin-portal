@@ -1,12 +1,18 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/invoice_model.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/redux/product/product_selectors.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
-  const InvoiceItemSelector({this.state, this.onItemsSelected});
+  const InvoiceItemSelector({
+    @required this.productMap,
+    this.onItemsSelected,
+  });
 
-  final AppState state;
+  final BuiltMap<int, ProductEntity> productMap;
   final Function(List<InvoiceItemEntity>) onItemsSelected;
 
   @override
@@ -35,7 +41,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     final List<InvoiceItemEntity> items = [];
 
     _selectedIds.forEach((entityId) {
-      final product = widget.state.productState.map[entityId];
+      final product = widget.productMap[entityId];
       items.add(product.asInvoiceItem);
     });
 
@@ -130,22 +136,20 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     }
 
     Widget _entityList() {
-      final state = widget.state.selectedCompanyState.productState;
-      final matches = state.list
-          .where((entityId) {
-              final entity = state.map[entityId];
-              return entity.isActive && entity.matchesSearch(_filter);
-          })
-          .toList();
+      final matches = memoizedProductList(widget.productMap).where((entityId) {
+        final entity = widget.productMap[entityId];
+        return entity.isActive && entity.matchesSearch(_filter);
+      }).toList();
 
-      matches.sort((idA, idB) => state.map[idA].compareTo(state.map[idB]));
+      matches.sort((idA, idB) =>
+          widget.productMap[idA].compareTo(widget.productMap[idB]));
 
       return ListView.builder(
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final int entityId = matches[index];
-          final entity = state.map[entityId];
+          final entity = widget.productMap[entityId];
           final String subtitle = entity.matchesSearchValue(_filter);
           return ListTile(
             dense: true,
@@ -158,7 +162,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                 Expanded(
                   child: Text(entity.listDisplayName),
                 ),
-                //Text(entity.listDisplayAmount),
+                entity.listDisplayAmount != null
+                    ? Text(formatNumber(entity.listDisplayAmount, context,
+                        formatNumberType: entity.listDisplayAmountType))
+                    : Container(),
               ],
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,

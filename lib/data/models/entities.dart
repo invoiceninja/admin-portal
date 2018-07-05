@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 part 'entities.g.dart';
 
@@ -65,7 +66,8 @@ abstract class SelectableEntity {
 
   String get listDisplayName => 'Error: listDisplayName not set';
 
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 }
 
 abstract class BaseEntity extends Object with SelectableEntity {

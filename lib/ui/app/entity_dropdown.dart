@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:invoiceninja/utils/localization.dart';
 
 class EntityDropdown extends StatefulWidget {
@@ -149,6 +150,10 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
                 Expanded(
                   child: Text(entity.listDisplayName),
                 ),
+                entity.listDisplayAmount != null
+                    ? Text(formatNumber(entity.listDisplayAmount, context,
+                        formatNumberType: entity.listDisplayAmountType))
+                    : Container(),
               ],
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,

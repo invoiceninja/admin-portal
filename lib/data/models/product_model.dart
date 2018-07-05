@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/models/invoice_model.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 part 'product_model.g.dart';
 
@@ -101,6 +102,9 @@ abstract class ProductEntity extends Object
 
   @override
   double get listDisplayAmount => cost;
+
+  @override
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   @override
   InvoiceItemEntity get asInvoiceItem {

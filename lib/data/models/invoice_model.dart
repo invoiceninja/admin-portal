@@ -336,7 +336,10 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   }
 
   @override
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   bool get isPastDue {
     return ! isDeleted && isPublic && balance > 0 && DateTime.tryParse(dueDate).isBefore(DateTime.now());
@@ -433,7 +436,10 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
   }
 
   @override
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<InvoiceItemEntity> get serializer => _$invoiceItemEntitySerializer;
 }
@@ -493,7 +499,10 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
   }
 
   @override
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<InvitationEntity> get serializer => _$invitationEntitySerializer;
 }

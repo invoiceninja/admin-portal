@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -37,6 +38,7 @@ class InvoiceEditVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final InvoiceEntity origInvoice;
+  final BuiltMap<int, ProductEntity> productMap;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(List<InvoiceItemEntity>) onItemsAdded;
@@ -47,6 +49,7 @@ class InvoiceEditVM {
     @required this.company,
     @required this.invoice,
     @required this.origInvoice,
+    @required this.productMap,
     @required this.onSavePressed,
     @required this.onItemsAdded,
     @required this.onBackPressed,
@@ -61,6 +64,7 @@ class InvoiceEditVM {
     return InvoiceEditVM(
         company: state.selectedCompany,
         isLoading: state.isLoading,
+        productMap: state.selectedCompanyState.productState.map,
         invoice: invoice,
         origInvoice: store.state.invoiceState.map[invoice.id],
         onBackPressed: () =>

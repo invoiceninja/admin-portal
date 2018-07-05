@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 part 'project_model.g.dart';
 
@@ -131,7 +132,10 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
   }
 
   @override
-  double get listDisplayAmount => 0.0;
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<ProjectEntity> get serializer => _$projectEntitySerializer;
 }
