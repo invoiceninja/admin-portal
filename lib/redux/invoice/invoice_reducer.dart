@@ -135,8 +135,6 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, LoadInvoicesSuccess>(_setLoadedInvoices),
   TypedReducer<InvoiceState, LoadInvoicesFailure>(_setNoInvoices),
 
-  //TypedReducer<InvoiceState, MarkSentInvoiceRequest>(_markSentInvoiceRequest),
-  //TypedReducer<InvoiceState, MarkSentInvoiceFailure>(_markSentInvoiceFailure),
   TypedReducer<InvoiceState, MarkSentInvoiceSuccess>(_markSentInvoiceSuccess),
 
   TypedReducer<InvoiceState, ArchiveInvoiceRequest>(_archiveInvoiceRequest),
@@ -152,23 +150,7 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, RestoreInvoiceFailure>(_restoreInvoiceFailure),
 ]);
 
-InvoiceState _markSentInvoiceRequest(InvoiceState invoiceState, MarkSentInvoiceRequest action) {
-  final invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
-    ..invoiceStatusId = kInvoiceStatusSent
-  );
-
-  return invoiceState.rebuild((b) => b
-    ..map[action.invoiceId] = invoice
-  );
-}
-
 InvoiceState _markSentInvoiceSuccess(InvoiceState invoiceState, MarkSentInvoiceSuccess action) {
-  return invoiceState.rebuild((b) => b
-    ..map[action.invoice.id] = action.invoice
-  );
-}
-
-InvoiceState _markSentInvoiceFailure(InvoiceState invoiceState, MarkSentInvoiceFailure action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
   );
