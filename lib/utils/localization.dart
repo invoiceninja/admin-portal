@@ -167,6 +167,8 @@ class AppLocalization {
       'invoice_status_4': 'Approved',
       'invoice_status_5': 'Partial',
       'invoice_status_6': 'Paid',
+      'mark_sent': 'Mark Sent',
+      'successfully_marked_invoice_as_sent': 'Successfully marked invoice as sent',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -344,6 +346,8 @@ class AppLocalization {
   String get invoiceStatus4 => _localizedValues[locale.languageCode]['invoice_status_4'];
   String get invoiceStatus5 => _localizedValues[locale.languageCode]['invoice_status_5'];
   String get invoiceStatus6 => _localizedValues[locale.languageCode]['invoice_status_6'];
+  String get markSent => _localizedValues[locale.languageCode]['mark_sent'];
+  String get successfullyMarkedInvoiceAsSent => _localizedValues[locale.languageCode]['successfully_marked_invoice_as_sent'];
 
 
   String get payment => _localizedValues[locale.languageCode]['payment'];

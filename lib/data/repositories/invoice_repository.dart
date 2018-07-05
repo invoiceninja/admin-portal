@@ -37,7 +37,12 @@ class InvoiceRepository {
     } else {
       var url = auth.url + '/invoices/' + invoice.id.toString();
       if (action != null) {
-        url += '?action=' + action.toString();
+        // TODO remove once fixed in the web app
+        if (action == EntityAction.markSent) {
+          url += '?action=mark_sent';
+        } else {
+          url += '?action=' + action.toString();
+        }
       }
       response = await webClient.put(url, company.token, json.encode(data));
     }

@@ -22,6 +22,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final deleteInvoice = _deleteInvoice(repository);
   final restoreInvoice = _restoreInvoice(repository);
   final emailInvoice = _emailInvoice(repository);
+  final markSentInvoice = _markSentInvoice(repository);
 
   return [
     TypedMiddleware<AppState, ViewInvoiceList>(viewInvoiceList),
@@ -33,6 +34,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
     TypedMiddleware<AppState, RestoreInvoiceRequest>(restoreInvoice),
     TypedMiddleware<AppState, EmailInvoiceRequest>(emailInvoice),
+    TypedMiddleware<AppState, MarkSentInvoiceRequest>(markSentInvoice),
   ];
 }
 
@@ -114,7 +116,7 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.restore)
+        origInvoice, EntityAction.restore)
         .then((dynamic invoice) {
       store.dispatch(RestoreInvoiceSuccess(invoice));
       if (action.completer != null) {
@@ -123,6 +125,29 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreInvoiceFailure(origInvoice));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final origInvoice = store.state.invoiceState.map[action.invoiceId];
+    repository
+        .saveData(store.state.selectedCompany, store.state.authState,
+        origInvoice, EntityAction.markSent)
+        .then((dynamic invoice) {
+      store.dispatch(MarkSentInvoiceSuccess(invoice));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(MarkSentInvoiceFailure(origInvoice));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

@@ -249,6 +249,12 @@ class _InvoiceViewState extends State<InvoiceView> {
                   ),
                   ActionMenuButton(
                     customActions: [
+                      ! invoice.isPublic ?
+                      ActionMenuChoice(
+                        action: EntityAction.markSent,
+                        icon: Icons.publish,
+                        label: AppLocalization.of(context).markSent,
+                      ) : null,
                       client.hasEmailAddress
                           ? ActionMenuChoice(
                               action: EntityAction.email,

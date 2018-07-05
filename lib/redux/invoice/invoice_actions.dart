@@ -115,6 +115,23 @@ class EmailInvoiceFailure implements StopLoading {
   EmailInvoiceFailure(this.error);
 }
 
+class MarkSentInvoiceRequest implements StartLoading {
+  final Completer completer;
+  final int invoiceId;
+
+  MarkSentInvoiceRequest(this.completer, this.invoiceId);
+}
+
+class MarkSentInvoiceSuccess implements StopLoading, PersistData {
+  final InvoiceEntity invoice;
+  MarkSentInvoiceSuccess(this.invoice);
+}
+
+class MarkSentInvoiceFailure implements StopLoading {
+  final InvoiceEntity invoice;
+  MarkSentInvoiceFailure(this.invoice);
+}
+
 class ArchiveInvoiceRequest implements StartLoading {
   final Completer completer;
   final int invoiceId;

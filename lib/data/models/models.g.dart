@@ -20,6 +20,7 @@ const EntityAction _$restore = const EntityAction._('restore');
 const EntityAction _$clone = const EntityAction._('clone');
 const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$email = const EntityAction._('email');
+const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$invoice = const EntityAction._('invoice');
 const EntityAction _$pdf = const EntityAction._('pdf');
 
@@ -37,6 +38,8 @@ EntityAction _$valueOf(String name) {
       return _$download;
     case 'email':
       return _$email;
+    case 'markSent':
+      return _$markSent;
     case 'invoice':
       return _$invoice;
     case 'pdf':
@@ -54,6 +57,7 @@ final BuiltSet<EntityAction> _$values =
   _$clone,
   _$download,
   _$email,
+  _$markSent,
   _$invoice,
   _$pdf,
 ]);
