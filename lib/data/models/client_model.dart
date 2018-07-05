@@ -44,6 +44,8 @@ class ClientFields {
   static const String isDeleted = 'isDeleted';
   static const String contact = 'contact';
   static const String workPhone = 'workPhone';
+  static const String language = 'language';
+  static const String currency = 'currency';
 }
 
 abstract class ClientEntity extends Object
