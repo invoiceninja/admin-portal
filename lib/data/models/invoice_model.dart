@@ -4,7 +4,6 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/models/mixins/invoice_mixin.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 
 part 'invoice_model.g.dart';
@@ -337,9 +336,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   }
 
   @override
-  String listDisplayCost(AppState state) {
-    return '';
-  }
+  double get listDisplayAmount => 0.0;
 
   bool get isPastDue {
     return ! isDeleted && isPublic && balance > 0 && DateTime.tryParse(dueDate).isBefore(DateTime.now());
@@ -436,9 +433,7 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
   }
 
   @override
-  String listDisplayCost(AppState state) {
-    return '';
-  }
+  double get listDisplayAmount => 0.0;
 
   static Serializer<InvoiceItemEntity> get serializer => _$invoiceItemEntitySerializer;
 }
@@ -498,9 +493,7 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
   }
 
   @override
-  String listDisplayCost(AppState state) {
-    return '';
-  }
+  double get listDisplayAmount => 0.0;
 
   static Serializer<InvitationEntity> get serializer => _$invitationEntitySerializer;
 }

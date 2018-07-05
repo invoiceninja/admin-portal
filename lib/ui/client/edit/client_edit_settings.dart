@@ -36,7 +36,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
     final client = widget.viewModel.client;
     _taskRateController.text = formatNumber(
-        client.taskRate, widget.viewModel.state,
+        client.taskRate, context,
         formatNumberType: FormatNumberType.input);
 
     _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));

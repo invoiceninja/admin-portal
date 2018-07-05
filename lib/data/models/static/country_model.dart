@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'country_model.g.dart';
 
@@ -183,9 +182,7 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
   }
 
   @override
-  String listDisplayCost(AppState state) {
-    return '';
-  }
+  double get listDisplayAmount => 0.0;
 
   static Serializer<CountryEntity> get serializer => _$countryEntitySerializer;
 }

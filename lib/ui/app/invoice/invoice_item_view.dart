@@ -18,8 +18,8 @@ class InvoiceItemListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String cost =
-        formatNumber(invoiceItem.cost, state, clientId: invoice.clientId);
-    final String qty = formatNumber(invoiceItem.qty, state,
+        formatNumber(invoiceItem.cost, context, clientId: invoice.clientId);
+    final String qty = formatNumber(invoiceItem.qty, context,
         clientId: invoice.clientId, formatNumberType: FormatNumberType.double);
     final localization = AppLocalization.of(context);
 
@@ -27,10 +27,10 @@ class InvoiceItemListTile extends StatelessWidget {
     if (invoiceItem.discount != 0) {
       subtitle += ' | ${localization.discount} ';
       if (invoice.isAmountDiscount) {
-        subtitle += formatNumber(invoiceItem.discount, state,
+        subtitle += formatNumber(invoiceItem.discount, context,
             clientId: invoice.clientId);
       } else {
-        subtitle += formatNumber(invoiceItem.discount, state,
+        subtitle += formatNumber(invoiceItem.discount, context,
             clientId: invoice.clientId,
             formatNumberType: FormatNumberType.percent);
       }
@@ -56,7 +56,7 @@ class InvoiceItemListTile extends StatelessWidget {
         title: Text(invoiceItem.productKey),
         subtitle: Text(subtitle),
         trailing: Text(
-            formatNumber(invoiceItem.total, state, clientId: invoice.clientId)),
+            formatNumber(invoiceItem.total, context, clientId: invoice.clientId)),
       ),
     );
   }

@@ -134,7 +134,7 @@ class DashboardRow extends StatelessWidget {
               children: <Widget>[
                 Text(title, style: TextStyle()),
                 Text(
-                  formatNumber(amount, state,
+                  formatNumber(amount, context,
                       formatNumberType: isMoney
                           ? FormatNumberType.money
                           : FormatNumberType.int),
@@ -185,7 +185,7 @@ class DashboardColumn extends StatelessWidget {
                 SizedBox(height: 18.0),
                 Text(title, style: TextStyle()),
                 Text(
-                  formatNumber(amount, state,
+                  formatNumber(amount, context,
                       formatNumberType: isMoney
                           ? FormatNumberType.money
                           : FormatNumberType.int),

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/number_symbols_data.dart';
 import 'package:intl/number_symbols.dart';
@@ -22,7 +24,7 @@ enum FormatNumberType {
 
 String formatNumber(
   double value,
-  AppState state, {
+  BuildContext context, {
   int clientId,
   FormatNumberType formatNumberType = FormatNumberType.money,
   bool zeroIsNull = false,
@@ -32,6 +34,7 @@ String formatNumber(
     return null;
   }
 
+  final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.selectedCompany;
   final ClientEntity client = state.selectedCompanyState.clientState.map[clientId];
 

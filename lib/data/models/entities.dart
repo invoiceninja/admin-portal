@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'entities.g.dart';
 
@@ -66,7 +65,7 @@ abstract class SelectableEntity {
 
   String get listDisplayName => 'Error: listDisplayName not set';
 
-  String listDisplayCost(AppState state) => 'Error: listDisplayCost not set';
+  double get listDisplayAmount => 0.0;
 }
 
 abstract class BaseEntity extends Object with SelectableEntity {

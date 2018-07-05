@@ -47,10 +47,10 @@ class _InvoiceViewState extends State<InvoiceView> {
               : InvoiceStatusColors.colors[invoice.invoiceStatusId])[200],
           label1: localization.totalAmount,
           value1:
-              formatNumber(invoice.amount, state, clientId: invoice.clientId),
+              formatNumber(invoice.amount, context, clientId: invoice.clientId),
           label2: localization.balanceDue,
           value2:
-              formatNumber(invoice.balance, state, clientId: invoice.clientId),
+              formatNumber(invoice.balance, context, clientId: invoice.clientId),
         ),
       ];
 
@@ -60,12 +60,12 @@ class _InvoiceViewState extends State<InvoiceView> {
             : invoiceStatusSelector(invoice, store.state.staticState),
         InvoiceFields.invoiceDate: invoice.invoiceDate,
         InvoiceFields.dueDate: invoice.dueDate,
-        InvoiceFields.partial: formatNumber(invoice.partial, state,
+        InvoiceFields.partial: formatNumber(invoice.partial, context,
             clientId: invoice.clientId, zeroIsNull: true),
         InvoiceFields.partialDueDate: invoice.partialDueDate,
         InvoiceFields.poNumber: invoice.poNumber,
         InvoiceFields.discount: formatNumber(
-            invoice.discount, widget.viewModel.state,
+            invoice.discount, context,
             clientId: invoice.clientId,
             zeroIsNull: true,
             formatNumberType: invoice.isAmountDiscount
@@ -190,7 +190,7 @@ class _InvoiceViewState extends State<InvoiceView> {
                   width: 80.0,
                   child: Align(
                       alignment: Alignment.centerRight,
-                      child: Text(formatNumber(amount, viewModel.state,
+                      child: Text(formatNumber(amount, context,
                           clientId: invoice.clientId))),
                 ),
               ],

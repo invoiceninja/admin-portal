@@ -18,15 +18,14 @@ class ClientOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
-    final state = viewModel.state;
 
     return ListView(
       children: <Widget>[
         TwoValueHeader(
           label1: localization.paidToDate,
-          value1: formatNumber(client.paidToDate, state, clientId: client.id),
+          value1: formatNumber(client.paidToDate, context, clientId: client.id),
           label2: localization.balanceDue,
-          value2: formatNumber(client.balance, state, clientId: client.id),
+          value2: formatNumber(client.balance, context, clientId: client.id),
         ),
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)

@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'expense_model.g.dart';
 
@@ -198,11 +197,6 @@ abstract class ExpenseEntity extends Object
     return publicNotes;
   }
 
-  @override
-  String listDisplayCost(AppState state) {
-    return '';
-  }
-
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 
@@ -238,9 +232,7 @@ abstract class ExpenseCategoryEntity extends Object
   }
 
   @override
-  String listDisplayCost(AppState state) {
-    return '';
-  }
+  double get listDisplayAmount => 0.0;
 
   String get name;
 

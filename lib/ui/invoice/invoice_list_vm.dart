@@ -8,7 +8,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/utils/localization.dart';
-import 'package:path/path.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/ui/invoice/invoice_list.dart';

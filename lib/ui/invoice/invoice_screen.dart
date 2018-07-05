@@ -1,4 +1,3 @@
-import 'package:invoiceninja/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja/ui/app/app_search.dart';
 import 'package:invoiceninja/ui/app/app_search_button.dart';
 import 'package:invoiceninja/utils/localization.dart';

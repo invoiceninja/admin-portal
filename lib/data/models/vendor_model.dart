@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
 
 part 'vendor_model.g.dart';
 
@@ -178,9 +177,7 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
   }
 
   @override
-  String listDisplayCost(AppState state) {
-    return '';
-  }
+  double get listDisplayAmount => 0.0;
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }
@@ -241,9 +238,7 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
   }
 
   @override
-  String listDisplayCost(AppState state) {
-    return '';
-  }
+  double get listDisplayAmount => 0.0;
 
   static Serializer<VendorContactEntity> get serializer => _$vendorContactEntitySerializer;
 }

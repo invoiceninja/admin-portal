@@ -87,16 +87,15 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final state = widget.viewModel.state;
     final invoiceItem = widget.invoiceItem;
 
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
-    _costController.text = formatNumber(invoiceItem.cost, state,
+    _costController.text = formatNumber(invoiceItem.cost, context,
         formatNumberType: FormatNumberType.input);
-    _qtyController.text = formatNumber(invoiceItem.qty, state,
+    _qtyController.text = formatNumber(invoiceItem.qty, context,
         formatNumberType: FormatNumberType.input);
-    _discountController.text = formatNumber(invoiceItem.discount, state,
+    _discountController.text = formatNumber(invoiceItem.discount, context,
         formatNumberType: FormatNumberType.input);
     _custom1Controller.text = invoiceItem.customValue1;
     _custom2Controller.text = invoiceItem.customValue2;

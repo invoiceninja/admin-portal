@@ -59,7 +59,7 @@ class ProductItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(product.cost, state),
+              Text(formatNumber(product.cost, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),

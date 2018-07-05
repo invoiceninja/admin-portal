@@ -54,7 +54,7 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
   }
 
   String _formatTaxRate(TaxRateEntity taxRate, AppState state) {
-    return '${formatNumber(taxRate.rate, state,
+    return '${formatNumber(taxRate.rate, context,
         formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
   }
 
@@ -72,7 +72,7 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
                   children: <Widget>[
                     SizedBox(
                       width: 70.0,
-                      child: Text(formatNumber(taxRate.rate, store.state,
+                      child: Text(formatNumber(taxRate.rate, context,
                           formatNumberType: FormatNumberType.percent)),
                     ),
                     Text(taxRate.name),

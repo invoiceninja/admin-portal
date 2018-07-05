@@ -48,7 +48,7 @@ class ClientItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.title,
               ),
             ),
-            Text(formatNumber(client.balance, state, clientId: client.id),
+            Text(formatNumber(client.balance, context, clientId: client.id),
                 style: Theme.of(context).textTheme.title)
           ],
         ),

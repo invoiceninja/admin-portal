@@ -50,7 +50,7 @@ class _ProductEditState extends State<ProductEdit> {
     final product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
-    _costController.text = formatNumber(product.cost, widget.viewModel.state, formatNumberType: FormatNumberType.input);
+    _costController.text = formatNumber(product.cost, context, formatNumberType: FormatNumberType.input);
     _custom1Controller.text = product.customValue1;
     _custom2Controller.text = product.customValue2;
 

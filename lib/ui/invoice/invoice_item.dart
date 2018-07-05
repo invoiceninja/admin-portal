@@ -51,7 +51,7 @@ class InvoiceItem extends StatelessWidget {
                 ),
               ),
               Text(
-                  formatNumber(invoice.amount, state,
+                  formatNumber(invoice.amount, context,
                       clientId: invoice.clientId),
                   style: Theme.of(context).textTheme.title),
             ],

@@ -56,18 +56,18 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     _invoiceDateController.text = invoice.invoiceDate;
     _poNumberController.text = invoice.poNumber;
     _discountController.text = formatNumber(
-        invoice.discount, widget.viewModel.state,
+        invoice.discount, context,
         formatNumberType: FormatNumberType.input);
     _partialController.text = formatNumber(
-        invoice.partial, widget.viewModel.state,
+        invoice.partial, context,
         formatNumberType: FormatNumberType.input);
     _custom1Controller.text = invoice.customTextValue1;
     _custom2Controller.text = invoice.customTextValue2;
     _surcharge1Controller.text = formatNumber(
-        invoice.customValue1, widget.viewModel.state,
+        invoice.customValue1, context,
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(
-        invoice.customValue2, widget.viewModel.state,
+        invoice.customValue2, context,
         formatNumberType: FormatNumberType.input);
 
     _controllers

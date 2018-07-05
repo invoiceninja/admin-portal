@@ -158,7 +158,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                 Expanded(
                   child: Text(entity.listDisplayName),
                 ),
-                Text(entity.listDisplayCost(widget.state)),
+                //Text(entity.listDisplayAmount),
               ],
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
