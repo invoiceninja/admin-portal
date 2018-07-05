@@ -8,27 +8,29 @@ import 'package:invoiceninja/utils/formatting.dart';
 
 part 'invoice_model.g.dart';
 
-abstract class InvoiceListResponse implements Built<InvoiceListResponse, 
-  InvoiceListResponseBuilder> {
-
-  factory InvoiceListResponse([void updates(InvoiceListResponseBuilder b)]) = _$InvoiceListResponse;
+abstract class InvoiceListResponse
+    implements Built<InvoiceListResponse, InvoiceListResponseBuilder> {
+  factory InvoiceListResponse([void updates(InvoiceListResponseBuilder b)]) =
+      _$InvoiceListResponse;
   InvoiceListResponse._();
 
   BuiltList<InvoiceEntity> get data;
 
-  static Serializer<InvoiceListResponse> get serializer => _$invoiceListResponseSerializer;
+  static Serializer<InvoiceListResponse> get serializer =>
+      _$invoiceListResponseSerializer;
 }
 
-abstract class InvoiceItemResponse implements Built<InvoiceItemResponse, InvoiceItemResponseBuilder> {
-
-  factory InvoiceItemResponse([void updates(InvoiceItemResponseBuilder b)]) = _$InvoiceItemResponse;
+abstract class InvoiceItemResponse
+    implements Built<InvoiceItemResponse, InvoiceItemResponseBuilder> {
+  factory InvoiceItemResponse([void updates(InvoiceItemResponseBuilder b)]) =
+      _$InvoiceItemResponse;
   InvoiceItemResponse._();
 
   InvoiceEntity get data;
 
-  static Serializer<InvoiceItemResponse> get serializer => _$invoiceItemResponseSerializer;
+  static Serializer<InvoiceItemResponse> get serializer =>
+      _$invoiceItemResponseSerializer;
 }
-
 
 class InvoiceFields {
   static const String amount = 'amount';
@@ -56,60 +58,58 @@ class InvoiceFields {
   static const String isDeleted = 'isDeleted';
 }
 
-
-abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTotal
-  implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-
+abstract class InvoiceEntity extends Object
+    with BaseEntity, CalculateInvoiceTotal
+    implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   static int counter = 0;
   factory InvoiceEntity() {
     return _$InvoiceEntity._(
-        id: --InvoiceEntity.counter,
-        amount: 0.0,
-        balance: 0.0,
-        clientId: 0,
-        invoiceStatusId: 0,
-        invoiceNumber: '',
-        discount: 0.0,
-        poNumber: '',
-        invoiceDate: convertDateTimeToSqlDate(),
-        dueDate: '',
-        terms: '',
-        publicNotes: '',
-        privateNotes: '',
-        invoiceTypeId: 0,
-        isRecurring: false,
-        frequencyId: 0,
-        startDate: '',
-        endDate: '',
-        lastSentDate: '',
-        recurringInvoiceId: 0,
-        taxName1: '',
-        taxRate1: 0.0,
-        taxName2: '',
-        taxRate2: 0.0,
-        isAmountDiscount: false,
-        invoiceFooter: '',
-        partial: 0.0,
-        partialDueDate: '',
-        hasTasks: false,
-        autoBill: false,
-        customValue1: 0.0,
-        customValue2: 0.0,
-        customTaxes1: false,
-        customTaxes2: false,
-        hasExpenses: false,
-        quoteInvoiceId: 0,
-        customTextValue1: '',
-        customTextValue2: '',
-        isQuote: false,
-        isPublic: false,
-        filename: '',
-        invoiceItems: BuiltList<InvoiceItemEntity>(),
-        invitations: BuiltList<InvitationEntity>(),
-        
-        updatedAt: 0,
-        archivedAt: 0,
-        isDeleted: false,
+      id: --InvoiceEntity.counter,
+      amount: 0.0,
+      balance: 0.0,
+      clientId: 0,
+      invoiceStatusId: 0,
+      invoiceNumber: '',
+      discount: 0.0,
+      poNumber: '',
+      invoiceDate: convertDateTimeToSqlDate(),
+      dueDate: '',
+      terms: '',
+      publicNotes: '',
+      privateNotes: '',
+      invoiceTypeId: 0,
+      isRecurring: false,
+      frequencyId: 0,
+      startDate: '',
+      endDate: '',
+      lastSentDate: '',
+      recurringInvoiceId: 0,
+      taxName1: '',
+      taxRate1: 0.0,
+      taxName2: '',
+      taxRate2: 0.0,
+      isAmountDiscount: false,
+      invoiceFooter: '',
+      partial: 0.0,
+      partialDueDate: '',
+      hasTasks: false,
+      autoBill: false,
+      customValue1: 0.0,
+      customValue2: 0.0,
+      customTaxes1: false,
+      customTaxes2: false,
+      hasExpenses: false,
+      quoteInvoiceId: 0,
+      customTextValue1: '',
+      customTextValue2: '',
+      isQuote: false,
+      isPublic: false,
+      filename: '',
+      invoiceItems: BuiltList<InvoiceItemEntity>(),
+      invitations: BuiltList<InvitationEntity>(),
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
   InvoiceEntity._();
@@ -166,7 +166,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
 
   @BuiltValueField(wireName: 'end_date')
   String get endDate;
-  
+
   @BuiltValueField(wireName: 'last_sent_date')
   String get lastSentDate;
 
@@ -195,7 +195,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
 
   @BuiltValueField(wireName: 'invoice_footer')
   String get invoiceFooter;
-  
+
   double get partial;
 
   @BuiltValueField(wireName: 'partial_due_date')
@@ -255,7 +255,7 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   int compareTo(InvoiceEntity invoice, String sortField, bool sortAscending) {
     int response = 0;
     final InvoiceEntity invoiceA = sortAscending ? this : invoice;
-    final InvoiceEntity invoiceB = sortAscending ? invoice: this;
+    final InvoiceEntity invoiceB = sortAscending ? invoice : this;
 
     switch (sortField) {
       case InvoiceFields.amount:
@@ -342,7 +342,12 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   bool get isPastDue {
-    return ! isDeleted && isPublic && balance > 0 && DateTime.tryParse(dueDate).isBefore(DateTime.now());
+    return !isDeleted &&
+        isPublic &&
+        balance > 0 &&
+        DateTime
+            .tryParse(dueDate)
+            .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
   String get invitationLink => invitations.first?.link;
@@ -352,8 +357,9 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
 
-abstract class InvoiceItemEntity extends Object with BaseEntity implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-
+abstract class InvoiceItemEntity extends Object
+    with BaseEntity
+    implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   static int counter = 0;
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
@@ -370,7 +376,6 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
       customValue1: '',
       customValue2: '',
       discount: 0.0,
-      
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -441,11 +446,13 @@ abstract class InvoiceItemEntity extends Object with BaseEntity implements Built
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  static Serializer<InvoiceItemEntity> get serializer => _$invoiceItemEntitySerializer;
+  static Serializer<InvoiceItemEntity> get serializer =>
+      _$invoiceItemEntitySerializer;
 }
 
-abstract class InvitationEntity extends Object with BaseEntity implements Built<InvitationEntity, InvitationEntityBuilder> {
-
+abstract class InvitationEntity extends Object
+    with BaseEntity
+    implements Built<InvitationEntity, InvitationEntityBuilder> {
   static int counter = 0;
   factory InvitationEntity() {
     return _$InvitationEntity._(
@@ -454,7 +461,6 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
       link: '',
       sentDate: '',
       viewedDate: '',
-      
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -504,5 +510,6 @@ abstract class InvitationEntity extends Object with BaseEntity implements Built<
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  static Serializer<InvitationEntity> get serializer => _$invitationEntitySerializer;
+  static Serializer<InvitationEntity> get serializer =>
+      _$invitationEntitySerializer;
 }

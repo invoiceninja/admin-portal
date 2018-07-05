@@ -471,6 +471,9 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'is_primary',
       serializers.serialize(object.isPrimary,
           specifiedType: const FullType(bool)),
+      'send_invoice',
+      serializers.serialize(object.sendInvoice,
+          specifiedType: const FullType(bool)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -545,6 +548,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           break;
         case 'is_primary':
           result.isPrimary = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'send_invoice':
+          result.sendInvoice = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_value1':
@@ -1430,6 +1437,8 @@ class _$ContactEntity extends ContactEntity {
   @override
   final bool isPrimary;
   @override
+  final bool sendInvoice;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -1454,6 +1463,7 @@ class _$ContactEntity extends ContactEntity {
       this.phone,
       this.contactKey,
       this.isPrimary,
+      this.sendInvoice,
       this.customValue1,
       this.customValue2,
       this.createdAt,
@@ -1474,6 +1484,8 @@ class _$ContactEntity extends ContactEntity {
       throw new BuiltValueNullFieldError('ContactEntity', 'contactKey');
     if (isPrimary == null)
       throw new BuiltValueNullFieldError('ContactEntity', 'isPrimary');
+    if (sendInvoice == null)
+      throw new BuiltValueNullFieldError('ContactEntity', 'sendInvoice');
     if (customValue1 == null)
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue1');
     if (customValue2 == null)
@@ -1497,6 +1509,7 @@ class _$ContactEntity extends ContactEntity {
         phone == other.phone &&
         contactKey == other.contactKey &&
         isPrimary == other.isPrimary &&
+        sendInvoice == other.sendInvoice &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         createdAt == other.createdAt &&
@@ -1519,12 +1532,16 @@ class _$ContactEntity extends ContactEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, firstName.hashCode),
-                                                    lastName.hashCode),
-                                                email.hashCode),
-                                            phone.hashCode),
-                                        contactKey.hashCode),
-                                    isPrimary.hashCode),
+                                                $jc(
+                                                    $jc(
+                                                        $jc(0,
+                                                            firstName.hashCode),
+                                                        lastName.hashCode),
+                                                    email.hashCode),
+                                                phone.hashCode),
+                                            contactKey.hashCode),
+                                        isPrimary.hashCode),
+                                    sendInvoice.hashCode),
                                 customValue1.hashCode),
                             customValue2.hashCode),
                         createdAt.hashCode),
@@ -1543,6 +1560,7 @@ class _$ContactEntity extends ContactEntity {
           ..add('phone', phone)
           ..add('contactKey', contactKey)
           ..add('isPrimary', isPrimary)
+          ..add('sendInvoice', sendInvoice)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('createdAt', createdAt)
@@ -1582,6 +1600,10 @@ class ContactEntityBuilder
   bool get isPrimary => _$this._isPrimary;
   set isPrimary(bool isPrimary) => _$this._isPrimary = isPrimary;
 
+  bool _sendInvoice;
+  bool get sendInvoice => _$this._sendInvoice;
+  set sendInvoice(bool sendInvoice) => _$this._sendInvoice = sendInvoice;
+
   String _customValue1;
   String get customValue1 => _$this._customValue1;
   set customValue1(String customValue1) => _$this._customValue1 = customValue1;
@@ -1620,6 +1642,7 @@ class ContactEntityBuilder
       _phone = _$v.phone;
       _contactKey = _$v.contactKey;
       _isPrimary = _$v.isPrimary;
+      _sendInvoice = _$v.sendInvoice;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _createdAt = _$v.createdAt;
@@ -1653,6 +1676,7 @@ class ContactEntityBuilder
             phone: phone,
             contactKey: contactKey,
             isPrimary: isPrimary,
+            sendInvoice: sendInvoice,
             customValue1: customValue1,
             customValue2: customValue2,
             createdAt: createdAt,

@@ -138,7 +138,7 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
     repository
         .emailInvoice(store.state.selectedCompany, store.state.authState,
         origInvoice)
-        .then((dynamic response) {
+        .then((void _) {
       store.dispatch(EmailInvoiceSuccess());
       if (action.completer != null) {
         action.completer.complete(null);

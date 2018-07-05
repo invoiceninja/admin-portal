@@ -89,7 +89,11 @@ abstract class ClientEntity extends Object
       creditNumberCounter: 0,
       customValue1: '',
       customValue2: '',
-      contacts: BuiltList<ContactEntity>(),
+      contacts: BuiltList<ContactEntity>(
+        <ContactEntity>[ContactEntity().rebuild((b) => b
+          ..isPrimary = true
+        )],
+      ),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -318,6 +322,7 @@ abstract class ContactEntity extends Object
       phone: '',
       contactKey: '',
       isPrimary: false,
+      sendInvoice: true,
       customValue1: '',
       customValue2: '',
       updatedAt: 0,
@@ -343,6 +348,9 @@ abstract class ContactEntity extends Object
 
   @BuiltValueField(wireName: 'is_primary')
   bool get isPrimary;
+
+  @BuiltValueField(wireName: 'send_invoice')
+  bool get sendInvoice;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;

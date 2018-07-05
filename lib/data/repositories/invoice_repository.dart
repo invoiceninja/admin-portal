@@ -50,12 +50,15 @@ class InvoiceRepository {
 
   Future emailInvoice(CompanyEntity company, AuthState auth, InvoiceEntity invoice) async {
 
+    /*
     final dynamic response = await webClient.post(
           auth.url + '/email_invoice?invoice_id=${invoice.id}', company.token);
+    */
 
-    final InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
-        InvoiceItemResponse.serializer, response);
+    await webClient.post(
+        auth.url + '/email_invoice?invoice_id=${invoice.id}', company.token);
 
-    return invoiceResponse.data;
+    // TODO parse response for errors
+    return null;
   }
 }
