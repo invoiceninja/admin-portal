@@ -204,28 +204,37 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       child: FormCard(
         children: <Widget>[
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: TextFormField(
-                    autocorrect: false,
-                    controller: _productKeyController,
-                    decoration: InputDecoration(
-                      labelText: localization.product,
-                    ),
+              FlatButton(
+                child: Text(
+                  localization.remove,
+                  style: TextStyle(
+                    color: Colors.grey[600],
                   ),
                 ),
+                onPressed: _confirmDelete,
               ),
-              IconButton(
-                icon: Icon(Icons.close),
+              RaisedButton(
+                color: Theme.of(context).primaryColorDark,
+                textColor: Theme.of(context).secondaryHeaderColor,
+                elevation: 4.0,
+                child: Text(
+                  localization.done,
+                ),
                 onPressed: () {
                   viewModel.onClearSelectedInvoiceItemPressed();
                   Navigator.of(context).pop();
                 },
               ),
             ],
+          ),
+          TextFormField(
+            autocorrect: false,
+            controller: _productKeyController,
+            decoration: InputDecoration(
+              labelText: localization.product,
+            ),
           ),
           TextFormField(
             autocorrect: false,
@@ -292,23 +301,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                   initialTaxRate: invoiceItem.taxRate2,
                 )
               : Container(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 14.0),
-                child: FlatButton(
-                  child: Text(
-                    localization.remove,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  onPressed: _confirmDelete,
-                ),
-              )
-            ],
-          ),
         ],
       ),
     );
