@@ -12,6 +12,8 @@ const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kCurrencyUSDollar = 1;
 const int kCurrencyEuro = 3;
 
+const int kInvoiceStatusPastDue = -1;
+
 class InvoiceStatusColors {
   static const colors = {
     1: Colors.grey, // draft

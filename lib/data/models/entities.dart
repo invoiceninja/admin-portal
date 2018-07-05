@@ -95,6 +95,10 @@ abstract class BaseEntity extends Object with SelectableEntity {
   bool get isActive => archivedAt == null;
   bool get isArchived => archivedAt != null && ! isDeleted;
 
+  bool matchesStatuses(BuiltList<EntityStatus> statuses) {
+    return true;
+  }
+
   bool matchesStates(BuiltList<EntityState> states) {
     if (states.isEmpty) {
       return true;

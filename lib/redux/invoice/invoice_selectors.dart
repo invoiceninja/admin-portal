@@ -30,6 +30,9 @@ List<int> visibleInvoicesSelector(
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
       return false;
     }
+    if (!invoice.matchesStatuses(invoiceListState.statusFilters)) {
+      return false;
+    }
     if (!invoice.matchesSearch(invoiceListState.search)) {
       return false;
     }

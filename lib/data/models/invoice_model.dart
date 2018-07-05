@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja/constants.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/models/mixins/invoice_mixin.dart';
 import 'package:invoiceninja/redux/app/app_state.dart';
@@ -271,6 +272,25 @@ abstract class InvoiceEntity extends Object with BaseEntity, CalculateInvoiceTot
     } else {
       return response;
     }
+  }
+
+  @override
+  bool matchesStatuses(BuiltList<EntityStatus> statuses) {
+    if (statuses.isEmpty) {
+      return true;
+    }
+
+    for (final status in statuses) {
+      if (status.id == invoiceStatusId) {
+        return true;
+      }
+
+      if (status.id == kInvoiceStatusPastDue && isPastDue) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @override
