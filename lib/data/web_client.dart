@@ -50,7 +50,7 @@ class WebClient {
     return jsonResponse;
   }
 
-  Future<dynamic> post(String url, String token, dynamic data) async {
+  Future<dynamic> post(String url, String token, [dynamic data]) async {
     final http.Response response = await http.Client().post(
       url,
       body: data,
