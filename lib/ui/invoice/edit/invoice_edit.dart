@@ -121,7 +121,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
                     productMap: viewModel.productMap,
-                    onItemsSelected: viewModel.onItemsAdded,
+                    onItemsSelected: (items) {
+                      viewModel.onItemsAdded(items);
+                      _controller.animateTo(kItemScreen);
+                    },
                   );
                 });
           },

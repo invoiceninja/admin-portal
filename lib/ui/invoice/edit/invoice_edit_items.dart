@@ -22,6 +22,8 @@ class InvoiceEditItems extends StatefulWidget {
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
 
+  var InvoiceItemEntity dialogInvoiceItem;
+
   void _showInvoiceItemEditor(InvoiceItemEntity invoiceItem, BuildContext context) {
     showDialog<ItemEditDetails>(
         context: context,
@@ -41,13 +43,6 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
 
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-    final invoiceItem = invoice.invoiceItems.contains(viewModel.invoiceItem) ? viewModel.invoiceItem : null;
-
-    if (invoiceItem != null) {
-      WidgetsBinding.instance.addPostFrameCallback((duration) {
-        _showInvoiceItemEditor(invoiceItem, context);
-      });
-    }
   }
 
   @override
@@ -55,6 +50,14 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
+    final invoiceItem = invoice.invoiceItems.contains(viewModel.invoiceItem) ? viewModel.invoiceItem : null;
+
+    if (invoiceItem != null && invoiceItem != dialogInvoiceItem) {
+      dialogInvoiceItem = invoiceItem;
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        _showInvoiceItemEditor(invoiceItem, context);
+      });
+    }
 
     if (invoice.invoiceItems.isEmpty) {
       return Center(

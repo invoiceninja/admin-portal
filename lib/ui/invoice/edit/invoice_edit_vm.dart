@@ -93,7 +93,12 @@ class InvoiceEditVM {
                 });
           });
         },
-        onItemsAdded: (items) => store.dispatch(AddInvoiceItems(items)),
+        onItemsAdded: (items) {
+          if (items.length == 1) {
+            store.dispatch(EditInvoiceItem(items[0]));
+          }
+          store.dispatch(AddInvoiceItems(items));
+        },
         onActionSelected: (BuildContext context, EntityAction action) {
           final Completer<Null> completer = new Completer<Null>();
           var message = '';
