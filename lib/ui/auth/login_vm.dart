@@ -59,13 +59,8 @@ class LoginVM {
           }
 
           final Completer<Null> completer = new Completer<Null>();
-          var apiUrl = url
-              .trim()
-              .replaceFirst(RegExp(r'/api/v1'), '')
-              .replaceFirst(RegExp(r'/$'), '');
-          apiUrl += '/api/v1';
           store.dispatch(UserLoginRequest(
-              completer, email.trim(), password.trim(), apiUrl, secret.trim()));
+              completer, email.trim(), password.trim(), url.trim(), secret.trim()));
           completer.future.then((_) {
             Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
             store.dispatch(UpdateCurrentRoute(DashboardScreen.route));

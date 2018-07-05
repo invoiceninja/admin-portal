@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
 import 'package:invoiceninja/ui/app/progress_button.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/app/form_card.dart';
 
@@ -40,10 +41,12 @@ class _LoginState extends State<LoginView> {
 
   @override
   void didChangeDependencies() {
-    _emailController.text = widget.authState.email;
-    _passwordController.text = widget.authState.password;
-    _urlController.text = widget.authState.url;
-    _secretController.text = widget.authState.secret;
+
+    final state = widget.authState;
+    _emailController.text = state.email;
+    _passwordController.text = state.password;
+    _urlController.text = formatApiUrlReadable(state.url);
+    _secretController.text = state.secret;
 
     super.didChangeDependencies();
   }

@@ -36,7 +36,8 @@ String formatNumber(
 
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.selectedCompany;
-  final ClientEntity client = state.selectedCompanyState.clientState.map[clientId];
+  final ClientEntity client =
+      state.selectedCompanyState.clientState.map[clientId];
 
   final countryId = client?.countryId ?? company.countryId;
   int currencyId;
@@ -148,3 +149,9 @@ String convertDateTimeToSqlDate([DateTime date]) {
   return date.toIso8601String().split('T').first;
 }
 
+String formatApiUrlMachine(String url) => formatApiUrlReadable(url) + '/api/v1';
+
+String formatApiUrlReadable(String url) => url
+    .trim()
+    .replaceFirst(RegExp(r'/api/v1'), '')
+    .replaceFirst(RegExp(r'/$'), '');

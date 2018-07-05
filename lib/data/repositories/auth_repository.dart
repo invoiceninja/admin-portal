@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:invoiceninja/data/models/serializers.dart';
 import 'package:invoiceninja/data/models/entities.dart';
 import 'package:invoiceninja/data/web_client.dart';
+import 'package:invoiceninja/utils/formatting.dart';
 
 class AuthRepository {
   final WebClient webClient;
@@ -20,6 +21,8 @@ class AuthRepository {
       'email': email,
       'password': password,
     };
+
+    url = formatApiUrlMachine(url);
 
     final dynamic response = await webClient.post(url + '/login?include=tax_rates&include_static=true', '', json.encode(credentials));
 

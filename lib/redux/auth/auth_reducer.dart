@@ -1,3 +1,4 @@
+import 'package:invoiceninja/utils/formatting.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja/redux/auth/auth_actions.dart';
 import 'package:invoiceninja/redux/auth/auth_state.dart';
@@ -22,7 +23,7 @@ AuthState userLoginRequestReducer(
     AuthState authState, UserLoginRequest action) {
   return authState.rebuild((b) => b
     ..error = null
-    ..url = action.url
+    ..url = formatApiUrlMachine(action.url)
     ..secret = action.secret
     ..email = action.email
     ..password = action.password);
