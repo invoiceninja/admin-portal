@@ -75,17 +75,8 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
               onTap: () => _showInvoiceItemEditor(invoiceItem, context),
             ));
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-      child: Column(
-        children: <Widget>[
-          Divider(height: 1.0),
-          ListView(
-            shrinkWrap: true,
-            children: invoiceItems.toList(),
-          ),
-        ],
-      ),
+    return ListView(
+      children: invoiceItems.toList(),
     );
   }
 }
@@ -226,7 +217,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               ),
               IconButton(
                 icon: Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  viewModel.onClearSelectedInvoiceItemPressed();
+                  Navigator.of(context).pop();
+                },
               ),
             ],
           ),

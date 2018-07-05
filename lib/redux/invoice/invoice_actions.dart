@@ -23,6 +23,11 @@ class EditInvoice implements PersistUI {
   EditInvoice({this.invoice, this.context, this.invoiceItem});
 }
 
+class EditInvoiceItem implements PersistUI {
+  final InvoiceItemEntity invoiceItem;
+  EditInvoiceItem([this.invoiceItem]);
+}
+
 class UpdateInvoice implements PersistUI {
   final InvoiceEntity invoice;
   UpdateInvoice(this.invoice);

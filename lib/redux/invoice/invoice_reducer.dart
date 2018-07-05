@@ -17,9 +17,10 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
 
 final editingItemReducer = combineReducers<InvoiceItemEntity>([
   TypedReducer<InvoiceItemEntity, EditInvoice>(editInvoiceItem),
+  TypedReducer<InvoiceItemEntity, EditInvoiceItem>(editInvoiceItem),
 ]);
 
-InvoiceItemEntity editInvoiceItem(InvoiceItemEntity invoiceItem, EditInvoice action) {
+InvoiceItemEntity editInvoiceItem(InvoiceItemEntity invoiceItem, dynamic action) {
   return action.invoiceItem ?? InvoiceItemEntity();
 }
 
