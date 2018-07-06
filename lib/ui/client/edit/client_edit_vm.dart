@@ -11,6 +11,7 @@ import 'package:invoiceninja/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
@@ -85,15 +86,24 @@ class ClientEditVM {
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
         onSavePressed: (BuildContext context) {
+          if (!client.hasNameSet) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(AppLocalization
+                      .of(context)
+                      .pleaseEnterAClientOrContactName);
+                });
+            return;
+          }
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((_) {
             if (client.isNew) {
               Navigator.of(context).pop();
-              Navigator
-                  .of(context)
-                  .push<ClientViewScreen>(MaterialPageRoute(builder: (_) => ClientViewScreen()));
+              Navigator.of(context).push<ClientViewScreen>(
+                  MaterialPageRoute(builder: (_) => ClientViewScreen()));
             } else {
               Navigator.of(context).pop();
             }

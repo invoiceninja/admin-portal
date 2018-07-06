@@ -170,6 +170,7 @@ class AppLocalization {
       'mark_sent': 'Mark Sent',
       'successfully_marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Done',
+      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -350,6 +351,7 @@ class AppLocalization {
   String get markSent => _localizedValues[locale.languageCode]['mark_sent'];
   String get successfullyMarkedInvoiceAsSent => _localizedValues[locale.languageCode]['successfully_marked_invoice_as_sent'];
   String get done => _localizedValues[locale.languageCode]['done'];
+  String get pleaseEnterAClientOrContactName => _localizedValues[locale.languageCode]['please_enter_a_client_or_contact_name'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

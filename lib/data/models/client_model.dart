@@ -92,9 +92,7 @@ abstract class ClientEntity extends Object
       customValue1: '',
       customValue2: '',
       contacts: BuiltList<ContactEntity>(
-        <ContactEntity>[ContactEntity().rebuild((b) => b
-          ..isPrimary = true
-        )],
+        <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
       updatedAt: 0,
       archivedAt: 0,
@@ -299,6 +297,14 @@ abstract class ClientEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  bool get hasNameSet {
+    final contact = contacts.first;
+    return name.isNotEmpty ||
+        contact.firstName.isNotEmpty ||
+        contact.lastName.isNotEmpty ||
+        contact.email.isNotEmpty;
+  }
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
