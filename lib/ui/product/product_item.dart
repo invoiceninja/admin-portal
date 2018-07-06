@@ -28,6 +28,7 @@ class ProductItem extends StatelessWidget {
     final searchMatch = filter != null && filter.isNotEmpty
         ? product.matchesSearchValue(filter)
         : null;
+    final subtitle = searchMatch ?? product.notes;
 
     return DismissibleEntity(
       entity: product,
@@ -64,11 +65,12 @@ class ProductItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            subtitle != null && subtitle.isNotEmpty ?
             Text(
-              searchMatch ?? product.notes,
+              subtitle,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-            ),
+            ) : Container(),
             EntityStateLabel(product),
           ],
         ),

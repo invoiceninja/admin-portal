@@ -108,11 +108,21 @@ class ProductEditVM {
               break;
           }
           return completer.future.then((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: message,
-                )
-            ));
+            if ([EntityAction.archive, EntityAction.delete].contains(action)) {
+              Navigator.of(context).pop();
+            } else {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: SnackBarRow(
+                    message: message,
+                  )
+              ));
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
           });
         });
   }
