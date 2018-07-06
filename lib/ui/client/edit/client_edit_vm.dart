@@ -94,7 +94,7 @@ class ClientEditVM {
                       .of(context)
                       .pleaseEnterAClientOrContactName);
                 });
-            return;
+            return null;
           }
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(

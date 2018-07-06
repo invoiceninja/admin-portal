@@ -157,6 +157,9 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           decoration: InputDecoration(
             labelText: localization.firstName,
           ),
+          validator: (String val) => ! viewModel.client.hasNameSet
+              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+              : null,
         ),
         TextFormField(
           autocorrect: false,
@@ -164,6 +167,9 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           decoration: InputDecoration(
             labelText: localization.lastName,
           ),
+          validator: (String val) => ! viewModel.client.hasNameSet
+              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+              : null,
         ),
         TextFormField(
           autocorrect: false,

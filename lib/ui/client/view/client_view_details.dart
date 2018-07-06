@@ -54,7 +54,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         if ((contact.email ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.email,
-            title: contact.fullName() + '\n' + contact.email,
+            title: contact.fullName + '\n' + contact.email,
             copyValue: contact.email,
             subtitle: localization.email,
             onTap: () => setState(() {
@@ -66,7 +66,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         if ((contact.phone ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.phone,
-            title: contact.fullName() + '\n' + contact.phone,
+            title: contact.fullName + '\n' + contact.phone,
             copyValue: contact.phone,
             subtitle: localization.phone,
             onTap: () => setState(() {

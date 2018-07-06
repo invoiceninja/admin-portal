@@ -101,6 +101,9 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               decoration: InputDecoration(
                 labelText: localization.name,
               ),
+              validator: (String val) => ! viewModel.client.hasNameSet
+                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                  : null,
             ),
             TextFormField(
               autocorrect: false,

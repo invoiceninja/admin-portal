@@ -301,8 +301,7 @@ abstract class ClientEntity extends Object
   bool get hasNameSet {
     final contact = contacts.first;
     return name.isNotEmpty ||
-        contact.firstName.isNotEmpty ||
-        contact.lastName.isNotEmpty ||
+        contact.fullName.isNotEmpty ||
         contact.email.isNotEmpty;
   }
 
@@ -366,7 +365,7 @@ abstract class ContactEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  String fullName() {
+  String get fullName {
     return (firstName + ' ' + lastName).trim();
   }
 
@@ -398,8 +397,8 @@ abstract class ContactEntity extends Object
     }
 
     search = search.toLowerCase();
-    if (fullName().toLowerCase().contains(search)) {
-      return fullName();
+    if (fullName.toLowerCase().contains(search)) {
+      return fullName;
     } else if (email.toLowerCase().contains(search)) {
       return email;
     } else if (phone.toLowerCase().contains(search)) {
@@ -411,7 +410,7 @@ abstract class ContactEntity extends Object
 
   @override
   String get listDisplayName {
-    return fullName();
+    return fullName;
   }
 
   @override
