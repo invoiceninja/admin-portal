@@ -102,11 +102,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
-    //return 'Route: ${uiState.currentRoute}';
-    if (selectedCompany?.customFields != null) {
-      return 'Custom Fields: ${selectedCompany?.customFields[CustomFieldType.product1]}';
-    }
-
-    return '';
+    return 'Route: ${uiState.currentRoute}';
   }
 }
