@@ -60,14 +60,14 @@ class InvoiceItemListTile extends StatelessWidget {
       subtitle += '\n' + parts.join(' • ');
     }
 
-    return Container(
+    return Material(
         color: Theme.of(context).canvasColor,
         child: Padding(
           padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
           child: Column(
             children: <Widget>[
               ListTile(
-                  onTap: () => onTap(),
+                  onTap: onTap,
                   title: Row(
                     children: <Widget>[
                       Expanded(child: Text(invoiceItem.productKey)),

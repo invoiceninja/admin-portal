@@ -1,4 +1,3 @@
-
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -9,7 +8,6 @@ import 'package:invoiceninja/data/models/models.dart';
 import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
-
   final EntityType entityType;
   final List<String> sortFields;
   final Function(String) onSelectedSortField;
@@ -17,14 +15,14 @@ class AppBottomBar extends StatefulWidget {
   final List<EntityStatus> statuses;
   final Function(EntityStatus, bool) onSelectedStatus;
 
-  const AppBottomBar(
-      {this.sortFields,
-        this.onSelectedSortField,
-        this.entityType,
-        this.onSelectedState,
-        this.statuses,
-        this.onSelectedStatus,
-      });
+  const AppBottomBar({
+    this.sortFields,
+    this.onSelectedSortField,
+    this.entityType,
+    this.onSelectedState,
+    this.statuses,
+    this.onSelectedStatus,
+  });
 
   @override
   _AppBottomBarState createState() => new _AppBottomBarState();
@@ -43,19 +41,23 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _filterStateController = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+      _filterStateController =
+          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return StoreConnector<AppState, BuiltList<EntityState>>(
           //distinct: true,
-          converter: (Store<AppState> store) => store.state.getListState(widget.entityType).stateFilters,
+          converter: (Store<AppState> store) =>
+              store.state.getListState(widget.entityType).stateFilters,
           builder: (BuildContext context, stateFilters) {
             return Container(
               color: Theme.of(context).backgroundColor,
-              child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              child:
+                  new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: EntityState.values.map<Widget>((state) {
                     return CheckboxListTile(
                       key: Key(state.toString()),
-                      title: Text(AppLocalization.of(context).lookup(state.toString())),
+                      title: Text(
+                          AppLocalization.of(context).lookup(state.toString())),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: stateFilters.contains(state),
                       dense: true,
@@ -67,7 +69,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 ),
               ]),
             );
-
           },
         );
       });
@@ -83,18 +84,22 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _filterStatusController = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+      _filterStatusController =
+          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return StoreConnector<AppState, BuiltList<EntityStatus>>(
-          converter: (Store<AppState> store) => store.state.getListState(widget.entityType).statusFilters,
+          converter: (Store<AppState> store) =>
+              store.state.getListState(widget.entityType).statusFilters,
           builder: (BuildContext context, statusFilters) {
             return Container(
               color: Theme.of(context).backgroundColor,
-              child: new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              child:
+                  new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: widget.statuses.map((status) {
                     return CheckboxListTile(
                       key: Key(status.toString()),
-                      title: Text(AppLocalization.of(context).lookup(status.name)),
+                      title:
+                          Text(AppLocalization.of(context).lookup(status.name)),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: statusFilters.contains(status),
                       dense: true,
@@ -121,10 +126,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _sortController  = Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+      _sortController =
+          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return StoreConnector<AppState, ListUIState>(
           //distinct: true,
-          converter: (Store<AppState> store) => store.state.getListState(widget.entityType),
+          converter: (Store<AppState> store) =>
+              store.state.getListState(widget.entityType),
           builder: (BuildContext context, listUIState) {
             return Container(
               color: Theme.of(context).backgroundColor,
@@ -133,11 +140,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   children: widget.sortFields.map((sortField) {
                     return RadioListTile(
                       dense: true,
-                      title: Text(AppLocalization.of(context).lookup(sortField)),
+                      title:
+                          Text(AppLocalization.of(context).lookup(sortField)),
                       subtitle: sortField == listUIState.sortField
                           ? Text(listUIState.sortAscending
-                          ? AppLocalization.of(context).ascending
-                          : AppLocalization.of(context).descending)
+                              ? AppLocalization.of(context).ascending
+                              : AppLocalization.of(context).descending)
                           : null,
                       groupValue: listUIState.sortField,
                       onChanged: (String value) {
@@ -170,10 +178,13 @@ class _AppBottomBarState extends State<AppBottomBar> {
             icon: Icon(Icons.filter_list),
             onPressed: _showFilterStateSheet,
           ),
-          IconButton(
-            tooltip: AppLocalization.of(context).filter,
-            icon: Icon(Icons.filter),
-            onPressed: _showFilterStatusSheet,
+          Opacity(
+            opacity: widget.statuses == null ? 0.0 : 1.0,
+            child: IconButton(
+              tooltip: AppLocalization.of(context).filter,
+              icon: Icon(Icons.filter),
+              onPressed: _showFilterStatusSheet,
+            ),
           ),
         ],
       ),
