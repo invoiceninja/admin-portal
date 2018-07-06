@@ -27,11 +27,11 @@ class ClientOverview extends StatelessWidget {
     final statics = state.staticState;
     final fields = <String, String>{};
 
-    if (client.languageId != company.languageId) {
+    if (client.languageId > 0 && client.languageId != company.languageId) {
       fields[ClientFields.language] = statics.languageMap[client.languageId].name;
     }
 
-    if (client.currencyId != company.currencyId) {
+    if (client.currencyId > 0 && client.currencyId != company.currencyId) {
       fields[ClientFields.currency] = statics.currencyMap[client.currencyId].name;
     }
 
