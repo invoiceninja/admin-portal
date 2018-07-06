@@ -1,10 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja/data/models/company_model.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja/utils/formatting.dart';
 
 class TaxRateDropdown extends StatefulWidget {

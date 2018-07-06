@@ -34,7 +34,7 @@ class ClientEditScreen extends StatelessWidget {
 
 class ClientEditVM {
   final CompanyEntity company;
-  final bool isLoading;
+  final bool isSaving;
   final ClientEntity client;
   final ClientEntity origClient;
   final Function(ClientEntity) onChanged;
@@ -49,7 +49,7 @@ class ClientEditVM {
 
   ClientEditVM({
     @required this.company,
-    @required this.isLoading,
+    @required this.isSaving,
     @required this.client,
     @required this.origClient,
     @required this.onAddContactPressed,
@@ -74,7 +74,7 @@ class ClientEditVM {
         countryMap: state.staticState.countryMap,
         languageMap: state.staticState.languageMap,
         currencyMap: state.staticState.currencyMap,
-        isLoading: state.isLoading,
+        isSaving: state.isSaving,
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
         onAddContactPressed: () => store.dispatch(AddContact()),

@@ -38,14 +38,6 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
-  }
-
-  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;

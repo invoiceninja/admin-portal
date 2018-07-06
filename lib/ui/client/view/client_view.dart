@@ -76,7 +76,7 @@ class _ClientViewState extends State<ClientView>
                     onPressed: () => viewModel.onEditPressed(context),
                   ),
                   ActionMenuButton(
-                    isLoading: viewModel.isLoading,
+                    isSaving: viewModel.isSaving,
                     entity: client,
                     onSelected: viewModel.onActionSelected,
                   )

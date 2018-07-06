@@ -103,7 +103,7 @@ class _ProductEditState extends State<ProductEdit> {
             Builder(builder: (BuildContext context) {
               return SaveIconButton(
                 isVisible: !product.isDeleted,
-                isLoading: viewModel.isLoading,
+                isSaving: viewModel.isSaving,
                 isDirty: product.isNew || product != viewModel.origProduct,
                 onPressed: () {
                   if (!_formKey.currentState.validate()) {

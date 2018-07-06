@@ -50,74 +50,74 @@ class LoadProductsSuccess implements PersistData, StopLoading {
   }
 }
 
-class SaveProductRequest implements StartLoading {
+class SaveProductRequest implements StartSaving {
   final Completer completer;
   final ProductEntity product;
   SaveProductRequest({this.product, this.completer});
 }
 
-class SaveProductSuccess implements StopLoading, PersistData, PersistUI {
+class SaveProductSuccess implements StopSaving, PersistData, PersistUI {
   final ProductEntity product;
 
   SaveProductSuccess(this.product);
 }
 
-class AddProductSuccess implements StopLoading, PersistData, PersistUI {
+class AddProductSuccess implements StopSaving, PersistData, PersistUI {
   final ProductEntity product;
   AddProductSuccess(this.product);
 }
 
-class SaveProductFailure implements StopLoading {
+class SaveProductFailure implements StopSaving {
   final Object error;
   SaveProductFailure (this.error);
 }
 
-class ArchiveProductRequest implements StartLoading {
+class ArchiveProductRequest implements StartSaving {
   final Completer completer;
   final int productId;
 
   ArchiveProductRequest(this.completer, this.productId);
 }
 
-class ArchiveProductSuccess implements StopLoading, PersistData {
+class ArchiveProductSuccess implements StopSaving, PersistData {
   final ProductEntity product;
   ArchiveProductSuccess(this.product);
 }
 
-class ArchiveProductFailure implements StopLoading {
+class ArchiveProductFailure implements StopSaving {
   final ProductEntity product;
   ArchiveProductFailure(this.product);
 }
 
-class DeleteProductRequest implements StartLoading {
+class DeleteProductRequest implements StartSaving {
   final Completer completer;
   final int productId;
 
   DeleteProductRequest(this.completer, this.productId);
 }
 
-class DeleteProductSuccess implements StopLoading, PersistData {
+class DeleteProductSuccess implements StopSaving, PersistData {
   final ProductEntity product;
   DeleteProductSuccess(this.product);
 }
 
-class DeleteProductFailure implements StopLoading {
+class DeleteProductFailure implements StopSaving {
   final ProductEntity product;
   DeleteProductFailure(this.product);
 }
 
-class RestoreProductRequest implements StartLoading {
+class RestoreProductRequest implements StartSaving {
   final Completer completer;
   final int productId;
   RestoreProductRequest(this.completer, this.productId);
 }
 
-class RestoreProductSuccess implements StopLoading, PersistData {
+class RestoreProductSuccess implements StopSaving, PersistData {
   final ProductEntity product;
   RestoreProductSuccess(this.product);
 }
 
-class RestoreProductFailure implements StopLoading {
+class RestoreProductFailure implements StopSaving {
   final ProductEntity product;
   RestoreProductFailure(this.product);
 }

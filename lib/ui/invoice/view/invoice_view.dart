@@ -258,7 +258,7 @@ class _InvoiceViewState extends State<InvoiceView> {
                         label: AppLocalization.of(context).pdf,
                       ),
                     ],
-                    isLoading: viewModel.isLoading,
+                    isSaving: viewModel.isSaving,
                     entity: invoice,
                     onSelected: viewModel.onActionSelected,
                   )

@@ -71,74 +71,74 @@ class DeleteContact implements PersistUI {
   DeleteContact(this.index);
 }
 
-class SaveClientRequest implements StartLoading {
+class SaveClientRequest implements StartSaving {
   final Completer completer;
   final ClientEntity client;
   SaveClientRequest({this.completer, this.client});
 }
 
-class SaveClientSuccess implements StopLoading, PersistData, PersistUI {
+class SaveClientSuccess implements StopSaving, PersistData, PersistUI {
   final ClientEntity client;
 
   SaveClientSuccess(this.client);
 }
 
-class AddClientSuccess implements StopLoading, PersistData, PersistUI {
+class AddClientSuccess implements StopSaving, PersistData, PersistUI {
   final ClientEntity client;
   AddClientSuccess(this.client);
 }
 
-class SaveClientFailure implements StopLoading {
+class SaveClientFailure implements StopSaving {
   final Object error;
   SaveClientFailure (this.error);
 }
 
-class ArchiveClientRequest implements StartLoading {
+class ArchiveClientRequest implements StartSaving {
   final Completer completer;
   final int clientId;
 
   ArchiveClientRequest(this.completer, this.clientId);
 }
 
-class ArchiveClientSuccess implements StopLoading, PersistData {
+class ArchiveClientSuccess implements StopSaving, PersistData {
   final ClientEntity client;
   ArchiveClientSuccess(this.client);
 }
 
-class ArchiveClientFailure implements StopLoading {
+class ArchiveClientFailure implements StopSaving {
   final ClientEntity client;
   ArchiveClientFailure(this.client);
 }
 
-class DeleteClientRequest implements StartLoading {
+class DeleteClientRequest implements StartSaving {
   final Completer completer;
   final int clientId;
 
   DeleteClientRequest(this.completer, this.clientId);
 }
 
-class DeleteClientSuccess implements StopLoading, PersistData {
+class DeleteClientSuccess implements StopSaving, PersistData {
   final ClientEntity client;
   DeleteClientSuccess(this.client);
 }
 
-class DeleteClientFailure implements StopLoading {
+class DeleteClientFailure implements StopSaving {
   final ClientEntity client;
   DeleteClientFailure(this.client);
 }
 
-class RestoreClientRequest implements StartLoading {
+class RestoreClientRequest implements StartSaving {
   final Completer completer;
   final int clientId;
   RestoreClientRequest(this.completer, this.clientId);
 }
 
-class RestoreClientSuccess implements StopLoading, PersistData {
+class RestoreClientSuccess implements StopSaving, PersistData {
   final ClientEntity client;
   RestoreClientSuccess(this.client);
 }
 
-class RestoreClientFailure implements StopLoading {
+class RestoreClientFailure implements StopSaving {
   final ClientEntity client;
   RestoreClientFailure(this.client);
 }

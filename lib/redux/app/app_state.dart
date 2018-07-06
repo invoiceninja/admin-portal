@@ -19,6 +19,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState() {
     return _$AppState._(
       isLoading: false,
+      isSaving: false,
       authState: AuthState(),
       staticState: StaticState(),
       companyState1: CompanyState(),
@@ -32,6 +33,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   AppState._();
 
   bool get isLoading;
+  bool get isSaving;
   AuthState get authState;
   StaticState get staticState;
   UIState get uiState;

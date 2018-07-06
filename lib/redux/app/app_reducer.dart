@@ -11,11 +11,15 @@ AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
     return AppState().rebuild((b) => b.authState.replace(state.authState));
   } else if (action is LoadStateSuccess) {
-    return action.state.rebuild((b) => b.isLoading = false);
+    return action.state.rebuild((b) => b
+        ..isLoading = false
+        ..isSaving = false
+    );
   }
 
   return state.rebuild((b) => b
     ..isLoading = loadingReducer(state.isLoading, action)
+    ..isSaving = savingReducer(state.isSaving, action)
     ..authState.replace(authReducer(state.authState, action))
     ..staticState.replace(staticReducer(state.staticState, action))
     ..companyState1.replace(state.uiState.selectedCompanyIndex == 1

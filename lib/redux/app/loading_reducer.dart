@@ -13,3 +13,17 @@ bool _setLoading(bool state, StartLoading action) {
 bool _setLoaded(bool state, StopLoading action) {
   return false;
 }
+
+
+final savingReducer = combineReducers<bool>([
+  TypedReducer<bool, StartSaving>(_setSaving),
+  TypedReducer<bool, StopSaving>(_setSaved),
+]);
+
+bool _setSaving(bool state, StartSaving action) {
+  return true;
+}
+
+bool _setSaved(bool state, StopSaving action) {
+  return false;
+}

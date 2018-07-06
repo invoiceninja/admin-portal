@@ -41,7 +41,7 @@ class InvoiceViewVM {
   final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
   final Function(BuildContext) onClientPressed;
   final Function onBackPressed;
-  final bool isLoading;
+  final bool isSaving;
   final bool isDirty;
 
   InvoiceViewVM({
@@ -52,7 +52,7 @@ class InvoiceViewVM {
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onClientPressed,
-    @required this.isLoading,
+    @required this.isSaving,
     @required this.isDirty,
   });
 
@@ -83,7 +83,7 @@ class InvoiceViewVM {
 
     return InvoiceViewVM(
         company: state.selectedCompany,
-        isLoading: state.isLoading,
+        isSaving: state.isSaving,
         isDirty: invoice.isNew,
         invoice: invoice,
         client: client,

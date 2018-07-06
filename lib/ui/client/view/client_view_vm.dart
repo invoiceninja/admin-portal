@@ -39,7 +39,7 @@ class ClientViewVM {
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onInvoicesPressed;
-  final bool isLoading;
+  final bool isSaving;
   final bool isDirty;
 
   ClientViewVM({
@@ -49,7 +49,7 @@ class ClientViewVM {
     @required this.onEditPressed,
     @required this.onInvoicesPressed,
     @required this.onBackPressed,
-    @required this.isLoading,
+    @required this.isSaving,
     @required this.isDirty,
   });
 
@@ -58,7 +58,7 @@ class ClientViewVM {
     final client = state.clientState.map[state.clientUIState.selectedId];
 
     return ClientViewVM(
-        isLoading: store.state.isLoading,
+        isSaving: state.isSaving,
         isDirty: client.isNew,
         client: client,
         company: state.selectedCompany,

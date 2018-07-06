@@ -85,105 +85,105 @@ class DeleteInvoiceItem implements PersistUI {
   DeleteInvoiceItem(this.index);
 }
 
-class SaveInvoiceRequest implements StartLoading {
+class SaveInvoiceRequest implements StartSaving {
   final Completer completer;
   final InvoiceEntity invoice;
   SaveInvoiceRequest({this.completer, this.invoice});
 }
 
-class SaveInvoiceSuccess implements StopLoading, PersistData, PersistUI {
+class SaveInvoiceSuccess implements StopSaving, PersistData, PersistUI {
   final InvoiceEntity invoice;
 
   SaveInvoiceSuccess(this.invoice);
 }
 
-class AddInvoiceSuccess implements StopLoading, PersistData, PersistUI {
+class AddInvoiceSuccess implements StopSaving, PersistData, PersistUI {
   final InvoiceEntity invoice;
   AddInvoiceSuccess(this.invoice);
 }
 
-class SaveInvoiceFailure implements StopLoading {
+class SaveInvoiceFailure implements StopSaving {
   final Object error;
   SaveInvoiceFailure (this.error);
 }
 
-class EmailInvoiceRequest implements StartLoading {
+class EmailInvoiceRequest implements StartSaving {
   final Completer completer;
   final int invoiceId;
 
   EmailInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class EmailInvoiceSuccess implements StopLoading, PersistData {}
+class EmailInvoiceSuccess implements StopSaving, PersistData {}
 
-class EmailInvoiceFailure implements StopLoading {
+class EmailInvoiceFailure implements StopSaving {
   final dynamic error;
   EmailInvoiceFailure(this.error);
 }
 
-class MarkSentInvoiceRequest implements StartLoading {
+class MarkSentInvoiceRequest implements StartSaving {
   final Completer completer;
   final int invoiceId;
 
   MarkSentInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class MarkSentInvoiceSuccess implements StopLoading, PersistData {
+class MarkSentInvoiceSuccess implements StopSaving, PersistData {
   final InvoiceEntity invoice;
   MarkSentInvoiceSuccess(this.invoice);
 }
 
-class MarkSentInvoiceFailure implements StopLoading {
+class MarkSentInvoiceFailure implements StopSaving {
   final InvoiceEntity invoice;
   MarkSentInvoiceFailure(this.invoice);
 }
 
-class ArchiveInvoiceRequest implements StartLoading {
+class ArchiveInvoiceRequest implements StartSaving {
   final Completer completer;
   final int invoiceId;
 
   ArchiveInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class ArchiveInvoiceSuccess implements StopLoading, PersistData {
+class ArchiveInvoiceSuccess implements StopSaving, PersistData {
   final InvoiceEntity invoice;
   ArchiveInvoiceSuccess(this.invoice);
 }
 
-class ArchiveInvoiceFailure implements StopLoading {
+class ArchiveInvoiceFailure implements StopSaving {
   final InvoiceEntity invoice;
   ArchiveInvoiceFailure(this.invoice);
 }
 
-class DeleteInvoiceRequest implements StartLoading {
+class DeleteInvoiceRequest implements StartSaving {
   final Completer completer;
   final int invoiceId;
 
   DeleteInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class DeleteInvoiceSuccess implements StopLoading, PersistData {
+class DeleteInvoiceSuccess implements StopSaving, PersistData {
   final InvoiceEntity invoice;
   DeleteInvoiceSuccess(this.invoice);
 }
 
-class DeleteInvoiceFailure implements StopLoading {
+class DeleteInvoiceFailure implements StopSaving {
   final InvoiceEntity invoice;
   DeleteInvoiceFailure(this.invoice);
 }
 
-class RestoreInvoiceRequest implements StartLoading {
+class RestoreInvoiceRequest implements StartSaving {
   final Completer completer;
   final int invoiceId;
   RestoreInvoiceRequest(this.completer, this.invoiceId);
 }
 
-class RestoreInvoiceSuccess implements StopLoading, PersistData {
+class RestoreInvoiceSuccess implements StopSaving, PersistData {
   final InvoiceEntity invoice;
   RestoreInvoiceSuccess(this.invoice);
 }
 
-class RestoreInvoiceFailure implements StopLoading {
+class RestoreInvoiceFailure implements StopSaving {
   final InvoiceEntity invoice;
   RestoreInvoiceFailure(this.invoice);
 }

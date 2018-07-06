@@ -44,7 +44,7 @@ class InvoiceEditVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(List<InvoiceItemEntity>) onItemsAdded;
   final Function onBackPressed;
-  final bool isLoading;
+  final bool isSaving;
 
   InvoiceEditVM({
     @required this.company,
@@ -56,7 +56,7 @@ class InvoiceEditVM {
     @required this.onItemsAdded,
     @required this.onBackPressed,
     @required this.onActionSelected,
-    @required this.isLoading,
+    @required this.isSaving,
   });
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
@@ -65,7 +65,7 @@ class InvoiceEditVM {
 
     return InvoiceEditVM(
         company: state.selectedCompany,
-        isLoading: state.isLoading,
+        isSaving: state.isSaving,
         productMap: state.selectedCompanyState.productState.map,
         invoice: invoice,
         invoiceItem: state.invoiceUIState.editingItem,

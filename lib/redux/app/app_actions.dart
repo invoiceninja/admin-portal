@@ -6,6 +6,9 @@ class PersistData {}
 class StartLoading {}
 class StopLoading {}
 
+class StartSaving {}
+class StopSaving {}
+
 class LoadStaticSuccess {
   final StaticData data;
 

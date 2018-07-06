@@ -17,12 +17,12 @@ class ActionMenuButton extends StatelessWidget {
   final BaseEntity entity;
   final List<ActionMenuChoice> customActions;
   final Function(BuildContext, EntityAction) onSelected;
-  final bool isLoading;
+  final bool isSaving;
 
   const ActionMenuButton({
     @required this.entity,
     @required this.onSelected,
-    this.isLoading = false,
+    this.isSaving = false,
     this.customActions,
   });
 
@@ -30,7 +30,7 @@ class ActionMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<PopupMenuEntry<EntityAction>> actions = [];
 
-    if (isLoading) {
+    if (isSaving) {
       return IconButton(
         onPressed: null,
         icon: SizedBox(

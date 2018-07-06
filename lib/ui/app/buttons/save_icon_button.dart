@@ -3,13 +3,13 @@ import 'package:invoiceninja/utils/localization.dart';
 
 class SaveIconButton extends StatelessWidget {
   const SaveIconButton({
-    this.isLoading,
+    this.isSaving,
     this.isDirty,
     this.onPressed,
     this.isVisible,
   });
 
-  final bool isLoading;
+  final bool isSaving;
   final bool isDirty;
   final bool isVisible;
   final Function onPressed;
@@ -22,7 +22,7 @@ class SaveIconButton extends StatelessWidget {
       return Container();
     }
 
-    if (isLoading) {
+    if (isSaving) {
       return IconButton(
         onPressed: null,
         icon: SizedBox(

@@ -58,7 +58,7 @@ class _ClientEditState extends State<ClientEdit>
             SaveIconButton(
               isVisible: !client.isDeleted,
               isDirty: client.isNew || client != viewModel.origClient,
-              isLoading: viewModel.isLoading,
+              isSaving: viewModel.isSaving,
               onPressed: () {
                 if (! _formKey.currentState.validate()) {
                   return;

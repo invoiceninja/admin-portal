@@ -40,7 +40,7 @@ class ProductEditVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function onBackPressed;
-  final bool isLoading;
+  final bool isSaving;
   final bool isDirty;
 
   ProductEditVM({
@@ -51,7 +51,7 @@ class ProductEditVM {
     @required this.onSavePressed,
     @required this.onBackPressed,
     @required this.onActionSelected,
-    @required this.isLoading,
+    @required this.isSaving,
     @required this.isDirty,
   });
 
@@ -61,7 +61,7 @@ class ProductEditVM {
 
     return ProductEditVM(
         company: state.selectedCompany,
-        isLoading: state.isLoading,
+        isSaving: state.isSaving,
         isDirty: product.isNew,
         product: product,
         origProduct: state.productState.map[product.id],
