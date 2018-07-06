@@ -156,8 +156,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
       });
     };
 
-    return new BottomAppBar(
-      hasNotch: true,
+    return BottomAppBar(
+      shape: CircularNotchedRectangle(),
       child: Row(
         children: <Widget>[
           IconButton(

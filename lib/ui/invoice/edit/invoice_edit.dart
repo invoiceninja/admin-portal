@@ -101,7 +101,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          hasNotch: true,
+          shape: CircularNotchedRectangle(),
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
