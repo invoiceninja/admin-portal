@@ -23,8 +23,9 @@ class InvoiceItemListTile extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     String subtitle = '$qty x $cost';
+
     if (invoiceItem.discount != 0) {
-      subtitle += ' | ${localization.discount} ';
+      subtitle += ' • ${localization.discount} ';
       if (invoice.isAmountDiscount) {
         subtitle += formatNumber(invoiceItem.discount, context,
             clientId: invoice.clientId);
@@ -33,6 +34,16 @@ class InvoiceItemListTile extends StatelessWidget {
             clientId: invoice.clientId,
             formatNumberType: FormatNumberType.percent);
       }
+    }
+
+    if (invoiceItem.taxRate1 != 0) {
+      final taxRate1 = formatNumber(invoiceItem.taxRate1, context, formatNumberType: FormatNumberType.percent);
+      subtitle += ' • $taxRate1 ${invoiceItem.taxName1}';
+    }
+
+    if (invoiceItem.taxRate2 != 0) {
+      final taxRate2 = formatNumber(invoiceItem.taxRate2, context, formatNumberType: FormatNumberType.percent);
+      subtitle += ' • $taxRate2 ${invoiceItem.taxName2}';
     }
 
     final List<String> parts = [];

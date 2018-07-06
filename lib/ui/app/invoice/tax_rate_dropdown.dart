@@ -35,8 +35,8 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     final taxRates = widget.taxRates;
 
     _selectedTaxRate = taxRates.firstWhere(
-            (taxRate) =>
-        taxRate.name == widget.initialTaxName &&
+        (taxRate) =>
+            taxRate.name == widget.initialTaxName &&
             taxRate.rate == widget.initialTaxRate,
         orElse: () => TaxRateEntity().rebuild((b) => b
           ..rate = widget.initialTaxRate
@@ -64,56 +64,57 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
   Widget build(BuildContext context) {
     final taxRates = widget.taxRates;
 
-    return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
-      final options = taxRates
-          .where(
-              (taxRate) => taxRate.archivedAt == null && !taxRate.isInclusive)
-          .map((taxRate) => PopupMenuItem<TaxRateEntity>(
-                value: taxRate,
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 70.0,
-                      child: Text(formatNumber(taxRate.rate, context,
-                          formatNumberType: FormatNumberType.percent)),
-                    ),
-                    Text(taxRate.name),
-                  ],
-                ),
-              ))
-          .toList();
+    if (taxRates.isEmpty) {
+      return Container();
+    }
 
-      options.insert(
-          0,
-          PopupMenuItem<TaxRateEntity>(
-            value: TaxRateEntity(),
-            child: Container(),
-          ));
-
-      return PopupMenuButton<TaxRateEntity>(
-        padding: EdgeInsets.zero,
-        initialValue: _selectedTaxRate,
-        onSelected: (taxRate) {
-          if (taxRate.rate == 0) {
-            _textController.text = '';
-          } else {
-            _textController.text = _formatTaxRate(taxRate);
-          }
-          widget.onSelected(taxRate);
-        },
-        child: InkWell(
-          child: IgnorePointer(
-            child: TextFormField(
-              controller: _textController,
-              decoration: InputDecoration(
-                labelText: widget.labelText,
-                suffixIcon: const Icon(Icons.arrow_drop_down),
+    final options = taxRates
+        .where((taxRate) => taxRate.archivedAt == null && !taxRate.isInclusive)
+        .map((taxRate) => PopupMenuItem<TaxRateEntity>(
+              value: taxRate,
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: 70.0,
+                    child: Text(formatNumber(taxRate.rate, context,
+                        formatNumberType: FormatNumberType.percent)),
+                  ),
+                  Text(taxRate.name),
+                ],
               ),
+            ))
+        .toList();
+
+    options.insert(
+        0,
+        PopupMenuItem<TaxRateEntity>(
+          value: TaxRateEntity(),
+          child: Container(),
+        ));
+
+    return PopupMenuButton<TaxRateEntity>(
+      padding: EdgeInsets.zero,
+      initialValue: _selectedTaxRate,
+      onSelected: (taxRate) {
+        if (taxRate.rate == 0) {
+          _textController.text = '';
+        } else {
+          _textController.text = _formatTaxRate(taxRate);
+        }
+        widget.onSelected(taxRate);
+      },
+      child: InkWell(
+        child: IgnorePointer(
+          child: TextFormField(
+            controller: _textController,
+            decoration: InputDecoration(
+              labelText: widget.labelText,
+              suffixIcon: const Icon(Icons.arrow_drop_down),
             ),
           ),
         ),
-        itemBuilder: (BuildContext context) => options,
-      );
-    });
+      ),
+      itemBuilder: (BuildContext context) => options,
+    );
   }
 }

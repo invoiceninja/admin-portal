@@ -23,7 +23,7 @@ class ProgressButton extends StatelessWidget {
     */
 
     return Padding(
-      padding: EdgeInsets.only(left: 14.0, right: 14.0, top: 2.0),
+      padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 2.0),
       child: isLoading
           ? SizedBox(
         width: 100.0,
