@@ -5,14 +5,10 @@ This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/
 The project is under active development, for the time being we recommend using the existing [mobile apps](https://www.invoiceninja.com/iphone-android/).
 
 <p align="center">
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_01.png" alt="Product List" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_02.png" alt="Edit Product" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_03.png" alt="Drawer" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_04.png" alt="Dashboard" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_05.png" alt="Client Overview" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_08.png" alt="View Invoice" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_01.png" alt="List Invoices" width="200"/>
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_06.png" alt="Contact Details" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_07.png" alt="Edit Contacts" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_08.png" alt="New Invoice" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_02.png" alt="Edit Product" width="200"/>
 </p>
 
 ## Features
