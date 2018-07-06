@@ -33,7 +33,7 @@ class TwoValueHeader extends StatelessWidget {
           Text(
             value1 ?? '',
             style: TextStyle(
-              fontSize: 26.0,
+              fontSize: 22.0,
               fontWeight: FontWeight.bold,
             ),
           )
@@ -57,7 +57,7 @@ class TwoValueHeader extends StatelessWidget {
           Text(
             value2 ?? '',
             style: TextStyle(
-              fontSize: 26.0,
+              fontSize: 22.0,
               fontWeight: FontWeight.bold,
             ),
           )
