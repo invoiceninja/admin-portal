@@ -1,8 +1,6 @@
-# Invoice Ninja - Mobile
+# Invoice Ninja
 
 This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja) web app.
-
-The project is under active development, for the time being we recommend using the existing [mobile apps](https://www.invoiceninja.com/iphone-android/).
 
 <p align="center">
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_08.png" alt="View Invoice" width="200"/>
