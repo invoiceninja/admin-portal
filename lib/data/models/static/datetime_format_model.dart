@@ -36,6 +36,7 @@ abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, Datet
       id: 0,
       format: '',
       formatMoment: '',
+      formatDart: '',
     );
   }
   DatetimeFormatEntity._();
@@ -45,6 +46,9 @@ abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, Datet
 
   @BuiltValueField(wireName: 'format_moment')
   String get formatMoment;
-  
+
+  @BuiltValueField(wireName: 'format_dart')
+  String get formatDart;
+
   static Serializer<DatetimeFormatEntity> get serializer => _$datetimeFormatEntitySerializer;
 }
