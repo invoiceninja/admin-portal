@@ -253,20 +253,20 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               labelText: localization.unitCost,
             ),
           ),
-          TextFormField(
+          company.hasInvoiceField('quantity') ? TextFormField(
             controller: _qtyController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: localization.quantity,
             ),
-          ),
-          TextFormField(
+          ) : Container(),
+          company.hasInvoiceField('discount') ? TextFormField(
             controller: _discountController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: localization.discount,
             ),
-          ),
+          ) : Container(),
           company.enableInvoiceTaxes
               ? TaxRateDropdown(
                   taxRates: company.taxRates,

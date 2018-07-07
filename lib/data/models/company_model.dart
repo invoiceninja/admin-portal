@@ -47,6 +47,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       timezoneId: 1,
       taxRates: BuiltList<TaxRateEntity>(),
       customFields: BuiltMap<String, String>(),
+      invoiceFields: '',
     );
   }
   CompanyEntity._();
@@ -158,7 +159,20 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
 
+  @BuiltValueField(wireName: 'invoice_fields')
+  String get invoiceFields;
+
   //@BuiltValueField(wireName: 'invoice_labels')
+
+  bool hasInvoiceField(String field, [EntityType entityType = EntityType.product]) {
+    if (invoiceFields.isNotEmpty) {
+      return invoiceFields.contains('$entityType.$field');
+    } else if (field == 'discount') {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   String getCustomFieldLabel(String field) {
     if (customFields.containsKey(field)) {
