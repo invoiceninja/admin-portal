@@ -161,8 +161,8 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .emailInvoice(store.state.selectedCompany, store.state.authState,
-        origInvoice)
+        .saveData(store.state.selectedCompany, store.state.authState,
+        origInvoice, EntityAction.emailInvoice)
         .then((void _) {
       store.dispatch(EmailInvoiceSuccess());
       if (action.completer != null) {

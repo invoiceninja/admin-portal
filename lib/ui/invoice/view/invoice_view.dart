@@ -247,7 +247,7 @@ class _InvoiceViewState extends State<InvoiceView> {
                       ) : null,
                       client.hasEmailAddress
                           ? ActionMenuChoice(
-                              action: EntityAction.email,
+                              action: EntityAction.emailInvoice,
                               icon: Icons.send,
                               label: AppLocalization.of(context).email,
                             )

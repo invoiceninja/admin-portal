@@ -106,7 +106,7 @@ class InvoiceViewVM {
               store.dispatch(MarkSentInvoiceRequest(completer, invoice.id));
               message = AppLocalization.of(context).successfullyMarkedInvoiceAsSent;
               break;
-            case EntityAction.email:
+            case EntityAction.emailInvoice:
               store.dispatch(EmailInvoiceRequest(completer, invoice.id));
               message = AppLocalization.of(context).successfullyEmailedInvoice;
               break;

@@ -478,7 +478,7 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
 
-  String get silentLink => link + '?silent=true';
+  String get silentLink => link + '?silent=true&borderless=true';
   String get downloadLink => link.replaceFirst('/view/', '/download/');
 
   @override

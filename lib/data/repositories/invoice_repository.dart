@@ -37,12 +37,7 @@ class InvoiceRepository {
     } else {
       var url = auth.url + '/invoices/' + invoice.id.toString();
       if (action != null) {
-        // TODO remove once fixed in the web app
-        if (action == EntityAction.markSent) {
-          url += '?action=mark_sent';
-        } else {
-          url += '?action=' + action.toString();
-        }
+        url += '?action=' + action.toString();
       }
       response = await webClient.put(url, company.token, json.encode(data));
     }
@@ -51,19 +46,5 @@ class InvoiceRepository {
         InvoiceItemResponse.serializer, response);
 
     return invoiceResponse.data;
-  }
-
-  Future emailInvoice(CompanyEntity company, AuthState auth, InvoiceEntity invoice) async {
-
-    /*
-    final dynamic response = await webClient.post(
-          auth.url + '/email_invoice?invoice_id=${invoice.id}', company.token);
-    */
-
-    await webClient.post(
-        auth.url + '/email_invoice?invoice_id=${invoice.id}', company.token);
-
-    // TODO parse response for errors
-    return null;
   }
 }
