@@ -28,7 +28,7 @@ This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/
 
 ## Application Architecture
 
-The app was created using the [Flutter Redux Starter](https://github.com/hillelcoren/flutter-redux-starter).
+The application was created using the [Flutter Redux Starter](https://github.com/hillelcoren/flutter-redux-starter).
 
 The architecture is based off these two projects:
 
