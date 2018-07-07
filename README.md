@@ -17,19 +17,18 @@ This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/
 - [x] Invoices
 - [ ] Payments
 - [ ] Quotes
-- [ ] Recurring
 - [ ] Credits
+- [ ] Recurring
 - [ ] Vendors
 - [ ] Expenses
 - [ ] Projects
 - [ ] Tasks
-
-## Code Samples
-
-- Redux Starter: [hillelcoren/flutter-redux-starter](https://github.com/hillelcoren/flutter-redux-starter)
-- Forms: [Keys](https://github.com/invoiceninja/flutter-mobile/blob/master/samples/form_keys.dart) vs [Redux](https://github.com/invoiceninja/flutter-mobile/blob/master/samples/form_redux.dart)
+- [ ] Tablet support
+- [ ] Desktop support
 
 ## Application Architecture
+
+The app was created using the [Flutter Redux Starter](https://github.com/hillelcoren/flutter-redux-starter).
 
 The architecture is based off these two projects:
 
