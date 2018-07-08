@@ -342,6 +342,10 @@ abstract class InvoiceEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   bool get isPastDue {
+    if (dueDate.isEmpty) {
+      return false;
+    }
+
     return !isDeleted &&
         isPublic &&
         balance > 0 &&

@@ -39,8 +39,16 @@ String formatNumber(
   final ClientEntity client =
       state.selectedCompanyState.clientState.map[clientId];
 
-  final countryId = client?.countryId ?? company.countryId;
   int currencyId;
+  int countryId;
+
+  if (client != null && client.countryId > 0) {
+    countryId = client.countryId;
+  } else if (company.countryId > 0) {
+    countryId = company.countryId;
+  } else {
+    countryId = kCountryUnitedStates;
+  }
 
   if (client != null && client.currencyId > 0) {
     currencyId = client.currencyId;
