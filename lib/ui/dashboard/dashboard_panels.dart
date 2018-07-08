@@ -43,31 +43,33 @@ class DashboardPanels extends StatelessWidget {
             Row(
               children: <Widget>[
                 DashboardColumn(
-                  amount: viewModel.dashboardState.data.averageInvoice,
-                  icon: Icons.email,
-                  color: Color(0xFF44AF69),
-                  title: localization.averageInvoice,
-                ),
+                    title: localization.invoicesSent,
+                    color: Color(0xFFFCAB10),
+                    icon: Icons.send,
+                    isMoney: false,
+                    amount:
+                        viewModel.dashboardState.data.invoicesSent.toDouble()),
                 DashboardColumn(
-                  amount: viewModel.dashboardState.data.balances,
-                  icon: Icons.schedule,
-                  color: Color(0xFFF8333C),
-                  title: localization.outstanding,
-                ),
+                    title: localization.activeClients,
+                    color: Color(0xFFDBD5B5),
+                    icon: Icons.people,
+                    isMoney: false,
+                    amount:
+                        viewModel.dashboardState.data.activeClients.toDouble()),
               ],
             ),
             DashboardRow(
-                title: localization.invoicesSent,
-                color: Color(0xFFFCAB10),
-                icon: Icons.send,
-                isMoney: false,
-                amount: viewModel.dashboardState.data.invoicesSent.toDouble()),
+              amount: viewModel.dashboardState.data.averageInvoice,
+              icon: Icons.email,
+              color: Color(0xFF44AF69),
+              title: localization.averageInvoice,
+            ),
             DashboardRow(
-                title: localization.activeClients,
-                color: Color(0xFFDBD5B5),
-                icon: Icons.people,
-                isMoney: false,
-                amount: viewModel.dashboardState.data.activeClients.toDouble()),
+              amount: viewModel.dashboardState.data.balances,
+              icon: Icons.schedule,
+              color: Color(0xFFF8333C),
+              title: localization.outstanding,
+            ),
           ]),
     );
   }
@@ -99,8 +101,8 @@ class ColorIcon extends StatelessWidget {
 }
 
 class DashboardRow extends StatelessWidget {
-  const DashboardRow({
-      @required this.title,
+  const DashboardRow(
+      {@required this.title,
       @required this.icon,
       @required this.amount,
       @required this.color,
@@ -146,8 +148,8 @@ class DashboardRow extends StatelessWidget {
 }
 
 class DashboardColumn extends StatelessWidget {
-  const DashboardColumn({
-      @required this.title,
+  const DashboardColumn(
+      {@required this.title,
       @required this.icon,
       @required this.amount,
       @required this.color,
