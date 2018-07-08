@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:memoize/memoize.dart';
 
-
 var memoizedCountryList = memo1((BuiltMap<int, CountryEntity> countryMap) =>
     countryList(countryMap));
 

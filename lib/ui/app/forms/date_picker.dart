@@ -25,10 +25,10 @@ class _DatePickerState extends State<DatePicker> {
   final _textController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    _textController.text = formatDate(widget.selectedDate, context);
 
-    _textController.text = widget.selectedDate;
+    super.didChangeDependencies();
   }
 
   @override
@@ -45,10 +45,10 @@ class _DatePickerState extends State<DatePicker> {
         lastDate: new DateTime(2101)
     );
 
-    _textController.text = convertDateTimeToSqlDate(selectedDate);
-    widget.onSelected(convertDateTimeToSqlDate(selectedDate));
+    final date = convertDateTimeToSqlDate(selectedDate);
+    _textController.text = formatDate(date, context);
+    widget.onSelected(date);
   }
-
 
   @override
   Widget build(BuildContext context) {

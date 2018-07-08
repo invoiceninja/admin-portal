@@ -53,11 +53,11 @@ class _InvoiceViewState extends State<InvoiceView> {
         InvoiceFields.invoiceStatusId: invoice.isPastDue
             ? localization.pastDue
             : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
-        InvoiceFields.invoiceDate: invoice.invoiceDate,
-        InvoiceFields.dueDate: invoice.dueDate,
+        InvoiceFields.invoiceDate: formatDate(invoice.invoiceDate, context),
+        InvoiceFields.dueDate: formatDate(invoice.dueDate, context),
         InvoiceFields.partial: formatNumber(invoice.partial, context,
             clientId: invoice.clientId, zeroIsNull: true),
-        InvoiceFields.partialDueDate: invoice.partialDueDate,
+        InvoiceFields.partialDueDate: formatDate(invoice.partialDueDate, context),
         InvoiceFields.poNumber: invoice.poNumber,
         InvoiceFields.discount: formatNumber(
             invoice.discount, context,

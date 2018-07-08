@@ -35,20 +35,14 @@ abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, Datet
     return _$DatetimeFormatEntity._(
       id: 0,
       format: '',
-      formatMoment: '',
-      formatDart: '',
     );
   }
   DatetimeFormatEntity._();
 
   int get id;
-  String get format;
-
-  @BuiltValueField(wireName: 'format_moment')
-  String get formatMoment;
 
   @BuiltValueField(wireName: 'format_dart')
-  String get formatDart;
+  String get format;
 
   static Serializer<DatetimeFormatEntity> get serializer => _$datetimeFormatEntitySerializer;
 }

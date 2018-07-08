@@ -15,6 +15,8 @@ const int kCurrencyEuro = 3;
 const int kInvoiceStatusSent = 2;
 const int kInvoiceStatusPastDue = -1;
 
+const int kDefaultDateFormat = 5;
+
 class InvoiceStatusColors {
   static const colors = {
     1: Colors.grey, // draft

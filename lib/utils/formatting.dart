@@ -149,6 +149,24 @@ String convertDateTimeToSqlDate([DateTime date]) {
   return date.toIso8601String().split('T').first;
 }
 
+String formatDate(
+    String value,
+    BuildContext context,
+    ) {
+  if (value == null || value.isEmpty) {
+    return '';
+  }
+
+  final state = StoreProvider.of<AppState>(context).state;
+  final CompanyEntity company = state.selectedCompany;
+  final dateFormats = state.staticState.dateFormatMap;
+  final dateFormatId = company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
+  final formatter = DateFormat(dateFormats[dateFormatId].format);
+
+  return formatter.format(DateTime.tryParse(value));
+}
+
+
 String formatApiUrlMachine(String url) => formatApiUrlReadable(url) + '/api/v1';
 
 String formatApiUrlReadable(String url) => url
