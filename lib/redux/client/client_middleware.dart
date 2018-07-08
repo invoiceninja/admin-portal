@@ -43,10 +43,12 @@ Middleware<AppState> _editClient() {
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
     final message = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
 
+    /*
     Scaffold.of(action.context).showSnackBar(SnackBar(
         content: SnackBarRow(
           message: message,
         )));
+        */
   };
 }
 
@@ -57,10 +59,12 @@ Middleware<AppState> _viewClient() {
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
     final message = await Navigator.of(action.context).pushNamed(ClientViewScreen.route);
 
+    /*
     Scaffold.of(action.context).showSnackBar(SnackBar(
         content: SnackBarRow(
           message: message,
         )));
+        */
   };
 }
 

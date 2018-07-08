@@ -38,10 +38,12 @@ Middleware<AppState> _editProduct() {
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
     final message = await Navigator.of(action.context).pushNamed(ProductEditScreen.route);
 
+    /*
     Scaffold.of(action.context).showSnackBar(SnackBar(
         content: SnackBarRow(
           message: message,
         )));
+        */
   };
 }
 

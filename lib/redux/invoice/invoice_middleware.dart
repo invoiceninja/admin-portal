@@ -46,10 +46,12 @@ Middleware<AppState> _viewInvoice() {
     store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
     final message = await Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
 
+    /*
     Scaffold.of(action.context).showSnackBar(SnackBar(
         content: SnackBarRow(
           message: message,
         )));
+        */
   };
 }
 
@@ -69,10 +71,12 @@ Middleware<AppState> _editInvoice() {
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
     final message = await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
 
+    /*
     Scaffold.of(action.context).showSnackBar(SnackBar(
         content: SnackBarRow(
           message: message,
         )));
+        */
   };
 }
 
