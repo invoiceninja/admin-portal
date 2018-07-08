@@ -109,7 +109,7 @@ class ProductEditVM {
           }
           return completer.future.then((_) {
             if ([EntityAction.archive, EntityAction.delete].contains(action)) {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(message);
             } else {
               Scaffold.of(context).showSnackBar(SnackBar(
                   content: SnackBarRow(

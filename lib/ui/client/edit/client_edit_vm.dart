@@ -100,12 +100,13 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((_) {
+            final localization = AppLocalization.of(context);
             if (client.isNew) {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(localization.successfullyCreatedClient);
               Navigator.of(context).push<ClientViewScreen>(
                   MaterialPageRoute(builder: (_) => ClientViewScreen()));
             } else {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(localization.successfullyUpdatedClient);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

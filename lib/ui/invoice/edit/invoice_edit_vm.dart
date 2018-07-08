@@ -73,17 +73,18 @@ class InvoiceEditVM {
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onSavePressed: (BuildContext context) {
+          final localization = AppLocalization.of(context);
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(
               SaveInvoiceRequest(completer: completer, invoice: invoice));
           return completer.future.then((_) {
             if (invoice.isNew) {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(localization.successfullyCreatedInvoice);
               Navigator
                   .of(context)
                   .push<InvoiceViewScreen>(MaterialPageRoute(builder: (_) => InvoiceViewScreen()));
             } else {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(localization.successfullyUpdatedInvoice);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
@@ -118,7 +119,7 @@ class InvoiceEditVM {
           }
           return completer.future.then((_) {
             if ([EntityAction.archive, EntityAction.delete].contains(action)) {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(message);
             } else {
               Scaffold.of(context).showSnackBar(SnackBar(
                   content: SnackBarRow(

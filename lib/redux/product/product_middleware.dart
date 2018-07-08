@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja/ui/product/product_screen.dart';
 import 'package:redux/redux.dart';
@@ -31,11 +32,16 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 }
 
 Middleware<AppState> _editProduct() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
-    Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+    final message = await Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+
+    Scaffold.of(action.context).showSnackBar(SnackBar(
+        content: SnackBarRow(
+          message: message,
+        )));
   };
 }
 

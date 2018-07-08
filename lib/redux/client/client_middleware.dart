@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/product/product_actions.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/ui/client/client_screen.dart';
 import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
@@ -35,20 +37,30 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 }
 
 Middleware<AppState> _editClient() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
-    Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+    final message = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+
+    Scaffold.of(action.context).showSnackBar(SnackBar(
+        content: SnackBarRow(
+          message: message,
+        )));
   };
 }
 
 Middleware<AppState> _viewClient() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
-    Navigator.of(action.context).pushNamed(ClientViewScreen.route);
+    final message = await Navigator.of(action.context).pushNamed(ClientViewScreen.route);
+
+    Scaffold.of(action.context).showSnackBar(SnackBar(
+        content: SnackBarRow(
+          message: message,
+        )));
   };
 }
 

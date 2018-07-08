@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja/data/models/models.dart';
 import 'package:invoiceninja/redux/ui/ui_actions.dart';
+import 'package:invoiceninja/ui/app/snackbar_row.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
@@ -39,11 +40,16 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
 }
 
 Middleware<AppState> _viewInvoice() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-    Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
+    final message = await Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
+
+    Scaffold.of(action.context).showSnackBar(SnackBar(
+        content: SnackBarRow(
+          message: message,
+        )));
   };
 }
 
@@ -57,11 +63,16 @@ Middleware<AppState> _viewInvoiceList() {
 }
 
 Middleware<AppState> _editInvoice() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
-    Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
+    final message = await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
+
+    Scaffold.of(action.context).showSnackBar(SnackBar(
+        content: SnackBarRow(
+          message: message,
+        )));
   };
 }
 
