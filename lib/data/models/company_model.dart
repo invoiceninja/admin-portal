@@ -187,7 +187,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   List<String> getCustomFieldValues(String field) {
     final values = customFields[field];
 
-    if (!values.contains('|')) {
+    if (values == null || !values.contains('|')) {
       return [];
     } else {
       return values.split('|').last.split(',');
