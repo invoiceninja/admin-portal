@@ -1,3 +1,4 @@
+import 'package:redux/redux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -12,7 +13,6 @@ import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja/utils/localization.dart';
 import 'package:invoiceninja/ui/auth/login_vm.dart';
 import 'package:invoiceninja/ui/dashboard/dashboard_screen.dart';
@@ -74,8 +74,8 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           primaryColorLight: const Color(0xFF5dabf4),
           primaryColorDark: const Color(0xFF0D5D91),
           indicatorColor: Colors.white,
-          bottomAppBarColor: Colors.grey[300],
-          backgroundColor: Colors.grey[200],
+          bottomAppBarColor: Colors.grey.shade300,
+          backgroundColor: Colors.grey.shade200,
         ),
 
         //dark theme

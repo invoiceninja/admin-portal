@@ -101,12 +101,15 @@ class _InvoiceEditState extends State<InvoiceEdit>
           ),
         ),
         bottomNavigationBar: BottomAppBar(
+          color: Theme.of(context).primaryColor,
           shape: CircularNotchedRectangle(),
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
               '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.enableInclusiveTaxes), context, clientId: viewModel.invoice.clientId)}',
               style: TextStyle(
+                //color: Theme.of(context).selectedRowColor,
+                color: Colors.white,
                 fontSize: 18.0,
               ),
             ),
