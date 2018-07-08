@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewDashboard implements PersistUI {
   final BuildContext context;

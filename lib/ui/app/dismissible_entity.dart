@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 
 class DismissibleEntity extends StatelessWidget {
 

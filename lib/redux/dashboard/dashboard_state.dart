@@ -1,5 +1,5 @@
-import 'package:invoiceninja/constants.dart';
-import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 

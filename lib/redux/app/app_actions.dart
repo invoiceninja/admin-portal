@@ -1,4 +1,4 @@
-import 'package:invoiceninja/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 class PersistUI {}
 class PersistData {}

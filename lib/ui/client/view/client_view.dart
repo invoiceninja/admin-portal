@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja/ui/app/buttons/edit_icon_button.dart';
-import 'package:invoiceninja/ui/client/view/client_view_details.dart';
-import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja/ui/client/view/client_view_overview.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientView extends StatefulWidget {
   final ClientViewVM viewModel;

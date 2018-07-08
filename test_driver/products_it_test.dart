@@ -1,8 +1,8 @@
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:invoiceninja/.env.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:test/test.dart';
 
-import 'package:invoiceninja/utils/keys.dart';
+import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class Constants {
   static String newProductKey = 'Example Test Driver Product';

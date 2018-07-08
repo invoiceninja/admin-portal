@@ -1,8 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/utils/formatting.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({

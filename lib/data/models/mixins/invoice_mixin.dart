@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja/data/models/invoice_model.dart';
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 abstract class CalculateInvoiceTotal {
   bool get isAmountDiscount;

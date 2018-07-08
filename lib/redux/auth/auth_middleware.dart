@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/.env.dart';
-import 'package:invoiceninja/constants.dart';
-import 'package:invoiceninja/redux/app/app_actions.dart';
-import 'package:invoiceninja/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/auth/auth_actions.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:invoiceninja/data/repositories/auth_repository.dart';
-import 'package:invoiceninja/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/data/repositories/auth_repository.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepository repository = const AuthRepository(),

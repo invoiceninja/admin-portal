@@ -1,7 +1,7 @@
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/invoice_model.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceItemListTile extends StatelessWidget {
   const InvoiceItemListTile({

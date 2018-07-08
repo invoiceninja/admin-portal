@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/ui/app/entity_dropdown.dart';
-import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
 import '../../app/form_card.dart';
 

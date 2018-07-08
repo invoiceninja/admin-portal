@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
-import 'package:invoiceninja/utils/strings.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class AppLocalization {
   AppLocalization(this.locale);

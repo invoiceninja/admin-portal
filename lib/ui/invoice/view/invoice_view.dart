@@ -1,16 +1,16 @@
-import 'package:invoiceninja/constants.dart';
-import 'package:invoiceninja/ui/app/buttons/edit_icon_button.dart';
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja/ui/app/icon_message.dart';
-import 'package:invoiceninja/ui/app/invoice/invoice_item_view.dart';
-import 'package:invoiceninja/ui/app/two_value_header.dart';
-import 'package:invoiceninja/ui/invoice/view/invoice_view_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
+import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceView extends StatefulWidget {
   final InvoiceViewVM viewModel;

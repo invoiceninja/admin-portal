@@ -1,7 +1,7 @@
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownClientList = memo2(
     (BuiltMap<int, ClientEntity> clientMap, BuiltList<int> clientList) =>

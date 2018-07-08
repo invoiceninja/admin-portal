@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:core';
-import 'package:invoiceninja/data/models/company_model.dart';
-import 'package:invoiceninja/data/models/serializers.dart';
-import 'package:invoiceninja/redux/auth/auth_state.dart';
-import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/data/web_client.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class DashboardRepository {
   final WebClient webClient;

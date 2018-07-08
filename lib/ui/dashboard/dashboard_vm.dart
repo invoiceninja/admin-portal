@@ -4,13 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja/ui/app/snackbar_row.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/ui/dashboard/dashboard_panels.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
 class DashboardBuilder extends StatelessWidget {
   const DashboardBuilder({Key key}) : super(key: key);

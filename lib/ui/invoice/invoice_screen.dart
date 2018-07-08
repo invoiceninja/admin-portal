@@ -1,14 +1,14 @@
-import 'package:invoiceninja/ui/app/app_search.dart';
-import 'package:invoiceninja/ui/app/app_search_button.dart';
-import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_search.dart';
+import 'package:invoiceninja_flutter/ui/app/app_search_button.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/invoice/invoice_list_vm.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
-import 'package:invoiceninja/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
 class InvoiceScreen extends StatelessWidget {
   static const String route = '/invoice';

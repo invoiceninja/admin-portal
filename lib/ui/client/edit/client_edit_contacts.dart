@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/app/form_card.dart';
-import 'package:invoiceninja/ui/app/forms/custom_field.dart';
-import 'package:invoiceninja/ui/client/edit/client_edit_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditContacts extends StatelessWidget {
   const ClientEditContacts({

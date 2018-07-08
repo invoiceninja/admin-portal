@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/ui/ui_actions.dart';
-import 'package:invoiceninja/ui/app/snackbar_row.dart';
-import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
-import 'package:invoiceninja/ui/product/product_screen.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/data/repositories/product_repository.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/data/repositories/product_repository.dart';
 
 List<Middleware<AppState>> createStoreProductsMiddleware([
   ProductRepository repository = const ProductRepository(),

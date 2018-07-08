@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class InvoiceEditItemsScreen extends StatelessWidget {
   const InvoiceEditItemsScreen({Key key}) : super(key: key);

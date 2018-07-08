@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 
 class DatePicker extends StatefulWidget {

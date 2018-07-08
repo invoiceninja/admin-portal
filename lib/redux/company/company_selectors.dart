@@ -1,5 +1,5 @@
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 List<CompanyEntity> companiesSelector(AppState state) {
   final List<CompanyEntity> list = [];

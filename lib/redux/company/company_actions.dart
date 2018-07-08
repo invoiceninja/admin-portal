@@ -1,4 +1,4 @@
-import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 
 class SelectCompany {
   final int companyIndex;

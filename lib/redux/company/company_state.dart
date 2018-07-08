@@ -1,8 +1,8 @@
-import 'package:invoiceninja/redux/client/client_state.dart';
-import 'package:invoiceninja/redux/invoice/invoice_state.dart';
-import 'package:invoiceninja/redux/product/product_state.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
-import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 

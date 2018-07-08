@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/ui/app/app_drawer_vm.dart';
-import 'package:invoiceninja/ui/dashboard/dashboard_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardScreen extends StatelessWidget {
 

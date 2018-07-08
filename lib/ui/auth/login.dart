@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/redux/auth/auth_state.dart';
-import 'package:invoiceninja/ui/app/progress_button.dart';
-import 'package:invoiceninja/utils/formatting.dart';
-import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/ui/app/progress_button.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
-import 'package:invoiceninja/utils/keys.dart';
+import 'package:invoiceninja_flutter/utils/keys.dart';
 
 
 class LoginView extends StatefulWidget {

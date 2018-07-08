@@ -1,11 +1,11 @@
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/redux/company/company_state.dart';
-import 'package:invoiceninja/redux/product/product_reducer.dart';
-import 'package:invoiceninja/redux/client/client_reducer.dart';
-import 'package:invoiceninja/redux/invoice/invoice_reducer.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_reducer.dart';
-import 'package:invoiceninja/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
+import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 
 CompanyState companyReducer(CompanyState state, dynamic action) {
 

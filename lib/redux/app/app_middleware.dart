@@ -1,15 +1,15 @@
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja/data/file_storage.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/data/repositories/persistence_repository.dart';
-import 'package:invoiceninja/redux/app/app_actions.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/auth/auth_actions.dart';
-import 'package:invoiceninja/redux/auth/auth_state.dart';
-import 'package:invoiceninja/redux/company/company_state.dart';
-import 'package:invoiceninja/redux/static/static_state.dart';
-import 'package:invoiceninja/redux/ui/ui_state.dart';
-import 'package:invoiceninja/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/data/file_storage.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/repositories/persistence_repository.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 

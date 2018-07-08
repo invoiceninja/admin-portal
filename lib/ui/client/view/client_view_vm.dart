@@ -2,17 +2,17 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja/redux/ui/ui_actions.dart';
-import 'package:invoiceninja/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja/ui/client/client_screen.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/client/client_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/client/view/client_view.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class ClientViewScreen extends StatelessWidget {
   static const String route = '/client/view';

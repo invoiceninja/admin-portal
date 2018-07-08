@@ -1,6 +1,6 @@
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
 final dashboardReducer = combineReducers<DashboardState>([
   TypedReducer<DashboardState, LoadDashboardSuccess>(_setLoadedDashboards),
