@@ -1,10 +1,10 @@
-import 'package:invoiceninja/redux/ui/ui_reducer.dart';
-import 'package:invoiceninja/redux/auth/auth_actions.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/app/loading_reducer.dart';
-import 'package:invoiceninja/redux/auth/auth_reducer.dart';
-import 'package:invoiceninja/redux/static/static_reducer.dart';
-import 'package:invoiceninja/redux/company/company_reducer.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_reducer.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/app/loading_reducer.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_reducer.dart';
+import 'package:invoiceninja_flutter/redux/static/static_reducer.dart';
+import 'package:invoiceninja_flutter/redux/company/company_reducer.dart';
 
 // We create the State reducer by combining many smaller reducers into one!
 AppState appReducer(AppState state, dynamic action) {

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/ui/app/loading_indicator.dart';
-import 'package:invoiceninja/ui/client/client_item.dart';
-import 'package:invoiceninja/ui/client/client_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/client/client_item.dart';
+import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 
 class ClientList extends StatelessWidget {
   final ClientListVM viewModel;

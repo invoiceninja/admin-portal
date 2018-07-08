@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:invoiceninja/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 
-import 'package:invoiceninja/redux/auth/auth_state.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class ProjectsRepository {
   final WebClient webClient;

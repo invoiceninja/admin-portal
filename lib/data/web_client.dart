@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
-import 'package:invoiceninja/constants.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 class WebClient {
 

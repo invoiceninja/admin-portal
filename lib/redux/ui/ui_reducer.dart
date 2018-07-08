@@ -1,9 +1,9 @@
-import 'package:invoiceninja/redux/client/client_reducer.dart';
-import 'package:invoiceninja/redux/company/company_actions.dart';
-import 'package:invoiceninja/redux/ui/ui_actions.dart';
-import 'package:invoiceninja/redux/ui/ui_state.dart';
-import 'package:invoiceninja/redux/product/product_reducer.dart';
-import 'package:invoiceninja/redux/invoice/invoice_reducer.dart';
+import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:redux/redux.dart';
 
 UIState uiReducer(UIState state, dynamic action) {

@@ -1,9 +1,9 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/data/models/invoice_model.dart';
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'product_model.g.dart';
 

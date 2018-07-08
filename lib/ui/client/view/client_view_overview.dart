@@ -1,14 +1,14 @@
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/data/models/client_model.dart';
-import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:invoiceninja/ui/app/icon_message.dart';
-import 'package:invoiceninja/ui/app/two_value_header.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientOverview extends StatelessWidget {
   const ClientOverview({

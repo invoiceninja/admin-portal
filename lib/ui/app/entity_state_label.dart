@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityStateLabel extends StatelessWidget {
   const EntityStateLabel(this.entity);

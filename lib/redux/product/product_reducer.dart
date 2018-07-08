@@ -1,10 +1,10 @@
-import 'package:invoiceninja/data/models/product_model.dart';
-import 'package:invoiceninja/redux/company/company_actions.dart';
-import 'package:invoiceninja/redux/ui/entity_ui_state.dart';
-import 'package:invoiceninja/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/data/models/product_model.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/redux/product/product_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 
 EntityUIState productUIReducer(ProductUIState state, dynamic action) {
   return state.rebuild((b) => b

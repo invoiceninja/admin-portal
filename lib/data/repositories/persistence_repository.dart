@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:invoiceninja/redux/static/static_state.dart';
-import 'package:invoiceninja/redux/auth/auth_state.dart';
-import 'package:invoiceninja/redux/company/company_state.dart';
-import 'package:invoiceninja/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:meta/meta.dart';
-import 'package:invoiceninja/data/models/serializers.dart';
-import 'package:invoiceninja/data/file_storage.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/data/file_storage.dart';
 
 class PersistenceRepository {
   final FileStorage fileStorage;

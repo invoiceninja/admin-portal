@@ -383,7 +383,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.invoiceninja.invoiceninja;
+				PRODUCT_BUNDLE_IDENTIFIER = com.invoiceninja.invoiceninja_flutter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -407,7 +407,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.invoiceninja.invoiceninja;
+				PRODUCT_BUNDLE_IDENTIFIER = com.invoiceninja.invoiceninja_flutter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

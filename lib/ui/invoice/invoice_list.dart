@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/ui/app/loading_indicator.dart';
-import 'package:invoiceninja/ui/invoice/invoice_item.dart';
-import 'package:invoiceninja/ui/invoice/invoice_list_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_item.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceList extends StatelessWidget {
   final InvoiceListVM viewModel;

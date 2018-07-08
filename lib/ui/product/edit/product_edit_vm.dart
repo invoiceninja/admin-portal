@@ -2,16 +2,16 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/redux/ui/ui_actions.dart';
-import 'package:invoiceninja/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja/ui/product/product_screen.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/product/product_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/ui/product/edit/product_edit.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/product/edit/product_edit.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class ProductEditScreen extends StatelessWidget {
   static const String route = '/product/edit';

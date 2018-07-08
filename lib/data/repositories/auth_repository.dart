@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:invoiceninja/data/models/serializers.dart';
-import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/data/web_client.dart';
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class AuthRepository {
   final WebClient webClient;

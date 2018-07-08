@@ -1,7 +1,7 @@
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/auth/auth_actions.dart';
-import 'package:invoiceninja/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 
 Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, UserLoginLoaded>(userLoginLoadedReducer),

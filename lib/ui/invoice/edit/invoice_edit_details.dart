@@ -1,14 +1,14 @@
-import 'package:invoiceninja/redux/client/client_selectors.dart';
-import 'package:invoiceninja/ui/app/forms/custom_field.dart';
-import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/ui/app/entity_dropdown.dart';
-import 'package:invoiceninja/ui/app/form_card.dart';
-import 'package:invoiceninja/ui/app/forms/date_picker.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditDetails extends StatefulWidget {
   const InvoiceEditDetails({

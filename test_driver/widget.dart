@@ -3,12 +3,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/redux/app/app_reducer.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/auth/auth_middleware.dart';
-import 'package:invoiceninja/redux/dashboard/dashboard_middleware.dart';
-import 'package:invoiceninja/redux/product/product_middleware.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_middleware.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_middleware.dart';
+import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 //import 'package:redux_logging/redux_logging.dart';
 
 void main() {

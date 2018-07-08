@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja/redux/app/app_actions.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class LoadStateRequest {
   final BuildContext context;

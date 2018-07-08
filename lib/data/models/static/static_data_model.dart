@@ -1,19 +1,19 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:invoiceninja/data/models/static/currency_model.dart';
-import 'package:invoiceninja/data/models/static/size_model.dart';
-import 'package:invoiceninja/data/models/static/industry_model.dart';
-import 'package:invoiceninja/data/models/static/timezone_model.dart';
-import 'package:invoiceninja/data/models/static/date_format_model.dart';
-import 'package:invoiceninja/data/models/static/datetime_format_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/size_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/timezone_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/date_format_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/datetime_format_model.dart';
 
-import 'package:invoiceninja/data/models/static/country_model.dart';
-import 'package:invoiceninja/data/models/static/language_model.dart';
-import 'package:invoiceninja/data/models/static/payment_type_model.dart';
-import 'package:invoiceninja/data/models/static/invoice_design_model.dart';
-import 'package:invoiceninja/data/models/static/invoice_status_model.dart';
-import 'package:invoiceninja/data/models/static/frequency_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/country_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/language_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/payment_type_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/invoice_design_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/invoice_status_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/frequency_model.dart';
 
 part 'static_data_model.g.dart';
 

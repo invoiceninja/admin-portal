@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:invoiceninja/data/models/models.dart';
-import 'package:invoiceninja/utils/formatting.dart';
-import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/utils/platforms.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClientViewDetails extends StatefulWidget {

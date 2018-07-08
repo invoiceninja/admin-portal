@@ -1,15 +1,15 @@
-import 'package:invoiceninja/data/models/entities.dart';
-import 'package:invoiceninja/ui/app/forms/custom_field.dart';
-import 'package:invoiceninja/ui/app/invoice/tax_rate_dropdown.dart';
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja/ui/app/form_card.dart';
-import 'package:invoiceninja/ui/product/edit/product_edit_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/ui/app/buttons/save_icon_button.dart';
-import 'package:invoiceninja/utils/keys.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/save_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class ProductEdit extends StatefulWidget {
   final ProductEditVM viewModel;

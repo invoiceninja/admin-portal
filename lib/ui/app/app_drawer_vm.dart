@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja/ui/app/app_drawer.dart';
-import 'package:invoiceninja/redux/app/app_state.dart';
-import 'package:invoiceninja/redux/auth/auth_actions.dart';
-import 'package:invoiceninja/redux/company/company_selectors.dart';
-import 'package:invoiceninja/redux/company/company_actions.dart';
-import 'package:invoiceninja/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/app_drawer.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 
 class AppDrawerBuilder extends StatelessWidget {
   const AppDrawerBuilder({Key key}) : super(key: key);

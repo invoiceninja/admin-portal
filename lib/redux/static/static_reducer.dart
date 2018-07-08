@@ -1,5 +1,5 @@
-import 'package:invoiceninja/redux/app/app_actions.dart';
-import 'package:invoiceninja/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:redux/redux.dart';
 
 Reducer<StaticState> staticReducer = combineReducers([

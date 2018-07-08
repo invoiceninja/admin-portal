@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_details_vm.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_items_vm.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_edit_vm.dart';
-import 'package:invoiceninja/ui/invoice/edit/invoice_item_selector.dart';
-import 'package:invoiceninja/utils/formatting.dart';
-import 'package:invoiceninja/utils/localization.dart';
-import 'package:invoiceninja/ui/app/buttons/save_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/save_icon_button.dart';
 
 class InvoiceEdit extends StatefulWidget {
   final InvoiceEditVM viewModel;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog(this.error);

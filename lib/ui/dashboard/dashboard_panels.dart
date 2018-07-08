@@ -1,10 +1,10 @@
-import 'package:invoiceninja/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja/ui/app/app_loading.dart';
-import 'package:invoiceninja/ui/app/loading_indicator.dart';
-import 'package:invoiceninja/ui/dashboard/dashboard_vm.dart';
-import 'package:invoiceninja/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/app_loading.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardPanels extends StatelessWidget {
   final DashboardVM viewModel;
