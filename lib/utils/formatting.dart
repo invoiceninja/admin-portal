@@ -67,10 +67,10 @@ String formatNumber(
 
   if (currency.id == kCurrencyEuro) {
     swapCurrencySymbol = country.swapCurrencySymbol;
-    if (country.thousandSeparator.isNotEmpty) {
+    if (country.thousandSeparator != null && country.thousandSeparator.isNotEmpty) {
       thousandSeparator = country.thousandSeparator;
     }
-    if (country.decimalSeparator.isNotEmpty) {
+    if (country.decimalSeparator != null && country.decimalSeparator.isNotEmpty) {
       decimalSeparator = country.decimalSeparator;
     }
   }
