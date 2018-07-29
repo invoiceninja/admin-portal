@@ -6,7 +6,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
@@ -102,28 +101,16 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
-            final localization = AppLocalization.of(context);
+            //final localization = AppLocalization.of(context);
             if (client.isNew) {
               if (store.state.uiState.currentRoute == InvoiceEditScreen.route) {
-                /*
-                final invoice = store.state.invoiceUIState.editing;
-                invoice.rebuild((b) => b
-                  ..clientId = client.id
-                );
-                store.dispatch(UpdateInvoice(invoice));
-                */
                 Navigator.of(context).pop(savedClient);
               } else {
                 Navigator.of(context).pushReplacementNamed(
                     ClientViewScreen.route);
               }
-              /*
-              Navigator.of(context).pop(localization.successfullyCreatedClient);
-              Navigator.of(context).push<ClientViewScreen>(
-                  MaterialPageRoute(builder: (_) => ClientViewScreen()));
-                  */
             } else {
-              Navigator.of(context).pop(localization.successfullyUpdatedClient);
+              Navigator.of(context).pop(savedClient);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

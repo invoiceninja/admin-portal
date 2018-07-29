@@ -64,7 +64,15 @@ class ClientViewVM {
         client: client,
         company: state.selectedCompany,
         onEditPressed: (BuildContext context) {
-          store.dispatch(EditClient(client: client, context: context));
+          final Completer<ClientEntity> completer = new Completer<ClientEntity>();
+          store.dispatch(EditClient(client: client, context: context, completer: completer));
+          completer.future.then((client) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: AppLocalization.of(context).successfullyUpdatedClient,
+                )
+            ));
+          });
         },
         onInvoicesPressed: (BuildContext context) {
           store.dispatch(FilterInvoicesByClient(client.id));

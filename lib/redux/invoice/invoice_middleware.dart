@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
@@ -44,14 +43,7 @@ Middleware<AppState> _viewInvoice() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-    final message = await Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
-
-    /*
-    Scaffold.of(action.context).showSnackBar(SnackBar(
-        content: SnackBarRow(
-          message: message,
-        )));
-        */
+    await Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
   };
 }
 
@@ -69,14 +61,12 @@ Middleware<AppState> _editInvoice() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
-    final message = await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
+    final invoice = await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
 
-    /*
-    Scaffold.of(action.context).showSnackBar(SnackBar(
-        content: SnackBarRow(
-          message: message,
-        )));
-        */
+    if (action.completer != null) {
+      action.completer.complete(invoice);
+    }
+
   };
 }
 

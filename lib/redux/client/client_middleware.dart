@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -63,14 +62,7 @@ Middleware<AppState> _viewClient() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
-    final message = await Navigator.of(action.context).pushNamed(ClientViewScreen.route);
-
-    /*
-    Scaffold.of(action.context).showSnackBar(SnackBar(
-        content: SnackBarRow(
-          message: message,
-        )));
-        */
+    Navigator.of(action.context).pushNamed(ClientViewScreen.route);
   };
 }
 

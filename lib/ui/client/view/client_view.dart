@@ -53,34 +53,10 @@ class _ClientViewState extends State<ClientView>
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        appBar: AppBar(
-          title: Text(
-              client.displayName ?? ''), // Text(localizations.clientDetails),
-          bottom: TabBar(
-            controller: _controller,
-            //isScrollable: true,
-            tabs: [
-              Tab(
-                text: localization.overview,
-              ),
-              Tab(
-                text: localization.details,
-              ),
-            ],
-          ),
-          actions: client.isNew
-              ? []
-              : [
-                  EditIconButton(
-                    isVisible: !client.isDeleted,
-                    onPressed: () => viewModel.onEditPressed(context),
-                  ),
-                  ActionMenuButton(
-                    isSaving: viewModel.isSaving,
-                    entity: client,
-                    onSelected: viewModel.onActionSelected,
-                  )
-                ],
+        appBar: CustomAppBar(
+          viewModel: viewModel,
+          client: client,
+          controller: _controller,
         ),
         body: TabBarView(
           controller: _controller,
@@ -142,6 +118,56 @@ class _ClientViewState extends State<ClientView>
           tooltip: localization.create,
         ),
       ),
+    );
+  }
+}
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({
+    @required this.client,
+    @required this.viewModel,
+    @required this.controller,
+  });
+
+  final ClientViewVM viewModel;
+  final ClientEntity client;
+  final TabController controller;
+
+  @override
+  final Size preferredSize = const Size(double.infinity, 100.0);
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AppBar(
+      title: Text(
+          client.displayName ?? ''), // Text(localizations.clientDetails),
+      bottom: TabBar(
+        controller: controller,
+        //isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.overview,
+          ),
+          Tab(
+            text: localization.details,
+          ),
+        ],
+      ),
+      actions: client.isNew
+          ? []
+          : [
+        EditIconButton(
+          isVisible: !client.isDeleted,
+          onPressed: () => viewModel.onEditPressed(context),
+        ),
+        ActionMenuButton(
+          isSaving: viewModel.isSaving,
+          entity: client,
+          onSelected: viewModel.onActionSelected,
+        )
+      ],
     );
   }
 }
