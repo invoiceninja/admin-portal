@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -13,6 +15,7 @@ class EntityDropdown extends StatefulWidget {
     @required this.onSelected,
     this.validator,
     this.initialValue,
+    this.onAddPressed,
   });
 
   final EntityType entityType;
@@ -22,6 +25,7 @@ class EntityDropdown extends StatefulWidget {
   final String initialValue;
   final Function(int) onSelected;
   final Function validator;
+  final Function(BuildContext context, Completer completer) onAddPressed;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -49,11 +53,12 @@ class _EntityDropdownState extends State<EntityDropdown> {
           return EntityDropdownDialog(
             entityMap: widget.entityMap,
             entityList: widget.entityList,
-            onSelected: (entityId) {
-              _textController.text = widget.entityMap[entityId].listDisplayName;
-              widget.onSelected(entityId);
+            onSelected: (entity) {
+              _textController.text = entity.listDisplayName;
+              widget.onSelected(entity.id);
               Navigator.pop(context);
             },
+            onAddPressed: (context, completer) => widget.onAddPressed(context, completer),
           );
         });
   }
@@ -81,11 +86,14 @@ class EntityDropdownDialog extends StatefulWidget {
     @required this.entityMap,
     @required this.entityList,
     @required this.onSelected,
+    this.onAddPressed,
   });
 
   final BuiltMap<int, SelectableEntity> entityMap;
   final List<int> entityList;
-  final Function(int) onSelected;
+  final Function(BaseEntity) onSelected;
+  final Function(BuildContext context, Completer completer) onAddPressed;
+
 
   @override
   _EntityDropdownDialogState createState() => new _EntityDropdownDialogState();
@@ -125,6 +133,16 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
           IconButton(
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
+          ),
+          IconButton(
+            icon: Icon(Icons.add_circle_outline),
+            onPressed: () {
+              final Completer<BaseEntity> completer = new Completer<BaseEntity>();
+              widget.onAddPressed(context, completer);
+              completer.future.then((entity) {
+                widget.onSelected(entity);
+              });
+            },
           )
         ],
       );
@@ -157,7 +175,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               ],
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
-            onTap: () => widget.onSelected(entityId),
+            onTap: () => widget.onSelected(entity),
           );
         },
       );

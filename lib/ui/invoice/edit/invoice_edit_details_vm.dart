@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -32,6 +35,7 @@ class InvoiceEditDetailsVM {
   final Function(InvoiceEntity) onChanged;
   final BuiltMap<int, ClientEntity> clientMap;
   final BuiltList<int> clientList;
+  final Function(BuildContext context, Completer completer) onAddClientPressed;
 
   InvoiceEditDetailsVM({
     @required this.company,
@@ -39,6 +43,7 @@ class InvoiceEditDetailsVM {
     @required this.onChanged,
     @required this.clientMap,
     @required this.clientList,
+    @required this.onAddClientPressed,
   });
 
   factory InvoiceEditDetailsVM.fromStore(Store<AppState> store) {
@@ -52,6 +57,8 @@ class InvoiceEditDetailsVM {
             store.dispatch(UpdateInvoice(invoice)),
         clientMap: state.clientState.map,
         clientList: state.clientState.list,
+        onAddClientPressed: (context, completer) => store.dispatch(
+            EditClient(client: ClientEntity(), context: context, completer: completer, trackRoute: false)),
     );
   }
 }

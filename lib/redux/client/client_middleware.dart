@@ -40,9 +40,15 @@ Middleware<AppState> _editClient() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
-    final message = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+    if (action.trackRoute) {
+      store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
+    }
 
+    final client = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+
+    if (action.completer != null) {
+      action.completer.complete(client);
+    }
     /*
     Scaffold.of(action.context).showSnackBar(SnackBar(
         content: SnackBarRow(
@@ -157,7 +163,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
       } else {
         store.dispatch(SaveClientSuccess(client));
       }
-      action.completer.complete(null);
+      action.completer.complete(client);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveClientFailure(error));

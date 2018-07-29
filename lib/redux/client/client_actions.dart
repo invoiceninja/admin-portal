@@ -19,7 +19,9 @@ class ViewClient implements PersistUI {
 class EditClient implements PersistUI {
   final ClientEntity client;
   final BuildContext context;
-  EditClient({this.client, this.context});
+  final Completer completer;
+  final bool trackRoute;
+  EditClient({this.client, this.context, this.completer, this.trackRoute = true});
 }
 
 class UpdateClient implements PersistUI {
