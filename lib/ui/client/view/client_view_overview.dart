@@ -28,11 +28,13 @@ class ClientOverview extends StatelessWidget {
     final fields = <String, String>{};
 
     if (client.languageId > 0 && client.languageId != company.languageId) {
-      fields[ClientFields.language] = statics.languageMap[client.languageId].name;
+      fields[ClientFields.language] =
+          statics.languageMap[client.languageId].name;
     }
 
     if (client.currencyId > 0 && client.currencyId != company.currencyId) {
-      fields[ClientFields.currency] = statics.currencyMap[client.currencyId].name;
+      fields[ClientFields.currency] =
+          statics.currencyMap[client.currencyId].name;
     }
 
     if (client.customValue1.isNotEmpty) {
@@ -61,11 +63,11 @@ class ClientOverview extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-                  value,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                )),
+              value,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+            )),
           ],
         ));
       }
@@ -82,29 +84,35 @@ class ClientOverview extends StatelessWidget {
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)
             : Container(),
-        fieldWidgets.isNotEmpty ? Column(
-          children: <Widget>[
-            Container(
-              color: Theme.of(context).canvasColor,
-              child: Padding(
-                padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-                child: IgnorePointer(
-                  child: GridView.count(
-                    shrinkWrap: true,
-                    primary: true,
-                    crossAxisCount: 2,
-                    children: fieldWidgets,
-                    childAspectRatio: 3.5,
+        fieldWidgets.isNotEmpty
+            ? Column(
+                children: <Widget>[
+                  Container(
+                    color: Theme.of(context).canvasColor,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
+                      child: IgnorePointer(
+                        child: GridView.count(
+                          shrinkWrap: true,
+                          primary: true,
+                          crossAxisCount: 2,
+                          children: fieldWidgets,
+                          childAspectRatio: 3.5,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Container(
-              color: Theme.of(context).backgroundColor,
-              height: 12.0,
-            ),
-          ],
-        ) : Container(),
+                  Container(
+                    color: Theme.of(context).backgroundColor,
+                    height: 12.0,
+                  ),
+                ],
+              )
+            : Container(),
+        Divider(
+          height: 1.0,
+        ),
         Material(
           color: Theme.of(context).canvasColor,
           child: ListTile(
@@ -113,6 +121,81 @@ class ClientOverview extends StatelessWidget {
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onInvoicesPressed(context),
           ),
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(localization.payments),
+            leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(localization.quotes),
+            leading: Icon(FontAwesomeIcons.fileAltO, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(localization.projects),
+            leading: Icon(FontAwesomeIcons.briefcase, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(localization.tasks),
+            leading: Icon(FontAwesomeIcons.clockO, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(localization.expenses),
+            leading: Icon(FontAwesomeIcons.fileImageO, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+        ),
+        Divider(
+          height: 1.0,
+        ),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(localization.vendors),
+            leading: Icon(FontAwesomeIcons.building, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+        ),
+        Divider(
+          height: 1.0,
         ),
       ],
     );

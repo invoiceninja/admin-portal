@@ -108,14 +108,30 @@ class _ClientViewState extends State<ClientView>
                             context: context));
                       },
                     ),
-                    /*
+                    ListTile(
+                      dense: true,
+                      leading: Icon(Icons.add_circle_outline),
+                      title: Text(localization.quote),
+                      onTap: () {},
+                    ),
                     ListTile(
                       dense: true,
                       leading: Icon(Icons.add_circle_outline),
                       title: Text(localization.payment),
                       onTap: () {},
                     ),
-                    */
+                    ListTile(
+                      dense: true,
+                      leading: Icon(Icons.add_circle_outline),
+                      title: Text(localization.expense),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      dense: true,
+                      leading: Icon(Icons.add_circle_outline),
+                      title: Text(localization.task),
+                      onTap: () {},
+                    ),
                   ]),
             );
           },

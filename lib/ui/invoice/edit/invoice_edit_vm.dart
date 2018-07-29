@@ -79,10 +79,13 @@ class InvoiceEditVM {
               SaveInvoiceRequest(completer: completer, invoice: invoice));
           return completer.future.then((_) {
             if (invoice.isNew) {
+              /*
               Navigator.of(context).pop(localization.successfullyCreatedInvoice);
               Navigator
                   .of(context)
                   .push<InvoiceViewScreen>(MaterialPageRoute(builder: (_) => InvoiceViewScreen()));
+                  */
+              Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
             } else {
               Navigator.of(context).pop(localization.successfullyUpdatedInvoice);
             }
