@@ -29,12 +29,40 @@ class UpdateClient implements PersistUI {
   UpdateClient(this.client);
 }
 
+class LoadClient {
+  final Completer completer;
+  final int clientId;
+
+  LoadClient({this.completer, this.clientId});
+}
 
 class LoadClients {
   final Completer completer;
   final bool force;
 
-  LoadClients([this.completer, this.force = false]);
+  LoadClients({this.completer, this.force = false});
+}
+
+class LoadClientRequest implements StartLoading {}
+
+class LoadClientFailure implements StopLoading {
+  final dynamic error;
+  LoadClientFailure(this.error);
+
+  @override
+  String toString() {
+    return 'LoadClientFailure{error: $error}';
+  }
+}
+
+class LoadClientSuccess implements StopLoading, PersistData {
+  final ClientEntity client;
+  LoadClientSuccess(this.client);
+
+  @override
+  String toString() {
+    return 'LoadClientSuccess{client: $client}';
+  }
 }
 
 class LoadClientsRequest implements StartLoading {}

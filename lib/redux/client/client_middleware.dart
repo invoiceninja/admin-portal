@@ -18,6 +18,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   final viewClient = _viewClient();
   final editClient = _editClient();
   final loadClients = _loadClients(repository);
+  final loadClient = _loadClient(repository);
   final saveClient = _saveClient(repository);
   final archiveClient = _archiveClient(repository);
   final deleteClient = _deleteClient(repository);
@@ -28,6 +29,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
     TypedMiddleware<AppState, ViewClient>(viewClient),
     TypedMiddleware<AppState, EditClient>(editClient),
     TypedMiddleware<AppState, LoadClients>(loadClients),
+    TypedMiddleware<AppState, LoadClient>(loadClient),
     TypedMiddleware<AppState, SaveClientRequest>(saveClient),
     TypedMiddleware<AppState, ArchiveClientRequest>(archiveClient),
     TypedMiddleware<AppState, DeleteClientRequest>(deleteClient),
@@ -160,6 +162,37 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
       print(error);
       store.dispatch(SaveClientFailure(error));
       action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _loadClient(ClientRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+
+    final AppState state = store.state;
+
+    if (state.isLoading) {
+      next(action);
+      return;
+    }
+
+    store.dispatch(LoadClientRequest());
+    repository
+        .loadItem(state.selectedCompany, state.authState, action.clientId)
+        .then((client) {
+      store.dispatch(LoadClientSuccess(client));
+
+      if (action.completer != null) {
+        action.completer.complete(client);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadClientFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);

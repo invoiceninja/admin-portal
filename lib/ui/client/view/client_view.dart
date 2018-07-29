@@ -57,12 +57,9 @@ class _ClientViewState extends State<ClientView>
           viewModel: viewModel,
           controller: _controller,
         ),
-        body: TabBarView(
+        body: CustomTabBarView(
+          viewModel: viewModel,
           controller: _controller,
-          children: <Widget>[
-            ClientOverview(viewModel: viewModel),
-            ClientViewDetails(client: client),
-          ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
@@ -121,6 +118,33 @@ class _ClientViewState extends State<ClientView>
   }
 }
 
+class CustomTabBarView extends StatelessWidget {
+  const CustomTabBarView({
+    @required this.viewModel,
+    @required this.controller,
+  });
+
+  final ClientViewVM viewModel;
+  final TabController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBarView(
+      controller: controller,
+      children: <Widget>[
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: ClientOverview(viewModel: viewModel),
+        ),
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: ClientViewDetails(client: viewModel.client),
+        ),
+      ],
+    );
+  }
+}
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     @required this.viewModel,
@@ -139,8 +163,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final client = viewModel.client;
 
     return AppBar(
-      title: Text(
-          client.displayName ?? ''), // Text(localizations.clientDetails),
+      title:
+          Text(client.displayName ?? ''), // Text(localizations.clientDetails),
       bottom: TabBar(
         controller: controller,
         //isScrollable: true,
@@ -156,16 +180,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: client.isNew
           ? []
           : [
-        EditIconButton(
-          isVisible: !client.isDeleted,
-          onPressed: () => viewModel.onEditPressed(context),
-        ),
-        ActionMenuButton(
-          isSaving: viewModel.isSaving,
-          entity: client,
-          onSelected: viewModel.onActionSelected,
-        )
-      ],
+              EditIconButton(
+                isVisible: !client.isDeleted,
+                onPressed: () => viewModel.onEditPressed(context),
+              ),
+              ActionMenuButton(
+                isSaving: viewModel.isSaving,
+                entity: client,
+                onSelected: viewModel.onActionSelected,
+              )
+            ],
     );
   }
 }

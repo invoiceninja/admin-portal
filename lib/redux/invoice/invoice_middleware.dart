@@ -17,6 +17,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final viewInvoice = _viewInvoice();
   final editInvoice = _editInvoice();
   final loadInvoices = _loadInvoices(repository);
+  final loadInvoice = _loadInvoice(repository);
   final saveInvoice = _saveInvoice(repository);
   final archiveInvoice = _archiveInvoice(repository);
   final deleteInvoice = _deleteInvoice(repository);
@@ -29,6 +30,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, ViewInvoice>(viewInvoice),
     TypedMiddleware<AppState, EditInvoice>(editInvoice),
     TypedMiddleware<AppState, LoadInvoices>(loadInvoices),
+    TypedMiddleware<AppState, LoadInvoice>(loadInvoice),
     TypedMiddleware<AppState, SaveInvoiceRequest>(saveInvoice),
     TypedMiddleware<AppState, ArchiveInvoiceRequest>(archiveInvoice),
     TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
@@ -200,6 +202,37 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       print(error);
       store.dispatch(SaveInvoiceFailure(error));
       action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+
+    final AppState state = store.state;
+
+    if (state.isLoading) {
+      next(action);
+      return;
+    }
+
+    store.dispatch(LoadInvoiceRequest());
+    repository
+        .loadItem(state.selectedCompany, state.authState, action.invoiceId)
+        .then((invoice) {
+      store.dispatch(LoadInvoiceSuccess(invoice));
+
+      if (action.completer != null) {
+        action.completer.complete(invoice);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadInvoiceFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);

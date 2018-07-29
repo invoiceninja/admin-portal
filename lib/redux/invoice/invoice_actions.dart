@@ -34,12 +34,40 @@ class UpdateInvoice implements PersistUI {
   UpdateInvoice(this.invoice);
 }
 
+class LoadInvoice {
+  final Completer completer;
+  final int invoiceId;
+
+  LoadInvoice({this.completer, this.invoiceId});
+}
 
 class LoadInvoices {
   final Completer completer;
   final bool force;
 
-  LoadInvoices([this.completer, this.force = false]);
+  LoadInvoices({this.completer, this.force = false});
+}
+
+class LoadInvoiceRequest implements StartLoading {}
+
+class LoadInvoiceFailure implements StopLoading {
+  final dynamic error;
+  LoadInvoiceFailure(this.error);
+
+  @override
+  String toString() {
+    return 'LoadInvoiceFailure{error: $error}';
+  }
+}
+
+class LoadInvoiceSuccess implements StopLoading, PersistData {
+  final InvoiceEntity invoice;
+  LoadInvoiceSuccess(this.invoice);
+
+  @override
+  String toString() {
+    return 'LoadInvoiceSuccess{invoice: $invoice}';
+  }
 }
 
 class LoadInvoicesRequest implements StartLoading {}

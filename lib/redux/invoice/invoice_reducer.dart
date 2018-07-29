@@ -142,6 +142,7 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, AddInvoiceSuccess>(_addInvoice),
   TypedReducer<InvoiceState, LoadInvoicesSuccess>(_setLoadedInvoices),
   TypedReducer<InvoiceState, LoadInvoicesFailure>(_setNoInvoices),
+  TypedReducer<InvoiceState, LoadInvoiceSuccess>(_updateInvoice),
 
   TypedReducer<InvoiceState, MarkSentInvoiceSuccess>(_markSentInvoiceSuccess),
 
@@ -242,7 +243,7 @@ InvoiceState _addInvoice(
 }
 
 InvoiceState _updateInvoice(
-    InvoiceState invoiceState, SaveInvoiceSuccess action) {
+    InvoiceState invoiceState, dynamic action) {
   return invoiceState.rebuild((b) => b
       ..map[action.invoice.id] = action.invoice
   );

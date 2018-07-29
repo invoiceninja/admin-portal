@@ -15,6 +15,17 @@ class ClientRepository {
     this.webClient = const WebClient(),
   });
 
+  Future<ClientEntity> loadItem(CompanyEntity company, AuthState auth, int entityId) async {
+
+    final dynamic response = await webClient.get(
+        '${auth.url}/clients/$entityId', company.token);
+
+    final ClientItemResponse clientResponse = serializers.deserializeWith(
+        ClientItemResponse.serializer, response);
+
+    return clientResponse.data;
+  }
+
   Future<BuiltList<ClientEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
     final dynamic response = await webClient.get(

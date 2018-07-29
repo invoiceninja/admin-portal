@@ -43,8 +43,8 @@ class _InvoiceViewState extends State<InvoiceView> {
           value1:
               formatNumber(invoice.amount, context, clientId: invoice.clientId),
           label2: localization.balanceDue,
-          value2:
-              formatNumber(invoice.balance, context, clientId: invoice.clientId),
+          value2: formatNumber(invoice.balance, context,
+              clientId: invoice.clientId),
         ),
       ];
 
@@ -56,10 +56,10 @@ class _InvoiceViewState extends State<InvoiceView> {
         InvoiceFields.dueDate: formatDate(invoice.dueDate, context),
         InvoiceFields.partial: formatNumber(invoice.partial, context,
             clientId: invoice.clientId, zeroIsNull: true),
-        InvoiceFields.partialDueDate: formatDate(invoice.partialDueDate, context),
+        InvoiceFields.partialDueDate:
+            formatDate(invoice.partialDueDate, context),
         InvoiceFields.poNumber: invoice.poNumber,
-        InvoiceFields.discount: formatNumber(
-            invoice.discount, context,
+        InvoiceFields.discount: formatNumber(invoice.discount, context,
             clientId: invoice.clientId,
             zeroIsNull: true,
             formatNumberType: invoice.isAmountDiscount
@@ -149,9 +149,9 @@ class _InvoiceViewState extends State<InvoiceView> {
       invoice.invoiceItems.forEach((invoiceItem) {
         widgets.addAll([
           InvoiceItemListTile(
-              invoice: invoice,
-              invoiceItem: invoiceItem,
-              onTap: () => viewModel.onEditPressed(context, invoiceItem),
+            invoice: invoice,
+            invoiceItem: invoiceItem,
+            onTap: () => viewModel.onEditPressed(context, invoiceItem),
           ),
         ]);
       });
@@ -228,10 +228,13 @@ class _InvoiceViewState extends State<InvoiceView> {
         appBar: CustomAppBar(
           viewModel: viewModel,
         ),
-        body: Container(
-          color: Theme.of(context).backgroundColor,
-          child: ListView(
-            children: _buildView(),
+        body: RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: Container(
+            color: Theme.of(context).backgroundColor,
+            child: ListView(
+              children: _buildView(),
+            ),
           ),
         ),
       ),
@@ -256,41 +259,41 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final client = viewModel.client;
 
     return AppBar(
-      title:
-      Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
+      title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
       actions: invoice.isNew
           ? []
           : [
-        EditIconButton(
-          isVisible: !invoice.isDeleted,
-          onPressed: () => viewModel.onEditPressed(context),
-        ),
-        ActionMenuButton(
-          customActions: [
-            ! invoice.isPublic ?
-            ActionMenuChoice(
-              action: EntityAction.markSent,
-              icon: Icons.publish,
-              label: AppLocalization.of(context).markSent,
-            ) : null,
-            client.hasEmailAddress
-                ? ActionMenuChoice(
-              action: EntityAction.emailInvoice,
-              icon: Icons.send,
-              label: AppLocalization.of(context).email,
-            )
-                : null,
-            ActionMenuChoice(
-              action: EntityAction.pdf,
-              icon: Icons.picture_as_pdf,
-              label: AppLocalization.of(context).pdf,
-            ),
-          ],
-          isSaving: viewModel.isSaving,
-          entity: invoice,
-          onSelected: viewModel.onActionSelected,
-        )
-      ],
+              EditIconButton(
+                isVisible: !invoice.isDeleted,
+                onPressed: () => viewModel.onEditPressed(context),
+              ),
+              ActionMenuButton(
+                customActions: [
+                  !invoice.isPublic
+                      ? ActionMenuChoice(
+                          action: EntityAction.markSent,
+                          icon: Icons.publish,
+                          label: AppLocalization.of(context).markSent,
+                        )
+                      : null,
+                  client.hasEmailAddress
+                      ? ActionMenuChoice(
+                          action: EntityAction.emailInvoice,
+                          icon: Icons.send,
+                          label: AppLocalization.of(context).email,
+                        )
+                      : null,
+                  ActionMenuChoice(
+                    action: EntityAction.pdf,
+                    icon: Icons.picture_as_pdf,
+                    label: AppLocalization.of(context).pdf,
+                  ),
+                ],
+                isSaving: viewModel.isSaving,
+                entity: invoice,
+                onSelected: viewModel.onActionSelected,
+              )
+            ],
     );
   }
 }

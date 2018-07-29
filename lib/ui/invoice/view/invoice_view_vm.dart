@@ -41,6 +41,7 @@ class InvoiceViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
   final Function(BuildContext) onClientPressed;
+  final Function(BuildContext) onRefreshed;
   final Function onBackPressed;
   final bool isSaving;
   final bool isDirty;
@@ -55,12 +56,24 @@ class InvoiceViewVM {
     @required this.onClientPressed,
     @required this.isSaving,
     @required this.isDirty,
+    @required this.onRefreshed,
   });
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final invoice = state.invoiceState.map[state.invoiceUIState.selectedId];
     final client = store.state.clientState.map[invoice.clientId];
+
+    Future<Null> _handleRefresh(BuildContext context) {
+      final Completer<InvoiceEntity> completer = new Completer<InvoiceEntity>();
+      store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
+      return completer.future.then((_) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+            content: SnackBarRow(
+              message: AppLocalization.of(context).refreshComplete,
+            )));
+      });
+    }
 
     Future<Null> _viewPdf(BuildContext context) async {
       final localization = AppLocalization.of(context);
@@ -105,6 +118,7 @@ class InvoiceViewVM {
                 )));
           });
         },
+        onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onClientPressed: (BuildContext context) {
