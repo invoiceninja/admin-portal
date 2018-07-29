@@ -29,7 +29,6 @@ class _InvoiceViewState extends State<InvoiceView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
     final client = viewModel.client;
     final company = viewModel.company;
 
@@ -226,42 +225,8 @@ class _InvoiceViewState extends State<InvoiceView> {
         return true;
       },
       child: Scaffold(
-        appBar: AppBar(
-          title:
-              Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
-          actions: invoice.isNew
-              ? []
-              : [
-                  EditIconButton(
-                    isVisible: !invoice.isDeleted,
-                    onPressed: () => viewModel.onEditPressed(context),
-                  ),
-                  ActionMenuButton(
-                    customActions: [
-                      ! invoice.isPublic ?
-                      ActionMenuChoice(
-                        action: EntityAction.markSent,
-                        icon: Icons.publish,
-                        label: AppLocalization.of(context).markSent,
-                      ) : null,
-                      client.hasEmailAddress
-                          ? ActionMenuChoice(
-                              action: EntityAction.emailInvoice,
-                              icon: Icons.send,
-                              label: AppLocalization.of(context).email,
-                            )
-                          : null,
-                      ActionMenuChoice(
-                        action: EntityAction.pdf,
-                        icon: Icons.picture_as_pdf,
-                        label: AppLocalization.of(context).pdf,
-                      ),
-                    ],
-                    isSaving: viewModel.isSaving,
-                    entity: invoice,
-                    onSelected: viewModel.onActionSelected,
-                  )
-                ],
+        appBar: CustomAppBar(
+          viewModel: viewModel,
         ),
         body: Container(
           color: Theme.of(context).backgroundColor,
@@ -270,6 +235,62 @@ class _InvoiceViewState extends State<InvoiceView> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({
+    @required this.viewModel,
+  });
+
+  final InvoiceViewVM viewModel;
+
+  @override
+  final Size preferredSize = const Size(double.infinity, 54.0);
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final invoice = viewModel.invoice;
+    final client = viewModel.client;
+
+    return AppBar(
+      title:
+      Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
+      actions: invoice.isNew
+          ? []
+          : [
+        EditIconButton(
+          isVisible: !invoice.isDeleted,
+          onPressed: () => viewModel.onEditPressed(context),
+        ),
+        ActionMenuButton(
+          customActions: [
+            ! invoice.isPublic ?
+            ActionMenuChoice(
+              action: EntityAction.markSent,
+              icon: Icons.publish,
+              label: AppLocalization.of(context).markSent,
+            ) : null,
+            client.hasEmailAddress
+                ? ActionMenuChoice(
+              action: EntityAction.emailInvoice,
+              icon: Icons.send,
+              label: AppLocalization.of(context).email,
+            )
+                : null,
+            ActionMenuChoice(
+              action: EntityAction.pdf,
+              icon: Icons.picture_as_pdf,
+              label: AppLocalization.of(context).pdf,
+            ),
+          ],
+          isSaving: viewModel.isSaving,
+          entity: invoice,
+          onSelected: viewModel.onActionSelected,
+        )
+      ],
     );
   }
 }

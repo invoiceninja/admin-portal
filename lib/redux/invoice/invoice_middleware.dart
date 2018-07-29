@@ -66,7 +66,6 @@ Middleware<AppState> _editInvoice() {
     if (action.completer != null) {
       action.completer.complete(invoice);
     }
-
   };
 }
 
@@ -196,7 +195,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       } else {
         store.dispatch(SaveInvoiceSuccess(invoice));
       }
-      action.completer.complete(null);
+      action.completer.complete(invoice);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveInvoiceFailure(error));

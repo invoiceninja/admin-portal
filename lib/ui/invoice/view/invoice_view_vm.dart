@@ -71,7 +71,8 @@ class InvoiceViewVM {
         url = invoice.invitationSilentLink;
         useWebView = true;
       } else {
-        url = 'https://docs.google.com/viewer?url=' +  invoice.invitationDownloadLink;
+        url = 'https://docs.google.com/viewer?url=' +
+            invoice.invitationDownloadLink;
         useWebView = false;
       }
 
@@ -89,9 +90,23 @@ class InvoiceViewVM {
         invoice: invoice,
         client: client,
         onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
-          store.dispatch(EditInvoice(invoice: invoice, context: context, invoiceItem: invoiceItem));
+          final Completer<InvoiceEntity> completer =
+              new Completer<InvoiceEntity>();
+          store.dispatch(EditInvoice(
+              invoice: invoice,
+              context: context,
+              completer: completer,
+              invoiceItem: invoiceItem));
+          completer.future.then((invoice) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                    content: SnackBarRow(
+                  message:
+                      AppLocalization.of(context).successfullyUpdatedInvoice,
+                )));
+          });
         },
-        onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+        onBackPressed: () =>
+            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onClientPressed: (BuildContext context) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },
@@ -104,7 +119,8 @@ class InvoiceViewVM {
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyMarkedInvoiceAsSent;
+              message =
+                  AppLocalization.of(context).successfullyMarkedInvoiceAsSent;
               break;
             case EntityAction.emailInvoice:
               store.dispatch(EmailInvoiceRequest(completer, invoice.id));
@@ -125,11 +141,12 @@ class InvoiceViewVM {
           }
           if (message != null) {
             return completer.future.then((_) {
-              if ([EntityAction.archive, EntityAction.delete].contains(action)) {
+              if ([EntityAction.archive, EntityAction.delete]
+                  .contains(action)) {
                 Navigator.of(context).pop(message);
               } else {
                 Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
+                        content: SnackBarRow(
                       message: message,
                     )));
               }
@@ -141,7 +158,6 @@ class InvoiceViewVM {
                   });
             });
           }
-        }
-    );
+        });
   }
 }

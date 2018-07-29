@@ -73,15 +73,14 @@ class InvoiceEditVM {
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onSavePressed: (BuildContext context) {
-          final localization = AppLocalization.of(context);
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<InvoiceEntity> completer = new Completer<InvoiceEntity>();
           store.dispatch(
               SaveInvoiceRequest(completer: completer, invoice: invoice));
-          return completer.future.then((_) {
+          return completer.future.then((savedInvoice) {
             if (invoice.isNew) {
               Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
             } else {
-              Navigator.of(context).pop(localization.successfullyUpdatedInvoice);
+              Navigator.of(context).pop(savedInvoice);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

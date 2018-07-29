@@ -55,7 +55,6 @@ class _ClientViewState extends State<ClientView>
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: CustomAppBar(
           viewModel: viewModel,
-          client: client,
           controller: _controller,
         ),
         body: TabBarView(
@@ -124,13 +123,11 @@ class _ClientViewState extends State<ClientView>
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
-    @required this.client,
     @required this.viewModel,
     @required this.controller,
   });
 
   final ClientViewVM viewModel;
-  final ClientEntity client;
   final TabController controller;
 
   @override
@@ -139,6 +136,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final client = viewModel.client;
 
     return AppBar(
       title: Text(
