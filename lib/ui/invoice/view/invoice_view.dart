@@ -121,14 +121,13 @@ class _InvoiceViewState extends State<InvoiceView> {
           color: Theme.of(context).canvasColor,
           child: Padding(
             padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-            child: IgnorePointer(
-              child: GridView.count(
-                shrinkWrap: true,
-                primary: true,
-                crossAxisCount: 2,
-                children: fieldWidgets,
-                childAspectRatio: 3.5,
-              ),
+            child: GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              primary: true,
+              crossAxisCount: 2,
+              children: fieldWidgets,
+              childAspectRatio: 3.5,
             ),
           ),
         ),
