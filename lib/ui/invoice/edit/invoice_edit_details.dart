@@ -131,7 +131,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                       viewModel.onChanged(
                           invoice.rebuild((b) => b..clientId = clientId));
                     },
-                    onAddPressed: (context, completer) => viewModel.onAddClientPressed(context, completer),
+                    onAddPressed: (completer) {
+                      viewModel.onAddClientPressed(context, completer);
+                    },
                   )
                 : TextFormField(
                     autocorrect: false,

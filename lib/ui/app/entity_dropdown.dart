@@ -25,7 +25,7 @@ class EntityDropdown extends StatefulWidget {
   final String initialValue;
   final Function(int) onSelected;
   final Function validator;
-  final Function(BuildContext context, Completer completer) onAddPressed;
+  final Function(Completer<BaseEntity> completer) onAddPressed;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -58,7 +58,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
               widget.onSelected(entity.id);
               Navigator.pop(context);
             },
-            onAddPressed: (context, completer) => widget.onAddPressed(context, completer),
+            onAddPressed: (context, completer) => widget.onAddPressed(completer),
           );
         });
   }

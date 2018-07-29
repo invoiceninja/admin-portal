@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -35,7 +37,7 @@ class InvoiceEditDetailsVM {
   final Function(InvoiceEntity) onChanged;
   final BuiltMap<int, ClientEntity> clientMap;
   final BuiltList<int> clientList;
-  final Function(BuildContext context, Completer completer) onAddClientPressed;
+  final Function(BuildContext context, Completer<BaseEntity> completer) onAddClientPressed;
 
   InvoiceEditDetailsVM({
     @required this.company,
@@ -57,8 +59,17 @@ class InvoiceEditDetailsVM {
             store.dispatch(UpdateInvoice(invoice)),
         clientMap: state.clientState.map,
         clientList: state.clientState.list,
-        onAddClientPressed: (context, completer) => store.dispatch(
-            EditClient(client: ClientEntity(), context: context, completer: completer, trackRoute: false)),
+        onAddClientPressed: (context, completer) {
+          store.dispatch(
+              EditClient(client: ClientEntity(), context: context, completer: completer, trackRoute: false));
+          completer.future.then((BaseEntity client) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: AppLocalization.of(context).successfullyCreatedClient,
+                )
+            ));
+          });
+        },
     );
   }
 }
