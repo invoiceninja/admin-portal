@@ -101,7 +101,6 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
-            //final localization = AppLocalization.of(context);
             if (client.isNew) {
               if (store.state.uiState.currentRoute == InvoiceEditScreen.route) {
                 Navigator.of(context).pop(savedClient);
