@@ -370,6 +370,11 @@ abstract class ContactEntity extends Object
   }
 
   @override
+  EntityType get entityType {
+    return EntityType.contact;
+  }
+
+  @override
   bool matchesSearch(String search) {
     if (search == null || search.isEmpty) {
       return true;

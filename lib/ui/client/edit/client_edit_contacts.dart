@@ -14,16 +14,32 @@ class ClientEditContacts extends StatelessWidget {
 
   final ClientEditVM viewModel;
 
+  void _showContactEditor(
+      ContactEntity contact, BuildContext context) {
+    showDialog<ContactEditDetails>(
+        context: context,
+        builder: (BuildContext context) {
+          final client = viewModel.client;
+
+          return ContactEditDetails(
+            viewModel: viewModel,
+            key: Key(contact.entityKey),
+            contact: contact,
+            isRemoveVisible: client.contacts.length > 1,
+            index: client.contacts.indexOf(contact),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
-    final contacts = client.contacts.map((contact) => ContactEditDetails(
-        viewModel: viewModel,
-        key: Key('__${EntityType.contact}_${contact.id}__'),
-        isRemoveVisible: client.contacts.length > 1,
-        contact: contact,
-        index: client.contacts.indexOf(contact)));
+
+    final contacts = client.contacts.map((contact) => ContactListTile(
+      contact: contact,
+      onTap: () => _showContactEditor(contact, context),
+    ));
 
     return ListView(
       children: []
@@ -41,6 +57,39 @@ class ClientEditContacts extends StatelessWidget {
     );
   }
 }
+
+class ContactListTile extends StatelessWidget {
+
+  const ContactListTile({
+    @required this.contact,
+    @required this.onTap,
+  });
+
+  final Function onTap;
+  final ContactEntity contact;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Theme.of(context).canvasColor,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                onTap: onTap,
+                title: Text(contact.fullName),
+                subtitle: Text(contact.email),
+                trailing: Icon(Icons.navigate_next),
+              ),
+              Divider(height: 1.0,),
+            ],
+          ),
+        )
+    );
+  }
+}
+
 
 class ContactEditDetails extends StatefulWidget {
   const ContactEditDetails({
@@ -72,6 +121,10 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   @override
   void didChangeDependencies() {
+    if (_controllers.isNotEmpty) {
+      return;
+    }
+
     _controllers = [
       _firstNameController,
       _lastNameController,
@@ -149,77 +202,84 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       );
     }
 
-    return FormCard(
-      children: <Widget>[
-        TextFormField(
-          autocorrect: false,
-          controller: _firstNameController,
-          decoration: InputDecoration(
-            labelText: localization.firstName,
-          ),
-          validator: (String val) => ! viewModel.client.hasNameSet
-              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-              : null,
-        ),
-        TextFormField(
-          autocorrect: false,
-          controller: _lastNameController,
-          decoration: InputDecoration(
-            labelText: localization.lastName,
-          ),
-          validator: (String val) => ! viewModel.client.hasNameSet
-              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-              : null,
-        ),
-        TextFormField(
-          autocorrect: false,
-          controller: _emailController,
-          decoration: InputDecoration(
-            labelText: localization.email,
-          ),
-          keyboardType: TextInputType.emailAddress,
-          validator: (value) => value.isNotEmpty && !value.contains('@')
-              ? localization.emailIsInvalid
-              : null,
-        ),
-        TextFormField(
-          autocorrect: false,
-          controller: _phoneController,
-          decoration: InputDecoration(
-            labelText: localization.phone,
-          ),
-          keyboardType: TextInputType.phone,
-        ),
-        CustomField(
-          controller: _custom1Controller,
-          labelText: company.getCustomFieldLabel(CustomFieldType.contact1),
-          options: company.getCustomFieldValues(CustomFieldType.contact1),
-        ),
-        CustomField(
-          controller: _custom2Controller,
-          labelText: company.getCustomFieldLabel(CustomFieldType.contact2),
-          options: company.getCustomFieldValues(CustomFieldType.contact2),
-        ),
-        widget.isRemoveVisible
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 14.0),
-                    child: FlatButton(
-                      child: Text(
-                        localization.remove,
-                        style: TextStyle(
-                          color: Colors.grey[600],
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom, // stay clear of the keyboard
+      ),
+      child: SingleChildScrollView(
+        child: FormCard(
+          children: <Widget>[
+            TextFormField(
+              autocorrect: false,
+              controller: _firstNameController,
+              decoration: InputDecoration(
+                labelText: localization.firstName,
+              ),
+              validator: (String val) => ! viewModel.client.hasNameSet
+                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                  : null,
+            ),
+            TextFormField(
+              autocorrect: false,
+              controller: _lastNameController,
+              decoration: InputDecoration(
+                labelText: localization.lastName,
+              ),
+              validator: (String val) => ! viewModel.client.hasNameSet
+                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                  : null,
+            ),
+            TextFormField(
+              autocorrect: false,
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: localization.email,
+              ),
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) => value.isNotEmpty && !value.contains('@')
+                  ? localization.emailIsInvalid
+                  : null,
+            ),
+            TextFormField(
+              autocorrect: false,
+              controller: _phoneController,
+              decoration: InputDecoration(
+                labelText: localization.phone,
+              ),
+              keyboardType: TextInputType.phone,
+            ),
+            CustomField(
+              controller: _custom1Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.contact1),
+              options: company.getCustomFieldValues(CustomFieldType.contact1),
+            ),
+            CustomField(
+              controller: _custom2Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.contact2),
+              options: company.getCustomFieldValues(CustomFieldType.contact2),
+            ),
+            widget.isRemoveVisible
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 14.0),
+                        child: FlatButton(
+                          child: Text(
+                            localization.remove,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                          onPressed: _confirmDelete,
                         ),
-                      ),
-                      onPressed: _confirmDelete,
-                    ),
+                      )
+                    ],
                   )
-                ],
-              )
-            : Container(),
-      ],
+                : Container(),
+          ],
+        ),
+      ),
     );
   }
 }

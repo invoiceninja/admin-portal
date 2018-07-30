@@ -387,6 +387,11 @@ abstract class InvoiceItemEntity extends Object
   }
   InvoiceItemEntity._();
 
+  @override
+  EntityType get entityType {
+    return EntityType.invoiceItem;
+  }
+
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
 

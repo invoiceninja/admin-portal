@@ -30,7 +30,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
         builder: (BuildContext context) {
           return ItemEditDetails(
             viewModel: widget.viewModel,
-            key: Key('__${EntityType.invoiceItem}_${invoiceItem.id}__'),
+            key: Key(invoiceItem.entityKey),
             invoiceItem: invoiceItem,
             index: widget.viewModel.invoice.invoiceItems.indexOf(invoiceItem),
           );
@@ -106,22 +106,17 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   List<TextEditingController> _controllers = [];
 
   @override
-  void didChangeDependencies() {
-    _controllers = [
-      _productKeyController,
-      _notesController,
-      _costController,
-      _qtyController,
-      _discountController,
-      _custom1Controller,
-      _custom2Controller,
-    ];
+  void initState() {
+    super.initState();
+  }
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+  @override
+  void didChangeDependencies() {
+    if (_controllers.isNotEmpty) {
+      return;
+    }
 
     final invoiceItem = widget.invoiceItem;
-
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
     _costController.text = formatNumber(invoiceItem.cost, context,
@@ -132,6 +127,16 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         formatNumberType: FormatNumberType.input);
     _custom1Controller.text = invoiceItem.customValue1;
     _custom2Controller.text = invoiceItem.customValue2;
+
+    _controllers = [
+      _productKeyController,
+      _notesController,
+      _costController,
+      _qtyController,
+      _discountController,
+      _custom1Controller,
+      _custom2Controller,
+    ];
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -169,7 +174,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final viewModel = widget.viewModel;
     final invoiceItem = widget.invoiceItem;
     final company = viewModel.company;
-    final MediaQueryData mediaQuery = MediaQuery.of(context);
 
     void _confirmDelete() {
       showDialog<AlertDialog>(
@@ -196,8 +200,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     }
 
     return Padding(
-      padding: new EdgeInsets.only(
-        bottom: mediaQuery.viewInsets.bottom, // stay clear of the keyboard
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom, // stay clear of the keyboard
       ),
       child: SingleChildScrollView(
         child: FormCard(
