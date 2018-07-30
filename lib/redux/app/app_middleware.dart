@@ -204,7 +204,7 @@ List<String> _getRoutes(AppState state) {
         route += '/view';
       }
     } else {
-      if (part != 'dashboard' && entityType == null) {
+      if (! ['dashboard', 'settings'].contains(part) && entityType == null) {
         entityType = EntityType.valueOf(part);
       }
 
