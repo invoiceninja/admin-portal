@@ -14,8 +14,7 @@ class ClientEditContacts extends StatelessWidget {
 
   final ClientEditVM viewModel;
 
-  void _showContactEditor(
-      ContactEntity contact, BuildContext context) {
+  void _showContactEditor(ContactEntity contact, BuildContext context) {
     showDialog<ContactEditDetails>(
         context: context,
         builder: (BuildContext context) {
@@ -37,9 +36,9 @@ class ClientEditContacts extends StatelessWidget {
     final client = viewModel.client;
 
     final contacts = client.contacts.map((contact) => ContactListTile(
-      contact: contact,
-      onTap: () => _showContactEditor(contact, context),
-    ));
+          contact: contact,
+          onTap: () => _showContactEditor(contact, context),
+        ));
 
     return ListView(
       children: []
@@ -48,7 +47,6 @@ class ClientEditContacts extends StatelessWidget {
           padding: const EdgeInsets.all(14.0),
           child: RaisedButton(
             elevation: 4.0,
-            color: Theme.of(context).primaryColorDark,
             textColor: Theme.of(context).secondaryHeaderColor,
             child: Text(localization.addContact.toUpperCase()),
             onPressed: viewModel.onAddContactPressed,
@@ -59,7 +57,6 @@ class ClientEditContacts extends StatelessWidget {
 }
 
 class ContactListTile extends StatelessWidget {
-
   const ContactListTile({
     @required this.contact,
     @required this.onTap,
@@ -82,14 +79,14 @@ class ContactListTile extends StatelessWidget {
                 subtitle: Text(contact.email),
                 trailing: Icon(Icons.navigate_next),
               ),
-              Divider(height: 1.0,),
+              Divider(
+                height: 1.0,
+              ),
             ],
           ),
-        )
-    );
+        ));
   }
 }
-
 
 class ContactEditDetails extends StatefulWidget {
   const ContactEditDetails({
@@ -134,7 +131,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _custom2Controller,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final contact = widget.contact;
     _firstNameController.text = contact.firstName;
@@ -144,7 +142,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _custom1Controller.text = contact.customValue1;
     _custom2Controller.text = contact.customValue2;
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -166,8 +165,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       ..email = _emailController.text.trim()
       ..phone = _phoneController.text.trim()
       ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-    );
+      ..customValue2 = _custom2Controller.text.trim());
     if (contact != widget.contact) {
       widget.viewModel.onChangedContact(contact, widget.index);
     }
@@ -204,18 +202,53 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom, // stay clear of the keyboard
+        bottom: MediaQuery
+            .of(context)
+            .viewInsets
+            .bottom, // stay clear of the keyboard
       ),
       child: SingleChildScrollView(
         child: FormCard(
           children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Container(),
+                ),
+                widget.isRemoveVisible
+                    ? RaisedButton(
+                  //color: Theme.of(context).,
+                  textColor: Theme.of(context).secondaryHeaderColor,
+                  child: Text(
+                    localization.remove,
+                  ),
+                  onPressed: _confirmDelete,
+                  elevation: 4.0,
+                )
+                    : Container(),
+                SizedBox(
+                  width: 10.0,
+                ),
+                RaisedButton(
+                  //color: Theme.of(context).primaryColorDark,
+                  textColor: Theme.of(context).secondaryHeaderColor,
+                  elevation: 4.0,
+                  child: Text(
+                    localization.done,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
             TextFormField(
               autocorrect: false,
               controller: _firstNameController,
               decoration: InputDecoration(
                 labelText: localization.firstName,
               ),
-              validator: (String val) => ! viewModel.client.hasNameSet
+              validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
             ),
@@ -225,7 +258,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               decoration: InputDecoration(
                 labelText: localization.lastName,
               ),
-              validator: (String val) => ! viewModel.client.hasNameSet
+              validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
             ),
@@ -258,25 +291,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               labelText: company.getCustomFieldLabel(CustomFieldType.contact2),
               options: company.getCustomFieldValues(CustomFieldType.contact2),
             ),
-            widget.isRemoveVisible
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 14.0),
-                        child: FlatButton(
-                          child: Text(
-                            localization.remove,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                          onPressed: _confirmDelete,
-                        ),
-                      )
-                    ],
-                  )
-                : Container(),
           ],
         ),
       ),

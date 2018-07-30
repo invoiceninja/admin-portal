@@ -26,7 +26,6 @@ class ErrorDialog extends StatelessWidget {
                   SizedBox(height: 40.0),
                   RaisedButton(
                     textColor: Colors.white,
-                    color: Theme.of(context).primaryColorDark,
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(localization.dismiss),
                   )

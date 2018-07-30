@@ -30,7 +30,7 @@ class InvoiceEditItemsVM {
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
   final Function(int) onRemoveInvoiceItemPressed;
-  final Function onClearSelectedInvoiceItemPressed;
+  final Function onDoneInvoiceItemPressed;
   final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
 
   InvoiceEditItemsVM({
@@ -38,7 +38,7 @@ class InvoiceEditItemsVM {
     @required this.invoice,
     @required this.invoiceItem,
     @required this.onRemoveInvoiceItemPressed,
-    @required this.onClearSelectedInvoiceItemPressed,
+    @required this.onDoneInvoiceItemPressed,
     @required this.onChangedInvoiceItem,
   });
 
@@ -52,7 +52,7 @@ class InvoiceEditItemsVM {
         invoiceItem: state.invoiceUIState.editingItem,
         onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteInvoiceItem(index)),
-        onClearSelectedInvoiceItemPressed: () => store.dispatch(EditInvoiceItem()),
+        onDoneInvoiceItemPressed: () => store.dispatch(EditInvoiceItem()),
         onChangedInvoiceItem: (invoiceItem, index) {
           store.dispatch(
               UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));

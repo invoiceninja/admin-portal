@@ -208,6 +208,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 FlatButton(
                   child: Text(
@@ -219,14 +220,13 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                   onPressed: _confirmDelete,
                 ),
                 RaisedButton(
-                  color: Theme.of(context).primaryColorDark,
                   textColor: Theme.of(context).secondaryHeaderColor,
                   elevation: 4.0,
                   child: Text(
                     localization.done,
                   ),
                   onPressed: () {
-                    viewModel.onClearSelectedInvoiceItemPressed();
+                    viewModel.onDoneInvoiceItemPressed();
                     Navigator.of(context).pop();
                   },
                 ),

@@ -76,6 +76,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           indicatorColor: Colors.white,
           bottomAppBarColor: Colors.grey.shade300,
           backgroundColor: Colors.grey.shade200,
+          buttonColor: const Color(0xFF0D5D91),
         ),
 
         //dark theme

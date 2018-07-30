@@ -41,9 +41,6 @@ class ProgressButton extends StatelessWidget {
           : RaisedButton(
         child: Text(label),
         padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-        //color: Colors.lightBlueAccent,
-        //color: const Color(0xFF005090),
-        color: Theme.of(context).primaryColorDark,
         textColor: Colors.white,
         elevation: 4.0,
         onPressed: () => this.onPressed(),
