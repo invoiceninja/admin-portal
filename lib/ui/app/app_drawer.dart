@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -134,10 +135,10 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            icon: FontAwesomeIcons.powerOff,
-            title: AppLocalization.of(context).logOut,
+            icon: FontAwesomeIcons.cog,
+            title: AppLocalization.of(context).settings,
             onTap: () {
-              viewModel.onLogoutTapped(context);
+              navigator.pushReplacementNamed(SettingsScreen.route);
             },
           ),
           AboutListTile(

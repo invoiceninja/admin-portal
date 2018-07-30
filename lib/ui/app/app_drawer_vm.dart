@@ -29,7 +29,6 @@ class AppDrawerVM {
   final CompanyEntity selectedCompany;
   final String selectedCompanyIndex;
   final Function(BuildContext context, String) onCompanyChanged;
-  final Function(BuildContext context) onLogoutTapped;
   final bool isLoading;
 
   AppDrawerVM({
@@ -37,7 +36,6 @@ class AppDrawerVM {
     @required this.selectedCompany,
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
-    @required this.onLogoutTapped,
     @required this.isLoading,
 });
 
@@ -52,13 +50,6 @@ class AppDrawerVM {
       onCompanyChanged: (BuildContext context, String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
       },
-      onLogoutTapped: (BuildContext context) {
-        while(Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        }
-        Navigator.of(context).pushReplacementNamed(LoginScreen.route);
-        store.dispatch(UserLogout());
-      }
     );
   }
 }

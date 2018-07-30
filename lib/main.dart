@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
@@ -114,6 +115,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           },
           InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
           InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
+          SettingsScreen.route: (context) => SettingsScreen(),
         },
       ),
     );
