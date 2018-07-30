@@ -97,7 +97,7 @@ class ContactListTile extends StatelessWidget {
               ListTile(
                 onTap: onTap,
                 title: Text(contact.fullName),
-                subtitle: Text(contact.email),
+                subtitle: Text(contact.email.isNotEmpty ? contact.email : contact.phone),
                 trailing: Icon(Icons.navigate_next),
               ),
               Divider(

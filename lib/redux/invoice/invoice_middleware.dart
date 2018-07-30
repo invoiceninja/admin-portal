@@ -65,7 +65,7 @@ Middleware<AppState> _editInvoice() {
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
     final invoice = await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
 
-    if (action.completer != null) {
+    if (action.completer != null && invoice != null) {
       action.completer.complete(invoice);
     }
   };

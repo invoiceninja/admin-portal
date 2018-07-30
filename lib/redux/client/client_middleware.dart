@@ -47,15 +47,9 @@ Middleware<AppState> _editClient() {
 
     final client = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
 
-    if (action.completer != null) {
+    if (action.completer != null && client != null) {
       action.completer.complete(client);
     }
-    /*
-    Scaffold.of(action.context).showSnackBar(SnackBar(
-        content: SnackBarRow(
-          message: message,
-        )));
-        */
   };
 }
 
