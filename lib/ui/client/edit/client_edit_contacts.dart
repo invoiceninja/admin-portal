@@ -34,7 +34,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
             viewModel: viewModel,
             key: Key(contact.entityKey),
             contact: contact,
-            isRemoveVisible: client.contacts.length > 1,
+            areButtonsVisible: client.contacts.length > 1,
             index: client.contacts.indexOf(contact),
           );
         });
@@ -45,10 +45,27 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
-    final contacts = client.contacts.map((contact) => ContactListTile(
+
+    List<Widget> contacts;
+
+    if (client.contacts.length > 1) {
+      contacts = client.contacts.map((contact) =>
+          ContactListTile(
+            contact: contact,
+            onTap: () => _showContactEditor(contact, context),
+          )).toList();
+    } else {
+      final contact = client.contacts[0];
+      contacts = [
+        ContactEditDetails(
+          viewModel: viewModel,
+          key: Key(contact.entityKey),
           contact: contact,
-          onTap: () => _showContactEditor(contact, context),
-        ));
+          areButtonsVisible: client.contacts.length > 1,
+          index: client.contacts.indexOf(contact),
+        ),
+      ];
+    }
 
     final contact = client.contacts.contains(viewModel.contact)
         ? viewModel.contact
@@ -115,13 +132,13 @@ class ContactEditDetails extends StatefulWidget {
     @required this.index,
     @required this.contact,
     @required this.viewModel,
-    @required this.isRemoveVisible,
+    @required this.areButtonsVisible,
   }) : super(key: key);
 
   final int index;
   final ContactEntity contact;
   final ClientEditContactsVM viewModel;
-  final bool isRemoveVisible;
+  final bool areButtonsVisible;
 
   @override
   ContactEditDetailsState createState() => ContactEditDetailsState();
@@ -232,6 +249,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       child: SingleChildScrollView(
         child: FormCard(
           children: <Widget>[
+            widget.areButtonsVisible ?
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,8 +257,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 Expanded(
                   child: Container(),
                 ),
-                widget.isRemoveVisible
-                    ? RaisedButton(
+                RaisedButton(
                   color: Colors.red,
                   textColor: Theme.of(context).secondaryHeaderColor,
                   child: IconText(
@@ -249,8 +266,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   ),
                   onPressed: _confirmDelete,
                   elevation: 4.0,
-                )
-                    : Container(),
+                ),
                 SizedBox(
                   width: 10.0,
                 ),
@@ -264,7 +280,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
-            ),
+            ) : Container(),
             TextFormField(
               autocorrect: false,
               controller: _firstNameController,
