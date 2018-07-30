@@ -32,6 +32,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'currentRoute',
       serializers.serialize(object.currentRoute,
           specifiedType: const FullType(String)),
+      'enableDarkMode',
+      serializers.serialize(object.enableDarkMode,
+          specifiedType: const FullType(bool)),
       'productUIState',
       serializers.serialize(object.productUIState,
           specifiedType: const FullType(ProductUIState)),
@@ -65,6 +68,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.currentRoute = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'enableDarkMode':
+          result.enableDarkMode = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'productUIState':
           result.productUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ProductUIState)) as ProductUIState);
@@ -90,6 +97,8 @@ class _$UIState extends UIState {
   @override
   final String currentRoute;
   @override
+  final bool enableDarkMode;
+  @override
   final ProductUIState productUIState;
   @override
   final ClientUIState clientUIState;
@@ -102,6 +111,7 @@ class _$UIState extends UIState {
   _$UIState._(
       {this.selectedCompanyIndex,
       this.currentRoute,
+      this.enableDarkMode,
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState})
@@ -110,6 +120,8 @@ class _$UIState extends UIState {
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
     if (currentRoute == null)
       throw new BuiltValueNullFieldError('UIState', 'currentRoute');
+    if (enableDarkMode == null)
+      throw new BuiltValueNullFieldError('UIState', 'enableDarkMode');
     if (productUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'productUIState');
     if (clientUIState == null)
@@ -131,6 +143,7 @@ class _$UIState extends UIState {
     if (other is! UIState) return false;
     return selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
+        enableDarkMode == other.enableDarkMode &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState;
@@ -141,8 +154,10 @@ class _$UIState extends UIState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc(0, selectedCompanyIndex.hashCode),
-                    currentRoute.hashCode),
+                $jc(
+                    $jc($jc(0, selectedCompanyIndex.hashCode),
+                        currentRoute.hashCode),
+                    enableDarkMode.hashCode),
                 productUIState.hashCode),
             clientUIState.hashCode),
         invoiceUIState.hashCode));
@@ -153,6 +168,7 @@ class _$UIState extends UIState {
     return (newBuiltValueToStringHelper('UIState')
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
+          ..add('enableDarkMode', enableDarkMode)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState))
@@ -171,6 +187,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String _currentRoute;
   String get currentRoute => _$this._currentRoute;
   set currentRoute(String currentRoute) => _$this._currentRoute = currentRoute;
+
+  bool _enableDarkMode;
+  bool get enableDarkMode => _$this._enableDarkMode;
+  set enableDarkMode(bool enableDarkMode) =>
+      _$this._enableDarkMode = enableDarkMode;
 
   ProductUIStateBuilder _productUIState;
   ProductUIStateBuilder get productUIState =>
@@ -196,6 +217,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     if (_$v != null) {
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
+      _enableDarkMode = _$v.enableDarkMode;
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
@@ -223,6 +245,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
           new _$UIState._(
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
+              enableDarkMode: enableDarkMode,
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build());

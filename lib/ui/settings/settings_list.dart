@@ -6,13 +6,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SettingsList extends StatelessWidget {
   final SettingsListVM viewModel;
-  final Function onThemeChange;
-  final bool isDark;
 
   const SettingsList({
     Key key,
-    @required this.isDark,
-    @required this.onThemeChange,
     @required this.viewModel,
   }) : super(key: key);
 
@@ -22,8 +18,8 @@ class SettingsList extends StatelessWidget {
       children: <Widget>[
         SwitchListTile(
           title: Text(AppLocalization.of(context).darkMode),
-          value: isDark ?? false,
-          onChanged: (value) => viewModel.onDarkModeChanged(value),
+          value: viewModel.enableDarkMode,
+          onChanged: (value) => viewModel.onDarkModeChanged(context, value),
           secondary: Icon(Icons.color_lens),
         ),
         ListTile(

@@ -172,6 +172,7 @@ class AppLocalization {
       'done': 'Done',
       'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
+      'restart_app_to_apply_change': 'Restart the app to apply the change',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -354,6 +355,7 @@ class AppLocalization {
   String get done => _localizedValues[locale.languageCode]['done'];
   String get pleaseEnterAClientOrContactName => _localizedValues[locale.languageCode]['please_enter_a_client_or_contact_name'];
   String get darkMode => _localizedValues[locale.languageCode]['dark_mode'];
+  String get restartAppToApplyChange => _localizedValues[locale.languageCode]['restart_app_to_apply_change'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

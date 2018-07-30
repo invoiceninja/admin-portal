@@ -14,3 +14,9 @@ class LoadStaticSuccess {
 
   LoadStaticSuccess(this.data);
 }
+
+class UserSettingsChanged implements PersistUI {
+  final bool enableDarkMode;
+
+  UserSettingsChanged({this.enableDarkMode});
+}

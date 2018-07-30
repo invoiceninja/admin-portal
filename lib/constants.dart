@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 // This version must be updated in tandem with the pubspec version.
 const String kAppVersion = '0.1.2';
 
+const String kSharedPrefEmail = 'email';
+const String kSharedPrefPassword = 'password';
+const String kSharedPrefUrl = 'url';
+const String kSharedPrefSecret = 'secret';
+const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
+
 const int kMinMajorAppVersion = 4;
 const int kMinMinorAppVersion = 5;
 
