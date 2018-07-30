@@ -4,21 +4,30 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
-import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ClientEditContacts extends StatelessWidget {
+class ClientEditContacts extends StatefulWidget {
   const ClientEditContacts({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final ClientEditVM viewModel;
+  final ClientEditContactsVM viewModel;
+
+  @override
+  _ClientEditContactsState createState() => new _ClientEditContactsState();
+}
+
+class _ClientEditContactsState extends State<ClientEditContacts> {
+
+  ContactEntity selectedContact;
 
   void _showContactEditor(ContactEntity contact, BuildContext context) {
     showDialog<ContactEditDetails>(
         context: context,
         builder: (BuildContext context) {
+          final viewModel = widget.viewModel;
           final client = viewModel.client;
 
           return ContactEditDetails(
@@ -34,12 +43,25 @@ class ClientEditContacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
     final client = viewModel.client;
-
     final contacts = client.contacts.map((contact) => ContactListTile(
           contact: contact,
           onTap: () => _showContactEditor(contact, context),
         ));
+
+    /*
+    final contact = client.contacts.contains(viewModel.contact)
+        ? viewModel.contact
+        : null;
+
+    if (contact != null && contact != selectedContact) {
+      selectedContact = contact;
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        _showContactEditor(contact, context);
+      });
+    }
+    */
 
     return ListView(
       children: []
@@ -100,7 +122,7 @@ class ContactEditDetails extends StatefulWidget {
 
   final int index;
   final ContactEntity contact;
-  final ClientEditVM viewModel;
+  final ClientEditContactsVM viewModel;
   final bool isRemoveVisible;
 
   @override

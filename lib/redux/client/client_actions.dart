@@ -18,10 +18,16 @@ class ViewClient implements PersistUI {
 
 class EditClient implements PersistUI {
   final ClientEntity client;
+  final ContactEntity contact;
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
-  EditClient({this.client, this.context, this.completer, this.trackRoute = true});
+  EditClient({this.client, this.contact, this.context, this.completer, this.trackRoute = true});
+}
+
+class EditContact implements PersistUI {
+  final ContactEntity contact;
+  EditContact([this.contact]);
 }
 
 class UpdateClient implements PersistUI {

@@ -10,8 +10,18 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(clientListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
+    ..editingContact.replace(editingContactReducer(state.editingContact, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
   );
+}
+
+final editingContactReducer = combineReducers<ContactEntity>([
+  TypedReducer<ContactEntity, EditClient>(editContact),
+  TypedReducer<ContactEntity, EditContact>(editContact),
+]);
+
+ContactEntity editContact(ContactEntity contact, dynamic action) {
+  return action.contact ?? ContactEntity();
 }
 
 Reducer<int> selectedIdReducer = combineReducers([

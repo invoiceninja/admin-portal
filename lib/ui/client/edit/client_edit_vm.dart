@@ -40,9 +40,6 @@ class ClientEditVM {
   final ClientEntity client;
   final ClientEntity origClient;
   final Function(ClientEntity) onChanged;
-  final Function() onAddContactPressed;
-  final Function(int) onRemoveContactPressed;
-  final Function(ContactEntity, int) onChangedContact;
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
   final BuiltMap<int, CountryEntity> countryMap;
@@ -54,9 +51,6 @@ class ClientEditVM {
     @required this.isSaving,
     @required this.client,
     @required this.origClient,
-    @required this.onAddContactPressed,
-    @required this.onRemoveContactPressed,
-    @required this.onChangedContact,
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onBackPressed,
@@ -79,11 +73,6 @@ class ClientEditVM {
         isSaving: state.isSaving,
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
-        onAddContactPressed: () => store.dispatch(AddContact()),
-        onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
-        onChangedContact: (contact, index) {
-          store.dispatch(UpdateContact(contact: contact, index: index));
-        },
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
         onSavePressed: (BuildContext context) {
