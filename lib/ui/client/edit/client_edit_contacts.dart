@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -49,7 +50,7 @@ class ClientEditContacts extends StatelessWidget {
             elevation: 4.0,
             textColor: Theme.of(context).secondaryHeaderColor,
             child: Text(localization.addContact.toUpperCase()),
-            onPressed: viewModel.onAddContactPressed,
+            onPressed: () => viewModel.onAddContactPressed(),
           ),
         )),
     );
@@ -219,10 +220,11 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 ),
                 widget.isRemoveVisible
                     ? RaisedButton(
-                  //color: Theme.of(context).,
+                  color: Colors.red,
                   textColor: Theme.of(context).secondaryHeaderColor,
-                  child: Text(
-                    localization.remove,
+                  child: IconText(
+                    icon: Icons.delete,
+                    text: localization.remove,
                   ),
                   onPressed: _confirmDelete,
                   elevation: 4.0,
@@ -232,11 +234,11 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   width: 10.0,
                 ),
                 RaisedButton(
-                  //color: Theme.of(context).primaryColorDark,
                   textColor: Theme.of(context).secondaryHeaderColor,
                   elevation: 4.0,
-                  child: Text(
-                    localization.done,
+                  child: IconText(
+                    icon: Icons.check_circle,
+                    text: localization.done,
                   ),
                   onPressed: () => Navigator.of(context).pop(),
                 ),

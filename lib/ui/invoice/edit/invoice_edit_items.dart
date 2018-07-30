@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
@@ -210,20 +211,24 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                FlatButton(
-                  child: Text(
-                    localization.remove,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
+                RaisedButton(
+                  color: Colors.red,
+                  textColor: Theme.of(context).secondaryHeaderColor,
+                  child: IconText(
+                    icon: Icons.delete,
+                    text: localization.remove,
                   ),
                   onPressed: _confirmDelete,
+                ),
+                SizedBox(
+                  width: 10.0,
                 ),
                 RaisedButton(
                   textColor: Theme.of(context).secondaryHeaderColor,
                   elevation: 4.0,
-                  child: Text(
-                    localization.done,
+                  child: IconText(
+                    icon: Icons.check_circle,
+                    text: localization.done,
                   ),
                   onPressed: () {
                     viewModel.onDoneInvoiceItemPressed();
