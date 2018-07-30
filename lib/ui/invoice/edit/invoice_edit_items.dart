@@ -21,10 +21,10 @@ class InvoiceEditItems extends StatefulWidget {
 }
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
-
   InvoiceItemEntity dialogInvoiceItem;
 
-  void _showInvoiceItemEditor(InvoiceItemEntity invoiceItem, BuildContext context) {
+  void _showInvoiceItemEditor(
+      InvoiceItemEntity invoiceItem, BuildContext context) {
     showDialog<ItemEditDetails>(
         context: context,
         builder: (BuildContext context) {
@@ -42,7 +42,9 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-    final invoiceItem = invoice.invoiceItems.contains(viewModel.invoiceItem) ? viewModel.invoiceItem : null;
+    final invoiceItem = invoice.invoiceItems.contains(viewModel.invoiceItem)
+        ? viewModel.invoiceItem
+        : null;
 
     if (invoiceItem != null && invoiceItem != dialogInvoiceItem) {
       dialogInvoiceItem = invoiceItem;
@@ -167,6 +169,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final viewModel = widget.viewModel;
     final invoiceItem = widget.invoiceItem;
     final company = viewModel.company;
+    final MediaQueryData mediaQuery = MediaQuery.of(context);
 
     void _confirmDelete() {
       showDialog<AlertDialog>(
@@ -192,108 +195,117 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       );
     }
 
-    return SingleChildScrollView(
-      child: FormCard(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              FlatButton(
-                child: Text(
-                  localization.remove,
-                  style: TextStyle(
-                    color: Colors.grey[600],
+    return Padding(
+      padding: new EdgeInsets.only(
+        bottom: mediaQuery.viewInsets.bottom, // stay clear of the keyboard
+      ),
+      child: SingleChildScrollView(
+        child: FormCard(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FlatButton(
+                  child: Text(
+                    localization.remove,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
                   ),
+                  onPressed: _confirmDelete,
                 ),
-                onPressed: _confirmDelete,
-              ),
-              RaisedButton(
-                color: Theme.of(context).primaryColorDark,
-                textColor: Theme.of(context).secondaryHeaderColor,
-                elevation: 4.0,
-                child: Text(
-                  localization.done,
+                RaisedButton(
+                  color: Theme.of(context).primaryColorDark,
+                  textColor: Theme.of(context).secondaryHeaderColor,
+                  elevation: 4.0,
+                  child: Text(
+                    localization.done,
+                  ),
+                  onPressed: () {
+                    viewModel.onClearSelectedInvoiceItemPressed();
+                    Navigator.of(context).pop();
+                  },
                 ),
-                onPressed: () {
-                  viewModel.onClearSelectedInvoiceItemPressed();
-                  Navigator.of(context).pop();
-                },
+              ],
+            ),
+            TextFormField(
+              autocorrect: false,
+              controller: _productKeyController,
+              decoration: InputDecoration(
+                labelText: localization.product,
               ),
-            ],
-          ),
-          TextFormField(
-            autocorrect: false,
-            controller: _productKeyController,
-            decoration: InputDecoration(
-              labelText: localization.product,
             ),
-          ),
-          TextFormField(
-            autocorrect: false,
-            controller: _notesController,
-            maxLines: 4,
-            decoration: InputDecoration(
-              labelText: localization.description,
+            TextFormField(
+              autocorrect: false,
+              controller: _notesController,
+              maxLines: 4,
+              decoration: InputDecoration(
+                labelText: localization.description,
+              ),
             ),
-          ),
-          CustomField(
-            controller: _custom1Controller,
-            labelText: company.getCustomFieldLabel(CustomFieldType.product1),
-            options: company.getCustomFieldValues(CustomFieldType.product1),
-          ),
-          CustomField(
-            controller: _custom2Controller,
-            labelText: company.getCustomFieldLabel(CustomFieldType.product2),
-            options: company.getCustomFieldValues(CustomFieldType.product2),
-          ),
-          TextFormField(
-            controller: _costController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: localization.unitCost,
+            CustomField(
+              controller: _custom1Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.product1),
+              options: company.getCustomFieldValues(CustomFieldType.product1),
             ),
-          ),
-          company.hasInvoiceField('quantity') ? TextFormField(
-            controller: _qtyController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: localization.quantity,
+            CustomField(
+              controller: _custom2Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.product2),
+              options: company.getCustomFieldValues(CustomFieldType.product2),
             ),
-          ) : Container(),
-          company.hasInvoiceField('discount') ? TextFormField(
-            controller: _discountController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: localization.discount,
+            TextFormField(
+              controller: _costController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: localization.unitCost,
+              ),
             ),
-          ) : Container(),
-          company.enableInvoiceTaxes
-              ? TaxRateDropdown(
-                  taxRates: company.taxRates,
-                  onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                      invoiceItem.rebuild((b) => b
-                        ..taxRate1 = taxRate.rate
-                        ..taxName1 = taxRate.name),
-                      widget.index),
-                  labelText: localization.tax,
-                  initialTaxName: invoiceItem.taxName1,
-                  initialTaxRate: invoiceItem.taxRate1,
-                )
-              : Container(),
-          company.enableInvoiceTaxes && company.enableSecondTaxRate
-              ? TaxRateDropdown(
-                  taxRates: company.taxRates,
-                  onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                      invoiceItem.rebuild((b) => b
-                        ..taxRate2 = taxRate.rate
-                        ..taxName2 = taxRate.name),
-                      widget.index),
-                  labelText: localization.tax,
-                  initialTaxName: invoiceItem.taxName2,
-                  initialTaxRate: invoiceItem.taxRate2,
-                )
-              : Container(),
-        ],
+            company.hasInvoiceField('quantity')
+                ? TextFormField(
+                    controller: _qtyController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: localization.quantity,
+                    ),
+                  )
+                : Container(),
+            company.hasInvoiceField('discount')
+                ? TextFormField(
+                    controller: _discountController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: localization.discount,
+                    ),
+                  )
+                : Container(),
+            company.enableInvoiceTaxes
+                ? TaxRateDropdown(
+                    taxRates: company.taxRates,
+                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                        invoiceItem.rebuild((b) => b
+                          ..taxRate1 = taxRate.rate
+                          ..taxName1 = taxRate.name),
+                        widget.index),
+                    labelText: localization.tax,
+                    initialTaxName: invoiceItem.taxName1,
+                    initialTaxRate: invoiceItem.taxRate1,
+                  )
+                : Container(),
+            company.enableInvoiceTaxes && company.enableSecondTaxRate
+                ? TaxRateDropdown(
+                    taxRates: company.taxRates,
+                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                        invoiceItem.rebuild((b) => b
+                          ..taxRate2 = taxRate.rate
+                          ..taxName2 = taxRate.name),
+                        widget.index),
+                    labelText: localization.tax,
+                    initialTaxName: invoiceItem.taxName2,
+                    initialTaxRate: invoiceItem.taxRate2,
+                  )
+                : Container(),
+          ],
+        ),
       ),
     );
   }
