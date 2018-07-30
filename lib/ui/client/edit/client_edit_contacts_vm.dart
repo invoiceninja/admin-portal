@@ -52,9 +52,12 @@ class ClientEditContactsVM {
         company: state.selectedCompany,
         client: client,
         contact: state.clientUIState.editingContact,
-        onAddContactPressed: () => store.dispatch(AddContact()),
-        onRemoveContactPressed: (index) =>
-            store.dispatch(DeleteContact(index)),
+        onAddContactPressed: () {
+          final contact = ContactEntity();
+          store.dispatch(AddContact(contact));
+          store.dispatch(EditContact(contact));
+        },
+        onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
         onDoneContactPressed: () => store.dispatch(EditContact()),
         onChangedContact: (contact, index) {
           store.dispatch(

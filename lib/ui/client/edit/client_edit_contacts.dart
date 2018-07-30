@@ -50,7 +50,6 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
           onTap: () => _showContactEditor(contact, context),
         ));
 
-    /*
     final contact = client.contacts.contains(viewModel.contact)
         ? viewModel.contact
         : null;
@@ -61,7 +60,6 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
         _showContactEditor(contact, context);
       });
     }
-    */
 
     return ListView(
       children: []
@@ -216,6 +214,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
                       widget.viewModel.onRemoveContactPressed(widget.index);
+                      Navigator.pop(context);
                       Navigator.pop(context);
                     })
               ],

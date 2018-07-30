@@ -53,7 +53,7 @@ ClientEntity _updateEditing(ClientEntity client, dynamic action) {
 
 ClientEntity _addContact(ClientEntity client, AddContact action) {
   return client.rebuild((b) => b
-    ..contacts.add(ContactEntity())
+    ..contacts.add(action.contact ?? ContactEntity())
   );
 }
 

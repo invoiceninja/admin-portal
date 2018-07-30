@@ -94,7 +94,10 @@ class LoadClientsSuccess implements StopLoading, PersistData {
 }
 
 
-class AddContact implements PersistUI {}
+class AddContact implements PersistUI {
+  final ContactEntity contact;
+  AddContact([this.contact]);
+}
 
 class UpdateContact implements PersistUI {
   final int index;
