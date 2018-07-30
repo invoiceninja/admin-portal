@@ -32,8 +32,9 @@ class UserLoginRequest implements StartLoading {
   final String password;
   final String url;
   final String secret;
+  final String platform;
 
-  UserLoginRequest(this.completer, this.email, this.password, this.url, this.secret);
+  UserLoginRequest({this.completer, this.email, this.password, this.url, this.secret, this.platform});
 }
 
 class UserLoginSuccess implements StopLoading {}

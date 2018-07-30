@@ -13,10 +13,10 @@ class AuthRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<LoginResponseData> login(String email, String password, String url, String secret) async {
+  Future<LoginResponseData> login(String email, String password, String url, String secret, String platform) async {
 
     final credentials = {
-      'token_name': 'mobile-app',
+      'token_name': 'invoice-ninja-$platform-app',
       'api_secret': secret,
       'email': email,
       'password': password,

@@ -60,7 +60,13 @@ class LoginVM {
 
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(UserLoginRequest(
-              completer, email.trim(), password.trim(), url.trim(), secret.trim()));
+              completer: completer,
+              email: email.trim(),
+              password: password.trim(),
+              url: url.trim(),
+              secret: secret.trim(),
+              platform: Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android',
+          ));
           completer.future.then((_) {
             Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
             store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
