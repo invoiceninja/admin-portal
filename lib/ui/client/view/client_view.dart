@@ -53,7 +53,7 @@ class _ClientViewState extends State<ClientView>
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        appBar: CustomAppBar(
+        appBar: _CustomAppBar(
           viewModel: viewModel,
           controller: _controller,
         ),
@@ -145,8 +145,8 @@ class CustomTabBarView extends StatelessWidget {
   }
 }
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({
+class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _CustomAppBar({
     @required this.viewModel,
     @required this.controller,
   });

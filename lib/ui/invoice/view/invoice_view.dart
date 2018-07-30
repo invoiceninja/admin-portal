@@ -225,25 +225,29 @@ class _InvoiceViewState extends State<InvoiceView> {
         return true;
       },
       child: Scaffold(
-        appBar: CustomAppBar(
+        appBar: _CustomAppBar(
           viewModel: viewModel,
         ),
-        body: RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context),
-          child: Container(
-            color: Theme.of(context).backgroundColor,
-            child: ListView(
-              children: _buildView(),
-            ),
-          ),
+        body: Builder(
+          builder: (BuildContext context) {
+            return RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: Container(
+                color: Theme.of(context).backgroundColor,
+                child: ListView(
+                  children: _buildView(),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
 }
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({
+class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _CustomAppBar({
     @required this.viewModel,
   });
 
