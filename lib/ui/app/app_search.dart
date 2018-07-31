@@ -21,10 +21,11 @@ class AppSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return StoreConnector<AppState, ListUIState>(
-      converter: (Store<AppState> store) =>
-          store.state.getListState(entityType),
-      builder: (BuildContext context, listUIState) {
+    return StoreConnector<AppState, AppState>(
+      converter: (Store<AppState> store) => store.state,
+      builder: (BuildContext context, state) {
+        final listUIState = state.getListState(entityType);
+        final bool enableDarkMode = state.uiState.enableDarkMode;
         return listUIState.search == null
             ? Text(localization.lookup(entityType.plural.toString()))
             : Container(
@@ -34,9 +35,15 @@ class AppSearch extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: listUIState.search != null &&
                             listUIState.search.isNotEmpty
-                        ? Colors.yellow[200]
-                        : Colors.grey[100],
-                    border: Border.all(color: Colors.grey[400], width: 1.0),
+                        ? enableDarkMode
+                            ? Colors.yellow.shade900
+                            : Colors.yellow.shade200
+                        : Theme.of(context).backgroundColor,
+                    border: Border.all(
+                        color: enableDarkMode
+                            ? Colors.grey.shade600
+                            : Colors.grey.shade400,
+                        width: 1.0),
                     borderRadius: BorderRadius.circular(6.0)),
                 child: TextField(
                   decoration: InputDecoration(
