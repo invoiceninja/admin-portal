@@ -58,7 +58,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
               widget.onSelected(entity.id);
               Navigator.pop(context);
             },
-            onAddPressed: (context, completer) => widget.onAddPressed(completer),
+            onAddPressed: widget.onAddPressed != null
+                ? (context, completer) => widget.onAddPressed(completer)
+                : null,
           );
         });
   }
@@ -93,7 +95,6 @@ class EntityDropdownDialog extends StatefulWidget {
   final List<int> entityList;
   final Function(BaseEntity) onSelected;
   final Function(BuildContext context, Completer completer) onAddPressed;
-
 
   @override
   _EntityDropdownDialogState createState() => new _EntityDropdownDialogState();
@@ -134,16 +135,19 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           ),
-          IconButton(
-            icon: Icon(Icons.add_circle_outline),
-            onPressed: () {
-              final Completer<BaseEntity> completer = new Completer<BaseEntity>();
-              widget.onAddPressed(context, completer);
-              completer.future.then((entity) {
-                widget.onSelected(entity);
-              });
-            },
-          )
+          widget.onAddPressed != null
+              ? IconButton(
+                  icon: Icon(Icons.add_circle_outline),
+                  onPressed: () {
+                    final Completer<BaseEntity> completer =
+                        new Completer<BaseEntity>();
+                    widget.onAddPressed(context, completer);
+                    completer.future.then((entity) {
+                      widget.onSelected(entity);
+                    });
+                  },
+                )
+              : Container()
         ],
       );
     }
