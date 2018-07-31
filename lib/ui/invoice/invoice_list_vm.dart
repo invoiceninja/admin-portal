@@ -64,7 +64,7 @@ class InvoiceListVM {
 
   static InvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<Null> completer = new Completer<Null>();
+      final Completer<Null> completer = Completer<Null>();
       store.dispatch(LoadInvoices(completer: completer, force: true));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
@@ -100,7 +100,7 @@ class InvoiceListVM {
                 context: context)),
         onDismissed: (BuildContext context, InvoiceEntity invoice,
             DismissDirection direction) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
             if (invoice.isDeleted || invoice.isArchived) {

@@ -75,7 +75,7 @@ String formatNumber(
     }
   }
 
-  numberFormatSymbols['custom'] = new NumberSymbols(
+  numberFormatSymbols['custom'] = NumberSymbols(
     NAME: 'custom',
     DECIMAL_SEP: decimalSeparator,
     GROUP_SEP: thousandSeparator,

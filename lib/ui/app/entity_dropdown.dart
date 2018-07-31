@@ -97,7 +97,7 @@ class EntityDropdownDialog extends StatefulWidget {
   final Function(BuildContext context, Completer completer) onAddPressed;
 
   @override
-  _EntityDropdownDialogState createState() => new _EntityDropdownDialogState();
+  _EntityDropdownDialogState createState() => _EntityDropdownDialogState();
 }
 
 class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
@@ -140,7 +140,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
                   icon: Icon(Icons.add_circle_outline),
                   onPressed: () {
                     final Completer<BaseEntity> completer =
-                        new Completer<BaseEntity>();
+                        Completer<BaseEntity>();
                     widget.onAddPressed(context, completer);
                     completer.future.then((entity) {
                       widget.onSelected(entity);

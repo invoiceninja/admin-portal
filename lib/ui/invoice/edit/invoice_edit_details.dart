@@ -19,7 +19,7 @@ class InvoiceEditDetails extends StatefulWidget {
   final InvoiceEditDetailsVM viewModel;
 
   @override
-  InvoiceEditDetailsState createState() => new InvoiceEditDetailsState();
+  InvoiceEditDetailsState createState() => InvoiceEditDetailsState();
 }
 
 class InvoiceEditDetailsState extends State<InvoiceEditDetails> {

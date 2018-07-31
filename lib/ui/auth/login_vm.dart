@@ -55,7 +55,7 @@ class LoginVM {
             return;
           }
 
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           store.dispatch(UserLoginRequest(
               completer: completer,
               email: email.trim(),

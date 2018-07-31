@@ -54,7 +54,7 @@ class ClientListVM {
 
   static ClientListVM fromStore(Store<AppState> store) {
       Future<Null> _handleRefresh(BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
+        final Completer<Null> completer = Completer<Null>();
         store.dispatch(LoadClients(completer: completer, force: true));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -76,7 +76,7 @@ class ClientListVM {
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,
             DismissDirection direction) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
             if (client.isDeleted || client.isArchived) {

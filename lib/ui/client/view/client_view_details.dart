@@ -14,7 +14,7 @@ class ClientViewDetails extends StatefulWidget {
   final ClientEntity client;
 
   @override
-  _ClientViewDetailsState createState() => new _ClientViewDetailsState();
+  _ClientViewDetailsState createState() => _ClientViewDetailsState();
 }
 
 class _ClientViewDetailsState extends State<ClientViewDetails> {
@@ -32,7 +32,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
   Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
     final localization = AppLocalization.of(context);
     if (snapshot.hasError) {
-      return new Text('${localization.error}: ${snapshot.error}');
+      return Text('${localization.error}: ${snapshot.error}');
     } else {
       return const Text('');
     }

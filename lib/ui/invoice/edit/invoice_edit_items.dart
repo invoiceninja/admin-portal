@@ -18,7 +18,7 @@ class InvoiceEditItems extends StatefulWidget {
   final InvoiceEditItemsVM viewModel;
 
   @override
-  _InvoiceEditItemsState createState() => new _InvoiceEditItemsState();
+  _InvoiceEditItemsState createState() => _InvoiceEditItemsState();
 }
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
@@ -183,12 +183,12 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               semanticLabel: localization.areYouSure,
               title: Text(localization.areYouSure),
               actions: <Widget>[
-                new FlatButton(
+                FlatButton(
                     child: Text(localization.cancel.toUpperCase()),
                     onPressed: () {
                       Navigator.pop(context);
                     }),
-                new FlatButton(
+                FlatButton(
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
                       widget.viewModel.onRemoveInvoiceItemPressed(widget.index);

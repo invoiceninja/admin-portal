@@ -17,7 +17,7 @@ class ClientEditShippingAddress extends StatefulWidget {
 
   @override
   ClientEditShippingAddressState createState() =>
-      new ClientEditShippingAddressState();
+      ClientEditShippingAddressState();
 }
 
 class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {

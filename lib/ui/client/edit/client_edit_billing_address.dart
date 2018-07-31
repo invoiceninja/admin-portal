@@ -17,7 +17,7 @@ class ClientEditBillingAddress extends StatefulWidget {
 
   @override
   ClientEditBillingAddressState createState() =>
-      new ClientEditBillingAddressState();
+      ClientEditBillingAddressState();
 }
 
 class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {

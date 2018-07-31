@@ -16,7 +16,7 @@ class ClientEditContacts extends StatefulWidget {
   final ClientEditContactsVM viewModel;
 
   @override
-  _ClientEditContactsState createState() => new _ClientEditContactsState();
+  _ClientEditContactsState createState() => _ClientEditContactsState();
 }
 
 class _ClientEditContactsState extends State<ClientEditContacts> {
@@ -225,12 +225,12 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               semanticLabel: localization.areYouSure,
               title: Text(localization.areYouSure),
               actions: <Widget>[
-                new FlatButton(
+                FlatButton(
                     child: Text(localization.cancel.toUpperCase()),
                     onPressed: () {
                       Navigator.pop(context);
                     }),
-                new FlatButton(
+                FlatButton(
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
                       widget.viewModel.onRemoveContactPressed(widget.index);

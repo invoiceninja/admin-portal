@@ -20,7 +20,7 @@ class ClientView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ClientViewState createState() => new _ClientViewState();
+  _ClientViewState createState() => _ClientViewState();
 }
 
 class _ClientViewState extends State<ClientView>
@@ -30,7 +30,7 @@ class _ClientViewState extends State<ClientView>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override

@@ -15,7 +15,7 @@ class ClientEditDetails extends StatefulWidget {
   final ClientEditVM viewModel;
 
   @override
-  ClientEditDetailsState createState() => new ClientEditDetailsState();
+  ClientEditDetailsState createState() => ClientEditDetailsState();
 }
 
 class ClientEditDetailsState extends State<ClientEditDetails> {

@@ -86,7 +86,7 @@ class ClientEditVM {
                 });
             return null;
           }
-          final Completer<ClientEntity> completer = new Completer<ClientEntity>();
+          final Completer<ClientEntity> completer = Completer<ClientEntity>();
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {

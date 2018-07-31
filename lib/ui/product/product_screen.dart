@@ -54,7 +54,7 @@ class ProductScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        key: new Key(ProductKeys.productScreenFABKeyString),
+        key: Key(ProductKeys.productScreenFABKeyString),
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
           store.dispatch(

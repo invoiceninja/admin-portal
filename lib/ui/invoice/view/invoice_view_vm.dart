@@ -65,7 +65,7 @@ class InvoiceViewVM {
     final client = store.state.clientState.map[invoice.clientId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<InvoiceEntity> completer = new Completer<InvoiceEntity>();
+      final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
       store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(

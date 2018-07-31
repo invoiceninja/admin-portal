@@ -157,22 +157,22 @@ class AppDrawer extends StatelessWidget {
             applicationVersion: 'Version ' + kAppVersion + ' - BETA',
             applicationLegalese: '© 2018 Invoice Ninja',
             aboutBoxChildren: <Widget>[
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 24.0),
-                child: new RichText(
-                  text: new TextSpan(
+                child: RichText(
+                  text: TextSpan(
                     children: <TextSpan>[
-                      new TextSpan(
+                      TextSpan(
                         style: aboutTextStyle,
                         text:
                             'Thanks for trying out the beta! Please join us on the #mobile channel on ',
                       ),
-                      new _LinkTextSpan(
+                      _LinkTextSpan(
                         style: linkStyle,
                         url: 'http://slack.invoiceninja.com',
                         text: 'Slack',
                       ),
-                      new TextSpan(
+                      TextSpan(
                         style: aboutTextStyle,
                         text: ' to help make the app better.',
                       ),
@@ -235,7 +235,7 @@ class _LinkTextSpan extends TextSpan {
       : super(
             style: style,
             text: text ?? url,
-            recognizer: new TapGestureRecognizer()
+            recognizer: TapGestureRecognizer()
               ..onTap = () {
                 launch(url, forceSafariVC: false);
               });

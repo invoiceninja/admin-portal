@@ -25,7 +25,7 @@ class AppBottomBar extends StatefulWidget {
   });
 
   @override
-  _AppBottomBarState createState() => new _AppBottomBarState();
+  _AppBottomBarState createState() => _AppBottomBarState();
 }
 
 class _AppBottomBarState extends State<AppBottomBar> {
@@ -51,7 +51,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             return Container(
               color: Theme.of(context).backgroundColor,
               child:
-                  new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: EntityState.values.map<Widget>((state) {
                     return CheckboxListTile(
@@ -93,7 +93,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             return Container(
               color: Theme.of(context).backgroundColor,
               child:
-                  new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: widget.statuses.map((status) {
                     return CheckboxListTile(

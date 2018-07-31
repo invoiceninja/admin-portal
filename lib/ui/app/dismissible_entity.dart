@@ -24,7 +24,7 @@ class DismissibleEntity extends StatelessWidget {
     return Dismissible(
       // TODO fix this properly https://github.com/flutter/flutter/issues/11825
       //key: Key(entity.entityKey),
-      key: new Key(entity.entityKey + Random().nextInt(100000).toString()),
+      key: Key(entity.entityKey + Random().nextInt(100000).toString()),
       onDismissed: onDismissed,
       child: child,
       background: entity.isDeleted ? Container(

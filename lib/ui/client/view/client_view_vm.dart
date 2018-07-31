@@ -61,7 +61,7 @@ class ClientViewVM {
     final client = state.clientState.map[state.clientUIState.selectedId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<ClientEntity> completer = new Completer<ClientEntity>();
+      final Completer<ClientEntity> completer = Completer<ClientEntity>();
       store.dispatch(LoadClient(completer: completer, clientId: client.id));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
@@ -77,7 +77,7 @@ class ClientViewVM {
         client: client,
         company: state.selectedCompany,
         onEditPressed: (BuildContext context) {
-          final Completer<ClientEntity> completer = new Completer<ClientEntity>();
+          final Completer<ClientEntity> completer = Completer<ClientEntity>();
           store.dispatch(EditClient(client: client, context: context, completer: completer));
           completer.future.then((client) {
             Scaffold.of(context).showSnackBar(SnackBar(
@@ -95,7 +95,7 @@ class ClientViewVM {
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           switch (action) {
             case EntityAction.archive:

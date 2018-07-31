@@ -18,7 +18,7 @@ class ClientEdit extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ClientEditState createState() => new _ClientEditState();
+  _ClientEditState createState() => _ClientEditState();
 }
 
 class _ClientEditState extends State<ClientEdit>
@@ -29,7 +29,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 5);
+    _controller = TabController(vsync: this, length: 5);
   }
 
   @override

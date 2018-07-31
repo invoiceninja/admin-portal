@@ -53,7 +53,7 @@ class ProductListVM {
 
   static ProductListVM fromStore(Store<AppState> store) {
       Future<Null> _handleRefresh(BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
+        final Completer<Null> completer = Completer<Null>();
         store.dispatch(LoadProducts(completer, true));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -75,7 +75,7 @@ class ProductListVM {
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ProductEntity product,
             DismissDirection direction) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
             if (product.isDeleted || product.isArchived) {

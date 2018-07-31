@@ -395,7 +395,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
 
   @override
   Future<AppLocalization> load(Locale locale) {
-    return new SynchronousFuture<AppLocalization>(new AppLocalization(locale));
+    return SynchronousFuture<AppLocalization>(AppLocalization(locale));
   }
 
   @override

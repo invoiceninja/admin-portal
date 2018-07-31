@@ -21,7 +21,7 @@ class LoginView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LoginState createState() => new _LoginState();
+  _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<LoginView> {
@@ -32,10 +32,10 @@ class _LoginState extends State<LoginView> {
   final _urlController = TextEditingController();
   final _secretController = TextEditingController();
 
-  static final ValueKey _emailKey = new Key(LoginKeys.emailKeyString);
-  static final ValueKey _passwordKey = new Key(LoginKeys.passwordKeyString);
-  static final ValueKey _urlKey = new Key(LoginKeys.urlKeyString);
-  static final ValueKey _secretKey = new Key(LoginKeys.secretKeyString);
+  static final ValueKey _emailKey = Key(LoginKeys.emailKeyString);
+  static final ValueKey _passwordKey = Key(LoginKeys.passwordKeyString);
+  static final ValueKey _urlKey = Key(LoginKeys.urlKeyString);
+  static final ValueKey _secretKey = Key(LoginKeys.secretKeyString);
 
   @override
   void didChangeDependencies() {

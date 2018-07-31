@@ -73,7 +73,7 @@ class InvoiceEditVM {
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onSavePressed: (BuildContext context) {
-          final Completer<InvoiceEntity> completer = new Completer<InvoiceEntity>();
+          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
           store.dispatch(
               SaveInvoiceRequest(completer: completer, invoice: invoice));
           return completer.future.then((savedInvoice) {
@@ -97,7 +97,7 @@ class InvoiceEditVM {
           store.dispatch(AddInvoiceItems(items));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           switch (action) {
             case EntityAction.archive:
