@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SaveIconButton extends StatelessWidget {
@@ -33,12 +35,18 @@ class SaveIconButton extends StatelessWidget {
       );
     }
 
+    final state = StoreProvider.of<AppState>(context).state;
+
     return IconButton(
       onPressed: onPressed,
       tooltip: localization.save,
       icon: Icon(
         Icons.cloud_upload,
-        color: isDirty ? Colors.yellowAccent : Colors.white,
+        color: isDirty
+            ? (state.uiState.enableDarkMode
+                ? Theme.of(context).accentColor
+                : Colors.yellowAccent)
+            : Colors.white,
       ),
     );
   }

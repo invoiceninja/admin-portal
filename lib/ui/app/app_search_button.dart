@@ -19,7 +19,6 @@ class AppSearchButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    //var store = StoreProvider.of<AppState>(context);
 
     return StoreConnector<AppState, ListUIState>(
       converter: (Store<AppState> store) =>
