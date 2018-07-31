@@ -24,7 +24,7 @@ class ElevatedButton extends StatelessWidget {
               text: label,
             )
           : Text(label),
-      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+      //ppadding: EdgeInsets.only(top: 12.0, bottom: 12.0),
       //textColor: Colors.white,
       elevation: 4.0,
       onPressed: () => this.onPressed(),

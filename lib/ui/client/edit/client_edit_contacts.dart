@@ -268,7 +268,10 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 ElevatedButton(
                   icon: Icons.check_circle,
                   label: localization.done,
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () {
+                    viewModel.onDoneContactPressed();
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
             ) : Container(),
