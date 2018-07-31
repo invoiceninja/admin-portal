@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/product/product_item.dart';
+import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 
 class ProductList extends StatelessWidget {
@@ -30,7 +30,7 @@ class ProductList extends StatelessWidget {
             final productId = viewModel.productList[index];
             final product = viewModel.productMap[productId];
             return Column(children: <Widget>[
-              ProductItem(
+              ProductListItem(
                 filter: viewModel.filter,
                 product: product,
                 onDismissed: (DismissDirection direction) =>

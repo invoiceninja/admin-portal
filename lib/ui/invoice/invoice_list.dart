@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_item.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -72,7 +72,7 @@ class InvoiceList extends StatelessWidget {
                     final invoiceId = viewModel.invoiceList[index];
                     final invoice = viewModel.invoiceMap[invoiceId];
                     return Column(children: <Widget>[
-                      InvoiceItem(
+                      InvoiceListItem(
                         filter: viewModel.filter,
                         invoice: invoice,
                         client: viewModel.clientMap[invoice.clientId],

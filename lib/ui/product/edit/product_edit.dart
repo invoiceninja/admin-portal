@@ -26,6 +26,8 @@ class ProductEdit extends StatefulWidget {
 class _ProductEditState extends State<ProductEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool autoValidate = false;
+
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
@@ -106,7 +108,13 @@ class _ProductEditState extends State<ProductEdit> {
                 isSaving: viewModel.isSaving,
                 isDirty: product.isNew || product != viewModel.origProduct,
                 onPressed: () {
-                  if (!_formKey.currentState.validate()) {
+                  final bool isValid = _formKey.currentState.validate();
+
+                  setState(() {
+                    autoValidate = ! isValid;
+                  });
+
+                  if (! isValid) {
                     return;
                   }
 
@@ -133,12 +141,12 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _productKeyController,
                     autocorrect: false,
                     decoration: InputDecoration(
-                      //border: InputBorder.none,
                       labelText: localization.product,
                     ),
                     validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? localization.pleaseEnterAProductKey
                         : null,
+                    autovalidate: autoValidate,
                   ),
                   TextFormField(
                     key: Key(ProductKeys.productEditNotesFieldKeyString),
