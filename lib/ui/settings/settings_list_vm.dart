@@ -44,6 +44,35 @@ class SettingsListVM {
   });
 
   static SettingsListVM fromStore(Store<AppState> store) {
+
+    void _confirmLogout(BuildContext context) {
+      final localization = AppLocalization.of(context);
+      showDialog<AlertDialog>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              semanticLabel: localization.areYouSure,
+              title: Text(localization.areYouSure),
+              actions: <Widget>[
+                new FlatButton(
+                    child: Text(localization.cancel.toUpperCase()),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                new FlatButton(
+                    child: Text(localization.ok.toUpperCase()),
+                    onPressed: () {
+                      final navigator = Navigator.of(context);
+                      while (navigator.canPop()) {
+                        navigator.pop();
+                      }
+                      navigator.pushNamed(LoginScreen.route);
+                      store.dispatch(UserLogout());
+                    })
+              ],
+            ),
+      );
+    }
+
     void _warnRestart(BuildContext context) {
       final localization = AppLocalization.of(context);
       showDialog<AlertDialog>(
@@ -61,15 +90,7 @@ class SettingsListVM {
     }
 
     return SettingsListVM(
-        onLogoutTap: (BuildContext context) {
-          //Navigator.popUntil(context, ModalRoute.withName(LoginScreen.route));
-          final navigator = Navigator.of(context);
-          while (navigator.canPop()) {
-            navigator.pop();
-          }
-          navigator.pushNamed(LoginScreen.route);
-          store.dispatch(UserLogout());
-        },
+        onLogoutTap: (BuildContext context) => _confirmLogout(context),
         onRefreshTap: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(RefreshData(
@@ -78,10 +99,9 @@ class SettingsListVM {
           ));
           return completer.future.then((_) {
             Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
+                    content: SnackBarRow(
                   message: AppLocalization.of(context).refreshComplete,
-                )
-            ));
+                )));
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
                 context: context,
