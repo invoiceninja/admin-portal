@@ -21,7 +21,6 @@ class ClientEditContacts extends StatefulWidget {
 }
 
 class _ClientEditContactsState extends State<ClientEditContacts> {
-
   ContactEntity selectedContact;
 
   void _showContactEditor(ContactEntity contact, BuildContext context) {
@@ -50,11 +49,12 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
     List<Widget> contacts;
 
     if (client.contacts.length > 1) {
-      contacts = client.contacts.map((contact) =>
-          ContactListTile(
-            contact: contact,
-            onTap: () => _showContactEditor(contact, context),
-          )).toList();
+      contacts = client.contacts
+          .map((contact) => ContactListTile(
+                contact: contact,
+                onTap: () => _showContactEditor(contact, context),
+              ))
+          .toList();
     } else {
       final contact = client.contacts[0];
       contacts = [
@@ -68,9 +68,8 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
       ];
     }
 
-    final contact = client.contacts.contains(viewModel.contact)
-        ? viewModel.contact
-        : null;
+    final contact =
+        client.contacts.contains(viewModel.contact) ? viewModel.contact : null;
 
     if (contact != null && contact != selectedContact) {
       selectedContact = contact;
@@ -112,8 +111,14 @@ class ContactListTile extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 onTap: onTap,
-                title: Text(contact.fullName),
-                subtitle: Text(contact.email.isNotEmpty ? contact.email : contact.phone),
+                title: contact.fullName.isNotEmpty
+                    ? Text(contact.fullName)
+                    : Text(AppLocalization.of(context).blankContact,
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                        )),
+                subtitle: Text(
+                    contact.email.isNotEmpty ? contact.email : contact.phone),
                 trailing: Icon(Icons.navigate_next),
               ),
               Divider(
@@ -248,33 +253,34 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       child: SingleChildScrollView(
         child: FormCard(
           children: <Widget>[
-            widget.areButtonsVisible ?
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Container(),
-                ),
-                ElevatedButton(
-                  color: Colors.red,
-                  icon: Icons.delete,
-                  label: localization.remove,
-                  onPressed: _confirmDelete,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                ElevatedButton(
-                  icon: Icons.check_circle,
-                  label: localization.done,
-                  onPressed: () {
-                    viewModel.onDoneContactPressed();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ) : Container(),
+            widget.areButtonsVisible
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(),
+                      ),
+                      ElevatedButton(
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        label: localization.remove,
+                        onPressed: _confirmDelete,
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      ElevatedButton(
+                        icon: Icons.check_circle,
+                        label: localization.done,
+                        onPressed: () {
+                          viewModel.onDoneContactPressed();
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  )
+                : Container(),
             TextFormField(
               autocorrect: false,
               controller: _firstNameController,

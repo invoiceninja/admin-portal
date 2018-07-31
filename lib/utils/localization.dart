@@ -174,6 +174,7 @@ class AppLocalization {
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
+      'blank_contact': 'Blank Contact',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -358,6 +359,7 @@ class AppLocalization {
   String get darkMode => _localizedValues[locale.languageCode]['dark_mode'];
   String get restartAppToApplyChange => _localizedValues[locale.languageCode]['restart_app_to_apply_change'];
   String get refreshData => _localizedValues[locale.languageCode]['refresh_data'];
+  String get blankContact => _localizedValues[locale.languageCode]['blank_contact'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
