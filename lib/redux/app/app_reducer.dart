@@ -32,6 +32,6 @@ AppState appReducer(AppState state, dynamic action) {
         ? companyReducer(state.companyState4, action) : state.companyState4)
     ..companyState5.replace(state.uiState.selectedCompanyIndex == 5
         ? companyReducer(state.companyState5, action) : state.companyState5)
-      ..uiState.replace(uiReducer(state.uiState, action))
+    ..uiState.replace(uiReducer(state.uiState, action))
   );
 }

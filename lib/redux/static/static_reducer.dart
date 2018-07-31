@@ -4,7 +4,12 @@ import 'package:redux/redux.dart';
 
 Reducer<StaticState> staticReducer = combineReducers([
   TypedReducer<StaticState, LoadStaticSuccess>(staticLoadedReducer),
+  TypedReducer<StaticState, RefreshData>(refreshData),
 ]);
+
+StaticState refreshData(StaticState staticState, RefreshData action) {
+  return StaticState();
+}
 
 StaticState staticLoadedReducer(StaticState staticState, LoadStaticSuccess action) {
   return StaticState().rebuild((b) => b

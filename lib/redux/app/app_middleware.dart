@@ -74,9 +74,9 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       company4Repository,
       company5Repository);
 
-  final loadData = _createLoadData();
+  final dataLoaded = _createDataLoaded();
 
-  final dataLoaded = _createDataLoaded(company1Repository, company2Repository,
+  final persistData = _createPersistData(company1Repository, company2Repository,
       company3Repository, company4Repository, company5Repository);
 
   final userLoggedIn = _createUserLoggedIn(
@@ -89,7 +89,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       company4Repository,
       company5Repository);
 
-  final uiChange = _createUIChange(uiRepository);
+  final persistUI = _createPersistUI(uiRepository);
 
   final deleteState = _createDeleteState(
       authRepository,
@@ -105,9 +105,9 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
-    TypedMiddleware<AppState, LoadDataSuccess>(loadData),
-    TypedMiddleware<AppState, PersistData>(dataLoaded),
-    TypedMiddleware<AppState, PersistUI>(uiChange),
+    TypedMiddleware<AppState, LoadDataSuccess>(dataLoaded),
+    TypedMiddleware<AppState, PersistData>(persistData),
+    TypedMiddleware<AppState, PersistUI>(persistUI),
   ];
 }
 
@@ -253,7 +253,7 @@ Middleware<AppState> _createUserLoggedIn(
   };
 }
 
-Middleware<AppState> _createUIChange(PersistenceRepository uiRepository) {
+Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
@@ -261,7 +261,7 @@ Middleware<AppState> _createUIChange(PersistenceRepository uiRepository) {
   };
 }
 
-Middleware<AppState> _createLoadData() {
+Middleware<AppState> _createDataLoaded() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final dynamic data = action.loginResponse;
     store.dispatch(LoadStaticSuccess(data.static));
@@ -278,7 +278,7 @@ Middleware<AppState> _createLoadData() {
   };
 }
 
-Middleware<AppState> _createDataLoaded(
+Middleware<AppState> _createPersistData(
   PersistenceRepository company1Repository,
   PersistenceRepository company2Repository,
   PersistenceRepository company3Repository,

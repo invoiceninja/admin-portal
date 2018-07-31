@@ -27,4 +27,7 @@ class LoadDataSuccess {
   LoadDataSuccess({this.loginResponse, this.completer});
 }
 
-class RefreshData {}
+class RefreshData {
+  final String platform;
+  RefreshData(this.platform);
+}

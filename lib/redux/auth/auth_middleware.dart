@@ -14,10 +14,12 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 ]) {
   final loginInit = _createLoginInit();
   final loginRequest = _createLoginRequest(repository);
+  final refreshRequest = _createRefreshRequest(repository);
 
   return [
     TypedMiddleware<AppState, LoadUserLogin>(loginInit),
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
+    TypedMiddleware<AppState, RefreshData>(refreshRequest),
   ];
 }
 
@@ -61,6 +63,30 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .login(action.email, action.password, action.url, action.secret, action.platform)
+        .then((data) {
+      _saveAuthLocal(action);
+
+      if (_isVersionSupported(data.version)) {
+        store.dispatch(LoadDataSuccess(completer: action.completer, loginResponse: data));
+      } else {
+        store.dispatch(UserLoginFailure(
+            'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion'));
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(UserLoginFailure(error.toString()));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final authState = store.state.authState;
+    final companyState = store.state.selectedCompany;
+    repository
+        .refresh(authState.url, companyState.token, action.platform)
         .then((data) {
       _saveAuthLocal(action);
 

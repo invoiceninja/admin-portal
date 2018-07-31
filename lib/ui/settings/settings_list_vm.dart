@@ -61,7 +61,9 @@ class SettingsListVM {
           store.dispatch(UserLogout());
         },
         onRefreshTap: (BuildContext context) {
-
+          store.dispatch(RefreshData(
+            Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android',
+          ));
         },
         onDarkModeChanged: (BuildContext context, bool value) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();

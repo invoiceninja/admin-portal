@@ -22,9 +22,23 @@ class AuthRepository {
       'password': password,
     };
 
+    return sendRequest(url, credentials);
+  }
+
+  Future<LoginResponseData> refresh(String url, String token, String platform) async {
+
+    final credentials = {
+      'token_name': 'invoice-ninja-$platform-app',
+    };
+
+    return sendRequest(url, credentials, token);
+  }
+
+  Future<LoginResponseData> sendRequest(String url, dynamic data, [String token]) async {
+
     url = formatApiUrlMachine(url);
 
-    final dynamic response = await webClient.post(url + '/login?include=tax_rates&include_static=true', '', json.encode(credentials));
+    final dynamic response = await webClient.post(url + '/login?include=tax_rates&include_static=true', token ?? '', json.encode(data));
 
     final LoginResponse loginResponse = serializers.deserializeWith(
         LoginResponse.serializer, response);
@@ -34,5 +48,6 @@ class AuthRepository {
     }
 
     return loginResponse.data;
- }
+  }
+
 }
