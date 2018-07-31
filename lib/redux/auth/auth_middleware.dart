@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/data/repositories/auth_repository.dart';
-import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepository repository = const AuthRepository(),
@@ -66,17 +65,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       _saveAuthLocal(action);
 
       if (_isVersionSupported(data.version)) {
-        store.dispatch(LoadStaticSuccess(data.static));
-
-        for (int i = 0; i < data.accounts.length; i++) {
-          store.dispatch(SelectCompany(i + 1));
-          store.dispatch(LoadCompanySuccess(data.accounts[i]));
-        }
-
-        store.dispatch(SelectCompany(1));
-        store.dispatch(UserLoginSuccess());
-
-        action.completer.complete(null);
+        store.dispatch(LoadDataSuccess(completer: action.completer, loginResponse: data));
       } else {
         store.dispatch(UserLoginFailure(
             'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion'));

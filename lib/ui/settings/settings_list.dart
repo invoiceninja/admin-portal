@@ -20,13 +20,20 @@ class SettingsList extends StatelessWidget {
           title: Text(AppLocalization.of(context).darkMode),
           value: viewModel.enableDarkMode,
           onChanged: (value) => viewModel.onDarkModeChanged(context, value),
-          secondary: Icon(Icons.color_lens),
+          secondary: Icon(FontAwesomeIcons.moon),
+        ),
+        ListTile(
+          leading: Icon(FontAwesomeIcons.syncAlt),
+          title: Text(AppLocalization.of(context).refreshData),
+          onTap: () {
+            viewModel.onRefreshTap(context);
+          },
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.powerOff),
           title: Text(AppLocalization.of(context).logOut),
           onTap: () {
-            viewModel.onLogoutTapped(context);
+            viewModel.onLogoutTap(context);
           },
         ),
       ],

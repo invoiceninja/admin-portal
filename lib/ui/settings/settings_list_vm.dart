@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsListBuilder extends StatelessWidget {
-
   const SettingsListBuilder({Key key}) : super(key: key);
 
   @override
@@ -27,12 +26,14 @@ class SettingsListBuilder extends StatelessWidget {
 }
 
 class SettingsListVM {
-  final Function(BuildContext context) onLogoutTapped;
+  final Function(BuildContext context) onLogoutTap;
+  final Function(BuildContext context) onRefreshTap;
   final Function(BuildContext context, bool value) onDarkModeChanged;
   final bool enableDarkMode;
 
   SettingsListVM({
-    @required this.onLogoutTapped,
+    @required this.onLogoutTap,
+    @required this.onRefreshTap,
     @required this.onDarkModeChanged,
     @required this.enableDarkMode,
   });
@@ -43,25 +44,31 @@ class SettingsListVM {
       showDialog<AlertDialog>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          semanticLabel: localization.restartAppToApplyChange,
-          title: Text(localization.restartAppToApplyChange),
-          actions: <Widget>[
-            new FlatButton(
-                child: Text(localization.ok.toUpperCase()),
-                onPressed: () => Navigator.pop(context))
-          ],
-        ),
+              semanticLabel: localization.restartAppToApplyChange,
+              title: Text(localization.restartAppToApplyChange),
+              actions: <Widget>[
+                new FlatButton(
+                    child: Text(localization.ok.toUpperCase()),
+                    onPressed: () => Navigator.pop(context))
+              ],
+            ),
       );
     }
 
-    return SettingsListVM(onLogoutTapped: (BuildContext context) {
-      Navigator.popUntil(context, ModalRoute.withName(LoginScreen.route));
-      store.dispatch(UserLogout());
-    }, onDarkModeChanged: (BuildContext context, bool value) async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool(kSharedPrefEnableDarkMode, value);
-      store.dispatch(UserSettingsChanged(enableDarkMode: value));
-      _warnRestart(context);
-    }, enableDarkMode: store.state.uiState.enableDarkMode);
+    return SettingsListVM(
+        onLogoutTap: (BuildContext context) {
+          Navigator.popUntil(context, ModalRoute.withName(LoginScreen.route));
+          store.dispatch(UserLogout());
+        },
+        onRefreshTap: (BuildContext context) {
+
+        },
+        onDarkModeChanged: (BuildContext context, bool value) async {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool(kSharedPrefEnableDarkMode, value);
+          store.dispatch(UserSettingsChanged(enableDarkMode: value));
+          _warnRestart(context);
+        },
+        enableDarkMode: store.state.uiState.enableDarkMode);
   }
 }

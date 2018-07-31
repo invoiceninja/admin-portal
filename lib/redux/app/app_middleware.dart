@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
@@ -73,6 +74,8 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       company4Repository,
       company5Repository);
 
+  final loadData = _createLoadData();
+
   final dataLoaded = _createDataLoaded(company1Repository, company2Repository,
       company3Repository, company4Repository, company5Repository);
 
@@ -102,6 +105,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
+    TypedMiddleware<AppState, LoadDataSuccess>(loadData),
     TypedMiddleware<AppState, PersistData>(dataLoaded),
     TypedMiddleware<AppState, PersistUI>(uiChange),
   ];
@@ -254,6 +258,23 @@ Middleware<AppState> _createUIChange(PersistenceRepository uiRepository) {
     next(action);
 
     uiRepository.saveUIState(store.state.uiState);
+  };
+}
+
+Middleware<AppState> _createLoadData() {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final dynamic data = action.loginResponse;
+    store.dispatch(LoadStaticSuccess(data.static));
+
+    for (int i = 0; i < data.accounts.length; i++) {
+      store.dispatch(SelectCompany(i + 1));
+      store.dispatch(LoadCompanySuccess(data.accounts[i]));
+    }
+
+    store.dispatch(SelectCompany(1));
+    store.dispatch(UserLoginSuccess());
+
+    action.completer.complete(null);
   };
 }
 
