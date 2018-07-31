@@ -5,6 +5,11 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 class PersistUI {}
 class PersistData {}
 
+class RefreshClient {
+  final int clientId;
+  RefreshClient(this.clientId);
+}
+
 class StartLoading {}
 class StopLoading {}
 

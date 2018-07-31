@@ -21,11 +21,11 @@ List<int> dropdownClientsSelector(
   return list;
 }
 
-var memoizedClientList = memo3((BuiltMap<int, ClientEntity> clientMap,
+var memoizedFilteredClientList = memo3((BuiltMap<int, ClientEntity> clientMap,
         BuiltList<int> clientList, ListUIState clientListState) =>
-    visibleClientsSelector(clientMap, clientList, clientListState));
+    filteredClientsSelector(clientMap, clientList, clientListState));
 
-List<int> visibleClientsSelector(BuiltMap<int, ClientEntity> clientMap,
+List<int> filteredClientsSelector(BuiltMap<int, ClientEntity> clientMap,
     BuiltList<int> clientList, ListUIState clientListState) {
   final list = clientList.where((clientId) {
     final client = clientMap[clientId];

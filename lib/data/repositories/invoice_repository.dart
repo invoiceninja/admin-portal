@@ -37,7 +37,7 @@ class InvoiceRepository {
     return invoiceResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, InvoiceEntity invoice, [EntityAction action]) async {
+  Future<InvoiceEntity> saveData(CompanyEntity company, AuthState auth, InvoiceEntity invoice, [EntityAction action]) async {
 
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     dynamic response;

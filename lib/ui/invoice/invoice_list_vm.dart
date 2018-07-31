@@ -78,7 +78,7 @@ class InvoiceListVM {
 
     return InvoiceListVM(
         listState: state.invoiceListState,
-        invoiceList: memoizedInvoiceList(
+        invoiceList: memoizedFilteredInvoiceList(
             state.invoiceState.map,
             state.invoiceState.list,
             state.clientState.map,

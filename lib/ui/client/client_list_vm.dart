@@ -65,7 +65,7 @@ class ClientListVM {
       }
 
     return ClientListVM(
-        clientList: memoizedClientList(store.state.clientState.map, store.state.clientState.list, store.state.clientListState),
+        clientList: memoizedFilteredClientList(store.state.clientState.map, store.state.clientState.list, store.state.clientListState),
         clientMap: store.state.clientState.map,
         isLoading: store.state.isLoading,
         isLoaded: store.state.clientState.isLoaded,

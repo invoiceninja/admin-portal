@@ -37,7 +37,7 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, ClientEntity client, [EntityAction action]) async {
+  Future<ClientEntity> saveData(CompanyEntity company, AuthState auth, ClientEntity client, [EntityAction action]) async {
 
     final data = serializers.serializeWith(ClientEntity.serializer, client);
     dynamic response;

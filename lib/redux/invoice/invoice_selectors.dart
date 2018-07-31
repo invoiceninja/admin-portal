@@ -8,14 +8,14 @@ ClientEntity invoiceClientSelector(
   return clientMap[invoice.clientId];
 }
 
-var memoizedInvoiceList = memo4((BuiltMap<int, InvoiceEntity> invoiceMap,
+var memoizedFilteredInvoiceList = memo4((BuiltMap<int, InvoiceEntity> invoiceMap,
         BuiltList<int> invoiceList,
         BuiltMap<int, ClientEntity> clientMap,
         ListUIState invoiceListState) =>
-    visibleInvoicesSelector(
+    filteredInvoicesSelector(
         invoiceMap, invoiceList, clientMap, invoiceListState));
 
-List<int> visibleInvoicesSelector(
+List<int> filteredInvoicesSelector(
     BuiltMap<int, InvoiceEntity> invoiceMap,
     BuiltList<int> invoiceList,
     BuiltMap<int, ClientEntity> clientMap,
