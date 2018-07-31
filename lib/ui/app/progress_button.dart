@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 
 class ProgressButton extends StatelessWidget {
   final String label;
@@ -16,6 +17,7 @@ class ProgressButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     /*
     if (! isDirty) {
       return Container();
@@ -38,11 +40,8 @@ class ProgressButton extends StatelessWidget {
           ),
         ),
       )
-          : RaisedButton(
-        child: Text(label),
-        padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-        textColor: Colors.white,
-        elevation: 4.0,
+      : ElevatedButton(
+        label: label,
         onPressed: () => this.onPressed(),
       ),
     );

@@ -62,7 +62,12 @@ class SettingsListVM {
 
     return SettingsListVM(
         onLogoutTap: (BuildContext context) {
-          Navigator.popUntil(context, ModalRoute.withName(LoginScreen.route));
+          //Navigator.popUntil(context, ModalRoute.withName(LoginScreen.route));
+          final navigator = Navigator.of(context);
+          while (navigator.canPop()) {
+            navigator.pop();
+          }
+          navigator.pushNamed(LoginScreen.route);
           store.dispatch(UserLogout());
         },
         onRefreshTap: (BuildContext context) {

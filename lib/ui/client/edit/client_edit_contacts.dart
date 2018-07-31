@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
@@ -82,11 +83,9 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
       children: []
         ..addAll(contacts)
         ..add(Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: RaisedButton(
-            elevation: 4.0,
-            textColor: Theme.of(context).secondaryHeaderColor,
-            child: Text(localization.addContact.toUpperCase()),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: ElevatedButton(
+            label: localization.addContact.toUpperCase(),
             onPressed: () => viewModel.onAddContactPressed(),
           ),
         )),
@@ -257,26 +256,18 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 Expanded(
                   child: Container(),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   color: Colors.red,
-                  textColor: Theme.of(context).secondaryHeaderColor,
-                  child: IconText(
-                    icon: Icons.delete,
-                    text: localization.remove,
-                  ),
+                  icon: Icons.delete,
+                  label: localization.remove,
                   onPressed: _confirmDelete,
-                  elevation: 4.0,
                 ),
                 SizedBox(
                   width: 10.0,
                 ),
-                RaisedButton(
-                  textColor: Theme.of(context).secondaryHeaderColor,
-                  elevation: 4.0,
-                  child: IconText(
-                    icon: Icons.check_circle,
-                    text: localization.done,
-                  ),
+                ElevatedButton(
+                  icon: Icons.check_circle,
+                  label: localization.done,
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ],

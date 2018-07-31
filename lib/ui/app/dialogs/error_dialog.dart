@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ErrorDialog extends StatelessWidget {
@@ -24,11 +25,10 @@ class ErrorDialog extends StatelessWidget {
                   SizedBox(height: 20.0),
                   Text(error.toString()),
                   SizedBox(height: 40.0),
-                  RaisedButton(
-                    textColor: Colors.white,
+                  ElevatedButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(localization.dismiss),
-                  )
+                    label: localization.dismiss,
+                  ),
                 ],
               ),
             ),
