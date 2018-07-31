@@ -32,8 +32,11 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 void main() async {
+  final prefs = await SharedPreferences.getInstance();
+  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode);
+
   final store = Store<AppState>(appReducer,
-      initialState: AppState(),
+      initialState: AppState(enableDarkMode: enableDarkMode),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDashboardMiddleware())
@@ -45,16 +48,12 @@ void main() async {
           LoggingMiddleware<dynamic>.printer(),
         ]));
 
-  final prefs = await SharedPreferences.getInstance();
-  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode);
-
-  runApp(InvoiceNinjaApp(store: store, enableDarkMode: enableDarkMode));
+  runApp(InvoiceNinjaApp(store: store));
 }
 
 class InvoiceNinjaApp extends StatefulWidget {
   final Store<AppState> store;
-  final bool enableDarkMode;
-  const InvoiceNinjaApp({Key key, this.store, this.enableDarkMode})
+  const InvoiceNinjaApp({Key key, this.store})
       : super(key: key);
 
   @override
@@ -75,7 +74,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         ],
 
         // light theme
-        theme: widget.enableDarkMode
+        theme: widget.store.state.uiState.enableDarkMode
             ? ThemeData(
                 brightness: Brightness.dark,
                 accentColor: Colors.lightBlueAccent,

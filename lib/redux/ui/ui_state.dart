@@ -9,11 +9,11 @@ part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
 
-  factory UIState() {
+  factory UIState({bool enableDarkMode}) {
     return _$UIState._(
       selectedCompanyIndex: 0,
       currentRoute: LoginScreen.route,
-      enableDarkMode: false,
+      enableDarkMode: enableDarkMode ?? false,
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
