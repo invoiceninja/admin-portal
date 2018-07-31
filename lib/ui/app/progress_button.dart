@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 class ProgressButton extends StatelessWidget {
   final String label;
   final bool isLoading;
-  final bool isDirty;
   final Function onPressed;
 
   const ProgressButton({
@@ -12,17 +11,10 @@ class ProgressButton extends StatelessWidget {
     @required this.label,
     @required this.isLoading,
     @required this.onPressed,
-    @required this.isDirty,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    /*
-    if (! isDirty) {
-      return Container();
-    }
-    */
 
     return Padding(
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 2.0),

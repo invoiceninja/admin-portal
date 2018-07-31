@@ -10,13 +10,11 @@ import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class LoginView extends StatefulWidget {
   final bool isLoading;
-  final bool isDirty;
   final AuthState authState;
   final Function(BuildContext, String, String, String, String) onLoginPressed;
 
   const LoginView({
     Key key,
-    @required this.isDirty,
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginPressed,
@@ -146,7 +144,6 @@ class _LoginState extends State<LoginView> {
         ProgressButton(
           label: AppLocalization.of(context).login.toUpperCase(),
           isLoading: widget.isLoading,
-          isDirty: widget.isDirty,
           onPressed: () {
             if (!_formKey.currentState.validate()) {
               return;

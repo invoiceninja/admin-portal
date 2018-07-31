@@ -25,7 +25,6 @@ class LoginScreen extends StatelessWidget {
         builder: (context, vm) {
           return LoginView(
             isLoading: vm.isLoading,
-            isDirty: vm.isDirty,
             authState: vm.authState,
             onLoginPressed: vm.onLoginPressed,
           );
@@ -37,20 +36,17 @@ class LoginScreen extends StatelessWidget {
 
 class LoginVM {
   bool isLoading;
-  bool isDirty;
   AuthState authState;
   final Function(BuildContext, String, String, String, String) onLoginPressed;
 
   LoginVM({
     @required this.isLoading,
-    @required this.isDirty,
     @required this.authState,
     @required this.onLoginPressed,
   });
 
   static LoginVM fromStore(Store<AppState> store) {
     return LoginVM(
-        isDirty: !store.state.authState.isAuthenticated,
         isLoading: store.state.isLoading,
         authState: store.state.authState,
         onLoginPressed: (BuildContext context, String email, String password,
