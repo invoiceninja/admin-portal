@@ -80,7 +80,7 @@ class AppLocalization {
       'successfully_archived_product': 'Successfully archived product',
       'successfully_deleted_product': 'Successfully deleted product',
       'successfully_restored_product': 'Successfully restored product',
-      'productKey': 'Product',
+      'product_key': 'Product',
       'notes': 'Notes',
       'cost': 'Cost',
 

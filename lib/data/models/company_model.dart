@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'company_model.g.dart';
@@ -48,6 +49,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       taxRates: BuiltList<TaxRateEntity>(),
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
+      countryId: kCountryUnitedStates,
     );
   }
   CompanyEntity._();

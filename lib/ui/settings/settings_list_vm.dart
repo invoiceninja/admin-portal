@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list.dart';
@@ -67,7 +68,7 @@ class SettingsListVM {
         onRefreshTap: (BuildContext context) {
           final Completer<Null> completer = new Completer<Null>();
           store.dispatch(RefreshData(
-            platform: Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android',
+            platform: getPlatform(context),
             completer: completer,
           ));
           return completer.future.then((_) {

@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -65,7 +66,7 @@ class LoginVM {
               password: password.trim(),
               url: url.trim(),
               secret: secret.trim(),
-              platform: Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android',
+              platform: getPlatform(context),
           ));
           completer.future.then((_) {
             Navigator.of(context).pushReplacementNamed(DashboardScreen.route);

@@ -12,6 +12,7 @@ abstract class CompanyState implements Built<CompanyState, CompanyStateBuilder> 
 
   factory CompanyState() {
     return _$CompanyState._(
+      company: CompanyEntity(),
       dashboardState: DashboardState(),
       productState: ProductState(),
       clientState: ClientState(),

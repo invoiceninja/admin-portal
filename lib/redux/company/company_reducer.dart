@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 
 CompanyState companyReducer(CompanyState state, dynamic action) {
-  if (action == RefreshData) {
+  if (action is RefreshData) {
     return CompanyState();
   }
 
