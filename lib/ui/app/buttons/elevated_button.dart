@@ -14,8 +14,6 @@ class ElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final state = StoreProvider.of<AppState>(context).state;
-
     return RaisedButton(
       color: color ?? Theme.of(context).buttonColor,
       child: icon != null
@@ -24,8 +22,7 @@ class ElevatedButton extends StatelessWidget {
               text: label,
             )
           : Text(label),
-      //ppadding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-      //textColor: Colors.white,
+      textColor: Colors.white,
       elevation: 4.0,
       onPressed: () => this.onPressed(),
     );

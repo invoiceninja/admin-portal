@@ -43,6 +43,7 @@ class AppDrawer extends StatelessWidget {
           isDense: true,
           value: viewModel.selectedCompanyIndex,
           items: viewModel.companies
+              .where((CompanyEntity company) => company.name.isNotEmpty)
               .map((CompanyEntity company) => DropdownMenuItem<String>(
                     value:
                         (viewModel.companies.indexOf(company) + 1).toString(),
@@ -61,7 +62,8 @@ class AppDrawer extends StatelessWidget {
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
-    final TextStyle linkStyle = themeData.textTheme.body2.copyWith(color: themeData.accentColor);
+    final TextStyle linkStyle =
+        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
 
     return Drawer(
       child: ListView(
@@ -72,14 +74,15 @@ class AppDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
-                      child: viewModel.selectedCompany.logoUrl != null
-                          //? Image.network(viewModel.selectedCompany.logoUrl)
+                      child: viewModel.selectedCompany.logoUrl != null &&
+                              viewModel.selectedCompany.logoUrl.isNotEmpty
                           ? CachedNetworkImage(
                               imageUrl: viewModel.selectedCompany.logoUrl,
                               placeholder: CircularProgressIndicator(),
                               errorWidget: Icon(Icons.error),
                             )
-                          : null),
+                          : Image.asset('assets/images/logo.png',
+                              width: 100.0, height: 100.0)),
                 ),
                 SizedBox(
                   height: 18.0,
@@ -161,7 +164,8 @@ class AppDrawer extends StatelessWidget {
                     children: <TextSpan>[
                       new TextSpan(
                         style: aboutTextStyle,
-                        text: 'Thanks for trying out the beta! Please join us on the #mobile channel on ',
+                        text:
+                            'Thanks for trying out the beta! Please join us on the #mobile channel on ',
                       ),
                       new _LinkTextSpan(
                         style: linkStyle,
@@ -227,12 +231,12 @@ class DrawerTile extends StatelessWidget {
 */
 
 class _LinkTextSpan extends TextSpan {
-
-  _LinkTextSpan({ TextStyle style, String url, String text }) : super(
-      style: style,
-      text: text ?? url,
-      recognizer: new TapGestureRecognizer()..onTap = () {
-        launch(url, forceSafariVC: false);
-      }
-  );
+  _LinkTextSpan({TextStyle style, String url, String text})
+      : super(
+            style: style,
+            text: text ?? url,
+            recognizer: new TapGestureRecognizer()
+              ..onTap = () {
+                launch(url, forceSafariVC: false);
+              });
 }

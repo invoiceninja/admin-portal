@@ -73,7 +73,7 @@ class _LoginState extends State<LoginView> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-          child: new Image.asset('assets/images/logo.png',
+          child: Image.asset('assets/images/logo.png',
               width: 100.0, height: 100.0),
         ),
         Form(
