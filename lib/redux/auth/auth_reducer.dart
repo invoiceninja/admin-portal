@@ -15,8 +15,7 @@ AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
     ..isInitialized = true
     ..url = action.url ?? ''
     ..secret = action.secret ?? ''
-    ..email = action.email ?? ''
-    ..password = action.password ?? '');
+    ..email = action.email ?? '');
 }
 
 AuthState userLoginRequestReducer(

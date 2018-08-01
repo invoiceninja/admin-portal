@@ -27,23 +27,16 @@ void _saveAuthLocal(dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(kSharedPrefEmail, action.email);
   prefs.setString(kSharedPrefUrl, action.url);
-
-  if (action.password == 'password') {
-    prefs.setString(kSharedPrefPassword, action.password);
-  }
-  if (action.secret == 'secret') {
-    prefs.setString(kSharedPrefSecret, action.secret);
-  }
+  prefs.setString(kSharedPrefSecret, action.secret);
 }
 
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   final String email = prefs.getString(kSharedPrefEmail) ?? Config.LOGIN_EMAIL;
-  final String password = prefs.getString(kSharedPrefPassword) ?? Config.LOGIN_PASSWORD;
   final String url = prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL;
   final String secret = prefs.getString(kSharedPrefSecret) ?? Config.LOGIN_SECRET;
-  store.dispatch(UserLoginLoaded(email, password, url, secret));
+  store.dispatch(UserLoginLoaded(email, url, secret));
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
   store.dispatch(UserSettingsChanged(enableDarkMode: enableDarkMode));

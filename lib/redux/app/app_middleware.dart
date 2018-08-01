@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/file_storage.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/repositories/persistence_repository.dart';
@@ -13,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository authRepository = const PersistenceRepository(
@@ -130,61 +132,55 @@ Middleware<AppState> _createLoadState(
   CompanyState company4State;
   CompanyState company5State;
 
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    authRepository.exists().then((exists) {
-      if (exists) {
-        authRepository.loadAuthState().then((state) {
-          authState = state;
-          uiRepository.loadUIState().then((state) {
-            uiState = state;
-            staticRepository.loadStaticState().then((state) {
-              staticState = state;
-              company1Repository.loadCompanyState().then((state) {
-                company1State = state;
-                company2Repository.loadCompanyState().then((state) {
-                  company2State = state;
-                  company3Repository.loadCompanyState().then((state) {
-                    company3State = state;
-                    company4Repository.loadCompanyState().then((state) {
-                      company4State = state;
-                      company5Repository.loadCompanyState().then((state) {
-                        company5State = state;
-                        final AppState appState = AppState().rebuild((b) => b
-                          ..authState.replace(authState)
-                          ..uiState.replace(uiState)
-                          ..staticState.replace(staticState)
-                          ..companyState1.replace(company1State)
-                          ..companyState2.replace(company2State)
-                          ..companyState3.replace(company3State)
-                          ..companyState4.replace(company4State)
-                          ..companyState5.replace(company5State));
-                        store.dispatch(LoadStateSuccess(appState));
-                        if (uiState.currentRoute != LoginScreen.route &&
-                            authState.url.isNotEmpty) {
-                          final NavigatorState navigator = Navigator.of(action.context);
-                          bool isFirst = true;
-                          _getRoutes(appState).forEach((route) {
-                            if (isFirst) {
-                              navigator.pushReplacementNamed(route);
-                            } else {
-                              navigator.pushNamed(route);
-                            }
-                            isFirst = false;
-                          });
-                        }
-                      }).catchError((Object error) => _handleError(store, error, action.context));
-                    }).catchError((Object error) => _handleError(store, error, action.context));
-                  }).catchError((Object error) => _handleError(store, error, action.context));
-                }).catchError((Object error) => _handleError(store, error, action.context));
-              }).catchError((Object error) => _handleError(store, error, action.context));
-            }).catchError((Object error) => _handleError(store, error, action.context));
-          }).catchError((Object error) => _handleError(store, error, action.context));
-        }).catchError((Object error) => _handleError(store, error, action.context));
-      } else {
-        store.dispatch(UserLogout());
-        store.dispatch(LoadUserLogin(action.context));
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final appVersion = prefs.getString(kSharedPrefAppVerson);
+      prefs.setString(kSharedPrefAppVerson, kAppVersion);
+
+      if (appVersion != kAppVersion) {
+        throw 'New app version - clearing state';
       }
-    }).catchError((Object error) => _handleError(store, error, action.context));
+
+      authState = await authRepository.loadAuthState();
+      uiState = await uiRepository.loadUIState();
+      staticState = await staticRepository.loadStaticState();
+      company1State = await company1Repository.loadCompanyState();
+      company2State = await company2Repository.loadCompanyState();
+      company3State = await company3Repository.loadCompanyState();
+      company4State = await company4Repository.loadCompanyState();
+      company5State = await company5Repository.loadCompanyState();
+
+      final AppState appState = AppState().rebuild((b) => b
+        ..authState.replace(authState)
+        ..uiState.replace(uiState)
+        ..staticState.replace(staticState)
+        ..companyState1.replace(company1State)
+        ..companyState2.replace(company2State)
+        ..companyState3.replace(company3State)
+        ..companyState4.replace(company4State)
+        ..companyState5.replace(company5State));
+
+      store.dispatch(LoadStateSuccess(appState));
+
+      if (uiState.currentRoute != LoginScreen.route &&
+          authState.url.isNotEmpty) {
+        final NavigatorState navigator = Navigator.of(action.context);
+        bool isFirst = true;
+        _getRoutes(appState).forEach((route) {
+          if (isFirst) {
+            navigator.pushReplacementNamed(route);
+          } else {
+            navigator.pushNamed(route);
+          }
+          isFirst = false;
+        });
+      }
+    } catch (error) {
+      print(error);
+      store.dispatch(UserLogout());
+      store.dispatch(LoadUserLogin(action.context));
+    }
 
     next(action);
   };
@@ -208,7 +204,7 @@ List<String> _getRoutes(AppState state) {
         route += '/view';
       }
     } else {
-      if (! ['dashboard', 'settings'].contains(part) && entityType == null) {
+      if (!['dashboard', 'settings'].contains(part) && entityType == null) {
         entityType = EntityType.valueOf(part);
       }
 
@@ -219,12 +215,6 @@ List<String> _getRoutes(AppState state) {
   });
 
   return routes;
-}
-
-void _handleError(Store<AppState> store, Object error, BuildContext context) {
-  print(error);
-  store.dispatch(UserLogout());
-  store.dispatch(LoadUserLogin(context));
 }
 
 Middleware<AppState> _createUserLoggedIn(
@@ -314,7 +304,7 @@ Middleware<AppState> _createPersistData(
 Middleware<AppState> _createDeleteState(
   PersistenceRepository authRepository,
   PersistenceRepository uiRepository,
-    PersistenceRepository staticRepository,
+  PersistenceRepository staticRepository,
   PersistenceRepository company1Repository,
   PersistenceRepository company2Repository,
   PersistenceRepository company3Repository,
