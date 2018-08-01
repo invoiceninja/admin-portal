@@ -17,10 +17,8 @@ class InvoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: ListFilter(
           entityType: EntityType.invoice,
