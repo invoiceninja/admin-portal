@@ -32,7 +32,7 @@ List<int> filteredClientsSelector(BuiltMap<int, ClientEntity> clientMap,
     if (!client.matchesStates(clientListState.stateFilters)) {
       return false;
     }
-    return client.matchesSearch(clientListState.search);
+    return client.matchesFilter(clientListState.filter);
   }).toList();
 
   list.sort((clientAId, clientBId) {

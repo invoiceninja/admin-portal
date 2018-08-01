@@ -219,10 +219,9 @@ class RestoreInvoiceFailure implements StopSaving {
 
 
 
-
-class SearchInvoices {
-  final String search;
-  SearchInvoices(this.search);
+class FilterInvoices {
+  final String filter;
+  FilterInvoices(this.filter);
 }
 
 class SortInvoices implements PersistUI {

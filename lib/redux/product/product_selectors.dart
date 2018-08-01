@@ -31,7 +31,7 @@ List<int> filteredProductsSelector(
     if (! product.matchesStates(productListState.stateFilters)) {
       return false;
     }
-    if (! product.matchesSearch(productListState.search)) {
+    if (! product.matchesFilter(productListState.filter)) {
       return false;
     }
     return true;

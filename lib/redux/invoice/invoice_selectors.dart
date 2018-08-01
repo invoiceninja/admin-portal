@@ -32,7 +32,7 @@ List<int> filteredInvoicesSelector(
     if (!invoice.matchesStatuses(invoiceListState.statusFilters)) {
       return false;
     }
-    if (!invoice.matchesSearch(invoiceListState.search)) {
+    if (!invoice.matchesFilter(invoiceListState.filter)) {
       return false;
     }
     if (invoiceListState.filterClientId != null &&

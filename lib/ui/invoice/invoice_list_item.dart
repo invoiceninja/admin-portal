@@ -25,8 +25,8 @@ class InvoiceListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final searchMatch = filter != null && filter.isNotEmpty
-        ? invoice.matchesSearchValue(filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? invoice.matchesFilterValue(filter)
         : null;
 
     return DismissibleEntity(
@@ -58,10 +58,10 @@ class InvoiceListItem extends StatelessWidget {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: searchMatch == null
+                  child: filterMatch == null
                       ? Text(invoice.invoiceNumber)
                       : Text(
-                          searchMatch,
+                          filterMatch,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),

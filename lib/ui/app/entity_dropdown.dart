@@ -155,7 +155,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
     Widget _createList() {
       final matches = widget.entityList
           .where(
-              (entityId) => widget.entityMap[entityId].matchesSearch(_filter))
+              (entityId) => widget.entityMap[entityId].matchesFilter(_filter))
           .toList();
 
       return ListView.builder(
@@ -164,7 +164,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
         itemBuilder: (BuildContext context, int index) {
           final int entityId = matches[index];
           final entity = widget.entityMap[entityId];
-          final String subtitle = entity.matchesSearchValue(_filter);
+          final String subtitle = entity.matchesFilterValue(_filter);
           return ListTile(
             dense: true,
             title: Row(

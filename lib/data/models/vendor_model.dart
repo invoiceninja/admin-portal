@@ -155,17 +155,17 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
   }
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    return name.contains(search);
+    return name.contains(filter);
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
@@ -219,8 +219,8 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
   String get phone;
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
@@ -228,8 +228,8 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 

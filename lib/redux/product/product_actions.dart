@@ -123,9 +123,9 @@ class RestoreProductFailure implements StopSaving {
 }
 
 
-class SearchProducts {
-  final String search;
-  SearchProducts(this.search);
+class FilterProducts {
+  final String filter;
+  FilterProducts(this.filter);
 }
 
 class SortProducts implements PersistUI {

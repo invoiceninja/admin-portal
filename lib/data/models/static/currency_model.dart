@@ -76,16 +76,16 @@ abstract class CurrencyEntity extends Object with SelectableEntity implements Bu
   double get exchangeRate;
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    search = search.toLowerCase();
+    filter = filter.toLowerCase();
 
-    if (name.toLowerCase().contains(search)) {
+    if (name.toLowerCase().contains(filter)) {
       return true;
-    } else if (code.toLowerCase().contains(search)) {
+    } else if (code.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -93,14 +93,14 @@ abstract class CurrencyEntity extends Object with SelectableEntity implements Bu
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
-    search = search.toLowerCase();
+    filter = filter.toLowerCase();
 
-    if (code.toLowerCase().contains(search)) {
+    if (code.toLowerCase().contains(filter)) {
       return code;
     }
 

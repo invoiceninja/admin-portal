@@ -25,8 +25,8 @@ class ClientListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //var localization = AppLocalization.of(context);
-    final searchMatch = filter != null && filter.isNotEmpty
-        ? client.matchesSearchValue(filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? client.matchesFilterValue(filter)
         : null;
 
     return DismissibleEntity(
@@ -50,10 +50,10 @@ class ClientListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            searchMatch == null
+            filterMatch == null
                 ? Container()
                 : Text(
-                    searchMatch,
+                    filterMatch,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),

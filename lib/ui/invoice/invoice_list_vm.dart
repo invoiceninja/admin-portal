@@ -87,7 +87,7 @@ class InvoiceListVM {
         clientMap: state.clientState.map,
         isLoading: state.isLoading,
         isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
-        filter: state.invoiceListState.search,
+        filter: state.invoiceListState.filter,
         onInvoiceTap: (context, invoice) {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         },

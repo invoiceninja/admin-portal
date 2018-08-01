@@ -90,7 +90,7 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
   TypedReducer<ListUIState, FilterInvoicesByStatus>(_filterInvoicesByStatus),
   TypedReducer<ListUIState, FilterInvoicesByClient>(_filterInvoicesByClient),
-  TypedReducer<ListUIState, SearchInvoices>(_searchInvoices),
+  TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
 ]);
 
 ListUIState _filterInvoicesByState(ListUIState invoiceListState, FilterInvoicesByState action) {
@@ -123,9 +123,9 @@ ListUIState _filterInvoicesByClient(ListUIState invoiceListState, FilterInvoices
   );
 }
 
-ListUIState _searchInvoices(ListUIState invoiceListState, SearchInvoices action) {
+ListUIState _filterInvoices(ListUIState invoiceListState, FilterInvoices action) {
   return invoiceListState.rebuild((b) => b
-    ..search = action.search
+    ..filter = action.filter
   );
 }
 

@@ -69,7 +69,7 @@ class ClientListVM {
         clientMap: store.state.clientState.map,
         isLoading: store.state.isLoading,
         isLoaded: store.state.clientState.isLoaded,
-        filter: store.state.clientListState.search,
+        filter: store.state.clientListState.filter,
         onClientTap: (context, client) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },

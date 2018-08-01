@@ -24,10 +24,10 @@ class ProductListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchMatch = filter != null && filter.isNotEmpty
-        ? product.matchesSearchValue(filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? product.matchesFilterValue(filter)
         : null;
-    final subtitle = searchMatch ?? product.notes;
+    final subtitle = filterMatch ?? product.notes;
 
     return DismissibleEntity(
       entity: product,

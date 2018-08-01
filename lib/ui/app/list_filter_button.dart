@@ -6,14 +6,14 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class AppSearchButton extends StatelessWidget {
+class ListFilterButton extends StatelessWidget {
 
   final EntityType entityType;
-  final Function onSearchPressed;
+  final Function onFilterPressed;
 
-  const AppSearchButton({
+  const ListFilterButton({
     this.entityType,
-    this.onSearchPressed,
+    this.onFilterPressed,
   });
 
   @override
@@ -26,9 +26,9 @@ class AppSearchButton extends StatelessWidget {
       distinct: true,
       builder: (BuildContext context, listUIState) {
         return IconButton(
-          icon: Icon(listUIState.search == null ? Icons.search : Icons.close),
-          tooltip: localization.search,
-          onPressed: () => onSearchPressed(listUIState.search == null ? '' : null),
+          icon: Icon(listUIState.filter == null ? Icons.search : Icons.close),
+          tooltip: localization.filter,
+          onPressed: () => onFilterPressed(listUIState.filter == null ? '' : null),
         );
       },
     );

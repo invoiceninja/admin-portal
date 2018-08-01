@@ -1,5 +1,5 @@
-import 'package:invoiceninja_flutter/ui/app/app_search.dart';
-import 'package:invoiceninja_flutter/ui/app/app_search_button.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +20,17 @@ class ClientScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: AppSearch(
+        title: ListFilter(
           entityType: EntityType.client,
-          onSearchChanged: (value) {
-            store.dispatch(SearchClients(value));
+          onFilterChanged: (value) {
+            store.dispatch(FilterClients(value));
           },
         ),
         actions: [
-          AppSearchButton(
+          ListFilterButton(
             entityType: EntityType.client,
-            onSearchPressed: (String value) {
-              store.dispatch(SearchClients(value));
+            onFilterPressed: (String value) {
+              store.dispatch(FilterClients(value));
             },
           ),
         ],

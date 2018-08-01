@@ -68,7 +68,7 @@ class ProductListVM {
         productMap: store.state.productState.map,
         isLoading: store.state.isLoading,
         isLoaded: store.state.productState.isLoaded,
-        filter: store.state.productUIState.listUIState.search,
+        filter: store.state.productUIState.listUIState.filter,
         onProductTap: (context, product) {
           store.dispatch(EditProduct(product: product, context: context));
         },

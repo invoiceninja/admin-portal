@@ -5,15 +5,15 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
-class AppSearch extends StatelessWidget {
+class ListFilter extends StatelessWidget {
   final EntityType entityType;
-  final String search;
-  final Function(String) onSearchChanged;
+  final String filter;
+  final Function(String) onFilterChanged;
 
-  const AppSearch({
+  const ListFilter({
     this.entityType,
-    this.search,
-    this.onSearchChanged,
+    this.filter,
+    this.onFilterChanged,
   });
 
   @override
@@ -25,15 +25,15 @@ class AppSearch extends StatelessWidget {
       builder: (BuildContext context, state) {
         final listUIState = state.getListState(entityType);
         final bool enableDarkMode = state.uiState.enableDarkMode;
-        return listUIState.search == null
+        return listUIState.filter == null
             ? Text(localization.lookup(entityType.plural.toString()))
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 height: 38.0,
                 margin: EdgeInsets.only(bottom: 2.0),
                 decoration: BoxDecoration(
-                    color: listUIState.search != null &&
-                            listUIState.search.isNotEmpty
+                    color: listUIState.filter != null &&
+                            listUIState.filter.isNotEmpty
                         ? enableDarkMode
                             ? Colors.yellow.shade900
                             : Colors.yellow.shade200
@@ -51,10 +51,10 @@ class AppSearch extends StatelessWidget {
                         child: Icon(Icons.search),
                       ),
                       border: InputBorder.none,
-                      hintText: localization.search),
+                      hintText: localization.filter),
                   autofocus: true,
                   autocorrect: false,
-                  onChanged: (value) => onSearchChanged(value),
+                  onChanged: (value) => onFilterChanged(value),
                 ),
               );
       },

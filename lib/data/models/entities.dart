@@ -61,8 +61,8 @@ abstract class SelectableEntity {
   @nullable
   int get id;
 
-  bool matchesSearch(String search) => true;
-  String matchesSearchValue(String search) => null;
+  bool matchesFilter(String filter) => true;
+  String matchesFilterValue(String filter) => null;
 
   String get listDisplayName => 'Error: listDisplayName not set';
 

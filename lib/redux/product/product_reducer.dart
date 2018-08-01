@@ -43,7 +43,7 @@ ProductEntity _updateEditing(ProductEntity client, dynamic action) {
 final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortProducts>(_sortProducts),
   TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
-  TypedReducer<ListUIState, SearchProducts>(_searchProducts),
+  TypedReducer<ListUIState, FilterProducts>(_filterProducts),
 ]);
 
 ListUIState _filterProductsByState(ListUIState productListState, FilterProductsByState action) {
@@ -58,9 +58,9 @@ ListUIState _filterProductsByState(ListUIState productListState, FilterProductsB
   }
 }
 
-ListUIState _searchProducts(ListUIState productListState, SearchProducts action) {
+ListUIState _filterProducts(ListUIState productListState, FilterProducts action) {
   return productListState.rebuild((b) => b
-    ..search = action.search
+    ..filter = action.filter
   );
 }
 

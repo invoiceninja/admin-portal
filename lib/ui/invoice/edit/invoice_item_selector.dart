@@ -138,7 +138,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     Widget _entityList() {
       final matches = memoizedProductList(widget.productMap).where((entityId) {
         final entity = widget.productMap[entityId];
-        return entity.isActive && entity.matchesSearch(_filter);
+        return entity.isActive && entity.matchesFilter(_filter);
       }).toList();
 
       matches.sort((idA, idB) =>
@@ -150,7 +150,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
         itemBuilder: (BuildContext context, int index) {
           final int entityId = matches[index];
           final entity = widget.productMap[entityId];
-          final String subtitle = entity.matchesSearchValue(_filter);
+          final String subtitle = entity.matchesFilterValue(_filter);
           return ListTile(
             dense: true,
             leading: Checkbox(

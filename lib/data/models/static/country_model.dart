@@ -141,18 +141,18 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
   */
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    search = search.toLowerCase();
+    filter = filter.toLowerCase();
 
-    if (name.toLowerCase().contains(search)) {
+    if (name.toLowerCase().contains(filter)) {
       return true;
-    } else if (iso2.toLowerCase().contains(search)) {
+    } else if (iso2.toLowerCase().contains(filter)) {
       return true;
-    } else if (iso3.toLowerCase().contains(search)) {
+    } else if (iso3.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -160,16 +160,16 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
-    search = search.toLowerCase();
+    filter = filter.toLowerCase();
 
-    if (iso2.toLowerCase().contains(search)) {
+    if (iso2.toLowerCase().contains(filter)) {
       return iso2;
-    } else if (iso3.toLowerCase().contains(search)) {
+    } else if (iso3.toLowerCase().contains(filter)) {
       return iso3;
     }
 

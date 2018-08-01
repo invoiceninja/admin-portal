@@ -185,9 +185,9 @@ class RestoreClientFailure implements StopSaving {
 
 
 
-class SearchClients {
-  final String search;
-  SearchClients(this.search);
+class FilterClients {
+  final String filter;
+  FilterClients(this.filter);
 }
 
 class SortClients implements PersistUI {

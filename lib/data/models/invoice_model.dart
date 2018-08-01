@@ -293,18 +293,18 @@ abstract class InvoiceEntity extends Object
   }
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    if (invoiceNumber.toLowerCase().contains(search)) {
+    if (invoiceNumber.toLowerCase().contains(filter)) {
       return true;
     } else if (customTextValue1.isNotEmpty &&
-        customTextValue1.toLowerCase().contains(search)) {
+        customTextValue1.toLowerCase().contains(filter)) {
       return true;
     } else if (customTextValue2.isNotEmpty &&
-        customTextValue2.toLowerCase().contains(search)) {
+        customTextValue2.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -312,19 +312,19 @@ abstract class InvoiceEntity extends Object
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
-    search = search.toLowerCase();
-    if (invoiceNumber.toLowerCase().contains(search)) {
+    filter = filter.toLowerCase();
+    if (invoiceNumber.toLowerCase().contains(filter)) {
       return invoiceNumber;
     } else if (customTextValue1.isNotEmpty &&
-        customTextValue1.toLowerCase().contains(search)) {
+        customTextValue1.toLowerCase().contains(filter)) {
       return customTextValue1;
     } else if (customTextValue2.isNotEmpty &&
-        customTextValue2.toLowerCase().contains(search)) {
+        customTextValue2.toLowerCase().contains(filter)) {
       return customTextValue2;
     }
     return null;
@@ -427,8 +427,8 @@ abstract class InvoiceItemEntity extends Object
   double get total => qty * cost;
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
@@ -436,8 +436,8 @@ abstract class InvoiceItemEntity extends Object
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
@@ -491,8 +491,8 @@ abstract class InvitationEntity extends Object
   String get downloadLink => link.replaceFirst('/view/', '/download/');
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
@@ -500,8 +500,8 @@ abstract class InvitationEntity extends Object
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 

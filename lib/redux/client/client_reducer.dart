@@ -72,7 +72,7 @@ ClientEntity _updateContact(ClientEntity client, UpdateContact action) {
 final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
-  TypedReducer<ListUIState, SearchClients>(_searchClients),
+  TypedReducer<ListUIState, FilterClients>(_filterClients),
 ]);
 
 ListUIState _filterClientsByState(ListUIState clientListState, FilterClientsByState action) {
@@ -87,9 +87,9 @@ ListUIState _filterClientsByState(ListUIState clientListState, FilterClientsBySt
   }
 }
 
-ListUIState _searchClients(ListUIState clientListState, SearchClients action) {
+ListUIState _filterClients(ListUIState clientListState, FilterClients action) {
   return clientListState.rebuild((b) => b
-    ..search = action.search
+    ..filter = action.filter
   );
 }
 

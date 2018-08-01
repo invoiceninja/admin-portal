@@ -20,7 +20,7 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   ListUIState._();
 
   @nullable
-  String get search;
+  String get filter;
 
   @nullable
   int get filterClientId;
