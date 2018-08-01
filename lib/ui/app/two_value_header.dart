@@ -73,7 +73,10 @@ class TwoValueHeader extends StatelessWidget {
           elevation: 2.0,
           child: Padding(
               padding: EdgeInsets.all(16.0),
-              child: Row(
+              child: Flex(
+                direction: value1.length > 12 || value2.length > 12
+                    ? Axis.vertical
+                    : Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   _value1(),
