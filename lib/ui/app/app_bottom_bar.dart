@@ -10,9 +10,9 @@ import 'package:redux/redux.dart';
 class AppBottomBar extends StatefulWidget {
   final EntityType entityType;
   final List<String> sortFields;
+  final List<EntityStatus> statuses;
   final Function(String) onSelectedSortField;
   final Function(EntityState, bool) onSelectedState;
-  final List<EntityStatus> statuses;
   final Function(EntityStatus, bool) onSelectedStatus;
 
   const AppBottomBar({
@@ -50,8 +50,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           builder: (BuildContext context, stateFilters) {
             return Container(
               color: Theme.of(context).backgroundColor,
-              child:
-                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: EntityState.values.map<Widget>((state) {
                     return CheckboxListTile(
@@ -60,6 +59,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           AppLocalization.of(context).lookup(state.toString())),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: stateFilters.contains(state),
+                      activeColor: Theme.of(context).accentColor,
                       dense: true,
                       onChanged: (value) {
                         widget.onSelectedState(state, value);
@@ -92,8 +92,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           builder: (BuildContext context, statusFilters) {
             return Container(
               color: Theme.of(context).backgroundColor,
-              child:
-                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: widget.statuses.map((status) {
                     return CheckboxListTile(
@@ -102,6 +101,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           Text(AppLocalization.of(context).lookup(status.name)),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: statusFilters.contains(status),
+                      activeColor: Theme.of(context).accentColor,
                       dense: true,
                       onChanged: (value) {
                         widget.onSelectedStatus(status, value);
@@ -148,6 +148,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                               : AppLocalization.of(context).descending)
                           : null,
                       groupValue: listUIState.sortField,
+                      activeColor: Theme.of(context).accentColor,
                       onChanged: (String value) {
                         widget.onSelectedSortField(value);
                       },
@@ -164,30 +165,42 @@ class _AppBottomBarState extends State<AppBottomBar> {
       });
     };
 
-    return BottomAppBar(
-      shape: CircularNotchedRectangle(),
-      child: Row(
-        children: <Widget>[
-          IconButton(
-            tooltip: AppLocalization.of(context).sort,
-            icon: Icon(Icons.sort_by_alpha),
-            onPressed: _showSortSheet,
-          ),
-          IconButton(
-            tooltip: AppLocalization.of(context).filter,
-            icon: Icon(Icons.filter_list),
-            onPressed: _showFilterStateSheet,
-          ),
-          Opacity(
-            opacity: widget.statuses == null ? 0.0 : 1.0,
-            child: IconButton(
-              tooltip: AppLocalization.of(context).filter,
-              icon: Icon(Icons.filter),
-              onPressed: _showFilterStatusSheet,
+    return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
+      return BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          children: <Widget>[
+            IconButton(
+              tooltip: AppLocalization.of(context).sort,
+              icon: Icon(Icons.sort_by_alpha),
+              onPressed: _showSortSheet,
             ),
-          ),
-        ],
-      ),
-    );
+            IconButton(
+              tooltip: AppLocalization.of(context).filter,
+              icon: Icon(Icons.filter_list),
+              onPressed: _showFilterStateSheet,
+              color: store.state
+                      .getListState(widget.entityType)
+                      .hasCustomStateFilters
+                  ? Theme.of(context).accentColor
+                  : null,
+            ),
+            Opacity(
+              opacity: widget.statuses == null ? 0.0 : 1.0,
+              child: IconButton(
+                tooltip: AppLocalization.of(context).filter,
+                icon: Icon(Icons.filter),
+                onPressed: _showFilterStatusSheet,
+                color: store.state
+                    .getListState(widget.entityType)
+                    .hasCustomStatusFilters
+                    ? Theme.of(context).accentColor
+                    : null,
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

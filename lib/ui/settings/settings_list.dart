@@ -21,6 +21,7 @@ class SettingsList extends StatelessWidget {
           value: viewModel.enableDarkMode,
           onChanged: (value) => viewModel.onDarkModeChanged(context, value),
           secondary: Icon(FontAwesomeIcons.moon),
+          activeColor: Theme.of(context).accentColor,
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.syncAlt),

@@ -30,6 +30,9 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   BuiltList<EntityState> get stateFilters;
   BuiltList<EntityStatus> get statusFilters;
 
+  bool get hasCustomStateFilters => stateFilters.length != 1 || stateFilters.first != EntityState.active;
+  bool get hasCustomStatusFilters => statusFilters.isNotEmpty;
+
   //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;
   static Serializer<ListUIState> get serializer => _$listUIStateSerializer;
 }
