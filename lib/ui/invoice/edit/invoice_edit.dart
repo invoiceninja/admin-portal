@@ -123,7 +123,6 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 context: context,
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
-                    productMap: viewModel.productMap,
                     onItemsSelected: (items) {
                       viewModel.onItemsAdded(items);
                       _controller.animateTo(kItemScreen);
