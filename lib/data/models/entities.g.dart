@@ -123,6 +123,8 @@ Serializer<DashboardResponse> _$dashboardResponseSerializer =
     new _$DashboardResponseSerializer();
 Serializer<DashboardEntity> _$dashboardEntitySerializer =
     new _$DashboardEntitySerializer();
+Serializer<ActivityEntity> _$activityEntitySerializer =
+    new _$ActivityEntitySerializer();
 
 class _$EntityTypeSerializer implements PrimitiveSerializer<EntityType> {
   @override
@@ -501,7 +503,12 @@ class _$DashboardEntitySerializer
   @override
   Iterable serialize(Serializers serializers, DashboardEntity object,
       {FullType specifiedType: FullType.unspecified}) {
-    final result = <Object>[];
+    final result = <Object>[
+      'activities',
+      serializers.serialize(object.activities,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ActivityEntity)])),
+    ];
     if (object.paidToDate != null) {
       result
         ..add('paidToDate')
@@ -595,6 +602,152 @@ class _$DashboardEntitySerializer
           break;
         case 'activeClients':
           result.activeClients = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'activities':
+          result.activities.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ActivityEntity)]))
+              as BuiltList);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ActivityEntitySerializer
+    implements StructuredSerializer<ActivityEntity> {
+  @override
+  final Iterable<Type> types = const [ActivityEntity, _$ActivityEntity];
+  @override
+  final String wireName = 'ActivityEntity';
+
+  @override
+  Iterable serialize(Serializers serializers, ActivityEntity object,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.key, specifiedType: const FullType(String)),
+      'activity_type_id',
+      serializers.serialize(object.activityTypeId,
+          specifiedType: const FullType(int)),
+      'user_id',
+      serializers.serialize(object.userId, specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+    ];
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.invoiceId != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.paymentId != null) {
+      result
+        ..add('payment_id')
+        ..add(serializers.serialize(object.paymentId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.creditId != null) {
+      result
+        ..add('credit_id')
+        ..add(serializers.serialize(object.creditId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.expenseId != null) {
+      result
+        ..add('expense_id')
+        ..add(serializers.serialize(object.expenseId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.isSystem != null) {
+      result
+        ..add('is_system')
+        ..add(serializers.serialize(object.isSystem,
+            specifiedType: const FullType(int)));
+    }
+    if (object.contactId != null) {
+      result
+        ..add('contact_id')
+        ..add(serializers.serialize(object.contactId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.taskId != null) {
+      result
+        ..add('task_id')
+        ..add(serializers.serialize(object.taskId,
+            specifiedType: const FullType(int)));
+    }
+
+    return result;
+  }
+
+  @override
+  ActivityEntity deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = new ActivityEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.key = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'activity_type_id':
+          result.activityTypeId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'client_id':
+          result.clientId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'user_id':
+          result.userId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'invoice_id':
+          result.invoiceId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'payment_id':
+          result.paymentId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'credit_id':
+          result.creditId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'expense_id':
+          result.expenseId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'is_system':
+          result.isSystem = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'contact_id':
+          result.contactId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'task_id':
+          result.taskId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
       }
@@ -1293,6 +1446,8 @@ class _$DashboardEntity extends DashboardEntity {
   final int invoicesSent;
   @override
   final int activeClients;
+  @override
+  final BuiltList<ActivityEntity> activities;
 
   factory _$DashboardEntity([void updates(DashboardEntityBuilder b)]) =>
       (new DashboardEntityBuilder()..update(updates)).build();
@@ -1305,8 +1460,12 @@ class _$DashboardEntity extends DashboardEntity {
       this.averageInvoice,
       this.averageInvoiceCurrency,
       this.invoicesSent,
-      this.activeClients})
-      : super._();
+      this.activeClients,
+      this.activities})
+      : super._() {
+    if (activities == null)
+      throw new BuiltValueNullFieldError('DashboardEntity', 'activities');
+  }
 
   @override
   DashboardEntity rebuild(void updates(DashboardEntityBuilder b)) =>
@@ -1327,7 +1486,8 @@ class _$DashboardEntity extends DashboardEntity {
         averageInvoice == other.averageInvoice &&
         averageInvoiceCurrency == other.averageInvoiceCurrency &&
         invoicesSent == other.invoicesSent &&
-        activeClients == other.activeClients;
+        activeClients == other.activeClients &&
+        activities == other.activities;
   }
 
   @override
@@ -1338,14 +1498,16 @@ class _$DashboardEntity extends DashboardEntity {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc(0, paidToDate.hashCode),
-                                paidToDateCurrency.hashCode),
-                            balances.hashCode),
-                        balancesCurrency.hashCode),
-                    averageInvoice.hashCode),
-                averageInvoiceCurrency.hashCode),
-            invoicesSent.hashCode),
-        activeClients.hashCode));
+                            $jc(
+                                $jc($jc(0, paidToDate.hashCode),
+                                    paidToDateCurrency.hashCode),
+                                balances.hashCode),
+                            balancesCurrency.hashCode),
+                        averageInvoice.hashCode),
+                    averageInvoiceCurrency.hashCode),
+                invoicesSent.hashCode),
+            activeClients.hashCode),
+        activities.hashCode));
   }
 
   @override
@@ -1358,7 +1520,8 @@ class _$DashboardEntity extends DashboardEntity {
           ..add('averageInvoice', averageInvoice)
           ..add('averageInvoiceCurrency', averageInvoiceCurrency)
           ..add('invoicesSent', invoicesSent)
-          ..add('activeClients', activeClients))
+          ..add('activeClients', activeClients)
+          ..add('activities', activities))
         .toString();
   }
 }
@@ -1403,6 +1566,12 @@ class DashboardEntityBuilder
   int get activeClients => _$this._activeClients;
   set activeClients(int activeClients) => _$this._activeClients = activeClients;
 
+  ListBuilder<ActivityEntity> _activities;
+  ListBuilder<ActivityEntity> get activities =>
+      _$this._activities ??= new ListBuilder<ActivityEntity>();
+  set activities(ListBuilder<ActivityEntity> activities) =>
+      _$this._activities = activities;
+
   DashboardEntityBuilder();
 
   DashboardEntityBuilder get _$this {
@@ -1415,6 +1584,7 @@ class DashboardEntityBuilder
       _averageInvoiceCurrency = _$v.averageInvoiceCurrency;
       _invoicesSent = _$v.invoicesSent;
       _activeClients = _$v.activeClients;
+      _activities = _$v.activities?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1433,16 +1603,260 @@ class DashboardEntityBuilder
 
   @override
   _$DashboardEntity build() {
+    _$DashboardEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$DashboardEntity._(
+              paidToDate: paidToDate,
+              paidToDateCurrency: paidToDateCurrency,
+              balances: balances,
+              balancesCurrency: balancesCurrency,
+              averageInvoice: averageInvoice,
+              averageInvoiceCurrency: averageInvoiceCurrency,
+              invoicesSent: invoicesSent,
+              activeClients: activeClients,
+              activities: activities.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'activities';
+        activities.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'DashboardEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ActivityEntity extends ActivityEntity {
+  @override
+  final String key;
+  @override
+  final int activityTypeId;
+  @override
+  final int clientId;
+  @override
+  final int userId;
+  @override
+  final int invoiceId;
+  @override
+  final int paymentId;
+  @override
+  final int creditId;
+  @override
+  final int updatedAt;
+  @override
+  final int expenseId;
+  @override
+  final int isSystem;
+  @override
+  final int contactId;
+  @override
+  final int taskId;
+
+  factory _$ActivityEntity([void updates(ActivityEntityBuilder b)]) =>
+      (new ActivityEntityBuilder()..update(updates)).build();
+
+  _$ActivityEntity._(
+      {this.key,
+      this.activityTypeId,
+      this.clientId,
+      this.userId,
+      this.invoiceId,
+      this.paymentId,
+      this.creditId,
+      this.updatedAt,
+      this.expenseId,
+      this.isSystem,
+      this.contactId,
+      this.taskId})
+      : super._() {
+    if (key == null)
+      throw new BuiltValueNullFieldError('ActivityEntity', 'key');
+    if (activityTypeId == null)
+      throw new BuiltValueNullFieldError('ActivityEntity', 'activityTypeId');
+    if (userId == null)
+      throw new BuiltValueNullFieldError('ActivityEntity', 'userId');
+    if (updatedAt == null)
+      throw new BuiltValueNullFieldError('ActivityEntity', 'updatedAt');
+  }
+
+  @override
+  ActivityEntity rebuild(void updates(ActivityEntityBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ActivityEntityBuilder toBuilder() =>
+      new ActivityEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    if (identical(other, this)) return true;
+    if (other is! ActivityEntity) return false;
+    return key == other.key &&
+        activityTypeId == other.activityTypeId &&
+        clientId == other.clientId &&
+        userId == other.userId &&
+        invoiceId == other.invoiceId &&
+        paymentId == other.paymentId &&
+        creditId == other.creditId &&
+        updatedAt == other.updatedAt &&
+        expenseId == other.expenseId &&
+        isSystem == other.isSystem &&
+        contactId == other.contactId &&
+        taskId == other.taskId;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, key.hashCode),
+                                                activityTypeId.hashCode),
+                                            clientId.hashCode),
+                                        userId.hashCode),
+                                    invoiceId.hashCode),
+                                paymentId.hashCode),
+                            creditId.hashCode),
+                        updatedAt.hashCode),
+                    expenseId.hashCode),
+                isSystem.hashCode),
+            contactId.hashCode),
+        taskId.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ActivityEntity')
+          ..add('key', key)
+          ..add('activityTypeId', activityTypeId)
+          ..add('clientId', clientId)
+          ..add('userId', userId)
+          ..add('invoiceId', invoiceId)
+          ..add('paymentId', paymentId)
+          ..add('creditId', creditId)
+          ..add('updatedAt', updatedAt)
+          ..add('expenseId', expenseId)
+          ..add('isSystem', isSystem)
+          ..add('contactId', contactId)
+          ..add('taskId', taskId))
+        .toString();
+  }
+}
+
+class ActivityEntityBuilder
+    implements Builder<ActivityEntity, ActivityEntityBuilder> {
+  _$ActivityEntity _$v;
+
+  String _key;
+  String get key => _$this._key;
+  set key(String key) => _$this._key = key;
+
+  int _activityTypeId;
+  int get activityTypeId => _$this._activityTypeId;
+  set activityTypeId(int activityTypeId) =>
+      _$this._activityTypeId = activityTypeId;
+
+  int _clientId;
+  int get clientId => _$this._clientId;
+  set clientId(int clientId) => _$this._clientId = clientId;
+
+  int _userId;
+  int get userId => _$this._userId;
+  set userId(int userId) => _$this._userId = userId;
+
+  int _invoiceId;
+  int get invoiceId => _$this._invoiceId;
+  set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+
+  int _paymentId;
+  int get paymentId => _$this._paymentId;
+  set paymentId(int paymentId) => _$this._paymentId = paymentId;
+
+  int _creditId;
+  int get creditId => _$this._creditId;
+  set creditId(int creditId) => _$this._creditId = creditId;
+
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+
+  int _expenseId;
+  int get expenseId => _$this._expenseId;
+  set expenseId(int expenseId) => _$this._expenseId = expenseId;
+
+  int _isSystem;
+  int get isSystem => _$this._isSystem;
+  set isSystem(int isSystem) => _$this._isSystem = isSystem;
+
+  int _contactId;
+  int get contactId => _$this._contactId;
+  set contactId(int contactId) => _$this._contactId = contactId;
+
+  int _taskId;
+  int get taskId => _$this._taskId;
+  set taskId(int taskId) => _$this._taskId = taskId;
+
+  ActivityEntityBuilder();
+
+  ActivityEntityBuilder get _$this {
+    if (_$v != null) {
+      _key = _$v.key;
+      _activityTypeId = _$v.activityTypeId;
+      _clientId = _$v.clientId;
+      _userId = _$v.userId;
+      _invoiceId = _$v.invoiceId;
+      _paymentId = _$v.paymentId;
+      _creditId = _$v.creditId;
+      _updatedAt = _$v.updatedAt;
+      _expenseId = _$v.expenseId;
+      _isSystem = _$v.isSystem;
+      _contactId = _$v.contactId;
+      _taskId = _$v.taskId;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ActivityEntity other) {
+    if (other == null) throw new ArgumentError.notNull('other');
+    _$v = other as _$ActivityEntity;
+  }
+
+  @override
+  void update(void updates(ActivityEntityBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ActivityEntity build() {
     final _$result = _$v ??
-        new _$DashboardEntity._(
-            paidToDate: paidToDate,
-            paidToDateCurrency: paidToDateCurrency,
-            balances: balances,
-            balancesCurrency: balancesCurrency,
-            averageInvoice: averageInvoice,
-            averageInvoiceCurrency: averageInvoiceCurrency,
-            invoicesSent: invoicesSent,
-            activeClients: activeClients);
+        new _$ActivityEntity._(
+            key: key,
+            activityTypeId: activityTypeId,
+            clientId: clientId,
+            userId: userId,
+            invoiceId: invoiceId,
+            paymentId: paymentId,
+            creditId: creditId,
+            updatedAt: updatedAt,
+            expenseId: expenseId,
+            isSystem: isSystem,
+            contactId: contactId,
+            taskId: taskId);
     replace(_$result);
     return _$result;
   }

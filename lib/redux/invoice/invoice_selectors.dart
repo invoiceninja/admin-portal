@@ -8,12 +8,13 @@ ClientEntity invoiceClientSelector(
   return clientMap[invoice.clientId];
 }
 
-var memoizedFilteredInvoiceList = memo4((BuiltMap<int, InvoiceEntity> invoiceMap,
-        BuiltList<int> invoiceList,
-        BuiltMap<int, ClientEntity> clientMap,
-        ListUIState invoiceListState) =>
-    filteredInvoicesSelector(
-        invoiceMap, invoiceList, clientMap, invoiceListState));
+var memoizedFilteredInvoiceList = memo4(
+    (BuiltMap<int, InvoiceEntity> invoiceMap,
+            BuiltList<int> invoiceList,
+            BuiltMap<int, ClientEntity> clientMap,
+            ListUIState invoiceListState) =>
+        filteredInvoicesSelector(
+            invoiceMap, invoiceList, clientMap, invoiceListState));
 
 List<int> filteredInvoicesSelector(
     BuiltMap<int, InvoiceEntity> invoiceMap,
@@ -48,4 +49,42 @@ List<int> filteredInvoicesSelector(
   });
 
   return list;
+}
+
+var memoizedInvoiceStatsForClient = memo4((int clientId,
+        BuiltMap<int, InvoiceEntity> invoiceMap,
+        String activeLabel,
+        String archivedLabel) =>
+    invoiceStatsForClient(clientId, invoiceMap, activeLabel, archivedLabel));
+
+String invoiceStatsForClient(
+    int clientId,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    String activeLabel,
+    String archivedLabel) {
+
+  int countActive = 0;
+  int countArchived = 0;
+  invoiceMap.forEach((invoiceId, invoice) {
+    if (invoice.clientId == clientId) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  String str = '';
+  if (countActive > 0) {
+    str = '$countActive $activeLabel';
+    if (countArchived > 0) {
+      str += ' • ';
+    }
+  }
+  if (countArchived > 0) {
+    str += '$countArchived $archivedLabel';
+  }
+
+  return str;
 }

@@ -2,6 +2,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -116,6 +117,7 @@ class ClientOverview extends StatelessWidget {
           color: Theme.of(context).canvasColor,
           child: ListTile(
             title: Text(localization.invoices),
+            subtitle: Text(memoizedInvoiceStatsForClient(client.id, state.invoiceState.map, localization.active, localization.archived)),
             leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onInvoicesPressed(context),

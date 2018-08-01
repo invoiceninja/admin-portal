@@ -244,5 +244,60 @@ abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntity
   @nullable
   int get activeClients;
 
+  BuiltList<ActivityEntity> get activities;
+
   static Serializer<DashboardEntity> get serializer => _$dashboardEntitySerializer;
+}
+
+
+abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBuilder> {
+
+  factory ActivityEntity([void updates(ActivityEntityBuilder b)]) = _$ActivityEntity;
+  ActivityEntity._();
+
+  @BuiltValueField(wireName: 'id')
+  String get key;
+
+  @BuiltValueField(wireName: 'activity_type_id')
+  int get activityTypeId;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_id')
+  int get clientId;
+
+  @BuiltValueField(wireName: 'user_id')
+  int get userId;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_id')
+  int get invoiceId;
+
+  @nullable
+  @BuiltValueField(wireName: 'payment_id')
+  int get paymentId;
+
+  @nullable
+  @BuiltValueField(wireName: 'credit_id')
+  int get creditId;
+
+  @BuiltValueField(wireName: 'updated_at')
+  int get updatedAt;
+
+  @nullable
+  @BuiltValueField(wireName: 'expense_id')
+  int get expenseId;
+
+  @nullable
+  @BuiltValueField(wireName: 'is_system')
+  int get isSystem;
+
+  @nullable
+  @BuiltValueField(wireName: 'contact_id')
+  int get contactId;
+
+  @nullable
+  @BuiltValueField(wireName: 'task_id')
+  int get taskId;
+
+  static Serializer<ActivityEntity> get serializer => _$activityEntitySerializer;
 }

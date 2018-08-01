@@ -15,6 +15,7 @@ part of 'serializers.dart';
 // ignore_for_file: sort_constructors_first
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(ActivityEntity.serializer)
       ..add(AppState.serializer)
       ..add(AuthState.serializer)
       ..add(ClientEntity.serializer)
@@ -105,6 +106,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(VendorEntity.serializer)
       ..add(VendorItemResponse.serializer)
       ..add(VendorListResponse.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ActivityEntity)]),
+          () => new ListBuilder<ActivityEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ClientEntity)]),
           () => new ListBuilder<ClientEntity>())
