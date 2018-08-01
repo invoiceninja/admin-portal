@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -71,6 +72,12 @@ class InvoiceListVM {
                 content: SnackBarRow(
               message: AppLocalization.of(context).refreshComplete,
             )));
+      }).catchError((Object error) {
+        showDialog<ErrorDialog>(
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            });
       });
     }
 
@@ -124,6 +131,12 @@ class InvoiceListVM {
                     content: SnackBarRow(
                   message: message,
                 )));
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
           });
         });
   }

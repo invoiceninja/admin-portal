@@ -68,6 +68,12 @@ class ClientViewVM {
             content: SnackBarRow(
               message: AppLocalization.of(context).refreshComplete,
             )));
+      }).catchError((Object error) {
+        showDialog<ErrorDialog>(
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            });
       });
     }
 
