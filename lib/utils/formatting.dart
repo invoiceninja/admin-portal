@@ -14,6 +14,19 @@ double round(double value, int precision) {
   return (value * fac).round() / fac;
 }
 
+double parseDouble(String value) {
+  // check for comma as decimal separator
+  final RegExp regExp = RegExp(r',[\d]{1,2}$');
+  if (regExp.hasMatch(value)) {
+    value = value.replaceAll('.', '');
+    value = value.replaceAll(',', '.');
+  }
+
+  value = value.replaceAll(RegExp(r'[^0-9\.\-]'), '');
+
+  return double.tryParse(value) ?? 0.0;
+}
+
 enum FormatNumberType {
   money, // $1,000.00
   percent, // 1,000.00%

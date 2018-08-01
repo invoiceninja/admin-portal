@@ -159,9 +159,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final invoiceItem = widget.invoiceItem.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()
-      ..cost = double.tryParse(_costController.text) ?? 0.0
-      ..qty = double.tryParse(_qtyController.text) ?? 0.0
-      ..discount = double.tryParse(_discountController.text) ?? 0.0
+      ..cost = parseDouble(_costController.text)
+      ..qty = parseDouble(_qtyController.text)
+      ..discount = parseDouble(_discountController.text)
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim());
     if (invoiceItem != widget.invoiceItem) {

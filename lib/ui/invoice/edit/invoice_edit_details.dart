@@ -92,12 +92,12 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           ? ''
           : _invoiceNumberController.text.trim()
       ..poNumber = _poNumberController.text.trim()
-      ..discount = double.tryParse(_discountController.text) ?? 0.0
-      ..partial = double.tryParse(_partialController.text) ?? 0.0
+      ..discount = parseDouble(_discountController.text)
+      ..partial = parseDouble(_partialController.text)
       ..customTextValue1 = _custom1Controller.text.trim()
       ..customTextValue2 = _custom2Controller.text.trim()
-      ..customValue1 = double.tryParse(_surcharge1Controller.text) ?? 0.0
-      ..customValue2 = double.tryParse(_surcharge2Controller.text) ?? 0.0
+      ..customValue1 = parseDouble(_surcharge1Controller.text)
+      ..customValue2 = parseDouble(_surcharge2Controller.text)
     );
     if (invoice != widget.viewModel.invoice) {
       widget.viewModel.onChanged(invoice);
