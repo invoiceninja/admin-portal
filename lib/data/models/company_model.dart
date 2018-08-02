@@ -48,6 +48,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       timezoneId: 1,
       taxRates: BuiltList<TaxRateEntity>(),
       users: BuiltList<UserEntity>(),
+      userMap: BuiltMap<int, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
@@ -161,6 +162,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
 
   @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
+  BuiltMap<int, UserEntity> get userMap;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
@@ -243,6 +245,7 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   @BuiltValueField(wireName: 'last_name')
   String get lastName;
 
+  String get fullName => (firstName + ' ' + lastName).trim();
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }

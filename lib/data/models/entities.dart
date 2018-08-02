@@ -299,5 +299,30 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
   @BuiltValueField(wireName: 'task_id')
   int get taskId;
 
+  String getDescription(String activity, {
+    UserEntity user,
+    ClientEntity client,
+    InvoiceEntity invoice,
+    //ContactEntity contact,
+    PaymentEntity payment,
+    CreditEntity credit,
+    //QuoteEntity quote,
+    TaskEntity task,
+    ExpenseEntity expense,
+    VendorEntity vendor,
+  }) {
+    activity = activity.replaceFirst(':user', user?.fullName ?? '');
+    activity = activity.replaceFirst(':client', client?.displayName ?? '');
+    activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
+    activity = activity.replaceFirst(':contact', client?.displayName ?? '');
+    activity = activity.replaceFirst(':payment', payment?.transactionReference ?? '');
+    activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');
+    activity = activity.replaceFirst(':task', task?.description ?? '');
+    activity = activity.replaceFirst(':expense', expense?.privateNotes ?? '');
+    activity = activity.replaceFirst(':vendor', vendor?.name ?? '');
+
+    return activity;
+  }
+
   static Serializer<ActivityEntity> get serializer => _$activityEntitySerializer;
 }

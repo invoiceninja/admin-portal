@@ -27,5 +27,11 @@ Reducer<CompanyEntity> companyEntityReducer = combineReducers([
 ]);
 
 CompanyEntity loadCompanySuccessReducer(CompanyEntity company, LoadCompanySuccess action) {
-  return action.company;
+  return action.company.rebuild((b) => b
+    ..userMap.addAll(Map.fromIterable(
+      action.company.users,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    ))
+  );
 }
