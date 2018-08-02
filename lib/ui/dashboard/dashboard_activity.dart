@@ -88,17 +88,25 @@ class ActivityListTile extends StatelessWidget {
       onTap: () {
         switch (activity.entityType) {
           case EntityType.client:
-            store.dispatch(ViewClient(clientId: activity.clientId, context: context));
+            store.dispatch(
+                ViewClient(clientId: activity.clientId, context: context));
             break;
           case EntityType.invoice:
-            store.dispatch(ViewInvoice(invoiceId: activity.invoiceId, context: context));
+            store.dispatch(
+                ViewInvoice(invoiceId: activity.invoiceId, context: context));
             break;
         }
       },
       trailing: Icon(Icons.navigate_next),
-      subtitle: Text(formatDate(
-          convertTimestampToSqlDate(activity.updatedAt), context,
-          showTime: true)),
+      subtitle: Row(
+        children: <Widget>[
+          Text(formatDate(
+              convertTimestampToSqlDate(activity.updatedAt), context,
+              showTime: true)),
+          SizedBox(width: 10.0),
+          (activity.isSystem ?? false) ? Icon(FontAwesomeIcons.server) : Container(),
+        ],
+      ),
     );
   }
 }

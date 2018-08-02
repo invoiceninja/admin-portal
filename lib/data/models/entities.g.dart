@@ -673,7 +673,7 @@ class _$ActivityEntitySerializer
       result
         ..add('is_system')
         ..add(serializers.serialize(object.isSystem,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(bool)));
     }
     if (object.contactId != null) {
       result
@@ -740,7 +740,7 @@ class _$ActivityEntitySerializer
           break;
         case 'is_system':
           result.isSystem = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'contact_id':
           result.contactId = serializers.deserialize(value,
@@ -1652,7 +1652,7 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final int expenseId;
   @override
-  final int isSystem;
+  final bool isSystem;
   @override
   final int contactId;
   @override
@@ -1797,9 +1797,9 @@ class ActivityEntityBuilder
   int get expenseId => _$this._expenseId;
   set expenseId(int expenseId) => _$this._expenseId = expenseId;
 
-  int _isSystem;
-  int get isSystem => _$this._isSystem;
-  set isSystem(int isSystem) => _$this._isSystem = isSystem;
+  bool _isSystem;
+  bool get isSystem => _$this._isSystem;
+  set isSystem(bool isSystem) => _$this._isSystem = isSystem;
 
   int _contactId;
   int get contactId => _$this._contactId;

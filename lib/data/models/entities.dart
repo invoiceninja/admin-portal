@@ -289,7 +289,7 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
 
   @nullable
   @BuiltValueField(wireName: 'is_system')
-  int get isSystem;
+  bool get isSystem;
 
   @nullable
   @BuiltValueField(wireName: 'contact_id')
