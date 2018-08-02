@@ -266,9 +266,6 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.clientState.isStale) {
-        store.dispatch(LoadClients());
-      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadInvoicesFailure(error));
