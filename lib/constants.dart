@@ -24,6 +24,7 @@ const int kInvoiceStatusSent = 2;
 const int kInvoiceStatusPastDue = -1;
 
 const int kDefaultDateFormat = 5;
+const int kDefaultDateTimeFormat = 5;
 
 class InvoiceStatusColors {
   static const colors = {

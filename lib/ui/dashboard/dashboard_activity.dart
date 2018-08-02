@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardActivity extends StatelessWidget {
@@ -57,6 +58,7 @@ class ActivityListTile extends StatelessWidget {
 
     return ListTile(
       title: Text(title),
+      subtitle: Text(formatDate(convertTimestampToSqlDate(activity.updatedAt), context, showTime: true)),
     );
   }
 }

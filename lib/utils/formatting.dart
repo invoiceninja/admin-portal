@@ -80,10 +80,12 @@ String formatNumber(
 
   if (currency.id == kCurrencyEuro) {
     swapCurrencySymbol = country.swapCurrencySymbol;
-    if (country.thousandSeparator != null && country.thousandSeparator.isNotEmpty) {
+    if (country.thousandSeparator != null &&
+        country.thousandSeparator.isNotEmpty) {
       thousandSeparator = country.thousandSeparator;
     }
-    if (country.decimalSeparator != null && country.decimalSeparator.isNotEmpty) {
+    if (country.decimalSeparator != null &&
+        country.decimalSeparator.isNotEmpty) {
       decimalSeparator = country.decimalSeparator;
     }
   }
@@ -170,23 +172,35 @@ String convertDateTimeToSqlDate([DateTime date]) {
   return date.toIso8601String().split('T').first;
 }
 
-String formatDate(
-    String value,
-    BuildContext context,
-    ) {
+String convertTimestampToSqlDate(int timestamp) {
+  final DateTime date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  return date.toIso8601String();
+}
+
+String formatDate(String value, BuildContext context, {bool showTime = false}) {
   if (value == null || value.isEmpty) {
     return '';
   }
 
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.selectedCompany;
-  final dateFormats = state.staticState.dateFormatMap;
-  final dateFormatId = company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
-  final formatter = DateFormat(dateFormats[dateFormatId].format);
 
-  return formatter.format(DateTime.tryParse(value));
+  if (showTime) {
+    final dateTimeFormats = state.staticState.datetimeFormatMap;
+    final dateTimeFormatId = company.datetimeFormatId > 0
+        ? company.datetimeFormatId
+        : kDefaultDateTimeFormat;
+    final formatter = DateFormat(dateTimeFormats[dateTimeFormatId].format);
+    print(DateTime.tryParse(value).timeZoneName);
+    return formatter.format(DateTime.tryParse(value).toLocal());
+  } else {
+    final dateFormats = state.staticState.dateFormatMap;
+    final dateFormatId =
+        company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
+    final formatter = DateFormat(dateFormats[dateFormatId].format);
+    return formatter.format(DateTime.tryParse(value));
+  }
 }
-
 
 String formatApiUrlMachine(String url) => formatApiUrlReadable(url) + '/api/v1';
 
