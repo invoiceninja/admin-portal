@@ -299,6 +299,28 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
   @BuiltValueField(wireName: 'task_id')
   int get taskId;
 
+  EntityType get entityType {
+    if ([1, 2, 3, 26].contains(activityTypeId)) {
+      return EntityType.client;
+    } else if ([4, 5, 6, 7, 8, 9, 25].contains(activityTypeId)) {
+      return EntityType.invoice;
+    } else if ([10, 11, 12, 13, 27].contains(activityTypeId)) {
+      return EntityType.payment;
+    } else if ([14, 15, 16, 17, 28].contains(activityTypeId)) {
+      return EntityType.credit;
+    } else if ([18, 19, 20, 21, 22, 23, 24, 29].contains(activityTypeId)) {
+      return EntityType.quote;
+    } else if ([30, 31, 32, 33].contains(activityTypeId)) {
+      return EntityType.vendor;
+    } else if ([34, 35, 36, 37, 47].contains(activityTypeId)) {
+      return EntityType.expense;
+    } else if ([42, 43, 44, 45, 46].contains(activityTypeId)) {
+      return EntityType.task;
+    } else {
+      return null;
+    }
+  }
+
   String getDescription(String activity, {
     UserEntity user,
     ClientEntity client,

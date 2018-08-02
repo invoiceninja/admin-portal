@@ -1,5 +1,3 @@
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_overview.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

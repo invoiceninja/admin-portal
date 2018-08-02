@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_overview.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
