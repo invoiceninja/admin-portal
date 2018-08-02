@@ -40,7 +40,9 @@ class AuthRepository {
 
   Future<LoginResponseData> sendRequest(String url, dynamic data, [String token]) async {
 
-    final dynamic response = await webClient.post(url + '?include=tax_rates&include_static=true', token ?? '', json.encode(data));
+    url += '?include=tax_rates,users&include_static=true';
+
+    final dynamic response = await webClient.post(url, token ?? '', json.encode(data));
 
     final LoginResponse loginResponse = serializers.deserializeWith(
         LoginResponse.serializer, response);

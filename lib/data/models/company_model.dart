@@ -47,6 +47,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       startOfWeek: 1,
       timezoneId: 1,
       taxRates: BuiltList<TaxRateEntity>(),
+      users: BuiltList<UserEntity>(),
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
@@ -158,6 +159,9 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'tax_rates')
   BuiltList<TaxRateEntity> get taxRates;
 
+  @BuiltValueField(wireName: 'users')
+  BuiltList<UserEntity> get users;
+
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
 
@@ -224,4 +228,21 @@ abstract class TaxRateEntity extends Object with SelectableEntity implements Bui
   @nullable
   @BuiltValueField(wireName: 'archived_at')
   int get archivedAt;
+}
+
+
+abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
+  factory UserEntity([void updates(UserEntityBuilder b)]) = _$UserEntity;
+  UserEntity._();
+
+  int get id;
+
+  @BuiltValueField(wireName: 'first_name')
+  String get firstName;
+
+  @BuiltValueField(wireName: 'last_name')
+  String get lastName;
+
+
+  static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }
