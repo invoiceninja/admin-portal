@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_view.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
@@ -20,7 +21,7 @@ class DashboardBuilder extends StatelessWidget {
     return StoreConnector<AppState, DashboardVM>(
       converter: DashboardVM.fromStore,
       builder: (context, vm) {
-        return DashboardPanels(
+        return DashboardView(
           viewModel: vm
         );
       },

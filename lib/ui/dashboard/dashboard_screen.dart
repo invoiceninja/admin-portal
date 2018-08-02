@@ -9,6 +9,9 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return DashboardBuilder();
+
+    /*
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalization.of(context).dashboard),
@@ -16,5 +19,6 @@ class DashboardScreen extends StatelessWidget {
       drawer: AppDrawerBuilder(),
       body: DashboardBuilder(),
     );
+    */
   }
 }

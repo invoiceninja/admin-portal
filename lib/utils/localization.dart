@@ -175,6 +175,7 @@ class AppLocalization {
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
       'blank_contact': 'Blank Contact',
+      'activity': 'Activity',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -360,6 +361,7 @@ class AppLocalization {
   String get restartAppToApplyChange => _localizedValues[locale.languageCode]['restart_app_to_apply_change'];
   String get refreshData => _localizedValues[locale.languageCode]['refresh_data'];
   String get blankContact => _localizedValues[locale.languageCode]['blank_contact'];
+  String get activity => _localizedValues[locale.languageCode]['activity'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
