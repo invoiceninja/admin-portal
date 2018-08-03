@@ -30,7 +30,7 @@ class _ClientViewState extends State<ClientView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -140,6 +140,10 @@ class CustomTabBarView extends StatelessWidget {
           onRefresh: () => viewModel.onRefreshed(context),
           child: ClientViewDetails(client: viewModel.client),
         ),
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: ClientViewActivity(client: viewModel.client),
+        ),
       ],
     );
   }
@@ -174,6 +178,9 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Tab(
             text: localization.details,
+          ),
+          Tab(
+            text: localization.activity,
           ),
         ],
       ),
