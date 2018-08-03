@@ -32,21 +32,12 @@ class _ClientViewState extends State<ClientView>
   void initState() {
     super.initState();
     _controller = TabController(vsync: this, length: 3);
-    _controller.addListener(_onTabChange);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChange);
     _controller.dispose();
     super.dispose();
-  }
-
-  void _onTabChange() {
-    final viewModel = widget.viewModel;
-    if (_controller.index == 2 && viewModel.client.activities.isEmpty) {
-      viewModel.onRefreshed(context);
-    }
   }
 
   @override
@@ -128,7 +119,7 @@ class _ClientViewState extends State<ClientView>
   }
 }
 
-class CustomTabBarView extends StatelessWidget {
+class CustomTabBarView extends StatefulWidget {
   const CustomTabBarView({
     @required this.viewModel,
     @required this.controller,
@@ -138,9 +129,36 @@ class CustomTabBarView extends StatelessWidget {
   final TabController controller;
 
   @override
+  _CustomTabBarViewState createState() => _CustomTabBarViewState();
+}
+
+class _CustomTabBarViewState extends State<CustomTabBarView> {
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_onTabChange);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onTabChange);
+    super.dispose();
+  }
+
+  void _onTabChange() {
+    final viewModel = widget.viewModel;
+    if (widget.controller.index == 2 && viewModel.client.activities.isEmpty) {
+      viewModel.onRefreshed(context);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final viewModel = widget.viewModel;
+
     return TabBarView(
-      controller: controller,
+      controller: widget.controller,
       children: <Widget>[
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
