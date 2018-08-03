@@ -25,7 +25,7 @@ class EntityDropdown extends StatefulWidget {
   final String initialValue;
   final Function(int) onSelected;
   final Function validator;
-  final Function(Completer<BaseEntity> completer) onAddPressed;
+  final Function(Completer<SelectableEntity> completer) onAddPressed;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -93,7 +93,7 @@ class EntityDropdownDialog extends StatefulWidget {
 
   final BuiltMap<int, SelectableEntity> entityMap;
   final List<int> entityList;
-  final Function(BaseEntity) onSelected;
+  final Function(SelectableEntity) onSelected;
   final Function(BuildContext context, Completer completer) onAddPressed;
 
   @override
@@ -139,8 +139,8 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               ? IconButton(
                   icon: Icon(Icons.add_circle_outline),
                   onPressed: () {
-                    final Completer<BaseEntity> completer =
-                        Completer<BaseEntity>();
+                    final Completer<SelectableEntity> completer =
+                        Completer<SelectableEntity>();
                     widget.onAddPressed(context, completer);
                     completer.future.then((entity) {
                       widget.onSelected(entity);
