@@ -174,7 +174,7 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 
     store.dispatch(LoadClientRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.clientId)
+        .loadItem(state.selectedCompany, state.authState, action.clientId, action.loadActivities)
         .then((client) {
       store.dispatch(LoadClientSuccess(client));
 

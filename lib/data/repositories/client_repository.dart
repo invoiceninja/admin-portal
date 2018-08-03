@@ -15,10 +15,16 @@ class ClientRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<ClientEntity> loadItem(CompanyEntity company, AuthState auth, int entityId) async {
+  Future<ClientEntity> loadItem(CompanyEntity company, AuthState auth, int entityId, bool loadActivities) async {
+
+    String url = '${auth.url}/clients/$entityId';
+
+    if (loadActivities) {
+      url += '?include=activities';
+    }
 
     final dynamic response = await webClient.get(
-        '${auth.url}/clients/$entityId?include=activities', company.token);
+        url, company.token);
 
     final ClientItemResponse clientResponse = serializers.deserializeWith(
         ClientItemResponse.serializer, response);

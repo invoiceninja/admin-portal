@@ -40,7 +40,7 @@ class ClientViewVM {
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onInvoicesPressed;
-  final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, bool) onRefreshed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
@@ -62,9 +62,9 @@ class ClientViewVM {
     final state = store.state;
     final client = state.clientState.map[state.clientUIState.selectedId];
 
-    Future<Null> _handleRefresh(BuildContext context) {
+    Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
       final Completer<ClientEntity> completer = Completer<ClientEntity>();
-      store.dispatch(LoadClient(completer: completer, clientId: client.id));
+      store.dispatch(LoadClient(completer: completer, clientId: client.id, loadActivities: loadActivities));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
             content: SnackBarRow(
@@ -94,7 +94,7 @@ class ClientViewVM {
           store.dispatch(FilterInvoicesByClient(client.id));
           store.dispatch(ViewInvoiceList(context));
         },
-        onRefreshed: (context) => _handleRefresh(context),
+        onRefreshed: (context, loadActivities) => _handleRefresh(context, loadActivities),
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
         onActionSelected: (BuildContext context, EntityAction action) {

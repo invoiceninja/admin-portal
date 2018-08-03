@@ -53,9 +53,6 @@ class _ClientViewState extends State<ClientView>
         return true;
       },
       child: Scaffold(
-        backgroundColor: Theme
-            .of(context)
-            .backgroundColor,
         appBar: _CustomAppBar(
           viewModel: viewModel,
           controller: _controller,
@@ -155,7 +152,7 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
 
     if (widget.controller.index == 2 && viewModel.client.activities.isEmpty &&
         !viewModel.isLoading) {
-      viewModel.onRefreshed(context);
+      viewModel.onRefreshed(context, true);
     }
   }
 
@@ -167,15 +164,15 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
       controller: widget.controller,
       children: <Widget>[
         RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context),
+          onRefresh: () => viewModel.onRefreshed(context, false),
           child: ClientOverview(viewModel: viewModel),
         ),
         RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context),
+          onRefresh: () => viewModel.onRefreshed(context, false),
           child: ClientViewDetails(client: viewModel.client),
         ),
         RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context),
+          onRefresh: () => viewModel.onRefreshed(context, true),
           child: ClientViewActivity(client: viewModel.client),
         ),
       ],

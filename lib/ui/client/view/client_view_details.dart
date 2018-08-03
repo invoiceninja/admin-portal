@@ -45,11 +45,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
 
     List<Widget> _buildDetailsList() {
       final listTiles = <Widget>[];
-
-      listTiles
-          .add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
-
       final contacts = client.contacts;
+
       contacts.forEach((contact) {
         if ((contact.email ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
@@ -102,6 +99,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
+      /*
       if (listTiles.isNotEmpty) {
         listTiles.add(
           Container(
@@ -110,6 +108,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           ),
         );
       }
+      */
 
       if ((client.vatNumber ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
@@ -157,6 +156,9 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
                           object: client, delimiter: ',', isShipping: true)));
             }));
       }
+
+      listTiles
+          .add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
 
       return listTiles;
     }
