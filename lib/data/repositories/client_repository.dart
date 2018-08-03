@@ -18,7 +18,7 @@ class ClientRepository {
   Future<ClientEntity> loadItem(CompanyEntity company, AuthState auth, int entityId) async {
 
     final dynamic response = await webClient.get(
-        '${auth.url}/clients/$entityId', company.token);
+        '${auth.url}/clients/$entityId?include=activities', company.token);
 
     final ClientItemResponse clientResponse = serializers.deserializeWith(
         ClientItemResponse.serializer, response);

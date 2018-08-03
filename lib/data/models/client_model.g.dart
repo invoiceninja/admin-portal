@@ -224,8 +224,8 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.contacts,
           specifiedType:
               const FullType(BuiltList, const [const FullType(ContactEntity)])),
-      'activity',
-      serializers.serialize(object.activity,
+      'activities',
+      serializers.serialize(object.activities,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
     ];
@@ -420,8 +420,8 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
                       BuiltList, const [const FullType(ContactEntity)]))
               as BuiltList);
           break;
-        case 'activity':
-          result.activity.replace(serializers.deserialize(value,
+        case 'activities':
+          result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
               as BuiltList);
@@ -854,7 +854,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<ContactEntity> contacts;
   @override
-  final BuiltList<ActivityEntity> activity;
+  final BuiltList<ActivityEntity> activities;
   @override
   final int createdAt;
   @override
@@ -906,7 +906,7 @@ class _$ClientEntity extends ClientEntity {
       this.customValue1,
       this.customValue2,
       this.contacts,
-      this.activity,
+      this.activities,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -986,8 +986,8 @@ class _$ClientEntity extends ClientEntity {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue2');
     if (contacts == null)
       throw new BuiltValueNullFieldError('ClientEntity', 'contacts');
-    if (activity == null)
-      throw new BuiltValueNullFieldError('ClientEntity', 'activity');
+    if (activities == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'activities');
   }
 
   @override
@@ -1037,7 +1037,7 @@ class _$ClientEntity extends ClientEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         contacts == other.contacts &&
-        activity == other.activity &&
+        activities == other.activities &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1079,7 +1079,7 @@ class _$ClientEntity extends ClientEntity {
                                         customValue1.hashCode),
                                     customValue2.hashCode),
                                 contacts.hashCode),
-                            activity.hashCode),
+                            activities.hashCode),
                         createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
@@ -1126,7 +1126,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('contacts', contacts)
-          ..add('activity', activity)
+          ..add('activities', activities)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1296,11 +1296,11 @@ class ClientEntityBuilder
   set contacts(ListBuilder<ContactEntity> contacts) =>
       _$this._contacts = contacts;
 
-  ListBuilder<ActivityEntity> _activity;
-  ListBuilder<ActivityEntity> get activity =>
-      _$this._activity ??= new ListBuilder<ActivityEntity>();
-  set activity(ListBuilder<ActivityEntity> activity) =>
-      _$this._activity = activity;
+  ListBuilder<ActivityEntity> _activities;
+  ListBuilder<ActivityEntity> get activities =>
+      _$this._activities ??= new ListBuilder<ActivityEntity>();
+  set activities(ListBuilder<ActivityEntity> activities) =>
+      _$this._activities = activities;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -1362,7 +1362,7 @@ class ClientEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _contacts = _$v.contacts?.toBuilder();
-      _activity = _$v.activity?.toBuilder();
+      _activities = _$v.activities?.toBuilder();
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1426,7 +1426,7 @@ class ClientEntityBuilder
               customValue1: customValue1,
               customValue2: customValue2,
               contacts: contacts.build(),
-              activity: activity.build(),
+              activities: activities.build(),
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
@@ -1437,8 +1437,8 @@ class ClientEntityBuilder
       try {
         _$failedField = 'contacts';
         contacts.build();
-        _$failedField = 'activity';
-        activity.build();
+        _$failedField = 'activities';
+        activities.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientEntity', _$failedField, e.toString());

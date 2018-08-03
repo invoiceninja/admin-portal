@@ -44,7 +44,7 @@ class _ClientViewState extends State<ClientView>
 
   void _onTabChange() {
     final viewModel = widget.viewModel;
-    if (_controller.index == 2 && viewModel.client.activity.isEmpty) {
+    if (_controller.index == 2 && viewModel.client.activities.isEmpty) {
       viewModel.onRefreshed(context);
     }
   }
