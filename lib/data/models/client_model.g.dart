@@ -224,6 +224,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.contacts,
           specifiedType:
               const FullType(BuiltList, const [const FullType(ContactEntity)])),
+      'activity',
+      serializers.serialize(object.activity,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ActivityEntity)])),
     ];
     if (object.createdAt != null) {
       result
@@ -414,6 +418,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ContactEntity)]))
+              as BuiltList);
+          break;
+        case 'activity':
+          result.activity.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ActivityEntity)]))
               as BuiltList);
           break;
         case 'created_at':
@@ -844,6 +854,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<ContactEntity> contacts;
   @override
+  final BuiltList<ActivityEntity> activity;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -894,6 +906,7 @@ class _$ClientEntity extends ClientEntity {
       this.customValue1,
       this.customValue2,
       this.contacts,
+      this.activity,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -973,6 +986,8 @@ class _$ClientEntity extends ClientEntity {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue2');
     if (contacts == null)
       throw new BuiltValueNullFieldError('ClientEntity', 'contacts');
+    if (activity == null)
+      throw new BuiltValueNullFieldError('ClientEntity', 'activity');
   }
 
   @override
@@ -1022,6 +1037,7 @@ class _$ClientEntity extends ClientEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         contacts == other.contacts &&
+        activity == other.activity &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1049,21 +1065,21 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode),
-                                                                                quoteNumberCounter.hashCode),
-                                                                            taskRate.hashCode),
-                                                                        shippingAddress1.hashCode),
-                                                                    shippingAddress2.hashCode),
-                                                                shippingCity.hashCode),
-                                                            shippingState.hashCode),
-                                                        shippingPostalCode.hashCode),
-                                                    shippingCountryId.hashCode),
-                                                showTasksInPortal.hashCode),
-                                            sendReminders.hashCode),
-                                        creditNumberCounter.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            contacts.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode),
+                                                                                taskRate.hashCode),
+                                                                            shippingAddress1.hashCode),
+                                                                        shippingAddress2.hashCode),
+                                                                    shippingCity.hashCode),
+                                                                shippingState.hashCode),
+                                                            shippingPostalCode.hashCode),
+                                                        shippingCountryId.hashCode),
+                                                    showTasksInPortal.hashCode),
+                                                sendReminders.hashCode),
+                                            creditNumberCounter.hashCode),
+                                        customValue1.hashCode),
+                                    customValue2.hashCode),
+                                contacts.hashCode),
+                            activity.hashCode),
                         createdAt.hashCode),
                     updatedAt.hashCode),
                 archivedAt.hashCode),
@@ -1110,6 +1126,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('contacts', contacts)
+          ..add('activity', activity)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1279,6 +1296,12 @@ class ClientEntityBuilder
   set contacts(ListBuilder<ContactEntity> contacts) =>
       _$this._contacts = contacts;
 
+  ListBuilder<ActivityEntity> _activity;
+  ListBuilder<ActivityEntity> get activity =>
+      _$this._activity ??= new ListBuilder<ActivityEntity>();
+  set activity(ListBuilder<ActivityEntity> activity) =>
+      _$this._activity = activity;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1339,6 +1362,7 @@ class ClientEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _contacts = _$v.contacts?.toBuilder();
+      _activity = _$v.activity?.toBuilder();
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1402,6 +1426,7 @@ class ClientEntityBuilder
               customValue1: customValue1,
               customValue2: customValue2,
               contacts: contacts.build(),
+              activity: activity.build(),
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
@@ -1412,6 +1437,8 @@ class ClientEntityBuilder
       try {
         _$failedField = 'contacts';
         contacts.build();
+        _$failedField = 'activity';
+        activity.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientEntity', _$failedField, e.toString());

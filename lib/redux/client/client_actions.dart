@@ -42,6 +42,13 @@ class LoadClient {
   LoadClient({this.completer, this.clientId});
 }
 
+class LoadClientActivity {
+  final Completer completer;
+  final int clientId;
+
+  LoadClientActivity({this.completer, this.clientId});
+}
+
 class LoadClients {
   final Completer completer;
   final bool force;

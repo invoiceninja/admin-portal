@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
@@ -31,12 +32,21 @@ class _ClientViewState extends State<ClientView>
   void initState() {
     super.initState();
     _controller = TabController(vsync: this, length: 3);
+    _controller.addListener(_onTabChange);
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChange);
     _controller.dispose();
     super.dispose();
+  }
+
+  void _onTabChange() {
+    final viewModel = widget.viewModel;
+    if (_controller.index == 2 && viewModel.client.activity.isEmpty) {
+      viewModel.onRefreshed(context);
+    }
   }
 
   @override

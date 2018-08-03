@@ -94,6 +94,7 @@ abstract class ClientEntity extends Object
       contacts: BuiltList<ContactEntity>(
         <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
+      activity: BuiltList<ActivityEntity>(),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -207,6 +208,7 @@ abstract class ClientEntity extends Object
   String get customValue2;
 
   BuiltList<ContactEntity> get contacts;
+  BuiltList<ActivityEntity> get activity;
 
   //String get last_login;
   //String get custom_messages;
