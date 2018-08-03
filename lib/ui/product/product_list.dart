@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductList extends StatelessWidget {
   final ProductListVM viewModel;
@@ -16,6 +17,18 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (! viewModel.isLoaded) {
       return LoadingIndicator();
+    } else if (viewModel.productList.isEmpty) {
+      return Opacity(
+        opacity: 0.5,
+        child: Center(
+            child: Text(
+                AppLocalization.of(context).noRecordsFound,
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+        ),
+      );
     }
 
     return _buildListView(context);

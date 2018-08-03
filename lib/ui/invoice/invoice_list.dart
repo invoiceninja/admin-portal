@@ -17,6 +17,18 @@ class InvoiceList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!viewModel.isLoaded) {
       return LoadingIndicator();
+    } else if (viewModel.invoiceList.isEmpty) {
+      return Opacity(
+        opacity: 0.5,
+        child: Center(
+          child: Text(
+            AppLocalization.of(context).noRecordsFound,
+            style: TextStyle(
+              fontSize: 18.0,
+            ),
+          ),
+        ),
+      );
     }
 
     return _buildListView(context);
