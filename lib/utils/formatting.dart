@@ -191,7 +191,6 @@ String formatDate(String value, BuildContext context, {bool showTime = false}) {
         ? company.datetimeFormatId
         : kDefaultDateTimeFormat;
     final formatter = DateFormat(dateTimeFormats[dateTimeFormatId].format);
-    print(DateTime.tryParse(value).timeZoneName);
     return formatter.format(DateTime.tryParse(value).toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;

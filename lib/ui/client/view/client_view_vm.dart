@@ -42,6 +42,7 @@ class ClientViewVM {
   final Function(BuildContext) onInvoicesPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
+  final bool isLoading;
   final bool isDirty;
 
   ClientViewVM({
@@ -52,6 +53,7 @@ class ClientViewVM {
     @required this.onInvoicesPressed,
     @required this.onBackPressed,
     @required this.isSaving,
+    @required this.isLoading,
     @required this.isDirty,
     @required this.onRefreshed,
   });
@@ -73,6 +75,7 @@ class ClientViewVM {
 
     return ClientViewVM(
         isSaving: state.isSaving,
+        isLoading: state.isLoading,
         isDirty: client.isNew,
         client: client,
         company: state.selectedCompany,
