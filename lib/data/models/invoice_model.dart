@@ -318,9 +318,7 @@ abstract class InvoiceEntity extends Object
     }
 
     filter = filter.toLowerCase();
-    if (invoiceNumber.toLowerCase().contains(filter)) {
-      return invoiceNumber;
-    } else if (customTextValue1.isNotEmpty &&
+    if (customTextValue1.isNotEmpty &&
         customTextValue1.toLowerCase().contains(filter)) {
       return customTextValue1;
     } else if (customTextValue2.isNotEmpty &&

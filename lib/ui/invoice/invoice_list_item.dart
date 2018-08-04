@@ -26,7 +26,7 @@ class InvoiceListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? invoice.matchesFilterValue(filter)
+        ? (invoice.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
         : null;
 
     return DismissibleEntity(
@@ -66,17 +66,6 @@ class InvoiceListItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                /*
-                Chip(
-                  label: Text(invoiceStatusSelector(invoice, state.staticState),
-                      style: TextStyle(color: Colors.white, fontSize: 12.0)),
-                  backgroundColor:
-                      InvoiceStatusColors.colors[invoice.invoiceStatusId],
-                  shape: RoundedRectangleBorder(),
-                  padding: EdgeInsets.all(0.0),
-                  //labelPadding: EdgeInsets.all(0.0),
-                ),
-                */
                 Text(invoice.isPastDue ? localization.pastDue : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
                     style: TextStyle(
                       color:

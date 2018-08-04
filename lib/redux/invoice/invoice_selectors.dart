@@ -33,7 +33,8 @@ List<int> filteredInvoicesSelector(
     if (!invoice.matchesStatuses(invoiceListState.statusFilters)) {
       return false;
     }
-    if (!invoice.matchesFilter(invoiceListState.filter)) {
+    if (!invoice.matchesFilter(invoiceListState.filter) &&
+        !client.matchesFilter(invoiceListState.filter)) {
       return false;
     }
     if (invoiceListState.filterClientId != null &&
@@ -62,7 +63,6 @@ String invoiceStatsForClient(
     BuiltMap<int, InvoiceEntity> invoiceMap,
     String activeLabel,
     String archivedLabel) {
-
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
