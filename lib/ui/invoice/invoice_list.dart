@@ -55,42 +55,48 @@ class InvoiceList extends StatelessWidget {
               )
             : Container(),
         Expanded(
-          child: !viewModel.isLoaded ? LoadingIndicator() : RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: viewModel.invoiceList.isEmpty
-                  ? Opacity(
-                      opacity: 0.5,
-                      child: Center(
-                        child: Text(
-                          AppLocalization.of(context).noRecordsFound,
-                          style: TextStyle(
-                            fontSize: 18.0,
+          child: !viewModel.isLoaded
+              ? LoadingIndicator()
+              : RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: viewModel.invoiceList.isEmpty
+                      ? Opacity(
+                          opacity: 0.5,
+                          child: Center(
+                            child: Text(
+                              AppLocalization.of(context).noRecordsFound,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                            ),
                           ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: viewModel.invoiceList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            final invoiceId = viewModel.invoiceList[index];
+                            final invoice = viewModel.invoiceMap[invoiceId];
+                            return Column(
+                              children: <Widget>[
+                                InvoiceListItem(
+                                  filter: viewModel.filter,
+                                  invoice: invoice,
+                                  client: viewModel.clientMap[invoice.clientId],
+                                  onDismissed: (DismissDirection direction) =>
+                                      viewModel.onDismissed(
+                                          context, invoice, direction),
+                                  onTap: () =>
+                                      viewModel.onInvoiceTap(context, invoice),
+                                ),
+                                Divider(
+                                  height: 1.0,
+                                ),
+                              ],
+                            );
+                          },
                         ),
-                      ),
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: viewModel.invoiceList.length,
-                      itemBuilder: (BuildContext context, index) {
-                        final invoiceId = viewModel.invoiceList[index];
-                        final invoice = viewModel.invoiceMap[invoiceId];
-                        return Column(children: <Widget>[
-                          InvoiceListItem(
-                            filter: viewModel.filter,
-                            invoice: invoice,
-                            client: viewModel.clientMap[invoice.clientId],
-                            onDismissed: (DismissDirection direction) =>
-                                viewModel.onDismissed(
-                                    context, invoice, direction),
-                            onTap: () =>
-                                viewModel.onInvoiceTap(context, invoice),
-                          ),
-                          Divider(
-                            height: 1.0,
-                          ),
-                        ]);
-                      })),
+                ),
         ),
       ],
     );
