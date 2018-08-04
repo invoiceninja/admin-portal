@@ -288,7 +288,8 @@ abstract class ClientEntity extends Object
         (contact) => contact.matchesFilter(filter),
         orElse: () => null);
     if (contact != null) {
-      return contact.matchesFilterValue(filter);
+      final match = contact.matchesFilterValue(filter);
+      return match == displayName ? null : match;
     }
 
     return null;
