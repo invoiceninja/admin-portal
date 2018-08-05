@@ -4,14 +4,10 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-<<<<<<< HEAD
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
-=======
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
->>>>>>> release-0.1.3
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
