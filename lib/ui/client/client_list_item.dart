@@ -1,13 +1,11 @@
+import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
-//import 'package:invoiceninja_flutter/utils/localization.dart';
 
-import '../app/entity_state_label.dart';
-
-class ClientItem extends StatelessWidget {
+class ClientListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   //final ValueChanged<bool> onCheckboxChanged;
@@ -16,7 +14,7 @@ class ClientItem extends StatelessWidget {
 
   static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
-  const ClientItem({
+  const ClientListItem({
     @required this.onDismissed,
     @required this.onTap,
     //@required this.onCheckboxChanged,
@@ -27,8 +25,8 @@ class ClientItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //var localization = AppLocalization.of(context);
-    final searchMatch = filter != null && filter.isNotEmpty
-        ? client.matchesSearchValue(filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? client.matchesFilterValue(filter)
         : null;
 
     return DismissibleEntity(
@@ -52,10 +50,10 @@ class ClientItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            searchMatch == null
+            filterMatch == null
                 ? Container()
                 : Text(
-                    searchMatch,
+                    filterMatch,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),

@@ -20,7 +20,7 @@ class TaxRateDropdown extends StatefulWidget {
   final double initialTaxRate;
 
   @override
-  _TaxRateDropdownState createState() => new _TaxRateDropdownState();
+  _TaxRateDropdownState createState() => _TaxRateDropdownState();
 }
 
 class _TaxRateDropdownState extends State<TaxRateDropdown> {

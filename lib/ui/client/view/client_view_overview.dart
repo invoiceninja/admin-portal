@@ -2,6 +2,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,9 @@ class ClientOverview extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
     final company = viewModel.company;
-    final state = StoreProvider.of<AppState>(context).state;
+    final state = StoreProvider
+        .of<AppState>(context)
+        .state;
     final statics = state.staticState;
     final fields = <String, String>{};
 
@@ -63,11 +66,11 @@ class ClientOverview extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-              value,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
-            )),
+                  value,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                )),
           ],
         ));
       }
@@ -86,37 +89,45 @@ class ClientOverview extends StatelessWidget {
             : Container(),
         fieldWidgets.isNotEmpty
             ? Column(
-                children: <Widget>[
-                  Container(
-                    color: Theme.of(context).canvasColor,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-                      child: IgnorePointer(
-                        child: GridView.count(
-                          shrinkWrap: true,
-                          primary: true,
-                          crossAxisCount: 2,
-                          children: fieldWidgets,
-                          childAspectRatio: 3.5,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                ],
-              )
+          children: <Widget>[
+            Container(
+              color: Theme
+                  .of(context)
+                  .canvasColor,
+              child: Padding(
+                padding:
+                EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
+                child: GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  primary: true,
+                  crossAxisCount: 2,
+                  children: fieldWidgets,
+                  childAspectRatio: 3.5,
+                ),
+              ),
+            ),
+            Container(
+              color: Theme
+                  .of(context)
+                  .backgroundColor,
+              height: 12.0,
+            ),
+          ],
+        )
             : Container(),
         Divider(
           height: 1.0,
         ),
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme
+              .of(context)
+              .canvasColor,
           child: ListTile(
             title: Text(localization.invoices),
+            subtitle: Text(memoizedInvoiceStatsForClient(
+                client.id, state.invoiceState.map, localization.active,
+                localization.archived)),
             leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onInvoicesPressed(context),
@@ -126,7 +137,9 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme
+              .of(context)
+              .canvasColor,
           child: ListTile(
             title: Text(localization.payments),
             leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
@@ -138,7 +151,9 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme
+              .of(context)
+              .canvasColor,
           child: ListTile(
             title: Text(localization.quotes),
             leading: Icon(FontAwesomeIcons.fileAltO, size: 18.0),
@@ -150,7 +165,9 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme
+              .of(context)
+              .canvasColor,
           child: ListTile(
             title: Text(localization.projects),
             leading: Icon(FontAwesomeIcons.briefcase, size: 18.0),
@@ -162,7 +179,9 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme
+              .of(context)
+              .canvasColor,
           child: ListTile(
             title: Text(localization.tasks),
             leading: Icon(FontAwesomeIcons.clockO, size: 18.0),
@@ -174,7 +193,9 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme
+              .of(context)
+              .canvasColor,
           child: ListTile(
             title: Text(localization.expenses),
             leading: Icon(FontAwesomeIcons.fileImageO, size: 18.0),
@@ -186,7 +207,9 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme
+              .of(context)
+              .canvasColor,
           child: ListTile(
             title: Text(localization.vendors),
             leading: Icon(FontAwesomeIcons.building, size: 18.0),

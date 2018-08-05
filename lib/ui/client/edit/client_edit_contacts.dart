@@ -1,44 +1,131 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
-import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ClientEditContacts extends StatelessWidget {
+class ClientEditContacts extends StatefulWidget {
   const ClientEditContacts({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final ClientEditVM viewModel;
+  final ClientEditContactsVM viewModel;
+
+  @override
+  _ClientEditContactsState createState() => _ClientEditContactsState();
+}
+
+class _ClientEditContactsState extends State<ClientEditContacts> {
+  ContactEntity selectedContact;
+
+  void _showContactEditor(ContactEntity contact, BuildContext context) {
+    showDialog<ContactEditDetails>(
+        context: context,
+        builder: (BuildContext context) {
+          final viewModel = widget.viewModel;
+          final client = viewModel.client;
+
+          return ContactEditDetails(
+            viewModel: viewModel,
+            key: Key(contact.entityKey),
+            contact: contact,
+            areButtonsVisible: client.contacts.length > 1,
+            index: client.contacts.indexOf(contact),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
     final client = viewModel.client;
-    final contacts = client.contacts.map((contact) => ContactEditDetails(
-        viewModel: viewModel,
-        key: Key('__${EntityType.contact}_${contact.id}__'),
-        isRemoveVisible: client.contacts.length > 1,
-        contact: contact,
-        index: client.contacts.indexOf(contact)));
+
+    List<Widget> contacts;
+
+    if (client.contacts.length > 1) {
+      contacts = client.contacts
+          .map((contact) => ContactListTile(
+                contact: contact,
+                onTap: () => _showContactEditor(contact, context),
+              ))
+          .toList();
+    } else {
+      final contact = client.contacts[0];
+      contacts = [
+        ContactEditDetails(
+          viewModel: viewModel,
+          key: Key(contact.entityKey),
+          contact: contact,
+          areButtonsVisible: client.contacts.length > 1,
+          index: client.contacts.indexOf(contact),
+        ),
+      ];
+    }
+
+    final contact =
+        client.contacts.contains(viewModel.contact) ? viewModel.contact : null;
+
+    if (contact != null && contact != selectedContact) {
+      selectedContact = contact;
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        _showContactEditor(contact, context);
+      });
+    }
 
     return ListView(
       children: []
         ..addAll(contacts)
         ..add(Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: RaisedButton(
-            elevation: 4.0,
-            color: Theme.of(context).primaryColorDark,
-            textColor: Theme.of(context).secondaryHeaderColor,
-            child: Text(localization.addContact.toUpperCase()),
-            onPressed: viewModel.onAddContactPressed,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: ElevatedButton(
+            label: localization.addContact.toUpperCase(),
+            onPressed: () => viewModel.onAddContactPressed(),
           ),
         )),
     );
+  }
+}
+
+class ContactListTile extends StatelessWidget {
+  const ContactListTile({
+    @required this.contact,
+    @required this.onTap,
+  });
+
+  final Function onTap;
+  final ContactEntity contact;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Theme.of(context).canvasColor,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                onTap: onTap,
+                title: contact.fullName.isNotEmpty
+                    ? Text(contact.fullName)
+                    : Text(AppLocalization.of(context).blankContact,
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                        )),
+                subtitle: Text(
+                    contact.email.isNotEmpty ? contact.email : contact.phone),
+                trailing: Icon(Icons.navigate_next),
+              ),
+              Divider(
+                height: 1.0,
+              ),
+            ],
+          ),
+        ));
   }
 }
 
@@ -48,13 +135,13 @@ class ContactEditDetails extends StatefulWidget {
     @required this.index,
     @required this.contact,
     @required this.viewModel,
-    @required this.isRemoveVisible,
+    @required this.areButtonsVisible,
   }) : super(key: key);
 
   final int index;
   final ContactEntity contact;
-  final ClientEditVM viewModel;
-  final bool isRemoveVisible;
+  final ClientEditContactsVM viewModel;
+  final bool areButtonsVisible;
 
   @override
   ContactEditDetailsState createState() => ContactEditDetailsState();
@@ -72,6 +159,10 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   @override
   void didChangeDependencies() {
+    if (_controllers.isNotEmpty) {
+      return;
+    }
+
     _controllers = [
       _firstNameController,
       _lastNameController,
@@ -81,7 +172,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _custom2Controller,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final contact = widget.contact;
     _firstNameController.text = contact.firstName;
@@ -91,7 +183,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _custom1Controller.text = contact.customValue1;
     _custom2Controller.text = contact.customValue2;
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -113,8 +206,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       ..email = _emailController.text.trim()
       ..phone = _phoneController.text.trim()
       ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-    );
+      ..customValue2 = _custom2Controller.text.trim());
     if (contact != widget.contact) {
       widget.viewModel.onChangedContact(contact, widget.index);
     }
@@ -133,15 +225,16 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               semanticLabel: localization.areYouSure,
               title: Text(localization.areYouSure),
               actions: <Widget>[
-                new FlatButton(
+                FlatButton(
                     child: Text(localization.cancel.toUpperCase()),
                     onPressed: () {
                       Navigator.pop(context);
                     }),
-                new FlatButton(
+                FlatButton(
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
                       widget.viewModel.onRemoveContactPressed(widget.index);
+                      Navigator.pop(context);
                       Navigator.pop(context);
                     })
               ],
@@ -149,77 +242,96 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       );
     }
 
-    return FormCard(
-      children: <Widget>[
-        TextFormField(
-          autocorrect: false,
-          controller: _firstNameController,
-          decoration: InputDecoration(
-            labelText: localization.firstName,
-          ),
-          validator: (String val) => ! viewModel.client.hasNameSet
-              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-              : null,
-        ),
-        TextFormField(
-          autocorrect: false,
-          controller: _lastNameController,
-          decoration: InputDecoration(
-            labelText: localization.lastName,
-          ),
-          validator: (String val) => ! viewModel.client.hasNameSet
-              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-              : null,
-        ),
-        TextFormField(
-          autocorrect: false,
-          controller: _emailController,
-          decoration: InputDecoration(
-            labelText: localization.email,
-          ),
-          keyboardType: TextInputType.emailAddress,
-          validator: (value) => value.isNotEmpty && !value.contains('@')
-              ? localization.emailIsInvalid
-              : null,
-        ),
-        TextFormField(
-          autocorrect: false,
-          controller: _phoneController,
-          decoration: InputDecoration(
-            labelText: localization.phone,
-          ),
-          keyboardType: TextInputType.phone,
-        ),
-        CustomField(
-          controller: _custom1Controller,
-          labelText: company.getCustomFieldLabel(CustomFieldType.contact1),
-          options: company.getCustomFieldValues(CustomFieldType.contact1),
-        ),
-        CustomField(
-          controller: _custom2Controller,
-          labelText: company.getCustomFieldLabel(CustomFieldType.contact2),
-          options: company.getCustomFieldValues(CustomFieldType.contact2),
-        ),
-        widget.isRemoveVisible
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 14.0),
-                    child: FlatButton(
-                      child: Text(
-                        localization.remove,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                        ),
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery
+            .of(context)
+            .viewInsets
+            .bottom, // stay clear of the keyboard
+      ),
+      child: SingleChildScrollView(
+        child: FormCard(
+          children: <Widget>[
+            widget.areButtonsVisible
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(),
                       ),
-                      onPressed: _confirmDelete,
-                    ),
+                      ElevatedButton(
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        label: localization.remove,
+                        onPressed: _confirmDelete,
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      ElevatedButton(
+                        icon: Icons.check_circle,
+                        label: localization.done,
+                        onPressed: () {
+                          viewModel.onDoneContactPressed();
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
                   )
-                ],
-              )
-            : Container(),
-      ],
+                : Container(),
+            TextFormField(
+              autocorrect: false,
+              controller: _firstNameController,
+              decoration: InputDecoration(
+                labelText: localization.firstName,
+              ),
+              validator: (String val) => !viewModel.client.hasNameSet
+                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                  : null,
+            ),
+            TextFormField(
+              autocorrect: false,
+              controller: _lastNameController,
+              decoration: InputDecoration(
+                labelText: localization.lastName,
+              ),
+              validator: (String val) => !viewModel.client.hasNameSet
+                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                  : null,
+            ),
+            TextFormField(
+              autocorrect: false,
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: localization.email,
+              ),
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) => value.isNotEmpty && !value.contains('@')
+                  ? localization.emailIsInvalid
+                  : null,
+            ),
+            TextFormField(
+              autocorrect: false,
+              controller: _phoneController,
+              decoration: InputDecoration(
+                labelText: localization.phone,
+              ),
+              keyboardType: TextInputType.phone,
+            ),
+            CustomField(
+              controller: _custom1Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.contact1),
+              options: company.getCustomFieldValues(CustomFieldType.contact1),
+            ),
+            CustomField(
+              controller: _custom2Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.contact2),
+              options: company.getCustomFieldValues(CustomFieldType.contact2),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardScreen extends StatelessWidget {
 
@@ -9,6 +7,9 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return DashboardBuilder();
+
+    /*
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalization.of(context).dashboard),
@@ -16,5 +17,6 @@ class DashboardScreen extends StatelessWidget {
       drawer: AppDrawerBuilder(),
       body: DashboardBuilder(),
     );
+    */
   }
 }

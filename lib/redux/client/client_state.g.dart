@@ -105,6 +105,12 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(ClientEntity)));
     }
+    if (object.editingContact != null) {
+      result
+        ..add('editingContact')
+        ..add(serializers.serialize(object.editingContact,
+            specifiedType: const FullType(ContactEntity)));
+    }
 
     return result;
   }
@@ -123,6 +129,10 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(ClientEntity)) as ClientEntity);
+          break;
+        case 'editingContact':
+          result.editingContact.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ContactEntity)) as ContactEntity);
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
@@ -255,6 +265,8 @@ class _$ClientUIState extends ClientUIState {
   @override
   final ClientEntity editing;
   @override
+  final ContactEntity editingContact;
+  @override
   final int selectedId;
   @override
   final ListUIState listUIState;
@@ -262,7 +274,8 @@ class _$ClientUIState extends ClientUIState {
   factory _$ClientUIState([void updates(ClientUIStateBuilder b)]) =>
       (new ClientUIStateBuilder()..update(updates)).build();
 
-  _$ClientUIState._({this.editing, this.selectedId, this.listUIState})
+  _$ClientUIState._(
+      {this.editing, this.editingContact, this.selectedId, this.listUIState})
       : super._() {
     if (selectedId == null)
       throw new BuiltValueNullFieldError('ClientUIState', 'selectedId');
@@ -282,13 +295,16 @@ class _$ClientUIState extends ClientUIState {
     if (identical(other, this)) return true;
     if (other is! ClientUIState) return false;
     return editing == other.editing &&
+        editingContact == other.editingContact &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, editing.hashCode), editingContact.hashCode),
+            selectedId.hashCode),
         listUIState.hashCode));
   }
 
@@ -296,6 +312,7 @@ class _$ClientUIState extends ClientUIState {
   String toString() {
     return (newBuiltValueToStringHelper('ClientUIState')
           ..add('editing', editing)
+          ..add('editingContact', editingContact)
           ..add('selectedId', selectedId)
           ..add('listUIState', listUIState))
         .toString();
@@ -310,6 +327,12 @@ class ClientUIStateBuilder
   ClientEntityBuilder get editing =>
       _$this._editing ??= new ClientEntityBuilder();
   set editing(ClientEntityBuilder editing) => _$this._editing = editing;
+
+  ContactEntityBuilder _editingContact;
+  ContactEntityBuilder get editingContact =>
+      _$this._editingContact ??= new ContactEntityBuilder();
+  set editingContact(ContactEntityBuilder editingContact) =>
+      _$this._editingContact = editingContact;
 
   int _selectedId;
   int get selectedId => _$this._selectedId;
@@ -326,6 +349,7 @@ class ClientUIStateBuilder
   ClientUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
+      _editingContact = _$v.editingContact?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
@@ -351,6 +375,7 @@ class ClientUIStateBuilder
       _$result = _$v ??
           new _$ClientUIState._(
               editing: _editing?.build(),
+              editingContact: _editingContact?.build(),
               selectedId: selectedId,
               listUIState: listUIState.build());
     } catch (_) {
@@ -358,6 +383,8 @@ class ClientUIStateBuilder
       try {
         _$failedField = 'editing';
         _editing?.build();
+        _$failedField = 'editingContact';
+        _editingContact?.build();
 
         _$failedField = 'listUIState';
         listUIState.build();

@@ -41,6 +41,7 @@ class InvoiceViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
   final Function(BuildContext) onClientPressed;
+  final Function(BuildContext) onRefreshed;
   final Function onBackPressed;
   final bool isSaving;
   final bool isDirty;
@@ -55,12 +56,24 @@ class InvoiceViewVM {
     @required this.onClientPressed,
     @required this.isSaving,
     @required this.isDirty,
+    @required this.onRefreshed,
   });
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final invoice = state.invoiceState.map[state.invoiceUIState.selectedId];
     final client = store.state.clientState.map[invoice.clientId];
+
+    Future<Null> _handleRefresh(BuildContext context) {
+      final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+      store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
+      return completer.future.then((_) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+            content: SnackBarRow(
+              message: AppLocalization.of(context).refreshComplete,
+            )));
+      });
+    }
 
     Future<Null> _viewPdf(BuildContext context) async {
       final localization = AppLocalization.of(context);
@@ -71,7 +84,8 @@ class InvoiceViewVM {
         url = invoice.invitationSilentLink;
         useWebView = true;
       } else {
-        url = 'https://docs.google.com/viewer?url=' +  invoice.invitationDownloadLink;
+        url = 'https://docs.google.com/viewer?url=' +
+            invoice.invitationDownloadLink;
         useWebView = false;
       }
 
@@ -89,9 +103,24 @@ class InvoiceViewVM {
         invoice: invoice,
         client: client,
         onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
-          store.dispatch(EditInvoice(invoice: invoice, context: context, invoiceItem: invoiceItem));
+          final Completer<InvoiceEntity> completer =
+              new Completer<InvoiceEntity>();
+          store.dispatch(EditInvoice(
+              invoice: invoice,
+              context: context,
+              completer: completer,
+              invoiceItem: invoiceItem));
+          completer.future.then((invoice) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                    content: SnackBarRow(
+                  message:
+                      AppLocalization.of(context).successfullyUpdatedInvoice,
+                )));
+          });
         },
-        onBackPressed: () => store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+        onRefreshed: (context) => _handleRefresh(context),
+        onBackPressed: () =>
+            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onClientPressed: (BuildContext context) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },
@@ -104,7 +133,8 @@ class InvoiceViewVM {
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyMarkedInvoiceAsSent;
+              message =
+                  AppLocalization.of(context).successfullyMarkedInvoiceAsSent;
               break;
             case EntityAction.emailInvoice:
               store.dispatch(EmailInvoiceRequest(completer, invoice.id));
@@ -125,11 +155,12 @@ class InvoiceViewVM {
           }
           if (message != null) {
             return completer.future.then((_) {
-              if ([EntityAction.archive, EntityAction.delete].contains(action)) {
+              if ([EntityAction.archive, EntityAction.delete]
+                  .contains(action)) {
                 Navigator.of(context).pop(message);
               } else {
                 Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
+                        content: SnackBarRow(
                       message: message,
                     )));
               }
@@ -141,7 +172,6 @@ class InvoiceViewVM {
                   });
             });
           }
-        }
-    );
+        });
   }
 }

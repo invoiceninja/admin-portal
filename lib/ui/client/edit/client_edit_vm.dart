@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -39,9 +40,6 @@ class ClientEditVM {
   final ClientEntity client;
   final ClientEntity origClient;
   final Function(ClientEntity) onChanged;
-  final Function() onAddContactPressed;
-  final Function(int) onRemoveContactPressed;
-  final Function(ContactEntity, int) onChangedContact;
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
   final BuiltMap<int, CountryEntity> countryMap;
@@ -53,9 +51,6 @@ class ClientEditVM {
     @required this.isSaving,
     @required this.client,
     @required this.origClient,
-    @required this.onAddContactPressed,
-    @required this.onRemoveContactPressed,
-    @required this.onChangedContact,
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onBackPressed,
@@ -78,11 +73,6 @@ class ClientEditVM {
         isSaving: state.isSaving,
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
-        onAddContactPressed: () => store.dispatch(AddContact()),
-        onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
-        onChangedContact: (contact, index) {
-          store.dispatch(UpdateContact(contact: contact, index: index));
-        },
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
         onSavePressed: (BuildContext context) {
@@ -96,17 +86,19 @@ class ClientEditVM {
                 });
             return null;
           }
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<ClientEntity> completer = Completer<ClientEntity>();
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
-          return completer.future.then((_) {
-            final localization = AppLocalization.of(context);
+          return completer.future.then((savedClient) {
             if (client.isNew) {
-              Navigator.of(context).pop(localization.successfullyCreatedClient);
-              Navigator.of(context).push<ClientViewScreen>(
-                  MaterialPageRoute(builder: (_) => ClientViewScreen()));
+              if (store.state.uiState.currentRoute == InvoiceEditScreen.route) {
+                Navigator.of(context).pop(savedClient);
+              } else {
+                Navigator.of(context).pushReplacementNamed(
+                    ClientViewScreen.route);
+              }
             } else {
-              Navigator.of(context).pop(localization.successfullyUpdatedClient);
+              Navigator.of(context).pop(savedClient);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -39,7 +38,6 @@ class InvoiceEditVM {
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
   final InvoiceEntity origInvoice;
-  final BuiltMap<int, ProductEntity> productMap;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(List<InvoiceItemEntity>) onItemsAdded;
@@ -51,7 +49,6 @@ class InvoiceEditVM {
     @required this.invoice,
     @required this.invoiceItem,
     @required this.origInvoice,
-    @required this.productMap,
     @required this.onSavePressed,
     @required this.onItemsAdded,
     @required this.onBackPressed,
@@ -66,28 +63,20 @@ class InvoiceEditVM {
     return InvoiceEditVM(
         company: state.selectedCompany,
         isSaving: state.isSaving,
-        productMap: state.selectedCompanyState.productState.map,
         invoice: invoice,
         invoiceItem: state.invoiceUIState.editingItem,
         origInvoice: store.state.invoiceState.map[invoice.id],
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
         onSavePressed: (BuildContext context) {
-          final localization = AppLocalization.of(context);
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
           store.dispatch(
               SaveInvoiceRequest(completer: completer, invoice: invoice));
-          return completer.future.then((_) {
+          return completer.future.then((savedInvoice) {
             if (invoice.isNew) {
-              /*
-              Navigator.of(context).pop(localization.successfullyCreatedInvoice);
-              Navigator
-                  .of(context)
-                  .push<InvoiceViewScreen>(MaterialPageRoute(builder: (_) => InvoiceViewScreen()));
-                  */
               Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
             } else {
-              Navigator.of(context).pop(localization.successfullyUpdatedInvoice);
+              Navigator.of(context).pop(savedInvoice);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
@@ -104,7 +93,7 @@ class InvoiceEditVM {
           store.dispatch(AddInvoiceItems(items));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           switch (action) {
             case EntityAction.archive:

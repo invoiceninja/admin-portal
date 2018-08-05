@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -64,8 +65,8 @@ class InvoiceListVM {
 
   static InvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<Null> completer = new Completer<Null>();
-      store.dispatch(LoadInvoices(completer, true));
+      final Completer<Null> completer = Completer<Null>();
+      store.dispatch(LoadInvoices(completer: completer, force: true));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
@@ -78,7 +79,7 @@ class InvoiceListVM {
 
     return InvoiceListVM(
         listState: state.invoiceListState,
-        invoiceList: memoizedInvoiceList(
+        invoiceList: memoizedFilteredInvoiceList(
             state.invoiceState.map,
             state.invoiceState.list,
             state.clientState.map,
@@ -87,7 +88,7 @@ class InvoiceListVM {
         clientMap: state.clientState.map,
         isLoading: state.isLoading,
         isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
-        filter: state.invoiceListState.search,
+        filter: state.invoiceListState.filter,
         onInvoiceTap: (context, invoice) {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         },
@@ -100,7 +101,7 @@ class InvoiceListVM {
                 context: context)),
         onDismissed: (BuildContext context, InvoiceEntity invoice,
             DismissDirection direction) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
             if (invoice.isDeleted || invoice.isArchived) {
@@ -124,6 +125,12 @@ class InvoiceListVM {
                     content: SnackBarRow(
                   message: message,
                 )));
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
           });
         });
   }

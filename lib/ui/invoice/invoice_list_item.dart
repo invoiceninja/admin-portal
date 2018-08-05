@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,16 +7,14 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-import '../app/entity_state_label.dart';
-
-class InvoiceItem extends StatelessWidget {
+class InvoiceListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final InvoiceEntity invoice;
   final ClientEntity client;
   final String filter;
 
-  const InvoiceItem({
+  const InvoiceListItem({
     @required this.onDismissed,
     @required this.onTap,
     @required this.invoice,
@@ -26,8 +25,8 @@ class InvoiceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final searchMatch = filter != null && filter.isNotEmpty
-        ? invoice.matchesSearchValue(filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? (invoice.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
         : null;
 
     return DismissibleEntity(
@@ -59,25 +58,14 @@ class InvoiceItem extends StatelessWidget {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: searchMatch == null
+                  child: filterMatch == null
                       ? Text(invoice.invoiceNumber)
                       : Text(
-                          searchMatch,
+                          filterMatch,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                /*
-                Chip(
-                  label: Text(invoiceStatusSelector(invoice, state.staticState),
-                      style: TextStyle(color: Colors.white, fontSize: 12.0)),
-                  backgroundColor:
-                      InvoiceStatusColors.colors[invoice.invoiceStatusId],
-                  shape: RoundedRectangleBorder(),
-                  padding: EdgeInsets.all(0.0),
-                  //labelPadding: EdgeInsets.all(0.0),
-                ),
-                */
                 Text(invoice.isPastDue ? localization.pastDue : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
                     style: TextStyle(
                       color:

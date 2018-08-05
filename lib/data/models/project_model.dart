@@ -109,17 +109,17 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
   }
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    return name.contains(search);
+    return name.contains(filter);
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 

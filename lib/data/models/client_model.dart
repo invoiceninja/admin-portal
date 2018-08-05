@@ -94,6 +94,7 @@ abstract class ClientEntity extends Object
       contacts: BuiltList<ContactEntity>(
         <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
+      activities: BuiltList<ActivityEntity>(),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -207,6 +208,7 @@ abstract class ClientEntity extends Object
   String get customValue2;
 
   BuiltList<ContactEntity> get contacts;
+  BuiltList<ActivityEntity> get activities;
 
   //String get last_login;
   //String get custom_messages;
@@ -243,50 +245,51 @@ abstract class ClientEntity extends Object
   }
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
-    search = search.toLowerCase();
-    if (displayName.toLowerCase().contains(search)) {
+    filter = filter.toLowerCase();
+    if (displayName.toLowerCase().contains(filter)) {
       return true;
     }
-    if (vatNumber.toLowerCase().contains(search)) {
+    if (vatNumber.toLowerCase().contains(filter)) {
       return true;
     }
-    if (idNumber.toLowerCase().contains(search)) {
+    if (idNumber.toLowerCase().contains(filter)) {
       return true;
     }
-    if (workPhone.toLowerCase().contains(search)) {
+    if (workPhone.toLowerCase().contains(filter)) {
       return true;
     }
-    if (contacts.where((contact) => contact.matchesSearch(search)).isNotEmpty) {
+    if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
       return true;
     }
     return false;
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
-    search = search.toLowerCase();
-    if (vatNumber.toLowerCase().contains(search)) {
+    filter = filter.toLowerCase();
+    if (vatNumber.toLowerCase().contains(filter)) {
       return vatNumber;
     }
-    if (idNumber.toLowerCase().contains(search)) {
+    if (idNumber.toLowerCase().contains(filter)) {
       return idNumber;
     }
-    if (workPhone.toLowerCase().contains(search)) {
+    if (workPhone.toLowerCase().contains(filter)) {
       return workPhone;
     }
     final contact = contacts.firstWhere(
-        (contact) => contact.matchesSearch(search),
+        (contact) => contact.matchesFilter(filter),
         orElse: () => null);
     if (contact != null) {
-      return contact.matchesSearchValue(search);
+      final match = contact.matchesFilterValue(filter);
+      return match == displayName ? null : match;
     }
 
     return null;
@@ -370,38 +373,43 @@ abstract class ContactEntity extends Object
   }
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  EntityType get entityType {
+    return EntityType.contact;
+  }
+
+  @override
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
-    search = search.toLowerCase();
-    if (firstName.toLowerCase().contains(search)) {
+    filter = filter.toLowerCase();
+    if (firstName.toLowerCase().contains(filter)) {
       return true;
     }
-    if (lastName.toLowerCase().contains(search)) {
+    if (lastName.toLowerCase().contains(filter)) {
       return true;
     }
-    if (phone.toLowerCase().contains(search)) {
+    if (phone.toLowerCase().contains(filter)) {
       return true;
     }
-    if (email.toLowerCase().contains(search)) {
+    if (email.toLowerCase().contains(filter)) {
       return true;
     }
     return false;
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
-    search = search.toLowerCase();
-    if (fullName.toLowerCase().contains(search)) {
+    filter = filter.toLowerCase();
+    if (fullName.toLowerCase().contains(filter)) {
       return fullName;
-    } else if (email.toLowerCase().contains(search)) {
+    } else if (email.toLowerCase().contains(filter)) {
       return email;
-    } else if (phone.toLowerCase().contains(search)) {
+    } else if (phone.toLowerCase().contains(filter)) {
       return phone;
     }
 

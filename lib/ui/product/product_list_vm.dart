@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -53,7 +54,7 @@ class ProductListVM {
 
   static ProductListVM fromStore(Store<AppState> store) {
       Future<Null> _handleRefresh(BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
+        final Completer<Null> completer = Completer<Null>();
         store.dispatch(LoadProducts(completer, true));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -68,14 +69,14 @@ class ProductListVM {
         productMap: store.state.productState.map,
         isLoading: store.state.isLoading,
         isLoaded: store.state.productState.isLoaded,
-        filter: store.state.productUIState.listUIState.search,
+        filter: store.state.productUIState.listUIState.filter,
         onProductTap: (context, product) {
           store.dispatch(EditProduct(product: product, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ProductEntity product,
             DismissDirection direction) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
             if (product.isDeleted || product.isArchived) {
@@ -99,6 +100,12 @@ class ProductListVM {
                 content: SnackBarRow(
                   message: message,
                 )));
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
           });
         });
   }

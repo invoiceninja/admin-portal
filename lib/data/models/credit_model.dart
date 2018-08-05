@@ -100,17 +100,17 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
   }
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    return publicNotes.contains(search);
+    return publicNotes.contains(filter);
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 

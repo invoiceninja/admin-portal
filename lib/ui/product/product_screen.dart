@@ -1,5 +1,5 @@
-import 'package:invoiceninja_flutter/ui/app/app_search.dart';
-import 'package:invoiceninja_flutter/ui/app/app_search_button.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -21,17 +21,17 @@ class ProductScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: AppSearch(
+        title: ListFilter(
           entityType: EntityType.product,
-          onSearchChanged: (value) {
-            store.dispatch(SearchProducts(value));
+          onFilterChanged: (value) {
+            store.dispatch(FilterProducts(value));
           },
         ),
         actions: [
-          AppSearchButton(
+          ListFilterButton(
             entityType: EntityType.product,
-            onSearchPressed: (String value) {
-              store.dispatch(SearchProducts(value));
+            onFilterPressed: (String value) {
+              store.dispatch(FilterProducts(value));
             },
           ),
         ],
@@ -54,7 +54,7 @@ class ProductScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        key: new Key(ProductKeys.productScreenFABKeyString),
+        key: Key(ProductKeys.productScreenFABKeyString),
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
           store.dispatch(

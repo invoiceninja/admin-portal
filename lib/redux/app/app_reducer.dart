@@ -9,7 +9,9 @@ import 'package:invoiceninja_flutter/redux/company/company_reducer.dart';
 // We create the State reducer by combining many smaller reducers into one!
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
-    return AppState().rebuild((b) => b.authState.replace(state.authState));
+    return AppState().rebuild((b) => b
+        ..authState.replace(state.authState)
+        ..uiState.enableDarkMode = state.uiState.enableDarkMode);
   } else if (action is LoadStateSuccess) {
     return action.state.rebuild((b) => b
         ..isLoading = false
@@ -32,6 +34,6 @@ AppState appReducer(AppState state, dynamic action) {
         ? companyReducer(state.companyState4, action) : state.companyState4)
     ..companyState5.replace(state.uiState.selectedCompanyIndex == 5
         ? companyReducer(state.companyState5, action) : state.companyState5)
-      ..uiState.replace(uiReducer(state.uiState, action))
+    ..uiState.replace(uiReducer(state.uiState, action))
   );
 }

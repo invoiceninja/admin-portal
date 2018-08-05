@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -19,6 +18,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   final viewClient = _viewClient();
   final editClient = _editClient();
   final loadClients = _loadClients(repository);
+  final loadClient = _loadClient(repository);
   final saveClient = _saveClient(repository);
   final archiveClient = _archiveClient(repository);
   final deleteClient = _deleteClient(repository);
@@ -29,6 +29,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
     TypedMiddleware<AppState, ViewClient>(viewClient),
     TypedMiddleware<AppState, EditClient>(editClient),
     TypedMiddleware<AppState, LoadClients>(loadClients),
+    TypedMiddleware<AppState, LoadClient>(loadClient),
     TypedMiddleware<AppState, SaveClientRequest>(saveClient),
     TypedMiddleware<AppState, ArchiveClientRequest>(archiveClient),
     TypedMiddleware<AppState, DeleteClientRequest>(deleteClient),
@@ -40,15 +41,15 @@ Middleware<AppState> _editClient() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
-    final message = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+    if (action.trackRoute) {
+      store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
+    }
 
-    /*
-    Scaffold.of(action.context).showSnackBar(SnackBar(
-        content: SnackBarRow(
-          message: message,
-        )));
-        */
+    final client = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+
+    if (action.completer != null && client != null) {
+      action.completer.complete(client);
+    }
   };
 }
 
@@ -57,14 +58,7 @@ Middleware<AppState> _viewClient() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
-    final message = await Navigator.of(action.context).pushNamed(ClientViewScreen.route);
-
-    /*
-    Scaffold.of(action.context).showSnackBar(SnackBar(
-        content: SnackBarRow(
-          message: message,
-        )));
-        */
+    Navigator.of(action.context).pushNamed(ClientViewScreen.route);
   };
 }
 
@@ -157,11 +151,42 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
       } else {
         store.dispatch(SaveClientSuccess(client));
       }
-      action.completer.complete(null);
+      action.completer.complete(client);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveClientFailure(error));
       action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _loadClient(ClientRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+
+    final AppState state = store.state;
+
+    if (state.isLoading) {
+      next(action);
+      return;
+    }
+
+    store.dispatch(LoadClientRequest());
+    repository
+        .loadItem(state.selectedCompany, state.authState, action.clientId, action.loadActivities)
+        .then((client) {
+      store.dispatch(LoadClientSuccess(client));
+
+      if (action.completer != null) {
+        action.completer.complete(client);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadClientFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);

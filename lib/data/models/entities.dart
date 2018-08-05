@@ -61,8 +61,8 @@ abstract class SelectableEntity {
   @nullable
   int get id;
 
-  bool matchesSearch(String search) => true;
-  String matchesSearchValue(String search) => null;
+  bool matchesFilter(String filter) => true;
+  String matchesFilterValue(String filter) => null;
 
   String get listDisplayName => 'Error: listDisplayName not set';
 
@@ -244,5 +244,107 @@ abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntity
   @nullable
   int get activeClients;
 
+  BuiltList<ActivityEntity> get activities;
+
   static Serializer<DashboardEntity> get serializer => _$dashboardEntitySerializer;
+}
+
+
+abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBuilder> {
+
+  factory ActivityEntity([void updates(ActivityEntityBuilder b)]) = _$ActivityEntity;
+  ActivityEntity._();
+
+  @BuiltValueField(wireName: 'id')
+  String get key;
+
+  @BuiltValueField(wireName: 'activity_type_id')
+  int get activityTypeId;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_id')
+  int get clientId;
+
+  @BuiltValueField(wireName: 'user_id')
+  int get userId;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_id')
+  int get invoiceId;
+
+  @nullable
+  @BuiltValueField(wireName: 'payment_id')
+  int get paymentId;
+
+  @nullable
+  @BuiltValueField(wireName: 'credit_id')
+  int get creditId;
+
+  @BuiltValueField(wireName: 'updated_at')
+  int get updatedAt;
+
+  @nullable
+  @BuiltValueField(wireName: 'expense_id')
+  int get expenseId;
+
+  @nullable
+  @BuiltValueField(wireName: 'is_system')
+  bool get isSystem;
+
+  @nullable
+  @BuiltValueField(wireName: 'contact_id')
+  int get contactId;
+
+  @nullable
+  @BuiltValueField(wireName: 'task_id')
+  int get taskId;
+
+  EntityType get entityType {
+    if ([1, 2, 3, 26].contains(activityTypeId)) {
+      return EntityType.client;
+    } else if ([4, 5, 6, 7, 8, 9, 25].contains(activityTypeId)) {
+      return EntityType.invoice;
+    } else if ([10, 11, 12, 13, 27].contains(activityTypeId)) {
+      return EntityType.payment;
+    } else if ([14, 15, 16, 17, 28].contains(activityTypeId)) {
+      return EntityType.credit;
+    } else if ([18, 19, 20, 21, 22, 23, 24, 29].contains(activityTypeId)) {
+      return EntityType.quote;
+    } else if ([30, 31, 32, 33].contains(activityTypeId)) {
+      return EntityType.vendor;
+    } else if ([34, 35, 36, 37, 47].contains(activityTypeId)) {
+      return EntityType.expense;
+    } else if ([42, 43, 44, 45, 46].contains(activityTypeId)) {
+      return EntityType.task;
+    } else {
+      return null;
+    }
+  }
+
+  String getDescription(String activity, {
+    UserEntity user,
+    ClientEntity client,
+    InvoiceEntity invoice,
+    //ContactEntity contact,
+    PaymentEntity payment,
+    CreditEntity credit,
+    //QuoteEntity quote,
+    TaskEntity task,
+    ExpenseEntity expense,
+    VendorEntity vendor,
+  }) {
+    activity = activity.replaceFirst(':user', user?.fullName ?? '');
+    activity = activity.replaceFirst(':client', client?.displayName ?? '');
+    activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
+    activity = activity.replaceFirst(':contact', client?.displayName ?? '');
+    activity = activity.replaceFirst(':payment', payment?.transactionReference ?? '');
+    activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');
+    activity = activity.replaceFirst(':task', task?.description ?? '');
+    activity = activity.replaceFirst(':expense', expense?.privateNotes ?? '');
+    activity = activity.replaceFirst(':vendor', vendor?.name ?? '');
+
+    return activity;
+  }
+
+  static Serializer<ActivityEntity> get serializer => _$activityEntitySerializer;
 }

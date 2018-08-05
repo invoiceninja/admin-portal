@@ -30,7 +30,12 @@ class WebClient {
 
     if (! url.contains('?')) 
       url += '?';
-    url += '&per_page=$kMaxRecordsPerApiPage';
+
+    if (url.contains('invoiceninja.com')) {
+      url += '&per_page=$kMaxRecordsPerApiPage';
+    } else {
+      url += '&per_page=999999';
+    }
 
     final http.Response response = await http.Client().get(
       url,

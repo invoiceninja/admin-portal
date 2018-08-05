@@ -46,16 +46,16 @@ abstract class LanguageEntity extends Object with SelectableEntity implements Bu
   String get locale;
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    search = search.toLowerCase();
+    filter = filter.toLowerCase();
 
-    if (name.toLowerCase().contains(search)) {
+    if (name.toLowerCase().contains(filter)) {
       return true;
-    } else if (locale.toLowerCase().contains(search)) {
+    } else if (locale.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -63,14 +63,14 @@ abstract class LanguageEntity extends Object with SelectableEntity implements Bu
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
-    search = search.toLowerCase();
+    filter = filter.toLowerCase();
 
-    if (locale.toLowerCase().contains(search)) {
+    if (locale.toLowerCase().contains(filter)) {
       return locale;
     }
 

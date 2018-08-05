@@ -45,6 +45,7 @@ abstract class ClientUIState extends Object with EntityUIState implements Built<
     return _$ClientUIState._(
       listUIState: ListUIState(ClientFields.name),
       editing: ClientEntity(),
+      editingContact: ContactEntity(),
       selectedId: 0,
     );
   }
@@ -52,6 +53,9 @@ abstract class ClientUIState extends Object with EntityUIState implements Built<
 
   @nullable
   ClientEntity get editing;
+
+  @nullable
+  ContactEntity get editingContact;
 
   @override
   bool get isCreatingNew => editing.isNew;

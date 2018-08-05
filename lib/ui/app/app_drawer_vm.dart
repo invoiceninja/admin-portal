@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -29,7 +27,6 @@ class AppDrawerVM {
   final CompanyEntity selectedCompany;
   final String selectedCompanyIndex;
   final Function(BuildContext context, String) onCompanyChanged;
-  final Function(BuildContext context) onLogoutTapped;
   final bool isLoading;
 
   AppDrawerVM({
@@ -37,7 +34,6 @@ class AppDrawerVM {
     @required this.selectedCompany,
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
-    @required this.onLogoutTapped,
     @required this.isLoading,
 });
 
@@ -52,13 +48,6 @@ class AppDrawerVM {
       onCompanyChanged: (BuildContext context, String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
       },
-      onLogoutTapped: (BuildContext context) {
-        while(Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        }
-        Navigator.of(context).pushReplacementNamed(LoginScreen.route);
-        store.dispatch(UserLogout());
-      }
     );
   }
 }

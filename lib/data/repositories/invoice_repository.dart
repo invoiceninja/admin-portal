@@ -15,6 +15,17 @@ class InvoiceRepository {
     this.webClient = const WebClient(),
   });
 
+  Future<InvoiceEntity> loadItem(CompanyEntity company, AuthState auth, int entityId) async {
+
+    final dynamic response = await webClient.get(
+        '${auth.url}/invoices/$entityId?include=invitations', company.token);
+
+    final InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
+        InvoiceItemResponse.serializer, response);
+
+    return invoiceResponse.data;
+  }
+
   Future<BuiltList<InvoiceEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
     final dynamic response = await webClient.get(
@@ -26,7 +37,7 @@ class InvoiceRepository {
     return invoiceResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, InvoiceEntity invoice, [EntityAction action]) async {
+  Future<InvoiceEntity> saveData(CompanyEntity company, AuthState auth, InvoiceEntity invoice, [EntityAction action]) async {
 
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     dynamic response;

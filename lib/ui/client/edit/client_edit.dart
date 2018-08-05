@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_billing_address.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_shipping_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/save_icon_button.dart';
-import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts.dart';
 
 class ClientEdit extends StatefulWidget {
   final ClientEditVM viewModel;
@@ -18,7 +18,7 @@ class ClientEdit extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ClientEditState createState() => new _ClientEditState();
+  _ClientEditState createState() => _ClientEditState();
 }
 
 class _ClientEditState extends State<ClientEdit>
@@ -29,7 +29,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 5);
+    _controller = TabController(vsync: this, length: 5);
   }
 
   @override
@@ -97,9 +97,7 @@ class _ClientEditState extends State<ClientEdit>
               ClientEditDetails(
                 viewModel: widget.viewModel,
               ),
-              ClientEditContacts(
-                viewModel: widget.viewModel,
-              ),
+              ClientEditContactsScreen(),
               ClientEditSettings(
                 viewModel: widget.viewModel,
               ),

@@ -80,7 +80,7 @@ class AppLocalization {
       'successfully_archived_product': 'Successfully archived product',
       'successfully_deleted_product': 'Successfully deleted product',
       'successfully_restored_product': 'Successfully restored product',
-      'productKey': 'Product',
+      'product_key': 'Product',
       'notes': 'Notes',
       'cost': 'Cost',
 
@@ -171,6 +171,12 @@ class AppLocalization {
       'successfully_marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Done',
       'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'dark_mode': 'Dark Mode',
+      'restart_app_to_apply_change': 'Restart the app to apply the change',
+      'refresh_data': 'Refresh Data',
+      'blank_contact': 'Blank Contact',
+      'activity': 'Activity',
+      'no_records_found': 'No records found',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -190,7 +196,52 @@ class AppLocalization {
       'project': 'Project',
       'projects': 'Projects',
 
-
+      'activity_1': ':user created client :client',
+      'activity_2': ':user archived client :client',
+      'activity_3': ':user deleted client :client',
+      'activity_4': ':user created invoice :invoice',
+      'activity_5': ':user updated invoice :invoice',
+      'activity_6': ':user emailed invoice :invoice to :contact',
+      'activity_7': ':contact viewed invoice :invoice',
+      'activity_8': ':user archived invoice :invoice',
+      'activity_9': ':user deleted invoice :invoice',
+      'activity_10': ':contact entered payment :payment for :invoice',
+      'activity_11': ':user updated payment :payment',
+      'activity_12': ':user archived payment :payment',
+      'activity_13': ':user deleted payment :payment',
+      'activity_14': ':user entered :credit credit',
+      'activity_15': ':user updated :credit credit',
+      'activity_16': ':user archived :credit credit',
+      'activity_17': ':user deleted :credit credit',
+      'activity_18': ':user created quote :quote',
+      'activity_19': ':user updated quote :quote',
+      'activity_20': ':user emailed quote :quote to :contact',
+      'activity_21': ':contact viewed quote :quote',
+      'activity_22': ':user archived quote :quote',
+      'activity_23': ':user deleted quote :quote',
+      'activity_24': ':user restored quote :quote',
+      'activity_25': ':user restored invoice :invoice',
+      'activity_26': ':user restored client :client',
+      'activity_27': ':user restored payment :payment',
+      'activity_28': ':user restored :credit credit',
+      'activity_29': ':contact approved quote :quote',
+      'activity_30': ':user created vendor :vendor',
+      'activity_31': ':user archived vendor :vendor',
+      'activity_32': ':user deleted vendor :vendor',
+      'activity_33': ':user restored vendor :vendor',
+      'activity_34': ':user created expense :expense',
+      'activity_35': ':user archived expense :expense',
+      'activity_36': ':user deleted expense :expense',
+      'activity_37': ':user restored expense :expense',
+      'activity_39': ':user cancelled payment :payment',
+      'activity_40': ':user refunded payment :payment',
+      'activity_41': 'Payment :payment failed',
+      'activity_42': ':user created task :task',
+      'activity_43': ':user updated task :task',
+      'activity_44': ':user archived task :task',
+      'activity_45': ':user deleted task :task',
+      'activity_46': ':user restored task :task',
+      'activity_47': ':user updated expense :expense',
 
     },
   };
@@ -352,6 +403,12 @@ class AppLocalization {
   String get successfullyMarkedInvoiceAsSent => _localizedValues[locale.languageCode]['successfully_marked_invoice_as_sent'];
   String get done => _localizedValues[locale.languageCode]['done'];
   String get pleaseEnterAClientOrContactName => _localizedValues[locale.languageCode]['please_enter_a_client_or_contact_name'];
+  String get darkMode => _localizedValues[locale.languageCode]['dark_mode'];
+  String get restartAppToApplyChange => _localizedValues[locale.languageCode]['restart_app_to_apply_change'];
+  String get refreshData => _localizedValues[locale.languageCode]['refresh_data'];
+  String get blankContact => _localizedValues[locale.languageCode]['blank_contact'];
+  String get activity => _localizedValues[locale.languageCode]['activity'];
+  String get noRecordsFound => _localizedValues[locale.languageCode]['no_records_found'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
@@ -371,8 +428,55 @@ class AppLocalization {
   String get project => _localizedValues[locale.languageCode]['project'];
   String get projects => _localizedValues[locale.languageCode]['projects'];
 
+  String get activity_1 => _localizedValues[locale.languageCode]['activity_1'];
+  String get activity_2 => _localizedValues[locale.languageCode]['activity_2'];
+  String get activity_3 => _localizedValues[locale.languageCode]['activity_3'];
+  String get activity_4 => _localizedValues[locale.languageCode]['activity_4'];
+  String get activity_5 => _localizedValues[locale.languageCode]['activity_5'];
+  String get activity_6 => _localizedValues[locale.languageCode]['activity_6'];
+  String get activity_7 => _localizedValues[locale.languageCode]['activity_7'];
+  String get activity_8 => _localizedValues[locale.languageCode]['activity_8'];
+  String get activity_9 => _localizedValues[locale.languageCode]['activity_9'];
+  String get activity_10 => _localizedValues[locale.languageCode]['activity_10'];
+  String get activity_11 => _localizedValues[locale.languageCode]['activity_11'];
+  String get activity_12 => _localizedValues[locale.languageCode]['activity_12'];
+  String get activity_13 => _localizedValues[locale.languageCode]['activity_13'];
+  String get activity_14 => _localizedValues[locale.languageCode]['activity_14'];
+  String get activity_15 => _localizedValues[locale.languageCode]['activity_15'];
+  String get activity_16 => _localizedValues[locale.languageCode]['activity_16'];
+  String get activity_17 => _localizedValues[locale.languageCode]['activity_17'];
+  String get activity_18 => _localizedValues[locale.languageCode]['activity_18'];
+  String get activity_19 => _localizedValues[locale.languageCode]['activity_19'];
+  String get activity_20 => _localizedValues[locale.languageCode]['activity_20'];
+  String get activity_21 => _localizedValues[locale.languageCode]['activity_21'];
+  String get activity_22 => _localizedValues[locale.languageCode]['activity_22'];
+  String get activity_23 => _localizedValues[locale.languageCode]['activity_23'];
+  String get activity_24 => _localizedValues[locale.languageCode]['activity_24'];
+  String get activity_25 => _localizedValues[locale.languageCode]['activity_25'];
+  String get activity_26 => _localizedValues[locale.languageCode]['activity_26'];
+  String get activity_27 => _localizedValues[locale.languageCode]['activity_27'];
+  String get activity_28 => _localizedValues[locale.languageCode]['activity_28'];
+  String get activity_29 => _localizedValues[locale.languageCode]['activity_29'];
+  String get activity_30 => _localizedValues[locale.languageCode]['activity_30'];
+  String get activity_31 => _localizedValues[locale.languageCode]['activity_31'];
+  String get activity_32 => _localizedValues[locale.languageCode]['activity_32'];
+  String get activity_33 => _localizedValues[locale.languageCode]['activity_33'];
+  String get activity_34 => _localizedValues[locale.languageCode]['activity_34'];
+  String get activity_35 => _localizedValues[locale.languageCode]['activity_35'];
+  String get activity_36 => _localizedValues[locale.languageCode]['activity_36'];
+  String get activity_37 => _localizedValues[locale.languageCode]['activity_37'];
+  String get activity_38 => _localizedValues[locale.languageCode]['activity_38'];
+  String get activity_39 => _localizedValues[locale.languageCode]['activity_39'];
+  String get activity_40 => _localizedValues[locale.languageCode]['activity_40'];
+  String get activity_41 => _localizedValues[locale.languageCode]['activity_41'];
+  String get activity_42 => _localizedValues[locale.languageCode]['activity_42'];
+  String get activity_43 => _localizedValues[locale.languageCode]['activity_43'];
+  String get activity_44 => _localizedValues[locale.languageCode]['activity_44'];
+  String get activity_45 => _localizedValues[locale.languageCode]['activity_45'];
+  String get activity_46 => _localizedValues[locale.languageCode]['activity_46'];
+  String get activity_47 => _localizedValues[locale.languageCode]['activity_47'];
 
-  String lookup(String key) {    
+  String lookup(String key) {
     return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? key;
   }
 }
@@ -387,7 +491,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
 
   @override
   Future<AppLocalization> load(Locale locale) {
-    return new SynchronousFuture<AppLocalization>(new AppLocalization(locale));
+    return SynchronousFuture<AppLocalization>(AppLocalization(locale));
   }
 
   @override

@@ -1,6 +1,7 @@
-import 'package:built_collection/built_collection.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -8,11 +9,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
-    @required this.productMap,
     this.onItemsSelected,
   });
 
-  final BuiltMap<int, ProductEntity> productMap;
   final Function(List<InvoiceItemEntity>) onItemsSelected;
 
   @override
@@ -37,11 +36,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     Navigator.pop(context);
   }
 
-  void _onItemsSelected() {
+  void _onItemsSelected(BuildContext context) {
     final List<InvoiceItemEntity> items = [];
+    final state = StoreProvider.of<AppState>(context).state;
 
     _selectedIds.forEach((entityId) {
-      final product = widget.productMap[entityId];
+      final product = state.productState.map[entityId];
       items.add(product.asInvoiceItem);
     });
 
@@ -123,7 +123,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
               _selectedIds.isNotEmpty
                   ? IconButton(
                       icon: Icon(Icons.check),
-                      onPressed: () => _onItemsSelected(),
+                      onPressed: () => _onItemsSelected(context),
                     )
                   : IconButton(
                       icon: Icon(Icons.add_circle_outline),
@@ -136,21 +136,22 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     }
 
     Widget _entityList() {
-      final matches = memoizedProductList(widget.productMap).where((entityId) {
-        final entity = widget.productMap[entityId];
-        return entity.isActive && entity.matchesSearch(_filter);
+      final state = StoreProvider.of<AppState>(context).state;
+      final matches = memoizedProductList(state.productState.map).where((entityId) {
+        final entity = state.productState.map[entityId];
+        return entity.isActive && entity.matchesFilter(_filter);
       }).toList();
 
       matches.sort((idA, idB) =>
-          widget.productMap[idA].compareTo(widget.productMap[idB]));
+          state.productState.map[idA].compareTo(state.productState.map[idB]));
 
       return ListView.builder(
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final int entityId = matches[index];
-          final entity = widget.productMap[entityId];
-          final String subtitle = entity.matchesSearchValue(_filter);
+          final entity = state.productState.map[entityId];
+          final String subtitle = entity.matchesFilterValue(_filter);
           return ListTile(
             dense: true,
             leading: Checkbox(
@@ -174,7 +175,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                 _toggleEntity(entityId);
               } else {
                 _selectedIds.add(entityId);
-                _onItemsSelected();
+                _onItemsSelected(context);
               }
             },
           );
@@ -184,13 +185,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        child: Material(
-          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            _headerRow(),
-            _entityList(),
-          ]),
-        ),
+      child: Material(
+        elevation: 4.0,
+        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          _headerRow(),
+          Expanded(child: _entityList()),
+        ]),
       ),
     );
   }

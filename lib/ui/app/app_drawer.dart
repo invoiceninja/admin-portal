@@ -8,7 +8,9 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -41,6 +43,7 @@ class AppDrawer extends StatelessWidget {
           isDense: true,
           value: viewModel.selectedCompanyIndex,
           items: viewModel.companies
+              .where((CompanyEntity company) => company.name.isNotEmpty)
               .map((CompanyEntity company) => DropdownMenuItem<String>(
                     value:
                         (viewModel.companies.indexOf(company) + 1).toString(),
@@ -59,7 +62,8 @@ class AppDrawer extends StatelessWidget {
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
-    final TextStyle linkStyle = themeData.textTheme.body2.copyWith(color: themeData.accentColor);
+    final TextStyle linkStyle =
+        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
 
     return Drawer(
       child: ListView(
@@ -70,14 +74,15 @@ class AppDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
-                      child: viewModel.selectedCompany.logoUrl != null
-                          //? Image.network(viewModel.selectedCompany.logoUrl)
+                      child: viewModel.selectedCompany.logoUrl != null &&
+                              viewModel.selectedCompany.logoUrl.isNotEmpty
                           ? CachedNetworkImage(
                               imageUrl: viewModel.selectedCompany.logoUrl,
                               placeholder: CircularProgressIndicator(),
                               errorWidget: Icon(Icons.error),
                             )
-                          : null),
+                          : Image.asset('assets/images/logo.png',
+                              width: 100.0, height: 100.0)),
                 ),
                 SizedBox(
                   height: 18.0,
@@ -134,10 +139,11 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            icon: FontAwesomeIcons.powerOff,
-            title: AppLocalization.of(context).logOut,
+            icon: FontAwesomeIcons.cog,
+            title: AppLocalization.of(context).settings,
             onTap: () {
-              viewModel.onLogoutTapped(context);
+              store.dispatch(UpdateCurrentRoute(SettingsScreen.route));
+              navigator.pushReplacementNamed(SettingsScreen.route);
             },
           ),
           AboutListTile(
@@ -151,21 +157,22 @@ class AppDrawer extends StatelessWidget {
             applicationVersion: 'Version ' + kAppVersion + ' - BETA',
             applicationLegalese: '© 2018 Invoice Ninja',
             aboutBoxChildren: <Widget>[
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 24.0),
-                child: new RichText(
-                  text: new TextSpan(
+                child: RichText(
+                  text: TextSpan(
                     children: <TextSpan>[
-                      new TextSpan(
+                      TextSpan(
                         style: aboutTextStyle,
-                        text: 'Thanks for trying out the beta! Please join us on the #mobile channel on ',
+                        text:
+                            'Thanks for trying out the beta! Please join us on the #mobile channel on ',
                       ),
-                      new _LinkTextSpan(
+                      _LinkTextSpan(
                         style: linkStyle,
                         url: 'http://slack.invoiceninja.com',
                         text: 'Slack',
                       ),
-                      new TextSpan(
+                      TextSpan(
                         style: aboutTextStyle,
                         text: ' to help make the app better.',
                       ),
@@ -224,12 +231,12 @@ class DrawerTile extends StatelessWidget {
 */
 
 class _LinkTextSpan extends TextSpan {
-
-  _LinkTextSpan({ TextStyle style, String url, String text }) : super(
-      style: style,
-      text: text ?? url,
-      recognizer: new TapGestureRecognizer()..onTap = () {
-        launch(url, forceSafariVC: false);
-      }
-  );
+  _LinkTextSpan({TextStyle style, String url, String text})
+      : super(
+            style: style,
+            text: text ?? url,
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                launch(url, forceSafariVC: false);
+              });
 }

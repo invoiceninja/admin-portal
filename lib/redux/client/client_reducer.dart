@@ -10,8 +10,18 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(clientListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
+    ..editingContact.replace(editingContactReducer(state.editingContact, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
   );
+}
+
+final editingContactReducer = combineReducers<ContactEntity>([
+  TypedReducer<ContactEntity, EditClient>(editContact),
+  TypedReducer<ContactEntity, EditContact>(editContact),
+]);
+
+ContactEntity editContact(ContactEntity contact, dynamic action) {
+  return action.contact ?? ContactEntity();
 }
 
 Reducer<int> selectedIdReducer = combineReducers([
@@ -43,7 +53,7 @@ ClientEntity _updateEditing(ClientEntity client, dynamic action) {
 
 ClientEntity _addContact(ClientEntity client, AddContact action) {
   return client.rebuild((b) => b
-    ..contacts.add(ContactEntity())
+    ..contacts.add(action.contact ?? ContactEntity())
   );
 }
 
@@ -62,7 +72,7 @@ ClientEntity _updateContact(ClientEntity client, UpdateContact action) {
 final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
-  TypedReducer<ListUIState, SearchClients>(_searchClients),
+  TypedReducer<ListUIState, FilterClients>(_filterClients),
 ]);
 
 ListUIState _filterClientsByState(ListUIState clientListState, FilterClientsByState action) {
@@ -77,9 +87,9 @@ ListUIState _filterClientsByState(ListUIState clientListState, FilterClientsBySt
   }
 }
 
-ListUIState _searchClients(ListUIState clientListState, SearchClients action) {
+ListUIState _filterClients(ListUIState clientListState, FilterClients action) {
   return clientListState.rebuild((b) => b
-    ..search = action.search
+    ..filter = action.filter
   );
 }
 
@@ -96,6 +106,7 @@ final clientsReducer = combineReducers<ClientState>([
   TypedReducer<ClientState, AddClientSuccess>(_addClient),
   TypedReducer<ClientState, LoadClientsSuccess>(_setLoadedClients),
   TypedReducer<ClientState, LoadClientsFailure>(_setNoClients),
+  TypedReducer<ClientState, LoadClientSuccess>(_updateClient),
 
   TypedReducer<ClientState, ArchiveClientRequest>(_archiveClientRequest),
   TypedReducer<ClientState, ArchiveClientSuccess>(_archiveClientSuccess),
@@ -187,7 +198,7 @@ ClientState _addClient(
 }
 
 ClientState _updateClient(
-    ClientState clientState, SaveClientSuccess action) {
+    ClientState clientState, dynamic action) {
   return clientState.rebuild((b) => b
       ..map[action.client.id] = action.client
   );

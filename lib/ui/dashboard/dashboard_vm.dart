@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_view.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
@@ -20,7 +20,7 @@ class DashboardBuilder extends StatelessWidget {
     return StoreConnector<AppState, DashboardVM>(
       converter: DashboardVM.fromStore,
       builder: (context, vm) {
-        return DashboardPanels(
+        return DashboardView(
           viewModel: vm
         );
       },
@@ -41,7 +41,7 @@ class DashboardVM {
 
   static DashboardVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<Null> completer = new Completer<Null>();
+      final Completer<Null> completer = Completer<Null>();
       store.dispatch(LoadDashboard(completer, true));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(

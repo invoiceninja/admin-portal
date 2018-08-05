@@ -40,7 +40,9 @@ class ClientViewVM {
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onInvoicesPressed;
+  final Function(BuildContext, bool) onRefreshed;
   final bool isSaving;
+  final bool isLoading;
   final bool isDirty;
 
   ClientViewVM({
@@ -51,29 +53,52 @@ class ClientViewVM {
     @required this.onInvoicesPressed,
     @required this.onBackPressed,
     @required this.isSaving,
+    @required this.isLoading,
     @required this.isDirty,
+    @required this.onRefreshed,
   });
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final client = state.clientState.map[state.clientUIState.selectedId];
 
+    Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
+      final Completer<ClientEntity> completer = Completer<ClientEntity>();
+      store.dispatch(LoadClient(completer: completer, clientId: client.id, loadActivities: loadActivities));
+      return completer.future.then((_) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+            content: SnackBarRow(
+              message: AppLocalization.of(context).refreshComplete,
+            )));
+      });
+    }
+
     return ClientViewVM(
         isSaving: state.isSaving,
+        isLoading: state.isLoading,
         isDirty: client.isNew,
         client: client,
         company: state.selectedCompany,
         onEditPressed: (BuildContext context) {
-          store.dispatch(EditClient(client: client, context: context));
+          final Completer<ClientEntity> completer = Completer<ClientEntity>();
+          store.dispatch(EditClient(client: client, context: context, completer: completer));
+          completer.future.then((client) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: AppLocalization.of(context).successfullyUpdatedClient,
+                )
+            ));
+          });
         },
         onInvoicesPressed: (BuildContext context) {
           store.dispatch(FilterInvoicesByClient(client.id));
           store.dispatch(ViewInvoiceList(context));
         },
+        onRefreshed: (context, loadActivities) => _handleRefresh(context, loadActivities),
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           switch (action) {
             case EntityAction.archive:

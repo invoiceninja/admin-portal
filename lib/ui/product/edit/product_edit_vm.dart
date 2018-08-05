@@ -72,7 +72,7 @@ class ProductEditVM {
           store.dispatch(UpdateCurrentRoute(ProductScreen.route));
         },
         onSavePressed: (BuildContext context) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           store.dispatch(
               SaveProductRequest(completer: completer, product: product));
           return completer.future.then((_) {
@@ -91,7 +91,7 @@ class ProductEditVM {
           });
         },
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           switch (action) {
             case EntityAction.archive:

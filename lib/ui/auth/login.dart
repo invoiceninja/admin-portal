@@ -10,20 +10,18 @@ import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class LoginView extends StatefulWidget {
   final bool isLoading;
-  final bool isDirty;
   final AuthState authState;
   final Function(BuildContext, String, String, String, String) onLoginPressed;
 
   const LoginView({
     Key key,
-    @required this.isDirty,
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginPressed,
   }) : super(key: key);
 
   @override
-  _LoginState createState() => new _LoginState();
+  _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<LoginView> {
@@ -34,10 +32,10 @@ class _LoginState extends State<LoginView> {
   final _urlController = TextEditingController();
   final _secretController = TextEditingController();
 
-  static final ValueKey _emailKey = new Key(LoginKeys.emailKeyString);
-  static final ValueKey _passwordKey = new Key(LoginKeys.passwordKeyString);
-  static final ValueKey _urlKey = new Key(LoginKeys.urlKeyString);
-  static final ValueKey _secretKey = new Key(LoginKeys.secretKeyString);
+  static final ValueKey _emailKey = Key(LoginKeys.emailKeyString);
+  static final ValueKey _passwordKey = Key(LoginKeys.passwordKeyString);
+  static final ValueKey _urlKey = Key(LoginKeys.urlKeyString);
+  static final ValueKey _secretKey = Key(LoginKeys.secretKeyString);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +71,7 @@ class _LoginState extends State<LoginView> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-          child: new Image.asset('assets/images/logo.png',
+          child: Image.asset('assets/images/logo.png',
               width: 100.0, height: 100.0),
         ),
         Form(
@@ -146,7 +144,6 @@ class _LoginState extends State<LoginView> {
         ProgressButton(
           label: AppLocalization.of(context).login.toUpperCase(),
           isLoading: widget.isLoading,
-          isDirty: widget.isDirty,
           onPressed: () {
             if (!_formKey.currentState.validate()) {
               return;

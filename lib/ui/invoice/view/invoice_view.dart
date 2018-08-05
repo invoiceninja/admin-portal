@@ -29,7 +29,6 @@ class _InvoiceViewState extends State<InvoiceView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
     final client = viewModel.client;
     final company = viewModel.company;
 
@@ -44,8 +43,8 @@ class _InvoiceViewState extends State<InvoiceView> {
           value1:
               formatNumber(invoice.amount, context, clientId: invoice.clientId),
           label2: localization.balanceDue,
-          value2:
-              formatNumber(invoice.balance, context, clientId: invoice.clientId),
+          value2: formatNumber(invoice.balance, context,
+              clientId: invoice.clientId),
         ),
       ];
 
@@ -57,10 +56,10 @@ class _InvoiceViewState extends State<InvoiceView> {
         InvoiceFields.dueDate: formatDate(invoice.dueDate, context),
         InvoiceFields.partial: formatNumber(invoice.partial, context,
             clientId: invoice.clientId, zeroIsNull: true),
-        InvoiceFields.partialDueDate: formatDate(invoice.partialDueDate, context),
+        InvoiceFields.partialDueDate:
+            formatDate(invoice.partialDueDate, context),
         InvoiceFields.poNumber: invoice.poNumber,
-        InvoiceFields.discount: formatNumber(
-            invoice.discount, context,
+        InvoiceFields.discount: formatNumber(invoice.discount, context,
             clientId: invoice.clientId,
             zeroIsNull: true,
             formatNumberType: invoice.isAmountDiscount
@@ -121,14 +120,13 @@ class _InvoiceViewState extends State<InvoiceView> {
           color: Theme.of(context).canvasColor,
           child: Padding(
             padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-            child: IgnorePointer(
-              child: GridView.count(
-                shrinkWrap: true,
-                primary: true,
-                crossAxisCount: 2,
-                children: fieldWidgets,
-                childAspectRatio: 3.5,
-              ),
+            child: GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              primary: true,
+              crossAxisCount: 2,
+              children: fieldWidgets,
+              childAspectRatio: 3.5,
             ),
           ),
         ),
@@ -151,9 +149,9 @@ class _InvoiceViewState extends State<InvoiceView> {
       invoice.invoiceItems.forEach((invoiceItem) {
         widgets.addAll([
           InvoiceItemListTile(
-              invoice: invoice,
-              invoiceItem: invoiceItem,
-              onTap: () => viewModel.onEditPressed(context, invoiceItem),
+            invoice: invoice,
+            invoiceItem: invoiceItem,
+            onTap: () => viewModel.onEditPressed(context, invoiceItem),
           ),
         ]);
       });
@@ -227,50 +225,79 @@ class _InvoiceViewState extends State<InvoiceView> {
         return true;
       },
       child: Scaffold(
-        appBar: AppBar(
-          title:
-              Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
-          actions: invoice.isNew
-              ? []
-              : [
-                  EditIconButton(
-                    isVisible: !invoice.isDeleted,
-                    onPressed: () => viewModel.onEditPressed(context),
-                  ),
-                  ActionMenuButton(
-                    customActions: [
-                      ! invoice.isPublic ?
-                      ActionMenuChoice(
-                        action: EntityAction.markSent,
-                        icon: Icons.publish,
-                        label: AppLocalization.of(context).markSent,
-                      ) : null,
-                      client.hasEmailAddress
-                          ? ActionMenuChoice(
-                              action: EntityAction.emailInvoice,
-                              icon: Icons.send,
-                              label: AppLocalization.of(context).email,
-                            )
-                          : null,
-                      ActionMenuChoice(
-                        action: EntityAction.pdf,
-                        icon: Icons.picture_as_pdf,
-                        label: AppLocalization.of(context).pdf,
-                      ),
-                    ],
-                    isSaving: viewModel.isSaving,
-                    entity: invoice,
-                    onSelected: viewModel.onActionSelected,
-                  )
-                ],
+        appBar: _CustomAppBar(
+          viewModel: viewModel,
         ),
-        body: Container(
-          color: Theme.of(context).backgroundColor,
-          child: ListView(
-            children: _buildView(),
-          ),
+        body: Builder(
+          builder: (BuildContext context) {
+            return RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: Container(
+                color: Theme.of(context).backgroundColor,
+                child: ListView(
+                  children: _buildView(),
+                ),
+              ),
+            );
+          },
         ),
       ),
+    );
+  }
+}
+
+class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _CustomAppBar({
+    @required this.viewModel,
+  });
+
+  final InvoiceViewVM viewModel;
+
+  @override
+  final Size preferredSize = const Size(double.infinity, 54.0);
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final invoice = viewModel.invoice;
+    final client = viewModel.client;
+
+    return AppBar(
+      title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
+      actions: invoice.isNew
+          ? []
+          : [
+              EditIconButton(
+                isVisible: !invoice.isDeleted,
+                onPressed: () => viewModel.onEditPressed(context),
+              ),
+              ActionMenuButton(
+                customActions: [
+                  !invoice.isPublic
+                      ? ActionMenuChoice(
+                          action: EntityAction.markSent,
+                          icon: Icons.publish,
+                          label: AppLocalization.of(context).markSent,
+                        )
+                      : null,
+                  client.hasEmailAddress
+                      ? ActionMenuChoice(
+                          action: EntityAction.emailInvoice,
+                          icon: Icons.send,
+                          label: AppLocalization.of(context).email,
+                        )
+                      : null,
+                  ActionMenuChoice(
+                    action: EntityAction.pdf,
+                    icon: Icons.picture_as_pdf,
+                    label: AppLocalization.of(context).pdf,
+                  ),
+                ],
+                isSaving: viewModel.isSaving,
+                entity: invoice,
+                onSelected: viewModel.onActionSelected,
+              )
+            ],
     );
   }
 }

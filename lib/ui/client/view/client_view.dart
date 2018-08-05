@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
@@ -20,7 +21,7 @@ class ClientView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ClientViewState createState() => new _ClientViewState();
+  _ClientViewState createState() => _ClientViewState();
 }
 
 class _ClientViewState extends State<ClientView>
@@ -30,7 +31,7 @@ class _ClientViewState extends State<ClientView>
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -52,45 +53,18 @@ class _ClientViewState extends State<ClientView>
         return true;
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        appBar: AppBar(
-          title: Text(
-              client.displayName ?? ''), // Text(localizations.clientDetails),
-          bottom: TabBar(
-            controller: _controller,
-            //isScrollable: true,
-            tabs: [
-              Tab(
-                text: localization.overview,
-              ),
-              Tab(
-                text: localization.details,
-              ),
-            ],
-          ),
-          actions: client.isNew
-              ? []
-              : [
-                  EditIconButton(
-                    isVisible: !client.isDeleted,
-                    onPressed: () => viewModel.onEditPressed(context),
-                  ),
-                  ActionMenuButton(
-                    isSaving: viewModel.isSaving,
-                    entity: client,
-                    onSelected: viewModel.onActionSelected,
-                  )
-                ],
-        ),
-        body: TabBarView(
+        appBar: _CustomAppBar(
+          viewModel: viewModel,
           controller: _controller,
-          children: <Widget>[
-            ClientOverview(viewModel: viewModel),
-            ClientViewDetails(client: client),
-          ],
+        ),
+        body: CustomTabBarView(
+          viewModel: viewModel,
+          controller: _controller,
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColorDark,
+          backgroundColor: Theme
+              .of(context)
+              .primaryColorDark,
           onPressed: () {
             showDialog<SimpleDialog>(
               context: context,
@@ -142,6 +116,118 @@ class _ClientViewState extends State<ClientView>
           tooltip: localization.create,
         ),
       ),
+    );
+  }
+}
+
+class CustomTabBarView extends StatefulWidget {
+  const CustomTabBarView({
+    @required this.viewModel,
+    @required this.controller,
+  });
+
+  final ClientViewVM viewModel;
+  final TabController controller;
+
+  @override
+  _CustomTabBarViewState createState() => _CustomTabBarViewState();
+}
+
+class _CustomTabBarViewState extends State<CustomTabBarView> {
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_onTabChange);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onTabChange);
+    super.dispose();
+  }
+
+  void _onTabChange() {
+    final viewModel = widget.viewModel;
+
+    if (widget.controller.index == 2 && viewModel.client.activities.isEmpty &&
+        !viewModel.isLoading) {
+      viewModel.onRefreshed(context, true);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = widget.viewModel;
+
+    return TabBarView(
+      controller: widget.controller,
+      children: <Widget>[
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context, false),
+          child: ClientOverview(viewModel: viewModel),
+        ),
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context, false),
+          child: ClientViewDetails(client: viewModel.client),
+        ),
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context, true),
+          child: ClientViewActivity(client: viewModel.client),
+        ),
+      ],
+    );
+  }
+}
+
+class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _CustomAppBar({
+    @required this.viewModel,
+    @required this.controller,
+  });
+
+  final ClientViewVM viewModel;
+  final TabController controller;
+
+  @override
+  final Size preferredSize = const Size(double.infinity, 100.0);
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final client = viewModel.client;
+
+    return AppBar(
+      title:
+      Text(client.displayName ?? ''), // Text(localizations.clientDetails),
+      bottom: TabBar(
+        controller: controller,
+        //isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.overview,
+          ),
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.activity,
+          ),
+        ],
+      ),
+      actions: client.isNew
+          ? []
+          : [
+        EditIconButton(
+          isVisible: !client.isDeleted,
+          onPressed: () => viewModel.onEditPressed(context),
+        ),
+        ActionMenuButton(
+          isSaving: viewModel.isSaving,
+          entity: client,
+          onSelected: viewModel.onActionSelected,
+        )
+      ],
     );
   }
 }

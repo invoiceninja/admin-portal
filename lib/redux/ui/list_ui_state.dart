@@ -20,7 +20,7 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   ListUIState._();
 
   @nullable
-  String get search;
+  String get filter;
 
   @nullable
   int get filterClientId;
@@ -29,6 +29,9 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   bool get sortAscending;
   BuiltList<EntityState> get stateFilters;
   BuiltList<EntityStatus> get statusFilters;
+
+  bool get hasCustomStateFilters => stateFilters.length != 1 || stateFilters.first != EntityState.active;
+  bool get hasCustomStatusFilters => statusFilters.isNotEmpty;
 
   //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;
   static Serializer<ListUIState> get serializer => _$listUIStateSerializer;

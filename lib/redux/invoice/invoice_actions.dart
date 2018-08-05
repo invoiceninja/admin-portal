@@ -20,7 +20,8 @@ class EditInvoice implements PersistUI {
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
   final BuildContext context;
-  EditInvoice({this.invoice, this.context, this.invoiceItem});
+  final Completer completer;
+  EditInvoice({this.invoice, this.context, this.completer, this.invoiceItem});
 }
 
 class EditInvoiceItem implements PersistUI {
@@ -33,12 +34,40 @@ class UpdateInvoice implements PersistUI {
   UpdateInvoice(this.invoice);
 }
 
+class LoadInvoice {
+  final Completer completer;
+  final int invoiceId;
+
+  LoadInvoice({this.completer, this.invoiceId});
+}
 
 class LoadInvoices {
   final Completer completer;
   final bool force;
 
-  LoadInvoices([this.completer, this.force = false]);
+  LoadInvoices({this.completer, this.force = false});
+}
+
+class LoadInvoiceRequest implements StartLoading {}
+
+class LoadInvoiceFailure implements StopLoading {
+  final dynamic error;
+  LoadInvoiceFailure(this.error);
+
+  @override
+  String toString() {
+    return 'LoadInvoiceFailure{error: $error}';
+  }
+}
+
+class LoadInvoiceSuccess implements StopLoading, PersistData {
+  final InvoiceEntity invoice;
+  LoadInvoiceSuccess(this.invoice);
+
+  @override
+  String toString() {
+    return 'LoadInvoiceSuccess{invoice: $invoice}';
+  }
 }
 
 class LoadInvoicesRequest implements StartLoading {}
@@ -190,10 +219,9 @@ class RestoreInvoiceFailure implements StopSaving {
 
 
 
-
-class SearchInvoices {
-  final String search;
-  SearchInvoices(this.search);
+class FilterInvoices {
+  final String filter;
+  FilterInvoices(this.filter);
 }
 
 class SortInvoices implements PersistUI {

@@ -14,7 +14,7 @@ class ClientViewDetails extends StatefulWidget {
   final ClientEntity client;
 
   @override
-  _ClientViewDetailsState createState() => new _ClientViewDetailsState();
+  _ClientViewDetailsState createState() => _ClientViewDetailsState();
 }
 
 class _ClientViewDetailsState extends State<ClientViewDetails> {
@@ -32,7 +32,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
   Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
     final localization = AppLocalization.of(context);
     if (snapshot.hasError) {
-      return new Text('${localization.error}: ${snapshot.error}');
+      return Text('${localization.error}: ${snapshot.error}');
     } else {
       return const Text('');
     }
@@ -45,11 +45,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
 
     List<Widget> _buildDetailsList() {
       final listTiles = <Widget>[];
-
-      listTiles
-          .add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
-
       final contacts = client.contacts;
+
       contacts.forEach((contact) {
         if ((contact.email ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
@@ -102,6 +99,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
+      /*
       if (listTiles.isNotEmpty) {
         listTiles.add(
           Container(
@@ -110,6 +108,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           ),
         );
       }
+      */
 
       if ((client.vatNumber ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
@@ -157,6 +156,9 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
                           object: client, delimiter: ',', isShipping: true)));
             }));
       }
+
+      listTiles
+          .add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
 
       return listTiles;
     }

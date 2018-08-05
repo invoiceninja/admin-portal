@@ -18,8 +18,16 @@ class ViewClient implements PersistUI {
 
 class EditClient implements PersistUI {
   final ClientEntity client;
+  final ContactEntity contact;
   final BuildContext context;
-  EditClient({this.client, this.context});
+  final Completer completer;
+  final bool trackRoute;
+  EditClient({this.client, this.contact, this.context, this.completer, this.trackRoute = true});
+}
+
+class EditContact implements PersistUI {
+  final ContactEntity contact;
+  EditContact([this.contact]);
 }
 
 class UpdateClient implements PersistUI {
@@ -27,12 +35,48 @@ class UpdateClient implements PersistUI {
   UpdateClient(this.client);
 }
 
+class LoadClient {
+  final Completer completer;
+  final int clientId;
+  final bool loadActivities;
+
+  LoadClient({this.completer, this.clientId, this.loadActivities});
+}
+
+class LoadClientActivity {
+  final Completer completer;
+  final int clientId;
+
+  LoadClientActivity({this.completer, this.clientId});
+}
 
 class LoadClients {
   final Completer completer;
   final bool force;
 
-  LoadClients([this.completer, this.force = false]);
+  LoadClients({this.completer, this.force = false});
+}
+
+class LoadClientRequest implements StartLoading {}
+
+class LoadClientFailure implements StopLoading {
+  final dynamic error;
+  LoadClientFailure(this.error);
+
+  @override
+  String toString() {
+    return 'LoadClientFailure{error: $error}';
+  }
+}
+
+class LoadClientSuccess implements StopLoading, PersistData {
+  final ClientEntity client;
+  LoadClientSuccess(this.client);
+
+  @override
+  String toString() {
+    return 'LoadClientSuccess{client: $client}';
+  }
 }
 
 class LoadClientsRequest implements StartLoading {}
@@ -58,7 +102,10 @@ class LoadClientsSuccess implements StopLoading, PersistData {
 }
 
 
-class AddContact implements PersistUI {}
+class AddContact implements PersistUI {
+  final ContactEntity contact;
+  AddContact([this.contact]);
+}
 
 class UpdateContact implements PersistUI {
   final int index;
@@ -146,9 +193,9 @@ class RestoreClientFailure implements StopSaving {
 
 
 
-class SearchClients {
-  final String search;
-  SearchClients(this.search);
+class FilterClients {
+  final String filter;
+  FilterClients(this.filter);
 }
 
 class SortClients implements PersistUI {

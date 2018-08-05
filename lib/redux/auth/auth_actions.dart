@@ -19,11 +19,10 @@ class LoadUserLogin {
 
 class UserLoginLoaded {
   final String email;
-  final String password;
   final String url;
   final String secret;
 
-  UserLoginLoaded(this.email, this.password, this.url, this.secret);
+  UserLoginLoaded(this.email, this.url, this.secret);
 }
 
 class UserLoginRequest implements StartLoading {
@@ -32,8 +31,9 @@ class UserLoginRequest implements StartLoading {
   final String password;
   final String url;
   final String secret;
+  final String platform;
 
-  UserLoginRequest(this.completer, this.email, this.password, this.url, this.secret);
+  UserLoginRequest({this.completer, this.email, this.password, this.url, this.secret, this.platform});
 }
 
 class UserLoginSuccess implements StopLoading {}

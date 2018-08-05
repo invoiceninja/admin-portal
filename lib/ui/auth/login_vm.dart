@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -24,7 +25,6 @@ class LoginScreen extends StatelessWidget {
         builder: (context, vm) {
           return LoginView(
             isLoading: vm.isLoading,
-            isDirty: vm.isDirty,
             authState: vm.authState,
             onLoginPressed: vm.onLoginPressed,
           );
@@ -36,20 +36,17 @@ class LoginScreen extends StatelessWidget {
 
 class LoginVM {
   bool isLoading;
-  bool isDirty;
   AuthState authState;
   final Function(BuildContext, String, String, String, String) onLoginPressed;
 
   LoginVM({
     @required this.isLoading,
-    @required this.isDirty,
     @required this.authState,
     @required this.onLoginPressed,
   });
 
   static LoginVM fromStore(Store<AppState> store) {
     return LoginVM(
-        isDirty: !store.state.authState.isAuthenticated,
         isLoading: store.state.isLoading,
         authState: store.state.authState,
         onLoginPressed: (BuildContext context, String email, String password,
@@ -58,9 +55,15 @@ class LoginVM {
             return;
           }
 
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           store.dispatch(UserLoginRequest(
-              completer, email.trim(), password.trim(), url.trim(), secret.trim()));
+              completer: completer,
+              email: email.trim(),
+              password: password.trim(),
+              url: url.trim(),
+              secret: secret.trim(),
+              platform: getPlatform(context),
+          ));
           completer.future.then((_) {
             Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
             store.dispatch(UpdateCurrentRoute(DashboardScreen.route));

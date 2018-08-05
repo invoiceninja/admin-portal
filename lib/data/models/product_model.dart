@@ -146,22 +146,22 @@ abstract class ProductEntity extends Object
   }
 
   @override
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    search = search.toLowerCase();
+    filter = filter.toLowerCase();
 
-    if (productKey.toLowerCase().contains(search)) {
+    if (productKey.toLowerCase().contains(filter)) {
       return true;
-    } else if (notes.toLowerCase().contains(search)) {
+    } else if (notes.toLowerCase().contains(filter)) {
       return true;
     } else if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(search)) {
+        customValue1.toLowerCase().contains(filter)) {
       return true;
     } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(search)) {
+        customValue2.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -169,19 +169,19 @@ abstract class ProductEntity extends Object
   }
 
   @override
-  String matchesSearchValue(String search) {
-    if (search == null || search.isEmpty) {
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
       return null;
     }
 
-    search = search.toLowerCase();
-    if (notes.toLowerCase().contains(search)) {
+    filter = filter.toLowerCase();
+    if (notes.toLowerCase().contains(filter)) {
       return notes;
     } else if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(search)) {
+        customValue1.toLowerCase().contains(filter)) {
       return customValue1;
     } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(search)) {
+        customValue2.toLowerCase().contains(filter)) {
       return customValue2;
     }
     return null;

@@ -90,7 +90,7 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
   TypedReducer<ListUIState, FilterInvoicesByStatus>(_filterInvoicesByStatus),
   TypedReducer<ListUIState, FilterInvoicesByClient>(_filterInvoicesByClient),
-  TypedReducer<ListUIState, SearchInvoices>(_searchInvoices),
+  TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
 ]);
 
 ListUIState _filterInvoicesByState(ListUIState invoiceListState, FilterInvoicesByState action) {
@@ -123,9 +123,9 @@ ListUIState _filterInvoicesByClient(ListUIState invoiceListState, FilterInvoices
   );
 }
 
-ListUIState _searchInvoices(ListUIState invoiceListState, SearchInvoices action) {
+ListUIState _filterInvoices(ListUIState invoiceListState, FilterInvoices action) {
   return invoiceListState.rebuild((b) => b
-    ..search = action.search
+    ..filter = action.filter
   );
 }
 
@@ -142,6 +142,7 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, AddInvoiceSuccess>(_addInvoice),
   TypedReducer<InvoiceState, LoadInvoicesSuccess>(_setLoadedInvoices),
   TypedReducer<InvoiceState, LoadInvoicesFailure>(_setNoInvoices),
+  TypedReducer<InvoiceState, LoadInvoiceSuccess>(_updateInvoice),
 
   TypedReducer<InvoiceState, MarkSentInvoiceSuccess>(_markSentInvoiceSuccess),
 
@@ -242,7 +243,7 @@ InvoiceState _addInvoice(
 }
 
 InvoiceState _updateInvoice(
-    InvoiceState invoiceState, SaveInvoiceSuccess action) {
+    InvoiceState invoiceState, dynamic action) {
   return invoiceState.rebuild((b) => b
       ..map[action.invoice.id] = action.invoice
   );

@@ -14,6 +14,19 @@ double round(double value, int precision) {
   return (value * fac).round() / fac;
 }
 
+double parseDouble(String value) {
+  // check for comma as decimal separator
+  final RegExp regExp = RegExp(r',[\d]{1,2}$');
+  if (regExp.hasMatch(value)) {
+    value = value.replaceAll('.', '');
+    value = value.replaceAll(',', '.');
+  }
+
+  value = value.replaceAll(RegExp(r'[^0-9\.\-]'), '');
+
+  return double.tryParse(value) ?? 0.0;
+}
+
 enum FormatNumberType {
   money, // $1,000.00
   percent, // 1,000.00%
@@ -67,15 +80,17 @@ String formatNumber(
 
   if (currency.id == kCurrencyEuro) {
     swapCurrencySymbol = country.swapCurrencySymbol;
-    if (country.thousandSeparator != null && country.thousandSeparator.isNotEmpty) {
+    if (country.thousandSeparator != null &&
+        country.thousandSeparator.isNotEmpty) {
       thousandSeparator = country.thousandSeparator;
     }
-    if (country.decimalSeparator != null && country.decimalSeparator.isNotEmpty) {
+    if (country.decimalSeparator != null &&
+        country.decimalSeparator.isNotEmpty) {
       decimalSeparator = country.decimalSeparator;
     }
   }
 
-  numberFormatSymbols['custom'] = new NumberSymbols(
+  numberFormatSymbols['custom'] = NumberSymbols(
     NAME: 'custom',
     DECIMAL_SEP: decimalSeparator,
     GROUP_SEP: thousandSeparator,
@@ -157,23 +172,34 @@ String convertDateTimeToSqlDate([DateTime date]) {
   return date.toIso8601String().split('T').first;
 }
 
-String formatDate(
-    String value,
-    BuildContext context,
-    ) {
+String convertTimestampToSqlDate(int timestamp) {
+  final DateTime date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  return date.toIso8601String();
+}
+
+String formatDate(String value, BuildContext context, {bool showTime = false}) {
   if (value == null || value.isEmpty) {
     return '';
   }
 
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.selectedCompany;
-  final dateFormats = state.staticState.dateFormatMap;
-  final dateFormatId = company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
-  final formatter = DateFormat(dateFormats[dateFormatId].format);
 
-  return formatter.format(DateTime.tryParse(value));
+  if (showTime) {
+    final dateTimeFormats = state.staticState.datetimeFormatMap;
+    final dateTimeFormatId = company.datetimeFormatId > 0
+        ? company.datetimeFormatId
+        : kDefaultDateTimeFormat;
+    final formatter = DateFormat(dateTimeFormats[dateTimeFormatId].format);
+    return formatter.format(DateTime.tryParse(value).toLocal());
+  } else {
+    final dateFormats = state.staticState.dateFormatMap;
+    final dateFormatId =
+        company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
+    final formatter = DateFormat(dateFormats[dateFormatId].format);
+    return formatter.format(DateTime.tryParse(value));
+  }
 }
-
 
 String formatApiUrlMachine(String url) => formatApiUrlReadable(url) + '/api/v1';
 

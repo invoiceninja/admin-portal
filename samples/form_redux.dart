@@ -246,7 +246,6 @@ class ContactsPage extends StatelessWidget {
             padding: const EdgeInsets.all(14.0),
             child: RaisedButton(
               elevation: 4.0,
-              color: Theme.of(context).primaryColorDark,
               textColor: Theme.of(context).secondaryHeaderColor,
               child: Text('ADD CONTACT'),
               onPressed: () {

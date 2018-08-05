@@ -2,41 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
-class AppSearch extends StatelessWidget {
+class ListFilter extends StatelessWidget {
   final EntityType entityType;
-  final String search;
-  final Function(String) onSearchChanged;
+  final String filter;
+  final Function(String) onFilterChanged;
 
-  const AppSearch({
+  const ListFilter({
     this.entityType,
-    this.search,
-    this.onSearchChanged,
+    this.filter,
+    this.onFilterChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return StoreConnector<AppState, ListUIState>(
-      converter: (Store<AppState> store) =>
-          store.state.getListState(entityType),
-      builder: (BuildContext context, listUIState) {
-        return listUIState.search == null
+    return StoreConnector<AppState, AppState>(
+      converter: (Store<AppState> store) => store.state,
+      builder: (BuildContext context, state) {
+        final listUIState = state.getListState(entityType);
+        final bool enableDarkMode = state.uiState.enableDarkMode;
+        return listUIState.filter == null
             ? Text(localization.lookup(entityType.plural.toString()))
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 height: 38.0,
                 margin: EdgeInsets.only(bottom: 2.0),
                 decoration: BoxDecoration(
-                    color: listUIState.search != null &&
-                            listUIState.search.isNotEmpty
-                        ? Colors.yellow[200]
-                        : Colors.grey[100],
-                    border: Border.all(color: Colors.grey[400], width: 1.0),
+                    color: listUIState.filter != null &&
+                            listUIState.filter.isNotEmpty
+                        ? enableDarkMode
+                            ? Colors.yellow.shade900
+                            : Colors.yellow.shade200
+                        : Theme.of(context).backgroundColor,
+                    border: Border.all(
+                        color: enableDarkMode
+                            ? Colors.grey.shade600
+                            : Colors.grey.shade400,
+                        width: 1.0),
                     borderRadius: BorderRadius.circular(6.0)),
                 child: TextField(
                   decoration: InputDecoration(
@@ -45,10 +51,10 @@ class AppSearch extends StatelessWidget {
                         child: Icon(Icons.search),
                       ),
                       border: InputBorder.none,
-                      hintText: localization.search),
+                      hintText: localization.filter),
                   autofocus: true,
                   autocorrect: false,
-                  onChanged: (value) => onSearchChanged(value),
+                  onChanged: (value) => onFilterChanged(value),
                 ),
               );
       },

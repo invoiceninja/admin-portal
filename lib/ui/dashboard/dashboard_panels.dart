@@ -90,11 +90,9 @@ class ColorIcon extends StatelessWidget {
         color: Colors.white,
         size: 30.0,
       ),
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: backgroundColor,
-        //backgroundImage: new BackgroundImage(
-        //image: new AssetImage('assets/cat.jpg'),
       ),
     );
   }

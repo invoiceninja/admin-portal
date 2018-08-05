@@ -15,6 +15,23 @@ class ClientRepository {
     this.webClient = const WebClient(),
   });
 
+  Future<ClientEntity> loadItem(CompanyEntity company, AuthState auth, int entityId, bool loadActivities) async {
+
+    String url = '${auth.url}/clients/$entityId';
+
+    if (loadActivities) {
+      url += '?include=activities';
+    }
+
+    final dynamic response = await webClient.get(
+        url, company.token);
+
+    final ClientItemResponse clientResponse = serializers.deserializeWith(
+        ClientItemResponse.serializer, response);
+
+    return clientResponse.data;
+  }
+
   Future<BuiltList<ClientEntity>> loadList(CompanyEntity company, AuthState auth) async {
 
     final dynamic response = await webClient.get(
@@ -26,7 +43,7 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, ClientEntity client, [EntityAction action]) async {
+  Future<ClientEntity> saveData(CompanyEntity company, AuthState auth, ClientEntity client, [EntityAction action]) async {
 
     final data = serializers.serializeWith(ClientEntity.serializer, client);
     dynamic response;

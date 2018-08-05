@@ -26,7 +26,7 @@ class ProductRepository {
     return productResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, ProductEntity product, [EntityAction action]) async {
+  Future<ProductEntity> saveData(CompanyEntity company, AuthState auth, ProductEntity product, [EntityAction action]) async {
 
     final data = serializers.serializeWith(ProductEntity.serializer, product);
     dynamic response;

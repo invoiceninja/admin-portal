@@ -18,10 +18,10 @@ List<int> productList(BuiltMap<int, ProductEntity> productMap) {
 var memoizedFilteredProductList = memo3((
     BuiltMap<int, ProductEntity> productMap,
     BuiltList<int> productList,
-    ListUIState productListState) => visibleProductsSelector(productMap, productList, productListState)
+    ListUIState productListState) => filteredProductsSelector(productMap, productList, productListState)
 );
 
-List<int> visibleProductsSelector(
+List<int> filteredProductsSelector(
     BuiltMap<int, ProductEntity> productMap,
     BuiltList<int> productList,
     ListUIState productListState) {
@@ -31,7 +31,7 @@ List<int> visibleProductsSelector(
     if (! product.matchesStates(productListState.stateFilters)) {
       return false;
     }
-    if (! product.matchesSearch(productListState.search)) {
+    if (! product.matchesFilter(productListState.filter)) {
       return false;
     }
     return true;

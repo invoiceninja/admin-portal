@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -54,8 +55,8 @@ class ClientListVM {
 
   static ClientListVM fromStore(Store<AppState> store) {
       Future<Null> _handleRefresh(BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(LoadClients(completer, true));
+        final Completer<Null> completer = Completer<Null>();
+        store.dispatch(LoadClients(completer: completer, force: true));
         return completer.future.then((_) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
@@ -65,18 +66,18 @@ class ClientListVM {
       }
 
     return ClientListVM(
-        clientList: memoizedClientList(store.state.clientState.map, store.state.clientState.list, store.state.clientListState),
+        clientList: memoizedFilteredClientList(store.state.clientState.map, store.state.clientState.list, store.state.clientListState),
         clientMap: store.state.clientState.map,
         isLoading: store.state.isLoading,
         isLoaded: store.state.clientState.isLoaded,
-        filter: store.state.clientListState.search,
+        filter: store.state.clientListState.filter,
         onClientTap: (context, client) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,
             DismissDirection direction) {
-          final Completer<Null> completer = new Completer<Null>();
+          final Completer<Null> completer = Completer<Null>();
           var message = '';
           if (direction == DismissDirection.endToStart) {
             if (client.isDeleted || client.isArchived) {
@@ -100,6 +101,12 @@ class ClientListVM {
                 content: SnackBarRow(
                   message: message,
                 )));
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
           });
         });
   }
