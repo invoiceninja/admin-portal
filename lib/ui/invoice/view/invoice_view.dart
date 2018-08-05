@@ -41,7 +41,7 @@ class _InvoiceViewState extends State<InvoiceView> {
               : InvoiceStatusColors.colors[invoice.invoiceStatusId])[200],
           label1: localization.totalAmount,
           value1:
-              formatNumber(invoice.amount, context, clientId: invoice.clientId),
+          formatNumber(invoice.amount, context, clientId: invoice.clientId),
           label2: localization.balanceDue,
           value2: formatNumber(invoice.balance, context,
               clientId: invoice.clientId),
@@ -57,7 +57,7 @@ class _InvoiceViewState extends State<InvoiceView> {
         InvoiceFields.partial: formatNumber(invoice.partial, context,
             clientId: invoice.clientId, zeroIsNull: true),
         InvoiceFields.partialDueDate:
-            formatDate(invoice.partialDueDate, context),
+        formatDate(invoice.partialDueDate, context),
         InvoiceFields.poNumber: invoice.poNumber,
         InvoiceFields.discount: formatNumber(invoice.discount, context,
             clientId: invoice.clientId,
@@ -92,11 +92,11 @@ class _InvoiceViewState extends State<InvoiceView> {
               ),
               Flexible(
                   child: Text(
-                value,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-              )),
+                    value,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )),
             ],
           ));
         }
@@ -267,37 +267,37 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: invoice.isNew
           ? []
           : [
-              EditIconButton(
-                isVisible: !invoice.isDeleted,
-                onPressed: () => viewModel.onEditPressed(context),
-              ),
-              ActionMenuButton(
-                customActions: [
-                  !invoice.isPublic
-                      ? ActionMenuChoice(
-                          action: EntityAction.markSent,
-                          icon: Icons.publish,
-                          label: AppLocalization.of(context).markSent,
-                        )
-                      : null,
-                  client.hasEmailAddress
-                      ? ActionMenuChoice(
-                          action: EntityAction.emailInvoice,
-                          icon: Icons.send,
-                          label: AppLocalization.of(context).email,
-                        )
-                      : null,
-                  ActionMenuChoice(
-                    action: EntityAction.pdf,
-                    icon: Icons.picture_as_pdf,
-                    label: AppLocalization.of(context).pdf,
-                  ),
-                ],
-                isSaving: viewModel.isSaving,
-                entity: invoice,
-                onSelected: viewModel.onActionSelected,
-              )
-            ],
+        EditIconButton(
+          isVisible: !invoice.isDeleted,
+          onPressed: () => viewModel.onEditPressed(context),
+        ),
+        ActionMenuButton(
+          customActions: [
+            !invoice.isPublic
+                ? ActionMenuChoice(
+              action: EntityAction.markSent,
+              icon: Icons.publish,
+              label: AppLocalization.of(context).markSent,
+            )
+                : null,
+            client.hasEmailAddress
+                ? ActionMenuChoice(
+              action: EntityAction.emailInvoice,
+              icon: Icons.send,
+              label: AppLocalization.of(context).email,
+            )
+                : null,
+            ActionMenuChoice(
+              action: EntityAction.pdf,
+              icon: Icons.picture_as_pdf,
+              label: AppLocalization.of(context).pdf,
+            ),
+          ],
+          isSaving: viewModel.isSaving,
+          entity: invoice,
+          onSelected: viewModel.onActionSelected,
+        )
+      ],
     );
   }
 }
