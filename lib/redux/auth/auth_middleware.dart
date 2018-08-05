@@ -63,7 +63,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         store.dispatch(LoadDataSuccess(completer: action.completer, loginResponse: data));
       } else {
         store.dispatch(UserLoginFailure(
-            'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion'));
+            'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
       }
     }).catchError((Object error) {
       print(error);
@@ -95,6 +95,7 @@ bool _isVersionSupported(String version) {
 
   final int major = int.parse(parts[0]);
   final int minor = int.parse(parts[1]);
+  final int patch = int.parse(parts[2]);
 
-  return major >= kMinMajorAppVersion && minor >= kMinMinorAppVersion;
+  return major >= kMinMajorAppVersion && minor >= kMinMinorAppVersion && patch >= kMinPatchAppVersion;
 }

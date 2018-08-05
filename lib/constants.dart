@@ -11,6 +11,7 @@ const String kSharedPrefAppVerson = 'app_version';
 
 const int kMinMajorAppVersion = 4;
 const int kMinMinorAppVersion = 5;
+const int kMinPatchAppVersion = 2;
 
 const int kMaxRecordsPerApiPage = 5000;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
