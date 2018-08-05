@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 class PersistUI {}
