@@ -20,15 +20,15 @@ class ListFilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return StoreConnector<AppState, ListUIState>(
+    return StoreConnector<AppState, String>(
       converter: (Store<AppState> store) =>
-          store.state.getListState(entityType),
+          entityType != null ? store.state.getListState(entityType).filter : store.state.uiState.filter,
       distinct: true,
-      builder: (BuildContext context, listUIState) {
+      builder: (BuildContext context, filter) {
         return IconButton(
-          icon: Icon(listUIState.filter == null ? Icons.search : Icons.close),
+          icon: Icon(filter == null ? Icons.search : Icons.close),
           tooltip: localization.filter,
-          onPressed: () => onFilterPressed(listUIState.filter == null ? '' : null),
+          onPressed: () => onFilterPressed(filter == null ? '' : null),
         );
       },
     );

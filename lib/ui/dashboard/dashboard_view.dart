@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
@@ -36,11 +41,24 @@ class _DashboardViewState extends State<DashboardView>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
 
     return Scaffold(
       drawer: AppDrawerBuilder(),
       appBar: AppBar(
-        title: Text(AppLocalization.of(context).dashboard),
+        title: ListFilter(
+          title: AppLocalization.of(context).dashboard,
+          onFilterChanged: (value) {
+            store.dispatch(FilterCompany(value));
+          },
+        ),
+        actions: <Widget>[
+          ListFilterButton(
+            onFilterPressed: (String value) {
+              store.dispatch(FilterCompany(value));
+            },
+          ),
+        ],
         bottom: TabBar(
           controller: _controller,
           tabs: [

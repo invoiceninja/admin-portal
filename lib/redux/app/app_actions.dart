@@ -36,3 +36,8 @@ class RefreshData {
   final Completer completer;
   RefreshData({this.platform, this.completer});
 }
+
+class FilterCompany {
+  final String filter;
+  FilterCompany(this.filter);
+}

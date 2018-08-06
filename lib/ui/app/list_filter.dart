@@ -8,11 +8,13 @@ import 'package:redux/redux.dart';
 class ListFilter extends StatelessWidget {
   final EntityType entityType;
   final String filter;
+  final String title;
   final Function(String) onFilterChanged;
 
   const ListFilter({
     this.entityType,
     this.filter,
+    this.title,
     this.onFilterChanged,
   });
 
@@ -23,17 +25,18 @@ class ListFilter extends StatelessWidget {
     return StoreConnector<AppState, AppState>(
       converter: (Store<AppState> store) => store.state,
       builder: (BuildContext context, state) {
-        final listUIState = state.getListState(entityType);
+        final filter = entityType != null
+            ? state.getListState(entityType).filter
+            : state.uiState.filter;
         final bool enableDarkMode = state.uiState.enableDarkMode;
-        return listUIState.filter == null
-            ? Text(localization.lookup(entityType.plural.toString()))
+        return filter == null
+            ? Text(title ?? localization.lookup(entityType.plural.toString()))
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 height: 38.0,
                 margin: EdgeInsets.only(bottom: 2.0),
                 decoration: BoxDecoration(
-                    color: listUIState.filter != null &&
-                            listUIState.filter.isNotEmpty
+                    color: filter != null && filter.isNotEmpty
                         ? enableDarkMode
                             ? Colors.yellow.shade900
                             : Colors.yellow.shade200
