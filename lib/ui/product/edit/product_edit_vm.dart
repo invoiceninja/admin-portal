@@ -106,11 +106,14 @@ class ProductEditVM {
               store.dispatch(RestoreProductRequest(completer, product.id));
               message = AppLocalization.of(context).successfullyRestoredProduct;
               break;
+            case EntityAction.clone:
+              store.dispatch(UpdateProduct(product.clone));
+              break;
           }
           return completer.future.then((_) {
             if ([EntityAction.archive, EntityAction.delete].contains(action)) {
               Navigator.of(context).pop(message);
-            } else {
+            } else if (message.isNotEmpty) {
               Scaffold.of(context).showSnackBar(SnackBar(
                   content: SnackBarRow(
                     message: message,

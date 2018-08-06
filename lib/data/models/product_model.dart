@@ -65,6 +65,10 @@ abstract class ProductEntity extends Object
   }
   ProductEntity._();
 
+  ProductEntity get clone => rebuild((b) => b
+    ..id = --ProductEntity.counter
+  );
+
   @override
   EntityType get entityType {
     return EntityType.product;

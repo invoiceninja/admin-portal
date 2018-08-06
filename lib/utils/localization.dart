@@ -177,6 +177,7 @@ class AppLocalization {
       'blank_contact': 'Blank Contact',
       'activity': 'Activity',
       'no_records_found': 'No records found',
+      'clone': 'Clone',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -409,6 +410,7 @@ class AppLocalization {
   String get blankContact => _localizedValues[locale.languageCode]['blank_contact'];
   String get activity => _localizedValues[locale.languageCode]['activity'];
   String get noRecordsFound => _localizedValues[locale.languageCode]['no_records_found'];
+  String get clone => _localizedValues[locale.languageCode]['clone'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

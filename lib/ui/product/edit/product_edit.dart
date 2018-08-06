@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -127,6 +128,13 @@ class _ProductEditState extends State<ProductEdit> {
                 : ActionMenuButton(
                     entity: viewModel.product,
                     onSelected: viewModel.onActionSelected,
+                    customActions: [
+                      ActionMenuChoice(
+                        label: localization.clone,
+                        icon: Icons.control_point_duplicate,
+                        action: EntityAction.clone,
+                      ),
+                    ],
                   )
           ],
         ),
