@@ -9,15 +9,15 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 EntityUIState productUIReducer(ProductUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
-  );
+    ..editing.replace(editingReducer(state.editing, action)));
 }
 
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterProductDropdown>(filterClientDropdownReducer),
 ]);
 
-String filterClientDropdownReducer(String dropdownFilter, FilterProductDropdown action) {
+String filterClientDropdownReducer(
+    String dropdownFilter, FilterProductDropdown action) {
   return action.filter;
 }
 
@@ -46,133 +46,114 @@ final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProducts>(_filterProducts),
 ]);
 
-ListUIState _filterProductsByState(ListUIState productListState, FilterProductsByState action) {
+ListUIState _filterProductsByState(
+    ListUIState productListState, FilterProductsByState action) {
   if (productListState.stateFilters.contains(action.state)) {
-    return productListState.rebuild((b) => b
-        ..stateFilters.remove(action.state)
-    );
+    return productListState
+        .rebuild((b) => b..stateFilters.remove(action.state));
   } else {
-    return productListState.rebuild((b) => b
-        ..stateFilters.add(action.state)
-    );
+    return productListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
-ListUIState _filterProducts(ListUIState productListState, FilterProducts action) {
-  return productListState.rebuild((b) => b
-    ..filter = action.filter
-  );
+ListUIState _filterProducts(
+    ListUIState productListState, FilterProducts action) {
+  return productListState.rebuild((b) => b..filter = action.filter);
 }
 
 ListUIState _sortProducts(ListUIState productListState, SortProducts action) {
   return productListState.rebuild((b) => b
-      ..sortAscending = b.sortField != action.field || ! b.sortAscending
-      ..sortField = action.field
-  );
+    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortField = action.field);
 }
-
 
 final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, SaveProductSuccess>(_updateProduct),
   TypedReducer<ProductState, AddProductSuccess>(_addProduct),
   TypedReducer<ProductState, LoadProductsSuccess>(_setLoadedProducts),
   TypedReducer<ProductState, LoadProductsFailure>(_setNoProducts),
-
   TypedReducer<ProductState, ArchiveProductRequest>(_archiveProductRequest),
   TypedReducer<ProductState, ArchiveProductSuccess>(_archiveProductSuccess),
   TypedReducer<ProductState, ArchiveProductFailure>(_archiveProductFailure),
-
   TypedReducer<ProductState, DeleteProductRequest>(_deleteProductRequest),
   TypedReducer<ProductState, DeleteProductSuccess>(_deleteProductSuccess),
   TypedReducer<ProductState, DeleteProductFailure>(_deleteProductFailure),
-
   TypedReducer<ProductState, RestoreProductRequest>(_restoreProductRequest),
   TypedReducer<ProductState, RestoreProductSuccess>(_restoreProductSuccess),
   TypedReducer<ProductState, RestoreProductFailure>(_restoreProductFailure),
 ]);
 
-ProductState _archiveProductRequest(ProductState productState, ArchiveProductRequest action) {
+ProductState _archiveProductRequest(
+    ProductState productState, ArchiveProductRequest action) {
+  final product = productState.map[action.productId]
+      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+
+  return productState.rebuild((b) => b..map[action.productId] = product);
+}
+
+ProductState _archiveProductSuccess(
+    ProductState productState, ArchiveProductSuccess action) {
+  return productState
+      .rebuild((b) => b..map[action.product.id] = action.product);
+}
+
+ProductState _archiveProductFailure(
+    ProductState productState, ArchiveProductFailure action) {
+  return productState
+      .rebuild((b) => b..map[action.product.id] = action.product);
+}
+
+ProductState _deleteProductRequest(
+    ProductState productState, DeleteProductRequest action) {
   final product = productState.map[action.productId].rebuild((b) => b
     ..archivedAt = DateTime.now().millisecondsSinceEpoch
-  );
+    ..isDeleted = true);
 
-  return productState.rebuild((b) => b
-    ..map[action.productId] = product
-  );
+  return productState.rebuild((b) => b..map[action.productId] = product);
 }
 
-ProductState _archiveProductSuccess(ProductState productState, ArchiveProductSuccess action) {
-  return productState.rebuild((b) => b
-    ..map[action.product.id] = action.product
-  );
+ProductState _deleteProductSuccess(
+    ProductState productState, DeleteProductSuccess action) {
+  return productState
+      .rebuild((b) => b..map[action.product.id] = action.product);
 }
 
-ProductState _archiveProductFailure(ProductState productState, ArchiveProductFailure action) {
-  return productState.rebuild((b) => b
-    ..map[action.product.id] = action.product
-  );
+ProductState _deleteProductFailure(
+    ProductState productState, DeleteProductFailure action) {
+  return productState
+      .rebuild((b) => b..map[action.product.id] = action.product);
 }
 
-ProductState _deleteProductRequest(ProductState productState, DeleteProductRequest action) {
-  final product = productState.map[action.productId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true
-  );
-
-  return productState.rebuild((b) => b
-    ..map[action.productId] = product
-  );
-}
-
-ProductState _deleteProductSuccess(ProductState productState, DeleteProductSuccess action) {
-  return productState.rebuild((b) => b
-    ..map[action.product.id] = action.product
-  );
-}
-
-ProductState _deleteProductFailure(ProductState productState, DeleteProductFailure action) {
-  return productState.rebuild((b) => b
-    ..map[action.product.id] = action.product
-  );
-}
-
-
-ProductState _restoreProductRequest(ProductState productState, RestoreProductRequest action) {
+ProductState _restoreProductRequest(
+    ProductState productState, RestoreProductRequest action) {
   final product = productState.map[action.productId].rebuild((b) => b
     ..archivedAt = null
-    ..isDeleted = false
-  );
-  return productState.rebuild((b) => b
-    ..map[action.productId] = product
-  );
+    ..isDeleted = false);
+  return productState.rebuild((b) => b..map[action.productId] = product);
 }
 
-ProductState _restoreProductSuccess(ProductState productState, RestoreProductSuccess action) {
-  return productState.rebuild((b) => b
-    ..map[action.product.id] = action.product
-  );
+ProductState _restoreProductSuccess(
+    ProductState productState, RestoreProductSuccess action) {
+  return productState
+      .rebuild((b) => b..map[action.product.id] = action.product);
 }
 
-ProductState _restoreProductFailure(ProductState productState, RestoreProductFailure action) {
-  return productState.rebuild((b) => b
-    ..map[action.product.id] = action.product
-  );
+ProductState _restoreProductFailure(
+    ProductState productState, RestoreProductFailure action) {
+  return productState
+      .rebuild((b) => b..map[action.product.id] = action.product);
 }
 
-
-ProductState _addProduct(
-    ProductState productState, AddProductSuccess action) {
+ProductState _addProduct(ProductState productState, AddProductSuccess action) {
   return productState.rebuild((b) => b
     ..map[action.product.id] = action.product
-    ..list.add(action.product.id)
-  );
+    ..list.add(action.product.id));
 }
 
 ProductState _updateProduct(
     ProductState productState, SaveProductSuccess action) {
-  return productState.rebuild((b) => b
-      ..map[action.product.id] = action.product
-  );
+  return productState
+      .rebuild((b) => b..map[action.product.id] = action.product);
 }
 
 ProductState _setNoProducts(
@@ -182,15 +163,13 @@ ProductState _setNoProducts(
 
 ProductState _setLoadedProducts(
     ProductState productState, LoadProductsSuccess action) {
-  return productState.rebuild(
-    (b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-      ..map.addAll(Map.fromIterable(
-        action.products,
-        key: (dynamic item) => item.id,
-        value: (dynamic item) => item,
-      ))
-      ..list.replace(action.products.map(
-              (product) => product.id).toList())
-  );
+  final state = productState.rebuild((b) => b
+    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+    ..map.addAll(Map.fromIterable(
+      action.products,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    )));
+
+  return state.rebuild((b) => b..list.replace(state.map.keys));
 }

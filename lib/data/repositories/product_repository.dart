@@ -15,10 +15,15 @@ class ProductRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<BuiltList<ProductEntity>> loadList(CompanyEntity company, AuthState auth) async {
+  Future<BuiltList<ProductEntity>> loadList(CompanyEntity company, AuthState auth, int updatedAt) async {
 
-    final dynamic response = await webClient.get(
-        auth.url + '/products', company.token);
+    String url = auth.url + '/products';
+
+    if (updatedAt > 0) {
+      url += '?updated_at=${updatedAt - 600}';
+    }
+
+    final dynamic response = await webClient.get(url, company.token);
 
     final ProductListResponse productResponse = serializers.deserializeWith(
         ProductListResponse.serializer, response);

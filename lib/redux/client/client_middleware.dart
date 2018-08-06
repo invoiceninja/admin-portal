@@ -208,9 +208,11 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
       return;
     }
 
+    final int updatedAt = action.force ? 0 : (state.clientState.lastUpdated / 1000).round();
+
     store.dispatch(LoadClientsRequest());
     repository
-        .loadList(state.selectedCompany, state.authState)
+        .loadList(state.selectedCompany, state.authState, updatedAt)
         .then((data) {
       store.dispatch(LoadClientsSuccess(data));
 

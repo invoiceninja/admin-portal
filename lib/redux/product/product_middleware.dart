@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:redux/redux.dart';
@@ -154,8 +154,10 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
       return;
     }
 
+    final int updatedAt = action.force ? 0 : (state.productState.lastUpdated / 1000).round();
+
     store.dispatch(LoadProductsRequest());
-    repository.loadList(state.selectedCompany, state.authState).then((data) {
+    repository.loadList(state.selectedCompany, state.authState, updatedAt).then((data) {
       store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

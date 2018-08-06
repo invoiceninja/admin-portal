@@ -26,10 +26,15 @@ class InvoiceRepository {
     return invoiceResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(CompanyEntity company, AuthState auth) async {
+  Future<BuiltList<InvoiceEntity>> loadList(CompanyEntity company, AuthState auth, int updatedAt) async {
 
-    final dynamic response = await webClient.get(
-        auth.url + '/invoices?include=invitations', company.token);
+    String url = auth.url + '/invoices?include=invitations';
+
+    if (updatedAt > 0) {
+      url += '?updated_at=${updatedAt - 600}';
+    }
+
+    final dynamic response = await webClient.get(url, company.token);
 
     final InvoiceListResponse invoiceResponse = serializers.deserializeWith(
         InvoiceListResponse.serializer, response);

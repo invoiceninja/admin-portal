@@ -258,9 +258,11 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
       return;
     }
 
+    final int updatedAt = action.force ? 0 : (state.invoiceState.lastUpdated / 1000).round();
+
     store.dispatch(LoadInvoicesRequest());
     repository
-        .loadList(state.selectedCompany, state.authState)
+        .loadList(state.selectedCompany, state.authState, updatedAt)
         .then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {

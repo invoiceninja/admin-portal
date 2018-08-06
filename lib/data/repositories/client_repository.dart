@@ -32,10 +32,15 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future<BuiltList<ClientEntity>> loadList(CompanyEntity company, AuthState auth) async {
+  Future<BuiltList<ClientEntity>> loadList(CompanyEntity company, AuthState auth, int updatedAt) async {
 
-    final dynamic response = await webClient.get(
-        auth.url + '/clients', company.token);
+    String url = auth.url + '/clients';
+
+    if (updatedAt > 0) {
+      url += '?updated_at=${updatedAt - 600}';
+    }
+
+    final dynamic response = await webClient.get(url, company.token);
 
     final ClientListResponse clientResponse = serializers.deserializeWith(
         ClientListResponse.serializer, response);

@@ -12,6 +12,7 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
 
   factory ProductState() {
     return _$ProductState._(
+      lastUpdated: 0,
       map: BuiltMap<int, ProductEntity>(),
       list: BuiltList<int>(),
     );
@@ -32,9 +33,7 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool get isLoaded {
-    return lastUpdated != null;
-  }
+  bool get isLoaded => lastUpdated > 0;
 
   static Serializer<ProductState> get serializer => _$productStateSerializer;
 }

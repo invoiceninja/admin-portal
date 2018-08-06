@@ -12,6 +12,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 
   factory ClientState() {
     return _$ClientState._(
+      lastUpdated: 0,
       map: BuiltMap<int, ClientEntity>(),
       list: BuiltList<int>(),
     );
@@ -32,9 +33,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool get isLoaded {
-    return lastUpdated != null;
-  }
+  bool get isLoaded => lastUpdated > 0;
 
   static Serializer<ClientState> get serializer => _$clientStateSerializer;
 }
