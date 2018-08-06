@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
@@ -267,6 +268,9 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
+      }
+      if (state.dashboardState.isStale) {
+        store.dispatch(LoadDashboard());
       }
     }).catchError((Object error) {
       print(error);
