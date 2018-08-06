@@ -31,7 +31,7 @@ class InvoiceRepository {
     String url = auth.url + '/invoices?include=invitations';
 
     if (updatedAt > 0) {
-      url += '?updated_at=${updatedAt - 600}';
+      url += '&updated_at=${updatedAt - 600}';
     }
 
     final dynamic response = await webClient.get(url, company.token);
