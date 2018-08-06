@@ -62,6 +62,9 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
     );
   }
   ProjectEntity._();
+  ProjectEntity get clone => rebuild((b) => b
+    ..id = --ProjectEntity.counter
+  );
 
   @override
   EntityType get entityType {

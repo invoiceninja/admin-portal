@@ -114,6 +114,11 @@ abstract class InvoiceEntity extends Object
   }
   InvoiceEntity._();
 
+  InvoiceEntity get clone => rebuild((b) => b
+    ..id = --InvoiceEntity.counter
+    ..invoiceNumber = ''
+  );
+
   @override
   EntityType get entityType {
     return EntityType.invoice;

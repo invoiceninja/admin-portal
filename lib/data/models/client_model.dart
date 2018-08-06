@@ -103,6 +103,10 @@ abstract class ClientEntity extends Object
 
   ClientEntity._();
 
+  ClientEntity get clone => rebuild((b) => b
+    ..id = --ClientEntity.counter
+  );
+
   @override
   EntityType get entityType {
     return EntityType.client;

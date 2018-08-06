@@ -84,6 +84,9 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
     );
   }
   VendorEntity._();
+  VendorEntity get clone => rebuild((b) => b
+    ..id = --VendorEntity.counter
+  );
 
   @override
   EntityType get entityType {
