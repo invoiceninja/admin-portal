@@ -7,13 +7,11 @@ import 'package:redux/redux.dart';
 
 class ListFilter extends StatefulWidget {
   final EntityType entityType;
-  final String filter;
   final String title;
   final Function(String) onFilterChanged;
 
   const ListFilter({
     this.entityType,
-    this.filter,
     this.title,
     this.onFilterChanged,
   });
@@ -29,7 +27,13 @@ class _ListFilterState extends State<ListFilter> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _filterController.text = widget.filter;
+
+    final state = StoreProvider.of<AppState>(context).state;
+    final String filter = widget.entityType != null
+        ? state.getListState(widget.entityType).filter
+        : state.uiState.filter;
+
+    _filterController.text = filter;
   }
 
   @override

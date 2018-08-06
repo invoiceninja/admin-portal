@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -53,7 +52,6 @@ class _DashboardViewState extends State<DashboardView>
       drawer: AppDrawerBuilder(),
       appBar: AppBar(
         title: ListFilter(
-          filter: widget.viewModel.filter,
           title: AppLocalization.of(context).dashboard,
           onFilterChanged: (value) {
             store.dispatch(FilterCompany(value));
