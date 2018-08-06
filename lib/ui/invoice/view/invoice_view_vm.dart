@@ -154,6 +154,7 @@ class InvoiceViewVM {
               message = AppLocalization.of(context).successfullyRestoredInvoice;
               break;
             case EntityAction.clone:
+              Navigator.of(context).pop();
               store.dispatch(
                   EditInvoice(context: context, invoice: invoice.clone));
               break;
