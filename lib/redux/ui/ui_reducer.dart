@@ -8,8 +8,8 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:redux/redux.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
-
   return state.rebuild((b) => b
+    ..filter = filterReducer(state.filter, action)
     ..selectedCompanyIndex = selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
@@ -17,6 +17,14 @@ UIState uiReducer(UIState state, dynamic action) {
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
   );
+}
+
+Reducer<String> filterReducer = combineReducers([
+  TypedReducer<String, FilterCompany>(updateFilter),
+]);
+
+String updateFilter(String filter, FilterCompany action) {
+  return action.filter;
 }
 
 Reducer<bool> darkModeReducer = combineReducers([
