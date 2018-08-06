@@ -65,7 +65,7 @@ class DashboardVM {
       isLoading: state.isLoading,
       onRefreshed: (context) => _handleRefresh(context),
       filter: filter,
-      filteredList: filteredSelector(filter, state.selectedCompanyState),
+      filteredList: memoizedFilteredSelector(filter, state.selectedCompanyState),
     );
   }
 }

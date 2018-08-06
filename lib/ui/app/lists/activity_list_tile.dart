@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ActivityListTile extends StatelessWidget {
@@ -15,29 +16,6 @@ class ActivityListTile extends StatelessWidget {
   }) : super(key: key);
 
   final ActivityEntity activity;
-
-  IconData getIconData(EntityType entityType) {
-    switch (entityType) {
-      case EntityType.client:
-        return FontAwesomeIcons.users;
-      case EntityType.invoice:
-        return FontAwesomeIcons.filePdfO;
-      case EntityType.payment:
-        return FontAwesomeIcons.creditCard;
-      case EntityType.credit:
-        return FontAwesomeIcons.creditCard;
-      case EntityType.quote:
-        return FontAwesomeIcons.fileAltO;
-      case EntityType.vendor:
-        return FontAwesomeIcons.building;
-      case EntityType.expense:
-        return FontAwesomeIcons.fileImageO;
-      case EntityType.task:
-        return FontAwesomeIcons.clockO;
-      default:
-        return null;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -4,12 +4,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardView extends StatefulWidget {
@@ -81,7 +85,6 @@ class _DashboardViewState extends State<DashboardView>
   }
 }
 
-
 class CustomTabBarView extends StatelessWidget {
   const CustomTabBarView({
     @required this.viewModel,
@@ -99,26 +102,29 @@ class CustomTabBarView extends StatelessWidget {
           itemBuilder: (BuildContext context, index) {
             final entity = viewModel.filteredList[index];
             final subtitle = entity.matchesFilterValue(viewModel.filter);
-            IconData icon;
-            switch (entity.entityType) {
-              case EntityType.client:
-                icon = FontAwesomeIcons.users;
-                break;
-              case EntityType.product:
-                icon = FontAwesomeIcons.cube;
-                break;
-              case EntityType.invoice:
-                icon = FontAwesomeIcons.filePdfO;
-                break;
-            }
             return ListTile(
               title: Text(entity.listDisplayName),
-              leading: Icon(icon),
+              leading: Icon(getIconData(entity.entityType)),
               trailing: Icon(Icons.navigate_next),
               subtitle: subtitle != null ? Text(subtitle) : Container(),
+              onTap: () {
+                dynamic action;
+                switch (entity.entityType) {
+                  case EntityType.product:
+                    action = EditProduct(product: entity, context: context);
+                    break;
+                  case EntityType.client:
+                    action = ViewClient(clientId: entity.id, context: context);
+                    break;
+                  case EntityType.invoice:
+                    action =
+                        ViewInvoice(invoiceId: entity.id, context: context);
+                    break;
+                }
+                StoreProvider.of<AppState>(context).dispatch(action);
+              },
             );
-          }
-      );
+          });
     }
 
     return TabBarView(
