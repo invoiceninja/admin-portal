@@ -273,6 +273,11 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               ActionMenuButton(
                 customActions: [
+                  ActionMenuChoice(
+                    label: localization.clone,
+                    icon: Icons.control_point_duplicate,
+                    action: EntityAction.clone,
+                  ),
                   !invoice.isPublic
                       ? ActionMenuChoice(
                           action: EntityAction.markSent,

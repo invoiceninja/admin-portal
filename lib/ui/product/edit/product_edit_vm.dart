@@ -92,7 +92,7 @@ class ProductEditVM {
         },
         onActionSelected: (BuildContext context, EntityAction action) {
           final Completer<Null> completer = Completer<Null>();
-          var message = '';
+          String message;
           switch (action) {
             case EntityAction.archive:
               store.dispatch(ArchiveProductRequest(completer, product.id));
@@ -110,10 +110,10 @@ class ProductEditVM {
               store.dispatch(UpdateProduct(product.clone));
               break;
           }
-          return completer.future.then((_) {
+          completer.future.then((_) {
             if ([EntityAction.archive, EntityAction.delete].contains(action)) {
               Navigator.of(context).pop(message);
-            } else if (message.isNotEmpty) {
+            } else if (message != null) {
               Scaffold.of(context).showSnackBar(SnackBar(
                   content: SnackBarRow(
                     message: message,

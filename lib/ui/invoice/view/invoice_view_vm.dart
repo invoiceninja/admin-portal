@@ -17,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
   static const String route = '/invoice/view';
+
   const InvoiceViewScreen({Key key}) : super(key: key);
 
   @override
@@ -69,7 +70,7 @@ class InvoiceViewVM {
       store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
-            content: SnackBarRow(
+                content: SnackBarRow(
               message: AppLocalization.of(context).refreshComplete,
             )));
       });
@@ -152,26 +153,27 @@ class InvoiceViewVM {
               store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
               message = AppLocalization.of(context).successfullyRestoredInvoice;
               break;
+            case EntityAction.clone:
+              store.dispatch(
+                  EditInvoice(context: context, invoice: invoice.clone));
+              break;
           }
-          if (message != null) {
-            return completer.future.then((_) {
-              if ([EntityAction.archive, EntityAction.delete]
-                  .contains(action)) {
-                Navigator.of(context).pop(message);
-              } else {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                        content: SnackBarRow(
-                      message: message,
-                    )));
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
-          }
+          completer.future.then((_) {
+            if ([EntityAction.archive, EntityAction.delete].contains(action)) {
+              Navigator.of(context).pop(message);
+            } else if (message != null) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                      content: SnackBarRow(
+                    message: message,
+                  )));
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
   }
 }

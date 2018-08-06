@@ -99,7 +99,7 @@ class ClientViewVM {
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
         onActionSelected: (BuildContext context, EntityAction action) {
           final Completer<Null> completer = Completer<Null>();
-          var message = '';
+          String message;
           switch (action) {
             case EntityAction.archive:
               store.dispatch(ArchiveClientRequest(completer, client.id));
@@ -114,10 +114,10 @@ class ClientViewVM {
               message = AppLocalization.of(context).successfullyRestoredClient;
               break;
           }
-          return completer.future.then((_) {
+          completer.future.then((_) {
             if ([EntityAction.archive, EntityAction.delete].contains(action)) {
               Navigator.of(context).pop(message);
-            } else {
+            } else if (message != null){
               Scaffold.of(context).showSnackBar(SnackBar(
                   content: SnackBarRow(
                     message: message,
