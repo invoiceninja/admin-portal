@@ -4,6 +4,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 
 IconData getIconData(EntityType entityType) {
   switch (entityType) {
+    case EntityType.product:
+      return FontAwesomeIcons.cube;
     case EntityType.client:
       return FontAwesomeIcons.users;
     case EntityType.invoice:

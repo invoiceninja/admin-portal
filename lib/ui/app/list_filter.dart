@@ -5,7 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
-class ListFilter extends StatelessWidget {
+class ListFilter extends StatefulWidget {
   final EntityType entityType;
   final String filter;
   final String title;
@@ -19,18 +19,39 @@ class ListFilter extends StatelessWidget {
   });
 
   @override
+  _ListFilterState createState() => new _ListFilterState();
+}
+
+class _ListFilterState extends State<ListFilter> {
+
+  final _filterController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _filterController.text = widget.filter;
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
     return StoreConnector<AppState, AppState>(
       converter: (Store<AppState> store) => store.state,
       builder: (BuildContext context, state) {
+        final entityType = widget.entityType;
         final filter = entityType != null
             ? state.getListState(entityType).filter
             : state.uiState.filter;
         final bool enableDarkMode = state.uiState.enableDarkMode;
         return filter == null
-            ? Text(title ?? localization.lookup(entityType.plural.toString()))
+            ? Text(widget.title ?? localization.lookup(entityType.plural.toString()))
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 height: 38.0,
@@ -57,7 +78,8 @@ class ListFilter extends StatelessWidget {
                       hintText: localization.filter),
                   autofocus: true,
                   autocorrect: false,
-                  onChanged: (value) => onFilterChanged(value),
+                  onChanged: (value) => widget.onFilterChanged(value),
+                  controller: _filterController,
                 ),
               );
       },

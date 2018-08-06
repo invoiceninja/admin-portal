@@ -53,6 +53,7 @@ class _DashboardViewState extends State<DashboardView>
       drawer: AppDrawerBuilder(),
       appBar: AppBar(
         title: ListFilter(
+          filter: widget.viewModel.filter,
           title: AppLocalization.of(context).dashboard,
           onFilterChanged: (value) {
             store.dispatch(FilterCompany(value));
@@ -65,7 +66,7 @@ class _DashboardViewState extends State<DashboardView>
             },
           ),
         ],
-        bottom: TabBar(
+        bottom: store.state.uiState.filter != null ? null : TabBar(
           controller: _controller,
           tabs: [
             Tab(
