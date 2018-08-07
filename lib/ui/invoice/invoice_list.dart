@@ -16,7 +16,7 @@ class InvoiceList extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  void _showMenu(BuildContext context, InvoiceEntity invoice) async {
+  void _showMenu(BuildContext context, InvoiceEntity invoice, ClientEntity client) async {
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(children: <Widget>[
@@ -25,6 +25,24 @@ class InvoiceList extends StatelessWidget {
             title: Text(AppLocalization.of(context).clone),
             onTap: () => viewModel.onEntityAction(
                 context, invoice, EntityAction.clone),
+          ),
+          ! invoice.isPublic ? ListTile(
+            leading: Icon(Icons.publish),
+            title: Text(AppLocalization.of(context).markSent),
+            onTap: () => viewModel.onEntityAction(
+                context, invoice, EntityAction.markSent),
+          ) : Container(),
+          client.hasEmailAddress ? ListTile(
+            leading: Icon(Icons.send),
+            title: Text(AppLocalization.of(context).email),
+            onTap: () => viewModel.onEntityAction(
+                context, invoice, EntityAction.emailInvoice),
+          ) : Container(),
+          ListTile(
+            leading: Icon(Icons.picture_as_pdf),
+            title: Text(AppLocalization.of(context).pdf),
+            onTap: () => viewModel.onEntityAction(
+                context, invoice, EntityAction.pdf),
           ),
           Divider(),
           ! invoice.isActive ? ListTile(
@@ -118,6 +136,7 @@ class InvoiceList extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             final invoiceId = viewModel.invoiceList[index];
                             final invoice = viewModel.invoiceMap[invoiceId];
+                            final client = viewModel.clientMap[invoice.clientId];
                             return Column(
                               children: <Widget>[
                                 InvoiceListItem(
@@ -129,7 +148,7 @@ class InvoiceList extends StatelessWidget {
                                           context, invoice, direction),
                                   onTap: () =>
                                       viewModel.onInvoiceTap(context, invoice),
-                                  onLongPress: () => _showMenu(context, invoice),
+                                  onLongPress: () => _showMenu(context, invoice, client),
                                 ),
                                 Divider(
                                   height: 1.0,

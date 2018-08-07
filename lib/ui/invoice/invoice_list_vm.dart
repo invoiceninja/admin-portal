@@ -98,7 +98,23 @@ class InvoiceListVM {
                 clientId: state.invoiceListState.filterClientId,
                 context: context)),
         onEntityAction: (context, invoice, action) {
+          final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.pdf:
+              //_viewPdf(context);
+              break;
+            case EntityAction.markSent:
+              store.dispatch(MarkSentInvoiceRequest(
+                  popCompleter(
+                      context, localization.successfullyMarkedInvoiceAsSent),
+                  invoice.id));
+              break;
+            case EntityAction.emailInvoice:
+              store.dispatch(EmailInvoiceRequest(
+                  popCompleter(
+                      context, localization.successfullyEmailedInvoice),
+                  invoice.id));
+              break;
             case EntityAction.clone:
               Navigator.of(context).pop();
               store.dispatch(
@@ -107,19 +123,19 @@ class InvoiceListVM {
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyRestoredInvoice),
+                      localization.successfullyRestoredInvoice),
                   invoice.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyArchivedInvoice),
+                      localization.successfullyArchivedInvoice),
                   invoice.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteInvoiceRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyDeletedInvoice),
+                      localization.successfullyDeletedInvoice),
                   invoice.id));
               break;
           }
