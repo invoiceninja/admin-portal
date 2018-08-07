@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -35,8 +36,8 @@ class ProductList extends StatelessWidget {
     return _buildListView(context);
   }
 
-  void _showMenu(BuildContext context, ProductEntity product) {
-    showDialog<String>(
+  void _showMenu(BuildContext context, ProductEntity product) async {
+    final message = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(children: <Widget>[
               ListTile(
@@ -59,6 +60,12 @@ class ProductList extends StatelessWidget {
                     context, product, EntityAction.delete),
               ),
             ]));
+    if (message != null) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: SnackBarRow(
+            message: message,
+          )));
+    }
   }
 
   Widget _buildListView(BuildContext context) {
