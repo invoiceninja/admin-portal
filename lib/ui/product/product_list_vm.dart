@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -37,9 +36,9 @@ class ProductListVM {
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
-  final Function(BuildContext, ProductEntity) onProductLongPress;
   final Function(BuildContext, ProductEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, ProductEntity, EntityAction) onEntityAction;
 
   ProductListVM({
     @required this.productList,
@@ -48,9 +47,9 @@ class ProductListVM {
     @required this.isLoading,
     @required this.isLoaded,
     @required this.onProductTap,
-    @required this.onProductLongPress,
     @required this.onDismissed,
     @required this.onRefreshed,
+    @required this.onEntityAction,
   });
 
   static ProductListVM fromStore(Store<AppState> store) {
@@ -73,48 +72,25 @@ class ProductListVM {
         onProductTap: (context, product) {
           store.dispatch(EditProduct(product: product, context: context));
         },
-        onProductLongPress: (context, product) async {
-          final message = await showDialog<String>(
-              context: context,
-              builder: (BuildContext context) =>
-                  SimpleDialog(children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.control_point_duplicate),
-                      title: Text(AppLocalization.of(context).clone),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        store.dispatch(EditProduct(
-                            context: context, product: product.clone));
-                      },
-                    ),
-                    Divider(),
-                    ListTile(
-                        leading: Icon(Icons.archive),
-                        title: Text(AppLocalization.of(context).archive),
-                        onTap: () => store.dispatch(ArchiveProductRequest(
-                            popCompleter(
-                                context,
-                                AppLocalization
-                                    .of(context)
-                                    .successfullyArchivedProduct),
-                            product.id))),
-                    ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text(AppLocalization.of(context).delete),
-                      onTap: () => store.dispatch(DeleteProductRequest(
-                          popCompleter(
-                              context,
-                              AppLocalization
-                                  .of(context)
-                                  .successfullyDeletedProduct),
-                          product.id)),
-                    ),
-                  ]));
-          if (message != null) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
-                  message: message,
-                )));
+        onEntityAction: (context, product, action) {
+          switch (action) {
+            case EntityAction.clone:
+              Navigator.of(context).pop();
+              store.dispatch(
+                  EditProduct(context: context, product: product.clone));
+              break;
+            case EntityAction.archive:
+              store.dispatch(ArchiveProductRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyArchivedProduct),
+                  product.id));
+              break;
+            case EntityAction.delete:
+              store.dispatch(DeleteProductRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyDeletedProduct),
+                  product.id));
+              break;
           }
         },
         onRefreshed: (context) => _handleRefresh(context),

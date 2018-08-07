@@ -44,7 +44,7 @@ Completer<Null> snackBarCompleter(BuildContext context, String message) {
 }
 
 Completer<Null> popCompleter(BuildContext context, String message) {
-  final Completer<Null> completer = Completer<String>();
+  final Completer<Null> completer = Completer<Null>();
 
   completer.future.then((_) {
     Navigator.of(context).pop(message);
