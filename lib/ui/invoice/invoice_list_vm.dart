@@ -102,6 +102,7 @@ class InvoiceListVM {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
+              Navigator.of(context).pop();
               viewPdf(invoice, context);
               break;
             case EntityAction.markSent:
