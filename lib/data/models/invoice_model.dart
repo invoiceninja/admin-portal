@@ -117,6 +117,7 @@ abstract class InvoiceEntity extends Object
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
     ..invoiceNumber = ''
+    ..isPublic = false
   );
 
   @override

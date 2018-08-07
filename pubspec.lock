@@ -184,6 +184,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_pdf_viewer:
+    dependency: "direct main"
+    description:
+      name: flutter_pdf_viewer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   flutter_redux:
     dependency: "direct main"
     description:
