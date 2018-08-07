@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -66,14 +67,10 @@ class InvoiceViewVM {
     final client = store.state.clientState.map[invoice.clientId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-      store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
-      return completer.future.then((_) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).refreshComplete,
-            )));
-      });
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
+      store.dispatch(LoadInvoices(completer: completer, force: true));
+      return completer.future;
     }
 
     Future<Null> _viewPdf(BuildContext context) async {

@@ -2,9 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
-Completer<String> snackBarCompleter(BuildContext context, String message) {
-  final Completer<String> completer = Completer<String>();
+Completer<Null> snackBarCompleter(BuildContext context, String message) {
+  final Completer<Null> completer = Completer<Null>();
 
   completer.future.then((_) {
     Scaffold.of(context).showSnackBar(SnackBar(
@@ -22,8 +23,8 @@ Completer<String> snackBarCompleter(BuildContext context, String message) {
   return completer;
 }
 
-Completer<String> popCompleter(BuildContext context, String message) {
-  final Completer<String> completer = Completer<String>();
+Completer<Null> popCompleter(BuildContext context, String message) {
+  final Completer<Null> completer = Completer<Null>();
 
   completer.future.then((_) {
     Navigator.of(context).pop(message);

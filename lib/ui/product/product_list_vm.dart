@@ -55,23 +55,21 @@ class ProductListVM {
 
   static ProductListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<Null> completer = Completer<Null>();
-      store.dispatch(LoadProducts(completer, true));
-      return completer.future.then((_) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).refreshComplete,
-            )));
-      });
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
+      store.dispatch(LoadProducts(completer: completer, force: true));
+      return completer.future;
     }
 
+    final state = store.state;
+
     return ProductListVM(
-        productList: memoizedFilteredProductList(store.state.productState.map,
-            store.state.productState.list, store.state.productListState),
-        productMap: store.state.productState.map,
-        isLoading: store.state.isLoading,
-        isLoaded: store.state.productState.isLoaded,
-        filter: store.state.productUIState.listUIState.filter,
+        productList: memoizedFilteredProductList(state.productState.map,
+            state.productState.list, state.productListState),
+        productMap: state.productState.map,
+        isLoading: state.isLoading,
+        isLoaded: state.productState.isLoaded,
+        filter: state.productUIState.listUIState.filter,
         onProductTap: (context, product) {
           store.dispatch(EditProduct(product: product, context: context));
         },

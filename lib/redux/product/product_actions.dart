@@ -25,7 +25,7 @@ class LoadProducts {
   final Completer completer;
   final bool force;
 
-  LoadProducts([this.completer, this.force = false]);
+  LoadProducts({this.completer, this.force = false});
 }
 
 class LoadProductsRequest implements StartLoading {}

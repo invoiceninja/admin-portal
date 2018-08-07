@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -54,19 +54,16 @@ class ClientListVM {
   });
 
   static ClientListVM fromStore(Store<AppState> store) {
-      Future<Null> _handleRefresh(BuildContext context) {
-        final Completer<Null> completer = Completer<Null>();
-        store.dispatch(LoadClients(completer: completer, force: true));
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-                message: AppLocalization.of(context).refreshComplete,
-              )));
-        });
-      }
+    Future<Null> _handleRefresh(BuildContext context) {
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
+      store.dispatch(LoadClients(completer: completer, force: true));
+      return completer.future;
+    }
 
     return ClientListVM(
-        clientList: memoizedFilteredClientList(store.state.clientState.map, store.state.clientState.list, store.state.clientListState),
+        clientList: memoizedFilteredClientList(store.state.clientState.map,
+            store.state.clientState.list, store.state.clientListState),
         clientMap: store.state.clientState.map,
         isLoading: store.state.isLoading,
         isLoaded: store.state.clientState.isLoaded,
@@ -98,7 +95,7 @@ class ClientListVM {
           }
           return completer.future.then((_) {
             Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
+                    content: SnackBarRow(
                   message: message,
                 )));
           }).catchError((Object error) {
