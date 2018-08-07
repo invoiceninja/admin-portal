@@ -179,7 +179,7 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
       store.dispatch(LoadClientSuccess(client));
 
       if (action.completer != null) {
-        action.completer.complete(client);
+        action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);

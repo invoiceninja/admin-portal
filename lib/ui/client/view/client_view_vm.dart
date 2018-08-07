@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -65,17 +64,13 @@ class ClientViewVM {
     final client = state.clientState.map[state.clientUIState.selectedId];
 
     Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
-      final Completer<ClientEntity> completer = Completer<ClientEntity>();
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadClient(
           completer: completer,
           clientId: client.id,
           loadActivities: loadActivities));
-      return completer.future.then((_) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).refreshComplete,
-            )));
-      });
+      return completer.future;
     }
 
     return ClientViewVM(

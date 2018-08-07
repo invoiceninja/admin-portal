@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -67,14 +66,10 @@ class InvoiceListVM {
 
   static InvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<Null> completer = Completer<Null>();
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadInvoices(completer: completer, force: true));
-      return completer.future.then((_) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).refreshComplete,
-            )));
-      });
+      return completer.future;
     }
 
     final state = store.state;

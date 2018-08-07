@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -92,23 +93,12 @@ class SettingsListVM {
     return SettingsListVM(
         onLogoutTap: (BuildContext context) => _confirmLogout(context),
         onRefreshTap: (BuildContext context) {
-          final Completer<Null> completer = new Completer<Null>();
+          final completer = snackBarCompleter(
+              context, AppLocalization.of(context).refreshComplete);
           store.dispatch(RefreshData(
             platform: getPlatform(context),
             completer: completer,
           ));
-          return completer.future.then((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
-                  message: AppLocalization.of(context).refreshComplete,
-                )));
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
         },
         onDarkModeChanged: (BuildContext context, bool value) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
