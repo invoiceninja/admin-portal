@@ -47,18 +47,24 @@ class ProductList extends StatelessWidget {
                     context, product, EntityAction.clone),
               ),
               Divider(),
-              ListTile(
+              ! product.isActive ? ListTile(
+                leading: Icon(Icons.restore),
+                title: Text(AppLocalization.of(context).restore),
+                onTap: () => viewModel.onEntityAction(
+                    context, product, EntityAction.restore),
+              ) : Container(),
+              product.isActive ? ListTile(
                 leading: Icon(Icons.archive),
                 title: Text(AppLocalization.of(context).archive),
                 onTap: () => viewModel.onEntityAction(
                     context, product, EntityAction.archive),
-              ),
-              ListTile(
+              ) : Container(),
+              ! product.isDeleted ? ListTile(
                 leading: Icon(Icons.delete),
                 title: Text(AppLocalization.of(context).delete),
                 onTap: () => viewModel.onEntityAction(
                     context, product, EntityAction.delete),
-              ),
+              ) : Container(),
             ]));
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(

@@ -79,6 +79,12 @@ class ProductListVM {
               store.dispatch(
                   EditProduct(context: context, product: product.clone));
               break;
+            case EntityAction.restore:
+              store.dispatch(RestoreProductRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyRestoredProduct),
+                  product.id));
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveProductRequest(
                   popCompleter(context,
