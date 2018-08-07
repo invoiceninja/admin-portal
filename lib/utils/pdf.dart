@@ -8,17 +8,36 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
+  final localization = AppLocalization.of(context);
+  final navigator = Navigator.of(context);
   if (Theme.of(context).platform == TargetPlatform.iOS) {
     if (await canLaunch(invoice.invitationSilentLink)) {
-      await launch(invoice.invitationSilentLink, forceSafariVC: true, forceWebView: true);
+      await launch(invoice.invitationSilentLink,
+          forceSafariVC: true, forceWebView: true);
     } else {
-      throw AppLocalization.of(context).anErrorOccurred;
+      throw localization.anErrorOccurred;
     }
   } else {
-    final http.Response response = await http.Client().get(
-      invoice.invitationDownloadLink + '?base64=true',
+    showDialog<SimpleDialog>(
+      context: context,
+      builder: (BuildContext context) => SimpleDialog(children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text('${localization.loading}...'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                height: 4.0,
+                child: LinearProgressIndicator(),
+              ),
+            )
+          ]),
     );
+    final http.Response response = await http.Client().get(
+          invoice.invitationDownloadLink + '?base64=true',
+        );
+    navigator.pop();
     FlutterPdfViewer.loadBytes(base64Decode(response.body.substring(28)));
   }
 }
-
