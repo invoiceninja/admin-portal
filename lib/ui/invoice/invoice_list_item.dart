@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class InvoiceListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
+  final GestureTapCallback onLongPress;
   final InvoiceEntity invoice;
   final ClientEntity client;
   final String filter;
@@ -17,6 +18,7 @@ class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
     @required this.onDismissed,
     @required this.onTap,
+    @required this.onLongPress,
     @required this.invoice,
     @required this.client,
     @required this.filter,
@@ -32,9 +34,9 @@ class InvoiceListItem extends StatelessWidget {
     return DismissibleEntity(
       entity: invoice,
       onDismissed: onDismissed,
-      onTap: onTap,
       child: ListTile(
         onTap: onTap,
+        onLongPress: onLongPress,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

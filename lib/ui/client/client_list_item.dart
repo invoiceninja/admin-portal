@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 class ClientListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
+  final GestureTapCallback onLongPress;
   //final ValueChanged<bool> onCheckboxChanged;
   final ClientEntity client;
   final String filter;
@@ -17,6 +18,7 @@ class ClientListItem extends StatelessWidget {
   const ClientListItem({
     @required this.onDismissed,
     @required this.onTap,
+    @required this.onLongPress,
     //@required this.onCheckboxChanged,
     @required this.client,
     @required this.filter,
@@ -35,6 +37,7 @@ class ClientListItem extends StatelessWidget {
       //entityKey: clientItemKey,
       child: ListTile(
         onTap: onTap,
+        onLongPress: onLongPress,
         title: Row(
           children: <Widget>[
             Expanded(

@@ -47,6 +47,7 @@ class InvoiceListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearClientFilterPressed;
   final Function(BuildContext) onViewClientFilterPressed;
+  final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
 
   InvoiceListVM({
     @required this.listState,
@@ -61,6 +62,7 @@ class InvoiceListVM {
     @required this.onRefreshed,
     @required this.onClearClientFilterPressed,
     @required this.onViewClientFilterPressed,
+    @required this.onEntityAction,
   });
 
   static InvoiceListVM fromStore(Store<AppState> store) {
@@ -95,6 +97,33 @@ class InvoiceListVM {
             ViewClient(
                 clientId: state.invoiceListState.filterClientId,
                 context: context)),
+        onEntityAction: (context, invoice, action) {
+          switch (action) {
+            case EntityAction.clone:
+              Navigator.of(context).pop();
+              store.dispatch(
+                  EditInvoice(context: context, invoice: invoice.clone));
+              break;
+            case EntityAction.restore:
+              store.dispatch(RestoreInvoiceRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyRestoredInvoice),
+                  invoice.id));
+              break;
+            case EntityAction.archive:
+              store.dispatch(ArchiveInvoiceRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyArchivedInvoice),
+                  invoice.id));
+              break;
+            case EntityAction.delete:
+              store.dispatch(DeleteInvoiceRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyDeletedInvoice),
+                  invoice.id));
+              break;
+          }
+        },
         onDismissed: (BuildContext context, InvoiceEntity invoice,
             DismissDirection direction) {
           final localization = AppLocalization.of(context);

@@ -39,6 +39,7 @@ class ClientListVM {
   final Function(BuildContext, ClientEntity) onClientTap;
   final Function(BuildContext, ClientEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
 
   ClientListVM({
     @required this.clientList,
@@ -49,6 +50,7 @@ class ClientListVM {
     @required this.onClientTap,
     @required this.onDismissed,
     @required this.onRefreshed,
+    @required this.onEntityAction,
   });
 
   static ClientListVM fromStore(Store<AppState> store) {
@@ -68,6 +70,28 @@ class ClientListVM {
         filter: store.state.clientListState.filter,
         onClientTap: (context, client) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
+        },
+        onEntityAction: (context, client, action) {
+          switch (action) {
+            case EntityAction.restore:
+              store.dispatch(RestoreClientRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyRestoredClient),
+                  client.id));
+              break;
+            case EntityAction.archive:
+              store.dispatch(ArchiveClientRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyArchivedClient),
+                  client.id));
+              break;
+            case EntityAction.delete:
+              store.dispatch(DeleteClientRequest(
+                  popCompleter(context,
+                      AppLocalization.of(context).successfullyDeletedClient),
+                  client.id));
+              break;
+          }
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,
