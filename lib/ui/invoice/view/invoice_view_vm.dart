@@ -123,32 +123,40 @@ class InvoiceViewVM {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = new Completer<Null>();
-          String message;
+          final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
               _viewPdf(context);
               break;
             case EntityAction.markSent:
-              store.dispatch(MarkSentInvoiceRequest(completer, invoice.id));
-              message =
-                  AppLocalization.of(context).successfullyMarkedInvoiceAsSent;
+              store.dispatch(MarkSentInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyMarkedInvoiceAsSent),
+                  invoice.id));
               break;
             case EntityAction.emailInvoice:
-              store.dispatch(EmailInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyEmailedInvoice;
+              store.dispatch(EmailInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyEmailedInvoice),
+                  invoice.id));
               break;
             case EntityAction.archive:
-              store.dispatch(ArchiveInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyArchivedInvoice;
+              store.dispatch(ArchiveInvoiceRequest(
+                  popCompleter(
+                      context, localization.successfullyArchivedInvoice),
+                  invoice.id));
               break;
             case EntityAction.delete:
-              store.dispatch(DeleteInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyDeletedInvoice;
+              store.dispatch(DeleteInvoiceRequest(
+                  popCompleter(
+                      context, localization.successfullyDeletedInvoice),
+                  invoice.id));
               break;
             case EntityAction.restore:
-              store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyRestoredInvoice;
+              store.dispatch(RestoreInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyRestoredInvoice),
+                  invoice.id));
               break;
             case EntityAction.clone:
               Navigator.of(context).pop();
@@ -156,22 +164,6 @@ class InvoiceViewVM {
                   EditInvoice(context: context, invoice: invoice.clone));
               break;
           }
-          completer.future.then((_) {
-            if ([EntityAction.archive, EntityAction.delete].contains(action)) {
-              Navigator.of(context).pop(message);
-            } else if (message != null) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                      content: SnackBarRow(
-                    message: message,
-                  )));
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
         });
   }
 }
