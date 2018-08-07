@@ -74,37 +74,32 @@ class ClientListVM {
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,
             DismissDirection direction) {
-          final Completer<Null> completer = Completer<Null>();
-          var message = '';
+          final localization = AppLocalization.of(context);
           if (direction == DismissDirection.endToStart) {
             if (client.isDeleted || client.isArchived) {
-              store.dispatch(RestoreClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyRestoredClient;
+              store.dispatch(RestoreClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyRestoredClient),
+                  client.id));
             } else {
-              store.dispatch(ArchiveClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyArchivedClient;
+              store.dispatch(ArchiveClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyArchivedClient),
+                  client.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (client.isDeleted) {
-              store.dispatch(RestoreClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyRestoredClient;
+              store.dispatch(RestoreClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyRestoredClient),
+                  client.id));
             } else {
-              store.dispatch(DeleteClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyDeletedClient;
+              store.dispatch(DeleteClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyDeletedClient),
+                  client.id));
             }
           }
-          return completer.future.then((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
-                  message: message,
-                )));
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
         });
   }
 }

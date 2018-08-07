@@ -9,6 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -18,6 +19,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
   static const String route = '/invoices/edit';
+
   const InvoiceListBuilder({Key key}) : super(key: key);
 
   @override
@@ -101,37 +103,32 @@ class InvoiceListVM {
                 context: context)),
         onDismissed: (BuildContext context, InvoiceEntity invoice,
             DismissDirection direction) {
-          final Completer<Null> completer = Completer<Null>();
-          var message = '';
+          final localization = AppLocalization.of(context);
           if (direction == DismissDirection.endToStart) {
             if (invoice.isDeleted || invoice.isArchived) {
-              store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyRestoredInvoice;
+              store.dispatch(RestoreClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyRestoredInvoice),
+                  invoice.id));
             } else {
-              store.dispatch(ArchiveInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyArchivedInvoice;
+              store.dispatch(ArchiveClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyArchivedInvoice),
+                  invoice.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (invoice.isDeleted) {
-              store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyRestoredInvoice;
+              store.dispatch(RestoreClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyRestoredInvoice),
+                  invoice.id));
             } else {
-              store.dispatch(DeleteInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyDeletedInvoice;
+              store.dispatch(DeleteClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyDeletedInvoice),
+                  invoice.id));
             }
           }
-          return completer.future.then((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
-                  message: message,
-                )));
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
         });
   }
 }
