@@ -49,6 +49,7 @@ class ProductList extends StatelessWidget {
                 onDismissed: (DismissDirection direction) =>
                     viewModel.onDismissed(context, product, direction),
                 onTap: () => viewModel.onProductTap(context, product),
+                onLongPress: () => viewModel.onProductLongPress(context, product),
               ),
               Divider(
                 height: 1.0,

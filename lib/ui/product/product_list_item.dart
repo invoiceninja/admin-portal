@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 class ProductListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
+  final GestureTapCallback onLongPress;
   //final ValueChanged<bool> onCheckboxChanged;
   final ProductEntity product;
   final String filter;
@@ -17,6 +18,7 @@ class ProductListItem extends StatelessWidget {
   const ProductListItem({
     @required this.onDismissed,
     @required this.onTap,
+    @required this.onLongPress,
     //@required this.onCheckboxChanged,
     @required this.product,
     @required this.filter,
@@ -35,6 +37,7 @@ class ProductListItem extends StatelessWidget {
       onTap: onTap,
       child: ListTile(
         onTap: onTap,
+        onLongPress: onLongPress,
         /*
         leading: Checkbox(
           //key: NinjaKeys.productItemCheckbox(product.id),
