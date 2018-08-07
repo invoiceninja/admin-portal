@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -16,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class ClientViewScreen extends StatelessWidget {
   static const String route = '/client/view';
+
   const ClientViewScreen({Key key}) : super(key: key);
 
   @override
@@ -64,10 +66,13 @@ class ClientViewVM {
 
     Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
       final Completer<ClientEntity> completer = Completer<ClientEntity>();
-      store.dispatch(LoadClient(completer: completer, clientId: client.id, loadActivities: loadActivities));
+      store.dispatch(LoadClient(
+          completer: completer,
+          clientId: client.id,
+          loadActivities: loadActivities));
       return completer.future.then((_) {
         Scaffold.of(context).showSnackBar(SnackBar(
-            content: SnackBarRow(
+                content: SnackBarRow(
               message: AppLocalization.of(context).refreshComplete,
             )));
       });
@@ -81,56 +86,45 @@ class ClientViewVM {
         company: state.selectedCompany,
         onEditPressed: (BuildContext context) {
           final Completer<ClientEntity> completer = Completer<ClientEntity>();
-          store.dispatch(EditClient(client: client, context: context, completer: completer));
+          store.dispatch(EditClient(
+              client: client, context: context, completer: completer));
           completer.future.then((client) {
             Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization.of(context).successfullyUpdatedClient,
-                )
-            ));
+                    content: SnackBarRow(
+                  message:
+                      AppLocalization.of(context).successfullyUpdatedClient,
+                )));
           });
         },
         onInvoicesPressed: (BuildContext context) {
           store.dispatch(FilterInvoicesByClient(client.id));
           store.dispatch(ViewInvoiceList(context));
         },
-        onRefreshed: (context, loadActivities) => _handleRefresh(context, loadActivities),
+        onRefreshed: (context, loadActivities) =>
+            _handleRefresh(context, loadActivities),
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = Completer<Null>();
-          String message;
+          final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.archive:
-              store.dispatch(ArchiveClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyArchivedClient;
+              store.dispatch(ArchiveClientRequest(
+                  popCompleter(
+                      context, localization.successfullyArchivedClient),
+                  client.id));
               break;
             case EntityAction.delete:
-              store.dispatch(DeleteClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyDeletedClient;
+              store.dispatch(DeleteClientRequest(
+                  popCompleter(context, localization.successfullyDeletedClient),
+                  client.id));
               break;
             case EntityAction.restore:
-              store.dispatch(RestoreClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyRestoredClient;
+              store.dispatch(RestoreClientRequest(
+                  snackBarCompleter(
+                      context, localization.successfullyRestoredClient),
+                  client.id));
               break;
           }
-          completer.future.then((_) {
-            if ([EntityAction.archive, EntityAction.delete].contains(action)) {
-              Navigator.of(context).pop(message);
-            } else if (message != null){
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  content: SnackBarRow(
-                    message: message,
-                  )
-              ));
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
         });
   }
 }
