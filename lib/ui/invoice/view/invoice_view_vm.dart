@@ -7,6 +7,8 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -72,27 +74,6 @@ class InvoiceViewVM {
       return completer.future;
     }
 
-    Future<Null> _viewPdf(BuildContext context) async {
-      final localization = AppLocalization.of(context);
-      String url;
-      bool useWebView;
-
-      if (Theme.of(context).platform == TargetPlatform.iOS) {
-        url = invoice.invitationSilentLink;
-        useWebView = true;
-      } else {
-        url = 'https://docs.google.com/viewer?url=' +
-            invoice.invitationDownloadLink;
-        useWebView = false;
-      }
-
-      if (await canLaunch(url)) {
-        await launch(url, forceSafariVC: useWebView, forceWebView: useWebView);
-      } else {
-        throw '${localization.anErrorOccurred}';
-      }
-    }
-
     return InvoiceViewVM(
         company: state.selectedCompany,
         isSaving: state.isSaving,
@@ -125,7 +106,7 @@ class InvoiceViewVM {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
-              _viewPdf(context);
+              viewPdf(invoice, context);
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(

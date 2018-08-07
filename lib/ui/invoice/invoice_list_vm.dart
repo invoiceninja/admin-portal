@@ -9,6 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
@@ -101,7 +102,7 @@ class InvoiceListVM {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
-              //_viewPdf(context);
+              viewPdf(invoice, context);
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(
