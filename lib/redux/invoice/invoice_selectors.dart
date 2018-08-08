@@ -24,7 +24,7 @@ List<int> filteredInvoicesSelector(
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId];
-    if (client == null || client.isDeleted) {
+    if (client == null || ! client.isActive) {
       return false;
     }
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
