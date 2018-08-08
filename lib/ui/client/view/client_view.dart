@@ -82,6 +82,7 @@ class _ClientViewState extends State<ClientView>
                             context: context));
                       },
                     ),
+                    /*
                     ListTile(
                       dense: true,
                       leading: Icon(Icons.add_circle_outline),
@@ -106,6 +107,7 @@ class _ClientViewState extends State<ClientView>
                       title: Text(localization.task),
                       onTap: () {},
                     ),
+                    */
                   ]),
             );
           },

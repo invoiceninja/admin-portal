@@ -136,6 +136,7 @@ class ClientOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
+        /*
         Material(
           color: Theme
               .of(context)
@@ -220,6 +221,7 @@ class ClientOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
+        */
       ],
     );
   }
