@@ -7,10 +7,10 @@ part 'list_ui_state.g.dart';
 
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
-  factory ListUIState(String sortField) {
+  factory ListUIState(String sortField, [bool sortAscending = true]) {
     return _$ListUIState._(
       sortField: sortField,
-      sortAscending: true,
+      sortAscending: sortAscending,
       stateFilters: BuiltList<EntityState>(<EntityState>[
         EntityState.active,
       ]),

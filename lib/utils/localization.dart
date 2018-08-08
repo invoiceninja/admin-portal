@@ -58,7 +58,7 @@ class AppLocalization {
       'vat_number': 'VAT Number',
       'id_number': 'Id Number',
       'create': 'Create',
-      'copied_to_clipboard': 'Copied to clipboard',
+      'copied_to_clipboard': 'Copied :value to the clipboard',
       'error': 'Error',
       'could_not_launch': 'Could not launch',
       'contacts': 'Contacts',

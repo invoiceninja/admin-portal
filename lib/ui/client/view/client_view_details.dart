@@ -200,7 +200,10 @@ class AppListTile extends StatelessWidget {
         onLongPress: () {
           Clipboard.setData(ClipboardData(text: copyValue ?? title));
           Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalization.of(context).copiedToClipboard)));
+              content: Text(AppLocalization
+                  .of(context)
+                  .copiedToClipboard
+                  .replaceFirst(':value', copyValue ?? title))));
         },
       ),
     );
