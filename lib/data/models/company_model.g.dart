@@ -16,6 +16,8 @@ part of 'company_model.dart';
 
 Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
+Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
+    new _$PaymentTermEntitySerializer();
 Serializer<TaxRateEntity> _$taxRateEntitySerializer =
     new _$TaxRateEntitySerializer();
 Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
@@ -149,6 +151,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
+      'custom_payment_terms',
+      serializers.serialize(object.customPaymentTerms,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(PaymentTermEntity)])),
       'invoice_fields',
       serializers.serialize(object.invoiceFields,
           specifiedType: const FullType(String)),
@@ -333,9 +339,78 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                 const FullType(String)
               ])) as BuiltMap);
           break;
+        case 'custom_payment_terms':
+          result.customPaymentTerms.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(PaymentTermEntity)]))
+              as BuiltList);
+          break;
         case 'invoice_fields':
           result.invoiceFields = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$PaymentTermEntitySerializer
+    implements StructuredSerializer<PaymentTermEntity> {
+  @override
+  final Iterable<Type> types = const [PaymentTermEntity, _$PaymentTermEntity];
+  @override
+  final String wireName = 'PaymentTermEntity';
+
+  @override
+  Iterable serialize(Serializers serializers, PaymentTermEntity object,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.numDays != null) {
+      result
+        ..add('num_days')
+        ..add(serializers.serialize(object.numDays,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
+
+    return result;
+  }
+
+  @override
+  PaymentTermEntity deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType: FullType.unspecified}) {
+    final result = new PaymentTermEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'num_days':
+          result.numDays = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -549,6 +624,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltMap<String, String> customFields;
   @override
+  final BuiltList<PaymentTermEntity> customPaymentTerms;
+  @override
   final String invoiceFields;
 
   factory _$CompanyEntity([void updates(CompanyEntityBuilder b)]) =>
@@ -594,6 +671,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.users,
       this.userMap,
       this.customFields,
+      this.customPaymentTerms,
       this.invoiceFields})
       : super._() {
     if (name == null)
@@ -687,6 +765,8 @@ class _$CompanyEntity extends CompanyEntity {
       throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
     if (customFields == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
+    if (customPaymentTerms == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'customPaymentTerms');
     if (invoiceFields == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceFields');
   }
@@ -741,6 +821,7 @@ class _$CompanyEntity extends CompanyEntity {
         users == other.users &&
         userMap == other.userMap &&
         customFields == other.customFields &&
+        customPaymentTerms == other.customPaymentTerms &&
         invoiceFields == other.invoiceFields;
   }
 
@@ -764,25 +845,25 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode),
-                                                                                defaultTaxRate2.hashCode),
-                                                                            defaultQuoteTerms.hashCode),
-                                                                        showCurrencyCode.hashCode),
-                                                                    enableSecondTaxRate.hashCode),
-                                                                startOfWeek.hashCode),
-                                                            financialYearStart.hashCode),
-                                                        enabledModules.hashCode),
-                                                    defaultPaymentTerms.hashCode),
-                                                defaultPaymentTypeId.hashCode),
-                                            defaultTaskRate.hashCode),
-                                        enableInclusiveTaxes.hashCode),
-                                    convertProductExchangeRate.hashCode),
-                                enableCustomInvoiceTaxes1.hashCode),
-                            enableCustomInvoiceTaxes2.hashCode),
-                        taxRates.hashCode),
-                    users.hashCode),
-                userMap.hashCode),
-            customFields.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode),
+                                                                                defaultQuoteTerms.hashCode),
+                                                                            showCurrencyCode.hashCode),
+                                                                        enableSecondTaxRate.hashCode),
+                                                                    startOfWeek.hashCode),
+                                                                financialYearStart.hashCode),
+                                                            enabledModules.hashCode),
+                                                        defaultPaymentTerms.hashCode),
+                                                    defaultPaymentTypeId.hashCode),
+                                                defaultTaskRate.hashCode),
+                                            enableInclusiveTaxes.hashCode),
+                                        convertProductExchangeRate.hashCode),
+                                    enableCustomInvoiceTaxes1.hashCode),
+                                enableCustomInvoiceTaxes2.hashCode),
+                            taxRates.hashCode),
+                        users.hashCode),
+                    userMap.hashCode),
+                customFields.hashCode),
+            customPaymentTerms.hashCode),
         invoiceFields.hashCode));
   }
 
@@ -828,6 +909,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('users', users)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
+          ..add('customPaymentTerms', customPaymentTerms)
           ..add('invoiceFields', invoiceFields))
         .toString();
   }
@@ -1024,6 +1106,12 @@ class CompanyEntityBuilder
   set customFields(MapBuilder<String, String> customFields) =>
       _$this._customFields = customFields;
 
+  ListBuilder<PaymentTermEntity> _customPaymentTerms;
+  ListBuilder<PaymentTermEntity> get customPaymentTerms =>
+      _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
+  set customPaymentTerms(ListBuilder<PaymentTermEntity> customPaymentTerms) =>
+      _$this._customPaymentTerms = customPaymentTerms;
+
   String _invoiceFields;
   String get invoiceFields => _$this._invoiceFields;
   set invoiceFields(String invoiceFields) =>
@@ -1072,6 +1160,7 @@ class CompanyEntityBuilder
       _users = _$v.users?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
+      _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _invoiceFields = _$v.invoiceFields;
       _$v = null;
     }
@@ -1134,6 +1223,7 @@ class CompanyEntityBuilder
               users: users.build(),
               userMap: userMap.build(),
               customFields: customFields.build(),
+              customPaymentTerms: customPaymentTerms.build(),
               invoiceFields: invoiceFields);
     } catch (_) {
       String _$failedField;
@@ -1146,12 +1236,109 @@ class CompanyEntityBuilder
         userMap.build();
         _$failedField = 'customFields';
         customFields.build();
+        _$failedField = 'customPaymentTerms';
+        customPaymentTerms.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyEntity', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$PaymentTermEntity extends PaymentTermEntity {
+  @override
+  final int numDays;
+  @override
+  final int archivedAt;
+  @override
+  final int id;
+
+  factory _$PaymentTermEntity([void updates(PaymentTermEntityBuilder b)]) =>
+      (new PaymentTermEntityBuilder()..update(updates)).build();
+
+  _$PaymentTermEntity._({this.numDays, this.archivedAt, this.id}) : super._();
+
+  @override
+  PaymentTermEntity rebuild(void updates(PaymentTermEntityBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PaymentTermEntityBuilder toBuilder() =>
+      new PaymentTermEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    if (identical(other, this)) return true;
+    if (other is! PaymentTermEntity) return false;
+    return numDays == other.numDays &&
+        archivedAt == other.archivedAt &&
+        id == other.id;
+  }
+
+  @override
+  int get hashCode {
+    return $jf(
+        $jc($jc($jc(0, numDays.hashCode), archivedAt.hashCode), id.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('PaymentTermEntity')
+          ..add('numDays', numDays)
+          ..add('archivedAt', archivedAt)
+          ..add('id', id))
+        .toString();
+  }
+}
+
+class PaymentTermEntityBuilder
+    implements Builder<PaymentTermEntity, PaymentTermEntityBuilder> {
+  _$PaymentTermEntity _$v;
+
+  int _numDays;
+  int get numDays => _$this._numDays;
+  set numDays(int numDays) => _$this._numDays = numDays;
+
+  int _archivedAt;
+  int get archivedAt => _$this._archivedAt;
+  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  PaymentTermEntityBuilder();
+
+  PaymentTermEntityBuilder get _$this {
+    if (_$v != null) {
+      _numDays = _$v.numDays;
+      _archivedAt = _$v.archivedAt;
+      _id = _$v.id;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PaymentTermEntity other) {
+    if (other == null) throw new ArgumentError.notNull('other');
+    _$v = other as _$PaymentTermEntity;
+  }
+
+  @override
+  void update(void updates(PaymentTermEntityBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$PaymentTermEntity build() {
+    final _$result = _$v ??
+        new _$PaymentTermEntity._(
+            numDays: numDays, archivedAt: archivedAt, id: id);
     replace(_$result);
     return _$result;
   }

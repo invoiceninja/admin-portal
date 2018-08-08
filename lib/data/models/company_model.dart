@@ -6,10 +6,8 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'company_model.g.dart';
 
-
-
-abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {
-
+abstract class CompanyEntity
+    implements Built<CompanyEntity, CompanyEntityBuilder> {
   factory CompanyEntity() {
     return _$CompanyEntity._(
       name: '',
@@ -46,6 +44,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       showInvoiceItemTaxes: false,
       startOfWeek: 1,
       timezoneId: 1,
+      customPaymentTerms: BuiltList<PaymentTermEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       users: BuiltList<UserEntity>(),
       userMap: BuiltMap<int, UserEntity>(),
@@ -54,9 +53,11 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       countryId: kCountryUnitedStates,
     );
   }
+
   CompanyEntity._();
 
   String get name;
+
   String get token;
 
   String get plan;
@@ -162,17 +163,22 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
 
   @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
+
   BuiltMap<int, UserEntity> get userMap;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
+
+  @BuiltValueField(wireName: 'custom_payment_terms')
+  BuiltList<PaymentTermEntity> get customPaymentTerms;
 
   @BuiltValueField(wireName: 'invoice_fields')
   String get invoiceFields;
 
   //@BuiltValueField(wireName: 'invoice_labels')
 
-  bool hasInvoiceField(String field, [EntityType entityType = EntityType.product]) {
+  bool hasInvoiceField(String field,
+      [EntityType entityType = EntityType.product]) {
     if (invoiceFields.isNotEmpty) {
       return invoiceFields.contains('$entityType.$field');
     } else if (field == 'discount') {
@@ -184,9 +190,7 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
 
   String getCustomFieldLabel(String field) {
     if (customFields.containsKey(field)) {
-      return customFields[field]
-          .split('|')
-          .first;
+      return customFields[field].split('|').first;
     } else {
       return '';
     }
@@ -205,10 +209,37 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 
-
-abstract class TaxRateEntity extends Object with SelectableEntity implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-
+abstract class PaymentTermEntity extends Object
+    with SelectableEntity
+    implements Built<PaymentTermEntity, PaymentTermEntityBuilder> {
   static int counter = 0;
+
+  factory PaymentTermEntity() {
+    return _$PaymentTermEntity._(
+      id: --PaymentTermEntity.counter,
+      numDays: 0,
+    );
+  }
+
+  PaymentTermEntity._();
+
+  static Serializer<PaymentTermEntity> get serializer =>
+      _$paymentTermEntitySerializer;
+
+  @nullable
+  @BuiltValueField(wireName: 'num_days')
+  int get numDays;
+
+  @nullable
+  @BuiltValueField(wireName: 'archived_at')
+  int get archivedAt;
+}
+
+abstract class TaxRateEntity extends Object
+    with SelectableEntity
+    implements Built<TaxRateEntity, TaxRateEntityBuilder> {
+  static int counter = 0;
+
   factory TaxRateEntity() {
     return _$TaxRateEntity._(
       id: --TaxRateEntity.counter,
@@ -217,11 +248,13 @@ abstract class TaxRateEntity extends Object with SelectableEntity implements Bui
       isInclusive: false,
     );
   }
+
   TaxRateEntity._();
 
   static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
 
   String get name;
+
   double get rate;
 
   @BuiltValueField(wireName: 'is_inclusive')
@@ -232,9 +265,9 @@ abstract class TaxRateEntity extends Object with SelectableEntity implements Bui
   int get archivedAt;
 }
 
-
 abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   factory UserEntity([void updates(UserEntityBuilder b)]) = _$UserEntity;
+
   UserEntity._();
 
   int get id;

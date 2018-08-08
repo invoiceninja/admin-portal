@@ -123,11 +123,15 @@ class _$IndustryEntitySerializer
   Iterable serialize(Serializers serializers, IndustryEntity object,
       {FullType specifiedType: FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
 
     return result;
   }
@@ -143,13 +147,13 @@ class _$IndustryEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -344,15 +348,14 @@ class IndustryItemResponseBuilder
 
 class _$IndustryEntity extends IndustryEntity {
   @override
-  final int id;
-  @override
   final String name;
+  @override
+  final int id;
 
   factory _$IndustryEntity([void updates(IndustryEntityBuilder b)]) =>
       (new IndustryEntityBuilder()..update(updates)).build();
 
-  _$IndustryEntity._({this.id, this.name}) : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('IndustryEntity', 'id');
+  _$IndustryEntity._({this.name, this.id}) : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('IndustryEntity', 'name');
   }
@@ -369,19 +372,19 @@ class _$IndustryEntity extends IndustryEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! IndustryEntity) return false;
-    return id == other.id && name == other.name;
+    return name == other.name && id == other.id;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, id.hashCode), name.hashCode));
+    return $jf($jc($jc(0, name.hashCode), id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('IndustryEntity')
-          ..add('id', id)
-          ..add('name', name))
+          ..add('name', name)
+          ..add('id', id))
         .toString();
   }
 }
@@ -390,20 +393,20 @@ class IndustryEntityBuilder
     implements Builder<IndustryEntity, IndustryEntityBuilder> {
   _$IndustryEntity _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   IndustryEntityBuilder();
 
   IndustryEntityBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
       _name = _$v.name;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -422,7 +425,7 @@ class IndustryEntityBuilder
 
   @override
   _$IndustryEntity build() {
-    final _$result = _$v ?? new _$IndustryEntity._(id: id, name: name);
+    final _$result = _$v ?? new _$IndustryEntity._(name: name, id: id);
     replace(_$result);
     return _$result;
   }

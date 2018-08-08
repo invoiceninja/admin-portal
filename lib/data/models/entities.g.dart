@@ -29,6 +29,8 @@ const EntityType _$payment = const EntityType._('payment');
 const EntityType _$country = const EntityType._('country');
 const EntityType _$currency = const EntityType._('currency');
 const EntityType _$language = const EntityType._('language');
+const EntityType _$industry = const EntityType._('industry');
+const EntityType _$size = const EntityType._('size');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
@@ -62,6 +64,10 @@ EntityType _$typeValueOf(String name) {
       return _$currency;
     case 'language':
       return _$language;
+    case 'industry':
+      return _$industry;
+    case 'size':
+      return _$size;
     default:
       throw new ArgumentError(name);
   }
@@ -84,6 +90,8 @@ final BuiltSet<EntityType> _$typeValues =
   _$country,
   _$currency,
   _$language,
+  _$industry,
+  _$size,
 ]);
 
 const EntityState _$active = const EntityState._('active');
