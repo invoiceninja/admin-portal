@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_details.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_shipping_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
@@ -29,7 +30,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 5);
+    _controller = TabController(vsync: this, length: 6);
   }
 
   @override
@@ -78,6 +79,9 @@ class _ClientEditState extends State<ClientEdit>
                 text: localization.contacts,
               ),
               Tab(
+                text: localization.notes,
+              ),
+              Tab(
                 text: localization.settings,
               ),
               Tab(
@@ -98,6 +102,9 @@ class _ClientEditState extends State<ClientEdit>
                 viewModel: widget.viewModel,
               ),
               ClientEditContactsScreen(),
+              ClientEditNotes(
+                viewModel: widget.viewModel,
+              ),
               ClientEditSettings(
                 viewModel: widget.viewModel,
               ),

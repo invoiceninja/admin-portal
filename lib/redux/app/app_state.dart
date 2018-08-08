@@ -105,6 +105,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Date Formats: ${staticState.dateFormatMap}';
-    return 'Route: ${uiState.currentRoute}, Dark Mode: ${uiState.enableDarkMode}';
+    return 'Route: ${uiState.currentRoute}';
   }
 }
