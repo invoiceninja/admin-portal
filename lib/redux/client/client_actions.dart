@@ -40,7 +40,7 @@ class LoadClient {
   final int clientId;
   final bool loadActivities;
 
-  LoadClient({this.completer, this.clientId, this.loadActivities});
+  LoadClient({this.completer, this.clientId, this.loadActivities = false});
 }
 
 class LoadClientActivity {
