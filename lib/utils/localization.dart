@@ -179,6 +179,8 @@ class AppLocalization {
       'no_records_found': 'No records found',
       'clone': 'Clone',
       'loading': 'Loading',
+      'industry': 'Industry',
+      'size': 'Size',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -413,6 +415,8 @@ class AppLocalization {
   String get noRecordsFound => _localizedValues[locale.languageCode]['no_records_found'];
   String get clone => _localizedValues[locale.languageCode]['clone'];
   String get loading => _localizedValues[locale.languageCode]['loading'];
+  String get industry => _localizedValues[locale.languageCode]['industry'];
+  String get size => _localizedValues[locale.languageCode]['size'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

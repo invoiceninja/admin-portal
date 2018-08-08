@@ -77,19 +77,19 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           children: <Widget>[
             EntityDropdown(
               entityType: EntityType.currency,
-              entityMap: viewModel.currencyMap,
-              entityList: memoizedCurrencyList(viewModel.currencyMap),
+              entityMap: viewModel.staticState.currencyMap,
+              entityList: memoizedCurrencyList(viewModel.staticState.currencyMap),
               labelText: localization.currency,
-              initialValue: viewModel.currencyMap[client.currencyId]?.name,
+              initialValue: viewModel.staticState.currencyMap[client.currencyId]?.name,
               onSelected: (int currencyId) => viewModel
                   .onChanged(client.rebuild((b) => b..currencyId = currencyId)),
             ),
             EntityDropdown(
               entityType: EntityType.language,
-              entityMap: viewModel.languageMap,
-              entityList: memoizedLanguageList(viewModel.languageMap),
+              entityMap: viewModel.staticState.languageMap,
+              entityList: memoizedLanguageList(viewModel.staticState.languageMap),
               labelText: localization.language,
-              initialValue: viewModel.languageMap[client.languageId]?.name,
+              initialValue: viewModel.staticState.languageMap[client.languageId]?.name,
               onSelected: (int languageId) => viewModel
                   .onChanged(client.rebuild((b) => b..languageId = languageId)),
             ),

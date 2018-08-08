@@ -125,10 +125,10 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
           ),
           EntityDropdown(
             entityType: EntityType.country,
-            entityMap: viewModel.countryMap,
-            entityList: memoizedCountryList(viewModel.countryMap),
+            entityMap: viewModel.staticState.countryMap,
+            entityList: memoizedCountryList(viewModel.staticState.countryMap),
             labelText: localization.country,
-            initialValue: viewModel.countryMap[client.countryId]?.name,
+            initialValue: viewModel.staticState.countryMap[client.countryId]?.name,
             onSelected: (int countryId) => viewModel
                 .onChanged(client.rebuild((b) => b..countryId = countryId)),
           ),

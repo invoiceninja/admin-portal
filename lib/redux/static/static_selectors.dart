@@ -38,3 +38,27 @@ List<int> currencyList(BuiltMap<int, CurrencyEntity> currencyMap) {
   return list;
 }
 
+var memoizedIndustryList = memo1((BuiltMap<int, IndustryEntity> industryMap) =>
+    industryList(industryMap));
+
+List<int> industryList(BuiltMap<int, IndustryEntity> industryMap) {
+  final list = industryMap.keys.toList();
+
+  list.sort((idA, idB) => industryMap[idA].listDisplayName
+      .compareTo(industryMap[idB].listDisplayName));
+
+  return list;
+}
+
+var memoizedSizeList = memo1((BuiltMap<int, SizeEntity> sizeMap) =>
+    sizeList(sizeMap));
+
+List<int> sizeList(BuiltMap<int, SizeEntity> sizeMap) {
+  final list = sizeMap.keys.toList();
+
+  list.sort((idA, idB) => sizeMap[idA].listDisplayName
+      .compareTo(sizeMap[idB].listDisplayName));
+
+  return list;
+}
+
