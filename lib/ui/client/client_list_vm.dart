@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -73,6 +74,12 @@ class ClientListVM {
         },
         onEntityAction: (context, client, action) {
           switch (action) {
+            case EntityAction.invoice:
+              store.dispatch(EditInvoice(
+                  invoice: InvoiceEntity()
+                      .rebuild((b) => b.clientId = client.id),
+                  context: context));
+              break;
             case EntityAction.restore:
               store.dispatch(RestoreClientRequest(
                   popCompleter(context,

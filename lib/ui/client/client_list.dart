@@ -40,6 +40,13 @@ class ClientList extends StatelessWidget {
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(children: <Widget>[
+          client.isActive ? ListTile(
+            leading: Icon(Icons.add_circle_outline),
+            title: Text(AppLocalization.of(context).newInvoice),
+            onTap: () => viewModel.onEntityAction(
+                context, client, EntityAction.invoice),
+          ) : Container(),
+          Divider(),
           ! client.isActive ? ListTile(
             leading: Icon(Icons.restore),
             title: Text(AppLocalization.of(context).restore),
