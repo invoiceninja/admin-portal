@@ -158,7 +158,10 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
       }
 
       listTiles
-          .add(FutureBuilder<Null>(future: _launched, builder: _launchStatus));
+          .add(Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
+          ));
 
       return listTiles;
     }
