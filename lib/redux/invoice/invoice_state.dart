@@ -33,7 +33,7 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool get isLoaded => lastUpdated > 0;
+  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
 }

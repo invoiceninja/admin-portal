@@ -229,6 +229,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
     ];
+    if (object.lastUpdatedActivities != null) {
+      result
+        ..add('lastUpdatedActivities')
+        ..add(serializers.serialize(object.lastUpdatedActivities,
+            specifiedType: const FullType(int)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -274,6 +280,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'lastUpdatedActivities':
+          result.lastUpdatedActivities = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -782,6 +792,8 @@ class ClientItemResponseBuilder
 
 class _$ClientEntity extends ClientEntity {
   @override
+  final int lastUpdatedActivities;
+  @override
   final String name;
   @override
   final String displayName;
@@ -870,7 +882,8 @@ class _$ClientEntity extends ClientEntity {
       (new ClientEntityBuilder()..update(updates)).build();
 
   _$ClientEntity._(
-      {this.name,
+      {this.lastUpdatedActivities,
+      this.name,
       this.displayName,
       this.balance,
       this.paidToDate,
@@ -1001,7 +1014,8 @@ class _$ClientEntity extends ClientEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! ClientEntity) return false;
-    return name == other.name &&
+    return lastUpdatedActivities == other.lastUpdatedActivities &&
+        name == other.name &&
         displayName == other.displayName &&
         balance == other.balance &&
         paidToDate == other.paidToDate &&
@@ -1065,7 +1079,7 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode),
                                                                                 taskRate.hashCode),
                                                                             shippingAddress1.hashCode),
                                                                         shippingAddress2.hashCode),
@@ -1090,6 +1104,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ClientEntity')
+          ..add('lastUpdatedActivities', lastUpdatedActivities)
           ..add('name', name)
           ..add('displayName', displayName)
           ..add('balance', balance)
@@ -1139,6 +1154,11 @@ class _$ClientEntity extends ClientEntity {
 class ClientEntityBuilder
     implements Builder<ClientEntity, ClientEntityBuilder> {
   _$ClientEntity _$v;
+
+  int _lastUpdatedActivities;
+  int get lastUpdatedActivities => _$this._lastUpdatedActivities;
+  set lastUpdatedActivities(int lastUpdatedActivities) =>
+      _$this._lastUpdatedActivities = lastUpdatedActivities;
 
   String _name;
   String get name => _$this._name;
@@ -1326,6 +1346,7 @@ class ClientEntityBuilder
 
   ClientEntityBuilder get _$this {
     if (_$v != null) {
+      _lastUpdatedActivities = _$v.lastUpdatedActivities;
       _name = _$v.name;
       _displayName = _$v.displayName;
       _balance = _$v.balance;
@@ -1390,6 +1411,7 @@ class ClientEntityBuilder
     try {
       _$result = _$v ??
           new _$ClientEntity._(
+              lastUpdatedActivities: lastUpdatedActivities,
               name: name,
               displayName: displayName,
               balance: balance,

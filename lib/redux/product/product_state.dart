@@ -33,7 +33,7 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool get isLoaded => lastUpdated > 0;
+  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<ProductState> get serializer => _$productStateSerializer;
 }

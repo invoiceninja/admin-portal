@@ -33,7 +33,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool get isLoaded => lastUpdated > 0;
+  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<ClientState> get serializer => _$clientStateSerializer;
 }

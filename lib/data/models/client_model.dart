@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -95,6 +96,7 @@ abstract class ClientEntity extends Object
         <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
       activities: BuiltList<ActivityEntity>(),
+      lastUpdatedActivities: 0,
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -106,6 +108,19 @@ abstract class ClientEntity extends Object
   ClientEntity get clone => rebuild((b) => b
     ..id = --ClientEntity.counter
   );
+
+  @nullable
+  int get lastUpdatedActivities;
+
+  bool get areActivitiesLoaded => lastUpdatedActivities != null && lastUpdatedActivities > 0;
+
+  bool get areActivitiesStale {
+    if (! areActivitiesLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - lastUpdatedActivities > kMillisecondsToRefreshActivities;
+  }
 
   @override
   EntityType get entityType {

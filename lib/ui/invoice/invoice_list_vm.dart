@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
@@ -112,10 +113,19 @@ class InvoiceListVM {
                   invoice.id));
               break;
             case EntityAction.emailInvoice:
+              /*
               store.dispatch(EmailInvoiceRequest(
                   popCompleter(
                       context, localization.successfullyEmailedInvoice),
                   invoice.id));
+                  */
+              showDialog<EmailInvoiceDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return EmailInvoiceDialog(
+                      invoice: invoice,
+                    );
+                  });
               break;
             case EntityAction.clone:
               Navigator.of(context).pop();

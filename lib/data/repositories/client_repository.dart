@@ -55,11 +55,11 @@ class ClientRepository {
 
     if (client.isNew) {
       response = await webClient.post(
-          auth.url + '/clients', company.token, json.encode(data));
+          auth.url + '/clients?include=activities', company.token, json.encode(data));
     } else {
-      var url = auth.url + '/clients/' + client.id.toString();
+      var url = auth.url + '/clients/${client.id}?include=activities';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response = await webClient.put(url, company.token, json.encode(data));
     }
