@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
@@ -21,17 +22,7 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
     showDialog<SimpleDialog>(
       context: context,
       builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text('${localization.loading}...'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                height: 4.0,
-                child: LinearProgressIndicator(),
-              ),
-            )
+            LoadingDialog(),
           ]),
     );
     final http.Response response = await http.Client().get(

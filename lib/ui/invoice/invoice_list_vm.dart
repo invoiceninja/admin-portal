@@ -119,6 +119,7 @@ class InvoiceListVM {
                       context, localization.successfullyEmailedInvoice),
                   invoice.id));
                   */
+              Navigator.of(context).pop();
               showDialog<EmailInvoiceDialog>(
                   context: context,
                   builder: (BuildContext context) {

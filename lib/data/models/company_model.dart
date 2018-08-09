@@ -51,6 +51,18 @@ abstract class CompanyEntity
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
+      emailSubjectInvoice: '',
+      emailSubjectQuote: '',
+      emailSubjectPayment: '',
+      emailBodyInvoice: '',
+      emailBodyQuote: '',
+      emailBodyPayment: '',
+      emailSubjectReminder1: '',
+      emailSubjectReminder2: '',
+      emailSubjectReminder3: '',
+      emailBodyReminder1: '',
+      emailBodyReminder2: '',
+      emailBodyReminder3: '',
     );
   }
 
@@ -175,6 +187,44 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'invoice_fields')
   String get invoiceFields;
 
+  @BuiltValueField(wireName: 'email_subject_invoice')
+  String get emailSubjectInvoice;
+
+  @BuiltValueField(wireName: 'email_subject_quote')
+  String get emailSubjectQuote;
+
+  @BuiltValueField(wireName: 'email_subject_payment')
+  String get emailSubjectPayment;
+
+  @BuiltValueField(wireName: 'email_template_invoice')
+  String get emailBodyInvoice;
+
+  @BuiltValueField(wireName: 'email_template_quote')
+  String get emailBodyQuote;
+
+  @BuiltValueField(wireName: 'email_template_payment')
+  String get emailBodyPayment;
+
+  @BuiltValueField(wireName: 'email_subject_reminder1')
+  String get emailSubjectReminder1;
+
+  @BuiltValueField(wireName: 'email_subject_reminder2')
+  String get emailSubjectReminder2;
+
+  @BuiltValueField(wireName: 'email_subject_reminder3')
+  String get emailSubjectReminder3;
+
+  @BuiltValueField(wireName: 'email_template_reminder1')
+  String get emailBodyReminder1;
+
+  @BuiltValueField(wireName: 'email_template_reminder2')
+  String get emailBodyReminder2;
+
+  @BuiltValueField(wireName: 'email_template_reminder3')
+  String get emailBodyReminder3;
+
+
+  //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')
 
   bool hasInvoiceField(String field,

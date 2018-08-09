@@ -158,6 +158,42 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'invoice_fields',
       serializers.serialize(object.invoiceFields,
           specifiedType: const FullType(String)),
+      'email_subject_invoice',
+      serializers.serialize(object.emailSubjectInvoice,
+          specifiedType: const FullType(String)),
+      'email_subject_quote',
+      serializers.serialize(object.emailSubjectQuote,
+          specifiedType: const FullType(String)),
+      'email_subject_payment',
+      serializers.serialize(object.emailSubjectPayment,
+          specifiedType: const FullType(String)),
+      'email_template_invoice',
+      serializers.serialize(object.emailBodyInvoice,
+          specifiedType: const FullType(String)),
+      'email_template_quote',
+      serializers.serialize(object.emailBodyQuote,
+          specifiedType: const FullType(String)),
+      'email_template_payment',
+      serializers.serialize(object.emailBodyPayment,
+          specifiedType: const FullType(String)),
+      'email_subject_reminder1',
+      serializers.serialize(object.emailSubjectReminder1,
+          specifiedType: const FullType(String)),
+      'email_subject_reminder2',
+      serializers.serialize(object.emailSubjectReminder2,
+          specifiedType: const FullType(String)),
+      'email_subject_reminder3',
+      serializers.serialize(object.emailSubjectReminder3,
+          specifiedType: const FullType(String)),
+      'email_template_reminder1',
+      serializers.serialize(object.emailBodyReminder1,
+          specifiedType: const FullType(String)),
+      'email_template_reminder2',
+      serializers.serialize(object.emailBodyReminder2,
+          specifiedType: const FullType(String)),
+      'email_template_reminder3',
+      serializers.serialize(object.emailBodyReminder3,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -347,6 +383,54 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'invoice_fields':
           result.invoiceFields = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_invoice':
+          result.emailSubjectInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_quote':
+          result.emailSubjectQuote = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_payment':
+          result.emailSubjectPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_invoice':
+          result.emailBodyInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_quote':
+          result.emailBodyQuote = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_payment':
+          result.emailBodyPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_reminder1':
+          result.emailSubjectReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_reminder2':
+          result.emailSubjectReminder2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_reminder3':
+          result.emailSubjectReminder3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_reminder1':
+          result.emailBodyReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_reminder2':
+          result.emailBodyReminder2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_reminder3':
+          result.emailBodyReminder3 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -627,6 +711,30 @@ class _$CompanyEntity extends CompanyEntity {
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
   final String invoiceFields;
+  @override
+  final String emailSubjectInvoice;
+  @override
+  final String emailSubjectQuote;
+  @override
+  final String emailSubjectPayment;
+  @override
+  final String emailBodyInvoice;
+  @override
+  final String emailBodyQuote;
+  @override
+  final String emailBodyPayment;
+  @override
+  final String emailSubjectReminder1;
+  @override
+  final String emailSubjectReminder2;
+  @override
+  final String emailSubjectReminder3;
+  @override
+  final String emailBodyReminder1;
+  @override
+  final String emailBodyReminder2;
+  @override
+  final String emailBodyReminder3;
 
   factory _$CompanyEntity([void updates(CompanyEntityBuilder b)]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
@@ -672,7 +780,19 @@ class _$CompanyEntity extends CompanyEntity {
       this.userMap,
       this.customFields,
       this.customPaymentTerms,
-      this.invoiceFields})
+      this.invoiceFields,
+      this.emailSubjectInvoice,
+      this.emailSubjectQuote,
+      this.emailSubjectPayment,
+      this.emailBodyInvoice,
+      this.emailBodyQuote,
+      this.emailBodyPayment,
+      this.emailSubjectReminder1,
+      this.emailSubjectReminder2,
+      this.emailSubjectReminder3,
+      this.emailBodyReminder1,
+      this.emailBodyReminder2,
+      this.emailBodyReminder3})
       : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
@@ -769,6 +889,35 @@ class _$CompanyEntity extends CompanyEntity {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customPaymentTerms');
     if (invoiceFields == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceFields');
+    if (emailSubjectInvoice == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectInvoice');
+    if (emailSubjectQuote == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailSubjectQuote');
+    if (emailSubjectPayment == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectPayment');
+    if (emailBodyInvoice == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyInvoice');
+    if (emailBodyQuote == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyQuote');
+    if (emailBodyPayment == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyPayment');
+    if (emailSubjectReminder1 == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectReminder1');
+    if (emailSubjectReminder2 == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectReminder2');
+    if (emailSubjectReminder3 == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectReminder3');
+    if (emailBodyReminder1 == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder1');
+    if (emailBodyReminder2 == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder2');
+    if (emailBodyReminder3 == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder3');
   }
 
   @override
@@ -822,7 +971,19 @@ class _$CompanyEntity extends CompanyEntity {
         userMap == other.userMap &&
         customFields == other.customFields &&
         customPaymentTerms == other.customPaymentTerms &&
-        invoiceFields == other.invoiceFields;
+        invoiceFields == other.invoiceFields &&
+        emailSubjectInvoice == other.emailSubjectInvoice &&
+        emailSubjectQuote == other.emailSubjectQuote &&
+        emailSubjectPayment == other.emailSubjectPayment &&
+        emailBodyInvoice == other.emailBodyInvoice &&
+        emailBodyQuote == other.emailBodyQuote &&
+        emailBodyPayment == other.emailBodyPayment &&
+        emailSubjectReminder1 == other.emailSubjectReminder1 &&
+        emailSubjectReminder2 == other.emailSubjectReminder2 &&
+        emailSubjectReminder3 == other.emailSubjectReminder3 &&
+        emailBodyReminder1 == other.emailBodyReminder1 &&
+        emailBodyReminder2 == other.emailBodyReminder2 &&
+        emailBodyReminder3 == other.emailBodyReminder3;
   }
 
   @override
@@ -845,26 +1006,26 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode),
-                                                                                defaultQuoteTerms.hashCode),
-                                                                            showCurrencyCode.hashCode),
-                                                                        enableSecondTaxRate.hashCode),
-                                                                    startOfWeek.hashCode),
-                                                                financialYearStart.hashCode),
-                                                            enabledModules.hashCode),
-                                                        defaultPaymentTerms.hashCode),
-                                                    defaultPaymentTypeId.hashCode),
-                                                defaultTaskRate.hashCode),
-                                            enableInclusiveTaxes.hashCode),
-                                        convertProductExchangeRate.hashCode),
-                                    enableCustomInvoiceTaxes1.hashCode),
-                                enableCustomInvoiceTaxes2.hashCode),
-                            taxRates.hashCode),
-                        users.hashCode),
-                    userMap.hashCode),
-                customFields.hashCode),
-            customPaymentTerms.hashCode),
-        invoiceFields.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode),
+                                                                                enableCustomInvoiceTaxes2.hashCode),
+                                                                            taxRates.hashCode),
+                                                                        users.hashCode),
+                                                                    userMap.hashCode),
+                                                                customFields.hashCode),
+                                                            customPaymentTerms.hashCode),
+                                                        invoiceFields.hashCode),
+                                                    emailSubjectInvoice.hashCode),
+                                                emailSubjectQuote.hashCode),
+                                            emailSubjectPayment.hashCode),
+                                        emailBodyInvoice.hashCode),
+                                    emailBodyQuote.hashCode),
+                                emailBodyPayment.hashCode),
+                            emailSubjectReminder1.hashCode),
+                        emailSubjectReminder2.hashCode),
+                    emailSubjectReminder3.hashCode),
+                emailBodyReminder1.hashCode),
+            emailBodyReminder2.hashCode),
+        emailBodyReminder3.hashCode));
   }
 
   @override
@@ -910,7 +1071,19 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('customPaymentTerms', customPaymentTerms)
-          ..add('invoiceFields', invoiceFields))
+          ..add('invoiceFields', invoiceFields)
+          ..add('emailSubjectInvoice', emailSubjectInvoice)
+          ..add('emailSubjectQuote', emailSubjectQuote)
+          ..add('emailSubjectPayment', emailSubjectPayment)
+          ..add('emailBodyInvoice', emailBodyInvoice)
+          ..add('emailBodyQuote', emailBodyQuote)
+          ..add('emailBodyPayment', emailBodyPayment)
+          ..add('emailSubjectReminder1', emailSubjectReminder1)
+          ..add('emailSubjectReminder2', emailSubjectReminder2)
+          ..add('emailSubjectReminder3', emailSubjectReminder3)
+          ..add('emailBodyReminder1', emailBodyReminder1)
+          ..add('emailBodyReminder2', emailBodyReminder2)
+          ..add('emailBodyReminder3', emailBodyReminder3))
         .toString();
   }
 }
@@ -1117,6 +1290,66 @@ class CompanyEntityBuilder
   set invoiceFields(String invoiceFields) =>
       _$this._invoiceFields = invoiceFields;
 
+  String _emailSubjectInvoice;
+  String get emailSubjectInvoice => _$this._emailSubjectInvoice;
+  set emailSubjectInvoice(String emailSubjectInvoice) =>
+      _$this._emailSubjectInvoice = emailSubjectInvoice;
+
+  String _emailSubjectQuote;
+  String get emailSubjectQuote => _$this._emailSubjectQuote;
+  set emailSubjectQuote(String emailSubjectQuote) =>
+      _$this._emailSubjectQuote = emailSubjectQuote;
+
+  String _emailSubjectPayment;
+  String get emailSubjectPayment => _$this._emailSubjectPayment;
+  set emailSubjectPayment(String emailSubjectPayment) =>
+      _$this._emailSubjectPayment = emailSubjectPayment;
+
+  String _emailBodyInvoice;
+  String get emailBodyInvoice => _$this._emailBodyInvoice;
+  set emailBodyInvoice(String emailBodyInvoice) =>
+      _$this._emailBodyInvoice = emailBodyInvoice;
+
+  String _emailBodyQuote;
+  String get emailBodyQuote => _$this._emailBodyQuote;
+  set emailBodyQuote(String emailBodyQuote) =>
+      _$this._emailBodyQuote = emailBodyQuote;
+
+  String _emailBodyPayment;
+  String get emailBodyPayment => _$this._emailBodyPayment;
+  set emailBodyPayment(String emailBodyPayment) =>
+      _$this._emailBodyPayment = emailBodyPayment;
+
+  String _emailSubjectReminder1;
+  String get emailSubjectReminder1 => _$this._emailSubjectReminder1;
+  set emailSubjectReminder1(String emailSubjectReminder1) =>
+      _$this._emailSubjectReminder1 = emailSubjectReminder1;
+
+  String _emailSubjectReminder2;
+  String get emailSubjectReminder2 => _$this._emailSubjectReminder2;
+  set emailSubjectReminder2(String emailSubjectReminder2) =>
+      _$this._emailSubjectReminder2 = emailSubjectReminder2;
+
+  String _emailSubjectReminder3;
+  String get emailSubjectReminder3 => _$this._emailSubjectReminder3;
+  set emailSubjectReminder3(String emailSubjectReminder3) =>
+      _$this._emailSubjectReminder3 = emailSubjectReminder3;
+
+  String _emailBodyReminder1;
+  String get emailBodyReminder1 => _$this._emailBodyReminder1;
+  set emailBodyReminder1(String emailBodyReminder1) =>
+      _$this._emailBodyReminder1 = emailBodyReminder1;
+
+  String _emailBodyReminder2;
+  String get emailBodyReminder2 => _$this._emailBodyReminder2;
+  set emailBodyReminder2(String emailBodyReminder2) =>
+      _$this._emailBodyReminder2 = emailBodyReminder2;
+
+  String _emailBodyReminder3;
+  String get emailBodyReminder3 => _$this._emailBodyReminder3;
+  set emailBodyReminder3(String emailBodyReminder3) =>
+      _$this._emailBodyReminder3 = emailBodyReminder3;
+
   CompanyEntityBuilder();
 
   CompanyEntityBuilder get _$this {
@@ -1162,6 +1395,18 @@ class CompanyEntityBuilder
       _customFields = _$v.customFields?.toBuilder();
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _invoiceFields = _$v.invoiceFields;
+      _emailSubjectInvoice = _$v.emailSubjectInvoice;
+      _emailSubjectQuote = _$v.emailSubjectQuote;
+      _emailSubjectPayment = _$v.emailSubjectPayment;
+      _emailBodyInvoice = _$v.emailBodyInvoice;
+      _emailBodyQuote = _$v.emailBodyQuote;
+      _emailBodyPayment = _$v.emailBodyPayment;
+      _emailSubjectReminder1 = _$v.emailSubjectReminder1;
+      _emailSubjectReminder2 = _$v.emailSubjectReminder2;
+      _emailSubjectReminder3 = _$v.emailSubjectReminder3;
+      _emailBodyReminder1 = _$v.emailBodyReminder1;
+      _emailBodyReminder2 = _$v.emailBodyReminder2;
+      _emailBodyReminder3 = _$v.emailBodyReminder3;
       _$v = null;
     }
     return this;
@@ -1224,7 +1469,19 @@ class CompanyEntityBuilder
               userMap: userMap.build(),
               customFields: customFields.build(),
               customPaymentTerms: customPaymentTerms.build(),
-              invoiceFields: invoiceFields);
+              invoiceFields: invoiceFields,
+              emailSubjectInvoice: emailSubjectInvoice,
+              emailSubjectQuote: emailSubjectQuote,
+              emailSubjectPayment: emailSubjectPayment,
+              emailBodyInvoice: emailBodyInvoice,
+              emailBodyQuote: emailBodyQuote,
+              emailBodyPayment: emailBodyPayment,
+              emailSubjectReminder1: emailSubjectReminder1,
+              emailSubjectReminder2: emailSubjectReminder2,
+              emailSubjectReminder3: emailSubjectReminder3,
+              emailBodyReminder1: emailBodyReminder1,
+              emailBodyReminder2: emailBodyReminder2,
+              emailBodyReminder3: emailBodyReminder3);
     } catch (_) {
       String _$failedField;
       try {

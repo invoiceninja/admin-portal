@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,9 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
     //final company = viewModel.company;
 
     if (client.areActivitiesStale) {
-      return Center(child: CircularProgressIndicator());
+      return SimpleDialog(children: <Widget>[
+          LoadingDialog()
+      ]);
     }
 
     return Padding(
