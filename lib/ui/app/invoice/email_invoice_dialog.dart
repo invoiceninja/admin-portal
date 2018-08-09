@@ -22,6 +22,10 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
     final client = viewModel.client;
     //final company = viewModel.company;
 
+    if (client.areActivitiesStale) {
+      return Center(child: CircularProgressIndicator());
+    }
+
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Column(

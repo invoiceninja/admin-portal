@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -16,6 +17,12 @@ class EmailInvoiceDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, EmailInvoiceDialogVM>(
+      onInit: (Store<AppState> store) {
+        final client = store.state.clientState.map[invoice.clientId];
+        if (client.areActivitiesStale) {
+          store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
+        }
+      },
       converter: (Store<AppState> store) {
         return EmailInvoiceDialogVM.fromStore(store, invoice);
       },
