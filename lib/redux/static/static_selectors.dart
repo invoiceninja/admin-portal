@@ -56,8 +56,8 @@ var memoizedSizeList = memo1((BuiltMap<int, SizeEntity> sizeMap) =>
 List<int> sizeList(BuiltMap<int, SizeEntity> sizeMap) {
   final list = sizeMap.keys.toList();
 
-  list.sort((idA, idB) => sizeMap[idA].listDisplayName
-      .compareTo(sizeMap[idB].listDisplayName));
+  list.sort((idA, idB) => sizeMap[idA].id
+      .compareTo(sizeMap[idB].id));
 
   return list;
 }
