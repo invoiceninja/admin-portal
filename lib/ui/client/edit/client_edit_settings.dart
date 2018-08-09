@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
@@ -21,25 +23,29 @@ class ClientEditSettings extends StatefulWidget {
 }
 
 class ClientEditSettingsState extends State<ClientEditSettings> {
-
   final _taskRateController = TextEditingController();
+  final _paymentTermsController = TextEditingController();
 
   final List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
+    final localization = AppLocalization.of(context);
     final List<TextEditingController> _controllers = [
-      _taskRateController
+      _taskRateController,
+      _paymentTermsController,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final client = widget.viewModel.client;
-    _taskRateController.text = formatNumber(
-        client.taskRate, context,
+    _taskRateController.text = formatNumber(client.taskRate, context,
         formatNumberType: FormatNumberType.input);
+    _paymentTermsController.text = client.getPaymentTerm(localization.net);
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -56,9 +62,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) => b
-      ..taskRate = parseDouble(_taskRateController.text)
-    );
+    final client = viewModel.client
+        .rebuild((b) => b..taskRate = parseDouble(_taskRateController.text));
     if (client != viewModel.client) {
       viewModel.onChanged(client);
     }
@@ -78,20 +83,54 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             EntityDropdown(
               entityType: EntityType.currency,
               entityMap: viewModel.staticState.currencyMap,
-              entityList: memoizedCurrencyList(viewModel.staticState.currencyMap),
+              entityList:
+                  memoizedCurrencyList(viewModel.staticState.currencyMap),
               labelText: localization.currency,
-              initialValue: viewModel.staticState.currencyMap[client.currencyId]?.name,
+              initialValue:
+                  viewModel.staticState.currencyMap[client.currencyId]?.name,
               onSelected: (int currencyId) => viewModel
                   .onChanged(client.rebuild((b) => b..currencyId = currencyId)),
             ),
             EntityDropdown(
               entityType: EntityType.language,
               entityMap: viewModel.staticState.languageMap,
-              entityList: memoizedLanguageList(viewModel.staticState.languageMap),
+              entityList:
+                  memoizedLanguageList(viewModel.staticState.languageMap),
               labelText: localization.language,
-              initialValue: viewModel.staticState.languageMap[client.languageId]?.name,
+              initialValue:
+                  viewModel.staticState.languageMap[client.languageId]?.name,
               onSelected: (int languageId) => viewModel
                   .onChanged(client.rebuild((b) => b..languageId = languageId)),
+            ),
+            PopupMenuButton<PaymentTermEntity>(
+              padding: EdgeInsets.zero,
+              initialValue: null,
+              itemBuilder: (BuildContext context) => kPaymentTerms
+                  .map((numDays) =>
+                      PaymentTermEntity().rebuild((b) => b..numDays = numDays))
+                  .map((paymentTerm) => PopupMenuItem<PaymentTermEntity>(
+                        value: paymentTerm,
+                        child:
+                            Text(paymentTerm.getPaymentTerm(localization.net)),
+                      ))
+                  .toList(),
+              onSelected: (paymentTerm) {
+                viewModel.onChanged(client
+                    .rebuild((b) => b..paymentTerms = paymentTerm.numDays));
+                _paymentTermsController.text =
+                    paymentTerm.getPaymentTerm(localization.net);
+              },
+              child: InkWell(
+                child: IgnorePointer(
+                  child: TextFormField(
+                    controller: _paymentTermsController,
+                    decoration: InputDecoration(
+                      labelText: localization.paymentTerms,
+                      suffixIcon: const Icon(Icons.arrow_drop_down),
+                    ),
+                  ),
+                ),
+              ),
             ),
             TextFormField(
               controller: _taskRateController,

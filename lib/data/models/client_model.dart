@@ -222,6 +222,16 @@ abstract class ClientEntity extends Object
     return displayName;
   }
 
+  String getPaymentTerm(String netLabel) {
+    if (paymentTerms == 0) {
+      return '';
+    } else if (paymentTerms == -1) {
+      return '$netLabel 0';
+    } else {
+      return '$netLabel $paymentTerms';
+    }
+  }
+
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
 

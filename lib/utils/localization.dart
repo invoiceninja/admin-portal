@@ -181,6 +181,8 @@ class AppLocalization {
       'loading': 'Loading',
       'industry': 'Industry',
       'size': 'Size',
+      'payment_terms': 'Payment Terms',
+      'net': 'Net',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -417,6 +419,8 @@ class AppLocalization {
   String get loading => _localizedValues[locale.languageCode]['loading'];
   String get industry => _localizedValues[locale.languageCode]['industry'];
   String get size => _localizedValues[locale.languageCode]['size'];
+  String get paymentTerms => _localizedValues[locale.languageCode]['payment_terms'];
+  String get net => _localizedValues[locale.languageCode]['net'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

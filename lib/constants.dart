@@ -37,3 +37,15 @@ class InvoiceStatusColors {
     6: Colors.green, // paid
   };
 }
+
+const List<int> kPaymentTerms = [
+  0,
+  -1,
+  7,
+  10,
+  14,
+  15,
+  30,
+  60,
+  90
+];

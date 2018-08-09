@@ -226,6 +226,16 @@ abstract class PaymentTermEntity extends Object
   static Serializer<PaymentTermEntity> get serializer =>
       _$paymentTermEntitySerializer;
 
+  String getPaymentTerm(String netLabel) {
+    if (numDays == 0) {
+      return '';
+    } else if (numDays == -1) {
+      return '$netLabel 0';
+    } else {
+      return '$netLabel $numDays';
+    }
+  }
+
   @nullable
   @BuiltValueField(wireName: 'num_days')
   int get numDays;
