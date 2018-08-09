@@ -32,8 +32,7 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  client.areActivitiesLoaded ? Text('activities are loaded') : Text('activities are NOT loaded'),
-                  client.areActivitiesStale ? Text('activities are state') : Text('activities are NOT stale'),
+
                 ],
               ),
             ),
