@@ -105,8 +105,12 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             PopupMenuButton<PaymentTermEntity>(
               padding: EdgeInsets.zero,
               initialValue: null,
-              itemBuilder: (BuildContext context) => kPaymentTerms
-                  .map((numDays) =>
+              itemBuilder: (BuildContext context) => (<int>[]
+                    ..addAll(kPaymentTerms)
+                    ..addAll(viewModel.company.customPaymentTerms
+                        .map((paymentTerm) => paymentTerm.numDays))
+                    ..sort((a, b) => a.abs() - b.abs()))
+                  .map((int numDays) =>
                       PaymentTermEntity().rebuild((b) => b..numDays = numDays))
                   .map((paymentTerm) => PopupMenuItem<PaymentTermEntity>(
                         value: paymentTerm,
