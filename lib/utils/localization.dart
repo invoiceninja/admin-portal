@@ -183,6 +183,10 @@ class AppLocalization {
       'size': 'Size',
       'payment_terms': 'Payment Terms',
       'net': 'Net',
+      'client_portal': 'Client Portal',
+      'show_tasks': 'Show tasks',
+      'email_reminders': 'Email Reminders',
+      'enabled': 'Enabled',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -421,6 +425,11 @@ class AppLocalization {
   String get size => _localizedValues[locale.languageCode]['size'];
   String get paymentTerms => _localizedValues[locale.languageCode]['payment_terms'];
   String get net => _localizedValues[locale.languageCode]['net'];
+  String get clientPortal => _localizedValues[locale.languageCode]['client_portal'];
+  String get showTasks => _localizedValues[locale.languageCode]['show_tasks'];
+  String get emailReminders => _localizedValues[locale.languageCode]['email_reminders'];
+  String get enabled => _localizedValues[locale.languageCode]['enabled'];
+
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
