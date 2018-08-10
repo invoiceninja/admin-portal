@@ -37,7 +37,7 @@ class InvoiceEditDetailsVM {
   final Function(InvoiceEntity) onChanged;
   final BuiltMap<int, ClientEntity> clientMap;
   final BuiltList<int> clientList;
-  final Function(BuildContext context, Completer<BaseEntity> completer) onAddClientPressed;
+  final Function(BuildContext context, Completer<SelectableEntity> completer) onAddClientPressed;
 
   InvoiceEditDetailsVM({
     @required this.company,
@@ -62,7 +62,7 @@ class InvoiceEditDetailsVM {
         onAddClientPressed: (context, completer) {
           store.dispatch(
               EditClient(client: ClientEntity(), context: context, completer: completer, trackRoute: false));
-          completer.future.then((BaseEntity client) {
+          completer.future.then((SelectableEntity client) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
                   message: AppLocalization.of(context).successfullyCreatedClient,
