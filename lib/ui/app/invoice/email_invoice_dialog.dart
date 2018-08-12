@@ -19,6 +19,8 @@ class EmailInvoiceView extends StatefulWidget {
 }
 
 class _EmailInvoiceViewState extends State<EmailInvoiceView> {
+  String selectedTemplate = 'First Reminder';
+
   Widget _buildSend(BuildContext context) {
     final localization = AppLocalization.of(context);
 
@@ -31,8 +33,12 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
               Expanded(
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    value: localization.initialEmail,
-                    onChanged: (template) {},
+                    value: selectedTemplate,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedTemplate = value;
+                      });
+                    },
                     items: [
                       DropdownMenuItem<String>(
                         child: Text(localization.initialEmail),
@@ -60,6 +66,9 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
               ElevatedButton(
                 label: localization.send,
                 color: Colors.orange,
+                onPressed: () {
+
+                },
               )
             ],
           ),
