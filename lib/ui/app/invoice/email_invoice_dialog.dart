@@ -17,9 +17,56 @@ class EmailInvoiceView extends StatefulWidget {
 }
 
 class _EmailInvoiceViewState extends State<EmailInvoiceView> {
+
+  Widget _buildSend(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return ListView(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                  child: Text(localization.template,
+                    style: Theme.of(context).textTheme.subhead,
+                  )
+              ),
+              DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: localization.initialEmail,
+                  onChanged: (template) {
+
+                  },
+                  items: [
+                    DropdownMenuItem<String>(
+                      child: Text(localization.initialEmail),
+                      value: localization.initialEmail,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.firstReminder),
+                      value: localization.firstReminder,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.secondReminder),
+                      value: localization.secondReminder,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.thirdReminder),
+                      value: localization.thirdReminder,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     //final company = viewModel.company;
@@ -29,23 +76,32 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
     }
 
     return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          Material(
-            child: Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-
-                  
-                ],
-              ),
+      padding: const EdgeInsets.all(32.0),
+      child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TabBar(
+                  tabs: [
+                    Tab(icon: Icon(Icons.send)),
+                    Tab(icon: Icon(Icons.edit)),
+                    Tab(icon: Icon(Icons.history)),
+                  ],
+                ),
+              ],
             ),
           ),
-          Expanded(child: Container()),
-        ],
+          body: TabBarView(
+            children: [
+              _buildSend(context),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),        ),
       ),
     );
   }
