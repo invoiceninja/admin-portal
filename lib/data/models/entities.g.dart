@@ -120,8 +120,38 @@ final BuiltSet<EntityState> _$values =
   _$deleted,
 ]);
 
+const EmailTemplate _$initial = const EmailTemplate._('initial');
+const EmailTemplate _$reminder1 = const EmailTemplate._('reminder1');
+const EmailTemplate _$reminder2 = const EmailTemplate._('reminder2');
+const EmailTemplate _$reminder3 = const EmailTemplate._('reminder3');
+
+EmailTemplate _$templateValueOf(String name) {
+  switch (name) {
+    case 'initial':
+      return _$initial;
+    case 'reminder1':
+      return _$reminder1;
+    case 'reminder2':
+      return _$reminder2;
+    case 'reminder3':
+      return _$reminder3;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<EmailTemplate> _$templateValues =
+    new BuiltSet<EmailTemplate>(const <EmailTemplate>[
+  _$initial,
+  _$reminder1,
+  _$reminder2,
+  _$reminder3,
+]);
+
 Serializer<EntityType> _$entityTypeSerializer = new _$EntityTypeSerializer();
 Serializer<EntityState> _$entityStateSerializer = new _$EntityStateSerializer();
+Serializer<EmailTemplate> _$emailTemplateSerializer =
+    new _$EmailTemplateSerializer();
 Serializer<ErrorMessage> _$errorMessageSerializer =
     new _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
@@ -168,6 +198,23 @@ class _$EntityStateSerializer implements PrimitiveSerializer<EntityState> {
   EntityState deserialize(Serializers serializers, Object serialized,
           {FullType specifiedType = FullType.unspecified}) =>
       EntityState.valueOf(serialized as String);
+}
+
+class _$EmailTemplateSerializer implements PrimitiveSerializer<EmailTemplate> {
+  @override
+  final Iterable<Type> types = const <Type>[EmailTemplate];
+  @override
+  final String wireName = 'EmailTemplate';
+
+  @override
+  Object serialize(Serializers serializers, EmailTemplate object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  EmailTemplate deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      EmailTemplate.valueOf(serialized as String);
 }
 
 class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {

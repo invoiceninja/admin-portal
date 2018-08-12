@@ -19,7 +19,20 @@ class EmailInvoiceView extends StatefulWidget {
 }
 
 class _EmailInvoiceViewState extends State<EmailInvoiceView> {
-  String selectedTemplate = 'First Reminder';
+  String selectedTemplate;
+  String emailSubject;
+  String emailBody;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final localization = AppLocalization.of(context);
+    final company = widget.viewModel.company;
+
+    selectedTemplate = localization.initialEmail;
+    emailSubject = company.emailSubjectInvoice;
+    emailBody = company.emailBodyInvoice;
+  }
 
   Widget _buildSend(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -36,7 +49,17 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
                     value: selectedTemplate,
                     onChanged: (value) {
                       setState(() {
+                        final localization = AppLocalization.of(context);
+                        final company = widget.viewModel.company;
                         selectedTemplate = value;
+
+                        switch (value) {
+                          //case const :
+                        }
+                        selectedTemplate = localization.initialEmail;
+                        emailSubject = company.emailSubjectInvoice;
+                        emailBody = company.emailBodyInvoice;
+
                       });
                     },
                     items: [
@@ -77,7 +100,8 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
           child: Container(
             color: Colors.white,
             child: HtmlView(
-              data: widget.viewModel.company.emailBodyInvoice,
+              //data: widget.viewModel.company.emailBodyInvoice,
+              data: emailBody,
             ),
           ),
         ),

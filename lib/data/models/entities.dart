@@ -54,6 +54,21 @@ class EntityState extends EnumClass {
   static EntityState valueOf(String name) => _$valueOf(name);
 }
 
+class EmailTemplate extends EnumClass {
+
+  const EmailTemplate._(String name) : super(name);
+
+  static Serializer<EmailTemplate> get serializer => _$emailTemplateSerializer;
+
+  static const EmailTemplate initial = _$initial;
+  static const EmailTemplate reminder1 = _$reminder1;
+  static const EmailTemplate reminder2 = _$reminder2;
+  static const EmailTemplate reminder3 = _$reminder3;
+
+  static BuiltSet<EmailTemplate> get values => _$templateValues;
+  static EmailTemplate valueOf(String name) => _$templateValueOf(name);
+}
+
 abstract class EntityStatus {
   int get id;
   String get name;
