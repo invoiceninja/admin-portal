@@ -9,7 +9,9 @@ part of 'timezone_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -33,7 +35,7 @@ class _$TimezoneListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, TimezoneListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -46,7 +48,7 @@ class _$TimezoneListResponseSerializer
 
   @override
   TimezoneListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new TimezoneListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -80,7 +82,7 @@ class _$TimezoneItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, TimezoneItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -92,7 +94,7 @@ class _$TimezoneItemResponseSerializer
 
   @override
   TimezoneItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new TimezoneItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -121,7 +123,7 @@ class _$TimezoneEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, TimezoneEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
@@ -137,7 +139,7 @@ class _$TimezoneEntitySerializer
 
   @override
   TimezoneEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new TimezoneEntityBuilder();
 
     final iterator = serialized.iterator;

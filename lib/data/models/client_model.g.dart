@@ -9,7 +9,9 @@ part of 'client_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -32,7 +34,7 @@ class _$ClientListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, ClientListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -45,7 +47,7 @@ class _$ClientListResponseSerializer
 
   @override
   ClientListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -76,7 +78,7 @@ class _$ClientItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, ClientItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -88,7 +90,7 @@ class _$ClientItemResponseSerializer
 
   @override
   ClientItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -116,7 +118,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
 
   @override
   Iterable serialize(Serializers serializers, ClientEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -271,7 +273,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
 
   @override
   ClientEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -471,7 +473,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
 
   @override
   Iterable serialize(Serializers serializers, ContactEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'first_name',
       serializers.serialize(object.firstName,
@@ -537,7 +539,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
 
   @override
   ContactEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ContactEntityBuilder();
 
     final iterator = serialized.iterator;

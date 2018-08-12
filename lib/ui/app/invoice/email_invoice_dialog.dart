@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EmailInvoiceView extends StatefulWidget {
   final EmailInvoiceDialogVM viewModel;
@@ -18,15 +19,13 @@ class EmailInvoiceView extends StatefulWidget {
 class _EmailInvoiceViewState extends State<EmailInvoiceView> {
   @override
   Widget build(BuildContext context) {
-    //final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     //final company = viewModel.company;
 
     if (client.areActivitiesStale) {
-      return SimpleDialog(children: <Widget>[
-          LoadingDialog()
-      ]);
+      return SimpleDialog(children: <Widget>[LoadingDialog()]);
     }
 
     return Padding(
@@ -40,6 +39,7 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
 
+                  
                 ],
               ),
             ),

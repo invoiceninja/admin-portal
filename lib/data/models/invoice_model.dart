@@ -485,6 +485,9 @@ abstract class InvitationEntity extends Object
 
   String get link;
 
+  //@BuiltValueField(wireName: 'contact_id')
+  //int get contactId;
+
   @BuiltValueField(wireName: 'sent_date')
   String get sentDate;
 

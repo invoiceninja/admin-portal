@@ -9,7 +9,9 @@ part of 'invoice_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -37,7 +39,7 @@ class _$InvoiceListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, InvoiceListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -50,7 +52,7 @@ class _$InvoiceListResponseSerializer
 
   @override
   InvoiceListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -84,7 +86,7 @@ class _$InvoiceItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, InvoiceItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -96,7 +98,7 @@ class _$InvoiceItemResponseSerializer
 
   @override
   InvoiceItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -124,7 +126,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
 
   @override
   Iterable serialize(Serializers serializers, InvoiceEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'amount',
       serializers.serialize(object.amount,
@@ -291,7 +293,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
 
   @override
   InvoiceEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -508,7 +510,7 @@ class _$InvoiceItemEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, InvoiceItemEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'product_key',
       serializers.serialize(object.productKey,
@@ -581,7 +583,7 @@ class _$InvoiceItemEntitySerializer
 
   @override
   InvoiceItemEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceItemEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -674,7 +676,7 @@ class _$InvitationEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, InvitationEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'key',
       serializers.serialize(object.key, specifiedType: const FullType(String)),
@@ -723,7 +725,7 @@ class _$InvitationEntitySerializer
 
   @override
   InvitationEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new InvitationEntityBuilder();
 
     final iterator = serialized.iterator;

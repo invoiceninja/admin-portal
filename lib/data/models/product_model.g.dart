@@ -9,7 +9,9 @@ part of 'product_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -33,7 +35,7 @@ class _$ProductListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, ProductListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -46,7 +48,7 @@ class _$ProductListResponseSerializer
 
   @override
   ProductListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -80,7 +82,7 @@ class _$ProductItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, ProductItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -92,7 +94,7 @@ class _$ProductItemResponseSerializer
 
   @override
   ProductItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -120,7 +122,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
 
   @override
   Iterable serialize(Serializers serializers, ProductEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'product_key',
       serializers.serialize(object.productKey,
@@ -185,7 +187,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
 
   @override
   ProductEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductEntityBuilder();
 
     final iterator = serialized.iterator;

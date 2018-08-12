@@ -9,7 +9,9 @@ part of 'entities.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -142,12 +144,12 @@ class _$EntityTypeSerializer implements PrimitiveSerializer<EntityType> {
 
   @override
   Object serialize(Serializers serializers, EntityType object,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       object.name;
 
   @override
   EntityType deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       EntityType.valueOf(serialized as String);
 }
 
@@ -159,12 +161,12 @@ class _$EntityStateSerializer implements PrimitiveSerializer<EntityState> {
 
   @override
   Object serialize(Serializers serializers, EntityState object,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       object.name;
 
   @override
   EntityState deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       EntityState.valueOf(serialized as String);
 }
 
@@ -176,7 +178,7 @@ class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
 
   @override
   Iterable serialize(Serializers serializers, ErrorMessage object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'message',
       serializers.serialize(object.message,
@@ -188,7 +190,7 @@ class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
 
   @override
   ErrorMessage deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ErrorMessageBuilder();
 
     final iterator = serialized.iterator;
@@ -216,7 +218,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
 
   @override
   Iterable serialize(Serializers serializers, LoginResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -234,7 +236,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
 
   @override
   LoginResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new LoginResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -268,7 +270,7 @@ class _$LoginResponseDataSerializer
 
   @override
   Iterable serialize(Serializers serializers, LoginResponseData object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'accounts',
       serializers.serialize(object.accounts,
@@ -287,7 +289,7 @@ class _$LoginResponseDataSerializer
 
   @override
   LoginResponseData deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new LoginResponseDataBuilder();
 
     final iterator = serialized.iterator;
@@ -325,7 +327,7 @@ class _$StaticDataSerializer implements StructuredSerializer<StaticData> {
 
   @override
   Iterable serialize(Serializers serializers, StaticData object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'currencies',
       serializers.serialize(object.currencies,
@@ -378,7 +380,7 @@ class _$StaticDataSerializer implements StructuredSerializer<StaticData> {
 
   @override
   StaticData deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new StaticDataBuilder();
 
     final iterator = serialized.iterator;
@@ -468,7 +470,7 @@ class _$DashboardResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, DashboardResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -480,7 +482,7 @@ class _$DashboardResponseSerializer
 
   @override
   DashboardResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new DashboardResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -510,7 +512,7 @@ class _$DashboardEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, DashboardEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'activities',
       serializers.serialize(object.activities,
@@ -571,7 +573,7 @@ class _$DashboardEntitySerializer
 
   @override
   DashboardEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new DashboardEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -634,7 +636,7 @@ class _$ActivityEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, ActivityEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
       serializers.serialize(object.key, specifiedType: const FullType(String)),
@@ -701,7 +703,7 @@ class _$ActivityEntitySerializer
 
   @override
   ActivityEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ActivityEntityBuilder();
 
     final iterator = serialized.iterator;

@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class EmailInvoiceDialog extends StatelessWidget {
-  //static const String route = '/invoice/email';
 
   const EmailInvoiceDialog({Key key, this.invoice}) : super(key: key);
 
@@ -38,10 +37,12 @@ class EmailInvoiceDialog extends StatelessWidget {
 class EmailInvoiceDialogVM {
   final InvoiceEntity invoice;
   final ClientEntity client;
+  //final List<ContactEntity> recipients;
 
   EmailInvoiceDialogVM({
     @required this.invoice,
     @required this.client,
+    //@required this.recipients,
   });
 
   factory EmailInvoiceDialogVM.fromStore(
@@ -51,6 +52,12 @@ class EmailInvoiceDialogVM {
     return EmailInvoiceDialogVM(
       invoice: invoice,
       client: state.clientState.map[invoice.clientId],
+        /*
+        recipients: invoice.invitations.map((invitation,) {
+          final client = state.clientState.map[invoice.clientId];
+          client.contacts.where((contact) => contact.id == invitation.;
+        }).toList(),
+        */
     );
   }
 }

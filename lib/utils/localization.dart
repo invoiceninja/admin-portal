@@ -187,6 +187,7 @@ class AppLocalization {
       'show_tasks': 'Show tasks',
       'email_reminders': 'Email Reminders',
       'enabled': 'Enabled',
+      'recipients': 'Recipients',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -429,7 +430,7 @@ class AppLocalization {
   String get showTasks => _localizedValues[locale.languageCode]['show_tasks'];
   String get emailReminders => _localizedValues[locale.languageCode]['email_reminders'];
   String get enabled => _localizedValues[locale.languageCode]['enabled'];
-
+  String get recipients => _localizedValues[locale.languageCode]['recipients'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

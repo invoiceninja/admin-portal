@@ -13,7 +13,8 @@ import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+
+//import 'package:cached_network_image/cached_network_image.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -74,6 +75,9 @@ class AppDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
+                      child: Image.asset('assets/images/logo.png',
+                          width: 100.0, height: 100.0)),
+                  /*
                       child: viewModel.selectedCompany.logoUrl != null &&
                               viewModel.selectedCompany.logoUrl.isNotEmpty
                           ? CachedNetworkImage(
@@ -83,6 +87,7 @@ class AppDrawer extends StatelessWidget {
                             )
                           : Image.asset('assets/images/logo.png',
                               width: 100.0, height: 100.0)),
+                              */
                 ),
                 SizedBox(
                   height: 18.0,
