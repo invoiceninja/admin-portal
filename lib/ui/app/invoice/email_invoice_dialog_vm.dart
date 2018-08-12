@@ -35,11 +35,13 @@ class EmailInvoiceDialog extends StatelessWidget {
 }
 
 class EmailInvoiceDialogVM {
+  final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
   //final List<ContactEntity> recipients;
 
   EmailInvoiceDialogVM({
+    @required this.company,
     @required this.invoice,
     @required this.client,
     //@required this.recipients,
@@ -50,6 +52,7 @@ class EmailInvoiceDialogVM {
     final state = store.state;
 
     return EmailInvoiceDialogVM(
+      company: state.selectedCompany,
       invoice: invoice,
       client: state.clientState.map[invoice.clientId],
         /*

@@ -193,6 +193,7 @@ class AppLocalization {
       'second_reminder': 'Second Reminder',
       'third_reminder': 'Third Reminder',
       'template': 'Template',
+      'send': 'Send',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -436,12 +437,12 @@ class AppLocalization {
   String get emailReminders => _localizedValues[locale.languageCode]['email_reminders'];
   String get enabled => _localizedValues[locale.languageCode]['enabled'];
   String get recipients => _localizedValues[locale.languageCode]['recipients'];
-
   String get initialEmail => _localizedValues[locale.languageCode]['initial_email'];
   String get firstReminder => _localizedValues[locale.languageCode]['first_reminder'];
   String get secondReminder => _localizedValues[locale.languageCode]['second_reminder'];
   String get thirdReminder => _localizedValues[locale.languageCode]['third_reminder'];
   String get template => _localizedValues[locale.languageCode]['template'];
+  String get send => _localizedValues[locale.languageCode]['send'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
