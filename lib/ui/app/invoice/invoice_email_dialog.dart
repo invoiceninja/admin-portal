@@ -149,14 +149,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                   Expanded(
                     child: Container(),
                   ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  ElevatedButton(
-                    label: localization.send,
-                    color: Colors.orange,
-                    onPressed: () {},
-                  )
                 ],
               ),
             ),
@@ -168,7 +160,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 13.0, top: 13.0, right: 13.0, bottom: 20.0),
+                      left: 13.0, top: 20.0, right: 13.0, bottom: 24.0),
                   child: Text(
                     emailSubject,
                     style: TextStyle(
@@ -219,6 +211,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     //final company = viewModel.company;
@@ -227,33 +220,34 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
       return SimpleDialog(children: <Widget>[LoadingDialog()]);
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            flexibleSpace: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TabBar(
-                  tabs: [
-                    Tab(icon: Icon(Icons.send)),
-                    Tab(icon: Icon(Icons.edit)),
-                    Tab(icon: Icon(Icons.history)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              _buildSend(context),
-              _buildEdit(context),
-              Icon(Icons.directions_bike),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalization.of(context).sendEmail),
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.email)),
+              Tab(icon: Icon(Icons.edit)),
+              Tab(icon: Icon(Icons.history)),
             ],
           ),
+          actions: <Widget>[
+            IconButton(
+              tooltip: localization.send,
+              icon: Icon(Icons.send),
+              onPressed: () {
+
+              },
+            )
+          ],
+        ),
+        body: TabBarView(
+          children: [
+            _buildSend(context),
+            _buildEdit(context),
+            Icon(Icons.directions_bike),
+          ],
         ),
       ),
     );

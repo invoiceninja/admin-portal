@@ -196,6 +196,7 @@ class AppLocalization {
       'send': 'Send',
       'subject': 'Subject',
       'body': 'Body',
+      'send_email': 'Send Email',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -447,6 +448,7 @@ class AppLocalization {
   String get send => _localizedValues[locale.languageCode]['send'];
   String get subject => _localizedValues[locale.languageCode]['subject'];
   String get body => _localizedValues[locale.languageCode]['body'];
+  String get sendEmail => _localizedValues[locale.languageCode]['send_email'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

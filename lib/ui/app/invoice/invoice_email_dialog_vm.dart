@@ -11,20 +11,22 @@ class InvoiceEmailDialog extends StatelessWidget {
 
   static const String route = '/invoice/email';
 
-  const InvoiceEmailDialog({Key key, this.invoice}) : super(key: key);
-
-  final InvoiceEntity invoice;
+  const InvoiceEmailDialog({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, EmailInvoiceDialogVM>(
       onInit: (Store<AppState> store) {
+        final invoiceId = store.state.uiState.invoiceUIState.selectedId;
+        final invoice = store.state.invoiceState.map[invoiceId];
         final client = store.state.clientState.map[invoice.clientId];
         if (client.areActivitiesStale) {
           store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
         }
       },
       converter: (Store<AppState> store) {
+        final invoiceId = store.state.uiState.invoiceUIState.selectedId;
+        final invoice = store.state.invoiceState.map[invoiceId];
         return EmailInvoiceDialogVM.fromStore(store, invoice);
       },
       builder: (context, vm) {

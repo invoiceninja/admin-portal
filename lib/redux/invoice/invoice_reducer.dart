@@ -37,7 +37,9 @@ Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewInvoice>(
       (int selectedId, dynamic action) => action.invoiceId),
   TypedReducer<int, AddInvoiceSuccess>(
-      (int selectedId, dynamic action) => action.invoice.id),
+          (int selectedId, dynamic action) => action.invoice.id),
+  TypedReducer<int, ShowEmailInvoice>(
+          (int selectedId, dynamic action) => action.invoice.id),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
