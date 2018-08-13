@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
@@ -47,7 +48,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
       _subjectController,
       _bodyController,
     ];
-
   }
 
   @override
@@ -73,7 +73,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _subjectController.text = emailSubject;
-    _bodyController.text = emailBody;
+    _bodyController.text = emailBody
+        .replaceAll('</div>', '</div>\n');
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -174,7 +175,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
               Container(
                 color: Colors.white,
                 child: HtmlView(
-                  //data: widget.viewModel.company.emailBodyInvoice,
                   data: emailBody,
                 ),
               ),
@@ -188,24 +188,26 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   Widget _buildEdit(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return FormCard(
-      children: <Widget>[
-        TextFormField(
-          controller: _subjectController,
-          decoration: InputDecoration(
-            labelText: localization.subject,
+    return SingleChildScrollView(
+      child: FormCard(
+        children: <Widget>[
+          TextFormField(
+            controller: _subjectController,
+            decoration: InputDecoration(
+              labelText: localization.subject,
+            ),
+            keyboardType: TextInputType.text,
           ),
-          keyboardType: TextInputType.text,
-        ),
-        TextFormField(
-          controller: _bodyController,
-          decoration: InputDecoration(
-            labelText: localization.body,
+          TextFormField(
+            controller: _bodyController,
+            decoration: InputDecoration(
+              labelText: localization.body,
+            ),
+            maxLines: 10,
+            keyboardType: TextInputType.multiline,
           ),
-          maxLines: 6,
-          keyboardType: TextInputType.multiline,
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -215,10 +217,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     //final company = viewModel.company;
-
-    if (client.areActivitiesStale) {
-      return SimpleDialog(children: <Widget>[LoadingDialog()]);
-    }
 
     return DefaultTabController(
       length: 3,
@@ -236,19 +234,24 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
             IconButton(
               tooltip: localization.send,
               icon: Icon(Icons.send),
-              onPressed: () {
-
-              },
+              onPressed: () {},
             )
           ],
         ),
-        body: TabBarView(
-          children: [
-            _buildSend(context),
-            _buildEdit(context),
-            Icon(Icons.directions_bike),
-          ],
-        ),
+        body: client.areActivitiesStale
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  LoadingIndicator(),
+                ],
+              )
+            : TabBarView(
+                children: [
+                  _buildSend(context),
+                  _buildEdit(context),
+                  Icon(Icons.directions_bike),
+                ],
+              ),
       ),
     );
   }
