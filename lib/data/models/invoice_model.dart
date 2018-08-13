@@ -345,6 +345,8 @@ abstract class InvoiceEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  double get requestedAmount => partial > 0 ? partial : amount;
+
   bool get isPastDue {
     if (dueDate.isEmpty) {
       return false;
