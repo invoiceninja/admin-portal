@@ -36,18 +36,21 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final company = widget.viewModel.company;
-
-    selectedTemplate = EmailTemplate.initial;
-    emailSubject = company.emailSubjectInvoice;
-    emailBody = company.emailBodyInvoice;
-
-    updateTemplate();
+    loadTemplate(EmailTemplate.initial);
 
     _controllers = [
       _subjectController,
       _bodyController,
     ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    _subjectController.text = emailSubject;
+    _bodyController.text = emailBody.replaceAll('</div>', '</div>\n');
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
   }
 
   @override
@@ -66,18 +69,35 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     });
   }
 
+  void loadTemplate(EmailTemplate template) {
+    final company = widget.viewModel.company;
+
+    selectedTemplate = template;
+
+    switch (template) {
+      case EmailTemplate.initial:
+        emailSubject = company.emailSubjectInvoice;
+        emailBody = company.emailBodyInvoice;
+        break;
+      case EmailTemplate.reminder1:
+        emailSubject = company.emailSubjectReminder1;
+        emailBody = company.emailBodyReminder1;
+        break;
+      case EmailTemplate.reminder2:
+        emailSubject = company.emailSubjectReminder2;
+        emailBody = company.emailBodyReminder2;
+        break;
+      case EmailTemplate.reminder3:
+        emailSubject = company.emailSubjectReminder3;
+        emailBody = company.emailBodyReminder3;
+        break;
+    }
+
+    updateTemplate();
+  }
+
   void updateTemplate() {
     final viewModel = widget.viewModel;
-
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
-    _subjectController.text = emailSubject;
-    _bodyController.text = emailBody
-        .replaceAll('</div>', '</div>\n');
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     emailSubject = processTemplate(emailSubject, viewModel.invoice, context);
     emailBody = processTemplate(emailBody, viewModel.invoice, context);
@@ -99,32 +119,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                   DropdownButtonHideUnderline(
                     child: DropdownButton<EmailTemplate>(
                       value: selectedTemplate,
-                      onChanged: (value) {
+                      onChanged: (template) {
                         setState(() {
-                          final viewModel = widget.viewModel;
-                          final company = viewModel.company;
-                          selectedTemplate = value;
-
-                          switch (value) {
-                            case EmailTemplate.initial:
-                              emailSubject = company.emailSubjectInvoice;
-                              emailBody = company.emailBodyInvoice;
-                              break;
-                            case EmailTemplate.reminder1:
-                              emailSubject = company.emailSubjectReminder1;
-                              emailBody = company.emailBodyReminder1;
-                              break;
-                            case EmailTemplate.reminder2:
-                              emailSubject = company.emailSubjectReminder2;
-                              emailBody = company.emailBodyReminder2;
-                              break;
-                            case EmailTemplate.reminder3:
-                              emailSubject = company.emailSubjectReminder3;
-                              emailBody = company.emailBodyReminder3;
-                              break;
-                          }
-
-                          updateTemplate();
+                          loadTemplate(template);
                         });
                       },
                       items: [

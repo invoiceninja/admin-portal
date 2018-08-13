@@ -15,8 +15,8 @@ const int kMinPatchAppVersion = 2;
 
 const int kMaxRecordsPerApiPage = 5000;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
-const int kMillisecondsToRefreshActivities = 1000 * 15; // 15 seconds
-//const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
+//const int kMillisecondsToRefreshActivities = 1000 * 15; // 15 seconds
+const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 
 const int kCurrencyUSDollar = 1;
 const int kCurrencyEuro = 3;
