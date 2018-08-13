@@ -2,14 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class EmailInvoiceDialog extends StatelessWidget {
+class InvoiceEmailDialog extends StatelessWidget {
 
-  const EmailInvoiceDialog({Key key, this.invoice}) : super(key: key);
+  static const String route = '/invoice/email';
+
+  const InvoiceEmailDialog({Key key, this.invoice}) : super(key: key);
 
   final InvoiceEntity invoice;
 
@@ -26,7 +28,7 @@ class EmailInvoiceDialog extends StatelessWidget {
         return EmailInvoiceDialogVM.fromStore(store, invoice);
       },
       builder: (context, vm) {
-        return EmailInvoiceView(
+        return InvoiceEmailView(
           viewModel: vm,
         );
       },

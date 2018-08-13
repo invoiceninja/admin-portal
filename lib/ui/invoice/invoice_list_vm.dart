@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
@@ -120,10 +120,10 @@ class InvoiceListVM {
                   invoice.id));
                   */
               Navigator.of(context).pop();
-              showDialog<EmailInvoiceDialog>(
+              showDialog<InvoiceEmailDialog>(
                   context: context,
                   builder: (BuildContext context) {
-                    return EmailInvoiceDialog(
+                    return InvoiceEmailDialog(
                       invoice: invoice,
                     );
                   });

@@ -2,26 +2,26 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
-class EmailInvoiceView extends StatefulWidget {
+class InvoiceEmailView extends StatefulWidget {
   final EmailInvoiceDialogVM viewModel;
 
-  const EmailInvoiceView({
+  const InvoiceEmailView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
   @override
-  _EmailInvoiceViewState createState() => new _EmailInvoiceViewState();
+  _InvoiceEmailViewState createState() => new _InvoiceEmailViewState();
 }
 
-class _EmailInvoiceViewState extends State<EmailInvoiceView> {
+class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   EmailTemplate selectedTemplate;
   String emailSubject;
   String emailBody;
