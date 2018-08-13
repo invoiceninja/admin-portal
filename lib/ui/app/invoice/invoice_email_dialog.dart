@@ -159,7 +159,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                   color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 13.0, top: 20.0, right: 13.0, bottom: 24.0),
+                        left: 13.0, top: 26.0, right: 13.0, bottom: 24.0),
                     child: Text(
                       emailSubject,
                       style: TextStyle(
