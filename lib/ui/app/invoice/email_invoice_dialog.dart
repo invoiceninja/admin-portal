@@ -35,7 +35,6 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final localization = AppLocalization.of(context);
     final company = widget.viewModel.company;
 
     selectedTemplate = EmailTemplate.initial;
@@ -102,7 +101,6 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
                       onChanged: (value) {
                         setState(() {
                           final viewModel = widget.viewModel;
-                          final localization = AppLocalization.of(context);
                           final company = viewModel.company;
                           selectedTemplate = value;
 

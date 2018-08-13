@@ -105,21 +105,21 @@ abstract class ClientEntity extends Object
 
   ClientEntity._();
 
-  ClientEntity get clone => rebuild((b) => b
-    ..id = --ClientEntity.counter
-  );
+  ClientEntity get clone => rebuild((b) => b..id = --ClientEntity.counter);
 
   @nullable
   int get lastUpdatedActivities;
 
-  bool get areActivitiesLoaded => lastUpdatedActivities != null && lastUpdatedActivities > 0;
+  bool get areActivitiesLoaded =>
+      lastUpdatedActivities != null && lastUpdatedActivities > 0;
 
   bool get areActivitiesStale {
-    if (! areActivitiesLoaded) {
+    if (!areActivitiesLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdatedActivities > kMillisecondsToRefreshActivities;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdatedActivities >
+        kMillisecondsToRefreshActivities;
   }
 
   @override
@@ -227,6 +227,7 @@ abstract class ClientEntity extends Object
   String get customValue2;
 
   BuiltList<ContactEntity> get contacts;
+
   BuiltList<ActivityEntity> get activities;
 
   //String get last_login;
@@ -335,6 +336,11 @@ abstract class ClientEntity extends Object
     return name.isNotEmpty ||
         contact.fullName.isNotEmpty ||
         contact.email.isNotEmpty;
+  }
+
+  @override
+  String toString() {
+    return displayName;
   }
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;

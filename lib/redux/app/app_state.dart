@@ -108,6 +108,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     if (selectedCompany != null) {
       //return 'Template: ${selectedCompany.emailBodyInvoice}';
     }
-    return 'Route: ${uiState.currentRoute}';
+    return 'Route: ${uiState.currentRoute}, Invoice Update: ${invoiceState.lastUpdated}';
   }
 }
