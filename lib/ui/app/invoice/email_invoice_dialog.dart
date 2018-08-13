@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,25 +26,61 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
   String emailSubject;
   String emailBody;
 
+  final _subjectController = TextEditingController();
+  final _bodyController = TextEditingController();
+
+  List<TextEditingController> _controllers = [];
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     final localization = AppLocalization.of(context);
     final company = widget.viewModel.company;
 
     selectedTemplate = EmailTemplate.initial;
     emailSubject = company.emailSubjectInvoice;
     emailBody = company.emailBodyInvoice;
+
     updateTemplate();
+
+    _controllers = [
+      _subjectController,
+      _bodyController,
+    ];
+
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  void _onChanged() {
+    setState(() {
+      updateTemplate();
+    });
   }
 
   void updateTemplate() {
     final viewModel = widget.viewModel;
 
-    emailSubject = processTemplate(
-        emailSubject, viewModel.invoice, context);
-    emailBody = processTemplate(
-        emailBody, viewModel.invoice, context);
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    _subjectController.text = emailSubject;
+    _bodyController.text = emailBody;
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    emailSubject = processTemplate(emailSubject, viewModel.invoice, context);
+    emailBody = processTemplate(emailBody, viewModel.invoice, context);
   }
 
   Widget _buildSend(BuildContext context) {
@@ -132,7 +169,8 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
               Container(
                 color: Colors.white,
                 child: Padding(
-                  padding: const EdgeInsets.all(13.0),
+                  padding: const EdgeInsets.only(
+                      left: 13.0, top: 13.0, right: 13.0, bottom: 20.0),
                   child: Text(
                     emailSubject,
                     style: TextStyle(
@@ -154,6 +192,30 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildEdit(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return FormCard(
+      children: <Widget>[
+        TextFormField(
+          controller: _subjectController,
+          decoration: InputDecoration(
+            labelText: localization.subject,
+          ),
+          keyboardType: TextInputType.text,
+        ),
+        TextFormField(
+          controller: _bodyController,
+          decoration: InputDecoration(
+            labelText: localization.body,
+          ),
+          maxLines: 6,
+          keyboardType: TextInputType.multiline,
+        ),
+      ],
     );
   }
 
@@ -190,7 +252,7 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
           body: TabBarView(
             children: [
               _buildSend(context),
-              Icon(Icons.directions_transit),
+              _buildEdit(context),
               Icon(Icons.directions_bike),
             ],
           ),

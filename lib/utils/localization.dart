@@ -194,6 +194,8 @@ class AppLocalization {
       'third_reminder': 'Third Reminder',
       'template': 'Template',
       'send': 'Send',
+      'subject': 'Subject',
+      'body': 'Body',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -443,6 +445,8 @@ class AppLocalization {
   String get thirdReminder => _localizedValues[locale.languageCode]['third_reminder'];
   String get template => _localizedValues[locale.languageCode]['template'];
   String get send => _localizedValues[locale.languageCode]['send'];
+  String get subject => _localizedValues[locale.languageCode]['subject'];
+  String get body => _localizedValues[locale.languageCode]['body'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];
