@@ -65,6 +65,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
   void _onChanged() {
     setState(() {
+      emailSubject = _subjectController.text;
+      emailBody = _bodyController.text;
       updateTemplate();
     });
   }
