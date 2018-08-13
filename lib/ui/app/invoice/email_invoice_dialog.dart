@@ -43,45 +43,45 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: <Widget>[
-              Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: selectedTemplate,
-                    onChanged: (value) {
-                      setState(() {
-                        final localization = AppLocalization.of(context);
-                        final company = widget.viewModel.company;
-                        selectedTemplate = value;
+              DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: selectedTemplate,
+                  onChanged: (value) {
+                    setState(() {
+                      final localization = AppLocalization.of(context);
+                      final company = widget.viewModel.company;
+                      selectedTemplate = value;
 
-                        switch (value) {
-                          //case const :
-                        }
-                        selectedTemplate = localization.initialEmail;
-                        emailSubject = company.emailSubjectInvoice;
-                        emailBody = company.emailBodyInvoice;
-
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem<String>(
-                        child: Text(localization.initialEmail),
-                        value: localization.initialEmail,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(localization.firstReminder),
-                        value: localization.firstReminder,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(localization.secondReminder),
-                        value: localization.secondReminder,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(localization.thirdReminder),
-                        value: localization.thirdReminder,
-                      ),
-                    ],
-                  ),
+                      switch (value) {
+                        //case const :
+                      }
+                      selectedTemplate = localization.initialEmail;
+                      emailSubject = company.emailSubjectInvoice;
+                      emailBody = company.emailBodyInvoice;
+                    });
+                  },
+                  items: [
+                    DropdownMenuItem<String>(
+                      child: Text(localization.initialEmail),
+                      value: localization.initialEmail,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.firstReminder),
+                      value: localization.firstReminder,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.secondReminder),
+                      value: localization.secondReminder,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.thirdReminder),
+                      value: localization.thirdReminder,
+                    ),
+                  ],
                 ),
+              ),
+              Expanded(
+                child: Container(),
               ),
               SizedBox(
                 width: 10.0,
@@ -89,21 +89,36 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
               ElevatedButton(
                 label: localization.send,
                 color: Colors.orange,
-                onPressed: () {
-
-                },
+                onPressed: () {},
               )
             ],
           ),
         ),
-        SingleChildScrollView(
-          child: Container(
-            color: Colors.white,
-            child: HtmlView(
-              //data: widget.viewModel.company.emailBodyInvoice,
-              data: emailBody,
+        ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: Text(
+                  emailSubject,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ),
             ),
-          ),
+            Container(
+              color: Colors.white,
+              child: HtmlView(
+                //data: widget.viewModel.company.emailBodyInvoice,
+                data: emailBody,
+              ),
+            ),
+          ],
         ),
       ],
     );
