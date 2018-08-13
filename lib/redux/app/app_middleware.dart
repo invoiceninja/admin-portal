@@ -135,8 +135,8 @@ Middleware<AppState> _createLoadState(
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final appVersion = prefs.getString(kSharedPrefAppVerson);
-      prefs.setString(kSharedPrefAppVerson, kAppVersion);
+      final appVersion = prefs.getString(kSharedPrefAppVersion);
+      prefs.setString(kSharedPrefAppVersion, kAppVersion);
 
       if (appVersion != kAppVersion) {
         throw 'New app version - clearing state';
