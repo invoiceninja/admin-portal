@@ -1,6 +1,4 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog_vm.dart';
 import 'package:flutter/foundation.dart';
@@ -153,31 +151,33 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
               ),
             ),
           ),
-          ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 13.0, top: 20.0, right: 13.0, bottom: 24.0),
-                  child: Text(
-                    emailSubject,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
+          Expanded(
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 13.0, top: 20.0, right: 13.0, bottom: 24.0),
+                    child: Text(
+                      emailSubject,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                color: Colors.white,
-                child: HtmlView(
-                  data: emailBody,
+                Container(
+                  color: Colors.white,
+                  child: HtmlView(
+                    data: emailBody,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
