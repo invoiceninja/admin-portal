@@ -49,105 +49,111 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
   Widget _buildSend(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: <Widget>[
-              DropdownButtonHideUnderline(
-                child: DropdownButton<EmailTemplate>(
-                  value: selectedTemplate,
-                  onChanged: (value) {
-                    setState(() {
-                      final viewModel = widget.viewModel;
-                      final localization = AppLocalization.of(context);
-                      final company = viewModel.company;
-                      selectedTemplate = value;
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          Container(
+            color: Theme.of(context).backgroundColor,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: <Widget>[
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton<EmailTemplate>(
+                      value: selectedTemplate,
+                      onChanged: (value) {
+                        setState(() {
+                          final viewModel = widget.viewModel;
+                          final localization = AppLocalization.of(context);
+                          final company = viewModel.company;
+                          selectedTemplate = value;
 
-                      switch (value) {
-                        case EmailTemplate.initial:
-                          emailSubject = company.emailSubjectInvoice;
-                          emailBody = company.emailBodyInvoice;
-                          break;
-                        case EmailTemplate.reminder1:
-                          emailSubject = company.emailSubjectReminder1;
-                          emailBody = company.emailBodyReminder1;
-                          break;
-                        case EmailTemplate.reminder2:
-                          emailSubject = company.emailSubjectReminder2;
-                          emailBody = company.emailBodyReminder2;
-                          break;
-                        case EmailTemplate.reminder3:
-                          emailSubject = company.emailSubjectReminder3;
-                          emailBody = company.emailBodyReminder3;
-                          break;
-                      }
+                          switch (value) {
+                            case EmailTemplate.initial:
+                              emailSubject = company.emailSubjectInvoice;
+                              emailBody = company.emailBodyInvoice;
+                              break;
+                            case EmailTemplate.reminder1:
+                              emailSubject = company.emailSubjectReminder1;
+                              emailBody = company.emailBodyReminder1;
+                              break;
+                            case EmailTemplate.reminder2:
+                              emailSubject = company.emailSubjectReminder2;
+                              emailBody = company.emailBodyReminder2;
+                              break;
+                            case EmailTemplate.reminder3:
+                              emailSubject = company.emailSubjectReminder3;
+                              emailBody = company.emailBodyReminder3;
+                              break;
+                          }
 
-                      updateTemplate();
-                    });
-                  },
-                  items: [
-                    DropdownMenuItem<EmailTemplate>(
-                      child: Text(localization.initialEmail),
-                      value: EmailTemplate.initial,
+                          updateTemplate();
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem<EmailTemplate>(
+                          child: Text(localization.initialEmail),
+                          value: EmailTemplate.initial,
+                        ),
+                        DropdownMenuItem<EmailTemplate>(
+                          child: Text(localization.firstReminder),
+                          value: EmailTemplate.reminder1,
+                        ),
+                        DropdownMenuItem<EmailTemplate>(
+                          child: Text(localization.secondReminder),
+                          value: EmailTemplate.reminder2,
+                        ),
+                        DropdownMenuItem<EmailTemplate>(
+                          child: Text(localization.thirdReminder),
+                          value: EmailTemplate.reminder3,
+                        ),
+                      ],
                     ),
-                    DropdownMenuItem<EmailTemplate>(
-                      child: Text(localization.firstReminder),
-                      value: EmailTemplate.reminder1,
-                    ),
-                    DropdownMenuItem<EmailTemplate>(
-                      child: Text(localization.secondReminder),
-                      value: EmailTemplate.reminder2,
-                    ),
-                    DropdownMenuItem<EmailTemplate>(
-                      child: Text(localization.thirdReminder),
-                      value: EmailTemplate.reminder3,
-                    ),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  ElevatedButton(
+                    label: localization.send,
+                    color: Colors.orange,
+                    onPressed: () {},
+                  )
+                ],
               ),
-              Expanded(
-                child: Container(),
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              ElevatedButton(
-                label: localization.send,
-                color: Colors.orange,
-                onPressed: () {},
-              )
-            ],
+            ),
           ),
-        ),
-        ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            Container(
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: Text(
-                  emailSubject,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
+          ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(13.0),
+                  child: Text(
+                    emailSubject,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              color: Colors.white,
-              child: HtmlView(
-                //data: widget.viewModel.company.emailBodyInvoice,
-                data: emailBody,
+              Container(
+                color: Colors.white,
+                child: HtmlView(
+                  //data: widget.viewModel.company.emailBodyInvoice,
+                  data: emailBody,
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 
