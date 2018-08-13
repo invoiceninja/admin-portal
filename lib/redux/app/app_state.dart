@@ -106,7 +106,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Date Formats: ${staticState.dateFormatMap}';
     if (selectedCompany != null) {
-      return 'Template: ${selectedCompany.emailBodyInvoice}';
+      //return 'Template: ${selectedCompany.emailBodyInvoice}';
     }
     return 'Route: ${uiState.currentRoute}';
   }

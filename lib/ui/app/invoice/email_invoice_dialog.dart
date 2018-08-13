@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:invoiceninja_flutter/utils/templates.dart';
 
 class EmailInvoiceView extends StatefulWidget {
   final EmailInvoiceDialogVM viewModel;
@@ -33,6 +34,16 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
     selectedTemplate = EmailTemplate.initial;
     emailSubject = company.emailSubjectInvoice;
     emailBody = company.emailBodyInvoice;
+    updateTemplate();
+  }
+
+  void updateTemplate() {
+    final viewModel = widget.viewModel;
+
+    emailSubject = processTemplate(
+        emailSubject, viewModel.invoice, context);
+    emailBody = processTemplate(
+        emailBody, viewModel.invoice, context);
   }
 
   Widget _buildSend(BuildContext context) {
@@ -49,8 +60,9 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
                   value: selectedTemplate,
                   onChanged: (value) {
                     setState(() {
+                      final viewModel = widget.viewModel;
                       final localization = AppLocalization.of(context);
-                      final company = widget.viewModel.company;
+                      final company = viewModel.company;
                       selectedTemplate = value;
 
                       switch (value) {
@@ -71,6 +83,8 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
                           emailBody = company.emailBodyReminder3;
                           break;
                       }
+
+                      updateTemplate();
                     });
                   },
                   items: [
