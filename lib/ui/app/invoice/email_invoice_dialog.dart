@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/email_invoice_dialog_vm.dart';
@@ -19,7 +20,7 @@ class EmailInvoiceView extends StatefulWidget {
 }
 
 class _EmailInvoiceViewState extends State<EmailInvoiceView> {
-  String selectedTemplate;
+  EmailTemplate selectedTemplate;
   String emailSubject;
   String emailBody;
 
@@ -29,7 +30,7 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
     final localization = AppLocalization.of(context);
     final company = widget.viewModel.company;
 
-    selectedTemplate = localization.initialEmail;
+    selectedTemplate = EmailTemplate.initial;
     emailSubject = company.emailSubjectInvoice;
     emailBody = company.emailBodyInvoice;
   }
@@ -44,7 +45,7 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
           child: Row(
             children: <Widget>[
               DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
+                child: DropdownButton<EmailTemplate>(
                   value: selectedTemplate,
                   onChanged: (value) {
                     setState(() {
@@ -53,29 +54,41 @@ class _EmailInvoiceViewState extends State<EmailInvoiceView> {
                       selectedTemplate = value;
 
                       switch (value) {
-                        //case const :
+                        case EmailTemplate.initial:
+                          emailSubject = company.emailSubjectInvoice;
+                          emailBody = company.emailBodyInvoice;
+                          break;
+                        case EmailTemplate.reminder1:
+                          emailSubject = company.emailSubjectReminder1;
+                          emailBody = company.emailBodyReminder1;
+                          break;
+                        case EmailTemplate.reminder2:
+                          emailSubject = company.emailSubjectReminder2;
+                          emailBody = company.emailBodyReminder2;
+                          break;
+                        case EmailTemplate.reminder3:
+                          emailSubject = company.emailSubjectReminder3;
+                          emailBody = company.emailBodyReminder3;
+                          break;
                       }
-                      selectedTemplate = localization.initialEmail;
-                      emailSubject = company.emailSubjectInvoice;
-                      emailBody = company.emailBodyInvoice;
                     });
                   },
                   items: [
-                    DropdownMenuItem<String>(
+                    DropdownMenuItem<EmailTemplate>(
                       child: Text(localization.initialEmail),
-                      value: localization.initialEmail,
+                      value: EmailTemplate.initial,
                     ),
-                    DropdownMenuItem<String>(
+                    DropdownMenuItem<EmailTemplate>(
                       child: Text(localization.firstReminder),
-                      value: localization.firstReminder,
+                      value: EmailTemplate.reminder1,
                     ),
-                    DropdownMenuItem<String>(
+                    DropdownMenuItem<EmailTemplate>(
                       child: Text(localization.secondReminder),
-                      value: localization.secondReminder,
+                      value: EmailTemplate.reminder2,
                     ),
-                    DropdownMenuItem<String>(
+                    DropdownMenuItem<EmailTemplate>(
                       child: Text(localization.thirdReminder),
-                      value: localization.thirdReminder,
+                      value: EmailTemplate.reminder3,
                     ),
                   ],
                 ),
