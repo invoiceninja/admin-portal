@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -41,6 +42,21 @@ class SettingsListVM {
   });
 
   static SettingsListVM fromStore(Store<AppState> store) {
+    void _refreshData(BuildContext context) async {
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete,
+          shouldPop: true);
+      store.dispatch(RefreshData(
+        platform: getPlatform(context),
+        completer: completer,
+      ));
+      showDialog<AlertDialog>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => SimpleDialog(
+                children: <Widget>[LoadingDialog()],
+              ));
+    }
 
     void _confirmLogout(BuildContext context) {
       final localization = AppLocalization.of(context);
@@ -89,12 +105,7 @@ class SettingsListVM {
     return SettingsListVM(
         onLogoutTap: (BuildContext context) => _confirmLogout(context),
         onRefreshTap: (BuildContext context) {
-          final completer = snackBarCompleter(
-              context, AppLocalization.of(context).refreshComplete);
-          store.dispatch(RefreshData(
-            platform: getPlatform(context),
-            completer: completer,
-          ));
+          _refreshData(context);
         },
         onDarkModeChanged: (BuildContext context, bool value) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();

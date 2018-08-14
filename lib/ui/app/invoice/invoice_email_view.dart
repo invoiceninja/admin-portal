@@ -231,7 +231,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final client = viewModel.client;
 
     return DefaultTabController(
       length: 3,

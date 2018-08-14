@@ -24,10 +24,13 @@ Completer<Null> refreshCompleter(BuildContext context) {
 }
 */
 
-Completer<Null> snackBarCompleter(BuildContext context, String message) {
+Completer<Null> snackBarCompleter(BuildContext context, String message, {bool shouldPop = false}) {
   final Completer<Null> completer = Completer<Null>();
 
   completer.future.then((_) {
+    if (shouldPop) {
+      Navigator.of(context).pop();
+    }
     Scaffold.of(context).showSnackBar(SnackBar(
         content: SnackBarRow(
           message: message,
