@@ -203,6 +203,9 @@ class AppLocalization {
       'documents': 'Documents',
       'auto_billing': 'Auto billing',
       'button': 'Button',
+      'preview': 'Preview',
+      'customize': 'Customize',
+      'history': 'History',
 
       'payment': 'Payment',
       'payments': 'Payments',
@@ -458,6 +461,9 @@ class AppLocalization {
   String get documents => _localizedValues[locale.languageCode]['documents'];
   String get autoBilling => _localizedValues[locale.languageCode]['auto_billing'];
   String get button => _localizedValues[locale.languageCode]['button'];
+  String get preview => _localizedValues[locale.languageCode]['preview'];
+  String get customize => _localizedValues[locale.languageCode]['customize'];
+  String get history => _localizedValues[locale.languageCode]['history'];
 
   String get payment => _localizedValues[locale.languageCode]['payment'];
   String get payments => _localizedValues[locale.languageCode]['payments'];

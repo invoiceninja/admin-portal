@@ -239,9 +239,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
           title: Text(AppLocalization.of(context).sendEmail),
           bottom: TabBar(
             tabs: [
-              Tab(icon: Icon(Icons.email)),
-              Tab(icon: Icon(Icons.edit)),
-              Tab(icon: Icon(Icons.history)),
+              Tab(text: localization.preview),
+              Tab(text: localization.customize),
+              Tab(text: localization.history),
             ],
           ),
           actions: <Widget>[
