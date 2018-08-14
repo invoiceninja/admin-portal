@@ -44,14 +44,11 @@ class EmailInvoiceVM {
   final ClientEntity client;
   final Function(EmailTemplate, String, String) onSendPressed;
 
-  //final List<ContactEntity> recipients;
-
   EmailInvoiceVM({
     @required this.company,
     @required this.invoice,
     @required this.client,
     @required this.onSendPressed,
-    //@required this.recipients,
   });
 
   factory EmailInvoiceVM.fromStore(
@@ -62,18 +59,12 @@ class EmailInvoiceVM {
         company: state.selectedCompany,
         invoice: invoice,
         client: state.clientState.map[invoice.clientId],
-        onSendPressed: (template, subject, body) => store.dispatch(EmailInvoiceRequest(
+        onSendPressed: (template, subject, body) =>
+            store.dispatch(EmailInvoiceRequest(
               invoiceId: invoice.id,
               template: template,
               subject: subject,
               body: body,
-            ))
-        /*
-        recipients: invoice.invitations.map((invitation,) {
-          final client = state.clientState.map[invoice.clientId];
-          client.contacts.where((contact) => contact.id == invitation.;
-        }).toList(),
-        */
-        );
+            )));
   }
 }
