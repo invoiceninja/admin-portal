@@ -88,7 +88,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _subjectController.text = emailSubject;
-    _bodyController.text = emailBody;
+    _bodyController.text = emailBody.replaceAll('</div>', '</div>\n');
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
