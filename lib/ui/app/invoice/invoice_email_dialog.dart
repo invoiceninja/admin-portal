@@ -34,23 +34,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    loadTemplate(EmailTemplate.initial);
-
     _controllers = [
       _subjectController,
       _bodyController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
-    _subjectController.text = emailSubject;
-    _bodyController.text = emailBody.replaceAll('</div>', '</div>\n');
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    updateTemplate();
+    loadTemplate(EmailTemplate.initial);
   }
 
   @override
@@ -95,11 +84,16 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
         break;
     }
 
-    //print('subject: $emailSubject');
-    //print('bod: $emailBody');
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _subjectController.text = emailSubject;
     _bodyController.text = emailBody;
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    updateTemplate();
   }
 
   void updateTemplate() {
@@ -125,12 +119,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                   DropdownButtonHideUnderline(
                     child: DropdownButton<EmailTemplate>(
                       value: selectedTemplate,
-                      onChanged: (template) {
-                        setState(() {
-                          loadTemplate(template);
-                          updateTemplate();
-                        });
-                      },
+                      onChanged: (template) =>
+                          setState(() => loadTemplate(template)),
                       items: [
                         DropdownMenuItem<EmailTemplate>(
                           child: Text(localization.initialEmail),
