@@ -51,6 +51,7 @@ abstract class CompanyEntity
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
+      emailFooter: '',
       emailSubjectInvoice: '',
       emailSubjectQuote: '',
       emailSubjectPayment: '',
@@ -186,6 +187,9 @@ abstract class CompanyEntity
 
   @BuiltValueField(wireName: 'invoice_fields')
   String get invoiceFields;
+
+  @BuiltValueField(wireName: 'email_footer')
+  String get emailFooter;
 
   @BuiltValueField(wireName: 'email_subject_invoice')
   String get emailSubjectInvoice;

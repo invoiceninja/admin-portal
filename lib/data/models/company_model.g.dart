@@ -160,6 +160,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'invoice_fields',
       serializers.serialize(object.invoiceFields,
           specifiedType: const FullType(String)),
+      'email_footer',
+      serializers.serialize(object.emailFooter,
+          specifiedType: const FullType(String)),
       'email_subject_invoice',
       serializers.serialize(object.emailSubjectInvoice,
           specifiedType: const FullType(String)),
@@ -385,6 +388,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'invoice_fields':
           result.invoiceFields = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_footer':
+          result.emailFooter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'email_subject_invoice':
@@ -714,6 +721,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String invoiceFields;
   @override
+  final String emailFooter;
+  @override
   final String emailSubjectInvoice;
   @override
   final String emailSubjectQuote;
@@ -783,6 +792,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.customFields,
       this.customPaymentTerms,
       this.invoiceFields,
+      this.emailFooter,
       this.emailSubjectInvoice,
       this.emailSubjectQuote,
       this.emailSubjectPayment,
@@ -891,6 +901,8 @@ class _$CompanyEntity extends CompanyEntity {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customPaymentTerms');
     if (invoiceFields == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceFields');
+    if (emailFooter == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailFooter');
     if (emailSubjectInvoice == null)
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'emailSubjectInvoice');
@@ -974,6 +986,7 @@ class _$CompanyEntity extends CompanyEntity {
         customFields == other.customFields &&
         customPaymentTerms == other.customPaymentTerms &&
         invoiceFields == other.invoiceFields &&
+        emailFooter == other.emailFooter &&
         emailSubjectInvoice == other.emailSubjectInvoice &&
         emailSubjectQuote == other.emailSubjectQuote &&
         emailSubjectPayment == other.emailSubjectPayment &&
@@ -1008,14 +1021,14 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode),
-                                                                                enableCustomInvoiceTaxes2.hashCode),
-                                                                            taxRates.hashCode),
-                                                                        users.hashCode),
-                                                                    userMap.hashCode),
-                                                                customFields.hashCode),
-                                                            customPaymentTerms.hashCode),
-                                                        invoiceFields.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode),
+                                                                                taxRates.hashCode),
+                                                                            users.hashCode),
+                                                                        userMap.hashCode),
+                                                                    customFields.hashCode),
+                                                                customPaymentTerms.hashCode),
+                                                            invoiceFields.hashCode),
+                                                        emailFooter.hashCode),
                                                     emailSubjectInvoice.hashCode),
                                                 emailSubjectQuote.hashCode),
                                             emailSubjectPayment.hashCode),
@@ -1074,6 +1087,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('customFields', customFields)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('invoiceFields', invoiceFields)
+          ..add('emailFooter', emailFooter)
           ..add('emailSubjectInvoice', emailSubjectInvoice)
           ..add('emailSubjectQuote', emailSubjectQuote)
           ..add('emailSubjectPayment', emailSubjectPayment)
@@ -1292,6 +1306,10 @@ class CompanyEntityBuilder
   set invoiceFields(String invoiceFields) =>
       _$this._invoiceFields = invoiceFields;
 
+  String _emailFooter;
+  String get emailFooter => _$this._emailFooter;
+  set emailFooter(String emailFooter) => _$this._emailFooter = emailFooter;
+
   String _emailSubjectInvoice;
   String get emailSubjectInvoice => _$this._emailSubjectInvoice;
   set emailSubjectInvoice(String emailSubjectInvoice) =>
@@ -1397,6 +1415,7 @@ class CompanyEntityBuilder
       _customFields = _$v.customFields?.toBuilder();
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _invoiceFields = _$v.invoiceFields;
+      _emailFooter = _$v.emailFooter;
       _emailSubjectInvoice = _$v.emailSubjectInvoice;
       _emailSubjectQuote = _$v.emailSubjectQuote;
       _emailSubjectPayment = _$v.emailSubjectPayment;
@@ -1472,6 +1491,7 @@ class CompanyEntityBuilder
               customFields: customFields.build(),
               customPaymentTerms: customPaymentTerms.build(),
               invoiceFields: invoiceFields,
+              emailFooter: emailFooter,
               emailSubjectInvoice: emailSubjectInvoice,
               emailSubjectQuote: emailSubjectQuote,
               emailSubjectPayment: emailSubjectPayment,
