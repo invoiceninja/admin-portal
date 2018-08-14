@@ -104,9 +104,7 @@ class SettingsListVM {
 
     return SettingsListVM(
         onLogoutTap: (BuildContext context) => _confirmLogout(context),
-        onRefreshTap: (BuildContext context) {
-          _refreshData(context);
-        },
+        onRefreshTap: (BuildContext context) => _refreshData(context),
         onDarkModeChanged: (BuildContext context, bool value) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool(kSharedPrefEnableDarkMode, value);
