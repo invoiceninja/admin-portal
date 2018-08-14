@@ -17,16 +17,18 @@ class InvoiceEmailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, EmailInvoiceVM>(
       onInit: (Store<AppState> store) {
-        final invoiceId = store.state.uiState.invoiceUIState.selectedId;
-        final invoice = store.state.invoiceState.map[invoiceId];
-        final client = store.state.clientState.map[invoice.clientId];
+        final state = store.state;
+        final invoiceId = state.uiState.invoiceUIState.selectedId;
+        final invoice = state.invoiceState.map[invoiceId];
+        final client = state.clientState.map[invoice.clientId];
         if (client.areActivitiesStale) {
           store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
         }
       },
       converter: (Store<AppState> store) {
-        final invoiceId = store.state.uiState.invoiceUIState.selectedId;
-        final invoice = store.state.invoiceState.map[invoiceId];
+        final state = store.state;
+        final invoiceId = state.uiState.invoiceUIState.selectedId;
+        final invoice = state.invoiceState.map[invoiceId];
         return EmailInvoiceVM.fromStore(store, invoice);
       },
       builder: (context, vm) {
