@@ -354,7 +354,7 @@ abstract class InvoiceEntity extends Object
 
     return !isDeleted &&
         isPublic &&
-        balance > 0 &&
+        invoiceStatusId != kInvoiceStatusPaid &&
         DateTime
             .tryParse(dueDate)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));

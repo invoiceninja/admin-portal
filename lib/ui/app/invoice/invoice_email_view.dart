@@ -259,12 +259,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
           ],
         ),
         body: viewModel.isLoading
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  LoadingIndicator(),
-                ],
-              )
+            ? LoadingIndicator()
             : TabBarView(
                 children: [
                   _buildPreview(context),

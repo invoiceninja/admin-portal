@@ -23,8 +23,9 @@ const int kCurrencyEuro = 3;
 
 const int kCountryUnitedStates = 840;
 
-const int kInvoiceStatusSent = 2;
 const int kInvoiceStatusPastDue = -1;
+const int kInvoiceStatusSent = 2;
+const int kInvoiceStatusPaid = 6;
 
 const int kDefaultDateFormat = 5;
 const int kDefaultDateTimeFormat = 5;
