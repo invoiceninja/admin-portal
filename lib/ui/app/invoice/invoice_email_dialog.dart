@@ -221,7 +221,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
       itemCount: activities.length,
       itemBuilder: (BuildContext context, index) {
         final ActivityEntity activity = activities.elementAt(index);
-        return ActivityListTile(activity: activity);
+        return ActivityListTile(activity: activity, enableNavigation: false);
       },
     );
   }
@@ -231,7 +231,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
-    //final company = viewModel.company;
 
     return DefaultTabController(
       length: 3,
@@ -249,7 +248,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
             IconButton(
               tooltip: localization.send,
               icon: Icon(Icons.send),
-              onPressed: () {},
+              onPressed: () => viewModel.onSendPressed(emailSubject, emailBody),
             )
           ],
         ),

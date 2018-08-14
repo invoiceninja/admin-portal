@@ -88,10 +88,9 @@ class InvoiceViewVM {
               invoiceItem: invoiceItem));
           completer.future.then((invoice) {
             Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
-                  message:
-                      AppLocalization.of(context).successfullyUpdatedInvoice,
-                )));
+                content: SnackBarRow(
+              message: AppLocalization.of(context).successfullyUpdatedInvoice,
+            )));
           });
         },
         onRefreshed: (context) => _handleRefresh(context),
@@ -114,9 +113,9 @@ class InvoiceViewVM {
               break;
             case EntityAction.emailInvoice:
               store.dispatch(EmailInvoiceRequest(
-                  snackBarCompleter(
+                  completer: snackBarCompleter(
                       context, localization.successfullyEmailedInvoice),
-                  invoice.id));
+                  invoiceId: invoice.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(
