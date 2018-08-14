@@ -17,8 +17,8 @@ String processTemplate(
   final client = state.clientState.map[invoice.clientId];
   final contact = client.contacts.first;
 
-  const String sampleLink = '<a href="#">https://example.com/...</a>';
-  const String sampleButton = '';
+  final String sampleButton = '[${localization.button}]';
+  const String sampleLink = 'https://example.com/...';
 
   template = template
       .replaceAll('\$footer', '')
