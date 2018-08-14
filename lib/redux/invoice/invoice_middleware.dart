@@ -80,9 +80,9 @@ Middleware<AppState> _showEmailInvoice() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    final message = await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
+    final emailWasSent = await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
 
-    if (action.completer != null && message != null) {
+    if (action.completer != null && emailWasSent) {
       action.completer.complete(null);
     }
   };

@@ -46,11 +46,11 @@ Completer<Null> snackBarCompleter(BuildContext context, String message, {bool sh
   return completer;
 }
 
-Completer<Null> popCompleter(BuildContext context, String message) {
+Completer<Null> popCompleter(BuildContext context, dynamic result) {
   final Completer<Null> completer = Completer<Null>();
 
   completer.future.then((_) {
-    Navigator.of(context).pop(message);
+    Navigator.of(context).pop<dynamic>(result);
   }).catchError((Object error) {
     showDialog<ErrorDialog>(
         context: context,

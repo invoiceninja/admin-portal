@@ -71,8 +71,7 @@ class EmailInvoiceVM {
         client: state.clientState.map[invoice.clientId],
         onSendPressed: (context, template, subject, body) =>
             store.dispatch(EmailInvoiceRequest(
-              completer: popCompleter(context,
-                  AppLocalization.of(context).successfullyEmailedInvoice),
+              completer: popCompleter(context, true),
               invoiceId: invoice.id,
               template: template,
               subject: subject,
