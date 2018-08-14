@@ -270,6 +270,9 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
+      case InvoiceFields.invoiceDate:
+        response = invoiceA.invoiceDate.compareTo(invoiceB.invoiceDate);
+        break;
     }
 
     if (response == 0) {

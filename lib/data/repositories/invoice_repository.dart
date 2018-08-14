@@ -28,7 +28,7 @@ class InvoiceRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/invoices?include=invitations&is_recurring=0';
+    String url = auth.url + '/invoices?include=invitations&is_recurring=0'; // invoice_type_id=1
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - 600}';
