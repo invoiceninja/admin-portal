@@ -242,7 +242,8 @@ abstract class ClientEntity extends Object
     EmailTemplate template = EmailTemplate.initial;
     activities
         .where((activity) =>
-            activity.invoiceId == invoiceId && activity.activityTypeId == 6)
+            activity.invoiceId == invoiceId &&
+            activity.activityTypeId == kActivityEmailInvoice)
         .forEach((activity) {
       if (template == EmailTemplate.initial) {
         template = EmailTemplate.reminder1;
