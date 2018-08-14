@@ -249,7 +249,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
               tooltip: localization.send,
               icon: Icon(Icons.send),
               onPressed: () => viewModel.onSendPressed(
-                  selectedTemplate, emailSubject, emailBody),
+                  selectedTemplate, _subjectController.text, _bodyController.text),
             )
           ],
         ),
