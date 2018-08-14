@@ -6,11 +6,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class RefreshIconButton extends StatelessWidget {
   const RefreshIconButton({
     this.isSaving,
-    this.isDirty,
     this.onPressed,
-    this.isVisible,
     this.tooltip,
     this.icon,
+    this.isDirty = false,
+    this.isVisible = true,
   });
 
   final bool isSaving;
