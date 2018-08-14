@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
@@ -80,7 +80,7 @@ Middleware<AppState> _showEmailInvoice() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    Navigator.of(action.context).pushNamed(InvoiceEmailDialog.route);
+    Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
 
     /*
     final invoice = await Navigator.of(action.context).pushNamed(InvoiceEmailDialog.route);

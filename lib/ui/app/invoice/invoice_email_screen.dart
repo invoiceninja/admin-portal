@@ -1,7 +1,7 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
 class InvoiceEmailView extends StatefulWidget {
-  final EmailInvoiceDialogVM viewModel;
+  final EmailInvoiceVM viewModel;
 
   const InvoiceEmailView({
     Key key,

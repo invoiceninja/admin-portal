@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class InvoiceEmailDialog extends StatelessWidget {
+class InvoiceEmailScreen extends StatelessWidget {
   static const String route = '/invoice/email';
 
-  const InvoiceEmailDialog({Key key}) : super(key: key);
+  const InvoiceEmailScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, EmailInvoiceDialogVM>(
+    return StoreConnector<AppState, EmailInvoiceVM>(
       onInit: (Store<AppState> store) {
         final invoiceId = store.state.uiState.invoiceUIState.selectedId;
         final invoice = store.state.invoiceState.map[invoiceId];
@@ -27,7 +27,7 @@ class InvoiceEmailDialog extends StatelessWidget {
       converter: (Store<AppState> store) {
         final invoiceId = store.state.uiState.invoiceUIState.selectedId;
         final invoice = store.state.invoiceState.map[invoiceId];
-        return EmailInvoiceDialogVM.fromStore(store, invoice);
+        return EmailInvoiceVM.fromStore(store, invoice);
       },
       builder: (context, vm) {
         return InvoiceEmailView(
@@ -38,7 +38,7 @@ class InvoiceEmailDialog extends StatelessWidget {
   }
 }
 
-class EmailInvoiceDialogVM {
+class EmailInvoiceVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
@@ -46,7 +46,7 @@ class EmailInvoiceDialogVM {
 
   //final List<ContactEntity> recipients;
 
-  EmailInvoiceDialogVM({
+  EmailInvoiceVM({
     @required this.company,
     @required this.invoice,
     @required this.client,
@@ -54,11 +54,11 @@ class EmailInvoiceDialogVM {
     //@required this.recipients,
   });
 
-  factory EmailInvoiceDialogVM.fromStore(
+  factory EmailInvoiceVM.fromStore(
       Store<AppState> store, InvoiceEntity invoice) {
     final state = store.state;
 
-    return EmailInvoiceDialogVM(
+    return EmailInvoiceVM(
         company: state.selectedCompany,
         invoice: invoice,
         client: state.clientState.map[invoice.clientId],

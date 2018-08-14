@@ -1,4 +1,4 @@
-import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +126,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           },
           InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
           InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
-          InvoiceEmailDialog.route: (context) => InvoiceEmailDialog(),
+          InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
           SettingsScreen.route: (context) => SettingsScreen(),
         },
       ),
