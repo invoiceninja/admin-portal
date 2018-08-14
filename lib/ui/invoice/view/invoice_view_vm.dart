@@ -112,10 +112,11 @@ class InvoiceViewVM {
                   invoice.id));
               break;
             case EntityAction.emailInvoice:
-              store.dispatch(EmailInvoiceRequest(
+              store.dispatch(ShowEmailInvoice(
                   completer: snackBarCompleter(
                       context, localization.successfullyEmailedInvoice),
-                  invoiceId: invoice.id));
+                  invoice: invoice,
+                  context: context));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(

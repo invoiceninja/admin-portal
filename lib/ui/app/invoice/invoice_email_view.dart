@@ -204,7 +204,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
             decoration: InputDecoration(
               labelText: localization.body,
             ),
-            maxLines: 10,
+            maxLines: 12,
             keyboardType: TextInputType.multiline,
           ),
         ],
