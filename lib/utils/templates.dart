@@ -74,5 +74,8 @@ String processTemplate(
         .replaceAll('\$${gatewayType}Button', sampleButton);
   });
 
+  print('TEMPLATE: $template');
+  print('FOOTER: ${company.emailFooter}');
+
   return template;
 }
