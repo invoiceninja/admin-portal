@@ -148,24 +148,24 @@ class InvoiceListVM {
           final localization = AppLocalization.of(context);
           if (direction == DismissDirection.endToStart) {
             if (invoice.isDeleted || invoice.isArchived) {
-              store.dispatch(RestoreClientRequest(
+              store.dispatch(RestoreInvoiceRequest(
                   snackBarCompleter(
                       context, localization.successfullyRestoredInvoice),
                   invoice.id));
             } else {
-              store.dispatch(ArchiveClientRequest(
+              store.dispatch(ArchiveInvoiceRequest(
                   snackBarCompleter(
                       context, localization.successfullyArchivedInvoice),
                   invoice.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (invoice.isDeleted) {
-              store.dispatch(RestoreClientRequest(
+              store.dispatch(RestoreInvoiceRequest(
                   snackBarCompleter(
                       context, localization.successfullyRestoredInvoice),
                   invoice.id));
             } else {
-              store.dispatch(DeleteClientRequest(
+              store.dispatch(DeleteInvoiceRequest(
                   snackBarCompleter(
                       context, localization.successfullyDeletedInvoice),
                   invoice.id));
