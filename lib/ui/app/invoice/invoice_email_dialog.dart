@@ -248,7 +248,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
             IconButton(
               tooltip: localization.send,
               icon: Icon(Icons.send),
-              onPressed: () => viewModel.onSendPressed(emailSubject, emailBody),
+              onPressed: () => viewModel.onSendPressed(
+                  selectedTemplate, emailSubject, emailBody),
             )
           ],
         ),

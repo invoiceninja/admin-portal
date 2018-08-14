@@ -42,7 +42,7 @@ class EmailInvoiceDialogVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
-  final Function(String, String) onSendPressed;
+  final Function(EmailTemplate, String, String) onSendPressed;
 
   //final List<ContactEntity> recipients;
 
@@ -62,8 +62,9 @@ class EmailInvoiceDialogVM {
         company: state.selectedCompany,
         invoice: invoice,
         client: state.clientState.map[invoice.clientId],
-        onSendPressed: (subject, body) => store.dispatch(EmailInvoiceRequest(
+        onSendPressed: (template, subject, body) => store.dispatch(EmailInvoiceRequest(
               invoiceId: invoice.id,
+              template: template,
               subject: subject,
               body: body,
             ))

@@ -192,7 +192,7 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .emailInvoice(store.state.selectedCompany, store.state.authState,
-            origInvoice, action.subject, action.body)
+            origInvoice, action.template, action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailInvoiceSuccess());
       store.dispatch(LoadClient(clientId: origInvoice.clientId));

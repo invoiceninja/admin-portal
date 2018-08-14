@@ -68,8 +68,15 @@ class InvoiceRepository {
   }
 
   Future emailInvoice(
-      CompanyEntity company, AuthState auth, InvoiceEntity invoice, String subject, String body) async {
+      CompanyEntity company,
+      AuthState auth,
+      InvoiceEntity invoice,
+      EmailTemplate template,
+      String subject,
+      String body) async {
+
     final data = {
+      'reminder': template == EmailTemplate.initial ? '' : template.toString(),
       'template': {
         'body': body,
         'subject': subject,
