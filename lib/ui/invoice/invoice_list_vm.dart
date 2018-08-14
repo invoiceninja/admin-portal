@@ -114,6 +114,8 @@ class InvoiceListVM {
             case EntityAction.emailInvoice:
               Navigator.of(context).pop();
               store.dispatch(ShowEmailInvoice(
+                  completer: snackBarCompleter(
+                      context, localization.successfullyEmailedInvoice),
                   invoice: invoice,
                   context: context));
               break;

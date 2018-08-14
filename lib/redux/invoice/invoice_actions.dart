@@ -30,8 +30,9 @@ class EditInvoice implements PersistUI {
 class ShowEmailInvoice {
   final InvoiceEntity invoice;
   final BuildContext context;
+  final Completer completer;
 
-  ShowEmailInvoice({this.invoice, this.context});
+  ShowEmailInvoice({this.invoice, this.context, this.completer});
 }
 
 class EditInvoiceItem implements PersistUI {
