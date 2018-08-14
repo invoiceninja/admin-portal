@@ -366,10 +366,12 @@ abstract class ClientEntity extends Object
         contact.email.isNotEmpty;
   }
 
+  /*
   @override
   String toString() {
     return displayName;
   }
+  */
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
