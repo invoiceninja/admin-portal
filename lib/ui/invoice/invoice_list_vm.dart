@@ -112,24 +112,10 @@ class InvoiceListVM {
                   invoice.id));
               break;
             case EntityAction.emailInvoice:
-              /*
-              store.dispatch(EmailInvoiceRequest(
-                  popCompleter(
-                      context, localization.successfullyEmailedInvoice),
-                  invoice.id));
-                  */
               Navigator.of(context).pop();
-              store.dispatch(
-                  ShowEmailInvoice(invoice: invoice, context: context));
-              /*
-              showDialog<InvoiceEmailDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return InvoiceEmailDialog(
-                      invoice: invoice,
-                    );
-                  });
-                  */
+              store.dispatch(ShowEmailInvoice(
+                  invoice: invoice,
+                  context: context));
               break;
             case EntityAction.clone:
               Navigator.of(context).pop();
@@ -138,20 +124,20 @@ class InvoiceListVM {
               break;
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(
-                  popCompleter(context,
-                      localization.successfullyRestoredInvoice),
+                  popCompleter(
+                      context, localization.successfullyRestoredInvoice),
                   invoice.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(
-                  popCompleter(context,
-                      localization.successfullyArchivedInvoice),
+                  popCompleter(
+                      context, localization.successfullyArchivedInvoice),
                   invoice.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteInvoiceRequest(
-                  popCompleter(context,
-                      localization.successfullyDeletedInvoice),
+                  popCompleter(
+                      context, localization.successfullyDeletedInvoice),
                   invoice.id));
               break;
           }

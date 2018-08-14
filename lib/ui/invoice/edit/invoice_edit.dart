@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/save_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 
 class InvoiceEdit extends StatefulWidget {
   final InvoiceEditVM viewModel;
@@ -64,7 +64,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
               ? localization.newInvoice
               : '${localization.invoice} ${viewModel.origInvoice.invoiceNumber}'),
           actions: <Widget>[
-            SaveIconButton(
+            RefreshIconButton(
+              icon: Icons.cloud_upload,
+              tooltip: localization.save,
               isVisible: !invoice.isDeleted,
               isSaving: widget.viewModel.isSaving,
               isDirty: invoice.isNew || invoice != viewModel.origInvoice,

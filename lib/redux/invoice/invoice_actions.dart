@@ -32,9 +32,6 @@ class ShowEmailInvoice {
   final BuildContext context;
 
   ShowEmailInvoice({this.invoice, this.context});
-
-//final Completer completer;
-//EditInvoice({this.invoice, this.context, this.completer, this.invoiceItem});
 }
 
 class EditInvoiceItem implements PersistUI {

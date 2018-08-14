@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
@@ -245,15 +246,19 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
             ],
           ),
           actions: <Widget>[
-            IconButton(
+            RefreshIconButton(
+              isSaving: viewModel.isSaving,
               tooltip: localization.send,
-              icon: Icon(Icons.send),
+              icon: Icons.send,
               onPressed: () => viewModel.onSendPressed(
-                  selectedTemplate, _subjectController.text, _bodyController.text),
+                  context,
+                  selectedTemplate,
+                  _subjectController.text,
+                  _bodyController.text),
             )
           ],
         ),
-        body: client.areActivitiesStale
+        body: viewModel.isLoading
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

@@ -81,14 +81,6 @@ Middleware<AppState> _showEmailInvoice() {
     next(action);
 
     Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
-
-    /*
-    final invoice = await Navigator.of(action.context).pushNamed(InvoiceEmailDialog.route);
-
-    if (action.completer != null && invoice != null) {
-      action.completer.complete(invoice);
-    }
-    */
   };
 }
 
