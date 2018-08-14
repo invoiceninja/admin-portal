@@ -238,12 +238,21 @@ abstract class ClientEntity extends Object
     return displayName;
   }
 
+  Iterable<ActivityEntity> getActivities({int invoiceId, int typeId}) {
+    return activities.where((activity) {
+      if (invoiceId != null && activity.invoiceId != invoiceId) {
+        return false;
+      }
+      if (typeId != null && activity.activityTypeId != typeId) {
+        return false;
+      }
+      return true;
+    });
+  }
+
   EmailTemplate getNextEmailTemplate(int invoiceId) {
     EmailTemplate template = EmailTemplate.initial;
-    activities
-        .where((activity) =>
-            activity.invoiceId == invoiceId &&
-            activity.activityTypeId == kActivityEmailInvoice)
+    getActivities(invoiceId: invoiceId, typeId: kActivityEmailInvoice)
         .forEach((activity) {
       if (template == EmailTemplate.initial) {
         template = EmailTemplate.reminder1;

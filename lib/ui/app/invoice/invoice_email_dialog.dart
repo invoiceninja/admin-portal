@@ -1,8 +1,10 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_dialog_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
@@ -209,6 +211,21 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     );
   }
 
+  Widget _buildHistory(BuildContext context) {
+    final invoice = widget.viewModel.invoice;
+    final client = widget.viewModel.client;
+    final activities = client.getActivities(
+        invoiceId: invoice.id, typeId: kActivityEmailInvoice);
+
+    return ListView.builder(
+      itemCount: activities.length,
+      itemBuilder: (BuildContext context, index) {
+        final ActivityEntity activity = activities.elementAt(index);
+        return ActivityListTile(activity: activity);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -247,7 +264,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                 children: [
                   _buildSend(context),
                   _buildEdit(context),
-                  Icon(Icons.directions_bike),
+                  _buildHistory(context),
                 ],
               ),
       ),
