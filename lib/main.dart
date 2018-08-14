@@ -68,7 +68,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     return StoreProvider<AppState>(
       store: widget.store,
       child: MaterialApp(
-        //debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           const AppLocalizationsDelegate(),
           GlobalMaterialLocalizations.delegate,
