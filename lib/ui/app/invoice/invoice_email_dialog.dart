@@ -49,6 +49,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    updateTemplate();
   }
 
   @override
@@ -93,7 +95,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
         break;
     }
 
-    updateTemplate();
+    //print('subject: $emailSubject');
+    //print('bod: $emailBody');
+
+    _subjectController.text = emailSubject;
+    _bodyController.text = emailBody;
   }
 
   void updateTemplate() {
@@ -122,6 +128,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                       onChanged: (template) {
                         setState(() {
                           loadTemplate(template);
+                          updateTemplate();
                         });
                       },
                       items: [
