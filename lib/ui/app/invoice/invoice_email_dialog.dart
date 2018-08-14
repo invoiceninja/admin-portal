@@ -39,7 +39,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
       _bodyController,
     ];
 
-    loadTemplate(EmailTemplate.initial);
+    final invoice = widget.viewModel.invoice;
+    final client = widget.viewModel.client;
+    loadTemplate(client.getNextEmailTemplate(invoice.id));
   }
 
   @override

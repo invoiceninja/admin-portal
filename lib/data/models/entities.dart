@@ -272,6 +272,8 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
   factory ActivityEntity([void updates(ActivityEntityBuilder b)]) = _$ActivityEntity;
   ActivityEntity._();
 
+  String get notes;
+
   @BuiltValueField(wireName: 'id')
   String get key;
 

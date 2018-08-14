@@ -685,6 +685,9 @@ class _$ActivityEntitySerializer
   Iterable serialize(Serializers serializers, ActivityEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'notes',
+      serializers.serialize(object.notes,
+          specifiedType: const FullType(String)),
       'id',
       serializers.serialize(object.key, specifiedType: const FullType(String)),
       'activity_type_id',
@@ -759,6 +762,10 @@ class _$ActivityEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'notes':
+          result.notes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'id':
           result.key = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1691,6 +1698,8 @@ class DashboardEntityBuilder
 
 class _$ActivityEntity extends ActivityEntity {
   @override
+  final String notes;
+  @override
   final String key;
   @override
   final int activityTypeId;
@@ -1719,7 +1728,8 @@ class _$ActivityEntity extends ActivityEntity {
       (new ActivityEntityBuilder()..update(updates)).build();
 
   _$ActivityEntity._(
-      {this.key,
+      {this.notes,
+      this.key,
       this.activityTypeId,
       this.clientId,
       this.userId,
@@ -1732,6 +1742,8 @@ class _$ActivityEntity extends ActivityEntity {
       this.contactId,
       this.taskId})
       : super._() {
+    if (notes == null)
+      throw new BuiltValueNullFieldError('ActivityEntity', 'notes');
     if (key == null)
       throw new BuiltValueNullFieldError('ActivityEntity', 'key');
     if (activityTypeId == null)
@@ -1754,7 +1766,8 @@ class _$ActivityEntity extends ActivityEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! ActivityEntity) return false;
-    return key == other.key &&
+    return notes == other.notes &&
+        key == other.key &&
         activityTypeId == other.activityTypeId &&
         clientId == other.clientId &&
         userId == other.userId &&
@@ -1780,7 +1793,9 @@ class _$ActivityEntity extends ActivityEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, key.hashCode),
+                                            $jc(
+                                                $jc($jc(0, notes.hashCode),
+                                                    key.hashCode),
                                                 activityTypeId.hashCode),
                                             clientId.hashCode),
                                         userId.hashCode),
@@ -1797,6 +1812,7 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ActivityEntity')
+          ..add('notes', notes)
           ..add('key', key)
           ..add('activityTypeId', activityTypeId)
           ..add('clientId', clientId)
@@ -1816,6 +1832,10 @@ class _$ActivityEntity extends ActivityEntity {
 class ActivityEntityBuilder
     implements Builder<ActivityEntity, ActivityEntityBuilder> {
   _$ActivityEntity _$v;
+
+  String _notes;
+  String get notes => _$this._notes;
+  set notes(String notes) => _$this._notes = notes;
 
   String _key;
   String get key => _$this._key;
@@ -1870,6 +1890,7 @@ class ActivityEntityBuilder
 
   ActivityEntityBuilder get _$this {
     if (_$v != null) {
+      _notes = _$v.notes;
       _key = _$v.key;
       _activityTypeId = _$v.activityTypeId;
       _clientId = _$v.clientId;
@@ -1902,6 +1923,7 @@ class ActivityEntityBuilder
   _$ActivityEntity build() {
     final _$result = _$v ??
         new _$ActivityEntity._(
+            notes: notes,
             key: key,
             activityTypeId: activityTypeId,
             clientId: clientId,

@@ -238,6 +238,24 @@ abstract class ClientEntity extends Object
     return displayName;
   }
 
+  EmailTemplate getNextEmailTemplate(int invoiceId) {
+    EmailTemplate template = EmailTemplate.initial;
+    activities
+        .where((activity) =>
+            activity.invoiceId == invoiceId && activity.activityTypeId == 6)
+        .forEach((activity) {
+      if (template == EmailTemplate.initial) {
+        template = EmailTemplate.reminder1;
+      }
+      if (activity.notes == 'reminder1') {
+        template = EmailTemplate.reminder2;
+      } else if (activity.notes == 'reminder2') {
+        template = EmailTemplate.reminder3;
+      }
+    });
+    return template;
+  }
+
   String getPaymentTerm(String netLabel) {
     if (paymentTerms == 0) {
       return '';
