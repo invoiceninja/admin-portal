@@ -62,9 +62,7 @@ class _ClientViewState extends State<ClientView>
           controller: _controller,
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme
-              .of(context)
-              .primaryColorDark,
+          backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
             showDialog<SimpleDialog>(
               context: context,
@@ -136,7 +134,6 @@ class CustomTabBarView extends StatefulWidget {
 }
 
 class _CustomTabBarViewState extends State<CustomTabBarView> {
-
   @override
   void initState() {
     super.initState();
@@ -152,7 +149,8 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
   void _onTabChange() {
     final viewModel = widget.viewModel;
 
-    if (widget.controller.index == 2 && viewModel.client.activities.isEmpty &&
+    if (widget.controller.index == 2 &&
+        viewModel.client.activities.isEmpty &&
         !viewModel.isLoading) {
       viewModel.onRefreshed(context, true);
     }
@@ -201,7 +199,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title:
-      Text(client.displayName ?? ''), // Text(localizations.clientDetails),
+          Text(client.displayName ?? ''), // Text(localizations.clientDetails),
       bottom: TabBar(
         controller: controller,
         //isScrollable: true,
@@ -220,16 +218,16 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: client.isNew
           ? []
           : [
-        EditIconButton(
-          isVisible: !client.isDeleted,
-          onPressed: () => viewModel.onEditPressed(context),
-        ),
-        ActionMenuButton(
-          isSaving: viewModel.isSaving,
-          entity: client,
-          onSelected: viewModel.onActionSelected,
-        )
-      ],
+              EditIconButton(
+                isVisible: !client.isDeleted,
+                onPressed: () => viewModel.onEditPressed(context),
+              ),
+              ActionMenuButton(
+                isSaving: viewModel.isSaving,
+                entity: client,
+                onSelected: viewModel.onActionSelected,
+              )
+            ],
     );
   }
 }
