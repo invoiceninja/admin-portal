@@ -67,7 +67,7 @@ class InvoiceRepository {
     return invoiceResponse.data;
   }
 
-  Future emailInvoice(
+  Future<Null> emailInvoice(
       CompanyEntity company,
       AuthState auth,
       InvoiceEntity invoice,
@@ -83,6 +83,12 @@ class InvoiceRepository {
       }
     };
 
+    await webClient.post(
+        auth.url + '/email_invoice?invoice_id=${invoice.id}',
+        company.token,
+        json.encode(data));
+
+    /*
     final Future<dynamic> response = await webClient.post(
         auth.url + '/email_invoice?invoice_id=${invoice.id}',
         company.token,
@@ -92,5 +98,6 @@ class InvoiceRepository {
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return invoiceResponse.data;
+    */
   }
 }
