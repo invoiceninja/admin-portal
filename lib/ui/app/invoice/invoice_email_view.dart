@@ -107,7 +107,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     emailBody = processTemplate(emailBody, viewModel.invoice, context);
   }
 
-  Widget _buildSend(BuildContext context) {
+  Widget _buildPreview(BuildContext context) {
     final localization = AppLocalization.of(context);
 
     return Container(
@@ -262,7 +262,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
               )
             : TabBarView(
                 children: [
-                  _buildSend(context),
+                  _buildPreview(context),
                   _buildEdit(context),
                   _buildHistory(context),
                 ],
