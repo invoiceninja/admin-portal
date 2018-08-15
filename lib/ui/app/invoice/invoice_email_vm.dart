@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';

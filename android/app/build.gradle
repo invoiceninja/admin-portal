@@ -12,6 +12,7 @@ if (flutterRoot == null) {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 def keystorePropertiesFile = rootProject.file("key.properties")

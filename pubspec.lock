@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.1"
+  firebase_auth:
+    dependency: "direct main"
+    description:
+      name: firebase_auth
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.18"
   fixnum:
     dependency: transitive
     description:
@@ -199,7 +206,7 @@ packages:
       name: flutter_html_view
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.3"
+    version: "0.5.4"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -252,6 +259,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.7"
+  google_sign_in:
+    dependency: "direct main"
+    description:
+      name: google_sign_in
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.4"
   graphs:
     dependency: transitive
     description:
@@ -620,7 +634,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.4"
+    version: "0.6.4"
   vm_service_client:
     dependency: transitive
     description:

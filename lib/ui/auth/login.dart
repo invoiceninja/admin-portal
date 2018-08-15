@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/progress_button.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -9,15 +10,11 @@ import 'package:invoiceninja_flutter/utils/keys.dart';
 
 
 class LoginView extends StatefulWidget {
-  final bool isLoading;
-  final AuthState authState;
-  final Function(BuildContext, String, String, String, String) onLoginPressed;
+  final LoginVM viewModel;
 
   const LoginView({
     Key key,
-    @required this.isLoading,
-    @required this.authState,
-    @required this.onLoginPressed,
+    @required this.viewModel,
   }) : super(key: key);
 
   @override
@@ -40,7 +37,7 @@ class _LoginState extends State<LoginView> {
   @override
   void didChangeDependencies() {
 
-    final state = widget.authState;
+    final state = widget.viewModel.authState;
     _emailController.text = state.email;
     _passwordController.text = state.password;
     _urlController.text = formatApiUrlReadable(state.url);
@@ -62,7 +59,10 @@ class _LoginState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.authState.isInitialized) {
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+
+    if (!viewModel.authState.isInitialized) {
       return Container();
     }
 
@@ -83,10 +83,10 @@ class _LoginState extends State<LoginView> {
                 key: _emailKey,
                 autocorrect: false,
                 decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).email),
+                    labelText: localization.email),
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) => val.isEmpty || val.trim().isEmpty
-                    ? AppLocalization.of(context).pleaseEnterYourEmail
+                    ? localization.pleaseEnterYourEmail
                     : null,
               ),
               TextFormField(
@@ -94,9 +94,9 @@ class _LoginState extends State<LoginView> {
                 key: _passwordKey,
                 autocorrect: false,
                 decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).password),
+                    labelText: localization.password),
                 validator: (val) => val.isEmpty || val.trim().isEmpty
-                    ? AppLocalization.of(context).pleaseEnterYourPassword
+                    ? localization.pleaseEnterYourPassword
                     : null,
                 obscureText: true,
               ),
@@ -105,9 +105,9 @@ class _LoginState extends State<LoginView> {
                 key: _urlKey,
                 autocorrect: false,
                 decoration:
-                    InputDecoration(labelText: AppLocalization.of(context).url),
+                    InputDecoration(labelText: localization.url),
                 validator: (val) => val.isEmpty || val.trim().isEmpty
-                    ? AppLocalization.of(context).pleaseEnterYourUrl
+                    ? localization.pleaseEnterYourUrl
                     : null,
                 keyboardType: TextInputType.url,
               ),
@@ -116,21 +116,16 @@ class _LoginState extends State<LoginView> {
                 key: _secretKey,
                 autocorrect: false,
                 decoration: InputDecoration(
-                    labelText: AppLocalization.of(context).secret),
-                /*
-                    validator: (val) => val.isEmpty || val.trim().length == 0
-                        ? AppLocalization.of(context).pleaseEnterYourPassword
-                        : null,
-                        */
+                    labelText: localization.secret),
                 obscureText: true,
               ),
-              widget.authState.error == null
+              viewModel.authState.error == null
                   ? Container()
                   : Container(
                       padding: EdgeInsets.only(top: 26.0, bottom: 4.0),
                       child: Center(
                         child: Text(
-                          widget.authState.error,
+                          viewModel.authState.error,
                           style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
@@ -142,19 +137,26 @@ class _LoginState extends State<LoginView> {
           ),
         ),
         ProgressButton(
-          label: AppLocalization.of(context).login.toUpperCase(),
-          isLoading: widget.isLoading,
+          label: localization.login.toUpperCase(),
+          isLoading: viewModel.isLoading,
           onPressed: () {
             if (!_formKey.currentState.validate()) {
               return;
             }
-            widget.onLoginPressed(
+            viewModel.onLoginPressed(
                 context,
                 _emailController.text,
                 _passwordController.text,
                 _urlController.text,
                 _secretController.text);
           },
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: ElevatedButton(
+            label: 'Google ${localization.login}'.toUpperCase(),
+            onPressed: () => viewModel.onGoogleLoginPressed(context),
+          ),
         ),
       ],
     );

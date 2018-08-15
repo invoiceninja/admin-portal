@@ -14,3 +14,4 @@ build/
 
 .env.dart
 key.properties
+google-services.json
