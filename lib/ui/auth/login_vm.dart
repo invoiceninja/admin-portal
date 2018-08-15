@@ -37,7 +37,7 @@ class LoginVM {
   bool isLoading;
   AuthState authState;
   final Function(BuildContext, String, String, String, String) onLoginPressed;
-  final Function(BuildContext) onGoogleLoginPressed;
+  final Function(BuildContext, String, String) onGoogleLoginPressed;
 
   LoginVM({
     @required this.isLoading,
@@ -58,7 +58,7 @@ class LoginVM {
     return LoginVM(
         isLoading: store.state.isLoading,
         authState: store.state.authState,
-        onGoogleLoginPressed: (context) async {
+        onGoogleLoginPressed: (BuildContext context, String url, String secret) async {
           try {
             final account = await _googleSignIn.signIn();
 
@@ -68,6 +68,9 @@ class LoginVM {
                 store.dispatch(OAuthLoginRequest(
                   completer: completer,
                   token: value.idToken,
+                  url: url.trim(),
+                  secret: secret.trim(),
+                  platform: getPlatform(context),
                 ));
                 completer.future.then((_) {
                   Navigator.of(context)

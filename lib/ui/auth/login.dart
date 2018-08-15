@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
-
 class LoginView extends StatefulWidget {
   final LoginVM viewModel;
 
@@ -36,7 +35,6 @@ class _LoginState extends State<LoginView> {
 
   @override
   void didChangeDependencies() {
-
     final state = widget.viewModel.authState;
     _emailController.text = state.email;
     _passwordController.text = state.password;
@@ -55,7 +53,6 @@ class _LoginState extends State<LoginView> {
 
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +79,7 @@ class _LoginState extends State<LoginView> {
                 controller: _emailController,
                 key: _emailKey,
                 autocorrect: false,
-                decoration: InputDecoration(
-                    labelText: localization.email),
+                decoration: InputDecoration(labelText: localization.email),
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? localization.pleaseEnterYourEmail
@@ -93,8 +89,7 @@ class _LoginState extends State<LoginView> {
                 controller: _passwordController,
                 key: _passwordKey,
                 autocorrect: false,
-                decoration: InputDecoration(
-                    labelText: localization.password),
+                decoration: InputDecoration(labelText: localization.password),
                 validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? localization.pleaseEnterYourPassword
                     : null,
@@ -104,8 +99,7 @@ class _LoginState extends State<LoginView> {
                 controller: _urlController,
                 key: _urlKey,
                 autocorrect: false,
-                decoration:
-                    InputDecoration(labelText: localization.url),
+                decoration: InputDecoration(labelText: localization.url),
                 validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? localization.pleaseEnterYourUrl
                     : null,
@@ -115,8 +109,7 @@ class _LoginState extends State<LoginView> {
                 controller: _secretController,
                 key: _secretKey,
                 autocorrect: false,
-                decoration: InputDecoration(
-                    labelText: localization.secret),
+                decoration: InputDecoration(labelText: localization.secret),
                 obscureText: true,
               ),
               viewModel.authState.error == null
@@ -155,7 +148,8 @@ class _LoginState extends State<LoginView> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ElevatedButton(
             label: 'Google ${localization.login}'.toUpperCase(),
-            onPressed: () => viewModel.onGoogleLoginPressed(context),
+            onPressed: () => viewModel.onGoogleLoginPressed(
+                context, _urlController.text, _secretController.text),
           ),
         ),
       ],

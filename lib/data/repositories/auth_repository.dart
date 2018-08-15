@@ -36,9 +36,11 @@ class AuthRepository {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
       'api_secret': secret,
+      'token': token,
+      'provider': 'google',
     };
 
-    url = formatApiUrlMachine(url) + '/login';
+    url = formatApiUrlMachine(url) + '/oauth_login';
 
     return sendRequest(url: url, data: credentials);
   }
