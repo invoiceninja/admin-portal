@@ -37,7 +37,8 @@ void _loadAuthLocal(Store<AppState> store, dynamic action) async {
 
   final String email = prefs.getString(kSharedPrefEmail) ?? Config.LOGIN_EMAIL;
   final String url = prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL;
-  final String secret = prefs.getString(kSharedPrefSecret) ?? Config.LOGIN_SECRET;
+  final String secret =
+      prefs.getString(kSharedPrefSecret) ?? Config.LOGIN_SECRET;
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
@@ -57,12 +58,18 @@ Middleware<AppState> _createLoginInit() {
 Middleware<AppState> _createLoginRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
-        .login(action.email, action.password, action.url, action.secret, action.platform)
+        .login(
+            email: action.email,
+            password: action.password,
+            url: action.url,
+            secret: action.secret,
+            platform: action.platform)
         .then((data) {
       _saveAuthLocal(action);
 
       if (_isVersionSupported(data.version)) {
-        store.dispatch(LoadDataSuccess(completer: action.completer, loginResponse: data));
+        store.dispatch(
+            LoadDataSuccess(completer: action.completer, loginResponse: data));
       } else {
         store.dispatch(UserLoginFailure(
             'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
@@ -79,12 +86,17 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
 Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
-        .oauth(action.token, action.url, action.secret, action.platform)
+        .oauthLogin(
+            token: action.token,
+            url: action.url,
+            secret: action.secret,
+            platform: action.platform)
         .then((data) {
       _saveAuthLocal(action);
 
       if (_isVersionSupported(data.version)) {
-        store.dispatch(LoadDataSuccess(completer: action.completer, loginResponse: data));
+        store.dispatch(
+            LoadDataSuccess(completer: action.completer, loginResponse: data));
       } else {
         store.dispatch(UserLoginFailure(
             'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
@@ -102,9 +114,13 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final state = store.state;
     repository
-        .refresh(state.authState.url, state.selectedCompany.token, action.platform)
+        .refresh(
+            url: state.authState.url,
+            token: state.selectedCompany.token,
+            platform: action.platform)
         .then((data) {
-        store.dispatch(LoadDataSuccess(completer: action.completer, loginResponse: data));
+      store.dispatch(
+          LoadDataSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print(error);
       store.dispatch(UserLoginFailure(error.toString()));
@@ -121,5 +137,7 @@ bool _isVersionSupported(String version) {
   final int minor = int.parse(parts[1]);
   final int patch = int.parse(parts[2]);
 
-  return major >= kMinMajorAppVersion && minor >= kMinMinorAppVersion && patch >= kMinPatchAppVersion;
+  return major >= kMinMajorAppVersion &&
+      minor >= kMinMinorAppVersion &&
+      patch >= kMinPatchAppVersion;
 }
