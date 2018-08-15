@@ -50,43 +50,38 @@ class LoginVM {
     final GoogleSignIn _googleSignIn = new GoogleSignIn(
       scopes: [
         'email',
-        'openid',
-        'profile',
+        //'openid',
+        //'profile',
       ],
     );
-
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-      print('gogole account: $account');
-
-      if (account != null) {
-        account.authentication.then((GoogleSignInAuthentication value) {
-          print('token: ${value.idToken}');
-          print('token: ${value.accessToken}');
-        });
-      }
-    });
-
-    //_googleSignIn.signInSilently();
 
     return LoginVM(
         isLoading: store.state.isLoading,
         authState: store.state.authState,
         onGoogleLoginPressed: (context) async {
           try {
-            final result = await _googleSignIn.signIn();
-            print(result);
+            final account = await _googleSignIn.signIn();
+
+            if (account != null) {
+              account.authentication.then((GoogleSignInAuthentication value) {
+                final Completer<Null> completer = Completer<Null>();
+                store.dispatch(OAuthLoginRequest(
+                  completer: completer,
+                  token: value.idToken,
+                ));
+                completer.future.then((_) {
+                  Navigator.of(context)
+                      .pushReplacementNamed(DashboardScreen.route);
+                  store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+                });
+              });
+            }
           } catch (error) {
             print(error);
           }
         },
         onLoginPressed: (BuildContext context, String email, String password,
             String url, String secret) async {
-          try {
-            await _googleSignIn.signIn();
-          } catch (error) {
-            print(error);
-          }
-
           if (store.state.isLoading) {
             return;
           }

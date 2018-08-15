@@ -27,6 +27,18 @@ class AuthRepository {
     return sendRequest(url, credentials);
   }
 
+  Future<LoginResponseData> oauth(String token, String url, String secret, String platform) async {
+
+    final credentials = {
+      'token_name': 'invoice-ninja-$platform-app',
+      'api_secret': secret,
+    };
+
+    url = formatApiUrlMachine(url) + '/login';
+
+    return sendRequest(url, credentials);
+  }
+
   Future<LoginResponseData> refresh(String url, String token, String platform) async {
 
     final credentials = {

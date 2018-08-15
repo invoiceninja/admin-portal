@@ -25,6 +25,12 @@ class UserLoginLoaded {
   UserLoginLoaded(this.email, this.url, this.secret);
 }
 
+class OAuthLoginRequest implements StartLoading {
+  final Completer completer;
+  final String token;
+  OAuthLoginRequest({this.completer, this.token});
+}
+
 class UserLoginRequest implements StartLoading {
   final Completer completer;
   final String email;
