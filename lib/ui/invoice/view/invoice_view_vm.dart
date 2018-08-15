@@ -89,7 +89,7 @@ class InvoiceViewVM {
           completer.future.then((invoice) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
-              message: AppLocalization.of(context).successfullyUpdatedInvoice,
+              message: AppLocalization.of(context).updatedInvoice,
             )));
           });
         },
@@ -108,32 +108,32 @@ class InvoiceViewVM {
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(
                   snackBarCompleter(
-                      context, localization.successfullyMarkedInvoiceAsSent),
+                      context, localization.markedInvoiceAsSent),
                   invoice.id));
               break;
             case EntityAction.emailInvoice:
               store.dispatch(ShowEmailInvoice(
                   completer: snackBarCompleter(
-                      context, localization.successfullyEmailedInvoice),
+                      context, localization.emailedInvoice),
                   invoice: invoice,
                   context: context));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(
                   popCompleter(
-                      context, localization.successfullyArchivedInvoice),
+                      context, localization.archivedInvoice),
                   invoice.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteInvoiceRequest(
                   popCompleter(
-                      context, localization.successfullyDeletedInvoice),
+                      context, localization.deletedInvoice),
                   invoice.id));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredInvoice),
+                      context, localization.restoredInvoice),
                   invoice.id));
               break;
             case EntityAction.clone:

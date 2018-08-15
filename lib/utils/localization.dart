@@ -27,7 +27,7 @@ class AppLocalization {
       'url': 'URL',
       'secret': 'Secret',
       'name': 'Name',
-      'log_out': 'Log Out',
+      'logout': 'Log Out',
       'login': 'Login',
       'filter': 'Filter',
       'sort': 'Sort',
@@ -74,22 +74,22 @@ class AppLocalization {
       'product': 'Product',
       'products': 'Products',
       'new_product': 'New Product',
-      'successfully_created_product': 'Successfully created product',
-      'successfully_updated_product': 'Successfully updated product',
-      'successfully_archived_product': 'Successfully archived product',
-      'successfully_deleted_product': 'Successfully deleted product',
-      'successfully_restored_product': 'Successfully restored product',
+      'created_product': 'Successfully created product',
+      'updated_product': 'Successfully updated product',
+      'archived_product': 'Successfully archived product',
+      'deleted_product': 'Successfully deleted product',
+      'restored_product': 'Successfully restored product',
       'product_key': 'Product',
       'notes': 'Notes',
       'cost': 'Cost',
       'client': 'Client',
       'clients': 'Clients',
       'new_client': 'New Client',
-      'successfully_created_client': 'Successfully created client',
-      'successfully_updated_client': 'Successfully updated client',
-      'successfully_archived_client': 'Successfully archived client',
-      'successfully_deleted_client': 'Successfully deleted client',
-      'successfully_restored_client': 'Successfully restored client',
+      'created_client': 'Successfully created client',
+      'updated_client': 'Successfully updated client',
+      'archived_client': 'Successfully archived client',
+      'deleted_client': 'Successfully deleted client',
+      'restored_client': 'Successfully restored client',
       'address1': 'Street',
       'address2': 'Apt/Suite',
       'city': 'City',
@@ -99,12 +99,12 @@ class AppLocalization {
       'invoice': 'Invoice',
       'invoices': 'Invoices',
       'new_invoice': 'New Invoice',
-      'successfully_created_invoice': 'Successfully created invoice',
-      'successfully_updated_invoice': 'Successfully updated invoice',
-      'successfully_archived_invoice': 'Successfully archived invoice',
-      'successfully_deleted_invoice': 'Successfully deleted invoice',
-      'successfully_restored_invoice': 'Successfully restored invoice',
-      'successfully_emailed_invoice': 'Successfully emailed invoice',
+      'created_invoice': 'Successfully created invoice',
+      'updated_invoice': 'Successfully updated invoice',
+      'archived_invoice': 'Successfully archived invoice',
+      'deleted_invoice': 'Successfully deleted invoice',
+      'restored_invoice': 'Successfully restored invoice',
+      'emailed_invoice': 'Successfully emailed invoice',
       'amount': 'Amount',
       'invoice_number': 'Invoice Number',
       'invoice_date': 'Invoice Date',
@@ -165,7 +165,7 @@ class AppLocalization {
       'invoice_status_5': 'Partial',
       'invoice_status_6': 'Paid',
       'mark_sent': 'Mark Sent',
-      'successfully_marked_invoice_as_sent':
+      'marked_invoice_as_sent':
           'Successfully marked invoice as sent',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
@@ -299,7 +299,7 @@ class AppLocalization {
 
   String get name => _localizedValues[locale.languageCode]['name'];
 
-  String get logOut => _localizedValues[locale.languageCode]['log_out'];
+  String get logout => _localizedValues[locale.languageCode]['logout'];
 
   String get login => _localizedValues[locale.languageCode]['login'];
 
@@ -404,20 +404,20 @@ class AppLocalization {
 
   String get newProduct => _localizedValues[locale.languageCode]['new_product'];
 
-  String get successfullyCreatedProduct =>
-      _localizedValues[locale.languageCode]['successfully_created_product'];
+  String get createdProduct =>
+      _localizedValues[locale.languageCode]['created_product'];
 
-  String get successfullyUpdatedProduct =>
-      _localizedValues[locale.languageCode]['successfully_updated_product'];
+  String get updatedProduct =>
+      _localizedValues[locale.languageCode]['updated_product'];
 
-  String get successfullyArchivedProduct =>
-      _localizedValues[locale.languageCode]['successfully_archived_product'];
+  String get archivedProduct =>
+      _localizedValues[locale.languageCode]['archived_product'];
 
-  String get successfullyDeletedProduct =>
-      _localizedValues[locale.languageCode]['successfully_deleted_product'];
+  String get deletedProduct =>
+      _localizedValues[locale.languageCode]['deleted_product'];
 
-  String get successfullyRestoredProduct =>
-      _localizedValues[locale.languageCode]['successfully_restored_product'];
+  String get restoredProduct =>
+      _localizedValues[locale.languageCode]['restored_product'];
 
   String get productKey => _localizedValues[locale.languageCode]['product_key'];
 
@@ -431,20 +431,20 @@ class AppLocalization {
 
   String get newClient => _localizedValues[locale.languageCode]['new_client'];
 
-  String get successfullyCreatedClient =>
-      _localizedValues[locale.languageCode]['successfully_created_client'];
+  String get createdClient =>
+      _localizedValues[locale.languageCode]['created_client'];
 
-  String get successfullyUpdatedClient =>
-      _localizedValues[locale.languageCode]['successfully_updated_client'];
+  String get updatedClient =>
+      _localizedValues[locale.languageCode]['updated_client'];
 
-  String get successfullyArchivedClient =>
-      _localizedValues[locale.languageCode]['successfully_archived_client'];
+  String get archivedClient =>
+      _localizedValues[locale.languageCode]['archived_client'];
 
-  String get successfullyDeletedClient =>
-      _localizedValues[locale.languageCode]['successfully_deleted_client'];
+  String get deletedClient =>
+      _localizedValues[locale.languageCode]['deleted_client'];
 
-  String get successfullyRestoredClient =>
-      _localizedValues[locale.languageCode]['successfully_restored_client'];
+  String get restoredClient =>
+      _localizedValues[locale.languageCode]['restored_client'];
 
   String get address1 => _localizedValues[locale.languageCode]['address1'];
 
@@ -464,23 +464,23 @@ class AppLocalization {
 
   String get newInvoice => _localizedValues[locale.languageCode]['new_invoice'];
 
-  String get successfullyCreatedInvoice =>
-      _localizedValues[locale.languageCode]['successfully_created_invoice'];
+  String get createdInvoice =>
+      _localizedValues[locale.languageCode]['created_invoice'];
 
-  String get successfullyUpdatedInvoice =>
-      _localizedValues[locale.languageCode]['successfully_updated_invoice'];
+  String get updatedInvoice =>
+      _localizedValues[locale.languageCode]['updated_invoice'];
 
-  String get successfullyArchivedInvoice =>
-      _localizedValues[locale.languageCode]['successfully_archived_invoice'];
+  String get archivedInvoice =>
+      _localizedValues[locale.languageCode]['archived_invoice'];
 
-  String get successfullyDeletedInvoice =>
-      _localizedValues[locale.languageCode]['successfully_deleted_invoice'];
+  String get deletedInvoice =>
+      _localizedValues[locale.languageCode]['deleted_invoice'];
 
-  String get successfullyRestoredInvoice =>
-      _localizedValues[locale.languageCode]['successfully_restored_invoice'];
+  String get restoredInvoice =>
+      _localizedValues[locale.languageCode]['restored_invoice'];
 
-  String get successfullyEmailedInvoice =>
-      _localizedValues[locale.languageCode]['successfully_emailed_invoice'];
+  String get emailedInvoice =>
+      _localizedValues[locale.languageCode]['emailed_invoice'];
 
   String get amount => _localizedValues[locale.languageCode]['amount'];
 
@@ -625,9 +625,9 @@ class AppLocalization {
 
   String get markSent => _localizedValues[locale.languageCode]['mark_sent'];
 
-  String get successfullyMarkedInvoiceAsSent =>
+  String get markedInvoiceAsSent =>
       _localizedValues[locale.languageCode]
-          ['successfully_marked_invoice_as_sent'];
+          ['marked_invoice_as_sent'];
 
   String get done => _localizedValues[locale.languageCode]['done'];
 

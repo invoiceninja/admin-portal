@@ -32,7 +32,7 @@ class SettingsList extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.powerOff),
-          title: Text(AppLocalization.of(context).logOut),
+          title: Text(AppLocalization.of(context).logout),
           onTap: () {
             viewModel.onLogoutTap(context);
           },

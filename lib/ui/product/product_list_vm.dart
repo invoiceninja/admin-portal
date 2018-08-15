@@ -82,19 +82,19 @@ class ProductListVM {
             case EntityAction.restore:
               store.dispatch(RestoreProductRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyRestoredProduct),
+                      AppLocalization.of(context).restoredProduct),
                   product.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveProductRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyArchivedProduct),
+                      AppLocalization.of(context).archivedProduct),
                   product.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteProductRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyDeletedProduct),
+                      AppLocalization.of(context).deletedProduct),
                   product.id));
               break;
           }
@@ -107,24 +107,24 @@ class ProductListVM {
             if (product.isDeleted || product.isArchived) {
               store.dispatch(RestoreProductRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredProduct),
+                      context, localization.restoredProduct),
                   product.id));
             } else {
               store.dispatch(ArchiveProductRequest(
                   snackBarCompleter(
-                      context, localization.successfullyArchivedProduct),
+                      context, localization.archivedProduct),
                   product.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (product.isDeleted) {
               store.dispatch(RestoreProductRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredProduct),
+                      context, localization.restoredProduct),
                   product.id));
             } else {
               store.dispatch(DeleteProductRequest(
                   snackBarCompleter(
-                      context, localization.successfullyDeletedProduct),
+                      context, localization.deletedProduct),
                   product.id));
             }
           }

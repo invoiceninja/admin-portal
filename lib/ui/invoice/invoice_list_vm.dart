@@ -108,13 +108,13 @@ class InvoiceListVM {
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(
                   popCompleter(
-                      context, localization.successfullyMarkedInvoiceAsSent),
+                      context, localization.markedInvoiceAsSent),
                   invoice.id));
               break;
             case EntityAction.emailInvoice:
               store.dispatch(ShowEmailInvoice(
                   completer: popCompleter(
-                      context, localization.successfullyEmailedInvoice),
+                      context, localization.emailedInvoice),
                   invoice: invoice,
                   context: context));
               break;
@@ -126,19 +126,19 @@ class InvoiceListVM {
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(
                   popCompleter(
-                      context, localization.successfullyRestoredInvoice),
+                      context, localization.restoredInvoice),
                   invoice.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(
                   popCompleter(
-                      context, localization.successfullyArchivedInvoice),
+                      context, localization.archivedInvoice),
                   invoice.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteInvoiceRequest(
                   popCompleter(
-                      context, localization.successfullyDeletedInvoice),
+                      context, localization.deletedInvoice),
                   invoice.id));
               break;
           }
@@ -150,24 +150,24 @@ class InvoiceListVM {
             if (invoice.isDeleted || invoice.isArchived) {
               store.dispatch(RestoreInvoiceRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredInvoice),
+                      context, localization.restoredInvoice),
                   invoice.id));
             } else {
               store.dispatch(ArchiveInvoiceRequest(
                   snackBarCompleter(
-                      context, localization.successfullyArchivedInvoice),
+                      context, localization.archivedInvoice),
                   invoice.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (invoice.isDeleted) {
               store.dispatch(RestoreInvoiceRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredInvoice),
+                      context, localization.restoredInvoice),
                   invoice.id));
             } else {
               store.dispatch(DeleteInvoiceRequest(
                   snackBarCompleter(
-                      context, localization.successfullyDeletedInvoice),
+                      context, localization.deletedInvoice),
                   invoice.id));
             }
           }

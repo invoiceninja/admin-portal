@@ -87,7 +87,7 @@ class ClientViewVM {
             Scaffold.of(context).showSnackBar(SnackBar(
                     content: SnackBarRow(
                   message:
-                      AppLocalization.of(context).successfullyUpdatedClient,
+                      AppLocalization.of(context).updatedClient,
                 )));
           });
         },
@@ -105,18 +105,18 @@ class ClientViewVM {
             case EntityAction.archive:
               store.dispatch(ArchiveClientRequest(
                   popCompleter(
-                      context, localization.successfullyArchivedClient),
+                      context, localization.archivedClient),
                   client.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteClientRequest(
-                  popCompleter(context, localization.successfullyDeletedClient),
+                  popCompleter(context, localization.deletedClient),
                   client.id));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreClientRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredClient),
+                      context, localization.restoredClient),
                   client.id));
               break;
           }

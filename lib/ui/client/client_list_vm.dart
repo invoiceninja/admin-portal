@@ -83,19 +83,19 @@ class ClientListVM {
             case EntityAction.restore:
               store.dispatch(RestoreClientRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyRestoredClient),
+                      AppLocalization.of(context).restoredClient),
                   client.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveClientRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyArchivedClient),
+                      AppLocalization.of(context).archivedClient),
                   client.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteClientRequest(
                   popCompleter(context,
-                      AppLocalization.of(context).successfullyDeletedClient),
+                      AppLocalization.of(context).deletedClient),
                   client.id));
               break;
           }
@@ -108,24 +108,24 @@ class ClientListVM {
             if (client.isDeleted || client.isArchived) {
               store.dispatch(RestoreClientRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredClient),
+                      context, localization.restoredClient),
                   client.id));
             } else {
               store.dispatch(ArchiveClientRequest(
                   snackBarCompleter(
-                      context, localization.successfullyArchivedClient),
+                      context, localization.archivedClient),
                   client.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (client.isDeleted) {
               store.dispatch(RestoreClientRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredClient),
+                      context, localization.restoredClient),
                   client.id));
             } else {
               store.dispatch(DeleteClientRequest(
                   snackBarCompleter(
-                      context, localization.successfullyDeletedClient),
+                      context, localization.deletedClient),
                   client.id));
             }
           }

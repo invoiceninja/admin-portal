@@ -75,8 +75,8 @@ class ProductEditVM {
               completer: snackBarCompleter(
                   context,
                   product.isNew
-                      ? AppLocalization.of(context).successfullyCreatedProduct
-                      : AppLocalization.of(context).successfullyUpdatedProduct),
+                      ? AppLocalization.of(context).createdProduct
+                      : AppLocalization.of(context).updatedProduct),
               product: product));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
@@ -85,19 +85,19 @@ class ProductEditVM {
             case EntityAction.archive:
               store.dispatch(ArchiveProductRequest(
                   popCompleter(
-                      context, localization.successfullyArchivedProduct),
+                      context, localization.archivedProduct),
                   product.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteProductRequest(
                   popCompleter(
-                      context, localization.successfullyDeletedProduct),
+                      context, localization.deletedProduct),
                   product.id));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreProductRequest(
                   snackBarCompleter(
-                      context, localization.successfullyRestoredProduct),
+                      context, localization.restoredProduct),
                   product.id));
               break;
             case EntityAction.clone:

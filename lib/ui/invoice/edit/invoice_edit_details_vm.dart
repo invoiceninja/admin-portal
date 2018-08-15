@@ -65,7 +65,7 @@ class InvoiceEditDetailsVM {
           completer.future.then((SelectableEntity client) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
-                  message: AppLocalization.of(context).successfullyCreatedClient,
+                  message: AppLocalization.of(context).createdClient,
                 )
             ));
           });
