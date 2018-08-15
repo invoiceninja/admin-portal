@@ -112,7 +112,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     final localization = AppLocalization.of(context);
 
     return Container(
-      color: Colors.white,
+      //color: Colors.white,
       child: Column(
         children: <Widget>[
           Container(
@@ -158,14 +158,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
               shrinkWrap: true,
               children: <Widget>[
                 Container(
-                  color: Colors.white,
+                  //color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 13.0, top: 26.0, right: 13.0, bottom: 24.0),
                     child: Text(
                       emailSubject,
                       style: TextStyle(
-                        color: Colors.black,
+                        //color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0,
                       ),
@@ -173,7 +173,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                   ),
                 ),
                 Container(
-                  color: Colors.white,
+                  //color: Colors.white,
                   child: HtmlView(
                     data: emailBody,
                   ),
