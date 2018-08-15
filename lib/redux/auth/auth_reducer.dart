@@ -30,7 +30,7 @@ AuthState userLoginRequestReducer(
 }
 
 AuthState oauthLoginRequestReducer(
-    AuthState authState, UserLoginRequest action) {
+    AuthState authState, OAuthLoginRequest action) {
   return authState.rebuild((b) => b
     ..error = null
     ..url = formatApiUrlMachine(action.url)
