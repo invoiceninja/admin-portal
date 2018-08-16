@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -54,82 +55,82 @@ void main() async {
 
 class InvoiceNinjaApp extends StatefulWidget {
   final Store<AppState> store;
-  const InvoiceNinjaApp({Key key, this.store})
-      : super(key: key);
+
+  const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
 
   @override
   InvoiceNinjaAppState createState() => InvoiceNinjaAppState();
 }
 
 class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
-
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: widget.store,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          const AppLocalizationsDelegate(),
-          GlobalMaterialLocalizations.delegate,
-        ],
-
-        // light theme
-        theme: widget.store.state.uiState.enableDarkMode
-            ? ThemeData(
-                brightness: Brightness.dark,
-                accentColor: Colors.lightBlueAccent,
-              )
-            : ThemeData().copyWith(
-                //accentColor: Colors.lightBlueAccent,
-                primaryColor: const Color(0xFF117cc1),
-                primaryColorLight: const Color(0xFF5dabf4),
-                primaryColorDark: const Color(0xFF0D5D91),
-                indicatorColor: Colors.white,
-                bottomAppBarColor: Colors.grey.shade300,
-                backgroundColor: Colors.grey.shade200,
-                buttonColor: const Color(0xFF0D5D91),
-              ),
-
-        title: 'Invoice Ninja',
-        routes: {
-          InitScreen.route: (context) => InitScreen(),
-          LoginScreen.route: (context) {
-            return LoginScreen();
-          },
-          DashboardScreen.route: (context) {
-            if (widget.store.state.dashboardState.isStale) {
-              widget.store.dispatch(LoadDashboard());
-            }
-            return DashboardScreen();
-          },
-          ProductScreen.route: (context) {
-            if (widget.store.state.productState.isStale) {
-              widget.store.dispatch(LoadProducts());
-            }
-            return ProductScreen();
-          },
-          ProductEditScreen.route: (context) => ProductEditScreen(),
-          ClientScreen.route: (context) {
-            if (widget.store.state.clientState.isStale) {
-              widget.store.dispatch(LoadClients());
-            }
-            return ClientScreen();
-          },
-          ClientViewScreen.route: (context) => ClientViewScreen(),
-          ClientEditScreen.route: (context) => ClientEditScreen(),
-          InvoiceScreen.route: (context) {
-            if (widget.store.state.invoiceState.isStale) {
-              widget.store.dispatch(LoadInvoices());
-            }
-            return InvoiceScreen();
-          },
-          InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
-          InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
-          InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
-          SettingsScreen.route: (context) => SettingsScreen(),
-        },
-      ),
+      child: AppBuilder(
+          builder: (context) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: [
+                const AppLocalizationsDelegate(),
+                GlobalMaterialLocalizations.delegate,
+              ],
+              // light theme
+              theme: widget.store.state.uiState.enableDarkMode
+                  ? ThemeData(
+                      brightness: Brightness.dark,
+                      accentColor: Colors.lightBlueAccent,
+                    )
+                  : ThemeData().copyWith(
+                      //accentColor: Colors.lightBlueAccent,
+                      primaryColor: const Color(0xFF117cc1),
+                      primaryColorLight: const Color(0xFF5dabf4),
+                      primaryColorDark: const Color(0xFF0D5D91),
+                      indicatorColor: Colors.white,
+                      bottomAppBarColor: Colors.grey.shade300,
+                      backgroundColor: Colors.grey.shade200,
+                      buttonColor: const Color(0xFF0D5D91),
+                    ),
+              title: 'Invoice Ninja',
+              routes: {
+                InitScreen.route: (context) => InitScreen(),
+                LoginScreen.route: (context) {
+                  return LoginScreen();
+                },
+                DashboardScreen.route: (context) {
+                  if (widget.store.state.dashboardState.isStale) {
+                    widget.store.dispatch(LoadDashboard());
+                  }
+                  return DashboardScreen();
+                },
+                ProductScreen.route: (context) {
+                  if (widget.store.state.productState.isStale) {
+                    widget.store.dispatch(LoadProducts());
+                  }
+                  return ProductScreen();
+                },
+                ProductEditScreen.route: (context) => ProductEditScreen(),
+                ClientScreen.route: (context) {
+                  if (widget.store.state.clientState.isStale) {
+                    widget.store.dispatch(LoadClients());
+                  }
+                  return ClientScreen();
+                },
+                ClientViewScreen.route: (context) => ClientViewScreen(),
+                ClientEditScreen.route: (context) => ClientEditScreen(),
+                InvoiceScreen.route: (context) {
+                  if (widget.store.state.invoiceState.isStale) {
+                    widget.store.dispatch(LoadInvoices());
+                  }
+                  return InvoiceScreen();
+                },
+                InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
+                InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
+                InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
+                SettingsScreen.route: (context) => SettingsScreen(),
+              },
+            );
+          }),
     );
   }
 }

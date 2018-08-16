@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -88,22 +89,6 @@ class SettingsListVM {
       );
     }
 
-    void _warnRestart(BuildContext context) {
-      final localization = AppLocalization.of(context);
-      showDialog<AlertDialog>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-              semanticLabel: localization.restartAppToApplyChange,
-              title: Text(localization.restartAppToApplyChange),
-              actions: <Widget>[
-                new FlatButton(
-                    child: Text(localization.ok.toUpperCase()),
-                    onPressed: () => Navigator.pop(context))
-              ],
-            ),
-      );
-    }
-
     return SettingsListVM(
         onLogoutTap: (BuildContext context) => _confirmLogout(context),
         onRefreshTap: (BuildContext context) => _refreshData(context),
@@ -111,7 +96,7 @@ class SettingsListVM {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool(kSharedPrefEnableDarkMode, value);
           store.dispatch(UserSettingsChanged(enableDarkMode: value));
-          _warnRestart(context);
+          AppBuilder.of(context).rebuild();
         },
         enableDarkMode: store.state.uiState.enableDarkMode);
   }
