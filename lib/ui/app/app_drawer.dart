@@ -170,7 +170,7 @@ class AppDrawer extends StatelessWidget {
                       TextSpan(
                         style: aboutTextStyle,
                         text:
-                            'Thanks for trying out the beta! Please join us on the #mobile channel on ',
+                            'Thanks for trying out the beta!\n\nPlease join us on the #mobile channel on ',
                       ),
                       _LinkTextSpan(
                         style: linkStyle,
