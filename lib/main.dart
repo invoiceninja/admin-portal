@@ -67,70 +67,72 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: widget.store,
-      child: AppBuilder(
-          builder: (context) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: [
-                const AppLocalizationsDelegate(),
-                GlobalMaterialLocalizations.delegate,
-              ],
-              // light theme
-              theme: widget.store.state.uiState.enableDarkMode
-                  ? ThemeData(
-                      brightness: Brightness.dark,
-                      accentColor: Colors.lightBlueAccent,
-                    )
-                  : ThemeData().copyWith(
-                      //accentColor: Colors.lightBlueAccent,
-                      primaryColor: const Color(0xFF117cc1),
-                      primaryColorLight: const Color(0xFF5dabf4),
-                      primaryColorDark: const Color(0xFF0D5D91),
-                      indicatorColor: Colors.white,
-                      bottomAppBarColor: Colors.grey.shade300,
-                      backgroundColor: Colors.grey.shade200,
-                      buttonColor: const Color(0xFF0D5D91),
-                    ),
-              title: 'Invoice Ninja',
-              routes: {
-                InitScreen.route: (context) => InitScreen(),
-                LoginScreen.route: (context) {
-                  return LoginScreen();
-                },
-                DashboardScreen.route: (context) {
-                  if (widget.store.state.dashboardState.isStale) {
-                    widget.store.dispatch(LoadDashboard());
-                  }
-                  return DashboardScreen();
-                },
-                ProductScreen.route: (context) {
-                  if (widget.store.state.productState.isStale) {
-                    widget.store.dispatch(LoadProducts());
-                  }
-                  return ProductScreen();
-                },
-                ProductEditScreen.route: (context) => ProductEditScreen(),
-                ClientScreen.route: (context) {
-                  if (widget.store.state.clientState.isStale) {
-                    widget.store.dispatch(LoadClients());
-                  }
-                  return ClientScreen();
-                },
-                ClientViewScreen.route: (context) => ClientViewScreen(),
-                ClientEditScreen.route: (context) => ClientEditScreen(),
-                InvoiceScreen.route: (context) {
-                  if (widget.store.state.invoiceState.isStale) {
-                    widget.store.dispatch(LoadInvoices());
-                  }
-                  return InvoiceScreen();
-                },
-                InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
-                InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
-                InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
-                SettingsScreen.route: (context) => SettingsScreen(),
-              },
-            );
-          }),
+      child: AppBuilder(builder: (context) {
+        final state = widget.store.state;
+
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: [
+            const AppLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+          ],
+          locale: Locale(state.staticState
+                  ?.languageMap[state.selectedCompany?.languageId]?.locale ??
+              'en'),
+          theme: state.uiState.enableDarkMode
+              ? ThemeData(
+                  brightness: Brightness.dark,
+                  accentColor: Colors.lightBlueAccent,
+                )
+              : ThemeData().copyWith(
+                  primaryColor: const Color(0xFF117cc1),
+                  primaryColorLight: const Color(0xFF5dabf4),
+                  primaryColorDark: const Color(0xFF0D5D91),
+                  indicatorColor: Colors.white,
+                  bottomAppBarColor: Colors.grey.shade300,
+                  backgroundColor: Colors.grey.shade200,
+                  buttonColor: const Color(0xFF0D5D91),
+                ),
+          title: 'Invoice Ninja',
+          routes: {
+            InitScreen.route: (context) => InitScreen(),
+            LoginScreen.route: (context) {
+              return LoginScreen();
+            },
+            DashboardScreen.route: (context) {
+              if (widget.store.state.dashboardState.isStale) {
+                widget.store.dispatch(LoadDashboard());
+              }
+              return DashboardScreen();
+            },
+            ProductScreen.route: (context) {
+              if (widget.store.state.productState.isStale) {
+                widget.store.dispatch(LoadProducts());
+              }
+              return ProductScreen();
+            },
+            ProductEditScreen.route: (context) => ProductEditScreen(),
+            ClientScreen.route: (context) {
+              if (widget.store.state.clientState.isStale) {
+                widget.store.dispatch(LoadClients());
+              }
+              return ClientScreen();
+            },
+            ClientViewScreen.route: (context) => ClientViewScreen(),
+            ClientEditScreen.route: (context) => ClientEditScreen(),
+            InvoiceScreen.route: (context) {
+              if (widget.store.state.invoiceState.isStale) {
+                widget.store.dispatch(LoadInvoices());
+              }
+              return InvoiceScreen();
+            },
+            InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
+            InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
+            InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
+            SettingsScreen.route: (context) => SettingsScreen(),
+          },
+        );
+      }),
     );
   }
 }

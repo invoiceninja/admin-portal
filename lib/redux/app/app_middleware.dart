@@ -11,7 +11,9 @@ import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:path/path.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -161,6 +163,7 @@ Middleware<AppState> _createLoadState(
         ..companyState4.replace(company4State)
         ..companyState5.replace(company5State));
 
+      AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
 
       if (uiState.currentRoute != LoginScreen.route &&

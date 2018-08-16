@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -47,6 +48,7 @@ class AppDrawerVM {
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged: (BuildContext context, String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
+        AppBuilder.of(context).rebuild();
       },
     );
   }

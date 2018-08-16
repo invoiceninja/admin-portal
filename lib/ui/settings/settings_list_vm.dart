@@ -58,6 +58,7 @@ class SettingsListVM {
           builder: (BuildContext context) => SimpleDialog(
                 children: <Widget>[LoadingDialog()],
               ));
+      AppBuilder.of(context).rebuild();
       store.dispatch(LoadDashboard());
     }
 

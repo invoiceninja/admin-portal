@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -55,10 +56,17 @@ class LoginVM {
       ],
     );
 
+    void _handleLogin(BuildContext context) {
+      AppBuilder.of(context).rebuild();
+      Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
+      store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+    }
+
     return LoginVM(
         isLoading: store.state.isLoading,
         authState: store.state.authState,
-        onGoogleLoginPressed: (BuildContext context, String url, String secret) async {
+        onGoogleLoginPressed:
+            (BuildContext context, String url, String secret) async {
           try {
             final account = await _googleSignIn.signIn();
 
@@ -72,11 +80,7 @@ class LoginVM {
                   secret: secret.trim(),
                   platform: getPlatform(context),
                 ));
-                completer.future.then((_) {
-                  Navigator.of(context)
-                      .pushReplacementNamed(DashboardScreen.route);
-                  store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
-                });
+                completer.future.then((_) => _handleLogin(context));
               });
             }
           } catch (error) {
@@ -98,10 +102,7 @@ class LoginVM {
             secret: secret.trim(),
             platform: getPlatform(context),
           ));
-          completer.future.then((_) {
-            Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
-            store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
-          });
+          completer.future.then((_) => _handleLogin(context));
         });
   }
 }
