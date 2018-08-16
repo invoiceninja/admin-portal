@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
 import 'package:redux/redux.dart';
@@ -69,6 +71,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       store: widget.store,
       child: AppBuilder(builder: (context) {
         final state = widget.store.state;
+        Intl.defaultLocale = localeSelector(state);
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -76,9 +79,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
           ],
-          locale: Locale(state.staticState
-                  ?.languageMap[state.selectedCompany?.languageId]?.locale ??
-              'en'),
+          locale: Locale(localeSelector(state)),
           theme: state.uiState.enableDarkMode
               ? ThemeData(
                   brightness: Brightness.dark,

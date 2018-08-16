@@ -3,9 +3,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:memoize/memoize.dart';
 
-var memoizedFilteredSelector = memo2((String filter,
-    CompanyState state) =>
-    filteredSelector(filter, state));
+var memoizedFilteredSelector = memo2(
+    (String filter, CompanyState state) => filteredSelector(filter, state));
 
 List<BaseEntity> filteredSelector(String filter, CompanyState state) {
   final List<BaseEntity> list = []
@@ -53,3 +52,7 @@ List<CompanyEntity> companiesSelector(AppState state) {
 
   return list;
 }
+
+String localeSelector(AppState state) =>
+    state.staticState?.languageMap[state.selectedCompany?.languageId]?.locale ??
+    'en';
