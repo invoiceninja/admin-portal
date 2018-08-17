@@ -126,7 +126,9 @@ class AppDrawer extends StatelessWidget {
                   icon: FontAwesomeIcons.tachometerAlt,
                   title: AppLocalization.of(context).dashboard,
                   onTap: () {
-                    navigator.pop();
+                    while (navigator.canPop()) {
+                      navigator.pop();
+                    }
                     store.dispatch(ViewDashboard(context));
                   },
                 )
@@ -136,7 +138,12 @@ class AppDrawer extends StatelessWidget {
             entityType: EntityType.client,
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
-            onTap: () => store.dispatch(ViewClientList(context)),
+            onTap: () {
+              while (navigator.canPop()) {
+                navigator.pop();
+              }
+              store.dispatch(ViewClientList(context));
+            },
             onCreateTap: () {
               navigator.pop();
               store.dispatch(
@@ -148,7 +155,12 @@ class AppDrawer extends StatelessWidget {
             entityType: EntityType.product,
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
-            onTap: () => store.dispatch(ViewProductList(context)),
+            onTap: () {
+              while (navigator.canPop()) {
+                navigator.pop();
+              }
+              store.dispatch(ViewProductList(context));
+            },
             onCreateTap: () {
               navigator.pop();
               store.dispatch(
@@ -160,7 +172,12 @@ class AppDrawer extends StatelessWidget {
             entityType: EntityType.invoice,
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
-            onTap: () => store.dispatch(ViewInvoiceList(context)),
+            onTap: () {
+              while (navigator.canPop()) {
+                navigator.pop();
+              }
+              store.dispatch(ViewInvoiceList(context));
+            },
             onCreateTap: () {
               navigator.pop();
               store.dispatch(

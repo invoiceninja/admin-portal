@@ -27,7 +27,7 @@ Middleware<AppState> _createViewDashboard() {
 
     if (action.context != null) {
       final NavigatorState navigator = Navigator.of(action.context);
-      navigator.pushReplacementNamed(DashboardScreen.route);
+      navigator.pushNamed(DashboardScreen.route);
     }
 
     next(action);

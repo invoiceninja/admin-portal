@@ -45,7 +45,7 @@ Middleware<AppState> _viewProductList() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-    Navigator.of(action.context).pushReplacementNamed(ProductScreen.route);
+    Navigator.of(action.context).pushNamed(ProductScreen.route);
   };
 }
 

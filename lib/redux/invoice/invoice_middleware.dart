@@ -58,7 +58,7 @@ Middleware<AppState> _viewInvoiceList() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
-    Navigator.of(action.context).pushReplacementNamed(InvoiceScreen.route);
+    Navigator.of(action.context).pushNamed(InvoiceScreen.route);
   };
 }
 
