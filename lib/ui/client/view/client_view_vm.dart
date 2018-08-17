@@ -35,6 +35,7 @@ class ClientViewScreen extends StatelessWidget {
 }
 
 class ClientViewVM {
+  final UserEntity user;
   final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
@@ -47,6 +48,7 @@ class ClientViewVM {
   final bool isDirty;
 
   ClientViewVM({
+    @required this.user,
     @required this.client,
     @required this.company,
     @required this.onActionSelected,
@@ -74,6 +76,7 @@ class ClientViewVM {
     }
 
     return ClientViewVM(
+        user: state.user,
         isSaving: state.isSaving,
         isLoading: state.isLoading,
         isDirty: client.isNew,

@@ -39,7 +39,6 @@ class _ProductEditState extends State<ProductEdit> {
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
       _productKeyController,
       _notesController,
@@ -48,16 +47,19 @@ class _ProductEditState extends State<ProductEdit> {
       _custom2Controller,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
-    _costController.text = formatNumber(product.cost, context, formatNumberType: FormatNumberType.input);
+    _costController.text = formatNumber(product.cost, context,
+        formatNumberType: FormatNumberType.input);
     _custom1Controller.text = product.customValue1;
     _custom2Controller.text = product.customValue2;
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -78,8 +80,7 @@ class _ProductEditState extends State<ProductEdit> {
       ..notes = _notesController.text.trim()
       ..cost = parseDouble(_costController.text)
       ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-    );
+      ..customValue2 = _custom2Controller.text.trim());
     if (product != widget.viewModel.product) {
       widget.viewModel.onChanged(product);
     }
@@ -114,10 +115,10 @@ class _ProductEditState extends State<ProductEdit> {
                   final bool isValid = _formKey.currentState.validate();
 
                   setState(() {
-                    autoValidate = ! isValid;
+                    autoValidate = !isValid;
                   });
 
-                  if (! isValid) {
+                  if (!isValid) {
                     return;
                   }
 
@@ -125,9 +126,11 @@ class _ProductEditState extends State<ProductEdit> {
                 },
               );
             }),
-            viewModel.product.isNew
+            viewModel.product.isNew ||
+                    !viewModel.user.canCreate(EntityType.product)
                 ? Container()
                 : ActionMenuButton(
+                    user: viewModel.user,
                     entity: viewModel.product,
                     onSelected: viewModel.onActionSelected,
                     customActions: [
@@ -168,13 +171,17 @@ class _ProductEditState extends State<ProductEdit> {
                   ),
                   CustomField(
                     controller: _custom1Controller,
-                    labelText: company.getCustomFieldLabel(CustomFieldType.product1),
-                    options: company.getCustomFieldValues(CustomFieldType.product1),
+                    labelText:
+                        company.getCustomFieldLabel(CustomFieldType.product1),
+                    options:
+                        company.getCustomFieldValues(CustomFieldType.product1),
                   ),
                   CustomField(
                     controller: _custom2Controller,
-                    labelText: company.getCustomFieldLabel(CustomFieldType.product2),
-                    options: company.getCustomFieldValues(CustomFieldType.product2),
+                    labelText:
+                        company.getCustomFieldLabel(CustomFieldType.product2),
+                    options:
+                        company.getCustomFieldValues(CustomFieldType.product2),
                   ),
                   TextFormField(
                     key: Key(ProductKeys.productEditCostFieldKeyString),
@@ -186,27 +193,27 @@ class _ProductEditState extends State<ProductEdit> {
                   ),
                   company.enableInvoiceItemTaxes
                       ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(product.rebuild((b) => b
-                          ..taxRate1 = taxRate.rate
-                          ..taxName1 = taxRate.name)),
-                    labelText: localization.tax,
-                    initialTaxName: product.taxName1,
-                    initialTaxRate: product.taxRate1,
-                  )
+                          taxRates: company.taxRates,
+                          onSelected: (taxRate) =>
+                              viewModel.onChanged(product.rebuild((b) => b
+                                ..taxRate1 = taxRate.rate
+                                ..taxName1 = taxRate.name)),
+                          labelText: localization.tax,
+                          initialTaxName: product.taxName1,
+                          initialTaxRate: product.taxRate1,
+                        )
                       : Container(),
                   company.enableInvoiceItemTaxes && company.enableSecondTaxRate
                       ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(product.rebuild((b) => b
-                          ..taxRate2 = taxRate.rate
-                          ..taxName2 = taxRate.name)),
-                    labelText: localization.tax,
-                    initialTaxName: product.taxName2,
-                    initialTaxRate: product.taxRate2,
-                  )
+                          taxRates: company.taxRates,
+                          onSelected: (taxRate) =>
+                              viewModel.onChanged(product.rebuild((b) => b
+                                ..taxRate2 = taxRate.rate
+                                ..taxName2 = taxRate.name)),
+                          labelText: localization.tax,
+                          initialTaxName: product.taxName2,
+                          initialTaxRate: product.taxRate2,
+                        )
                       : Container(),
                 ],
               ),

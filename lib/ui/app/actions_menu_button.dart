@@ -14,12 +14,14 @@ class ActionMenuChoice {
 }
 
 class ActionMenuButton extends StatelessWidget {
+  final UserEntity user;
   final BaseEntity entity;
   final List<ActionMenuChoice> customActions;
   final Function(BuildContext, EntityAction) onSelected;
   final bool isSaving;
 
   const ActionMenuButton({
+    @required this.user,
     @required this.entity,
     @required this.onSelected,
     this.isSaving = false,
@@ -60,7 +62,7 @@ class ActionMenuButton extends StatelessWidget {
       actions.add(PopupMenuDivider());
     }
     
-    if (entity.isArchived || entity.isDeleted) {
+    if (user.canEditEntity(entity) && (entity.isArchived || entity.isDeleted)) {
       actions.add(PopupMenuItem<EntityAction>(
         value: EntityAction.restore,
         child: Row(
@@ -73,7 +75,7 @@ class ActionMenuButton extends StatelessWidget {
       ));
     }
 
-    if (entity.isActive) {
+    if (user.canEditEntity(entity) && (entity.isActive)) {
       actions.add(PopupMenuItem<EntityAction>(
         value: EntityAction.archive,
         child: Row(
@@ -86,7 +88,7 @@ class ActionMenuButton extends StatelessWidget {
       ));
     }
 
-    if (entity.isActive || entity.isArchived) {
+    if (user.canEditEntity(entity) && (entity.isActive || entity.isArchived)) {
       actions.add(PopupMenuItem<EntityAction>(
         value: EntityAction.delete,
         child: Row(

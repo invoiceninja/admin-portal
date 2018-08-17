@@ -36,6 +36,7 @@ class InvoiceViewScreen extends StatelessWidget {
 }
 
 class InvoiceViewVM {
+  final UserEntity user;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
@@ -48,6 +49,7 @@ class InvoiceViewVM {
   final bool isDirty;
 
   InvoiceViewVM({
+    @required this.user,
     @required this.company,
     @required this.invoice,
     @required this.client,
@@ -73,6 +75,7 @@ class InvoiceViewVM {
     }
 
     return InvoiceViewVM(
+        user: state.user,
         company: state.selectedCompany,
         isSaving: state.isSaving,
         isDirty: invoice.isNew,
