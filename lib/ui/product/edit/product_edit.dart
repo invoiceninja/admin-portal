@@ -92,6 +92,7 @@ class _ProductEditState extends State<ProductEdit> {
     final viewModel = widget.viewModel;
     final product = viewModel.product;
     final company = viewModel.company;
+    final user = viewModel.user;
 
     return WillPopScope(
       onWillPop: () async {
@@ -105,6 +106,10 @@ class _ProductEditState extends State<ProductEdit> {
               : viewModel.origProduct.productKey),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
+              if (!user.canEditEntity(product)) {
+                return Container();
+              }
+
               return RefreshIconButton(
                 icon: Icons.cloud_upload,
                 tooltip: localization.save,
@@ -126,8 +131,7 @@ class _ProductEditState extends State<ProductEdit> {
                 },
               );
             }),
-            viewModel.product.isNew ||
-                    !viewModel.user.canCreate(EntityType.product)
+            product.isNew || !user.canCreate(EntityType.product)
                 ? Container()
                 : ActionMenuButton(
                     user: viewModel.user,

@@ -360,13 +360,23 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
 
   bool canEdit(EntityType entityType) => can(UserPermission.edit, entityType);
 
-  bool canEditEntity(BaseEntity entity) => canEdit(entity.entityType) || entity.isOwner;
-
   bool canCreate(EntityType entityType) =>
       can(UserPermission.create, entityType);
 
   bool canViewOrCreate(EntityType entityType) =>
       canView(entityType) || canCreate(entityType);
+
+  bool canEditEntity(BaseEntity entity) {
+    if (entity == null) {
+      return false;
+    }
+
+    if (entity.isNew) {
+      return canCreate(entity.entityType);
+    } else {
+      return canEdit(entity.entityType) || entity.isOwner;
+    }
+  }
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }

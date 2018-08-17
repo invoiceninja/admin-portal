@@ -271,10 +271,10 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: invoice.isNew
           ? []
           : [
-              EditIconButton(
+              user.canEditEntity(invoice) ? EditIconButton(
                 isVisible: !invoice.isDeleted,
                 onPressed: () => viewModel.onEditPressed(context),
-              ),
+              ) : Container(),
               ActionMenuButton(
                 user: user,
                 customActions: [

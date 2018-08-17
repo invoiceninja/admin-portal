@@ -68,7 +68,7 @@ class ProductScreen extends StatelessWidget {
               ),
               tooltip: localization.newProduct,
             )
-          : Container(),
+          : null,
     );
   }
 }
