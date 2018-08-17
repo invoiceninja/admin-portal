@@ -34,7 +34,7 @@ class _InvoiceViewState extends State<InvoiceView> {
 
     List<Widget> _buildView() {
       final invoice = widget.viewModel.invoice;
-      final user = widget.viewModel.user;
+      final user = widget.viewModel.company.user;
       final widgets = <Widget>[
         TwoValueHeader(
           backgroundColor: (invoice.isPastDue
@@ -264,7 +264,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final localization = AppLocalization.of(context);
     final invoice = viewModel.invoice;
     final client = viewModel.client;
-    final user = viewModel.user;
+    final user = viewModel.company.user;
 
     return AppBar(
       title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),

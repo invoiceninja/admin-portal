@@ -92,7 +92,7 @@ class _ProductEditState extends State<ProductEdit> {
     final viewModel = widget.viewModel;
     final product = viewModel.product;
     final company = viewModel.company;
-    final user = viewModel.user;
+    final user = company.user;
 
     return WillPopScope(
       onWillPop: () async {
@@ -134,7 +134,7 @@ class _ProductEditState extends State<ProductEdit> {
             product.isNew || !user.canCreate(EntityType.product)
                 ? Container()
                 : ActionMenuButton(
-                    user: viewModel.user,
+                    user: viewModel.company.user,
                     entity: viewModel.product,
                     onSelected: viewModel.onActionSelected,
                     customActions: [
