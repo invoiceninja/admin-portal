@@ -125,12 +125,7 @@ class AppDrawer extends StatelessWidget {
                   user: user,
                   icon: FontAwesomeIcons.tachometerAlt,
                   title: AppLocalization.of(context).dashboard,
-                  onTap: () {
-                    while (navigator.canPop()) {
-                      navigator.pop();
-                    }
-                    store.dispatch(ViewDashboard(context));
-                  },
+                  onTap: () => store.dispatch(ViewDashboard(context)),
                 )
               : Container(),
           DrawerTile(
@@ -138,12 +133,7 @@ class AppDrawer extends StatelessWidget {
             entityType: EntityType.client,
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
-            onTap: () {
-              while (navigator.canPop()) {
-                navigator.pop();
-              }
-              store.dispatch(ViewClientList(context));
-            },
+            onTap: () => store.dispatch(ViewClientList(context)),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(
@@ -156,9 +146,6 @@ class AppDrawer extends StatelessWidget {
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
             onTap: () {
-              while (navigator.canPop()) {
-                navigator.pop();
-              }
               store.dispatch(ViewProductList(context));
             },
             onCreateTap: () {
@@ -172,12 +159,7 @@ class AppDrawer extends StatelessWidget {
             entityType: EntityType.invoice,
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
-            onTap: () {
-              while (navigator.canPop()) {
-                navigator.pop();
-              }
-              store.dispatch(ViewInvoiceList(context));
-            },
+            onTap: () => store.dispatch(ViewInvoiceList(context)),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(
@@ -262,7 +244,12 @@ class DrawerTile extends StatelessWidget {
       dense: true,
       leading: Icon(icon, size: 22.0),
       title: Text(title),
-      onTap: () => onTap(),
+      onTap: () {
+        while (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
+        onTap();
+      },
       trailing: onCreateTap == null || !user.canCreate(entityType)
           ? null
           : IconButton(
