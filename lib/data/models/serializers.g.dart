@@ -273,13 +273,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(TaxRateEntity)]),
           () => new ListBuilder<TaxRateEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(UserEntity)]),
-          () => new ListBuilder<UserEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap,
-              const [const FullType(int), const FullType(UserEntity)]),
-          () => new MapBuilder<int, UserEntity>())
-      ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(String), const FullType(String)]),
           () => new MapBuilder<String, String>())
@@ -324,8 +317,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
               const [const FullType(int), const FullType(TimezoneEntity)]),
           () => new MapBuilder<int, TimezoneEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltMap, const [const FullType(int), const FullType(DateFormatEntity)]), () => new MapBuilder<int, DateFormatEntity>())
-      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(DatetimeFormatEntity)]), () => new MapBuilder<int, DatetimeFormatEntity>())
+          const FullType(BuiltMap,
+              const [const FullType(int), const FullType(DateFormatEntity)]),
+          () => new MapBuilder<int, DateFormatEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [const FullType(int), const FullType(DatetimeFormatEntity)]),
+          () => new MapBuilder<int, DatetimeFormatEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(LanguageEntity)]), () => new MapBuilder<int, LanguageEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(PaymentTypeEntity)]), () => new MapBuilder<int, PaymentTypeEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(CountryEntity)]), () => new MapBuilder<int, CountryEntity>())

@@ -46,9 +46,10 @@ abstract class CompanyEntity
       timezoneId: 1,
       customPaymentTerms: BuiltList<PaymentTermEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
-      userId: 0,
-      users: BuiltList<UserEntity>(),
-      userMap: BuiltMap<int, UserEntity>(),
+      user: UserEntity(),
+      //userId: 0,
+      //users: BuiltList<UserEntity>(),
+      //userMap: BuiltMap<int, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
@@ -175,13 +176,13 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'tax_rates')
   BuiltList<TaxRateEntity> get taxRates;
 
-  @BuiltValueField(wireName: 'user_id')
-  int get userId;
+  //@BuiltValueField(wireName: 'user_id')
+  //int get userId;
+  //@BuiltValueField(wireName: 'users')
+  //BuiltList<UserEntity> get users;
+  //BuiltMap<int, UserEntity> get userMap;
 
-  @BuiltValueField(wireName: 'users')
-  BuiltList<UserEntity> get users;
-
-  BuiltMap<int, UserEntity> get userMap;
+  UserEntity get user;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
@@ -263,7 +264,7 @@ abstract class CompanyEntity
     }
   }
 
-  UserEntity get user => userMap[userId];
+  //UserEntity get user => userMap[userId];
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
@@ -335,7 +336,15 @@ abstract class TaxRateEntity extends Object
 }
 
 abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
-  factory UserEntity([void updates(UserEntityBuilder b)]) = _$UserEntity;
+  factory UserEntity() {
+    return _$UserEntity._(
+      firstName: '',
+      lastName: '',
+      id: 0,
+      isAdmin: false,
+      permissionsMap: BuiltMap<String, bool>(),
+    );
+  }
 
   UserEntity._();
 

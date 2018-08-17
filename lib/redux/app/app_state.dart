@@ -123,6 +123,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Date Formats: ${staticState.dateFormatMap}';
-    return 'Route: ${uiState.currentRoute}, Company2: ${companyState2?.company?.userId} - ${companyState2?.company?.userMap}';
+    return 'Route: ${uiState.currentRoute}';
   }
 }
