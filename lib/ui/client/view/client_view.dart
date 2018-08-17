@@ -46,6 +46,7 @@ class _ClientViewState extends State<ClientView>
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final user = viewModel.user;
 
     return WillPopScope(
       onWillPop: () async {
@@ -68,7 +69,7 @@ class _ClientViewState extends State<ClientView>
               context: context,
               builder: (BuildContext context) =>
                   SimpleDialog(children: <Widget>[
-                    ListTile(
+                    user.canCreate(EntityType.client) ? ListTile(
                       dense: true,
                       leading: Icon(Icons.add_circle_outline),
                       title: Text(localization.invoice),
@@ -79,7 +80,7 @@ class _ClientViewState extends State<ClientView>
                                 .rebuild((b) => b.clientId = client.id),
                             context: context));
                       },
-                    ),
+                    ) : Container(),
                     /*
                     ListTile(
                       dense: true,
