@@ -281,6 +281,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -490,6 +496,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -569,6 +579,12 @@ class _$InvoiceItemEntitySerializer
       result
         ..add('is_deleted')
         ..add(serializers.serialize(object.isDeleted,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
             specifiedType: const FullType(bool)));
     }
     if (object.id != null) {
@@ -656,6 +672,10 @@ class _$InvoiceItemEntitySerializer
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -713,6 +733,12 @@ class _$InvitationEntitySerializer
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -764,6 +790,10 @@ class _$InvitationEntitySerializer
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'id':
@@ -1052,6 +1082,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$InvoiceEntity([void updates(InvoiceEntityBuilder b)]) =>
@@ -1104,6 +1136,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (amount == null)
@@ -1249,6 +1282,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -1272,25 +1306,25 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), invoiceTypeId.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode),
-                                                                                autoBill.hashCode),
-                                                                            customValue1.hashCode),
-                                                                        customValue2.hashCode),
-                                                                    customTaxes1.hashCode),
-                                                                customTaxes2.hashCode),
-                                                            hasExpenses.hashCode),
-                                                        quoteInvoiceId.hashCode),
-                                                    customTextValue1.hashCode),
-                                                customTextValue2.hashCode),
-                                            isQuote.hashCode),
-                                        isPublic.hashCode),
-                                    filename.hashCode),
-                                invoiceItems.hashCode),
-                            invitations.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), invoiceTypeId.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode),
+                                                                                customValue1.hashCode),
+                                                                            customValue2.hashCode),
+                                                                        customTaxes1.hashCode),
+                                                                    customTaxes2.hashCode),
+                                                                hasExpenses.hashCode),
+                                                            quoteInvoiceId.hashCode),
+                                                        customTextValue1.hashCode),
+                                                    customTextValue2.hashCode),
+                                                isQuote.hashCode),
+                                            isPublic.hashCode),
+                                        filename.hashCode),
+                                    invoiceItems.hashCode),
+                                invitations.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -1343,6 +1377,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -1549,6 +1584,10 @@ class InvoiceEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -1603,6 +1642,7 @@ class InvoiceEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -1672,6 +1712,7 @@ class InvoiceEntityBuilder
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
+              isOwner: isOwner,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -1725,6 +1766,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$InvoiceItemEntity([void updates(InvoiceItemEntityBuilder b)]) =>
@@ -1747,6 +1790,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (productKey == null)
@@ -1804,6 +1848,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -1826,25 +1871,27 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        productKey
+                                                                        $jc(
+                                                                            0,
+                                                                            productKey
+                                                                                .hashCode),
+                                                                        notes
                                                                             .hashCode),
-                                                                    notes
-                                                                        .hashCode),
-                                                                cost.hashCode),
-                                                            qty.hashCode),
-                                                        taxName1.hashCode),
-                                                    taxRate1.hashCode),
-                                                taxName2.hashCode),
-                                            taxRate2.hashCode),
-                                        invoiceItemTypeId.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            discount.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                                                                    cost.hashCode),
+                                                                qty.hashCode),
+                                                            taxName1.hashCode),
+                                                        taxRate1.hashCode),
+                                                    taxName2.hashCode),
+                                                taxRate2.hashCode),
+                                            invoiceItemTypeId.hashCode),
+                                        customValue1.hashCode),
+                                    customValue2.hashCode),
+                                discount.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -1867,6 +1914,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -1941,6 +1989,10 @@ class InvoiceItemEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -1965,6 +2017,7 @@ class InvoiceItemEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -2002,6 +2055,7 @@ class InvoiceItemEntityBuilder
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
+            isOwner: isOwner,
             id: id);
     replace(_$result);
     return _$result;
@@ -2026,6 +2080,8 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$InvitationEntity([void updates(InvitationEntityBuilder b)]) =>
@@ -2040,6 +2096,7 @@ class _$InvitationEntity extends InvitationEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (key == null)
@@ -2072,6 +2129,7 @@ class _$InvitationEntity extends InvitationEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -2083,13 +2141,15 @@ class _$InvitationEntity extends InvitationEntity {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, key.hashCode), link.hashCode),
-                                sentDate.hashCode),
-                            viewedDate.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                            $jc(
+                                $jc($jc($jc(0, key.hashCode), link.hashCode),
+                                    sentDate.hashCode),
+                                viewedDate.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -2104,6 +2164,7 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -2145,6 +2206,10 @@ class InvitationEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -2161,6 +2226,7 @@ class InvitationEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -2190,6 +2256,7 @@ class InvitationEntityBuilder
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
+            isOwner: isOwner,
             id: id);
     replace(_$result);
     return _$result;

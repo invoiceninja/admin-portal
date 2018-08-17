@@ -360,6 +360,8 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
 
   bool canEdit(EntityType entityType) => can(UserPermission.edit, entityType);
 
+  bool canEditEntity(BaseEntity entity) => canEdit(entity.entityType) || entity.isOwner;
+
   bool canCreate(EntityType entityType) =>
       can(UserPermission.create, entityType);
 

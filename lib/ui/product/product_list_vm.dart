@@ -30,6 +30,7 @@ class ProductListBuilder extends StatelessWidget {
 }
 
 class ProductListVM {
+  final UserEntity user;
   final List<int> productList;
   final BuiltMap<int, ProductEntity> productMap;
   final String filter;
@@ -41,6 +42,7 @@ class ProductListVM {
   final Function(BuildContext, ProductEntity, EntityAction) onEntityAction;
 
   ProductListVM({
+    @required this.user,
     @required this.productList,
     @required this.productMap,
     @required this.filter,
@@ -63,6 +65,7 @@ class ProductListVM {
     final state = store.state;
 
     return ProductListVM(
+        user: state.user,
         productList: memoizedFilteredProductList(state.productState.map,
             state.productState.list, state.productListState),
         productMap: state.productState.map,
@@ -81,20 +84,20 @@ class ProductListVM {
               break;
             case EntityAction.restore:
               store.dispatch(RestoreProductRequest(
-                  popCompleter(context,
-                      AppLocalization.of(context).restoredProduct),
+                  popCompleter(
+                      context, AppLocalization.of(context).restoredProduct),
                   product.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveProductRequest(
-                  popCompleter(context,
-                      AppLocalization.of(context).archivedProduct),
+                  popCompleter(
+                      context, AppLocalization.of(context).archivedProduct),
                   product.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteProductRequest(
-                  popCompleter(context,
-                      AppLocalization.of(context).deletedProduct),
+                  popCompleter(
+                      context, AppLocalization.of(context).deletedProduct),
                   product.id));
               break;
           }
@@ -106,25 +109,21 @@ class ProductListVM {
           if (direction == DismissDirection.endToStart) {
             if (product.isDeleted || product.isArchived) {
               store.dispatch(RestoreProductRequest(
-                  snackBarCompleter(
-                      context, localization.restoredProduct),
+                  snackBarCompleter(context, localization.restoredProduct),
                   product.id));
             } else {
               store.dispatch(ArchiveProductRequest(
-                  snackBarCompleter(
-                      context, localization.archivedProduct),
+                  snackBarCompleter(context, localization.archivedProduct),
                   product.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (product.isDeleted) {
               store.dispatch(RestoreProductRequest(
-                  snackBarCompleter(
-                      context, localization.restoredProduct),
+                  snackBarCompleter(context, localization.restoredProduct),
                   product.id));
             } else {
               store.dispatch(DeleteProductRequest(
-                  snackBarCompleter(
-                      context, localization.deletedProduct),
+                  snackBarCompleter(context, localization.deletedProduct),
                   product.id));
             }
           }

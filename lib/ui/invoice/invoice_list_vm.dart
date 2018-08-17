@@ -36,6 +36,7 @@ class InvoiceListBuilder extends StatelessWidget {
 }
 
 class InvoiceListVM {
+  final UserEntity user;
   final ListUIState listState;
   final List<int> invoiceList;
   final BuiltMap<int, InvoiceEntity> invoiceMap;
@@ -51,6 +52,7 @@ class InvoiceListVM {
   final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
 
   InvoiceListVM({
+    @required this.user,
     @required this.listState,
     @required this.invoiceList,
     @required this.invoiceMap,
@@ -77,6 +79,7 @@ class InvoiceListVM {
     final state = store.state;
 
     return InvoiceListVM(
+        user: state.user,
         listState: state.invoiceListState,
         invoiceList: memoizedFilteredInvoiceList(
             state.invoiceState.map,

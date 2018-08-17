@@ -37,40 +37,49 @@ class ProductList extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context, ProductEntity product) async {
+    final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.control_point_duplicate),
-                title: Text(AppLocalization.of(context).clone),
-                onTap: () => viewModel.onEntityAction(
-                    context, product, EntityAction.clone),
-              ),
+              user.canCreate(EntityType.product)
+                  ? ListTile(
+                      leading: Icon(Icons.control_point_duplicate),
+                      title: Text(AppLocalization.of(context).clone),
+                      onTap: () => viewModel.onEntityAction(
+                          context, product, EntityAction.clone),
+                    )
+                  : Container(),
               Divider(),
-              ! product.isActive ? ListTile(
-                leading: Icon(Icons.restore),
-                title: Text(AppLocalization.of(context).restore),
-                onTap: () => viewModel.onEntityAction(
-                    context, product, EntityAction.restore),
-              ) : Container(),
-              product.isActive ? ListTile(
-                leading: Icon(Icons.archive),
-                title: Text(AppLocalization.of(context).archive),
-                onTap: () => viewModel.onEntityAction(
-                    context, product, EntityAction.archive),
-              ) : Container(),
-              ! product.isDeleted ? ListTile(
-                leading: Icon(Icons.delete),
-                title: Text(AppLocalization.of(context).delete),
-                onTap: () => viewModel.onEntityAction(
-                    context, product, EntityAction.delete),
-              ) : Container(),
+              user.canEditEntity(product) && !product.isActive
+                  ? ListTile(
+                      leading: Icon(Icons.restore),
+                      title: Text(AppLocalization.of(context).restore),
+                      onTap: () => viewModel.onEntityAction(
+                          context, product, EntityAction.restore),
+                    )
+                  : Container(),
+              user.canEditEntity(product) && product.isActive
+                  ? ListTile(
+                      leading: Icon(Icons.archive),
+                      title: Text(AppLocalization.of(context).archive),
+                      onTap: () => viewModel.onEntityAction(
+                          context, product, EntityAction.archive),
+                    )
+                  : Container(),
+              user.canEditEntity(product) && !product.isDeleted
+                  ? ListTile(
+                      leading: Icon(Icons.delete),
+                      title: Text(AppLocalization.of(context).delete),
+                      onTap: () => viewModel.onEntityAction(
+                          context, product, EntityAction.delete),
+                    )
+                  : Container(),
             ]));
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(
-            message: message,
-          )));
+        message: message,
+      )));
     }
   }
 

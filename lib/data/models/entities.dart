@@ -121,6 +121,10 @@ abstract class BaseEntity extends Object with SelectableEntity {
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
 
+  @nullable
+  @BuiltValueField(wireName: 'is_owner')
+  bool get isOwner;
+
   String get entityKey => '__${entityType}__${id}__';
 
   EntityType get entityType => throw 'EntityType not set: ${this}';

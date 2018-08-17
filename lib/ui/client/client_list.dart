@@ -17,7 +17,7 @@ class ClientList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (! viewModel.isLoaded) {
+    if (!viewModel.isLoaded) {
       return LoadingIndicator();
     } else if (viewModel.clientList.isEmpty) {
       return Opacity(
@@ -37,40 +37,49 @@ class ClientList extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context, ClientEntity client) async {
+    final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-          client.isActive ? ListTile(
-            leading: Icon(Icons.add_circle_outline),
-            title: Text(AppLocalization.of(context).newInvoice),
-            onTap: () => viewModel.onEntityAction(
-                context, client, EntityAction.invoice),
-          ) : Container(),
-          Divider(),
-          ! client.isActive ? ListTile(
-            leading: Icon(Icons.restore),
-            title: Text(AppLocalization.of(context).restore),
-            onTap: () => viewModel.onEntityAction(
-                context, client, EntityAction.restore),
-          ) : Container(),
-          client.isActive ? ListTile(
-            leading: Icon(Icons.archive),
-            title: Text(AppLocalization.of(context).archive),
-            onTap: () => viewModel.onEntityAction(
-                context, client, EntityAction.archive),
-          ) : Container(),
-          ! client.isDeleted ? ListTile(
-            leading: Icon(Icons.delete),
-            title: Text(AppLocalization.of(context).delete),
-            onTap: () => viewModel.onEntityAction(
-                context, client, EntityAction.delete),
-          ) : Container(),
-        ]));
+              user.canCreate(EntityType.client) && client.isActive
+                  ? ListTile(
+                      leading: Icon(Icons.add_circle_outline),
+                      title: Text(AppLocalization.of(context).newInvoice),
+                      onTap: () => viewModel.onEntityAction(
+                          context, client, EntityAction.invoice),
+                    )
+                  : Container(),
+              Divider(),
+              user.canEditEntity(client) && !client.isActive
+                  ? ListTile(
+                      leading: Icon(Icons.restore),
+                      title: Text(AppLocalization.of(context).restore),
+                      onTap: () => viewModel.onEntityAction(
+                          context, client, EntityAction.restore),
+                    )
+                  : Container(),
+              user.canEditEntity(client) && client.isActive
+                  ? ListTile(
+                      leading: Icon(Icons.archive),
+                      title: Text(AppLocalization.of(context).archive),
+                      onTap: () => viewModel.onEntityAction(
+                          context, client, EntityAction.archive),
+                    )
+                  : Container(),
+              user.canEditEntity(client) && !client.isDeleted
+                  ? ListTile(
+                      leading: Icon(Icons.delete),
+                      title: Text(AppLocalization.of(context).delete),
+                      onTap: () => viewModel.onEntityAction(
+                          context, client, EntityAction.delete),
+                    )
+                  : Container(),
+            ]));
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(
-            message: message,
-          )));
+        message: message,
+      )));
     }
   }
 

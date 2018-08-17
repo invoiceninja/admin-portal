@@ -32,6 +32,7 @@ class ClientListBuilder extends StatelessWidget {
 }
 
 class ClientListVM {
+  final UserEntity user;
   final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
   final String filter;
@@ -43,6 +44,7 @@ class ClientListVM {
   final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
 
   ClientListVM({
+    @required this.user,
     @required this.clientList,
     @required this.clientMap,
     @required this.isLoading,
@@ -62,13 +64,16 @@ class ClientListVM {
       return completer.future;
     }
 
+    final state = store.state;
+
     return ClientListVM(
-        clientList: memoizedFilteredClientList(store.state.clientState.map,
-            store.state.clientState.list, store.state.clientListState),
-        clientMap: store.state.clientState.map,
-        isLoading: store.state.isLoading,
-        isLoaded: store.state.clientState.isLoaded,
-        filter: store.state.clientListState.filter,
+        user: state.user,
+        clientList: memoizedFilteredClientList(state.clientState.map,
+            state.clientState.list, state.clientListState),
+        clientMap: state.clientState.map,
+        isLoading: state.isLoading,
+        isLoaded: state.clientState.isLoaded,
+        filter: state.clientListState.filter,
         onClientTap: (context, client) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },

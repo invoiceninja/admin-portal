@@ -17,6 +17,7 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final user = store.state.user;
     final localization = AppLocalization.of(context);
 
     return Scaffold(
@@ -53,20 +54,21 @@ class ProductScreen extends StatelessWidget {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        key: Key(ProductKeys.productScreenFABKeyString),
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () {
-          store.dispatch(
-              EditProduct(product: ProductEntity(), context: context));
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        tooltip: localization.newProduct,
-      ),
+      floatingActionButton: user.canCreate(EntityType.product)
+          ? FloatingActionButton(
+              key: Key(ProductKeys.productScreenFABKeyString),
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                store.dispatch(
+                    EditProduct(product: ProductEntity(), context: context));
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newProduct,
+            )
+          : Container(),
     );
   }
 }
-

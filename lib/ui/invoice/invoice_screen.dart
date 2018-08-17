@@ -16,6 +16,7 @@ class InvoiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final user = store.state.user;
     final localization = AppLocalization.of(context);
 
     return Scaffold(
@@ -54,41 +55,50 @@ class InvoiceScreen extends StatelessWidget {
           store.dispatch(FilterInvoicesByStatus(status));
         },
         statuses: [
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 1
-            ..name = localization.draft,
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = 1
+              ..name = localization.draft,
           ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 2
-            ..name = localization.sent,
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = 2
+              ..name = localization.sent,
           ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 3
-            ..name = localization.viewed,
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = 3
+              ..name = localization.viewed,
           ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 5
-            ..name = localization.partial,
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = 5
+              ..name = localization.partial,
           ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 6
-            ..name = localization.paid,
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = 6
+              ..name = localization.paid,
           ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = -1
-            ..name = localization.pastDue,
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = -1
+              ..name = localization.pastDue,
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () {
-          store.dispatch(EditInvoice(invoice: InvoiceEntity(), context: context));
-        },
-        child: Icon(Icons.add,color: Colors.white,),
-        tooltip: localization.newInvoice,
-      ),
+      floatingActionButton: user.canCreate(EntityType.invoice)
+          ? FloatingActionButton(
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                store.dispatch(
+                    EditInvoice(invoice: InvoiceEntity(), context: context));
+              },
+              child: Icon(Icons.add, color: Colors.white),
+              tooltip: localization.newInvoice,
+            )
+          : null,
     );
   }
 }
