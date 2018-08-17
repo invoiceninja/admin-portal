@@ -93,6 +93,7 @@ class ProductList extends StatelessWidget {
             final product = viewModel.productMap[productId];
             return Column(children: <Widget>[
               ProductListItem(
+                user: viewModel.user,
                 filter: viewModel.filter,
                 product: product,
                 onDismissed: (DismissDirection direction) =>

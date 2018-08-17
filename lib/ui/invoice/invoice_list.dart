@@ -155,6 +155,7 @@ class InvoiceList extends StatelessWidget {
                             return Column(
                               children: <Widget>[
                                 InvoiceListItem(
+                                  user: viewModel.user,
                                   filter: viewModel.filter,
                                   invoice: invoice,
                                   client: viewModel.clientMap[invoice.clientId],

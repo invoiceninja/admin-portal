@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class ProductListItem extends StatelessWidget {
+  final UserEntity user;
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
@@ -16,6 +17,7 @@ class ProductListItem extends StatelessWidget {
   static final productItemKey = (int id) => Key('__product_item_${id}__');
 
   const ProductListItem({
+    @required this.user,
     @required this.onDismissed,
     @required this.onTap,
     @required this.onLongPress,
@@ -32,9 +34,9 @@ class ProductListItem extends StatelessWidget {
     final subtitle = filterMatch ?? product.notes;
 
     return DismissibleEntity(
+      user: user,
       entity: product,
       onDismissed: onDismissed,
-      onTap: onTap,
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,

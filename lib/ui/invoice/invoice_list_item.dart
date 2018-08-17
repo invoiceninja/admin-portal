@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceListItem extends StatelessWidget {
+  final UserEntity user;
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
@@ -16,6 +17,7 @@ class InvoiceListItem extends StatelessWidget {
   final String filter;
 
   const InvoiceListItem({
+    @required this.user,
     @required this.onDismissed,
     @required this.onTap,
     @required this.onLongPress,
@@ -32,6 +34,7 @@ class InvoiceListItem extends StatelessWidget {
         : null;
 
     return DismissibleEntity(
+      user: user,
       entity: invoice,
       onDismissed: onDismissed,
       child: ListTile(

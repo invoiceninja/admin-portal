@@ -93,6 +93,7 @@ class ClientList extends StatelessWidget {
             final client = viewModel.clientMap[clientId];
             return Column(children: <Widget>[
               ClientListItem(
+                user: viewModel.user,
                 filter: viewModel.filter,
                 client: client,
                 onDismissed: (DismissDirection direction) =>
