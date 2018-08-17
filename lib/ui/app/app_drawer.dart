@@ -38,7 +38,7 @@ class AppDrawer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(viewModel.selectedCompany.name),
-          Text(viewModel.selectedCompany.user.fullName,
+          Text(viewModel.selectedCompany.user.email,
               style: Theme.of(context).textTheme.caption)
         ],
       ),
@@ -58,7 +58,7 @@ class AppDrawer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(company.name),
-                        Text(company.user.fullName,
+                        Text(company.user.email,
                             style: Theme.of(context).textTheme.caption),
                       ],
                     ),

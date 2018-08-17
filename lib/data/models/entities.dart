@@ -375,6 +375,7 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
     activity = activity.replaceFirst(':user', user?.fullName ?? '');
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
+    //activity = activity.replaceFirst(':quote', invoice?.invoiceNumber ?? '');
     activity = activity.replaceFirst(':contact', client?.displayName ?? '');
     activity = activity.replaceFirst(':payment', payment?.transactionReference ?? '');
     activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');

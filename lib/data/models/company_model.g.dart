@@ -589,6 +589,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'last_name',
       serializers.serialize(object.lastName,
           specifiedType: const FullType(String)),
+      'email',
+      serializers.serialize(object.email,
+          specifiedType: const FullType(String)),
       'is_admin',
       serializers.serialize(object.isAdmin,
           specifiedType: const FullType(bool)),
@@ -622,6 +625,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'last_name':
           result.lastName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email':
+          result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'is_admin':
@@ -1748,6 +1755,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String lastName;
   @override
+  final String email;
+  @override
   final bool isAdmin;
   @override
   final BuiltMap<String, bool> permissionsMap;
@@ -1759,6 +1768,7 @@ class _$UserEntity extends UserEntity {
       {this.id,
       this.firstName,
       this.lastName,
+      this.email,
       this.isAdmin,
       this.permissionsMap})
       : super._() {
@@ -1767,6 +1777,8 @@ class _$UserEntity extends UserEntity {
       throw new BuiltValueNullFieldError('UserEntity', 'firstName');
     if (lastName == null)
       throw new BuiltValueNullFieldError('UserEntity', 'lastName');
+    if (email == null)
+      throw new BuiltValueNullFieldError('UserEntity', 'email');
     if (isAdmin == null)
       throw new BuiltValueNullFieldError('UserEntity', 'isAdmin');
     if (permissionsMap == null)
@@ -1787,6 +1799,7 @@ class _$UserEntity extends UserEntity {
     return id == other.id &&
         firstName == other.firstName &&
         lastName == other.lastName &&
+        email == other.email &&
         isAdmin == other.isAdmin &&
         permissionsMap == other.permissionsMap;
   }
@@ -1795,8 +1808,10 @@ class _$UserEntity extends UserEntity {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, id.hashCode), firstName.hashCode),
-                lastName.hashCode),
+            $jc(
+                $jc($jc($jc(0, id.hashCode), firstName.hashCode),
+                    lastName.hashCode),
+                email.hashCode),
             isAdmin.hashCode),
         permissionsMap.hashCode));
   }
@@ -1807,6 +1822,7 @@ class _$UserEntity extends UserEntity {
           ..add('id', id)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
+          ..add('email', email)
           ..add('isAdmin', isAdmin)
           ..add('permissionsMap', permissionsMap))
         .toString();
@@ -1828,6 +1844,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String get lastName => _$this._lastName;
   set lastName(String lastName) => _$this._lastName = lastName;
 
+  String _email;
+  String get email => _$this._email;
+  set email(String email) => _$this._email = email;
+
   bool _isAdmin;
   bool get isAdmin => _$this._isAdmin;
   set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
@@ -1845,6 +1865,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _id = _$v.id;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
+      _email = _$v.email;
       _isAdmin = _$v.isAdmin;
       _permissionsMap = _$v.permissionsMap?.toBuilder();
       _$v = null;
@@ -1872,6 +1893,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               id: id,
               firstName: firstName,
               lastName: lastName,
+              email: email,
               isAdmin: isAdmin,
               permissionsMap: permissionsMap.build());
     } catch (_) {

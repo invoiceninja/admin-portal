@@ -340,6 +340,7 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
     return _$UserEntity._(
       firstName: '',
       lastName: '',
+      email: '',
       id: 0,
       isAdmin: false,
       permissionsMap: BuiltMap<String, bool>(),
@@ -355,6 +356,8 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
 
   @BuiltValueField(wireName: 'last_name')
   String get lastName;
+
+  String get email;
 
   String get fullName => (firstName + ' ' + lastName).trim();
 
