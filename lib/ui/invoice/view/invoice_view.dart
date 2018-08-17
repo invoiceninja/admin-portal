@@ -152,7 +152,7 @@ class _InvoiceViewState extends State<InvoiceView> {
           InvoiceItemListTile(
             invoice: invoice,
             invoiceItem: invoiceItem,
-            onTap: user.canEditEntity(invoice)
+            onTap: () => user.canEditEntity(invoice)
                 ? viewModel.onEditPressed(context, invoiceItem)
                 : null,
           ),
