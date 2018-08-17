@@ -263,6 +263,8 @@ abstract class CompanyEntity
     }
   }
 
+  UserEntity get user => userMap[userId];
+
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 

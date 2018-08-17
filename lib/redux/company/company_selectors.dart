@@ -50,7 +50,9 @@ List<CompanyEntity> companiesSelector(AppState state) {
     list.add(state.companyState5.company);
   }
 
-  return list;
+  return list
+      .where((CompanyEntity company) => company.name.isNotEmpty)
+      .toList();
 }
 
 String localeSelector(AppState state) =>

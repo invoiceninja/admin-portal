@@ -34,21 +34,34 @@ class AppDrawer extends StatelessWidget {
 
     final _singleCompany = Align(
       alignment: FractionalOffset.bottomLeft,
-      child: Text(viewModel.selectedCompany.name),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(viewModel.selectedCompany.name),
+          Text(viewModel.selectedCompany.user.fullName,
+              style: Theme.of(context).textTheme.caption)
+        ],
+      ),
     );
 
     final _multipleCompanies = Align(
       alignment: FractionalOffset.bottomLeft,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          isDense: true,
           value: viewModel.selectedCompanyIndex,
           items: viewModel.companies
-              .where((CompanyEntity company) => company.name.isNotEmpty)
               .map((CompanyEntity company) => DropdownMenuItem<String>(
                     value:
                         (viewModel.companies.indexOf(company) + 1).toString(),
-                    child: Text(company.name),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(company.name),
+                        Text(company.user.fullName,
+                            style: Theme.of(context).textTheme.caption),
+                      ],
+                    ),
                   ))
               .toList(),
           onChanged: (value) {
@@ -73,6 +86,7 @@ class AppDrawer extends StatelessWidget {
           Container(
             child: DrawerHeader(
                 child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   child: Center(
