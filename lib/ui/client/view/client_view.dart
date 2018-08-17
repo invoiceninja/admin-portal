@@ -196,6 +196,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
+    final user = viewModel.user;
 
     return AppBar(
       title:
@@ -218,10 +219,10 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: client.isNew
           ? []
           : [
-              EditIconButton(
+              user.canEditEntity(client) ? EditIconButton(
                 isVisible: !client.isDeleted,
                 onPressed: () => viewModel.onEditPressed(context),
-              ),
+              ) : Container(),
               ActionMenuButton(
                 user: viewModel.user,
                 isSaving: viewModel.isSaving,

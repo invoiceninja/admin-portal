@@ -34,6 +34,7 @@ class _InvoiceViewState extends State<InvoiceView> {
 
     List<Widget> _buildView() {
       final invoice = widget.viewModel.invoice;
+      final user = widget.viewModel.user;
       final widgets = <Widget>[
         TwoValueHeader(
           backgroundColor: (invoice.isPastDue
@@ -151,7 +152,9 @@ class _InvoiceViewState extends State<InvoiceView> {
           InvoiceItemListTile(
             invoice: invoice,
             invoiceItem: invoiceItem,
-            onTap: () => viewModel.onEditPressed(context, invoiceItem),
+            onTap: user.canEditEntity(invoice)
+                ? viewModel.onEditPressed(context, invoiceItem)
+                : null,
           ),
         ]);
       });
@@ -261,6 +264,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final localization = AppLocalization.of(context);
     final invoice = viewModel.invoice;
     final client = viewModel.client;
+    final user = viewModel.user;
 
     return AppBar(
       title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
@@ -272,21 +276,23 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () => viewModel.onEditPressed(context),
               ),
               ActionMenuButton(
-                user: viewModel.user,
+                user: user,
                 customActions: [
-                  ActionMenuChoice(
-                    action: EntityAction.clone,
-                    icon: Icons.control_point_duplicate,
-                    label: AppLocalization.of(context).clone,
-                  ),
-                  !invoice.isPublic
+                  user.canCreate(EntityType.invoice)
+                      ? ActionMenuChoice(
+                          action: EntityAction.clone,
+                          icon: Icons.control_point_duplicate,
+                          label: AppLocalization.of(context).clone,
+                        )
+                      : null,
+                  user.canEditEntity(invoice) && !invoice.isPublic
                       ? ActionMenuChoice(
                           action: EntityAction.markSent,
                           icon: Icons.publish,
                           label: AppLocalization.of(context).markSent,
                         )
                       : null,
-                  client.hasEmailAddress
+                  user.canEditEntity(invoice) && client.hasEmailAddress
                       ? ActionMenuChoice(
                           action: EntityAction.emailInvoice,
                           icon: Icons.send,
