@@ -37,9 +37,9 @@ class _InvoiceViewState extends State<InvoiceView> {
       final user = widget.viewModel.company.user;
       final widgets = <Widget>[
         TwoValueHeader(
-          backgroundColor: (invoice.isPastDue
+          backgroundColor: invoice.isPastDue
               ? Colors.red
-              : InvoiceStatusColors.colors[invoice.invoiceStatusId])[200],
+              : InvoiceStatusColors.colors[invoice.invoiceStatusId],
           label1: localization.totalAmount,
           value1:
               formatNumber(invoice.amount, context, clientId: invoice.clientId),
