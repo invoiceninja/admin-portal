@@ -141,6 +141,8 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.taxRates,
           specifiedType:
               const FullType(BuiltList, const [const FullType(TaxRateEntity)])),
+      'user_id',
+      serializers.serialize(object.userId, specifiedType: const FullType(int)),
       'users',
       serializers.serialize(object.users,
           specifiedType:
@@ -360,6 +362,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TaxRateEntity)]))
               as BuiltList);
+          break;
+        case 'user_id':
+          result.userId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'users':
           result.users.replace(serializers.deserialize(value,
@@ -602,6 +608,13 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'last_name',
       serializers.serialize(object.lastName,
           specifiedType: const FullType(String)),
+      'is_admin',
+      serializers.serialize(object.isAdmin,
+          specifiedType: const FullType(bool)),
+      'permissions',
+      serializers.serialize(object.permissionsMap,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(String), const FullType(bool)])),
     ];
 
     return result;
@@ -629,6 +642,17 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'last_name':
           result.lastName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_admin':
+          result.isAdmin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'permissions':
+          result.permissionsMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(bool)
+              ])) as BuiltMap);
           break;
       }
     }
@@ -711,6 +735,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<TaxRateEntity> taxRates;
   @override
+  final int userId;
+  @override
   final BuiltList<UserEntity> users;
   @override
   final BuiltMap<int, UserEntity> userMap;
@@ -787,6 +813,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.enableCustomInvoiceTaxes1,
       this.enableCustomInvoiceTaxes2,
       this.taxRates,
+      this.userId,
       this.users,
       this.userMap,
       this.customFields,
@@ -891,6 +918,8 @@ class _$CompanyEntity extends CompanyEntity {
           'CompanyEntity', 'enableCustomInvoiceTaxes2');
     if (taxRates == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'taxRates');
+    if (userId == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'userId');
     if (users == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'users');
     if (userMap == null)
@@ -981,6 +1010,7 @@ class _$CompanyEntity extends CompanyEntity {
         enableCustomInvoiceTaxes1 == other.enableCustomInvoiceTaxes1 &&
         enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2 &&
         taxRates == other.taxRates &&
+        userId == other.userId &&
         users == other.users &&
         userMap == other.userMap &&
         customFields == other.customFields &&
@@ -1021,8 +1051,8 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode),
-                                                                                taxRates.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode),
+                                                                                userId.hashCode),
                                                                             users.hashCode),
                                                                         userMap.hashCode),
                                                                     customFields.hashCode),
@@ -1082,6 +1112,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('enableCustomInvoiceTaxes1', enableCustomInvoiceTaxes1)
           ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2)
           ..add('taxRates', taxRates)
+          ..add('userId', userId)
           ..add('users', users)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
@@ -1279,6 +1310,10 @@ class CompanyEntityBuilder
   set taxRates(ListBuilder<TaxRateEntity> taxRates) =>
       _$this._taxRates = taxRates;
 
+  int _userId;
+  int get userId => _$this._userId;
+  set userId(int userId) => _$this._userId = userId;
+
   ListBuilder<UserEntity> _users;
   ListBuilder<UserEntity> get users =>
       _$this._users ??= new ListBuilder<UserEntity>();
@@ -1410,6 +1445,7 @@ class CompanyEntityBuilder
       _enableCustomInvoiceTaxes1 = _$v.enableCustomInvoiceTaxes1;
       _enableCustomInvoiceTaxes2 = _$v.enableCustomInvoiceTaxes2;
       _taxRates = _$v.taxRates?.toBuilder();
+      _userId = _$v.userId;
       _users = _$v.users?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
@@ -1486,6 +1522,7 @@ class CompanyEntityBuilder
               enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
               enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2,
               taxRates: taxRates.build(),
+              userId: userId,
               users: users.build(),
               userMap: userMap.build(),
               customFields: customFields.build(),
@@ -1509,6 +1546,7 @@ class CompanyEntityBuilder
       try {
         _$failedField = 'taxRates';
         taxRates.build();
+
         _$failedField = 'users';
         users.build();
         _$failedField = 'userMap';
@@ -1759,16 +1797,30 @@ class _$UserEntity extends UserEntity {
   final String firstName;
   @override
   final String lastName;
+  @override
+  final bool isAdmin;
+  @override
+  final BuiltMap<String, bool> permissionsMap;
 
   factory _$UserEntity([void updates(UserEntityBuilder b)]) =>
       (new UserEntityBuilder()..update(updates)).build();
 
-  _$UserEntity._({this.id, this.firstName, this.lastName}) : super._() {
+  _$UserEntity._(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.isAdmin,
+      this.permissionsMap})
+      : super._() {
     if (id == null) throw new BuiltValueNullFieldError('UserEntity', 'id');
     if (firstName == null)
       throw new BuiltValueNullFieldError('UserEntity', 'firstName');
     if (lastName == null)
       throw new BuiltValueNullFieldError('UserEntity', 'lastName');
+    if (isAdmin == null)
+      throw new BuiltValueNullFieldError('UserEntity', 'isAdmin');
+    if (permissionsMap == null)
+      throw new BuiltValueNullFieldError('UserEntity', 'permissionsMap');
   }
 
   @override
@@ -1784,13 +1836,19 @@ class _$UserEntity extends UserEntity {
     if (other is! UserEntity) return false;
     return id == other.id &&
         firstName == other.firstName &&
-        lastName == other.lastName;
+        lastName == other.lastName &&
+        isAdmin == other.isAdmin &&
+        permissionsMap == other.permissionsMap;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, id.hashCode), firstName.hashCode), lastName.hashCode));
+    return $jf($jc(
+        $jc(
+            $jc($jc($jc(0, id.hashCode), firstName.hashCode),
+                lastName.hashCode),
+            isAdmin.hashCode),
+        permissionsMap.hashCode));
   }
 
   @override
@@ -1798,7 +1856,9 @@ class _$UserEntity extends UserEntity {
     return (newBuiltValueToStringHelper('UserEntity')
           ..add('id', id)
           ..add('firstName', firstName)
-          ..add('lastName', lastName))
+          ..add('lastName', lastName)
+          ..add('isAdmin', isAdmin)
+          ..add('permissionsMap', permissionsMap))
         .toString();
   }
 }
@@ -1818,6 +1878,16 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String get lastName => _$this._lastName;
   set lastName(String lastName) => _$this._lastName = lastName;
 
+  bool _isAdmin;
+  bool get isAdmin => _$this._isAdmin;
+  set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
+
+  MapBuilder<String, bool> _permissionsMap;
+  MapBuilder<String, bool> get permissionsMap =>
+      _$this._permissionsMap ??= new MapBuilder<String, bool>();
+  set permissionsMap(MapBuilder<String, bool> permissionsMap) =>
+      _$this._permissionsMap = permissionsMap;
+
   UserEntityBuilder();
 
   UserEntityBuilder get _$this {
@@ -1825,6 +1895,8 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _id = _$v.id;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
+      _isAdmin = _$v.isAdmin;
+      _permissionsMap = _$v.permissionsMap?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1843,8 +1915,26 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   @override
   _$UserEntity build() {
-    final _$result = _$v ??
-        new _$UserEntity._(id: id, firstName: firstName, lastName: lastName);
+    _$UserEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$UserEntity._(
+              id: id,
+              firstName: firstName,
+              lastName: lastName,
+              isAdmin: isAdmin,
+              permissionsMap: permissionsMap.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'permissionsMap';
+        permissionsMap.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'UserEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

@@ -71,6 +71,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   CompanyEntity get selectedCompany => selectedCompanyState.company;
   DashboardState get dashboardState => selectedCompanyState.dashboardState;
+  UserEntity get user => selectedCompany.userMap[selectedCompany.userId];
 
   EntityUIState getUIState(EntityType type) {
     switch (type) {
@@ -105,6 +106,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Date Formats: ${staticState.dateFormatMap}';
-    return 'Route: ${uiState.currentRoute}, Invoice Update: ${invoiceState.lastUpdated}';
+    return 'Route: ${uiState.currentRoute}, Permissions: ${selectedCompany?.userMap}';
   }
 }

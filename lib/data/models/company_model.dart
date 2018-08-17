@@ -46,6 +46,7 @@ abstract class CompanyEntity
       timezoneId: 1,
       customPaymentTerms: BuiltList<PaymentTermEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
+      userId: 0,
       users: BuiltList<UserEntity>(),
       userMap: BuiltMap<int, UserEntity>(),
       customFields: BuiltMap<String, String>(),
@@ -174,6 +175,9 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'tax_rates')
   BuiltList<TaxRateEntity> get taxRates;
 
+  @BuiltValueField(wireName: 'user_id')
+  int get userId;
+
   @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
 
@@ -226,7 +230,6 @@ abstract class CompanyEntity
 
   @BuiltValueField(wireName: 'email_template_reminder3')
   String get emailBodyReminder3;
-
 
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')
@@ -343,6 +346,25 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   String get lastName;
 
   String get fullName => (firstName + ' ' + lastName).trim();
+
+  @BuiltValueField(wireName: 'is_admin')
+  bool get isAdmin;
+
+  @BuiltValueField(wireName: 'permissions')
+  BuiltMap<String, bool> get permissionsMap;
+
+  bool can(UserPermission permission, EntityType entityType) =>
+      isAdmin || permissionsMap.containsKey('${permission}_$entityType');
+
+  bool canView(EntityType entityType) => can(UserPermission.view, entityType);
+
+  bool canEdit(EntityType entityType) => can(UserPermission.edit, entityType);
+
+  bool canCreate(EntityType entityType) =>
+      can(UserPermission.create, entityType);
+
+  bool canViewOrCreate(EntityType entityType) =>
+      canView(entityType) || canCreate(entityType);
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }

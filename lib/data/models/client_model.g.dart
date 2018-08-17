@@ -1102,6 +1102,55 @@ class _$ClientEntity extends ClientEntity {
             isDeleted.hashCode),
         id.hashCode));
   }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ClientEntity')
+          ..add('lastUpdatedActivities', lastUpdatedActivities)
+          ..add('name', name)
+          ..add('displayName', displayName)
+          ..add('balance', balance)
+          ..add('paidToDate', paidToDate)
+          ..add('address1', address1)
+          ..add('address2', address2)
+          ..add('city', city)
+          ..add('state', state)
+          ..add('postalCode', postalCode)
+          ..add('countryId', countryId)
+          ..add('workPhone', workPhone)
+          ..add('privateNotes', privateNotes)
+          ..add('publicNotes', publicNotes)
+          ..add('website', website)
+          ..add('industryId', industryId)
+          ..add('sizeId', sizeId)
+          ..add('paymentTerms', paymentTerms)
+          ..add('vatNumber', vatNumber)
+          ..add('idNumber', idNumber)
+          ..add('languageId', languageId)
+          ..add('currencyId', currencyId)
+          ..add('invoiceNumberCounter', invoiceNumberCounter)
+          ..add('quoteNumberCounter', quoteNumberCounter)
+          ..add('taskRate', taskRate)
+          ..add('shippingAddress1', shippingAddress1)
+          ..add('shippingAddress2', shippingAddress2)
+          ..add('shippingCity', shippingCity)
+          ..add('shippingState', shippingState)
+          ..add('shippingPostalCode', shippingPostalCode)
+          ..add('shippingCountryId', shippingCountryId)
+          ..add('showTasksInPortal', showTasksInPortal)
+          ..add('sendReminders', sendReminders)
+          ..add('creditNumberCounter', creditNumberCounter)
+          ..add('customValue1', customValue1)
+          ..add('customValue2', customValue2)
+          ..add('contacts', contacts)
+          ..add('activities', activities)
+          ..add('createdAt', createdAt)
+          ..add('updatedAt', updatedAt)
+          ..add('archivedAt', archivedAt)
+          ..add('isDeleted', isDeleted)
+          ..add('id', id))
+        .toString();
+  }
 }
 
 class ClientEntityBuilder

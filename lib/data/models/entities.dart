@@ -69,6 +69,22 @@ class EmailTemplate extends EnumClass {
   static EmailTemplate valueOf(String name) => _$templateValueOf(name);
 }
 
+
+class UserPermission extends EnumClass {
+
+  const UserPermission._(String name) : super(name);
+
+  static Serializer<UserPermission> get serializer => _$userPermissionSerializer;
+
+  static const UserPermission create = _$create;
+  static const UserPermission edit = _$edit;
+  static const UserPermission view = _$view;
+
+  static BuiltSet<UserPermission> get values => _$permissionValues;
+  static UserPermission valueOf(String name) => _$permissionValueOf(name);
+}
+
+
 abstract class EntityStatus {
   int get id;
   String get name;

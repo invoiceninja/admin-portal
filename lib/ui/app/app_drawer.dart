@@ -60,6 +60,7 @@ class AppDrawer extends StatelessWidget {
 
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
+    final user = store.state.user;
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
@@ -105,15 +106,20 @@ class AppDrawer extends StatelessWidget {
             )),
             color: Colors.white10,
           ),
+          user.isAdmin
+              ? DrawerTile(
+                  user: user,
+                  icon: FontAwesomeIcons.tachometerAlt,
+                  title: AppLocalization.of(context).dashboard,
+                  onTap: () {
+                    navigator.pop();
+                    store.dispatch(ViewDashboard(context));
+                  },
+                )
+              : Container(),
           DrawerTile(
-            icon: FontAwesomeIcons.tachometerAlt,
-            title: AppLocalization.of(context).dashboard,
-            onTap: () {
-              navigator.pop();
-              store.dispatch(ViewDashboard(context));
-            },
-          ),
-          DrawerTile(
+            user: user,
+            entityType: EntityType.client,
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
             onTap: () => store.dispatch(ViewClientList(context)),
@@ -124,6 +130,8 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
+            user: user,
+            entityType: EntityType.product,
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
             onTap: () => store.dispatch(ViewProductList(context)),
@@ -134,6 +142,8 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
+            user: user,
+            entityType: EntityType.invoice,
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
             onTap: () => store.dispatch(ViewInvoiceList(context)),
@@ -144,6 +154,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
+            user: user,
             icon: FontAwesomeIcons.cog,
             title: AppLocalization.of(context).settings,
             onTap: () {
@@ -195,12 +206,16 @@ class AppDrawer extends StatelessWidget {
 
 class DrawerTile extends StatelessWidget {
   const DrawerTile({
-    this.icon,
-    this.title,
-    this.onTap,
+    @required this.user,
+    @required this.icon,
+    @required this.title,
+    @required this.onTap,
     this.onCreateTap,
+    this.entityType,
   });
 
+  final UserEntity user;
+  final EntityType entityType;
   final IconData icon;
   final String title;
   final Function onTap;
@@ -208,12 +223,16 @@ class DrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (entityType != null && !user.canViewOrCreate(entityType)) {
+      return Container();
+    }
+
     return ListTile(
       dense: true,
       leading: Icon(icon, size: 22.0),
       title: Text(title),
       onTap: () => onTap(),
-      trailing: onCreateTap == null
+      trailing: onCreateTap == null || !user.canCreate(entityType)
           ? null
           : IconButton(
               icon: Icon(Icons.add_circle_outline),

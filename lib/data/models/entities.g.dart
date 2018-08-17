@@ -148,10 +148,36 @@ final BuiltSet<EmailTemplate> _$templateValues =
   _$reminder3,
 ]);
 
+const UserPermission _$create = const UserPermission._('create');
+const UserPermission _$edit = const UserPermission._('edit');
+const UserPermission _$view = const UserPermission._('view');
+
+UserPermission _$permissionValueOf(String name) {
+  switch (name) {
+    case 'create':
+      return _$create;
+    case 'edit':
+      return _$edit;
+    case 'view':
+      return _$view;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<UserPermission> _$permissionValues =
+    new BuiltSet<UserPermission>(const <UserPermission>[
+  _$create,
+  _$edit,
+  _$view,
+]);
+
 Serializer<EntityType> _$entityTypeSerializer = new _$EntityTypeSerializer();
 Serializer<EntityState> _$entityStateSerializer = new _$EntityStateSerializer();
 Serializer<EmailTemplate> _$emailTemplateSerializer =
     new _$EmailTemplateSerializer();
+Serializer<UserPermission> _$userPermissionSerializer =
+    new _$UserPermissionSerializer();
 Serializer<ErrorMessage> _$errorMessageSerializer =
     new _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
@@ -215,6 +241,24 @@ class _$EmailTemplateSerializer implements PrimitiveSerializer<EmailTemplate> {
   EmailTemplate deserialize(Serializers serializers, Object serialized,
           {FullType specifiedType = FullType.unspecified}) =>
       EmailTemplate.valueOf(serialized as String);
+}
+
+class _$UserPermissionSerializer
+    implements PrimitiveSerializer<UserPermission> {
+  @override
+  final Iterable<Type> types = const <Type>[UserPermission];
+  @override
+  final String wireName = 'UserPermission';
+
+  @override
+  Object serialize(Serializers serializers, UserPermission object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  UserPermission deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      UserPermission.valueOf(serialized as String);
 }
 
 class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
