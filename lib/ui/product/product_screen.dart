@@ -17,7 +17,8 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final user = store.state.user;
+    final company = store.state.selectedCompany;
+    final user = company.user;
     final localization = AppLocalization.of(context);
 
     return Scaffold(
@@ -41,6 +42,10 @@ class ProductScreen extends StatelessWidget {
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,
+        customValues1: company.getCustomFieldValues(CustomFieldType.product1,
+            excludeBlank: true),
+        customValues2: company.getCustomFieldValues(CustomFieldType.product2,
+            excludeBlank: true),
         onSelectedSortField: (value) {
           store.dispatch(SortProducts(value));
         },

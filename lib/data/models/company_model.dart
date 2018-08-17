@@ -254,18 +254,22 @@ abstract class CompanyEntity
     }
   }
 
-  List<String> getCustomFieldValues(String field) {
+  List<String> getCustomFieldValues(String field, {bool excludeBlank = false}) {
     final values = customFields[field];
 
     if (values == null || !values.contains('|')) {
       return [];
     } else {
-      return values.split('|').last.split(',');
+      final data = values.split('|').last.split(',');
+
+      if (excludeBlank) {
+        return data.where((data) => data.isNotEmpty).toList();
+      } else {
+        return data;
+      }
     }
   }
-
-  //UserEntity get user => userMap[userId];
-
+  
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 

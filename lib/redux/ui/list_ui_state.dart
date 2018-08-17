@@ -15,6 +15,8 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
         EntityState.active,
       ]),
       statusFilters: BuiltList<EntityStatus>(),
+      custom1Filters: BuiltList<String>(),
+      custom2Filters: BuiltList<String>(),
     );
   }
   ListUIState._();
@@ -29,6 +31,8 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   bool get sortAscending;
   BuiltList<EntityState> get stateFilters;
   BuiltList<EntityStatus> get statusFilters;
+  BuiltList<String> get custom1Filters;
+  BuiltList<String> get custom2Filters;
 
   bool get hasCustomStateFilters => stateFilters.length != 1 || stateFilters.first != EntityState.active;
   bool get hasCustomStatusFilters => statusFilters.isNotEmpty;
