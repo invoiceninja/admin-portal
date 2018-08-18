@@ -16,7 +16,8 @@ class ClientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final user = store.state.user;
+    final company = store.state.selectedCompany;
+    final user = company.user;
     final localization = AppLocalization.of(context);
 
     return Scaffold(
@@ -51,6 +52,14 @@ class ClientScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterClientsByState(state));
         },
+        customValues1: company.getCustomFieldValues(CustomFieldType.client1,
+            excludeBlank: true),
+        customValues2: company.getCustomFieldValues(CustomFieldType.client2,
+            excludeBlank: true),
+        onSelectedCustom1: (value) =>
+            store.dispatch(FilterClientsByCustom1(value)),
+        onSelectedCustom2: (value) =>
+            store.dispatch(FilterClientsByCustom2(value)),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: user.canCreate(EntityType.client)

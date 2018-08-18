@@ -16,7 +16,8 @@ class InvoiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final user = store.state.user;
+    final company = store.state.selectedCompany;
+    final user = company.user;
     final localization = AppLocalization.of(context);
 
     return Scaffold(
@@ -54,6 +55,14 @@ class InvoiceScreen extends StatelessWidget {
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterInvoicesByStatus(status));
         },
+        customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
+            excludeBlank: true),
+        customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
+            excludeBlank: true),
+        onSelectedCustom1: (value) =>
+            store.dispatch(FilterInvoicesByCustom1(value)),
+        onSelectedCustom2: (value) =>
+            store.dispatch(FilterInvoicesByCustom2(value)),
         statuses: [
           InvoiceStatusEntity().rebuild(
             (b) => b

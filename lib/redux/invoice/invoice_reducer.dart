@@ -91,7 +91,29 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterInvoicesByStatus>(_filterInvoicesByStatus),
   TypedReducer<ListUIState, FilterInvoicesByClient>(_filterInvoicesByClient),
   TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
+  TypedReducer<ListUIState, FilterInvoicesByCustom1>(_filterInvoicesByCustom1),
+  TypedReducer<ListUIState, FilterInvoicesByCustom2>(_filterInvoicesByCustom2),
 ]);
+
+ListUIState _filterInvoicesByCustom1(
+    ListUIState invoiceListState, FilterInvoicesByCustom1 action) {
+  if (invoiceListState.custom1Filters.contains(action.value)) {
+    return invoiceListState
+        .rebuild((b) => b..custom1Filters.remove(action.value));
+  } else {
+    return invoiceListState.rebuild((b) => b..custom1Filters.add(action.value));
+  }
+}
+
+ListUIState _filterInvoicesByCustom2(
+    ListUIState invoiceListState, FilterInvoicesByCustom2 action) {
+  if (invoiceListState.custom2Filters.contains(action.value)) {
+    return invoiceListState
+        .rebuild((b) => b..custom2Filters.remove(action.value));
+  } else {
+    return invoiceListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
 
 ListUIState _filterInvoicesByState(
     ListUIState invoiceListState, FilterInvoicesByState action) {

@@ -70,7 +70,29 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
   TypedReducer<ListUIState, FilterClients>(_filterClients),
+  TypedReducer<ListUIState, FilterClientsByCustom1>(_filterClientsByCustom1),
+  TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
 ]);
+
+ListUIState _filterClientsByCustom1(
+    ListUIState clientListState, FilterClientsByCustom1 action) {
+  if (clientListState.custom1Filters.contains(action.value)) {
+    return clientListState
+        .rebuild((b) => b..custom1Filters.remove(action.value));
+  } else {
+    return clientListState.rebuild((b) => b..custom1Filters.add(action.value));
+  }
+}
+
+ListUIState _filterClientsByCustom2(
+    ListUIState clientListState, FilterClientsByCustom2 action) {
+  if (clientListState.custom2Filters.contains(action.value)) {
+    return clientListState
+        .rebuild((b) => b..custom2Filters.remove(action.value));
+  } else {
+    return clientListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
 
 ListUIState _filterClientsByState(
     ListUIState clientListState, FilterClientsByState action) {

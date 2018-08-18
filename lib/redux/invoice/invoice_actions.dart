@@ -289,3 +289,15 @@ class FilterInvoiceDropdown {
 
   FilterInvoiceDropdown(this.filter);
 }
+
+class FilterInvoicesByCustom1 implements PersistUI {
+  final String value;
+
+  FilterInvoicesByCustom1(this.value);
+}
+
+class FilterInvoicesByCustom2 implements PersistUI {
+  final String value;
+
+  FilterInvoicesByCustom2(this.value);
+}

@@ -41,6 +41,14 @@ List<int> filteredInvoicesSelector(
         invoice.clientId != invoiceListState.filterClientId) {
       return false;
     }
+    if (invoiceListState.custom1Filters.isNotEmpty &&
+        !invoiceListState.custom1Filters.contains(invoice.customTextValue1)) {
+      return false;
+    }
+    if (invoiceListState.custom2Filters.isNotEmpty &&
+        !invoiceListState.custom2Filters.contains(invoice.customTextValue2)) {
+      return false;
+    }
     return true;
   }).toList();
 

@@ -208,3 +208,15 @@ class FilterClientsByState implements PersistUI {
 
   FilterClientsByState(this.state);
 }
+
+class FilterClientsByCustom1 implements PersistUI {
+  final String value;
+
+  FilterClientsByCustom1(this.value);
+}
+
+class FilterClientsByCustom2 implements PersistUI {
+  final String value;
+
+  FilterClientsByCustom2(this.value);
+}
