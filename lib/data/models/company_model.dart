@@ -269,7 +269,7 @@ abstract class CompanyEntity
       }
     }
   }
-  
+
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 

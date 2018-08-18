@@ -46,9 +46,11 @@ class ProductScreen extends StatelessWidget {
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.product2,
             excludeBlank: true),
-        onSelectedSortField: (value) {
-          store.dispatch(SortProducts(value));
-        },
+        onSelectedSortField: (value) => store.dispatch(SortProducts(value)),
+        onSelectedCustom1: (value) =>
+            store.dispatch(FilterProductsByCustom1(value)),
+        onSelectedCustom2: (value) =>
+            store.dispatch(FilterProductsByCustom2(value)),
         sortFields: [
           ProductFields.productKey,
           ProductFields.cost,

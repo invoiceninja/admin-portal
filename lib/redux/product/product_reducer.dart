@@ -42,8 +42,10 @@ ProductEntity _updateEditing(ProductEntity client, dynamic action) {
 
 final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortProducts>(_sortProducts),
-  TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
   TypedReducer<ListUIState, FilterProducts>(_filterProducts),
+  TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
+  TypedReducer<ListUIState, FilterProductsByCustom1>(_filterProductsByCustom1),
+  TypedReducer<ListUIState, FilterProductsByCustom2>(_filterProductsByCustom2),
 ]);
 
 ListUIState _filterProductsByState(
@@ -53,6 +55,26 @@ ListUIState _filterProductsByState(
         .rebuild((b) => b..stateFilters.remove(action.state));
   } else {
     return productListState.rebuild((b) => b..stateFilters.add(action.state));
+  }
+}
+
+ListUIState _filterProductsByCustom1(
+    ListUIState productListState, FilterProductsByCustom1 action) {
+  if (productListState.custom1Filters.contains(action.value)) {
+    return productListState
+        .rebuild((b) => b..custom1Filters.remove(action.value));
+  } else {
+    return productListState.rebuild((b) => b..custom1Filters.add(action.value));
+  }
+}
+
+ListUIState _filterProductsByCustom2(
+    ListUIState productListState, FilterProductsByCustom2 action) {
+  if (productListState.custom2Filters.contains(action.value)) {
+    return productListState
+        .rebuild((b) => b..custom2Filters.remove(action.value));
+  } else {
+    return productListState.rebuild((b) => b..custom2Filters.add(action.value));
   }
 }
 
