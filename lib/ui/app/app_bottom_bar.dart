@@ -273,7 +273,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               onPressed: _showFilterStateSheet,
               color: store.state
                       .getListState(widget.entityType)
-                      .hasCustomStateFilters
+                      .hasStateFilters
                   ? Theme.of(context).accentColor
                   : null,
             ),
@@ -283,7 +283,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               onPressed: _showFilterStatusSheet,
               color: store.state
                   .getListState(widget.entityType)
-                  .hasCustomStatusFilters
+                  .hasStatusFilters
                   ? Theme.of(context).accentColor
                   : null,
             ) : SizedBox(width: 0.0),
@@ -291,25 +291,21 @@ class _AppBottomBarState extends State<AppBottomBar> {
               tooltip: AppLocalization.of(context).filter,
               icon: Icon(Icons.looks_one),
               onPressed: _showFilterCustom1Sheet,
-              /*
               color: store.state
                   .getListState(widget.entityType)
-                  .hasCustomStatusFilters
+                  .hasCustom1Filters
                   ? Theme.of(context).accentColor
                   : null,
-                  */
             ) : SizedBox(width: 0.0),
             widget.customValues2.isNotEmpty ? IconButton(
               tooltip: AppLocalization.of(context).filter,
-              icon: Icon(Icons.looks_one),
+              icon: Icon(Icons.looks_two),
               onPressed: _showFilterCustom2Sheet,
-              /*
               color: store.state
                   .getListState(widget.entityType)
-                  .hasCustomStatusFilters
+                  .hasCustom2Filters
                   ? Theme.of(context).accentColor
                   : null,
-                  */
             ) : SizedBox(width: 0.0),
           ],
         ),
