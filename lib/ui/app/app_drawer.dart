@@ -171,7 +171,10 @@ class AppDrawer extends StatelessWidget {
             user: user,
             icon: FontAwesomeIcons.cog,
             title: AppLocalization.of(context).settings,
-            onTap: () => navigator.pushNamed(SettingsScreen.route),
+            onTap: () {
+              navigator.pop();
+              navigator.pushNamed(SettingsScreen.route);
+            },
           ),
           AboutListTile(
             icon: Icon(FontAwesomeIcons.info, size: 22.0),
