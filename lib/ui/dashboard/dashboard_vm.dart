@@ -22,9 +22,7 @@ class DashboardBuilder extends StatelessWidget {
     return StoreConnector<AppState, DashboardVM>(
       converter: DashboardVM.fromStore,
       builder: (context, vm) {
-        return DashboardView(
-          viewModel: vm
-        );
+        return DashboardView(viewModel: vm);
       },
     );
   }
@@ -59,9 +57,11 @@ class DashboardVM {
     return DashboardVM(
       dashboardState: state.dashboardState,
       isLoading: state.isLoading,
+      //onRefreshed: (context) => state.isLoading ? Future<Null>(null) : _handleRefresh(context),
       onRefreshed: (context) => _handleRefresh(context),
       filter: filter,
-      filteredList: memoizedFilteredSelector(filter, state.selectedCompanyState),
+      filteredList:
+          memoizedFilteredSelector(filter, state.selectedCompanyState),
     );
   }
 }

@@ -66,17 +66,19 @@ class _DashboardViewState extends State<DashboardView>
               },
             ),
           ],
-          bottom: store.state.uiState.filter != null ? null : TabBar(
-            controller: _controller,
-            tabs: [
-              Tab(
-                text: localization.overview,
-              ),
-              Tab(
-                text: localization.activity,
-              ),
-            ],
-          ),
+          bottom: store.state.uiState.filter != null
+              ? null
+              : TabBar(
+                  controller: _controller,
+                  tabs: [
+                    Tab(
+                      text: localization.overview,
+                    ),
+                    Tab(
+                      text: localization.activity,
+                    ),
+                  ],
+                ),
         ),
         body: CustomTabBarView(
           viewModel: widget.viewModel,
@@ -129,20 +131,16 @@ class CustomTabBarView extends StatelessWidget {
           });
     }
 
-    return TabBarView(
-      controller: controller,
-      children: <Widget>[
-        RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context),
-          child: DashboardPanels(
-            viewModel: viewModel,
-          ),
-        ),
-        RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context),
-          child: DashboardActivity(viewModel: viewModel),
-        ),
-      ],
-    );
+    return RefreshIndicator(
+        onRefresh: () => viewModel.onRefreshed(context),
+        child: TabBarView(
+          controller: controller,
+          children: <Widget>[
+            DashboardPanels(
+              viewModel: viewModel,
+            ),
+            DashboardActivity(viewModel: viewModel),
+          ],
+        ));
   }
 }
