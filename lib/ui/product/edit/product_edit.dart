@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -8,7 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/save_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class ProductEdit extends StatefulWidget {
@@ -38,7 +39,6 @@ class _ProductEditState extends State<ProductEdit> {
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
       _productKeyController,
       _notesController,
@@ -47,16 +47,19 @@ class _ProductEditState extends State<ProductEdit> {
       _custom2Controller,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
-    _costController.text = formatNumber(product.cost, context, formatNumberType: FormatNumberType.input);
+    _costController.text = formatNumber(product.cost, context,
+        formatNumberType: FormatNumberType.input);
     _custom1Controller.text = product.customValue1;
     _custom2Controller.text = product.customValue2;
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -77,8 +80,7 @@ class _ProductEditState extends State<ProductEdit> {
       ..notes = _notesController.text.trim()
       ..cost = parseDouble(_costController.text)
       ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-    );
+      ..customValue2 = _custom2Controller.text.trim());
     if (product != widget.viewModel.product) {
       widget.viewModel.onChanged(product);
     }
@@ -90,6 +92,7 @@ class _ProductEditState extends State<ProductEdit> {
     final viewModel = widget.viewModel;
     final product = viewModel.product;
     final company = viewModel.company;
+    final user = company.user;
 
     return WillPopScope(
       onWillPop: () async {
@@ -103,7 +106,13 @@ class _ProductEditState extends State<ProductEdit> {
               : viewModel.origProduct.productKey),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
-              return SaveIconButton(
+              if (!user.canEditEntity(product)) {
+                return Container();
+              }
+
+              return RefreshIconButton(
+                icon: Icons.cloud_upload,
+                tooltip: localization.save,
                 isVisible: !product.isDeleted,
                 isSaving: viewModel.isSaving,
                 isDirty: product.isNew || product != viewModel.origProduct,
@@ -111,10 +120,10 @@ class _ProductEditState extends State<ProductEdit> {
                   final bool isValid = _formKey.currentState.validate();
 
                   setState(() {
-                    autoValidate = ! isValid;
+                    autoValidate = !isValid;
                   });
 
-                  if (! isValid) {
+                  if (!isValid) {
                     return;
                   }
 
@@ -122,11 +131,19 @@ class _ProductEditState extends State<ProductEdit> {
                 },
               );
             }),
-            viewModel.product.isNew
+            product.isNew || !user.canCreate(EntityType.product)
                 ? Container()
                 : ActionMenuButton(
+                    user: viewModel.company.user,
                     entity: viewModel.product,
                     onSelected: viewModel.onActionSelected,
+                    customActions: [
+                      ActionMenuChoice(
+                        label: localization.clone,
+                        icon: Icons.control_point_duplicate,
+                        action: EntityAction.clone,
+                      ),
+                    ],
                   )
           ],
         ),
@@ -158,13 +175,17 @@ class _ProductEditState extends State<ProductEdit> {
                   ),
                   CustomField(
                     controller: _custom1Controller,
-                    labelText: company.getCustomFieldLabel(CustomFieldType.product1),
-                    options: company.getCustomFieldValues(CustomFieldType.product1),
+                    labelText:
+                        company.getCustomFieldLabel(CustomFieldType.product1),
+                    options:
+                        company.getCustomFieldValues(CustomFieldType.product1),
                   ),
                   CustomField(
                     controller: _custom2Controller,
-                    labelText: company.getCustomFieldLabel(CustomFieldType.product2),
-                    options: company.getCustomFieldValues(CustomFieldType.product2),
+                    labelText:
+                        company.getCustomFieldLabel(CustomFieldType.product2),
+                    options:
+                        company.getCustomFieldValues(CustomFieldType.product2),
                   ),
                   TextFormField(
                     key: Key(ProductKeys.productEditCostFieldKeyString),
@@ -176,27 +197,27 @@ class _ProductEditState extends State<ProductEdit> {
                   ),
                   company.enableInvoiceItemTaxes
                       ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(product.rebuild((b) => b
-                          ..taxRate1 = taxRate.rate
-                          ..taxName1 = taxRate.name)),
-                    labelText: localization.tax,
-                    initialTaxName: product.taxName1,
-                    initialTaxRate: product.taxRate1,
-                  )
+                          taxRates: company.taxRates,
+                          onSelected: (taxRate) =>
+                              viewModel.onChanged(product.rebuild((b) => b
+                                ..taxRate1 = taxRate.rate
+                                ..taxName1 = taxRate.name)),
+                          labelText: localization.tax,
+                          initialTaxName: product.taxName1,
+                          initialTaxRate: product.taxRate1,
+                        )
                       : Container(),
                   company.enableInvoiceItemTaxes && company.enableSecondTaxRate
                       ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(product.rebuild((b) => b
-                          ..taxRate2 = taxRate.rate
-                          ..taxName2 = taxRate.name)),
-                    labelText: localization.tax,
-                    initialTaxName: product.taxName2,
-                    initialTaxRate: product.taxRate2,
-                  )
+                          taxRates: company.taxRates,
+                          onSelected: (taxRate) =>
+                              viewModel.onChanged(product.rebuild((b) => b
+                                ..taxRate2 = taxRate.rate
+                                ..taxName2 = taxRate.name)),
+                          labelText: localization.tax,
+                          initialTaxName: product.taxName2,
+                          initialTaxRate: product.taxRate2,
+                        )
                       : Container(),
                 ],
               ),

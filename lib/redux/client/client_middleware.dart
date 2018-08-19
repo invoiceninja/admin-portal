@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -45,7 +46,8 @@ Middleware<AppState> _editClient() {
       store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
     }
 
-    final client = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+    final client =
+        await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
 
     if (action.completer != null && client != null) {
       action.completer.complete(client);
@@ -67,7 +69,11 @@ Middleware<AppState> _viewClientList() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
-    Navigator.of(action.context).pushReplacementNamed(ClientScreen.route);
+
+    //Navigator.of(action.context).pushNamedAndRemoveUntil(
+    //    ClientScreen.route, ModalRoute.withName(DashboardScreen.route));
+
+    Navigator.of(action.context).pushNamedAndRemoveUntil(ClientScreen.route, (Route<dynamic> route) => false);
   };
 }
 
@@ -164,7 +170,6 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 
 Middleware<AppState> _loadClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -174,12 +179,13 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 
     store.dispatch(LoadClientRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.clientId, action.loadActivities)
+        .loadItem(state.selectedCompany, state.authState, action.clientId,
+            action.loadActivities)
         .then((client) {
       store.dispatch(LoadClientSuccess(client));
 
       if (action.completer != null) {
-        action.completer.complete(client);
+        action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
@@ -195,7 +201,6 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 
 Middleware<AppState> _loadClients(ClientRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-
     final AppState state = store.state;
 
     if (!state.clientState.isStale && !action.force) {
@@ -208,9 +213,12 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
       return;
     }
 
+    final int updatedAt =
+        action.force ? 0 : (state.clientState.lastUpdated / 1000).round();
+
     store.dispatch(LoadClientsRequest());
     repository
-        .loadList(state.selectedCompany, state.authState)
+        .loadList(state.selectedCompany, state.authState, updatedAt)
         .then((data) {
       store.dispatch(LoadClientsSuccess(data));
 

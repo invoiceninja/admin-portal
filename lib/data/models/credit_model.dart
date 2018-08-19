@@ -60,6 +60,9 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
     );
   }
   CreditEntity._();
+  CreditEntity get clone => rebuild((b) => b
+    ..id = --CreditEntity.counter
+  );
 
   @override
   EntityType get entityType {

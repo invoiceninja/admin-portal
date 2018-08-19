@@ -1,12 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -44,6 +44,23 @@ class SettingsListVM {
   });
 
   static SettingsListVM fromStore(Store<AppState> store) {
+    void _refreshData(BuildContext context) async {
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete,
+          shouldPop: true);
+      store.dispatch(RefreshData(
+        platform: getPlatform(context),
+        completer: completer,
+      ));
+      await showDialog<AlertDialog>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => SimpleDialog(
+                children: <Widget>[LoadingDialog()],
+              ));
+      AppBuilder.of(context).rebuild();
+      store.dispatch(LoadDashboard());
+    }
 
     void _confirmLogout(BuildContext context) {
       final localization = AppLocalization.of(context);
@@ -61,11 +78,8 @@ class SettingsListVM {
                 new FlatButton(
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
-                      final navigator = Navigator.of(context);
-                      while (navigator.canPop()) {
-                        navigator.pop();
-                      }
-                      navigator.pushNamed(LoginScreen.route);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          LoginScreen.route, (Route<dynamic> route) => false);
                       store.dispatch(UserLogout());
                     })
               ],
@@ -73,48 +87,14 @@ class SettingsListVM {
       );
     }
 
-    void _warnRestart(BuildContext context) {
-      final localization = AppLocalization.of(context);
-      showDialog<AlertDialog>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-              semanticLabel: localization.restartAppToApplyChange,
-              title: Text(localization.restartAppToApplyChange),
-              actions: <Widget>[
-                new FlatButton(
-                    child: Text(localization.ok.toUpperCase()),
-                    onPressed: () => Navigator.pop(context))
-              ],
-            ),
-      );
-    }
-
     return SettingsListVM(
         onLogoutTap: (BuildContext context) => _confirmLogout(context),
-        onRefreshTap: (BuildContext context) {
-          final Completer<Null> completer = new Completer<Null>();
-          store.dispatch(RefreshData(
-            platform: getPlatform(context),
-            completer: completer,
-          ));
-          return completer.future.then((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
-                  message: AppLocalization.of(context).refreshComplete,
-                )));
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
-        },
+        onRefreshTap: (BuildContext context) => _refreshData(context),
         onDarkModeChanged: (BuildContext context, bool value) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool(kSharedPrefEnableDarkMode, value);
           store.dispatch(UserSettingsChanged(enableDarkMode: value));
-          _warnRestart(context);
+          AppBuilder.of(context).rebuild();
         },
         enableDarkMode: store.state.uiState.enableDarkMode);
   }

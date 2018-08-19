@@ -9,13 +9,17 @@ part of 'company_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
 
 Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
+Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
+    new _$PaymentTermEntitySerializer();
 Serializer<TaxRateEntity> _$taxRateEntitySerializer =
     new _$TaxRateEntitySerializer();
 Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
@@ -28,7 +32,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
 
   @override
   Iterable serialize(Serializers serializers, CompanyEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -137,20 +141,58 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.taxRates,
           specifiedType:
               const FullType(BuiltList, const [const FullType(TaxRateEntity)])),
-      'users',
-      serializers.serialize(object.users,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(UserEntity)])),
-      'userMap',
-      serializers.serialize(object.userMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(int), const FullType(UserEntity)])),
+      'user',
+      serializers.serialize(object.user,
+          specifiedType: const FullType(UserEntity)),
       'custom_fields',
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
+      'custom_payment_terms',
+      serializers.serialize(object.customPaymentTerms,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(PaymentTermEntity)])),
       'invoice_fields',
       serializers.serialize(object.invoiceFields,
+          specifiedType: const FullType(String)),
+      'email_footer',
+      serializers.serialize(object.emailFooter,
+          specifiedType: const FullType(String)),
+      'email_subject_invoice',
+      serializers.serialize(object.emailSubjectInvoice,
+          specifiedType: const FullType(String)),
+      'email_subject_quote',
+      serializers.serialize(object.emailSubjectQuote,
+          specifiedType: const FullType(String)),
+      'email_subject_payment',
+      serializers.serialize(object.emailSubjectPayment,
+          specifiedType: const FullType(String)),
+      'email_template_invoice',
+      serializers.serialize(object.emailBodyInvoice,
+          specifiedType: const FullType(String)),
+      'email_template_quote',
+      serializers.serialize(object.emailBodyQuote,
+          specifiedType: const FullType(String)),
+      'email_template_payment',
+      serializers.serialize(object.emailBodyPayment,
+          specifiedType: const FullType(String)),
+      'email_subject_reminder1',
+      serializers.serialize(object.emailSubjectReminder1,
+          specifiedType: const FullType(String)),
+      'email_subject_reminder2',
+      serializers.serialize(object.emailSubjectReminder2,
+          specifiedType: const FullType(String)),
+      'email_subject_reminder3',
+      serializers.serialize(object.emailSubjectReminder3,
+          specifiedType: const FullType(String)),
+      'email_template_reminder1',
+      serializers.serialize(object.emailBodyReminder1,
+          specifiedType: const FullType(String)),
+      'email_template_reminder2',
+      serializers.serialize(object.emailBodyReminder2,
+          specifiedType: const FullType(String)),
+      'email_template_reminder3',
+      serializers.serialize(object.emailBodyReminder3,
           specifiedType: const FullType(String)),
     ];
 
@@ -159,7 +201,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
 
   @override
   CompanyEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new CompanyEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -314,17 +356,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(TaxRateEntity)]))
               as BuiltList);
           break;
-        case 'users':
-          result.users.replace(serializers.deserialize(value,
-              specifiedType: const FullType(
-                  BuiltList, const [const FullType(UserEntity)])) as BuiltList);
-          break;
-        case 'userMap':
-          result.userMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
-                const FullType(UserEntity)
-              ])) as BuiltMap);
+        case 'user':
+          result.user.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserEntity)) as UserEntity);
           break;
         case 'custom_fields':
           result.customFields.replace(serializers.deserialize(value,
@@ -333,9 +367,130 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                 const FullType(String)
               ])) as BuiltMap);
           break;
+        case 'custom_payment_terms':
+          result.customPaymentTerms.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(PaymentTermEntity)]))
+              as BuiltList);
+          break;
         case 'invoice_fields':
           result.invoiceFields = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_footer':
+          result.emailFooter = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_invoice':
+          result.emailSubjectInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_quote':
+          result.emailSubjectQuote = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_payment':
+          result.emailSubjectPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_invoice':
+          result.emailBodyInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_quote':
+          result.emailBodyQuote = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_payment':
+          result.emailBodyPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_reminder1':
+          result.emailSubjectReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_reminder2':
+          result.emailSubjectReminder2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_reminder3':
+          result.emailSubjectReminder3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_reminder1':
+          result.emailBodyReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_reminder2':
+          result.emailBodyReminder2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_reminder3':
+          result.emailBodyReminder3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$PaymentTermEntitySerializer
+    implements StructuredSerializer<PaymentTermEntity> {
+  @override
+  final Iterable<Type> types = const [PaymentTermEntity, _$PaymentTermEntity];
+  @override
+  final String wireName = 'PaymentTermEntity';
+
+  @override
+  Iterable serialize(Serializers serializers, PaymentTermEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.numDays != null) {
+      result
+        ..add('num_days')
+        ..add(serializers.serialize(object.numDays,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
+
+    return result;
+  }
+
+  @override
+  PaymentTermEntity deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PaymentTermEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'num_days':
+          result.numDays = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -352,7 +507,7 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
 
   @override
   Iterable serialize(Serializers serializers, TaxRateEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -380,7 +535,7 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
 
   @override
   TaxRateEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new TaxRateEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -424,7 +579,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
 
   @override
   Iterable serialize(Serializers serializers, UserEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
@@ -434,6 +589,16 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'last_name',
       serializers.serialize(object.lastName,
           specifiedType: const FullType(String)),
+      'email',
+      serializers.serialize(object.email,
+          specifiedType: const FullType(String)),
+      'is_admin',
+      serializers.serialize(object.isAdmin,
+          specifiedType: const FullType(bool)),
+      'permissions',
+      serializers.serialize(object.permissionsMap,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(String), const FullType(bool)])),
     ];
 
     return result;
@@ -441,7 +606,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
 
   @override
   UserEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new UserEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -461,6 +626,21 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'last_name':
           result.lastName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'email':
+          result.email = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_admin':
+          result.isAdmin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'permissions':
+          result.permissionsMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(bool)
+              ])) as BuiltMap);
           break;
       }
     }
@@ -543,13 +723,39 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<TaxRateEntity> taxRates;
   @override
-  final BuiltList<UserEntity> users;
-  @override
-  final BuiltMap<int, UserEntity> userMap;
+  final UserEntity user;
   @override
   final BuiltMap<String, String> customFields;
   @override
+  final BuiltList<PaymentTermEntity> customPaymentTerms;
+  @override
   final String invoiceFields;
+  @override
+  final String emailFooter;
+  @override
+  final String emailSubjectInvoice;
+  @override
+  final String emailSubjectQuote;
+  @override
+  final String emailSubjectPayment;
+  @override
+  final String emailBodyInvoice;
+  @override
+  final String emailBodyQuote;
+  @override
+  final String emailBodyPayment;
+  @override
+  final String emailSubjectReminder1;
+  @override
+  final String emailSubjectReminder2;
+  @override
+  final String emailSubjectReminder3;
+  @override
+  final String emailBodyReminder1;
+  @override
+  final String emailBodyReminder2;
+  @override
+  final String emailBodyReminder3;
 
   factory _$CompanyEntity([void updates(CompanyEntityBuilder b)]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
@@ -591,10 +797,23 @@ class _$CompanyEntity extends CompanyEntity {
       this.enableCustomInvoiceTaxes1,
       this.enableCustomInvoiceTaxes2,
       this.taxRates,
-      this.users,
-      this.userMap,
+      this.user,
       this.customFields,
-      this.invoiceFields})
+      this.customPaymentTerms,
+      this.invoiceFields,
+      this.emailFooter,
+      this.emailSubjectInvoice,
+      this.emailSubjectQuote,
+      this.emailSubjectPayment,
+      this.emailBodyInvoice,
+      this.emailBodyQuote,
+      this.emailBodyPayment,
+      this.emailSubjectReminder1,
+      this.emailSubjectReminder2,
+      this.emailSubjectReminder3,
+      this.emailBodyReminder1,
+      this.emailBodyReminder2,
+      this.emailBodyReminder3})
       : super._() {
     if (name == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
@@ -681,14 +900,45 @@ class _$CompanyEntity extends CompanyEntity {
           'CompanyEntity', 'enableCustomInvoiceTaxes2');
     if (taxRates == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'taxRates');
-    if (users == null)
-      throw new BuiltValueNullFieldError('CompanyEntity', 'users');
-    if (userMap == null)
-      throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
+    if (user == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'user');
     if (customFields == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
+    if (customPaymentTerms == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'customPaymentTerms');
     if (invoiceFields == null)
       throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceFields');
+    if (emailFooter == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailFooter');
+    if (emailSubjectInvoice == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectInvoice');
+    if (emailSubjectQuote == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailSubjectQuote');
+    if (emailSubjectPayment == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectPayment');
+    if (emailBodyInvoice == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyInvoice');
+    if (emailBodyQuote == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyQuote');
+    if (emailBodyPayment == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyPayment');
+    if (emailSubjectReminder1 == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectReminder1');
+    if (emailSubjectReminder2 == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectReminder2');
+    if (emailSubjectReminder3 == null)
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'emailSubjectReminder3');
+    if (emailBodyReminder1 == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder1');
+    if (emailBodyReminder2 == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder2');
+    if (emailBodyReminder3 == null)
+      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder3');
   }
 
   @override
@@ -738,10 +988,23 @@ class _$CompanyEntity extends CompanyEntity {
         enableCustomInvoiceTaxes1 == other.enableCustomInvoiceTaxes1 &&
         enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2 &&
         taxRates == other.taxRates &&
-        users == other.users &&
-        userMap == other.userMap &&
+        user == other.user &&
         customFields == other.customFields &&
-        invoiceFields == other.invoiceFields;
+        customPaymentTerms == other.customPaymentTerms &&
+        invoiceFields == other.invoiceFields &&
+        emailFooter == other.emailFooter &&
+        emailSubjectInvoice == other.emailSubjectInvoice &&
+        emailSubjectQuote == other.emailSubjectQuote &&
+        emailSubjectPayment == other.emailSubjectPayment &&
+        emailBodyInvoice == other.emailBodyInvoice &&
+        emailBodyQuote == other.emailBodyQuote &&
+        emailBodyPayment == other.emailBodyPayment &&
+        emailSubjectReminder1 == other.emailSubjectReminder1 &&
+        emailSubjectReminder2 == other.emailSubjectReminder2 &&
+        emailSubjectReminder3 == other.emailSubjectReminder3 &&
+        emailBodyReminder1 == other.emailBodyReminder1 &&
+        emailBodyReminder2 == other.emailBodyReminder2 &&
+        emailBodyReminder3 == other.emailBodyReminder3;
   }
 
   @override
@@ -764,26 +1027,26 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode),
-                                                                                defaultTaxRate2.hashCode),
-                                                                            defaultQuoteTerms.hashCode),
-                                                                        showCurrencyCode.hashCode),
-                                                                    enableSecondTaxRate.hashCode),
-                                                                startOfWeek.hashCode),
-                                                            financialYearStart.hashCode),
-                                                        enabledModules.hashCode),
-                                                    defaultPaymentTerms.hashCode),
-                                                defaultPaymentTypeId.hashCode),
-                                            defaultTaskRate.hashCode),
-                                        enableInclusiveTaxes.hashCode),
-                                    convertProductExchangeRate.hashCode),
-                                enableCustomInvoiceTaxes1.hashCode),
-                            enableCustomInvoiceTaxes2.hashCode),
-                        taxRates.hashCode),
-                    users.hashCode),
-                userMap.hashCode),
-            customFields.hashCode),
-        invoiceFields.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode),
+                                                                                enableCustomInvoiceTaxes2.hashCode),
+                                                                            taxRates.hashCode),
+                                                                        user.hashCode),
+                                                                    customFields.hashCode),
+                                                                customPaymentTerms.hashCode),
+                                                            invoiceFields.hashCode),
+                                                        emailFooter.hashCode),
+                                                    emailSubjectInvoice.hashCode),
+                                                emailSubjectQuote.hashCode),
+                                            emailSubjectPayment.hashCode),
+                                        emailBodyInvoice.hashCode),
+                                    emailBodyQuote.hashCode),
+                                emailBodyPayment.hashCode),
+                            emailSubjectReminder1.hashCode),
+                        emailSubjectReminder2.hashCode),
+                    emailSubjectReminder3.hashCode),
+                emailBodyReminder1.hashCode),
+            emailBodyReminder2.hashCode),
+        emailBodyReminder3.hashCode));
   }
 
   @override
@@ -825,10 +1088,23 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('enableCustomInvoiceTaxes1', enableCustomInvoiceTaxes1)
           ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2)
           ..add('taxRates', taxRates)
-          ..add('users', users)
-          ..add('userMap', userMap)
+          ..add('user', user)
           ..add('customFields', customFields)
-          ..add('invoiceFields', invoiceFields))
+          ..add('customPaymentTerms', customPaymentTerms)
+          ..add('invoiceFields', invoiceFields)
+          ..add('emailFooter', emailFooter)
+          ..add('emailSubjectInvoice', emailSubjectInvoice)
+          ..add('emailSubjectQuote', emailSubjectQuote)
+          ..add('emailSubjectPayment', emailSubjectPayment)
+          ..add('emailBodyInvoice', emailBodyInvoice)
+          ..add('emailBodyQuote', emailBodyQuote)
+          ..add('emailBodyPayment', emailBodyPayment)
+          ..add('emailSubjectReminder1', emailSubjectReminder1)
+          ..add('emailSubjectReminder2', emailSubjectReminder2)
+          ..add('emailSubjectReminder3', emailSubjectReminder3)
+          ..add('emailBodyReminder1', emailBodyReminder1)
+          ..add('emailBodyReminder2', emailBodyReminder2)
+          ..add('emailBodyReminder3', emailBodyReminder3))
         .toString();
   }
 }
@@ -1008,15 +1284,9 @@ class CompanyEntityBuilder
   set taxRates(ListBuilder<TaxRateEntity> taxRates) =>
       _$this._taxRates = taxRates;
 
-  ListBuilder<UserEntity> _users;
-  ListBuilder<UserEntity> get users =>
-      _$this._users ??= new ListBuilder<UserEntity>();
-  set users(ListBuilder<UserEntity> users) => _$this._users = users;
-
-  MapBuilder<int, UserEntity> _userMap;
-  MapBuilder<int, UserEntity> get userMap =>
-      _$this._userMap ??= new MapBuilder<int, UserEntity>();
-  set userMap(MapBuilder<int, UserEntity> userMap) => _$this._userMap = userMap;
+  UserEntityBuilder _user;
+  UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
+  set user(UserEntityBuilder user) => _$this._user = user;
 
   MapBuilder<String, String> _customFields;
   MapBuilder<String, String> get customFields =>
@@ -1024,10 +1294,80 @@ class CompanyEntityBuilder
   set customFields(MapBuilder<String, String> customFields) =>
       _$this._customFields = customFields;
 
+  ListBuilder<PaymentTermEntity> _customPaymentTerms;
+  ListBuilder<PaymentTermEntity> get customPaymentTerms =>
+      _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
+  set customPaymentTerms(ListBuilder<PaymentTermEntity> customPaymentTerms) =>
+      _$this._customPaymentTerms = customPaymentTerms;
+
   String _invoiceFields;
   String get invoiceFields => _$this._invoiceFields;
   set invoiceFields(String invoiceFields) =>
       _$this._invoiceFields = invoiceFields;
+
+  String _emailFooter;
+  String get emailFooter => _$this._emailFooter;
+  set emailFooter(String emailFooter) => _$this._emailFooter = emailFooter;
+
+  String _emailSubjectInvoice;
+  String get emailSubjectInvoice => _$this._emailSubjectInvoice;
+  set emailSubjectInvoice(String emailSubjectInvoice) =>
+      _$this._emailSubjectInvoice = emailSubjectInvoice;
+
+  String _emailSubjectQuote;
+  String get emailSubjectQuote => _$this._emailSubjectQuote;
+  set emailSubjectQuote(String emailSubjectQuote) =>
+      _$this._emailSubjectQuote = emailSubjectQuote;
+
+  String _emailSubjectPayment;
+  String get emailSubjectPayment => _$this._emailSubjectPayment;
+  set emailSubjectPayment(String emailSubjectPayment) =>
+      _$this._emailSubjectPayment = emailSubjectPayment;
+
+  String _emailBodyInvoice;
+  String get emailBodyInvoice => _$this._emailBodyInvoice;
+  set emailBodyInvoice(String emailBodyInvoice) =>
+      _$this._emailBodyInvoice = emailBodyInvoice;
+
+  String _emailBodyQuote;
+  String get emailBodyQuote => _$this._emailBodyQuote;
+  set emailBodyQuote(String emailBodyQuote) =>
+      _$this._emailBodyQuote = emailBodyQuote;
+
+  String _emailBodyPayment;
+  String get emailBodyPayment => _$this._emailBodyPayment;
+  set emailBodyPayment(String emailBodyPayment) =>
+      _$this._emailBodyPayment = emailBodyPayment;
+
+  String _emailSubjectReminder1;
+  String get emailSubjectReminder1 => _$this._emailSubjectReminder1;
+  set emailSubjectReminder1(String emailSubjectReminder1) =>
+      _$this._emailSubjectReminder1 = emailSubjectReminder1;
+
+  String _emailSubjectReminder2;
+  String get emailSubjectReminder2 => _$this._emailSubjectReminder2;
+  set emailSubjectReminder2(String emailSubjectReminder2) =>
+      _$this._emailSubjectReminder2 = emailSubjectReminder2;
+
+  String _emailSubjectReminder3;
+  String get emailSubjectReminder3 => _$this._emailSubjectReminder3;
+  set emailSubjectReminder3(String emailSubjectReminder3) =>
+      _$this._emailSubjectReminder3 = emailSubjectReminder3;
+
+  String _emailBodyReminder1;
+  String get emailBodyReminder1 => _$this._emailBodyReminder1;
+  set emailBodyReminder1(String emailBodyReminder1) =>
+      _$this._emailBodyReminder1 = emailBodyReminder1;
+
+  String _emailBodyReminder2;
+  String get emailBodyReminder2 => _$this._emailBodyReminder2;
+  set emailBodyReminder2(String emailBodyReminder2) =>
+      _$this._emailBodyReminder2 = emailBodyReminder2;
+
+  String _emailBodyReminder3;
+  String get emailBodyReminder3 => _$this._emailBodyReminder3;
+  set emailBodyReminder3(String emailBodyReminder3) =>
+      _$this._emailBodyReminder3 = emailBodyReminder3;
 
   CompanyEntityBuilder();
 
@@ -1069,10 +1409,23 @@ class CompanyEntityBuilder
       _enableCustomInvoiceTaxes1 = _$v.enableCustomInvoiceTaxes1;
       _enableCustomInvoiceTaxes2 = _$v.enableCustomInvoiceTaxes2;
       _taxRates = _$v.taxRates?.toBuilder();
-      _users = _$v.users?.toBuilder();
-      _userMap = _$v.userMap?.toBuilder();
+      _user = _$v.user?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
+      _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _invoiceFields = _$v.invoiceFields;
+      _emailFooter = _$v.emailFooter;
+      _emailSubjectInvoice = _$v.emailSubjectInvoice;
+      _emailSubjectQuote = _$v.emailSubjectQuote;
+      _emailSubjectPayment = _$v.emailSubjectPayment;
+      _emailBodyInvoice = _$v.emailBodyInvoice;
+      _emailBodyQuote = _$v.emailBodyQuote;
+      _emailBodyPayment = _$v.emailBodyPayment;
+      _emailSubjectReminder1 = _$v.emailSubjectReminder1;
+      _emailSubjectReminder2 = _$v.emailSubjectReminder2;
+      _emailSubjectReminder3 = _$v.emailSubjectReminder3;
+      _emailBodyReminder1 = _$v.emailBodyReminder1;
+      _emailBodyReminder2 = _$v.emailBodyReminder2;
+      _emailBodyReminder3 = _$v.emailBodyReminder3;
       _$v = null;
     }
     return this;
@@ -1131,27 +1484,135 @@ class CompanyEntityBuilder
               enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
               enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2,
               taxRates: taxRates.build(),
-              users: users.build(),
-              userMap: userMap.build(),
+              user: user.build(),
               customFields: customFields.build(),
-              invoiceFields: invoiceFields);
+              customPaymentTerms: customPaymentTerms.build(),
+              invoiceFields: invoiceFields,
+              emailFooter: emailFooter,
+              emailSubjectInvoice: emailSubjectInvoice,
+              emailSubjectQuote: emailSubjectQuote,
+              emailSubjectPayment: emailSubjectPayment,
+              emailBodyInvoice: emailBodyInvoice,
+              emailBodyQuote: emailBodyQuote,
+              emailBodyPayment: emailBodyPayment,
+              emailSubjectReminder1: emailSubjectReminder1,
+              emailSubjectReminder2: emailSubjectReminder2,
+              emailSubjectReminder3: emailSubjectReminder3,
+              emailBodyReminder1: emailBodyReminder1,
+              emailBodyReminder2: emailBodyReminder2,
+              emailBodyReminder3: emailBodyReminder3);
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'taxRates';
         taxRates.build();
-        _$failedField = 'users';
-        users.build();
-        _$failedField = 'userMap';
-        userMap.build();
+        _$failedField = 'user';
+        user.build();
         _$failedField = 'customFields';
         customFields.build();
+        _$failedField = 'customPaymentTerms';
+        customPaymentTerms.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyEntity', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$PaymentTermEntity extends PaymentTermEntity {
+  @override
+  final int numDays;
+  @override
+  final int archivedAt;
+  @override
+  final int id;
+
+  factory _$PaymentTermEntity([void updates(PaymentTermEntityBuilder b)]) =>
+      (new PaymentTermEntityBuilder()..update(updates)).build();
+
+  _$PaymentTermEntity._({this.numDays, this.archivedAt, this.id}) : super._();
+
+  @override
+  PaymentTermEntity rebuild(void updates(PaymentTermEntityBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PaymentTermEntityBuilder toBuilder() =>
+      new PaymentTermEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    if (identical(other, this)) return true;
+    if (other is! PaymentTermEntity) return false;
+    return numDays == other.numDays &&
+        archivedAt == other.archivedAt &&
+        id == other.id;
+  }
+
+  @override
+  int get hashCode {
+    return $jf(
+        $jc($jc($jc(0, numDays.hashCode), archivedAt.hashCode), id.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('PaymentTermEntity')
+          ..add('numDays', numDays)
+          ..add('archivedAt', archivedAt)
+          ..add('id', id))
+        .toString();
+  }
+}
+
+class PaymentTermEntityBuilder
+    implements Builder<PaymentTermEntity, PaymentTermEntityBuilder> {
+  _$PaymentTermEntity _$v;
+
+  int _numDays;
+  int get numDays => _$this._numDays;
+  set numDays(int numDays) => _$this._numDays = numDays;
+
+  int _archivedAt;
+  int get archivedAt => _$this._archivedAt;
+  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  PaymentTermEntityBuilder();
+
+  PaymentTermEntityBuilder get _$this {
+    if (_$v != null) {
+      _numDays = _$v.numDays;
+      _archivedAt = _$v.archivedAt;
+      _id = _$v.id;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PaymentTermEntity other) {
+    if (other == null) throw new ArgumentError.notNull('other');
+    _$v = other as _$PaymentTermEntity;
+  }
+
+  @override
+  void update(void updates(PaymentTermEntityBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$PaymentTermEntity build() {
+    final _$result = _$v ??
+        new _$PaymentTermEntity._(
+            numDays: numDays, archivedAt: archivedAt, id: id);
     replace(_$result);
     return _$result;
   }
@@ -1293,16 +1754,35 @@ class _$UserEntity extends UserEntity {
   final String firstName;
   @override
   final String lastName;
+  @override
+  final String email;
+  @override
+  final bool isAdmin;
+  @override
+  final BuiltMap<String, bool> permissionsMap;
 
   factory _$UserEntity([void updates(UserEntityBuilder b)]) =>
       (new UserEntityBuilder()..update(updates)).build();
 
-  _$UserEntity._({this.id, this.firstName, this.lastName}) : super._() {
+  _$UserEntity._(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.isAdmin,
+      this.permissionsMap})
+      : super._() {
     if (id == null) throw new BuiltValueNullFieldError('UserEntity', 'id');
     if (firstName == null)
       throw new BuiltValueNullFieldError('UserEntity', 'firstName');
     if (lastName == null)
       throw new BuiltValueNullFieldError('UserEntity', 'lastName');
+    if (email == null)
+      throw new BuiltValueNullFieldError('UserEntity', 'email');
+    if (isAdmin == null)
+      throw new BuiltValueNullFieldError('UserEntity', 'isAdmin');
+    if (permissionsMap == null)
+      throw new BuiltValueNullFieldError('UserEntity', 'permissionsMap');
   }
 
   @override
@@ -1318,13 +1798,22 @@ class _$UserEntity extends UserEntity {
     if (other is! UserEntity) return false;
     return id == other.id &&
         firstName == other.firstName &&
-        lastName == other.lastName;
+        lastName == other.lastName &&
+        email == other.email &&
+        isAdmin == other.isAdmin &&
+        permissionsMap == other.permissionsMap;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, id.hashCode), firstName.hashCode), lastName.hashCode));
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc($jc($jc(0, id.hashCode), firstName.hashCode),
+                    lastName.hashCode),
+                email.hashCode),
+            isAdmin.hashCode),
+        permissionsMap.hashCode));
   }
 
   @override
@@ -1332,7 +1821,10 @@ class _$UserEntity extends UserEntity {
     return (newBuiltValueToStringHelper('UserEntity')
           ..add('id', id)
           ..add('firstName', firstName)
-          ..add('lastName', lastName))
+          ..add('lastName', lastName)
+          ..add('email', email)
+          ..add('isAdmin', isAdmin)
+          ..add('permissionsMap', permissionsMap))
         .toString();
   }
 }
@@ -1352,6 +1844,20 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String get lastName => _$this._lastName;
   set lastName(String lastName) => _$this._lastName = lastName;
 
+  String _email;
+  String get email => _$this._email;
+  set email(String email) => _$this._email = email;
+
+  bool _isAdmin;
+  bool get isAdmin => _$this._isAdmin;
+  set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
+
+  MapBuilder<String, bool> _permissionsMap;
+  MapBuilder<String, bool> get permissionsMap =>
+      _$this._permissionsMap ??= new MapBuilder<String, bool>();
+  set permissionsMap(MapBuilder<String, bool> permissionsMap) =>
+      _$this._permissionsMap = permissionsMap;
+
   UserEntityBuilder();
 
   UserEntityBuilder get _$this {
@@ -1359,6 +1865,9 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _id = _$v.id;
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
+      _email = _$v.email;
+      _isAdmin = _$v.isAdmin;
+      _permissionsMap = _$v.permissionsMap?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1377,8 +1886,27 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   @override
   _$UserEntity build() {
-    final _$result = _$v ??
-        new _$UserEntity._(id: id, firstName: firstName, lastName: lastName);
+    _$UserEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$UserEntity._(
+              id: id,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              isAdmin: isAdmin,
+              permissionsMap: permissionsMap.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'permissionsMap';
+        permissionsMap.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'UserEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

@@ -45,7 +45,8 @@ Middleware<AppState> _viewProductList() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-    Navigator.of(action.context).pushReplacementNamed(ProductScreen.route);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        ProductScreen.route, (Route<dynamic> route) => false);
   };
 }
 
@@ -154,8 +155,10 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
       return;
     }
 
+    final int updatedAt = action.force ? 0 : (state.productState.lastUpdated / 1000).round();
+
     store.dispatch(LoadProductsRequest());
-    repository.loadList(state.selectedCompany, state.authState).then((data) {
+    repository.loadList(state.selectedCompany, state.authState, updatedAt).then((data) {
       store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

@@ -28,6 +28,9 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   ClientUIState get clientUIState;
   InvoiceUIState get invoiceUIState;
 
+  @nullable
+  String get filter;
+
   //factory UIState([void updates(UIStateBuilder b)]) = _$UIState;
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 }

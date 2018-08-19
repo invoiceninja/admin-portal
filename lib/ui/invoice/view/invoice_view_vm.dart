@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
   static const String route = '/invoice/view';
+
   const InvoiceViewScreen({Key key}) : super(key: key);
 
   @override
@@ -65,35 +66,10 @@ class InvoiceViewVM {
     final client = store.state.clientState.map[invoice.clientId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-      store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
-      return completer.future.then((_) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-            content: SnackBarRow(
-              message: AppLocalization.of(context).refreshComplete,
-            )));
-      });
-    }
-
-    Future<Null> _viewPdf(BuildContext context) async {
-      final localization = AppLocalization.of(context);
-      String url;
-      bool useWebView;
-
-      if (Theme.of(context).platform == TargetPlatform.iOS) {
-        url = invoice.invitationSilentLink;
-        useWebView = true;
-      } else {
-        url = 'https://docs.google.com/viewer?url=' +
-            invoice.invitationDownloadLink;
-        useWebView = false;
-      }
-
-      if (await canLaunch(url)) {
-        await launch(url, forceSafariVC: useWebView, forceWebView: useWebView);
-      } else {
-        throw '${localization.anErrorOccurred}';
-      }
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
+      store.dispatch(LoadInvoices(completer: completer, force: true));
+      return completer.future;
     }
 
     return InvoiceViewVM(
@@ -112,10 +88,9 @@ class InvoiceViewVM {
               invoiceItem: invoiceItem));
           completer.future.then((invoice) {
             Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
-                  message:
-                      AppLocalization.of(context).successfullyUpdatedInvoice,
-                )));
+                content: SnackBarRow(
+              message: AppLocalization.of(context).updatedInvoice,
+            )));
           });
         },
         onRefreshed: (context) => _handleRefresh(context),
@@ -125,52 +100,47 @@ class InvoiceViewVM {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = new Completer<Null>();
-          String message;
+          final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
-              _viewPdf(context);
+              viewPdf(invoice, context);
               break;
             case EntityAction.markSent:
-              store.dispatch(MarkSentInvoiceRequest(completer, invoice.id));
-              message =
-                  AppLocalization.of(context).successfullyMarkedInvoiceAsSent;
+              store.dispatch(MarkSentInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.markedInvoiceAsSent),
+                  invoice.id));
               break;
             case EntityAction.emailInvoice:
-              store.dispatch(EmailInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyEmailedInvoice;
+              store.dispatch(ShowEmailInvoice(
+                  completer: snackBarCompleter(
+                      context, localization.emailedInvoice),
+                  invoice: invoice,
+                  context: context));
               break;
             case EntityAction.archive:
-              store.dispatch(ArchiveInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyArchivedInvoice;
+              store.dispatch(ArchiveInvoiceRequest(
+                  popCompleter(
+                      context, localization.archivedInvoice),
+                  invoice.id));
               break;
             case EntityAction.delete:
-              store.dispatch(DeleteInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyDeletedInvoice;
+              store.dispatch(DeleteInvoiceRequest(
+                  popCompleter(
+                      context, localization.deletedInvoice),
+                  invoice.id));
               break;
             case EntityAction.restore:
-              store.dispatch(RestoreInvoiceRequest(completer, invoice.id));
-              message = AppLocalization.of(context).successfullyRestoredInvoice;
+              store.dispatch(RestoreInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.restoredInvoice),
+                  invoice.id));
               break;
-          }
-          if (message != null) {
-            return completer.future.then((_) {
-              if ([EntityAction.archive, EntityAction.delete]
-                  .contains(action)) {
-                Navigator.of(context).pop(message);
-              } else {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                        content: SnackBarRow(
-                      message: message,
-                    )));
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
+            case EntityAction.clone:
+              Navigator.of(context).pop();
+              store.dispatch(
+                  EditInvoice(context: context, invoice: invoice.clone));
+              break;
           }
         });
   }

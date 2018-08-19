@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -95,6 +96,7 @@ abstract class ClientEntity extends Object
         <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
       activities: BuiltList<ActivityEntity>(),
+      lastUpdatedActivities: 0,
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -102,6 +104,23 @@ abstract class ClientEntity extends Object
   }
 
   ClientEntity._();
+
+  ClientEntity get clone => rebuild((b) => b..id = --ClientEntity.counter);
+
+  @nullable
+  int get lastUpdatedActivities;
+
+  bool get areActivitiesLoaded =>
+      lastUpdatedActivities != null && lastUpdatedActivities > 0;
+
+  bool get areActivitiesStale {
+    if (!areActivitiesLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - lastUpdatedActivities >
+        kMillisecondsToRefreshActivities;
+  }
 
   @override
   EntityType get entityType {
@@ -208,6 +227,7 @@ abstract class ClientEntity extends Object
   String get customValue2;
 
   BuiltList<ContactEntity> get contacts;
+
   BuiltList<ActivityEntity> get activities;
 
   //String get last_login;
@@ -216,6 +236,44 @@ abstract class ClientEntity extends Object
   @override
   String get listDisplayName {
     return displayName;
+  }
+
+  Iterable<ActivityEntity> getActivities({int invoiceId, int typeId}) {
+    return activities.where((activity) {
+      if (invoiceId != null && activity.invoiceId != invoiceId) {
+        return false;
+      }
+      if (typeId != null && activity.activityTypeId != typeId) {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  EmailTemplate getNextEmailTemplate(int invoiceId) {
+    EmailTemplate template = EmailTemplate.initial;
+    getActivities(invoiceId: invoiceId, typeId: kActivityEmailInvoice)
+        .forEach((activity) {
+      if (template == EmailTemplate.initial) {
+        template = EmailTemplate.reminder1;
+      }
+      if (activity.notes == 'reminder1') {
+        template = EmailTemplate.reminder2;
+      } else if (activity.notes == 'reminder2') {
+        template = EmailTemplate.reminder3;
+      }
+    });
+    return template;
+  }
+
+  String getPaymentTerm(String netLabel) {
+    if (paymentTerms == 0) {
+      return '';
+    } else if (paymentTerms == -1) {
+      return '$netLabel 0';
+    } else {
+      return '$netLabel $paymentTerms';
+    }
   }
 
   bool get hasEmailAddress =>
@@ -307,6 +365,13 @@ abstract class ClientEntity extends Object
         contact.fullName.isNotEmpty ||
         contact.email.isNotEmpty;
   }
+
+  /*
+  @override
+  String toString() {
+    return displayName;
+  }
+  */
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }

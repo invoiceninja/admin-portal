@@ -9,7 +9,9 @@ part of 'payment_type_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -33,7 +35,7 @@ class _$PaymentTypeListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, PaymentTypeListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -47,7 +49,7 @@ class _$PaymentTypeListResponseSerializer
   @override
   PaymentTypeListResponse deserialize(
       Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentTypeListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -81,7 +83,7 @@ class _$PaymentTypeItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, PaymentTypeItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -94,7 +96,7 @@ class _$PaymentTypeItemResponseSerializer
   @override
   PaymentTypeItemResponse deserialize(
       Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentTypeItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -124,7 +126,7 @@ class _$PaymentTypeEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, PaymentTypeEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
@@ -137,7 +139,7 @@ class _$PaymentTypeEntitySerializer
 
   @override
   PaymentTypeEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentTypeEntityBuilder();
 
     final iterator = serialized.iterator;

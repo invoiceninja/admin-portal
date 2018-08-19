@@ -16,78 +16,100 @@ class InvoiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final company = store.state.selectedCompany;
+    final user = company.user;
     final localization = AppLocalization.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          entityType: EntityType.invoice,
-          onFilterChanged: (value) {
-            store.dispatch(FilterInvoices(value));
-          },
-        ),
-        actions: [
-          ListFilterButton(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: ListFilter(
             entityType: EntityType.invoice,
-            onFilterPressed: (String value) {
+            onFilterChanged: (value) {
               store.dispatch(FilterInvoices(value));
             },
           ),
-        ],
-      ),
-      drawer: AppDrawerBuilder(),
-      body: InvoiceListBuilder(),
-      bottomNavigationBar: AppBottomBar(
-        entityType: EntityType.invoice,
-        onSelectedSortField: (value) {
-          store.dispatch(SortInvoices(value));
-        },
-        sortFields: [
-          InvoiceFields.invoiceNumber,
-          InvoiceFields.invoiceDate,
-          InvoiceFields.updatedAt,
-        ],
-        onSelectedState: (EntityState state, value) {
-          store.dispatch(FilterInvoicesByState(state));
-        },
-        onSelectedStatus: (EntityStatus status, value) {
-          store.dispatch(FilterInvoicesByStatus(status));
-        },
-        statuses: [
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 1
-            ..name = localization.draft,
-          ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 2
-            ..name = localization.sent,
-          ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 3
-            ..name = localization.viewed,
-          ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 5
-            ..name = localization.partial,
-          ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = 6
-            ..name = localization.paid,
-          ),
-          InvoiceStatusEntity().rebuild((b) => b
-            ..id = -1
-            ..name = localization.pastDue,
-          ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () {
-          store.dispatch(EditInvoice(invoice: InvoiceEntity(), context: context));
-        },
-        child: Icon(Icons.add,color: Colors.white,),
-        tooltip: localization.newInvoice,
+          actions: [
+            ListFilterButton(
+              entityType: EntityType.invoice,
+              onFilterPressed: (String value) {
+                store.dispatch(FilterInvoices(value));
+              },
+            ),
+          ],
+        ),
+        drawer: AppDrawerBuilder(),
+        body: InvoiceListBuilder(),
+        bottomNavigationBar: AppBottomBar(
+          entityType: EntityType.invoice,
+          onSelectedSortField: (value) {
+            store.dispatch(SortInvoices(value));
+          },
+          sortFields: [
+            InvoiceFields.invoiceNumber,
+            InvoiceFields.invoiceDate,
+            InvoiceFields.updatedAt,
+          ],
+          onSelectedState: (EntityState state, value) {
+            store.dispatch(FilterInvoicesByState(state));
+          },
+          onSelectedStatus: (EntityStatus status, value) {
+            store.dispatch(FilterInvoicesByStatus(status));
+          },
+          customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
+              excludeBlank: true),
+          customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
+              excludeBlank: true),
+          onSelectedCustom1: (value) =>
+              store.dispatch(FilterInvoicesByCustom1(value)),
+          onSelectedCustom2: (value) =>
+              store.dispatch(FilterInvoicesByCustom2(value)),
+          statuses: [
+            InvoiceStatusEntity().rebuild(
+              (b) => b
+                ..id = 1
+                ..name = localization.draft,
+            ),
+            InvoiceStatusEntity().rebuild(
+              (b) => b
+                ..id = 2
+                ..name = localization.sent,
+            ),
+            InvoiceStatusEntity().rebuild(
+              (b) => b
+                ..id = 3
+                ..name = localization.viewed,
+            ),
+            InvoiceStatusEntity().rebuild(
+              (b) => b
+                ..id = 5
+                ..name = localization.partial,
+            ),
+            InvoiceStatusEntity().rebuild(
+              (b) => b
+                ..id = 6
+                ..name = localization.paid,
+            ),
+            InvoiceStatusEntity().rebuild(
+              (b) => b
+                ..id = -1
+                ..name = localization.pastDue,
+            ),
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: user.canCreate(EntityType.invoice)
+            ? FloatingActionButton(
+                backgroundColor: Theme.of(context).primaryColorDark,
+                onPressed: () {
+                  store.dispatch(
+                      EditInvoice(invoice: InvoiceEntity(), context: context));
+                },
+                child: Icon(Icons.add, color: Colors.white),
+                tooltip: localization.newInvoice,
+              )
+            : null,
       ),
     );
   }

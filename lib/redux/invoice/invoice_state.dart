@@ -12,6 +12,7 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
 
   factory InvoiceState() {
     return _$InvoiceState._(
+      lastUpdated: 0,
       map: BuiltMap<int, InvoiceEntity>(),
       list: BuiltList<int>(),
     );
@@ -32,9 +33,7 @@ abstract class InvoiceState implements Built<InvoiceState, InvoiceStateBuilder> 
     return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
   }
 
-  bool get isLoaded {
-    return lastUpdated != null;
-  }
+  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
 }
@@ -43,7 +42,7 @@ abstract class InvoiceUIState extends Object with EntityUIState implements Built
 
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
-      listUIState: ListUIState(InvoiceFields.invoiceNumber),
+      listUIState: ListUIState(InvoiceFields.invoiceNumber, false),
       editing: InvoiceEntity(),
       editingItem: InvoiceItemEntity(),
       selectedId: 0,

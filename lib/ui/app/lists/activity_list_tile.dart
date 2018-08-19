@@ -6,38 +6,18 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ActivityListTile extends StatelessWidget {
   const ActivityListTile({
     Key key,
+    this.enableNavigation = true,
     @required this.activity,
   }) : super(key: key);
 
   final ActivityEntity activity;
-
-  IconData getIconData(EntityType entityType) {
-    switch (entityType) {
-      case EntityType.client:
-        return FontAwesomeIcons.users;
-      case EntityType.invoice:
-        return FontAwesomeIcons.filePdfO;
-      case EntityType.payment:
-        return FontAwesomeIcons.creditCard;
-      case EntityType.credit:
-        return FontAwesomeIcons.creditCard;
-      case EntityType.quote:
-        return FontAwesomeIcons.fileAltO;
-      case EntityType.vendor:
-        return FontAwesomeIcons.building;
-      case EntityType.expense:
-        return FontAwesomeIcons.fileImageO;
-      case EntityType.task:
-        return FontAwesomeIcons.clockO;
-      default:
-        return null;
-    }
-  }
+  final bool enableNavigation;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +28,7 @@ class ActivityListTile extends StatelessWidget {
     String title = localization.lookup('activity_${activity.activityTypeId}');
     title = activity.getDescription(
       title,
-      user: state.selectedCompany.userMap[activity.userId],
+      user: state.selectedCompany.user,
       client: state.clientState.map[activity.clientId],
       invoice: state.invoiceState.map[activity.invoiceId],
     );
@@ -56,26 +36,35 @@ class ActivityListTile extends StatelessWidget {
     return ListTile(
       leading: Icon(getIconData(activity.entityType)),
       title: Text(title),
-      onTap: () {
-        switch (activity.entityType) {
-          case EntityType.client:
-            store.dispatch(
-                ViewClient(clientId: activity.clientId, context: context));
-            break;
-          case EntityType.invoice:
-            store.dispatch(
-                ViewInvoice(invoiceId: activity.invoiceId, context: context));
-            break;
-        }
-      },
-      trailing: Icon(Icons.navigate_next),
+      onTap: !enableNavigation
+          ? null
+          : () {
+              switch (activity.entityType) {
+                case EntityType.client:
+                  store.dispatch(ViewClient(
+                      clientId: activity.clientId, context: context));
+                  break;
+                case EntityType.invoice:
+                  store.dispatch(ViewInvoice(
+                      invoiceId: activity.invoiceId, context: context));
+                  break;
+              }
+            },
+      trailing: enableNavigation ? Icon(Icons.navigate_next) : null,
       subtitle: Row(
         children: <Widget>[
           Text(formatDate(
               convertTimestampToSqlDate(activity.updatedAt), context,
               showTime: true)),
-          SizedBox(width: 10.0),
-          (activity.isSystem ?? false) ? Icon(FontAwesomeIcons.server) : Container(),
+          (activity.notes ?? '').isNotEmpty
+              ? Text(' • ${localization.lookup(activity.notes)}')
+              : Container(),
+          (activity.isSystem ?? false)
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Icon(FontAwesomeIcons.server),
+                )
+              : Container(),
         ],
       ),
     );

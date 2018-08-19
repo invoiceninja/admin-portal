@@ -48,6 +48,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       _surcharge1Controller,
       _surcharge2Controller,
     ];
+
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 

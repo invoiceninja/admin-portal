@@ -9,7 +9,9 @@ part of 'client_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -32,7 +34,7 @@ class _$ClientListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, ClientListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -45,7 +47,7 @@ class _$ClientListResponseSerializer
 
   @override
   ClientListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -76,7 +78,7 @@ class _$ClientItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, ClientItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -88,7 +90,7 @@ class _$ClientItemResponseSerializer
 
   @override
   ClientItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -116,7 +118,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
 
   @override
   Iterable serialize(Serializers serializers, ClientEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -229,6 +231,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
     ];
+    if (object.lastUpdatedActivities != null) {
+      result
+        ..add('lastUpdatedActivities')
+        ..add(serializers.serialize(object.lastUpdatedActivities,
+            specifiedType: const FullType(int)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -253,6 +261,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -265,7 +279,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
 
   @override
   ClientEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -274,6 +288,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'lastUpdatedActivities':
+          result.lastUpdatedActivities = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -442,6 +460,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -461,7 +483,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
 
   @override
   Iterable serialize(Serializers serializers, ContactEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'first_name',
       serializers.serialize(object.firstName,
@@ -515,6 +537,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -527,7 +555,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
 
   @override
   ContactEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ContactEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -586,6 +614,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'id':
@@ -782,6 +814,8 @@ class ClientItemResponseBuilder
 
 class _$ClientEntity extends ClientEntity {
   @override
+  final int lastUpdatedActivities;
+  @override
   final String name;
   @override
   final String displayName;
@@ -864,13 +898,16 @@ class _$ClientEntity extends ClientEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$ClientEntity([void updates(ClientEntityBuilder b)]) =>
       (new ClientEntityBuilder()..update(updates)).build();
 
   _$ClientEntity._(
-      {this.name,
+      {this.lastUpdatedActivities,
+      this.name,
       this.displayName,
       this.balance,
       this.paidToDate,
@@ -911,6 +948,7 @@ class _$ClientEntity extends ClientEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (name == null)
@@ -1001,7 +1039,8 @@ class _$ClientEntity extends ClientEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! ClientEntity) return false;
-    return name == other.name &&
+    return lastUpdatedActivities == other.lastUpdatedActivities &&
+        name == other.name &&
         displayName == other.displayName &&
         balance == other.balance &&
         paidToDate == other.paidToDate &&
@@ -1042,6 +1081,7 @@ class _$ClientEntity extends ClientEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -1065,31 +1105,32 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode),
-                                                                                taskRate.hashCode),
-                                                                            shippingAddress1.hashCode),
-                                                                        shippingAddress2.hashCode),
-                                                                    shippingCity.hashCode),
-                                                                shippingState.hashCode),
-                                                            shippingPostalCode.hashCode),
-                                                        shippingCountryId.hashCode),
-                                                    showTasksInPortal.hashCode),
-                                                sendReminders.hashCode),
-                                            creditNumberCounter.hashCode),
-                                        customValue1.hashCode),
-                                    customValue2.hashCode),
-                                contacts.hashCode),
-                            activities.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode), taskRate.hashCode),
+                                                                                shippingAddress1.hashCode),
+                                                                            shippingAddress2.hashCode),
+                                                                        shippingCity.hashCode),
+                                                                    shippingState.hashCode),
+                                                                shippingPostalCode.hashCode),
+                                                            shippingCountryId.hashCode),
+                                                        showTasksInPortal.hashCode),
+                                                    sendReminders.hashCode),
+                                                creditNumberCounter.hashCode),
+                                            customValue1.hashCode),
+                                        customValue2.hashCode),
+                                    contacts.hashCode),
+                                activities.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ClientEntity')
+          ..add('lastUpdatedActivities', lastUpdatedActivities)
           ..add('name', name)
           ..add('displayName', displayName)
           ..add('balance', balance)
@@ -1131,6 +1172,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -1139,6 +1181,11 @@ class _$ClientEntity extends ClientEntity {
 class ClientEntityBuilder
     implements Builder<ClientEntity, ClientEntityBuilder> {
   _$ClientEntity _$v;
+
+  int _lastUpdatedActivities;
+  int get lastUpdatedActivities => _$this._lastUpdatedActivities;
+  set lastUpdatedActivities(int lastUpdatedActivities) =>
+      _$this._lastUpdatedActivities = lastUpdatedActivities;
 
   String _name;
   String get name => _$this._name;
@@ -1318,6 +1365,10 @@ class ClientEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -1326,6 +1377,7 @@ class ClientEntityBuilder
 
   ClientEntityBuilder get _$this {
     if (_$v != null) {
+      _lastUpdatedActivities = _$v.lastUpdatedActivities;
       _name = _$v.name;
       _displayName = _$v.displayName;
       _balance = _$v.balance;
@@ -1367,6 +1419,7 @@ class ClientEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -1390,6 +1443,7 @@ class ClientEntityBuilder
     try {
       _$result = _$v ??
           new _$ClientEntity._(
+              lastUpdatedActivities: lastUpdatedActivities,
               name: name,
               displayName: displayName,
               balance: balance,
@@ -1431,6 +1485,7 @@ class ClientEntityBuilder
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
+              isOwner: isOwner,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -1478,6 +1533,8 @@ class _$ContactEntity extends ContactEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$ContactEntity([void updates(ContactEntityBuilder b)]) =>
@@ -1497,6 +1554,7 @@ class _$ContactEntity extends ContactEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (firstName == null)
@@ -1543,6 +1601,7 @@ class _$ContactEntity extends ContactEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -1561,20 +1620,24 @@ class _$ContactEntity extends ContactEntity {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc(0,
-                                                            firstName.hashCode),
-                                                        lastName.hashCode),
-                                                    email.hashCode),
-                                                phone.hashCode),
-                                            contactKey.hashCode),
-                                        isPrimary.hashCode),
-                                    sendInvoice.hashCode),
-                                customValue1.hashCode),
-                            customValue2.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                firstName
+                                                                    .hashCode),
+                                                            lastName.hashCode),
+                                                        email.hashCode),
+                                                    phone.hashCode),
+                                                contactKey.hashCode),
+                                            isPrimary.hashCode),
+                                        sendInvoice.hashCode),
+                                    customValue1.hashCode),
+                                customValue2.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -1594,6 +1657,7 @@ class _$ContactEntity extends ContactEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -1655,6 +1719,10 @@ class ContactEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -1676,6 +1744,7 @@ class ContactEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -1710,6 +1779,7 @@ class ContactEntityBuilder
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
+            isOwner: isOwner,
             id: id);
     replace(_$result);
     return _$result;

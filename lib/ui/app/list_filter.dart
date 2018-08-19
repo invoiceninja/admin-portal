@@ -5,16 +5,42 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
-class ListFilter extends StatelessWidget {
+class ListFilter extends StatefulWidget {
   final EntityType entityType;
-  final String filter;
+  final String title;
   final Function(String) onFilterChanged;
 
   const ListFilter({
     this.entityType,
-    this.filter,
+    this.title,
     this.onFilterChanged,
   });
+
+  @override
+  _ListFilterState createState() => new _ListFilterState();
+}
+
+class _ListFilterState extends State<ListFilter> {
+
+  final _filterController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final state = StoreProvider.of<AppState>(context).state;
+    final String filter = widget.entityType != null
+        ? state.getListState(widget.entityType).filter
+        : state.uiState.filter;
+
+    _filterController.text = filter;
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +49,19 @@ class ListFilter extends StatelessWidget {
     return StoreConnector<AppState, AppState>(
       converter: (Store<AppState> store) => store.state,
       builder: (BuildContext context, state) {
-        final listUIState = state.getListState(entityType);
+        final entityType = widget.entityType;
+        final filter = entityType != null
+            ? state.getListState(entityType).filter
+            : state.uiState.filter;
         final bool enableDarkMode = state.uiState.enableDarkMode;
-        return listUIState.filter == null
-            ? Text(localization.lookup(entityType.plural.toString()))
+        return filter == null
+            ? Text(widget.title ?? localization.lookup(entityType.plural.toString()))
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 height: 38.0,
                 margin: EdgeInsets.only(bottom: 2.0),
                 decoration: BoxDecoration(
-                    color: listUIState.filter != null &&
-                            listUIState.filter.isNotEmpty
+                    color: filter != null && filter.isNotEmpty
                         ? enableDarkMode
                             ? Colors.yellow.shade900
                             : Colors.yellow.shade200
@@ -54,7 +82,8 @@ class ListFilter extends StatelessWidget {
                       hintText: localization.filter),
                   autofocus: true,
                   autocorrect: false,
-                  onChanged: (value) => onFilterChanged(value),
+                  onChanged: (value) => widget.onFilterChanged(value),
+                  controller: _filterController,
                 ),
               );
       },

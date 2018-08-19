@@ -9,7 +9,9 @@ part of 'entities.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -29,6 +31,8 @@ const EntityType _$payment = const EntityType._('payment');
 const EntityType _$country = const EntityType._('country');
 const EntityType _$currency = const EntityType._('currency');
 const EntityType _$language = const EntityType._('language');
+const EntityType _$industry = const EntityType._('industry');
+const EntityType _$size = const EntityType._('size');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
@@ -62,6 +66,10 @@ EntityType _$typeValueOf(String name) {
       return _$currency;
     case 'language':
       return _$language;
+    case 'industry':
+      return _$industry;
+    case 'size':
+      return _$size;
     default:
       throw new ArgumentError(name);
   }
@@ -84,6 +92,8 @@ final BuiltSet<EntityType> _$typeValues =
   _$country,
   _$currency,
   _$language,
+  _$industry,
+  _$size,
 ]);
 
 const EntityState _$active = const EntityState._('active');
@@ -110,8 +120,64 @@ final BuiltSet<EntityState> _$values =
   _$deleted,
 ]);
 
+const EmailTemplate _$initial = const EmailTemplate._('initial');
+const EmailTemplate _$reminder1 = const EmailTemplate._('reminder1');
+const EmailTemplate _$reminder2 = const EmailTemplate._('reminder2');
+const EmailTemplate _$reminder3 = const EmailTemplate._('reminder3');
+
+EmailTemplate _$templateValueOf(String name) {
+  switch (name) {
+    case 'initial':
+      return _$initial;
+    case 'reminder1':
+      return _$reminder1;
+    case 'reminder2':
+      return _$reminder2;
+    case 'reminder3':
+      return _$reminder3;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<EmailTemplate> _$templateValues =
+    new BuiltSet<EmailTemplate>(const <EmailTemplate>[
+  _$initial,
+  _$reminder1,
+  _$reminder2,
+  _$reminder3,
+]);
+
+const UserPermission _$create = const UserPermission._('create');
+const UserPermission _$edit = const UserPermission._('edit');
+const UserPermission _$view = const UserPermission._('view');
+
+UserPermission _$permissionValueOf(String name) {
+  switch (name) {
+    case 'create':
+      return _$create;
+    case 'edit':
+      return _$edit;
+    case 'view':
+      return _$view;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<UserPermission> _$permissionValues =
+    new BuiltSet<UserPermission>(const <UserPermission>[
+  _$create,
+  _$edit,
+  _$view,
+]);
+
 Serializer<EntityType> _$entityTypeSerializer = new _$EntityTypeSerializer();
 Serializer<EntityState> _$entityStateSerializer = new _$EntityStateSerializer();
+Serializer<EmailTemplate> _$emailTemplateSerializer =
+    new _$EmailTemplateSerializer();
+Serializer<UserPermission> _$userPermissionSerializer =
+    new _$UserPermissionSerializer();
 Serializer<ErrorMessage> _$errorMessageSerializer =
     new _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
@@ -134,12 +200,12 @@ class _$EntityTypeSerializer implements PrimitiveSerializer<EntityType> {
 
   @override
   Object serialize(Serializers serializers, EntityType object,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       object.name;
 
   @override
   EntityType deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       EntityType.valueOf(serialized as String);
 }
 
@@ -151,13 +217,48 @@ class _$EntityStateSerializer implements PrimitiveSerializer<EntityState> {
 
   @override
   Object serialize(Serializers serializers, EntityState object,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       object.name;
 
   @override
   EntityState deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       EntityState.valueOf(serialized as String);
+}
+
+class _$EmailTemplateSerializer implements PrimitiveSerializer<EmailTemplate> {
+  @override
+  final Iterable<Type> types = const <Type>[EmailTemplate];
+  @override
+  final String wireName = 'EmailTemplate';
+
+  @override
+  Object serialize(Serializers serializers, EmailTemplate object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  EmailTemplate deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      EmailTemplate.valueOf(serialized as String);
+}
+
+class _$UserPermissionSerializer
+    implements PrimitiveSerializer<UserPermission> {
+  @override
+  final Iterable<Type> types = const <Type>[UserPermission];
+  @override
+  final String wireName = 'UserPermission';
+
+  @override
+  Object serialize(Serializers serializers, UserPermission object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  UserPermission deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      UserPermission.valueOf(serialized as String);
 }
 
 class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
@@ -168,7 +269,7 @@ class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
 
   @override
   Iterable serialize(Serializers serializers, ErrorMessage object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'message',
       serializers.serialize(object.message,
@@ -180,7 +281,7 @@ class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
 
   @override
   ErrorMessage deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ErrorMessageBuilder();
 
     final iterator = serialized.iterator;
@@ -208,7 +309,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
 
   @override
   Iterable serialize(Serializers serializers, LoginResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -226,7 +327,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
 
   @override
   LoginResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new LoginResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -260,7 +361,7 @@ class _$LoginResponseDataSerializer
 
   @override
   Iterable serialize(Serializers serializers, LoginResponseData object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'accounts',
       serializers.serialize(object.accounts,
@@ -279,7 +380,7 @@ class _$LoginResponseDataSerializer
 
   @override
   LoginResponseData deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new LoginResponseDataBuilder();
 
     final iterator = serialized.iterator;
@@ -317,7 +418,7 @@ class _$StaticDataSerializer implements StructuredSerializer<StaticData> {
 
   @override
   Iterable serialize(Serializers serializers, StaticData object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'currencies',
       serializers.serialize(object.currencies,
@@ -370,7 +471,7 @@ class _$StaticDataSerializer implements StructuredSerializer<StaticData> {
 
   @override
   StaticData deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new StaticDataBuilder();
 
     final iterator = serialized.iterator;
@@ -460,7 +561,7 @@ class _$DashboardResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, DashboardResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -472,7 +573,7 @@ class _$DashboardResponseSerializer
 
   @override
   DashboardResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new DashboardResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -502,7 +603,7 @@ class _$DashboardEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, DashboardEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'activities',
       serializers.serialize(object.activities,
@@ -563,7 +664,7 @@ class _$DashboardEntitySerializer
 
   @override
   DashboardEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new DashboardEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -626,8 +727,11 @@ class _$ActivityEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, ActivityEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'notes',
+      serializers.serialize(object.notes,
+          specifiedType: const FullType(String)),
       'id',
       serializers.serialize(object.key, specifiedType: const FullType(String)),
       'activity_type_id',
@@ -693,7 +797,7 @@ class _$ActivityEntitySerializer
 
   @override
   ActivityEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ActivityEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -702,6 +806,10 @@ class _$ActivityEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'notes':
+          result.notes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'id':
           result.key = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1634,6 +1742,8 @@ class DashboardEntityBuilder
 
 class _$ActivityEntity extends ActivityEntity {
   @override
+  final String notes;
+  @override
   final String key;
   @override
   final int activityTypeId;
@@ -1662,7 +1772,8 @@ class _$ActivityEntity extends ActivityEntity {
       (new ActivityEntityBuilder()..update(updates)).build();
 
   _$ActivityEntity._(
-      {this.key,
+      {this.notes,
+      this.key,
       this.activityTypeId,
       this.clientId,
       this.userId,
@@ -1675,6 +1786,8 @@ class _$ActivityEntity extends ActivityEntity {
       this.contactId,
       this.taskId})
       : super._() {
+    if (notes == null)
+      throw new BuiltValueNullFieldError('ActivityEntity', 'notes');
     if (key == null)
       throw new BuiltValueNullFieldError('ActivityEntity', 'key');
     if (activityTypeId == null)
@@ -1697,7 +1810,8 @@ class _$ActivityEntity extends ActivityEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! ActivityEntity) return false;
-    return key == other.key &&
+    return notes == other.notes &&
+        key == other.key &&
         activityTypeId == other.activityTypeId &&
         clientId == other.clientId &&
         userId == other.userId &&
@@ -1723,7 +1837,9 @@ class _$ActivityEntity extends ActivityEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, key.hashCode),
+                                            $jc(
+                                                $jc($jc(0, notes.hashCode),
+                                                    key.hashCode),
                                                 activityTypeId.hashCode),
                                             clientId.hashCode),
                                         userId.hashCode),
@@ -1740,6 +1856,7 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ActivityEntity')
+          ..add('notes', notes)
           ..add('key', key)
           ..add('activityTypeId', activityTypeId)
           ..add('clientId', clientId)
@@ -1759,6 +1876,10 @@ class _$ActivityEntity extends ActivityEntity {
 class ActivityEntityBuilder
     implements Builder<ActivityEntity, ActivityEntityBuilder> {
   _$ActivityEntity _$v;
+
+  String _notes;
+  String get notes => _$this._notes;
+  set notes(String notes) => _$this._notes = notes;
 
   String _key;
   String get key => _$this._key;
@@ -1813,6 +1934,7 @@ class ActivityEntityBuilder
 
   ActivityEntityBuilder get _$this {
     if (_$v != null) {
+      _notes = _$v.notes;
       _key = _$v.key;
       _activityTypeId = _$v.activityTypeId;
       _clientId = _$v.clientId;
@@ -1845,6 +1967,7 @@ class ActivityEntityBuilder
   _$ActivityEntity build() {
     final _$result = _$v ??
         new _$ActivityEntity._(
+            notes: notes,
             key: key,
             activityTypeId: activityTypeId,
             clientId: clientId,

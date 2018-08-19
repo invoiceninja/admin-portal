@@ -68,7 +68,7 @@ class TwoValueHeader extends StatelessWidget {
     return Container(
       color: backgroundColor ?? Theme.of(context).backgroundColor,
       child: Padding(
-        padding: EdgeInsets.all(14.0),
+        padding: EdgeInsets.all(8.0),
         child: Card(
           elevation: 2.0,
           child: Padding(

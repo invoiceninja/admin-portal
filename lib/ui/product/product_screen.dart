@@ -17,56 +17,68 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final company = store.state.selectedCompany;
+    final user = company.user;
     final localization = AppLocalization.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          entityType: EntityType.product,
-          onFilterChanged: (value) {
-            store.dispatch(FilterProducts(value));
-          },
-        ),
-        actions: [
-          ListFilterButton(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: ListFilter(
             entityType: EntityType.product,
-            onFilterPressed: (String value) {
+            onFilterChanged: (value) {
               store.dispatch(FilterProducts(value));
             },
           ),
-        ],
-      ),
-      drawer: AppDrawerBuilder(),
-      body: ProductListBuilder(),
-      bottomNavigationBar: AppBottomBar(
-        entityType: EntityType.product,
-        onSelectedSortField: (value) {
-          store.dispatch(SortProducts(value));
-        },
-        sortFields: [
-          ProductFields.productKey,
-          ProductFields.cost,
-          ProductFields.updatedAt,
-        ],
-        onSelectedState: (EntityState state, value) {
-          store.dispatch(FilterProductsByState(state));
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        key: Key(ProductKeys.productScreenFABKeyString),
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () {
-          store.dispatch(
-              EditProduct(product: ProductEntity(), context: context));
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+          actions: [
+            ListFilterButton(
+              entityType: EntityType.product,
+              onFilterPressed: (String value) {
+                store.dispatch(FilterProducts(value));
+              },
+            ),
+          ],
         ),
-        tooltip: localization.newProduct,
+        drawer: AppDrawerBuilder(),
+        body: ProductListBuilder(),
+        bottomNavigationBar: AppBottomBar(
+          entityType: EntityType.product,
+          onSelectedSortField: (value) => store.dispatch(SortProducts(value)),
+          customValues1: company.getCustomFieldValues(CustomFieldType.product1,
+              excludeBlank: true),
+          customValues2: company.getCustomFieldValues(CustomFieldType.product2,
+              excludeBlank: true),
+          onSelectedCustom1: (value) =>
+              store.dispatch(FilterProductsByCustom1(value)),
+          onSelectedCustom2: (value) =>
+              store.dispatch(FilterProductsByCustom2(value)),
+          sortFields: [
+            ProductFields.productKey,
+            ProductFields.cost,
+            ProductFields.updatedAt,
+          ],
+          onSelectedState: (EntityState state, value) {
+            store.dispatch(FilterProductsByState(state));
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: user.canCreate(EntityType.product)
+            ? FloatingActionButton(
+                key: Key(ProductKeys.productScreenFABKeyString),
+                backgroundColor: Theme.of(context).primaryColorDark,
+                onPressed: () {
+                  store.dispatch(
+                      EditProduct(product: ProductEntity(), context: context));
+                },
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                tooltip: localization.newProduct,
+              )
+            : null,
       ),
     );
   }
 }
-

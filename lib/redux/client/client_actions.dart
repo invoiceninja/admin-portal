@@ -40,7 +40,7 @@ class LoadClient {
   final int clientId;
   final bool loadActivities;
 
-  LoadClient({this.completer, this.clientId, this.loadActivities});
+  LoadClient({this.completer, this.clientId, this.loadActivities = false});
 }
 
 class LoadClientActivity {
@@ -207,4 +207,16 @@ class FilterClientsByState implements PersistUI {
   final EntityState state;
 
   FilterClientsByState(this.state);
+}
+
+class FilterClientsByCustom1 implements PersistUI {
+  final String value;
+
+  FilterClientsByCustom1(this.value);
+}
+
+class FilterClientsByCustom2 implements PersistUI {
+  final String value;
+
+  FilterClientsByCustom2(this.value);
 }

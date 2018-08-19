@@ -7,14 +7,16 @@ part 'list_ui_state.g.dart';
 
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
-  factory ListUIState(String sortField) {
+  factory ListUIState(String sortField, [bool sortAscending = true]) {
     return _$ListUIState._(
       sortField: sortField,
-      sortAscending: true,
+      sortAscending: sortAscending,
       stateFilters: BuiltList<EntityState>(<EntityState>[
         EntityState.active,
       ]),
       statusFilters: BuiltList<EntityStatus>(),
+      custom1Filters: BuiltList<String>(),
+      custom2Filters: BuiltList<String>(),
     );
   }
   ListUIState._();
@@ -29,9 +31,13 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   bool get sortAscending;
   BuiltList<EntityState> get stateFilters;
   BuiltList<EntityStatus> get statusFilters;
+  BuiltList<String> get custom1Filters;
+  BuiltList<String> get custom2Filters;
 
-  bool get hasCustomStateFilters => stateFilters.length != 1 || stateFilters.first != EntityState.active;
-  bool get hasCustomStatusFilters => statusFilters.isNotEmpty;
+  bool get hasStateFilters => stateFilters.length != 1 || stateFilters.first != EntityState.active;
+  bool get hasStatusFilters => statusFilters.isNotEmpty;
+  bool get hasCustom1Filters => custom1Filters.isNotEmpty;
+  bool get hasCustom2Filters => custom2Filters.isNotEmpty;
 
   //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;
   static Serializer<ListUIState> get serializer => _$listUIStateSerializer;

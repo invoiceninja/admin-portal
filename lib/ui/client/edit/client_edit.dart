@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_details.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_shipping_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/save_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 
 class ClientEdit extends StatefulWidget {
   final ClientEditVM viewModel;
@@ -29,7 +30,7 @@ class _ClientEditState extends State<ClientEdit>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 5);
+    _controller = TabController(vsync: this, length: 6);
   }
 
   @override
@@ -55,7 +56,9 @@ class _ClientEditState extends State<ClientEdit>
               ? localization.newClient
               : viewModel.origClient.displayName), // Text(localizations.clientDetails),
           actions: <Widget>[
-            SaveIconButton(
+            RefreshIconButton(
+              icon: Icons.cloud_upload,
+              tooltip: localization.save,
               isVisible: !client.isDeleted,
               isDirty: client.isNew || client != viewModel.origClient,
               isSaving: viewModel.isSaving,
@@ -78,6 +81,9 @@ class _ClientEditState extends State<ClientEdit>
                 text: localization.contacts,
               ),
               Tab(
+                text: localization.notes,
+              ),
+              Tab(
                 text: localization.settings,
               ),
               Tab(
@@ -98,6 +104,9 @@ class _ClientEditState extends State<ClientEdit>
                 viewModel: widget.viewModel,
               ),
               ClientEditContactsScreen(),
+              ClientEditNotes(
+                viewModel: widget.viewModel,
+              ),
               ClientEditSettings(
                 viewModel: widget.viewModel,
               ),

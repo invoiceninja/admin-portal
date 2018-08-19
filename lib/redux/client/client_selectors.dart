@@ -32,6 +32,14 @@ List<int> filteredClientsSelector(BuiltMap<int, ClientEntity> clientMap,
     if (!client.matchesStates(clientListState.stateFilters)) {
       return false;
     }
+    if (clientListState.custom1Filters.isNotEmpty &&
+        !clientListState.custom1Filters.contains(client.customValue1)) {
+      return false;
+    }
+    if (clientListState.custom2Filters.isNotEmpty &&
+        !clientListState.custom2Filters.contains(client.customValue2)) {
+      return false;
+    }
     return client.matchesFilter(clientListState.filter);
   }).toList();
 

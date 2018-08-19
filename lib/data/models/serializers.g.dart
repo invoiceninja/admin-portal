@@ -9,7 +9,9 @@ part of 'serializers.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -77,6 +79,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(PaymentEntity.serializer)
       ..add(PaymentItemResponse.serializer)
       ..add(PaymentListResponse.serializer)
+      ..add(PaymentTermEntity.serializer)
       ..add(PaymentTypeEntity.serializer)
       ..add(PaymentTypeItemResponse.serializer)
       ..add(PaymentTypeListResponse.serializer)
@@ -220,6 +223,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(EntityStatus)]),
           () => new ListBuilder<EntityStatus>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(ExpenseCategoryEntity)]),
           () => new ListBuilder<ExpenseCategoryEntity>())
@@ -270,16 +279,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(TaxRateEntity)]),
           () => new ListBuilder<TaxRateEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(UserEntity)]),
-          () => new ListBuilder<UserEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap,
-              const [const FullType(int), const FullType(UserEntity)]),
-          () => new MapBuilder<int, UserEntity>())
-      ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(String), const FullType(String)]),
           () => new MapBuilder<String, String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(PaymentTermEntity)]),
+          () => new ListBuilder<PaymentTermEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TimezoneEntity)]),
           () => new ListBuilder<TimezoneEntity>())
@@ -290,6 +295,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(VendorEntity)]),
           () => new ListBuilder<VendorEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltMap, const [const FullType(String), const FullType(bool)]),
+          () => new MapBuilder<String, bool>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(int), const FullType(ClientEntity)]),
@@ -317,10 +326,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltMap,
               const [const FullType(int), const FullType(DateFormatEntity)]),
           () => new MapBuilder<int, DateFormatEntity>())
-      ..addBuilderFactory(
-          const FullType(
-              BuiltMap, const [const FullType(int), const FullType(DatetimeFormatEntity)]),
-          () => new MapBuilder<int, DatetimeFormatEntity>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(DatetimeFormatEntity)]), () => new MapBuilder<int, DatetimeFormatEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(LanguageEntity)]), () => new MapBuilder<int, LanguageEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(PaymentTypeEntity)]), () => new MapBuilder<int, PaymentTypeEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(CountryEntity)]), () => new MapBuilder<int, CountryEntity>())

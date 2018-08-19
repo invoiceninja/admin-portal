@@ -9,7 +9,9 @@ part of 'size_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -29,7 +31,7 @@ class _$SizeListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, SizeListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -42,7 +44,7 @@ class _$SizeListResponseSerializer
 
   @override
   SizeListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new SizeListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -72,7 +74,7 @@ class _$SizeItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, SizeItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -84,7 +86,7 @@ class _$SizeItemResponseSerializer
 
   @override
   SizeItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new SizeItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -112,20 +114,24 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
 
   @override
   Iterable serialize(Serializers serializers, SizeEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
 
     return result;
   }
 
   @override
   SizeEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new SizeEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -134,13 +140,13 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -330,15 +336,14 @@ class SizeItemResponseBuilder
 
 class _$SizeEntity extends SizeEntity {
   @override
-  final int id;
-  @override
   final String name;
+  @override
+  final int id;
 
   factory _$SizeEntity([void updates(SizeEntityBuilder b)]) =>
       (new SizeEntityBuilder()..update(updates)).build();
 
-  _$SizeEntity._({this.id, this.name}) : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('SizeEntity', 'id');
+  _$SizeEntity._({this.name, this.id}) : super._() {
     if (name == null) throw new BuiltValueNullFieldError('SizeEntity', 'name');
   }
 
@@ -353,19 +358,19 @@ class _$SizeEntity extends SizeEntity {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! SizeEntity) return false;
-    return id == other.id && name == other.name;
+    return name == other.name && id == other.id;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, id.hashCode), name.hashCode));
+    return $jf($jc($jc(0, name.hashCode), id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SizeEntity')
-          ..add('id', id)
-          ..add('name', name))
+          ..add('name', name)
+          ..add('id', id))
         .toString();
   }
 }
@@ -373,20 +378,20 @@ class _$SizeEntity extends SizeEntity {
 class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
   _$SizeEntity _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
-
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   SizeEntityBuilder();
 
   SizeEntityBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
       _name = _$v.name;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -405,7 +410,7 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
 
   @override
   _$SizeEntity build() {
-    final _$result = _$v ?? new _$SizeEntity._(id: id, name: name);
+    final _$result = _$v ?? new _$SizeEntity._(name: name, id: id);
     replace(_$result);
     return _$result;
   }

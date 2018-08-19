@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Mobile app for Invoice Ninja
-version: 0.1.3
+version: 0.1.4
 author: Hillel Coren
 homepage: https://www.invoiceninja.com
 documentation: http://docs.invoiceninja.com
@@ -10,27 +10,31 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_redux: "^0.5.0"
-  redux_logging: "^0.3.0"
-  http: "^0.11.3+16"
-  path_provider: "^0.4.0"
-  shared_preferences: "^0.4.1"
-  font_awesome_flutter: "^6.0.0"
-  built_value: "^5.4.5"
-  built_collection: "^3.1.1"
-  memoize: "^1.4.0"
-  url_launcher: "^3.0.2"
-  cached_network_image: "^0.4.1"
-  share: "^0.5.2"
-  intl: "^0.15.6"
+  flutter_redux: ^0.5.0
+  redux_logging: ^0.3.0
+  http: ^0.11.3+16
+  path_provider: ^0.4.0
+  shared_preferences: ^0.4.1
+  font_awesome_flutter: ^6.0.0
+  built_value: ^5.4.5
+  built_collection: ^3.1.1
+  memoize: ^1.4.0
+  url_launcher: ^3.0.2
+  #cached_network_image: ^0.4.1
+  share: ^0.5.2
+  intl: ^0.15.6
+  flutter_pdf_viewer: ^0.0.2
+  flutter_html_view: ^0.5.2
+  google_sign_in: ^3.0.4
+  firebase_auth: ^0.5.14
 
 dev_dependencies:
   flutter_driver:
     sdk: flutter
   #flutter_test:
   #  sdk: flutter
-  build_runner: "^0.8.9"
-  built_value_generator: "^5.4.5"
+  build_runner: ^0.8.9
+  built_value_generator: ^5.4.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

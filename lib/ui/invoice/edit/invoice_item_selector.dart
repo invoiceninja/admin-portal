@@ -155,6 +155,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
           return ListTile(
             dense: true,
             leading: Checkbox(
+              activeColor: Theme.of(context).accentColor,
               value: _selectedIds.contains(entityId),
               onChanged: (bool value) => _toggleEntity(entityId),
             ),

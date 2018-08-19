@@ -6,10 +6,8 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'company_model.g.dart';
 
-
-
-abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilder> {
-
+abstract class CompanyEntity
+    implements Built<CompanyEntity, CompanyEntityBuilder> {
   factory CompanyEntity() {
     return _$CompanyEntity._(
       name: '',
@@ -46,17 +44,35 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
       showInvoiceItemTaxes: false,
       startOfWeek: 1,
       timezoneId: 1,
+      customPaymentTerms: BuiltList<PaymentTermEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
-      users: BuiltList<UserEntity>(),
-      userMap: BuiltMap<int, UserEntity>(),
+      user: UserEntity(),
+      //userId: 0,
+      //users: BuiltList<UserEntity>(),
+      //userMap: BuiltMap<int, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
+      emailFooter: '',
+      emailSubjectInvoice: '',
+      emailSubjectQuote: '',
+      emailSubjectPayment: '',
+      emailBodyInvoice: '',
+      emailBodyQuote: '',
+      emailBodyPayment: '',
+      emailSubjectReminder1: '',
+      emailSubjectReminder2: '',
+      emailSubjectReminder3: '',
+      emailBodyReminder1: '',
+      emailBodyReminder2: '',
+      emailBodyReminder3: '',
     );
   }
+
   CompanyEntity._();
 
   String get name;
+
   String get token;
 
   String get plan;
@@ -160,19 +176,67 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
   @BuiltValueField(wireName: 'tax_rates')
   BuiltList<TaxRateEntity> get taxRates;
 
-  @BuiltValueField(wireName: 'users')
-  BuiltList<UserEntity> get users;
-  BuiltMap<int, UserEntity> get userMap;
+  //@BuiltValueField(wireName: 'user_id')
+  //int get userId;
+  //@BuiltValueField(wireName: 'users')
+  //BuiltList<UserEntity> get users;
+  //BuiltMap<int, UserEntity> get userMap;
+
+  UserEntity get user;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
 
+  @BuiltValueField(wireName: 'custom_payment_terms')
+  BuiltList<PaymentTermEntity> get customPaymentTerms;
+
   @BuiltValueField(wireName: 'invoice_fields')
   String get invoiceFields;
 
+  @BuiltValueField(wireName: 'email_footer')
+  String get emailFooter;
+
+  @BuiltValueField(wireName: 'email_subject_invoice')
+  String get emailSubjectInvoice;
+
+  @BuiltValueField(wireName: 'email_subject_quote')
+  String get emailSubjectQuote;
+
+  @BuiltValueField(wireName: 'email_subject_payment')
+  String get emailSubjectPayment;
+
+  @BuiltValueField(wireName: 'email_template_invoice')
+  String get emailBodyInvoice;
+
+  @BuiltValueField(wireName: 'email_template_quote')
+  String get emailBodyQuote;
+
+  @BuiltValueField(wireName: 'email_template_payment')
+  String get emailBodyPayment;
+
+  @BuiltValueField(wireName: 'email_subject_reminder1')
+  String get emailSubjectReminder1;
+
+  @BuiltValueField(wireName: 'email_subject_reminder2')
+  String get emailSubjectReminder2;
+
+  @BuiltValueField(wireName: 'email_subject_reminder3')
+  String get emailSubjectReminder3;
+
+  @BuiltValueField(wireName: 'email_template_reminder1')
+  String get emailBodyReminder1;
+
+  @BuiltValueField(wireName: 'email_template_reminder2')
+  String get emailBodyReminder2;
+
+  @BuiltValueField(wireName: 'email_template_reminder3')
+  String get emailBodyReminder3;
+
+  //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')
 
-  bool hasInvoiceField(String field, [EntityType entityType = EntityType.product]) {
+  bool hasInvoiceField(String field,
+      [EntityType entityType = EntityType.product]) {
     if (invoiceFields.isNotEmpty) {
       return invoiceFields.contains('$entityType.$field');
     } else if (field == 'discount') {
@@ -184,31 +248,72 @@ abstract class CompanyEntity implements Built<CompanyEntity, CompanyEntityBuilde
 
   String getCustomFieldLabel(String field) {
     if (customFields.containsKey(field)) {
-      return customFields[field]
-          .split('|')
-          .first;
+      return customFields[field].split('|').first;
     } else {
       return '';
     }
   }
 
-  List<String> getCustomFieldValues(String field) {
+  List<String> getCustomFieldValues(String field, {bool excludeBlank = false}) {
     final values = customFields[field];
 
     if (values == null || !values.contains('|')) {
       return [];
     } else {
-      return values.split('|').last.split(',');
+      final data = values.split('|').last.split(',');
+
+      if (excludeBlank) {
+        return data.where((data) => data.isNotEmpty).toList();
+      } else {
+        return data;
+      }
     }
   }
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 
-
-abstract class TaxRateEntity extends Object with SelectableEntity implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-
+abstract class PaymentTermEntity extends Object
+    with SelectableEntity
+    implements Built<PaymentTermEntity, PaymentTermEntityBuilder> {
   static int counter = 0;
+
+  factory PaymentTermEntity() {
+    return _$PaymentTermEntity._(
+      id: --PaymentTermEntity.counter,
+      numDays: 0,
+    );
+  }
+
+  PaymentTermEntity._();
+
+  static Serializer<PaymentTermEntity> get serializer =>
+      _$paymentTermEntitySerializer;
+
+  String getPaymentTerm(String netLabel) {
+    if (numDays == 0) {
+      return '';
+    } else if (numDays == -1) {
+      return '$netLabel 0';
+    } else {
+      return '$netLabel $numDays';
+    }
+  }
+
+  @nullable
+  @BuiltValueField(wireName: 'num_days')
+  int get numDays;
+
+  @nullable
+  @BuiltValueField(wireName: 'archived_at')
+  int get archivedAt;
+}
+
+abstract class TaxRateEntity extends Object
+    with SelectableEntity
+    implements Built<TaxRateEntity, TaxRateEntityBuilder> {
+  static int counter = 0;
+
   factory TaxRateEntity() {
     return _$TaxRateEntity._(
       id: --TaxRateEntity.counter,
@@ -217,11 +322,13 @@ abstract class TaxRateEntity extends Object with SelectableEntity implements Bui
       isInclusive: false,
     );
   }
+
   TaxRateEntity._();
 
   static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
 
   String get name;
+
   double get rate;
 
   @BuiltValueField(wireName: 'is_inclusive')
@@ -232,9 +339,18 @@ abstract class TaxRateEntity extends Object with SelectableEntity implements Bui
   int get archivedAt;
 }
 
-
 abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
-  factory UserEntity([void updates(UserEntityBuilder b)]) = _$UserEntity;
+  factory UserEntity() {
+    return _$UserEntity._(
+      firstName: '',
+      lastName: '',
+      email: '',
+      id: 0,
+      isAdmin: false,
+      permissionsMap: BuiltMap<String, bool>(),
+    );
+  }
+
   UserEntity._();
 
   int get id;
@@ -245,7 +361,40 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   @BuiltValueField(wireName: 'last_name')
   String get lastName;
 
+  String get email;
+
   String get fullName => (firstName + ' ' + lastName).trim();
+
+  @BuiltValueField(wireName: 'is_admin')
+  bool get isAdmin;
+
+  @BuiltValueField(wireName: 'permissions')
+  BuiltMap<String, bool> get permissionsMap;
+
+  bool can(UserPermission permission, EntityType entityType) =>
+      isAdmin || permissionsMap.containsKey('${permission}_$entityType');
+
+  bool canView(EntityType entityType) => can(UserPermission.view, entityType);
+
+  bool canEdit(EntityType entityType) => can(UserPermission.edit, entityType);
+
+  bool canCreate(EntityType entityType) =>
+      can(UserPermission.create, entityType);
+
+  bool canViewOrCreate(EntityType entityType) =>
+      canView(entityType) || canCreate(entityType);
+
+  bool canEditEntity(BaseEntity entity) {
+    if (entity == null) {
+      return false;
+    }
+
+    if (entity.isNew) {
+      return canCreate(entity.entityType);
+    } else {
+      return canEdit(entity.entityType) || entity.isOwner;
+    }
+  }
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }

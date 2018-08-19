@@ -30,7 +30,7 @@ abstract class DashboardState implements Built<DashboardState, DashboardStateBui
   }
 
   bool get isLoaded {
-    return lastUpdated != null;
+    return lastUpdated != null && lastUpdated > 0;
   }
 
   static Serializer<DashboardState> get serializer => _$dashboardStateSerializer;

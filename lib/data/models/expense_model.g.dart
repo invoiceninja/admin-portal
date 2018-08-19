@@ -9,7 +9,9 @@ part of 'expense_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -35,7 +37,7 @@ class _$ExpenseListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, ExpenseListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -48,7 +50,7 @@ class _$ExpenseListResponseSerializer
 
   @override
   ExpenseListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -82,7 +84,7 @@ class _$ExpenseItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, ExpenseItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -94,7 +96,7 @@ class _$ExpenseItemResponseSerializer
 
   @override
   ExpenseItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -122,7 +124,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
 
   @override
   Iterable serialize(Serializers serializers, ExpenseEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'private_notes',
       serializers.serialize(object.privateNotes,
@@ -213,6 +215,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -225,7 +233,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
 
   @override
   ExpenseEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -336,6 +344,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -359,7 +371,7 @@ class _$ExpenseCategoryEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, ExpenseCategoryEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -388,6 +400,12 @@ class _$ExpenseCategoryEntitySerializer
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -401,7 +419,7 @@ class _$ExpenseCategoryEntitySerializer
   @override
   ExpenseCategoryEntity deserialize(
       Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseCategoryEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -428,6 +446,10 @@ class _$ExpenseCategoryEntitySerializer
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'id':
@@ -674,6 +696,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$ExpenseEntity([void updates(ExpenseEntityBuilder b)]) =>
@@ -705,6 +729,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (privateNotes == null)
@@ -788,6 +813,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -811,25 +837,25 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode),
-                                                                                exchangeCurrencyId.hashCode),
-                                                                            amount.hashCode),
-                                                                        expenseDate.hashCode),
-                                                                    exchangeRate.hashCode),
-                                                                invoiceCurrencyId.hashCode),
-                                                            taxName1.hashCode),
-                                                        taxRate1.hashCode),
-                                                    taxRate2.hashCode),
-                                                clientId.hashCode),
-                                            invoiceId.hashCode),
-                                        vendorId.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            expenseCategories.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), exchangeCurrencyId.hashCode),
+                                                                                amount.hashCode),
+                                                                            expenseDate.hashCode),
+                                                                        exchangeRate.hashCode),
+                                                                    invoiceCurrencyId.hashCode),
+                                                                taxName1.hashCode),
+                                                            taxRate1.hashCode),
+                                                        taxRate2.hashCode),
+                                                    clientId.hashCode),
+                                                invoiceId.hashCode),
+                                            vendorId.hashCode),
+                                        customValue1.hashCode),
+                                    customValue2.hashCode),
+                                expenseCategories.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -861,6 +887,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -978,6 +1005,10 @@ class ExpenseEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -1011,6 +1042,7 @@ class ExpenseEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -1059,6 +1091,7 @@ class ExpenseEntityBuilder
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
+              isOwner: isOwner,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -1088,6 +1121,8 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$ExpenseCategoryEntity(
@@ -1100,6 +1135,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (name == null)
@@ -1123,6 +1159,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -1131,10 +1168,12 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, name.hashCode), createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                $jc(
+                    $jc($jc($jc(0, name.hashCode), createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -1146,6 +1185,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -1175,6 +1215,10 @@ class ExpenseCategoryEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -1188,6 +1232,7 @@ class ExpenseCategoryEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -1214,6 +1259,7 @@ class ExpenseCategoryEntityBuilder
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
+            isOwner: isOwner,
             id: id);
     replace(_$result);
     return _$result;

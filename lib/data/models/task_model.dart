@@ -65,6 +65,9 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
     );
   }
   TaskEntity._();
+  TaskEntity get clone => rebuild((b) => b
+    ..id = --TaskEntity.counter
+  );
 
   @override
   EntityType get entityType {

@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -6,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -33,6 +32,7 @@ class ClientListBuilder extends StatelessWidget {
 }
 
 class ClientListVM {
+  final UserEntity user;
   final List<int> clientList;
   final BuiltMap<int, ClientEntity> clientMap;
   final String filter;
@@ -41,8 +41,10 @@ class ClientListVM {
   final Function(BuildContext, ClientEntity) onClientTap;
   final Function(BuildContext, ClientEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
 
   ClientListVM({
+    @required this.user,
     @required this.clientList,
     @required this.clientMap,
     @required this.isLoading,
@@ -51,63 +53,86 @@ class ClientListVM {
     @required this.onClientTap,
     @required this.onDismissed,
     @required this.onRefreshed,
+    @required this.onEntityAction,
   });
 
   static ClientListVM fromStore(Store<AppState> store) {
-      Future<Null> _handleRefresh(BuildContext context) {
-        final Completer<Null> completer = Completer<Null>();
-        store.dispatch(LoadClients(completer: completer, force: true));
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-                message: AppLocalization.of(context).refreshComplete,
-              )));
-        });
+    Future<Null> _handleRefresh(BuildContext context) {
+      if (store.state.isLoading) {
+        return Future<Null>(null);
       }
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
+      store.dispatch(LoadClients(completer: completer, force: true));
+      return completer.future;
+    }
+
+    final state = store.state;
 
     return ClientListVM(
-        clientList: memoizedFilteredClientList(store.state.clientState.map, store.state.clientState.list, store.state.clientListState),
-        clientMap: store.state.clientState.map,
-        isLoading: store.state.isLoading,
-        isLoaded: store.state.clientState.isLoaded,
-        filter: store.state.clientListState.filter,
+        user: state.user,
+        clientList: memoizedFilteredClientList(state.clientState.map,
+            state.clientState.list, state.clientListState),
+        clientMap: state.clientState.map,
+        isLoading: state.isLoading,
+        isLoaded: state.clientState.isLoaded,
+        filter: state.clientListState.filter,
         onClientTap: (context, client) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
+        },
+        onEntityAction: (context, client, action) {
+          switch (action) {
+            case EntityAction.invoice:
+              store.dispatch(EditInvoice(
+                  invoice:
+                      InvoiceEntity().rebuild((b) => b.clientId = client.id),
+                  context: context));
+              break;
+            case EntityAction.restore:
+              store.dispatch(RestoreClientRequest(
+                  popCompleter(
+                      context, AppLocalization.of(context).restoredClient),
+                  client.id));
+              break;
+            case EntityAction.archive:
+              store.dispatch(ArchiveClientRequest(
+                  popCompleter(
+                      context, AppLocalization.of(context).archivedClient),
+                  client.id));
+              break;
+            case EntityAction.delete:
+              store.dispatch(DeleteClientRequest(
+                  popCompleter(
+                      context, AppLocalization.of(context).deletedClient),
+                  client.id));
+              break;
+          }
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,
             DismissDirection direction) {
-          final Completer<Null> completer = Completer<Null>();
-          var message = '';
+          final localization = AppLocalization.of(context);
           if (direction == DismissDirection.endToStart) {
             if (client.isDeleted || client.isArchived) {
-              store.dispatch(RestoreClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyRestoredClient;
+              store.dispatch(RestoreClientRequest(
+                  snackBarCompleter(context, localization.restoredClient),
+                  client.id));
             } else {
-              store.dispatch(ArchiveClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyArchivedClient;
+              store.dispatch(ArchiveClientRequest(
+                  snackBarCompleter(context, localization.archivedClient),
+                  client.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (client.isDeleted) {
-              store.dispatch(RestoreClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyRestoredClient;
+              store.dispatch(RestoreClientRequest(
+                  snackBarCompleter(context, localization.restoredClient),
+                  client.id));
             } else {
-              store.dispatch(DeleteClientRequest(completer, client.id));
-              message = AppLocalization.of(context).successfullyDeletedClient;
+              store.dispatch(DeleteClientRequest(
+                  snackBarCompleter(context, localization.deletedClient),
+                  client.id));
             }
           }
-          return completer.future.then((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: message,
-                )));
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
         });
   }
 }

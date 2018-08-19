@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
@@ -135,8 +136,8 @@ Middleware<AppState> _createLoadState(
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final appVersion = prefs.getString(kSharedPrefAppVerson);
-      prefs.setString(kSharedPrefAppVerson, kAppVersion);
+      final appVersion = prefs.getString(kSharedPrefAppVersion);
+      prefs.setString(kSharedPrefAppVersion, kAppVersion);
 
       if (appVersion != kAppVersion) {
         throw 'New app version - clearing state';
@@ -161,6 +162,7 @@ Middleware<AppState> _createLoadState(
         ..companyState4.replace(company4State)
         ..companyState5.replace(company5State));
 
+      AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
 
       if (uiState.currentRoute != LoginScreen.route &&

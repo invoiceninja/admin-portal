@@ -28,6 +28,8 @@ class EntityType extends EnumClass {
   static const EntityType country = _$country;
   static const EntityType currency = _$currency;
   static const EntityType language = _$language;
+  static const EntityType industry = _$industry;
+  static const EntityType size = _$size;
 
   String get plural {
     return toString() + 's';
@@ -51,6 +53,37 @@ class EntityState extends EnumClass {
   static BuiltSet<EntityState> get values => _$values;
   static EntityState valueOf(String name) => _$valueOf(name);
 }
+
+class EmailTemplate extends EnumClass {
+
+  const EmailTemplate._(String name) : super(name);
+
+  static Serializer<EmailTemplate> get serializer => _$emailTemplateSerializer;
+
+  static const EmailTemplate initial = _$initial;
+  static const EmailTemplate reminder1 = _$reminder1;
+  static const EmailTemplate reminder2 = _$reminder2;
+  static const EmailTemplate reminder3 = _$reminder3;
+
+  static BuiltSet<EmailTemplate> get values => _$templateValues;
+  static EmailTemplate valueOf(String name) => _$templateValueOf(name);
+}
+
+
+class UserPermission extends EnumClass {
+
+  const UserPermission._(String name) : super(name);
+
+  static Serializer<UserPermission> get serializer => _$userPermissionSerializer;
+
+  static const UserPermission create = _$create;
+  static const UserPermission edit = _$edit;
+  static const UserPermission view = _$view;
+
+  static BuiltSet<UserPermission> get values => _$permissionValues;
+  static UserPermission valueOf(String name) => _$permissionValueOf(name);
+}
+
 
 abstract class EntityStatus {
   int get id;
@@ -87,6 +120,10 @@ abstract class BaseEntity extends Object with SelectableEntity {
   @nullable
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
+
+  @nullable
+  @BuiltValueField(wireName: 'is_owner')
+  bool get isOwner;
 
   String get entityKey => '__${entityType}__${id}__';
 
@@ -255,6 +292,8 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
   factory ActivityEntity([void updates(ActivityEntityBuilder b)]) = _$ActivityEntity;
   ActivityEntity._();
 
+  String get notes;
+
   @BuiltValueField(wireName: 'id')
   String get key;
 
@@ -336,6 +375,7 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
     activity = activity.replaceFirst(':user', user?.fullName ?? '');
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
+    //activity = activity.replaceFirst(':quote', invoice?.invoiceNumber ?? '');
     activity = activity.replaceFirst(':contact', client?.displayName ?? '');
     activity = activity.replaceFirst(':payment', payment?.transactionReference ?? '');
     activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');

@@ -14,14 +14,22 @@ class AppBottomBar extends StatefulWidget {
   final Function(String) onSelectedSortField;
   final Function(EntityState, bool) onSelectedState;
   final Function(EntityStatus, bool) onSelectedStatus;
+  final Function(String) onSelectedCustom1;
+  final Function(String) onSelectedCustom2;
+  final List<String> customValues1;
+  final List<String> customValues2;
 
   const AppBottomBar({
     this.sortFields,
     this.onSelectedSortField,
     this.entityType,
     this.onSelectedState,
-    this.statuses,
     this.onSelectedStatus,
+    this.onSelectedCustom1,
+    this.onSelectedCustom2,
+    this.statuses = const [],
+    this.customValues1 = const [],
+    this.customValues2 = const [],
   });
 
   @override
@@ -32,9 +40,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
   PersistentBottomSheetController _sortController;
   PersistentBottomSheetController _filterStateController;
   PersistentBottomSheetController _filterStatusController;
+  PersistentBottomSheetController _filterCustom1Controller;
+  PersistentBottomSheetController _filterCustom2Controller;
 
   @override
   Widget build(BuildContext context) {
+
     final _showFilterStateSheet = () {
       if (_filterStateController != null) {
         _filterStateController.close();
@@ -44,7 +55,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
       _filterStateController =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return StoreConnector<AppState, BuiltList<EntityState>>(
-          //distinct: true,
           converter: (Store<AppState> store) =>
               store.state.getListState(widget.entityType).stateFilters,
           builder: (BuildContext context, stateFilters) {
@@ -165,6 +175,88 @@ class _AppBottomBarState extends State<AppBottomBar> {
       });
     };
 
+    final _showFilterCustom1Sheet = () {
+      if (_filterCustom1Controller != null) {
+        _filterCustom1Controller.close();
+        return;
+      }
+
+      _filterCustom1Controller =
+          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+            return StoreConnector<AppState, BuiltList<String>>(
+              converter: (Store<AppState> store) =>
+              store.state.getListState(widget.entityType).custom1Filters,
+              builder: (BuildContext context, customFilters) {
+                return Container(
+                  color: Theme.of(context).backgroundColor,
+                  child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    Column(
+                      children: widget.customValues1.map<Widget>((customField) {
+                        return CheckboxListTile(
+                          key: Key(customField.toString()),
+                          title: Text(customField),
+                          controlAffinity: ListTileControlAffinity.leading,
+                          value: customFilters.contains(customField),
+                          activeColor: Theme.of(context).accentColor,
+                          dense: true,
+                          onChanged: (value) {
+                            widget.onSelectedCustom1(customField);
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ]),
+                );
+              },
+            );
+          });
+
+      _filterCustom1Controller.closed.whenComplete(() {
+        _filterCustom1Controller = null;
+      });
+    };
+
+    final _showFilterCustom2Sheet = () {
+      if (_filterCustom2Controller != null) {
+        _filterCustom2Controller.close();
+        return;
+      }
+
+      _filterCustom2Controller =
+          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+            return StoreConnector<AppState, BuiltList<String>>(
+              converter: (Store<AppState> store) =>
+              store.state.getListState(widget.entityType).custom2Filters,
+              builder: (BuildContext context, customFilters) {
+                return Container(
+                  color: Theme.of(context).backgroundColor,
+                  child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    Column(
+                      children: widget.customValues2.map<Widget>((customField) {
+                        return CheckboxListTile(
+                          key: Key(customField.toString()),
+                          title: Text(customField),
+                          controlAffinity: ListTileControlAffinity.leading,
+                          value: customFilters.contains(customField),
+                          activeColor: Theme.of(context).accentColor,
+                          dense: true,
+                          onChanged: (value) {
+                            widget.onSelectedCustom2(customField);
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ]),
+                );
+              },
+            );
+          });
+
+      _filterCustom2Controller.closed.whenComplete(() {
+        _filterCustom2Controller = null;
+      });
+    };
+
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
@@ -181,23 +273,40 @@ class _AppBottomBarState extends State<AppBottomBar> {
               onPressed: _showFilterStateSheet,
               color: store.state
                       .getListState(widget.entityType)
-                      .hasCustomStateFilters
+                      .hasStateFilters
                   ? Theme.of(context).accentColor
                   : null,
             ),
-            Opacity(
-              opacity: widget.statuses == null ? 0.0 : 1.0,
-              child: IconButton(
-                tooltip: AppLocalization.of(context).filter,
-                icon: Icon(Icons.filter),
-                onPressed: _showFilterStatusSheet,
-                color: store.state
-                    .getListState(widget.entityType)
-                    .hasCustomStatusFilters
-                    ? Theme.of(context).accentColor
-                    : null,
-              ),
-            ),
+            widget.statuses.isNotEmpty ? IconButton(
+              tooltip: AppLocalization.of(context).filter,
+              icon: Icon(Icons.filter),
+              onPressed: _showFilterStatusSheet,
+              color: store.state
+                  .getListState(widget.entityType)
+                  .hasStatusFilters
+                  ? Theme.of(context).accentColor
+                  : null,
+            ) : SizedBox(width: 0.0),
+            widget.customValues1.isNotEmpty ? IconButton(
+              tooltip: AppLocalization.of(context).filter,
+              icon: Icon(Icons.looks_one),
+              onPressed: _showFilterCustom1Sheet,
+              color: store.state
+                  .getListState(widget.entityType)
+                  .hasCustom1Filters
+                  ? Theme.of(context).accentColor
+                  : null,
+            ) : SizedBox(width: 0.0),
+            widget.customValues2.isNotEmpty ? IconButton(
+              tooltip: AppLocalization.of(context).filter,
+              icon: Icon(Icons.looks_two),
+              onPressed: _showFilterCustom2Sheet,
+              color: store.state
+                  .getListState(widget.entityType)
+                  .hasCustom2Filters
+                  ? Theme.of(context).accentColor
+                  : null,
+            ) : SizedBox(width: 0.0),
           ],
         ),
       );

@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardView extends StatefulWidget {
@@ -36,31 +46,48 @@ class _DashboardViewState extends State<DashboardView>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
 
-    return Scaffold(
-      drawer: AppDrawerBuilder(),
-      appBar: AppBar(
-        title: Text(AppLocalization.of(context).dashboard),
-        bottom: TabBar(
-          controller: _controller,
-          tabs: [
-            Tab(
-              text: localization.overview,
-            ),
-            Tab(
-              text: localization.activity,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        drawer: AppDrawerBuilder(),
+        appBar: AppBar(
+          title: ListFilter(
+            title: AppLocalization.of(context).dashboard,
+            onFilterChanged: (value) {
+              store.dispatch(FilterCompany(value));
+            },
+          ),
+          actions: <Widget>[
+            ListFilterButton(
+              onFilterPressed: (String value) {
+                store.dispatch(FilterCompany(value));
+              },
             ),
           ],
+          bottom: store.state.uiState.filter != null
+              ? null
+              : TabBar(
+                  controller: _controller,
+                  tabs: [
+                    Tab(
+                      text: localization.overview,
+                    ),
+                    Tab(
+                      text: localization.activity,
+                    ),
+                  ],
+                ),
         ),
-      ),
-      body: CustomTabBarView(
-        viewModel: widget.viewModel,
-        controller: _controller,
+        body: CustomTabBarView(
+          viewModel: widget.viewModel,
+          controller: _controller,
+        ),
       ),
     );
   }
 }
-
 
 class CustomTabBarView extends StatelessWidget {
   const CustomTabBarView({
@@ -73,21 +100,47 @@ class CustomTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      controller: controller,
-      children: <Widget>[
-        RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context),
-          //child: DashboardOverview(viewModel: viewModel),
-          child: DashboardPanels(
-            viewModel: viewModel,
-          ),
-        ),
-        RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context),
-          child: DashboardActivity(viewModel: viewModel),
-        ),
-      ],
-    );
+    if (viewModel.filter != null) {
+      return ListView.builder(
+          itemCount: viewModel.filteredList.length,
+          itemBuilder: (BuildContext context, index) {
+            final entity = viewModel.filteredList[index];
+            final subtitle = entity.matchesFilterValue(viewModel.filter);
+            return ListTile(
+              title: Text(entity.listDisplayName),
+              leading: Icon(getIconData(entity.entityType)),
+              trailing: Icon(Icons.navigate_next),
+              subtitle: subtitle != null ? Text(subtitle) : Container(),
+              onTap: () {
+                dynamic action;
+                switch (entity.entityType) {
+                  case EntityType.product:
+                    action = EditProduct(product: entity, context: context);
+                    break;
+                  case EntityType.client:
+                    action = ViewClient(clientId: entity.id, context: context);
+                    break;
+                  case EntityType.invoice:
+                    action =
+                        ViewInvoice(invoiceId: entity.id, context: context);
+                    break;
+                }
+                StoreProvider.of<AppState>(context).dispatch(action);
+              },
+            );
+          });
+    }
+
+    return RefreshIndicator(
+        onRefresh: () => viewModel.onRefreshed(context),
+        child: TabBarView(
+          controller: controller,
+          children: <Widget>[
+            DashboardPanels(
+              viewModel: viewModel,
+            ),
+            DashboardActivity(viewModel: viewModel),
+          ],
+        ));
   }
 }

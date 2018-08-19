@@ -9,7 +9,9 @@ part of 'vendor_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -32,7 +34,7 @@ class _$VendorListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, VendorListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -45,7 +47,7 @@ class _$VendorListResponseSerializer
 
   @override
   VendorListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -76,7 +78,7 @@ class _$VendorItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, VendorItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -88,7 +90,7 @@ class _$VendorItemResponseSerializer
 
   @override
   VendorItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -116,7 +118,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
 
   @override
   Iterable serialize(Serializers serializers, VendorEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -199,6 +201,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -211,7 +219,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
 
   @override
   VendorEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -314,6 +322,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -337,7 +349,7 @@ class _$VendorContactEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, VendorContactEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'first_name',
       serializers.serialize(object.firstName,
@@ -379,6 +391,12 @@ class _$VendorContactEntitySerializer
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -391,7 +409,7 @@ class _$VendorContactEntitySerializer
 
   @override
   VendorContactEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorContactEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -434,6 +452,10 @@ class _$VendorContactEntitySerializer
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'id':
@@ -676,6 +698,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$VendorEntity([void updates(VendorEntityBuilder b)]) =>
@@ -705,6 +729,7 @@ class _$VendorEntity extends VendorEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (name == null)
@@ -781,6 +806,7 @@ class _$VendorEntity extends VendorEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -804,25 +830,25 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode),
-                                                                                city.hashCode),
-                                                                            state.hashCode),
-                                                                        postalCode.hashCode),
-                                                                    countryId.hashCode),
-                                                                workPhone.hashCode),
-                                                            privateNotes.hashCode),
-                                                        lastLogin.hashCode),
-                                                    website.hashCode),
-                                                vatNumber.hashCode),
-                                            idNumber.hashCode),
-                                        currencyId.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            vendorContacts.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode),
+                                                                                state.hashCode),
+                                                                            postalCode.hashCode),
+                                                                        countryId.hashCode),
+                                                                    workPhone.hashCode),
+                                                                privateNotes.hashCode),
+                                                            lastLogin.hashCode),
+                                                        website.hashCode),
+                                                    vatNumber.hashCode),
+                                                idNumber.hashCode),
+                                            currencyId.hashCode),
+                                        customValue1.hashCode),
+                                    customValue2.hashCode),
+                                vendorContacts.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -852,6 +878,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -955,6 +982,10 @@ class VendorEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -986,6 +1017,7 @@ class VendorEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -1032,6 +1064,7 @@ class VendorEntityBuilder
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
+              isOwner: isOwner,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -1069,6 +1102,8 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$VendorContactEntity([void updates(VendorContactEntityBuilder b)]) =>
@@ -1084,6 +1119,7 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (firstName == null)
@@ -1119,6 +1155,7 @@ class _$VendorContactEntity extends VendorContactEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -1132,15 +1169,17 @@ class _$VendorContactEntity extends VendorContactEntity {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, firstName.hashCode),
-                                        lastName.hashCode),
-                                    email.hashCode),
-                                isPrimary.hashCode),
-                            phone.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                                    $jc(
+                                        $jc($jc(0, firstName.hashCode),
+                                            lastName.hashCode),
+                                        email.hashCode),
+                                    isPrimary.hashCode),
+                                phone.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -1156,6 +1195,7 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -1201,6 +1241,10 @@ class VendorContactEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -1218,6 +1262,7 @@ class VendorContactEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -1248,6 +1293,7 @@ class VendorContactEntityBuilder
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
+            isOwner: isOwner,
             id: id);
     replace(_$result);
     return _$result;

@@ -25,7 +25,7 @@ class LoadProducts {
   final Completer completer;
   final bool force;
 
-  LoadProducts([this.completer, this.force = false]);
+  LoadProducts({this.completer, this.force = false});
 }
 
 class LoadProductsRequest implements StartLoading {}
@@ -137,6 +137,18 @@ class FilterProductsByState implements PersistUI {
   final EntityState state;
 
   FilterProductsByState(this.state);
+}
+
+class FilterProductsByCustom1 implements PersistUI {
+  final String value;
+
+  FilterProductsByCustom1(this.value);
+}
+
+class FilterProductsByCustom2 implements PersistUI {
+  final String value;
+
+  FilterProductsByCustom2(this.value);
 }
 
 class FilterProductDropdown {

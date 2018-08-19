@@ -16,47 +16,66 @@ class ClientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final company = store.state.selectedCompany;
+    final user = company.user;
     final localization = AppLocalization.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          entityType: EntityType.client,
-          onFilterChanged: (value) {
-            store.dispatch(FilterClients(value));
-          },
-        ),
-        actions: [
-          ListFilterButton(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: ListFilter(
             entityType: EntityType.client,
-            onFilterPressed: (String value) {
+            onFilterChanged: (value) {
               store.dispatch(FilterClients(value));
             },
           ),
-        ],
-      ),
-      drawer: AppDrawerBuilder(),
-      body: ClientListBuilder(),
-      bottomNavigationBar: AppBottomBar(
-        entityType: EntityType.client,
-        onSelectedSortField: (value) {
-          store.dispatch(SortClients(value));
-        },
-        sortFields: [
-          ClientFields.name,
-          ClientFields.balance,
-          ClientFields.updatedAt,
-        ],
-        onSelectedState: (EntityState state, value) {
-          store.dispatch(FilterClientsByState(state));
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () => store.dispatch(EditClient(client: ClientEntity(), context: context)),
-        child: Icon(Icons.add, color: Colors.white,),
-        tooltip: localization.newClient,
+          actions: [
+            ListFilterButton(
+              entityType: EntityType.client,
+              onFilterPressed: (String value) {
+                store.dispatch(FilterClients(value));
+              },
+            ),
+          ],
+        ),
+        drawer: AppDrawerBuilder(),
+        body: ClientListBuilder(),
+        bottomNavigationBar: AppBottomBar(
+          entityType: EntityType.client,
+          onSelectedSortField: (value) {
+            store.dispatch(SortClients(value));
+          },
+          sortFields: [
+            ClientFields.name,
+            ClientFields.balance,
+            ClientFields.updatedAt,
+          ],
+          onSelectedState: (EntityState state, value) {
+            store.dispatch(FilterClientsByState(state));
+          },
+          customValues1: company.getCustomFieldValues(CustomFieldType.client1,
+              excludeBlank: true),
+          customValues2: company.getCustomFieldValues(CustomFieldType.client2,
+              excludeBlank: true),
+          onSelectedCustom1: (value) =>
+              store.dispatch(FilterClientsByCustom1(value)),
+          onSelectedCustom2: (value) =>
+              store.dispatch(FilterClientsByCustom2(value)),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: user.canCreate(EntityType.client)
+            ? FloatingActionButton(
+                backgroundColor: Theme.of(context).primaryColorDark,
+                onPressed: () => store.dispatch(
+                    EditClient(client: ClientEntity(), context: context)),
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                tooltip: localization.newClient,
+              )
+            : null,
       ),
     );
   }

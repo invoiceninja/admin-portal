@@ -9,7 +9,9 @@ part of 'datetime_format_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -33,7 +35,7 @@ class _$DatetimeFormatListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, DatetimeFormatListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -47,7 +49,7 @@ class _$DatetimeFormatListResponseSerializer
   @override
   DatetimeFormatListResponse deserialize(
       Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new DatetimeFormatListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -81,7 +83,7 @@ class _$DatetimeFormatItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, DatetimeFormatItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -94,7 +96,7 @@ class _$DatetimeFormatItemResponseSerializer
   @override
   DatetimeFormatItemResponse deserialize(
       Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new DatetimeFormatItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -127,7 +129,7 @@ class _$DatetimeFormatEntitySerializer
 
   @override
   Iterable serialize(Serializers serializers, DatetimeFormatEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
@@ -141,7 +143,7 @@ class _$DatetimeFormatEntitySerializer
 
   @override
   DatetimeFormatEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new DatetimeFormatEntityBuilder();
 
     final iterator = serialized.iterator;

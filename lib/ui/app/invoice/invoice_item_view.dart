@@ -76,7 +76,7 @@ class InvoiceItemListTile extends StatelessWidget {
                     ],
                   ),
                   subtitle: Text(subtitle),
-                  trailing: Icon(Icons.navigate_next),
+                  trailing: onTap != null ? Icon(Icons.navigate_next) : null,
               ),
               Divider(height: 1.0,),
             ],

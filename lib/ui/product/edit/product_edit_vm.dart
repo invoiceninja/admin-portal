@@ -1,20 +1,19 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class ProductEditScreen extends StatelessWidget {
   static const String route = '/product/edit';
+
   const ProductEditScreen({Key key}) : super(key: key);
 
   @override
@@ -72,58 +71,39 @@ class ProductEditVM {
           store.dispatch(UpdateCurrentRoute(ProductScreen.route));
         },
         onSavePressed: (BuildContext context) {
-          final Completer<Null> completer = Completer<Null>();
-          store.dispatch(
-              SaveProductRequest(completer: completer, product: product));
-          return completer.future.then((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: product.isNew
-                      ? AppLocalization.of(context).successfullyCreatedProduct
-                      : AppLocalization.of(context).successfullyUpdatedProduct,
-                )));
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          store.dispatch(SaveProductRequest(
+              completer: snackBarCompleter(
+                  context,
+                  product.isNew
+                      ? AppLocalization.of(context).createdProduct
+                      : AppLocalization.of(context).updatedProduct),
+              product: product));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = Completer<Null>();
-          var message = '';
+          final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.archive:
-              store.dispatch(ArchiveProductRequest(completer, product.id));
-              message = AppLocalization.of(context).successfullyArchivedProduct;
+              store.dispatch(ArchiveProductRequest(
+                  popCompleter(
+                      context, localization.archivedProduct),
+                  product.id));
               break;
             case EntityAction.delete:
-              store.dispatch(DeleteProductRequest(completer, product.id));
-              message = AppLocalization.of(context).successfullyDeletedProduct;
+              store.dispatch(DeleteProductRequest(
+                  popCompleter(
+                      context, localization.deletedProduct),
+                  product.id));
               break;
             case EntityAction.restore:
-              store.dispatch(RestoreProductRequest(completer, product.id));
-              message = AppLocalization.of(context).successfullyRestoredProduct;
+              store.dispatch(RestoreProductRequest(
+                  snackBarCompleter(
+                      context, localization.restoredProduct),
+                  product.id));
+              break;
+            case EntityAction.clone:
+              store.dispatch(UpdateProduct(product.clone));
               break;
           }
-          return completer.future.then((_) {
-            if ([EntityAction.archive, EntityAction.delete].contains(action)) {
-              Navigator.of(context).pop(message);
-            } else {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  content: SnackBarRow(
-                    message: message,
-                  )
-              ));
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
         });
   }
 }

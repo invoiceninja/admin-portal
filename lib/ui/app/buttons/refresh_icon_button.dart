@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class SaveIconButton extends StatelessWidget {
-  const SaveIconButton({
+class RefreshIconButton extends StatelessWidget {
+  const RefreshIconButton({
     this.isSaving,
-    this.isDirty,
     this.onPressed,
-    this.isVisible,
+    this.tooltip,
+    this.icon,
+    this.isDirty = false,
+    this.isVisible = true,
   });
 
   final bool isSaving;
   final bool isDirty;
   final bool isVisible;
   final Function onPressed;
+  final String tooltip;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-
     if (!isVisible) {
       return Container();
     }
@@ -39,9 +40,9 @@ class SaveIconButton extends StatelessWidget {
 
     return IconButton(
       onPressed: onPressed,
-      tooltip: localization.save,
+      tooltip: tooltip,
       icon: Icon(
-        Icons.cloud_upload,
+        icon,
         color: isDirty
             ? (state.uiState.enableDarkMode
                 ? Theme.of(context).accentColor

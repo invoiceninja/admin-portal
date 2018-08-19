@@ -9,7 +9,9 @@ part of 'payment_model.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -33,7 +35,7 @@ class _$PaymentListResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, PaymentListResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -46,7 +48,7 @@ class _$PaymentListResponseSerializer
 
   @override
   PaymentListResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -80,7 +82,7 @@ class _$PaymentItemResponseSerializer
 
   @override
   Iterable serialize(Serializers serializers, PaymentItemResponse object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
@@ -92,7 +94,7 @@ class _$PaymentItemResponseSerializer
 
   @override
   PaymentItemResponse deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -120,7 +122,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
 
   @override
   Iterable serialize(Serializers serializers, PaymentEntity object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'amount',
       serializers.serialize(object.amount,
@@ -174,6 +176,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -186,7 +194,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
 
   @override
   PaymentEntity deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -245,6 +253,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'id':
@@ -467,6 +479,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final bool isDeleted;
   @override
+  final bool isOwner;
+  @override
   final int id;
 
   factory _$PaymentEntity([void updates(PaymentEntityBuilder b)]) =>
@@ -486,6 +500,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
+      this.isOwner,
       this.id})
       : super._() {
     if (amount == null)
@@ -533,6 +548,7 @@ class _$PaymentEntity extends PaymentEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
         id == other.id;
   }
 
@@ -551,20 +567,25 @@ class _$PaymentEntity extends PaymentEntity {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc(0, amount.hashCode),
-                                                        transactionReference
-                                                            .hashCode),
-                                                    paymentDate.hashCode),
-                                                paymentTypeId.hashCode),
-                                            invoiceId.hashCode),
-                                        invoiceNumber.hashCode),
-                                    privateNotes.hashCode),
-                                exchangeRate.hashCode),
-                            exchangeCurrencyId.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                amount
+                                                                    .hashCode),
+                                                            transactionReference
+                                                                .hashCode),
+                                                        paymentDate.hashCode),
+                                                    paymentTypeId.hashCode),
+                                                invoiceId.hashCode),
+                                            invoiceNumber.hashCode),
+                                        privateNotes.hashCode),
+                                    exchangeRate.hashCode),
+                                exchangeCurrencyId.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
         id.hashCode));
   }
 
@@ -584,6 +605,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
           ..add('id', id))
         .toString();
   }
@@ -648,6 +670,10 @@ class PaymentEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
@@ -669,6 +695,7 @@ class PaymentEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _id = _$v.id;
       _$v = null;
     }
@@ -703,6 +730,7 @@ class PaymentEntityBuilder
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
+            isOwner: isOwner,
             id: id);
     replace(_$result);
     return _$result;

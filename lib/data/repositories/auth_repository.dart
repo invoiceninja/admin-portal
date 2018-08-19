@@ -13,8 +13,12 @@ class AuthRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<LoginResponseData> login(String email, String password, String url, String secret, String platform) async {
-
+  Future<LoginResponseData> login(
+      {String email,
+      String password,
+      String url,
+      String secret,
+      String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
       'api_secret': secret,
@@ -24,28 +28,43 @@ class AuthRepository {
 
     url = formatApiUrlMachine(url) + '/login';
 
-    return sendRequest(url, credentials);
+    return sendRequest(url: url, data: credentials);
   }
 
-  Future<LoginResponseData> refresh(String url, String token, String platform) async {
+  Future<LoginResponseData> oauthLogin(
+      {String token, String url, String secret, String platform}) async {
+    final credentials = {
+      'token_name': 'invoice-ninja-$platform-app',
+      'api_secret': secret,
+      'token': token,
+      'provider': 'google',
+    };
 
+    url = formatApiUrlMachine(url) + '/oauth_login';
+
+    return sendRequest(url: url, data: credentials);
+  }
+
+  Future<LoginResponseData> refresh(
+      {String url, String token, String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
     };
 
     url = formatApiUrlMachine(url) + '/refresh';
 
-    return sendRequest(url, credentials, token);
+    return sendRequest(url: url, data: credentials, token: token);
   }
 
-  Future<LoginResponseData> sendRequest(String url, dynamic data, [String token]) async {
+  Future<LoginResponseData> sendRequest(
+      {String url, dynamic data, String token}) async {
+    url += '?include=tax_rates,users,custom_payment_terms&include_static=true';
 
-    url += '?include=tax_rates,users&include_static=true';
+    final dynamic response =
+        await webClient.post(url, token ?? '', json.encode(data));
 
-    final dynamic response = await webClient.post(url, token ?? '', json.encode(data));
-
-    final LoginResponse loginResponse = serializers.deserializeWith(
-        LoginResponse.serializer, response);
+    final LoginResponse loginResponse =
+        serializers.deserializeWith(LoginResponse.serializer, response);
 
     if (loginResponse.error != null) {
       throw loginResponse.error.message;
@@ -53,5 +72,4 @@ class AuthRepository {
 
     return loginResponse.data;
   }
-
 }

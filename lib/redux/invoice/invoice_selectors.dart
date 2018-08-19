@@ -24,7 +24,7 @@ List<int> filteredInvoicesSelector(
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId];
-    if (client.isDeleted) {
+    if (client == null || ! client.isActive) {
       return false;
     }
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
@@ -39,6 +39,14 @@ List<int> filteredInvoicesSelector(
     }
     if (invoiceListState.filterClientId != null &&
         invoice.clientId != invoiceListState.filterClientId) {
+      return false;
+    }
+    if (invoiceListState.custom1Filters.isNotEmpty &&
+        !invoiceListState.custom1Filters.contains(invoice.customTextValue1)) {
+      return false;
+    }
+    if (invoiceListState.custom2Filters.isNotEmpty &&
+        !invoiceListState.custom2Filters.contains(invoice.customTextValue2)) {
       return false;
     }
     return true;

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -25,6 +26,7 @@ class AppDrawerBuilder extends StatelessWidget {
 class AppDrawerVM {
   final List<CompanyEntity> companies;
   final CompanyEntity selectedCompany;
+  final UserEntity user;
   final String selectedCompanyIndex;
   final Function(BuildContext context, String) onCompanyChanged;
   final bool isLoading;
@@ -32,6 +34,7 @@ class AppDrawerVM {
   AppDrawerVM({
     @required this.companies,
     @required this.selectedCompany,
+    @required this.user,
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
     @required this.isLoading,
@@ -43,10 +46,12 @@ class AppDrawerVM {
     return AppDrawerVM(
       isLoading: state.isLoading,
       companies: companiesSelector(state),
+      user: state.user,
       selectedCompany: state.selectedCompany,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged: (BuildContext context, String companyIndex) {
         store.dispatch(SelectCompany(int.parse(companyIndex)));
+        AppBuilder.of(context).rebuild();
       },
     );
   }

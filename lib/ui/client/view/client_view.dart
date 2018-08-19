@@ -46,6 +46,7 @@ class _ClientViewState extends State<ClientView>
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final user = viewModel.company.user;
 
     return WillPopScope(
       onWillPop: () async {
@@ -62,15 +63,13 @@ class _ClientViewState extends State<ClientView>
           controller: _controller,
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme
-              .of(context)
-              .primaryColorDark,
+          backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
             showDialog<SimpleDialog>(
               context: context,
               builder: (BuildContext context) =>
                   SimpleDialog(children: <Widget>[
-                    ListTile(
+                    user.canCreate(EntityType.client) ? ListTile(
                       dense: true,
                       leading: Icon(Icons.add_circle_outline),
                       title: Text(localization.invoice),
@@ -81,7 +80,8 @@ class _ClientViewState extends State<ClientView>
                                 .rebuild((b) => b.clientId = client.id),
                             context: context));
                       },
-                    ),
+                    ) : Container(),
+                    /*
                     ListTile(
                       dense: true,
                       leading: Icon(Icons.add_circle_outline),
@@ -106,6 +106,7 @@ class _ClientViewState extends State<ClientView>
                       title: Text(localization.task),
                       onTap: () {},
                     ),
+                    */
                   ]),
             );
           },
@@ -134,7 +135,6 @@ class CustomTabBarView extends StatefulWidget {
 }
 
 class _CustomTabBarViewState extends State<CustomTabBarView> {
-
   @override
   void initState() {
     super.initState();
@@ -150,7 +150,8 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
   void _onTabChange() {
     final viewModel = widget.viewModel;
 
-    if (widget.controller.index == 2 && viewModel.client.activities.isEmpty &&
+    if (widget.controller.index == 2 &&
+        viewModel.client.activities.isEmpty &&
         !viewModel.isLoading) {
       viewModel.onRefreshed(context, true);
     }
@@ -196,10 +197,11 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
+    final user = viewModel.company.user;
 
     return AppBar(
       title:
-      Text(client.displayName ?? ''), // Text(localizations.clientDetails),
+          Text(client.displayName ?? ''), // Text(localizations.clientDetails),
       bottom: TabBar(
         controller: controller,
         //isScrollable: true,
@@ -218,16 +220,17 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: client.isNew
           ? []
           : [
-        EditIconButton(
-          isVisible: !client.isDeleted,
-          onPressed: () => viewModel.onEditPressed(context),
-        ),
-        ActionMenuButton(
-          isSaving: viewModel.isSaving,
-          entity: client,
-          onSelected: viewModel.onActionSelected,
-        )
-      ],
+              user.canEditEntity(client) ? EditIconButton(
+                isVisible: !client.isDeleted,
+                onPressed: () => viewModel.onEditPressed(context),
+              ) : Container(),
+              ActionMenuButton(
+                user: viewModel.company.user,
+                isSaving: viewModel.isSaving,
+                entity: client,
+                onSelected: viewModel.onActionSelected,
+              )
+            ],
     );
   }
 }

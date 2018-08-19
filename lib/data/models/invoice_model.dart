@@ -114,6 +114,12 @@ abstract class InvoiceEntity extends Object
   }
   InvoiceEntity._();
 
+  InvoiceEntity get clone => rebuild((b) => b
+    ..id = --InvoiceEntity.counter
+    ..invoiceNumber = ''
+    ..isPublic = false
+  );
+
   @override
   EntityType get entityType {
     return EntityType.invoice;
@@ -264,6 +270,9 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
+      case InvoiceFields.invoiceDate:
+        response = invoiceA.invoiceDate.compareTo(invoiceB.invoiceDate);
+        break;
     }
 
     if (response == 0) {
@@ -339,6 +348,8 @@ abstract class InvoiceEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  double get requestedAmount => partial > 0 ? partial : amount;
+
   bool get isPastDue {
     if (dueDate.isEmpty) {
       return false;
@@ -346,7 +357,7 @@ abstract class InvoiceEntity extends Object
 
     return !isDeleted &&
         isPublic &&
-        balance > 0 &&
+        invoiceStatusId != kInvoiceStatusPaid &&
         DateTime
             .tryParse(dueDate)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
@@ -478,6 +489,9 @@ abstract class InvitationEntity extends Object
   String get key;
 
   String get link;
+
+  //@BuiltValueField(wireName: 'contact_id')
+  //int get contactId;
 
   @BuiltValueField(wireName: 'sent_date')
   String get sentDate;
