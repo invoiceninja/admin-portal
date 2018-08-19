@@ -172,7 +172,7 @@ class AppDrawer extends StatelessWidget {
             title: AppLocalization.of(context).settings,
             onTap: () {
               store.dispatch(UpdateCurrentRoute(SettingsScreen.route));
-              navigator.pushReplacementNamed(SettingsScreen.route);
+              navigator.pushNamed(SettingsScreen.route);
             },
           ),
           AboutListTile(
@@ -245,9 +245,11 @@ class DrawerTile extends StatelessWidget {
       leading: Icon(icon, size: 22.0),
       title: Text(title),
       onTap: () {
+        /*
         while (Navigator.of(context).canPop()) {
           Navigator.of(context).pop();
         }
+        */
         onTap();
       },
       trailing: onCreateTap == null || !user.canCreate(entityType)

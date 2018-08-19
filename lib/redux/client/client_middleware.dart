@@ -67,7 +67,8 @@ Middleware<AppState> _viewClientList() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
-    Navigator.of(action.context).pushNamed(ClientScreen.route);
+    //Navigator.of(action.context).pushNamed(ClientScreen.route);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(ClientScreen.route, (Route<dynamic> route) => false);
   };
 }
 

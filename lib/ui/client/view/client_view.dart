@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
@@ -62,6 +63,7 @@ class _ClientViewState extends State<ClientView>
           viewModel: viewModel,
           controller: _controller,
         ),
+        drawer: AppDrawerBuilder(),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
