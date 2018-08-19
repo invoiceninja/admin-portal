@@ -44,29 +44,31 @@ class AppDrawer extends StatelessWidget {
 
     final _multipleCompanies = Align(
       alignment: FractionalOffset.bottomLeft,
-      child: viewModel.companies.isNotEmpty ? DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: viewModel.selectedCompanyIndex,
-          items: viewModel.companies
-              .map((CompanyEntity company) => DropdownMenuItem<String>(
-                    value:
-                        (viewModel.companies.indexOf(company) + 1).toString(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(company.name),
-                        Text(company.user.email,
-                            style: Theme.of(context).textTheme.caption),
-                      ],
-                    ),
-                  ))
-              .toList(),
-          onChanged: (value) {
-            viewModel.onCompanyChanged(context, value);
-          },
-        ),
-      ) : Container(),
+      child: viewModel.companies.isNotEmpty
+          ? DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: viewModel.selectedCompanyIndex,
+                items: viewModel.companies
+                    .map((CompanyEntity company) => DropdownMenuItem<String>(
+                          value: (viewModel.companies.indexOf(company) + 1)
+                              .toString(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(company.name),
+                              Text(company.user.email,
+                                  style: Theme.of(context).textTheme.caption),
+                            ],
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  viewModel.onCompanyChanged(context, value);
+                },
+              ),
+            )
+          : Container(),
     );
 
     final Store<AppState> store = StoreProvider.of<AppState>(context);
@@ -115,6 +117,13 @@ class AppDrawer extends StatelessWidget {
                                 !viewModel.isLoading
                             ? _multipleCompanies
                             : _singleCompany),
+                    Opacity(
+                      opacity: viewModel.isLoading ? 1.0 : 0.0,
+                      child: SizedBox(
+                          child: CircularProgressIndicator(),
+                          width: 20.0,
+                          height: 20.0),
+                    )
                   ],
                 ),
               ],
