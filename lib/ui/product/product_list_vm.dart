@@ -56,6 +56,9 @@ class ProductListVM {
 
   static ProductListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
+      if (store.state.isLoading) {
+        return Future<Null>(null);
+      }
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadProducts(completer: completer, force: true));

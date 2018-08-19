@@ -58,6 +58,9 @@ class ClientListVM {
 
   static ClientListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
+      if (store.state.isLoading) {
+        return Future<Null>(null);
+      }
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadClients(completer: completer, force: true));
@@ -81,26 +84,26 @@ class ClientListVM {
           switch (action) {
             case EntityAction.invoice:
               store.dispatch(EditInvoice(
-                  invoice: InvoiceEntity()
-                      .rebuild((b) => b.clientId = client.id),
+                  invoice:
+                      InvoiceEntity().rebuild((b) => b.clientId = client.id),
                   context: context));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreClientRequest(
-                  popCompleter(context,
-                      AppLocalization.of(context).restoredClient),
+                  popCompleter(
+                      context, AppLocalization.of(context).restoredClient),
                   client.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveClientRequest(
-                  popCompleter(context,
-                      AppLocalization.of(context).archivedClient),
+                  popCompleter(
+                      context, AppLocalization.of(context).archivedClient),
                   client.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteClientRequest(
-                  popCompleter(context,
-                      AppLocalization.of(context).deletedClient),
+                  popCompleter(
+                      context, AppLocalization.of(context).deletedClient),
                   client.id));
               break;
           }
@@ -112,25 +115,21 @@ class ClientListVM {
           if (direction == DismissDirection.endToStart) {
             if (client.isDeleted || client.isArchived) {
               store.dispatch(RestoreClientRequest(
-                  snackBarCompleter(
-                      context, localization.restoredClient),
+                  snackBarCompleter(context, localization.restoredClient),
                   client.id));
             } else {
               store.dispatch(ArchiveClientRequest(
-                  snackBarCompleter(
-                      context, localization.archivedClient),
+                  snackBarCompleter(context, localization.archivedClient),
                   client.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (client.isDeleted) {
               store.dispatch(RestoreClientRequest(
-                  snackBarCompleter(
-                      context, localization.restoredClient),
+                  snackBarCompleter(context, localization.restoredClient),
                   client.id));
             } else {
               store.dispatch(DeleteClientRequest(
-                  snackBarCompleter(
-                      context, localization.deletedClient),
+                  snackBarCompleter(context, localization.deletedClient),
                   client.id));
             }
           }

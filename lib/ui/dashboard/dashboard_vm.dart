@@ -45,6 +45,9 @@ class DashboardVM {
 
   static DashboardVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
+      if (store.state.isLoading) {
+        return Future<Null>(null);
+      }
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadDashboard(completer, true));
@@ -57,7 +60,6 @@ class DashboardVM {
     return DashboardVM(
       dashboardState: state.dashboardState,
       isLoading: state.isLoading,
-      //onRefreshed: (context) => state.isLoading ? Future<Null>(null) : _handleRefresh(context),
       onRefreshed: (context) => _handleRefresh(context),
       filter: filter,
       filteredList:
