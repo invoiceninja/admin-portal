@@ -45,7 +45,8 @@ Middleware<AppState> _editClient() {
       store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
     }
 
-    final client = await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+    final client =
+        await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
 
     if (action.completer != null && client != null) {
       action.completer.complete(client);
@@ -67,8 +68,8 @@ Middleware<AppState> _viewClientList() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
-    //Navigator.of(action.context).pushNamed(ClientScreen.route);
-    Navigator.of(action.context).pushNamedAndRemoveUntil(ClientScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        ClientScreen.route, (Route<dynamic> route) => false);
   };
 }
 
@@ -165,7 +166,6 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 
 Middleware<AppState> _loadClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -175,7 +175,8 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 
     store.dispatch(LoadClientRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.clientId, action.loadActivities)
+        .loadItem(state.selectedCompany, state.authState, action.clientId,
+            action.loadActivities)
         .then((client) {
       store.dispatch(LoadClientSuccess(client));
 
@@ -196,7 +197,6 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 
 Middleware<AppState> _loadClients(ClientRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-
     final AppState state = store.state;
 
     if (!state.clientState.isStale && !action.force) {
@@ -209,7 +209,8 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
       return;
     }
 
-    final int updatedAt = action.force ? 0 : (state.clientState.lastUpdated / 1000).round();
+    final int updatedAt =
+        action.force ? 0 : (state.clientState.lastUpdated / 1000).round();
 
     store.dispatch(LoadClientsRequest());
     repository

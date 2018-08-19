@@ -58,7 +58,8 @@ Middleware<AppState> _viewInvoiceList() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
-    Navigator.of(action.context).pushNamed(InvoiceScreen.route);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        InvoiceScreen.route, (Route<dynamic> route) => false);
   };
 }
 

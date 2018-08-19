@@ -244,14 +244,7 @@ class DrawerTile extends StatelessWidget {
       dense: true,
       leading: Icon(icon, size: 22.0),
       title: Text(title),
-      onTap: () {
-        /*
-        while (Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        }
-        */
-        onTap();
-      },
+      onTap: onTap,
       trailing: onCreateTap == null || !user.canCreate(entityType)
           ? null
           : IconButton(

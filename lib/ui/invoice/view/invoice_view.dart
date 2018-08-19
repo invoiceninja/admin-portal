@@ -1,5 +1,4 @@
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -232,7 +231,6 @@ class _InvoiceViewState extends State<InvoiceView> {
         appBar: _CustomAppBar(
           viewModel: viewModel,
         ),
-        drawer: AppDrawerBuilder(),
         body: Builder(
           builder: (BuildContext context) {
             return RefreshIndicator(

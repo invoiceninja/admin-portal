@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
@@ -51,15 +52,12 @@ class LoginVM {
     final GoogleSignIn _googleSignIn = new GoogleSignIn(
       scopes: [
         'email',
-        //'openid',
-        //'profile',
       ],
     );
 
     void _handleLogin(BuildContext context) {
       AppBuilder.of(context).rebuild();
-      Navigator.of(context).pushReplacementNamed(DashboardScreen.route);
-      store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+      store.dispatch(ViewDashboard(context));
     }
 
     return LoginVM(
