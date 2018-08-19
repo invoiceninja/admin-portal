@@ -48,37 +48,40 @@ class _DashboardViewState extends State<DashboardView>
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
 
-    return Scaffold(
-      drawer: AppDrawerBuilder(),
-      appBar: AppBar(
-        title: ListFilter(
-          title: AppLocalization.of(context).dashboard,
-          onFilterChanged: (value) {
-            store.dispatch(FilterCompany(value));
-          },
-        ),
-        actions: <Widget>[
-          ListFilterButton(
-            onFilterPressed: (String value) {
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        drawer: AppDrawerBuilder(),
+        appBar: AppBar(
+          title: ListFilter(
+            title: AppLocalization.of(context).dashboard,
+            onFilterChanged: (value) {
               store.dispatch(FilterCompany(value));
             },
           ),
-        ],
-        bottom: store.state.uiState.filter != null ? null : TabBar(
-          controller: _controller,
-          tabs: [
-            Tab(
-              text: localization.overview,
-            ),
-            Tab(
-              text: localization.activity,
+          actions: <Widget>[
+            ListFilterButton(
+              onFilterPressed: (String value) {
+                store.dispatch(FilterCompany(value));
+              },
             ),
           ],
+          bottom: store.state.uiState.filter != null ? null : TabBar(
+            controller: _controller,
+            tabs: [
+              Tab(
+                text: localization.overview,
+              ),
+              Tab(
+                text: localization.activity,
+              ),
+            ],
+          ),
         ),
-      ),
-      body: CustomTabBarView(
-        viewModel: widget.viewModel,
-        controller: _controller,
+        body: CustomTabBarView(
+          viewModel: widget.viewModel,
+          controller: _controller,
+        ),
       ),
     );
   }

@@ -78,11 +78,8 @@ class SettingsListVM {
                 new FlatButton(
                     child: Text(localization.ok.toUpperCase()),
                     onPressed: () {
-                      final navigator = Navigator.of(context);
-                      while (navigator.canPop()) {
-                        navigator.pop();
-                      }
-                      navigator.pushNamed(LoginScreen.route);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          LoginScreen.route, (Route<dynamic> route) => false);
                       store.dispatch(UserLogout());
                     })
               ],
