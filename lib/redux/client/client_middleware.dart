@@ -70,9 +70,10 @@ Middleware<AppState> _viewClientList() {
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        ClientScreen.route, ModalRoute.withName(DashboardScreen.route));
-    //Navigator.of(action.context).pushNamedAndRemoveUntil(ClientScreen.route, (Route<dynamic> route) => false);
+    //Navigator.of(action.context).pushNamedAndRemoveUntil(
+    //    ClientScreen.route, ModalRoute.withName(DashboardScreen.route));
+
+    Navigator.of(action.context).pushNamedAndRemoveUntil(ClientScreen.route, (Route<dynamic> route) => false);
   };
 }
 
