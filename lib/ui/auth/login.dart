@@ -32,6 +32,10 @@ class _LoginState extends State<LoginView> {
   static final ValueKey _urlKey = Key(LoginKeys.urlKeyString);
   static final ValueKey _secretKey = Key(LoginKeys.secretKeyString);
 
+  FocusNode focusNode1 = new FocusNode();
+  FocusNode focusNode2 = new FocusNode();
+  FocusNode focusNode3 = new FocusNode();
+
   @override
   void didChangeDependencies() {
     final state = widget.viewModel.authState;
@@ -83,6 +87,8 @@ class _LoginState extends State<LoginView> {
                 validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? localization.pleaseEnterYourEmail
                     : null,
+                onFieldSubmitted: (String value) =>
+                    FocusScope.of(context).requestFocus(focusNode1),
               ),
               TextFormField(
                 controller: _passwordController,
@@ -93,6 +99,9 @@ class _LoginState extends State<LoginView> {
                     ? localization.pleaseEnterYourPassword
                     : null,
                 obscureText: true,
+                focusNode: focusNode1,
+                onFieldSubmitted: (String value) =>
+                    FocusScope.of(context).requestFocus(focusNode2),
               ),
               TextFormField(
                 controller: _urlController,
@@ -103,6 +112,9 @@ class _LoginState extends State<LoginView> {
                     ? localization.pleaseEnterYourUrl
                     : null,
                 keyboardType: TextInputType.url,
+                focusNode: focusNode2,
+                onFieldSubmitted: (String value) =>
+                    FocusScope.of(context).requestFocus(focusNode3),
               ),
               TextFormField(
                 controller: _secretController,
@@ -110,6 +122,7 @@ class _LoginState extends State<LoginView> {
                 autocorrect: false,
                 decoration: InputDecoration(labelText: localization.secret),
                 obscureText: true,
+                focusNode: focusNode3,
               ),
               viewModel.authState.error == null
                   ? Container()
