@@ -34,7 +34,8 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
             key: Key(contact.entityKey),
             contact: contact,
             areButtonsVisible: client.contacts.length > 1,
-            index: client.contacts.indexOf(contact),
+            index: client.contacts.indexOf(client.contacts
+                .firstWhere((c) => c.id == contact.id)),
           );
         });
   }
@@ -244,8 +245,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery
-            .of(context)
+        bottom: MediaQuery.of(context)
             .viewInsets
             .bottom, // stay clear of the keyboard
       ),

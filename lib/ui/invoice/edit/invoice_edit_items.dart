@@ -29,11 +29,15 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     showDialog<ItemEditDetails>(
         context: context,
         builder: (BuildContext context) {
+          final viewModel = widget.viewModel;
+          final invoice = viewModel.invoice;
+
           return ItemEditDetails(
-            viewModel: widget.viewModel,
+            viewModel: viewModel,
             key: Key(invoiceItem.entityKey),
             invoiceItem: invoiceItem,
-            index: widget.viewModel.invoice.invoiceItems.indexOf(invoiceItem),
+            index: invoice.invoiceItems.indexOf(invoice.invoiceItems
+                .firstWhere((i) => i.id == invoiceItem.id)),
           );
         });
   }
@@ -202,7 +206,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom, // stay clear of the keyboard
+        bottom: MediaQuery.of(context)
+            .viewInsets
+            .bottom, // stay clear of the keyboard
       ),
       child: SingleChildScrollView(
         child: FormCard(
