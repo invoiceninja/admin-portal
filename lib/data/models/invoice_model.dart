@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -12,6 +13,7 @@ abstract class InvoiceListResponse
     implements Built<InvoiceListResponse, InvoiceListResponseBuilder> {
   factory InvoiceListResponse([void updates(InvoiceListResponseBuilder b)]) =
       _$InvoiceListResponse;
+
   InvoiceListResponse._();
 
   BuiltList<InvoiceEntity> get data;
@@ -24,6 +26,7 @@ abstract class InvoiceItemResponse
     implements Built<InvoiceItemResponse, InvoiceItemResponseBuilder> {
   factory InvoiceItemResponse([void updates(InvoiceItemResponseBuilder b)]) =
       _$InvoiceItemResponse;
+
   InvoiceItemResponse._();
 
   InvoiceEntity get data;
@@ -62,6 +65,7 @@ abstract class InvoiceEntity extends Object
     with BaseEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   static int counter = 0;
+
   factory InvoiceEntity() {
     return _$InvoiceEntity._(
       id: --InvoiceEntity.counter,
@@ -112,13 +116,13 @@ abstract class InvoiceEntity extends Object
       isDeleted: false,
     );
   }
+
   InvoiceEntity._();
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
     ..invoiceNumber = ''
-    ..isPublic = false
-  );
+    ..isPublic = false);
 
   @override
   EntityType get entityType {
@@ -337,6 +341,22 @@ abstract class InvoiceEntity extends Object
     return null;
   }
 
+  InvoiceEntity applyTax(TaxRateEntity taxRate) {
+    InvoiceEntity invoice = rebuild((b) => b
+      ..taxRate1 = taxRate.rate
+      ..taxName1 = taxRate.name);
+
+    if (taxRate.isInclusive) {
+      invoice = invoice.rebuild((b) => b
+        ..invoiceItems.replace(invoiceItems
+            .map((item) => item.rebuild(
+                (b) => b.cost = round(b.cost / (100 + taxRate.rate) * 100, 2)))
+            .toList()));
+    }
+
+    return invoice;
+  }
+
   @override
   String get listDisplayName {
     return invoiceNumber;
@@ -358,13 +378,14 @@ abstract class InvoiceEntity extends Object
     return !isDeleted &&
         isPublic &&
         invoiceStatusId != kInvoiceStatusPaid &&
-        DateTime
-            .tryParse(dueDate)
+        DateTime.tryParse(dueDate)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
   String get invitationLink => invitations.first?.link;
+
   String get invitationSilentLink => invitations.first?.silentLink;
+
   String get invitationDownloadLink => invitations.first?.downloadLink;
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
@@ -374,6 +395,7 @@ abstract class InvoiceItemEntity extends Object
     with BaseEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   static int counter = 0;
+
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
       id: --InvoiceItemEntity.counter,
@@ -394,6 +416,7 @@ abstract class InvoiceItemEntity extends Object
       isDeleted: false,
     );
   }
+
   InvoiceItemEntity._();
 
   @override
@@ -453,6 +476,19 @@ abstract class InvoiceItemEntity extends Object
     return null;
   }
 
+  InvoiceItemEntity applyTax(TaxRateEntity taxRate) {
+    InvoiceItemEntity item = rebuild((b) => b
+      ..taxRate1 = taxRate.rate
+      ..taxName1 = taxRate.name);
+
+    if (taxRate.isInclusive) {
+      item = item.rebuild(
+          (b) => b..cost = round(b.cost / (100 + taxRate.rate) * 100, 2));
+    }
+
+    return item;
+  }
+
   @override
   String get listDisplayName {
     return '';
@@ -472,6 +508,7 @@ abstract class InvitationEntity extends Object
     with BaseEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
   static int counter = 0;
+
   factory InvitationEntity() {
     return _$InvitationEntity._(
       id: --InvitationEntity.counter,
@@ -484,6 +521,7 @@ abstract class InvitationEntity extends Object
       isDeleted: false,
     );
   }
+
   InvitationEntity._();
 
   String get key;
@@ -500,6 +538,7 @@ abstract class InvitationEntity extends Object
   String get viewedDate;
 
   String get silentLink => link + '?silent=true&borderless=true';
+
   String get downloadLink => link.replaceFirst('/view/', '/download/');
 
   @override

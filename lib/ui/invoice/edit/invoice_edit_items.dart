@@ -36,8 +36,8 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
             viewModel: viewModel,
             key: Key(invoiceItem.entityKey),
             invoiceItem: invoiceItem,
-            index: invoice.invoiceItems.indexOf(invoice.invoiceItems
-                .firstWhere((i) => i.id == invoiceItem.id)),
+            index: invoice.invoiceItems.indexOf(
+                invoice.invoiceItems.firstWhere((i) => i.id == invoiceItem.id)),
           );
         });
   }
@@ -290,10 +290,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        invoiceItem.rebuild((b) => b
-                          ..taxRate1 = taxRate.rate
-                          ..taxName1 = taxRate.name),
-                        widget.index),
+                        invoiceItem.applyTax(taxRate), widget.index),
                     labelText: localization.tax,
                     initialTaxName: invoiceItem.taxName1,
                     initialTaxRate: invoiceItem.taxRate1,
@@ -303,10 +300,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        invoiceItem.rebuild((b) => b
-                          ..taxRate2 = taxRate.rate
-                          ..taxName2 = taxRate.name),
-                        widget.index),
+                        invoiceItem.applyTax(taxRate), widget.index),
                     labelText: localization.tax,
                     initialTaxName: invoiceItem.taxName2,
                     initialTaxRate: invoiceItem.taxRate2,
