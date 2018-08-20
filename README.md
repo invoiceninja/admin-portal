@@ -5,10 +5,10 @@ This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/
 Join the Android beta: https://play.google.com/apps/testing/com.invoiceninja.invoiceninja_flutter
 
 <p align="center">
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_08.png" alt="View Invoice" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_01.png" alt="List Invoices" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_06.png" alt="Contact Details" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_02.png" alt="Edit Product" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_01.png" alt="View Invoice" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_02.png" alt="List Invoices" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_03.png" alt="Contact Details" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_04.png" alt="Edit Product" width="200"/>
 </p>
 
 ## Features
