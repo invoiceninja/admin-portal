@@ -20,9 +20,10 @@ class DashboardBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, DashboardVM>(
+      distinct: true,
       converter: DashboardVM.fromStore,
-      builder: (context, vm) {
-        return DashboardView(viewModel: vm);
+      builder: (context, viewModel) {
+        return DashboardView(viewModel: viewModel);
       },
     );
   }
@@ -30,17 +31,17 @@ class DashboardBuilder extends StatelessWidget {
 
 class DashboardVM {
   final DashboardState dashboardState;
-  final bool isLoading;
-  final Function(BuildContext) onRefreshed;
   final String filter;
   final List<BaseEntity> filteredList;
+  final bool isLoading;
+  final Function(BuildContext) onRefreshed;
 
   DashboardVM({
     @required this.dashboardState,
     @required this.isLoading,
-    @required this.onRefreshed,
     @required this.filter,
     @required this.filteredList,
+    @required this.onRefreshed,
   });
 
   static DashboardVM fromStore(Store<AppState> store) {
@@ -66,4 +67,18 @@ class DashboardVM {
           memoizedFilteredSelector(filter, state.selectedCompanyState),
     );
   }
+
+  @override
+  bool operator ==(dynamic other) =>
+      dashboardState == other.dashboardState &&
+      isLoading == other.isLoading &&
+      filter == other.filter &&
+      filteredList == other.filteredList;
+
+  @override
+  int get hashCode =>
+      dashboardState.hashCode ^
+      isLoading.hashCode ^
+      filter.hashCode ^
+      filteredList.hashCode;
 }

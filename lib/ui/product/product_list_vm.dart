@@ -19,6 +19,7 @@ class ProductListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductListVM>(
+      //distinct: true,
       converter: ProductListVM.fromStore,
       builder: (context, vm) {
         return ProductList(
@@ -132,4 +133,13 @@ class ProductListVM {
           }
         });
   }
+
+  /*
+  @override
+  bool operator ==(dynamic other) =>
+      client == other.client && company == other.company;
+
+  @override
+  int get hashCode => client.hashCode ^ company.hashCode;
+  */
 }

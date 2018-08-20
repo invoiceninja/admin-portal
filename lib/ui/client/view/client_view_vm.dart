@@ -22,6 +22,7 @@ class ClientViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ClientViewVM>(
+      distinct: true,
       converter: (Store<AppState> store) {
         return ClientViewVM.fromStore(store);
       },
@@ -85,10 +86,9 @@ class ClientViewVM {
               client: client, context: context, completer: completer));
           completer.future.then((client) {
             Scaffold.of(context).showSnackBar(SnackBar(
-                    content: SnackBarRow(
-                  message:
-                      AppLocalization.of(context).updatedClient,
-                )));
+                content: SnackBarRow(
+              message: AppLocalization.of(context).updatedClient,
+            )));
           });
         },
         onInvoicesPressed: (BuildContext context) {
@@ -104,8 +104,7 @@ class ClientViewVM {
           switch (action) {
             case EntityAction.archive:
               store.dispatch(ArchiveClientRequest(
-                  popCompleter(
-                      context, localization.archivedClient),
+                  popCompleter(context, localization.archivedClient),
                   client.id));
               break;
             case EntityAction.delete:
@@ -115,11 +114,17 @@ class ClientViewVM {
               break;
             case EntityAction.restore:
               store.dispatch(RestoreClientRequest(
-                  snackBarCompleter(
-                      context, localization.restoredClient),
+                  snackBarCompleter(context, localization.restoredClient),
                   client.id));
               break;
           }
         });
   }
+
+  @override
+  bool operator ==(dynamic other) =>
+      client == other.client && company == other.company;
+
+  @override
+  int get hashCode => client.hashCode ^ company.hashCode;
 }

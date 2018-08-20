@@ -23,12 +23,13 @@ class InvoiceViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceViewVM>(
+      distinct: true,
       converter: (Store<AppState> store) {
         return InvoiceViewVM.fromStore(store);
       },
-      builder: (context, vm) {
+      builder: (context, viewModel) {
         return InvoiceView(
-          viewModel: vm,
+          viewModel: viewModel,
         );
       },
     );
@@ -39,24 +40,24 @@ class InvoiceViewVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
+  final bool isSaving;
+  final bool isDirty;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
   final Function(BuildContext) onClientPressed;
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;
-  final bool isSaving;
-  final bool isDirty;
 
   InvoiceViewVM({
     @required this.company,
     @required this.invoice,
     @required this.client,
+    @required this.isSaving,
+    @required this.isDirty,
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onClientPressed,
-    @required this.isSaving,
-    @required this.isDirty,
     @required this.onRefreshed,
   });
 
@@ -107,33 +108,29 @@ class InvoiceViewVM {
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.markedInvoiceAsSent),
+                  snackBarCompleter(context, localization.markedInvoiceAsSent),
                   invoice.id));
               break;
             case EntityAction.emailInvoice:
               store.dispatch(ShowEmailInvoice(
-                  completer: snackBarCompleter(
-                      context, localization.emailedInvoice),
+                  completer:
+                      snackBarCompleter(context, localization.emailedInvoice),
                   invoice: invoice,
                   context: context));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(
-                  popCompleter(
-                      context, localization.archivedInvoice),
+                  popCompleter(context, localization.archivedInvoice),
                   invoice.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteInvoiceRequest(
-                  popCompleter(
-                      context, localization.deletedInvoice),
+                  popCompleter(context, localization.deletedInvoice),
                   invoice.id));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.restoredInvoice),
+                  snackBarCompleter(context, localization.restoredInvoice),
                   invoice.id));
               break;
             case EntityAction.clone:
@@ -144,4 +141,20 @@ class InvoiceViewVM {
           }
         });
   }
+
+  @override
+  bool operator ==(dynamic other) =>
+      client == other.client &&
+      company == other.company &&
+      invoice == other.invoice &&
+      isSaving == other.isSaving &&
+      isDirty == other.isDirty;
+
+  @override
+  int get hashCode =>
+      client.hashCode ^
+      company.hashCode ^
+      invoice.hashCode ^
+      isSaving.hashCode ^
+      isDirty.hashCode;
 }
