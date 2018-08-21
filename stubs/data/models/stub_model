@@ -1,0 +1,57 @@
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:flutter_redux_starter/data/models/models.dart';
+
+part 'stub_model.g.dart';
+
+class StubFields {
+  // STARTER: fields - do not remove comment
+}
+
+abstract class StubEntity extends Object with BaseEntity implements Built<StubEntity, StubEntityBuilder> {
+
+  // STARTER: properties - do not remove comment
+
+  static int counter = 0;
+  factory StubEntity() {
+    return _$StubEntity._(
+      id: 0,
+      // STARTER: constructor - do not remove comment
+    );
+  }
+
+  String get displayName {
+    // STARTER: display name - do not remove comment
+  }
+
+  int compareTo(StubEntity stub, String sortField, bool sortAscending) {
+    int response = 0;
+    StubEntity stubA = sortAscending ? this : stub;
+    StubEntity stubB = sortAscending ? stub: this; 
+
+    switch (sortField) {
+      // STARTER: sort switch - do not remove comment
+    }
+
+    if (response == 0) {
+      // STARTER: sort default - do not remove comment
+    } else {
+      return response;
+    }
+  }
+
+  bool matchesSearch(String search) {
+    if (search == null || search.isEmpty) {
+      return true;
+    }
+
+    search = search.toLowerCase();
+
+    // STARTER: search - do not remove comment
+
+    return false;
+  }
+
+  StubEntity._();
+  static Serializer<StubEntity> get serializer => _$stubEntitySerializer;
+}

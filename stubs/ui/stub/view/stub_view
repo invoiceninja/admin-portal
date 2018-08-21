@@ -1,0 +1,51 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_redux_starter/ui/app/actions_menu_button.dart';
+import 'package:flutter_redux_starter/ui/stub/view/stub_view_vm.dart';
+import 'package:flutter_redux_starter/ui/app/form_card.dart';
+
+class StubView extends StatefulWidget {
+  final StubViewVM viewModel;
+
+  StubView({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  @override
+  _StubViewState createState() => new _StubViewState();
+}
+
+class _StubViewState extends State<StubView> {
+  @override
+  Widget build(BuildContext context) {
+    var viewModel = widget.viewModel;
+    var stub = viewModel.stub;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(stub.displayName),
+        actions: stub.isNew
+            ? []
+            : [
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    viewModel.onEditPressed(context);
+                  },
+                ),
+                ActionMenuButton(
+                  isLoading: viewModel.isLoading,
+                  entity: stub,
+                  onSelected: viewModel.onActionSelected,
+                )
+              ],
+      ),
+      body: FormCard(
+        children: [
+          // STARTER: widgets - do not remove comment
+        ]
+      ),
+    );
+  }
+}

@@ -1,0 +1,132 @@
+import 'package:flutter/widgets.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux_starter/ui/stub/stub_screen.dart';
+import 'package:flutter_redux_starter/data/models/models.dart';
+import 'package:flutter_redux_starter/redux/stub/stub_actions.dart';
+import 'package:flutter_redux_starter/redux/ui/ui_actions.dart';
+import 'package:flutter_redux_starter/ui/stub/edit/stub_edit_vm.dart';
+import 'package:flutter_redux_starter/ui/stub/view/stub_view_vm.dart';
+import 'package:flutter_redux_starter/redux/app/app_state.dart';
+import 'package:flutter_redux_starter/data/repositories/stub_repository.dart';
+
+List<Middleware<AppState>> createStoreStubsMiddleware([
+  StubRepository repository = const StubRepository(),
+]) {
+  final viewStubList = _viewStubList();
+  final viewStub = _viewStub();
+  final editStub = _editStub();
+  final loadStubs = _loadStubs(repository);
+  final saveStub = _saveStub(repository);
+  final deleteStub = _deleteStub(repository);
+
+  return [
+    TypedMiddleware<AppState, ViewStubList>(viewStubList),
+    TypedMiddleware<AppState, ViewStub>(viewStub),
+    TypedMiddleware<AppState, EditStub>(editStub),
+    TypedMiddleware<AppState, LoadStubs>(loadStubs),
+    TypedMiddleware<AppState, SaveStubRequest>(saveStub),
+    TypedMiddleware<AppState, DeleteStubRequest>(deleteStub),
+  ];
+}
+
+Middleware<AppState> _viewStubList() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(StubScreen.route));
+    Navigator.of(action.context).pushReplacementNamed(StubScreen.route);
+  };
+}
+
+Middleware<AppState> _viewStub() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
+    Navigator.of(action.context).pushNamed(StubViewScreen.route);
+  };
+}
+
+Middleware<AppState> _editStub() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
+    Navigator.of(action.context).pushNamed(StubEditScreen.route);
+  };
+}
+
+
+Middleware<AppState> _deleteStub(StubRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    var origStub = store.state.stubState.map[action.stubId];
+    repository
+        .saveData(store.state.authState,
+            origStub, EntityAction.delete)
+        .then((stub) {
+      store.dispatch(DeleteStubSuccess(stub));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((error) {
+      print(error);
+      store.dispatch(DeleteStubFailure(origStub));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveStub(StubRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    repository
+        .saveData(
+            store.state.authState, action.stub)
+        .then((stub) {
+      if (action.stub.isNew) {
+        store.dispatch(AddStubSuccess(stub));
+      } else {
+        store.dispatch(SaveStubSuccess(stub));
+      }
+      action.completer.complete(null);
+    }).catchError((error) {
+      print(error);
+      store.dispatch(SaveStubFailure(error));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _loadStubs(StubRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+
+    AppState state = store.state;
+
+    if (!state.stubState.isStale && !action.force) {
+      next(action);
+      return;
+    }
+
+    if (state.isLoading) {
+      next(action);
+      return;
+    }
+
+    store.dispatch(LoadStubsRequest());
+    repository
+        .loadList(state.authState)
+        .then((data) {
+      store.dispatch(LoadStubsSuccess(data));
+
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((error) {
+      print(error);
+      store.dispatch(LoadStubsFailure(error));
+    });
+
+    next(action);
+  };
+}

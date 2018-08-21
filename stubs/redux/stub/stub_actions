@@ -1,0 +1,111 @@
+import 'dart:async';
+import 'package:flutter/widgets.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:flutter_redux_starter/data/models/stub_model.dart';
+import 'package:flutter_redux_starter/redux/app/app_actions.dart';
+
+
+class ViewStubList implements PersistUI {
+  final BuildContext context;
+  ViewStubList(this.context);
+}
+
+class ViewStub implements PersistUI {
+  final StubEntity stub;
+  final BuildContext context;
+  ViewStub({this.stub, this.context});
+}
+
+class EditStub implements PersistUI {
+  final StubEntity stub;
+  final BuildContext context;
+  EditStub({this.stub, this.context});
+}
+
+
+class LoadStubs {
+  final Completer completer;
+  final bool force;
+
+  LoadStubs([this.completer, this.force = false]);
+}
+
+class LoadStubsRequest implements StartLoading {}
+
+class LoadStubsFailure implements StopLoading {
+  final dynamic error;
+  LoadStubsFailure(this.error);
+
+  @override
+  String toString() {
+    return 'LoadStubsFailure{error: $error}';
+  }
+}
+
+class LoadStubsSuccess implements StopLoading, PersistData {
+  final BuiltList<StubEntity> stubs;
+  LoadStubsSuccess(this.stubs);
+
+  @override
+  String toString() {
+    return 'LoadStubsSuccess{stubs: $stubs}';
+  }
+}
+
+
+class UpdateStub implements PersistUI {
+  final StubEntity stub;
+  UpdateStub(this.stub);
+}
+
+class SaveStubRequest implements StartLoading {
+  final Completer completer;
+  final StubEntity stub;
+  SaveStubRequest({this.completer, this.stub});
+}
+
+class AddStubSuccess implements StopLoading, PersistData {
+  final StubEntity stub;
+  AddStubSuccess(this.stub);
+}
+
+
+class SaveStubSuccess implements StopLoading, PersistData {
+  final StubEntity stub;
+
+  SaveStubSuccess(this.stub);
+}
+
+class SaveStubFailure implements StopLoading {
+  final String error;
+  SaveStubFailure (this.error);
+}
+
+class DeleteStubRequest implements StartLoading {
+  final Completer completer;
+  final int stubId;
+
+  DeleteStubRequest(this.completer, this.stubId);
+}
+
+class DeleteStubSuccess implements StopLoading, PersistData {
+  final StubEntity stub;
+  DeleteStubSuccess(this.stub);
+}
+
+class DeleteStubFailure implements StopLoading {
+  final StubEntity stub;
+  DeleteStubFailure(this.stub);
+}
+
+
+
+class SearchStubs {
+  final String search;
+  SearchStubs(this.search);
+}
+
+class SortStubs implements PersistUI {
+  final String field;
+  SortStubs(this.field);
+}

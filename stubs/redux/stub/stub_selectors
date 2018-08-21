@@ -1,0 +1,29 @@
+import 'package:memoize/memoize.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:flutter_redux_starter/data/models/stub_model.dart';
+import 'package:flutter_redux_starter/redux/ui/list_ui_state.dart';
+
+var memoizedStubList = memo3((
+    BuiltMap<int, StubEntity> stubMap,
+    BuiltList<int> stubList,
+    ListUIState stubListState) => visibleStubsSelector(stubMap, stubList, stubListState)
+);
+
+List<int> visibleStubsSelector(
+    BuiltMap<int, StubEntity> stubMap,
+    BuiltList<int> stubList,
+    ListUIState stubListState) {
+
+  var list = stubList.where((stubId) {
+    var stub = stubMap[stubId];
+    return stub.matchesSearch(stubListState.search);
+  }).toList();
+
+  list.sort((stubAId, stubBId) {
+    var stubA = stubMap[stubAId];
+    var stubB = stubMap[stubBId];
+    return stubA.compareTo(stubB, stubListState.sortField, stubListState.sortAscending);
+  });
+
+  return list;
+}

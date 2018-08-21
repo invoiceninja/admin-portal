@@ -1,0 +1,75 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux_starter/redux/stub/stub_actions.dart';
+import 'package:flutter_redux_starter/data/models/stub_model.dart';
+import 'package:flutter_redux_starter/data/models/models.dart';
+import 'package:flutter_redux_starter/ui/stub/view/stub_view.dart';
+import 'package:flutter_redux_starter/redux/app/app_state.dart';
+import 'package:flutter_redux_starter/ui/app/icon_message.dart';
+
+class StubViewScreen extends StatelessWidget {
+  static final String route = '/stub/view';
+  StubViewScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, StubViewVM>(
+      converter: (Store<AppState> store) {
+        return StubViewVM.fromStore(store);
+      },
+      builder: (context, vm) {
+        return StubView(
+          viewModel: vm,
+        );
+      },
+    );
+  }
+}
+
+class StubViewVM {
+  final StubEntity stub;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext) onEditPressed;
+  final bool isLoading;
+
+  StubViewVM({
+    @required this.stub,
+    @required this.onActionSelected,
+    @required this.onEditPressed,
+    @required this.isLoading,
+  });
+
+  factory StubViewVM.fromStore(Store<AppState> store) {
+    final stub = store.state.stubUIState.selected;
+
+    return StubViewVM(
+        isLoading: store.state.isLoading,
+        stub: stub,
+        onEditPressed: (BuildContext context) {
+          store.dispatch(EditStub(stub: stub, context: context));
+        },
+        onActionSelected: (BuildContext context, EntityAction action) {
+          final Completer<Null> completer = new Completer<Null>();
+          var message;
+          switch (action) {
+            case EntityAction.delete:
+              store.dispatch(DeleteStubRequest(completer, stub.id));
+              message = 'Successfully Deleted Stub';
+              break;
+          }
+          if (message != null) {
+            return completer.future.then((_) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: IconMessage(
+                    message: message,
+                  ),
+                  duration: Duration(seconds: 3)));
+            });
+          }
+        }
+    );
+  }
+}

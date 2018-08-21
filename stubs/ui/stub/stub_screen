@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux_starter/ui/app/app_search.dart';
+import 'package:flutter_redux_starter/ui/app/app_search_button.dart';
+import 'package:flutter_redux_starter/redux/app/app_state.dart';
+import 'package:flutter_redux_starter/data/models/models.dart';
+import 'package:flutter_redux_starter/data/models/stub_model.dart';
+import 'package:flutter_redux_starter/ui/stub/stub_list_vm.dart';
+import 'package:flutter_redux_starter/redux/stub/stub_actions.dart';
+import 'package:flutter_redux_starter/ui/app/app_drawer_vm.dart';
+import 'package:flutter_redux_starter/ui/app/app_bottom_bar.dart';
+
+class StubScreen extends StatelessWidget {
+  static final String route = '/stub';
+
+  @override
+  Widget build(BuildContext context) {
+    var store = StoreProvider.of<AppState>(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: AppSearch(
+          entityType: EntityType.stub,
+          onSearchChanged: (value) {
+            store.dispatch(SearchStubs(value));
+          },
+        ),
+        actions: [
+          AppSearchButton(
+            entityType: EntityType.stub,
+            onSearchPressed: (value) {
+              store.dispatch(SearchStubs(value));
+            },
+          ),
+        ],
+      ),
+      drawer: AppDrawerBuilder(),
+      body: StubListBuilder(),
+      bottomNavigationBar: AppBottomBar(
+        entityType: EntityType.stub,
+        onSelectedSortField: (value) {
+          store.dispatch(SortStubs(value));
+        },
+        sortFields: [
+          // STARTER: sort - do not remove comment
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: () {
+          store.dispatch(EditStub(stub: StubEntity(), context: context));
+        },
+        child: Icon(Icons.add,color: Colors.white,),
+        tooltip: 'New Stub',
+      ),
+    );
+  }
+}

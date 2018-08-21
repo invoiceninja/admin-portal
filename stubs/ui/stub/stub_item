@@ -1,0 +1,66 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_redux_starter/data/models/stub_model.dart';
+//import 'package:flutter_redux_starter/ui/app/dismissible_entity.dart';
+
+
+class StubItem extends StatelessWidget {
+  final DismissDirectionCallback onDismissed;
+  final GestureTapCallback onTap;
+  final StubEntity stub;
+
+  static final stubItemKey = (int id) => Key('__stub_item_${id}__');
+
+  StubItem({
+    @required this.onDismissed,
+    @required this.onTap,
+    @required this.stub,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    /*
+    return DismissibleEntity(
+      entity: stub,
+      onDismissed: onDismissed,
+      onTap: onTap,
+      child: ListTile(
+        onTap: onTap,
+        title: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  stub.displayName,
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+            ],
+          ),
+        ),
+        // STARTER: subtitle - do not remove comment
+      ),
+    );
+  }
+  */
+
+    return ListTile(
+      onTap: onTap,
+      title: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                stub.displayName,
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+          ],
+        ),
+      ),
+      // STARTER: subtitle - do not remove comment
+    );
+  }
+}
