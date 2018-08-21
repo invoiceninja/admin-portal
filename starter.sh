@@ -346,11 +346,6 @@ else
     code="${code}),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/app_drawer.dart
 
-    comment="STARTER: types - do not remove comment"
-    code="static const EntityType ${module} = _$"
-    code="${code}${module};${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/models.dart
-
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_state.dart

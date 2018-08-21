@@ -34,6 +34,7 @@ import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+// STARTER: import - do not remove comment
 
 void main() async {
   final prefs = await SharedPreferences.getInstance();
@@ -48,6 +49,7 @@ void main() async {
         ..addAll(createStoreClientsMiddleware())
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
+        // STARTER: middleware - do not remove comment
         ..addAll([
           LoggingMiddleware<dynamic>.printer(),
         ]));
@@ -130,6 +132,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
+            // STARTER: routes - do not remove comment
             SettingsScreen.route: (context) => SettingsScreen(),
           },
         );

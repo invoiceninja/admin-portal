@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
+// STARTER: import - do not remove comment
 
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
@@ -175,6 +176,7 @@ class AppDrawer extends StatelessWidget {
                   EditInvoice(invoice: InvoiceEntity(), context: context));
             },
           ),
+          // STARTER: menu - do not remove comment
           DrawerTile(
             user: user,
             icon: FontAwesomeIcons.cog,
