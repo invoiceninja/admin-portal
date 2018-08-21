@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter_redux_starter/data/models/stub_model.dart';
-import 'package:flutter_redux_starter/redux/app/app_actions.dart';
-
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewStubList implements PersistUI {
   final BuildContext context;
@@ -11,23 +10,66 @@ class ViewStubList implements PersistUI {
 }
 
 class ViewStub implements PersistUI {
-  final StubEntity stub;
+  final int stubId;
   final BuildContext context;
-  ViewStub({this.stub, this.context});
+  ViewStub({this.stubId, this.context});
 }
 
 class EditStub implements PersistUI {
   final StubEntity stub;
   final BuildContext context;
-  EditStub({this.stub, this.context});
+  final Completer completer;
+  final bool trackRoute;
+  EditStub({this.stub, this.context, this.completer, this.trackRoute = true});
 }
 
+class UpdateStub implements PersistUI {
+  final StubEntity stub;
+  UpdateStub(this.stub);
+}
+
+class LoadStub {
+  final Completer completer;
+  final int stubId;
+  final bool loadActivities;
+
+  LoadStub({this.completer, this.stubId, this.loadActivities = false});
+}
+
+class LoadStubActivity {
+  final Completer completer;
+  final int stubId;
+
+  LoadStubActivity({this.completer, this.stubId});
+}
 
 class LoadStubs {
   final Completer completer;
   final bool force;
 
-  LoadStubs([this.completer, this.force = false]);
+  LoadStubs({this.completer, this.force = false});
+}
+
+class LoadStubRequest implements StartLoading {}
+
+class LoadStubFailure implements StopLoading {
+  final dynamic error;
+  LoadStubFailure(this.error);
+
+  @override
+  String toString() {
+    return 'LoadStubFailure{error: $error}';
+  }
+}
+
+class LoadStubSuccess implements StopLoading, PersistData {
+  final StubEntity stub;
+  LoadStubSuccess(this.stub);
+
+  @override
+  String toString() {
+    return 'LoadStubSuccess{stub: $stub}';
+  }
 }
 
 class LoadStubsRequest implements StartLoading {}
@@ -53,59 +95,106 @@ class LoadStubsSuccess implements StopLoading, PersistData {
 }
 
 
-class UpdateStub implements PersistUI {
-  final StubEntity stub;
-  UpdateStub(this.stub);
-}
 
-class SaveStubRequest implements StartLoading {
+class SaveStubRequest implements StartSaving {
   final Completer completer;
   final StubEntity stub;
   SaveStubRequest({this.completer, this.stub});
 }
 
-class AddStubSuccess implements StopLoading, PersistData {
-  final StubEntity stub;
-  AddStubSuccess(this.stub);
-}
-
-
-class SaveStubSuccess implements StopLoading, PersistData {
+class SaveStubSuccess implements StopSaving, PersistData, PersistUI {
   final StubEntity stub;
 
   SaveStubSuccess(this.stub);
 }
 
-class SaveStubFailure implements StopLoading {
-  final String error;
+class AddStubSuccess implements StopSaving, PersistData, PersistUI {
+  final StubEntity stub;
+  AddStubSuccess(this.stub);
+}
+
+class SaveStubFailure implements StopSaving {
+  final Object error;
   SaveStubFailure (this.error);
 }
 
-class DeleteStubRequest implements StartLoading {
+class ArchiveStubRequest implements StartSaving {
+  final Completer completer;
+  final int stubId;
+
+  ArchiveStubRequest(this.completer, this.stubId);
+}
+
+class ArchiveStubSuccess implements StopSaving, PersistData {
+  final StubEntity stub;
+  ArchiveStubSuccess(this.stub);
+}
+
+class ArchiveStubFailure implements StopSaving {
+  final StubEntity stub;
+  ArchiveStubFailure(this.stub);
+}
+
+class DeleteStubRequest implements StartSaving {
   final Completer completer;
   final int stubId;
 
   DeleteStubRequest(this.completer, this.stubId);
 }
 
-class DeleteStubSuccess implements StopLoading, PersistData {
+class DeleteStubSuccess implements StopSaving, PersistData {
   final StubEntity stub;
   DeleteStubSuccess(this.stub);
 }
 
-class DeleteStubFailure implements StopLoading {
+class DeleteStubFailure implements StopSaving {
   final StubEntity stub;
   DeleteStubFailure(this.stub);
 }
 
+class RestoreStubRequest implements StartSaving {
+  final Completer completer;
+  final int stubId;
+  RestoreStubRequest(this.completer, this.stubId);
+}
+
+class RestoreStubSuccess implements StopSaving, PersistData {
+  final StubEntity stub;
+  RestoreStubSuccess(this.stub);
+}
+
+class RestoreStubFailure implements StopSaving {
+  final StubEntity stub;
+  RestoreStubFailure(this.stub);
+}
 
 
-class SearchStubs {
-  final String search;
-  SearchStubs(this.search);
+
+
+class FilterStubs {
+  final String filter;
+  FilterStubs(this.filter);
 }
 
 class SortStubs implements PersistUI {
   final String field;
   SortStubs(this.field);
+}
+
+class FilterStubsByState implements PersistUI {
+  final EntityState state;
+
+  FilterStubsByState(this.state);
+}
+
+class FilterStubsByCustom1 implements PersistUI {
+  final String value;
+
+  FilterStubsByCustom1(this.value);
+}
+
+class FilterStubsByCustom2 implements PersistUI {
+  final String value;
+
+  FilterStubsByCustom2(this.value);
 }

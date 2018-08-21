@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_redux_starter/ui/stub/stub_screen.dart';
-import 'package:flutter_redux_starter/data/models/models.dart';
-import 'package:flutter_redux_starter/redux/stub/stub_actions.dart';
-import 'package:flutter_redux_starter/redux/ui/ui_actions.dart';
-import 'package:flutter_redux_starter/ui/stub/edit/stub_edit_vm.dart';
-import 'package:flutter_redux_starter/ui/stub/view/stub_view_vm.dart';
-import 'package:flutter_redux_starter/redux/app/app_state.dart';
-import 'package:flutter_redux_starter/data/repositories/stub_repository.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
+import 'package:invoiceninja_flutter/ui/stub/edit/stub_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/stub/view/stub_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/data/repositories/stub_repository.dart';
 
 List<Middleware<AppState>> createStoreStubsMiddleware([
   StubRepository repository = const StubRepository(),
@@ -16,30 +18,44 @@ List<Middleware<AppState>> createStoreStubsMiddleware([
   final viewStub = _viewStub();
   final editStub = _editStub();
   final loadStubs = _loadStubs(repository);
+  final loadStub = _loadStub(repository);
   final saveStub = _saveStub(repository);
+  final archiveStub = _archiveStub(repository);
   final deleteStub = _deleteStub(repository);
+  final restoreStub = _restoreStub(repository);
 
   return [
     TypedMiddleware<AppState, ViewStubList>(viewStubList),
     TypedMiddleware<AppState, ViewStub>(viewStub),
     TypedMiddleware<AppState, EditStub>(editStub),
     TypedMiddleware<AppState, LoadStubs>(loadStubs),
+    TypedMiddleware<AppState, LoadStub>(loadStub),
     TypedMiddleware<AppState, SaveStubRequest>(saveStub),
+    TypedMiddleware<AppState, ArchiveStubRequest>(archiveStub),
     TypedMiddleware<AppState, DeleteStubRequest>(deleteStub),
+    TypedMiddleware<AppState, RestoreStubRequest>(restoreStub),
   ];
 }
 
-Middleware<AppState> _viewStubList() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+Middleware<AppState> _editStub() {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(StubScreen.route));
-    Navigator.of(action.context).pushReplacementNamed(StubScreen.route);
+    if (action.trackRoute) {
+      store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
+    }
+
+    final stub =
+        await Navigator.of(action.context).pushNamed(StubEditScreen.route);
+
+    if (action.completer != null && stub != null) {
+      action.completer.complete(stub);
+    }
   };
 }
 
 Middleware<AppState> _viewStub() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
@@ -47,30 +63,79 @@ Middleware<AppState> _viewStub() {
   };
 }
 
-Middleware<AppState> _editStub() {
-  return (Store<AppState> store, action, NextDispatcher next) {
+Middleware<AppState> _viewStubList() {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
-    Navigator.of(action.context).pushNamed(StubEditScreen.route);
+    store.dispatch(UpdateCurrentRoute(StubScreen.route));
+
+    Navigator.of(action.context).pushNamedAndRemoveUntil(StubScreen.route, (Route<dynamic> route) => false);
   };
 }
 
+Middleware<AppState> _archiveStub(StubRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final origStub = store.state.stubState.map[action.stubId];
+    repository
+        .saveData(store.state.selectedCompany, store.state.authState,
+            origStub, EntityAction.archive)
+        .then((dynamic stub) {
+      store.dispatch(ArchiveStubSuccess(stub));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ArchiveStubFailure(origStub));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
 
 Middleware<AppState> _deleteStub(StubRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
-    var origStub = store.state.stubState.map[action.stubId];
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final origStub = store.state.stubState.map[action.stubId];
     repository
-        .saveData(store.state.authState,
+        .saveData(store.state.selectedCompany, store.state.authState,
             origStub, EntityAction.delete)
-        .then((stub) {
+        .then((dynamic stub) {
       store.dispatch(DeleteStubSuccess(stub));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+    }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteStubFailure(origStub));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _restoreStub(StubRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final origStub = store.state.stubState.map[action.stubId];
+    repository
+        .saveData(store.state.selectedCompany, store.state.authState,
+            origStub, EntityAction.restore)
+        .then((dynamic stub) {
+      store.dispatch(RestoreStubSuccess(stub));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RestoreStubFailure(origStub));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -78,20 +143,52 @@ Middleware<AppState> _deleteStub(StubRepository repository) {
 }
 
 Middleware<AppState> _saveStub(StubRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .saveData(
-            store.state.authState, action.stub)
-        .then((stub) {
+            store.state.selectedCompany, store.state.authState, action.stub)
+        .then((dynamic stub) {
       if (action.stub.isNew) {
         store.dispatch(AddStubSuccess(stub));
       } else {
         store.dispatch(SaveStubSuccess(stub));
       }
-      action.completer.complete(null);
-    }).catchError((error) {
+      action.completer.complete(stub);
+    }).catchError((Object error) {
       print(error);
       store.dispatch(SaveStubFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _loadStub(StubRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final AppState state = store.state;
+
+    if (state.isLoading) {
+      next(action);
+      return;
+    }
+
+    store.dispatch(LoadStubRequest());
+    repository
+        .loadItem(state.selectedCompany, state.authState, action.stubId,
+            action.loadActivities)
+        .then((stub) {
+      store.dispatch(LoadStubSuccess(stub));
+
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadStubFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -99,9 +196,8 @@ Middleware<AppState> _saveStub(StubRepository repository) {
 }
 
 Middleware<AppState> _loadStubs(StubRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
-
-    AppState state = store.state;
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final AppState state = store.state;
 
     if (!state.stubState.isStale && !action.force) {
       next(action);
@@ -113,18 +209,27 @@ Middleware<AppState> _loadStubs(StubRepository repository) {
       return;
     }
 
+    final int updatedAt =
+        action.force ? 0 : (state.stubState.lastUpdated / 1000).round();
+
     store.dispatch(LoadStubsRequest());
     repository
-        .loadList(state.authState)
+        .loadList(state.selectedCompany, state.authState, updatedAt)
         .then((data) {
       store.dispatch(LoadStubsSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-    }).catchError((error) {
+      if (state.productState.isStale) {
+        store.dispatch(LoadProducts());
+      }
+    }).catchError((Object error) {
       print(error);
       store.dispatch(LoadStubsFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
