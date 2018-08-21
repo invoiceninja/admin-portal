@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'dart:core';
 import 'dart:convert';
+import 'dart:core';
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter_redux_starter/data/models/models.dart';
-import 'package:flutter_redux_starter/data/models/serializers.dart';
-import 'package:flutter_redux_starter/redux/auth/auth_state.dart';
-import 'package:flutter_redux_starter/data/models/stub_model.dart';
-import 'package:flutter_redux_starter/data/web_client.dart';
-import 'package:flutter_redux_starter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class StubRepository {
   final WebClient webClient;
@@ -16,29 +14,30 @@ class StubRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<BuiltList<StubEntity>> loadList(AuthState auth) async {
-    final response = await webClient.get(kApiUrl + '/stubs');
+  Future<StubEntity> loadItem(
+      CompanyEntity company, AuthState auth, int entityId) async {
+    final dynamic response = await webClient.get(
+        '${auth.url}/stubs/$entityId', company.token);
 
-    var list = new BuiltList<StubEntity>(response.map((stub) {
-      return serializers.deserializeWith(StubEntity.serializer, stub);
-    }));
+    final StubItemResponse stubResponse =
+        serializers.deserializeWith(StubItemResponse.serializer, response);
 
-    return list;
+    return stubResponse.data;
   }
 
-  Future saveData(AuthState auth, StubEntity stub, [EntityAction action]) async {
+  Future<BuiltList<StubEntity>> loadList(
+      CompanyEntity company, AuthState auth, int updatedAt) async {
+    String url = auth.url + '/stubs';
 
-    var data = serializers.serializeWith(StubEntity.serializer, stub);
-    var response;
-
-    if (stub.isNew) {
-      response = await webClient.post(
-          kApiUrl + '/stubs', json.encode(data));
-    } else {
-      var url = kApiUrl + '/stubs/' + stub.id.toString();
-      response = await webClient.put(url, json.encode(data));
+    if (updatedAt > 0) {
+      url += '&updated_at=${updatedAt - 600}';
     }
 
-    return serializers.deserializeWith(StubEntity.serializer, response);
+    final dynamic response = await webClient.get(url, company.token);
+
+    final StubListResponse stubResponse =
+        serializers.deserializeWith(StubListResponse.serializer, response);
+
+    return stubResponse.data;
   }
 }

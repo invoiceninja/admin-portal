@@ -4,13 +4,38 @@ import 'package:flutter_redux_starter/data/models/models.dart';
 
 part 'stub_model.g.dart';
 
+abstract class StubListResponse
+    implements Built<StubListResponse, StubListResponseBuilder> {
+  factory StubListResponse([void updates(StubListResponseBuilder b)]) =
+      _$StubListResponse;
+
+  StubListResponse._();
+
+  BuiltList<StubEntity> get data;
+
+  static Serializer<StubListResponse> get serializer =>
+      _$StubListResponseSerializer;
+}
+
+abstract class StubItemResponse
+    implements Built<StubItemResponse, StubItemResponseBuilder> {
+  factory StubItemResponse([void updates(StubItemResponseBuilder b)]) =
+      _$StubItemResponse;
+
+  StubItemResponse._();
+
+  StubEntity get data;
+
+  static Serializer<StubItemResponse> get serializer =>
+      _$StubItemResponseSerializer;
+}
+
+
 class StubFields {
   // STARTER: fields - do not remove comment
 }
 
 abstract class StubEntity extends Object with BaseEntity implements Built<StubEntity, StubEntityBuilder> {
-
-  // STARTER: properties - do not remove comment
 
   static int counter = 0;
   factory StubEntity() {
@@ -19,6 +44,8 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
       // STARTER: constructor - do not remove comment
     );
   }
+
+  // STARTER: properties - do not remove comment
 
   String get displayName {
     // STARTER: display name - do not remove comment
@@ -40,16 +67,28 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
     }
   }
 
-  bool matchesSearch(String search) {
-    if (search == null || search.isEmpty) {
+  @override
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    search = search.toLowerCase();
+    filter = filter.toLowerCase();
 
     // STARTER: search - do not remove comment
 
     return false;
+  }
+
+  @override
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return null;
+    }
+
+    filter = filter.toLowerCase();
+
+    return null;
   }
 
   StubEntity._();
