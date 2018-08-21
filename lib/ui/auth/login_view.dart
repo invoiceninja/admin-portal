@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/progress_button.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -27,6 +28,8 @@ class _LoginState extends State<LoginView> {
   final _urlController = TextEditingController();
   final _secretController = TextEditingController();
   final _oneTimePasswordController = TextEditingController();
+
+  static const String OTP_ERROR = 'OTP_REQUIRED';
 
   static final ValueKey _emailKey = Key(LoginKeys.emailKeyString);
   static final ValueKey _passwordKey = Key(LoginKeys.passwordKeyString);
@@ -63,6 +66,8 @@ class _LoginState extends State<LoginView> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final error = viewModel.authState.error;
+    final isOneTimePassword = error == OTP_ERROR ||
+        _oneTimePasswordController.text.isNotEmpty;
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -80,8 +85,7 @@ class _LoginState extends State<LoginView> {
           key: _formKey,
           child: FormCard(
             children: <Widget>[
-              (error != null && error.contains('2FA')) ||
-                      _oneTimePasswordController.text.isNotEmpty
+              isOneTimePassword
                   ? TextFormField(
                       controller: _oneTimePasswordController,
                       key: _oneTimePasswordKey,
@@ -137,7 +141,7 @@ class _LoginState extends State<LoginView> {
                         ),
                       ],
                     ),
-              viewModel.authState.error == null || error.contains('2FA')
+              viewModel.authState.error == null || error == OTP_ERROR
                   ? Container()
                   : Container(
                       padding: EdgeInsets.only(top: 26.0, bottom: 4.0),
@@ -169,6 +173,21 @@ class _LoginState extends State<LoginView> {
                 oneTimePassword: _oneTimePasswordController.text);
           },
         ),
+        isOneTimePassword && ! viewModel.isLoading
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: ElevatedButton(
+                  label: localization.cancel.toUpperCase(),
+                  color: Colors.grey,
+                  onPressed: () {
+                    setState(() {
+                      _oneTimePasswordController.text = '';
+                    });
+                    viewModel.onCancel2FAPressed();
+                  },
+                ),
+              )
+            : Container(),
         /*
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),

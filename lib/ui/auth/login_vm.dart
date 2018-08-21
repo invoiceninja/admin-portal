@@ -36,6 +36,7 @@ class LoginScreen extends StatelessWidget {
 class LoginVM {
   bool isLoading;
   AuthState authState;
+  final Function() onCancel2FAPressed;
   final Function(BuildContext,
       {String email,
       String password,
@@ -48,6 +49,7 @@ class LoginVM {
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginPressed,
+    @required this.onCancel2FAPressed,
     @required this.onGoogleLoginPressed,
   });
 
@@ -66,6 +68,7 @@ class LoginVM {
     return LoginVM(
         isLoading: store.state.isLoading,
         authState: store.state.authState,
+        onCancel2FAPressed: () => store.dispatch(ClearAuthError()),
         onGoogleLoginPressed:
             (BuildContext context, String url, String secret) async {
           try {

@@ -68,3 +68,4 @@ class UserLoginFailure implements StopLoading {
 }
 
 class UserLogout implements PersistData {}
+class ClearAuthError {}
