@@ -161,7 +161,7 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.18"
+    version: "0.5.19"
   fixnum:
     dependency: transitive
     description:
@@ -190,7 +190,7 @@ packages:
       name: flutter_pdf_viewer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.2"
+    version: "0.0.3"
   flutter_redux:
     dependency: "direct main"
     description:
@@ -447,7 +447,7 @@ packages:
       name: share
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.2"
+    version: "0.5.3"
   shared_preferences:
     dependency: "direct main"
     description:
