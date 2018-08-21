@@ -316,23 +316,23 @@ else
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/company_state.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_state.dart
 
     comment="STARTER: fields - do not remove comment"
     code="${Module}State get ${module}State;${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/company_state.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_state.dart
 
     comment="STARTER: constructor - do not remove comment"
     code="${module}State: ${Module}State(),${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/company_state.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_state.dart
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module}\/${module}_reducer.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/company_reducer.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_reducer.dart
 
     comment="STARTER: reducer - do not remove comment"
     code="..${module}State.replace(${module}sReducer(state.${module}State, action))${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/company_reducer.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_reducer.dart
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module}\/${module}_actions.dart';${lineBreak}"
