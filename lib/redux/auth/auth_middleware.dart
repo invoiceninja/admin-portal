@@ -63,7 +63,8 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
             password: action.password,
             url: action.url,
             secret: action.secret,
-            platform: action.platform)
+            platform: action.platform,
+            oneTimePassword: action.oneTimePassword)
         .then((data) {
       _saveAuthLocal(action);
 

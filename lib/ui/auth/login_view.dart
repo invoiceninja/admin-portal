@@ -26,15 +26,16 @@ class _LoginState extends State<LoginView> {
   final _passwordController = TextEditingController();
   final _urlController = TextEditingController();
   final _secretController = TextEditingController();
+  final _oneTimePasswordController = TextEditingController();
 
   static final ValueKey _emailKey = Key(LoginKeys.emailKeyString);
   static final ValueKey _passwordKey = Key(LoginKeys.passwordKeyString);
   static final ValueKey _urlKey = Key(LoginKeys.urlKeyString);
   static final ValueKey _secretKey = Key(LoginKeys.secretKeyString);
+  static final ValueKey _oneTimePasswordKey =
+      Key(LoginKeys.oneTimePasswordKeyString);
 
   FocusNode focusNode1 = new FocusNode();
-  FocusNode focusNode2 = new FocusNode();
-  FocusNode focusNode3 = new FocusNode();
 
   @override
   void didChangeDependencies() {
@@ -61,6 +62,7 @@ class _LoginState extends State<LoginView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final error = viewModel.authState.error;
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -78,53 +80,64 @@ class _LoginState extends State<LoginView> {
           key: _formKey,
           child: FormCard(
             children: <Widget>[
-              TextFormField(
-                controller: _emailController,
-                key: _emailKey,
-                autocorrect: false,
-                decoration: InputDecoration(labelText: localization.email),
-                keyboardType: TextInputType.emailAddress,
-                validator: (val) => val.isEmpty || val.trim().isEmpty
-                    ? localization.pleaseEnterYourEmail
-                    : null,
-                onFieldSubmitted: (String value) =>
-                    FocusScope.of(context).requestFocus(focusNode1),
-              ),
-              TextFormField(
-                controller: _passwordController,
-                key: _passwordKey,
-                autocorrect: false,
-                decoration: InputDecoration(labelText: localization.password),
-                validator: (val) => val.isEmpty || val.trim().isEmpty
-                    ? localization.pleaseEnterYourPassword
-                    : null,
-                obscureText: true,
-                focusNode: focusNode1,
-                onFieldSubmitted: (String value) =>
-                    FocusScope.of(context).requestFocus(focusNode2),
-              ),
-              TextFormField(
-                controller: _urlController,
-                key: _urlKey,
-                autocorrect: false,
-                decoration: InputDecoration(labelText: localization.url),
-                validator: (val) => val.isEmpty || val.trim().isEmpty
-                    ? localization.pleaseEnterYourUrl
-                    : null,
-                keyboardType: TextInputType.url,
-                focusNode: focusNode2,
-                onFieldSubmitted: (String value) =>
-                    FocusScope.of(context).requestFocus(focusNode3),
-              ),
-              TextFormField(
-                controller: _secretController,
-                key: _secretKey,
-                autocorrect: false,
-                decoration: InputDecoration(labelText: localization.secret),
-                obscureText: true,
-                focusNode: focusNode3,
-              ),
-              viewModel.authState.error == null
+              (error != null && error.contains('2FA')) ||
+                      _oneTimePasswordController.text.isNotEmpty
+                  ? TextFormField(
+                      controller: _oneTimePasswordController,
+                      key: _oneTimePasswordKey,
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                          labelText: localization.oneTimePassword),
+                    )
+                  : Column(
+                      children: <Widget>[
+                        TextFormField(
+                          controller: _emailController,
+                          key: _emailKey,
+                          autocorrect: false,
+                          decoration:
+                              InputDecoration(labelText: localization.email),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (val) => val.isEmpty || val.trim().isEmpty
+                              ? localization.pleaseEnterYourEmail
+                              : null,
+                          onFieldSubmitted: (String value) =>
+                              FocusScope.of(context).requestFocus(focusNode1),
+                        ),
+                        TextFormField(
+                          controller: _passwordController,
+                          key: _passwordKey,
+                          autocorrect: false,
+                          decoration:
+                              InputDecoration(labelText: localization.password),
+                          validator: (val) => val.isEmpty || val.trim().isEmpty
+                              ? localization.pleaseEnterYourPassword
+                              : null,
+                          obscureText: true,
+                          focusNode: focusNode1,
+                        ),
+                        TextFormField(
+                          controller: _urlController,
+                          key: _urlKey,
+                          autocorrect: false,
+                          decoration:
+                              InputDecoration(labelText: localization.url),
+                          validator: (val) => val.isEmpty || val.trim().isEmpty
+                              ? localization.pleaseEnterYourUrl
+                              : null,
+                          keyboardType: TextInputType.url,
+                        ),
+                        TextFormField(
+                          controller: _secretController,
+                          key: _secretKey,
+                          autocorrect: false,
+                          decoration:
+                              InputDecoration(labelText: localization.secret),
+                          obscureText: true,
+                        ),
+                      ],
+                    ),
+              viewModel.authState.error == null || error.contains('2FA')
                   ? Container()
                   : Container(
                       padding: EdgeInsets.only(top: 26.0, bottom: 4.0),
@@ -148,12 +161,12 @@ class _LoginState extends State<LoginView> {
             if (!_formKey.currentState.validate()) {
               return;
             }
-            viewModel.onLoginPressed(
-                context,
-                _emailController.text,
-                _passwordController.text,
-                _urlController.text,
-                _secretController.text);
+            viewModel.onLoginPressed(context,
+                email: _emailController.text,
+                password: _passwordController.text,
+                url: _urlController.text,
+                secret: _secretController.text,
+                oneTimePassword: _oneTimePasswordController.text);
           },
         ),
         /*

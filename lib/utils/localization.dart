@@ -262,6 +262,7 @@ class AppLocalization {
       'activity_45': ':user deleted task :task',
       'activity_46': ':user restored task :task',
       'activity_47': ':user updated expense :expense',
+      'one_time_password': 'One Time Password',
     },
     'sq': {
       'billing_address': 'Adresa e faturimit',
@@ -7657,6 +7658,9 @@ class AppLocalization {
 
   String get activity_47 =>
       _localizedValues[locale.languageCode]['activity_47'];
+
+  String get oneTimePassword =>
+      _localizedValues[locale.languageCode]['one_time_password'];
 
   String lookup(String key) {
     return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? key;

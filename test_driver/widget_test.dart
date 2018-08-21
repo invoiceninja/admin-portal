@@ -1,6 +1,6 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
-//import 'package:invoiceninja_flutter/ui/auth/login.dart';
+//import 'package:invoiceninja_flutter/ui/auth/login_view.dart';
 
 void main() {
   group('scrolling performance test', () {

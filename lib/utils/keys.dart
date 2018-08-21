@@ -4,6 +4,7 @@ class LoginKeys {
   static const String passwordKeyString = 'loginPassword';
   static const String urlKeyString = 'loginUrl';
   static const String secretKeyString = 'loginSecret';
+  static const String oneTimePasswordKeyString = 'loginOneTimePassword';
 }
 
 // Keys for Product Screen

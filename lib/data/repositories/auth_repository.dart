@@ -18,12 +18,14 @@ class AuthRepository {
       String password,
       String url,
       String secret,
-      String platform}) async {
+      String platform,
+      String oneTimePassword}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
       'api_secret': secret,
       'email': email,
       'password': password,
+      'one_time_password': oneTimePassword,
     };
 
     url = formatApiUrlMachine(url) + '/login';
