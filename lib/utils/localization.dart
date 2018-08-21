@@ -2932,7 +2932,8 @@ class AppLocalization {
       'mark_sent': 'Als versendet markieren',
       'marked_invoice_as_sent': 'Rechnung wurde erfolgreich als gesendet markiert',
       'done': 'Erledigt',
-      'please_enter_a_client_or_contact_name': 'Bitte gebe einen Kunden- oder Kontaktnamen ein',
+      'please_enter_a_client_or_contact_name': 
+          'Bitte gebe einen Kunden- oder Kontaktnamen ein',
       'dark_mode': 'Dunkler Modus',
       'restart_app_to_apply_change': 'App neustarten, um die Änderungen anzuwenden',
       'refresh_data': 'Daten neu laden',
