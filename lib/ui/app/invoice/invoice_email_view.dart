@@ -9,7 +9,9 @@ import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
-import 'package:flutter_html_view/flutter_html_view.dart';
+
+//import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:html/parser.dart';
 
 class InvoiceEmailView extends StatefulWidget {
   final EmailInvoiceVM viewModel;
@@ -174,10 +176,17 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                 ),
                 Container(
                   //color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Text(
+                        parse(emailBody.replaceAll('</div>', '\n')).body.text),
+                  ),
+                  /*
                   child: HtmlView(
                     data: emailBody,
                   ),
-                ),
+                  */
+                  ),
               ],
             ),
           ),
