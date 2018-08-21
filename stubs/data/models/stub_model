@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 
 part 'stub_model.g.dart';
 
+
 abstract class StubListResponse
     implements Built<StubListResponse, StubListResponseBuilder> {
   factory StubListResponse([void updates(StubListResponseBuilder b)]) =
@@ -14,7 +15,7 @@ abstract class StubListResponse
   BuiltList<StubEntity> get data;
 
   static Serializer<StubListResponse> get serializer =>
-      _$StubListResponseSerializer;
+      _$stubListResponseSerializer;
 }
 
 abstract class StubItemResponse
@@ -27,15 +28,16 @@ abstract class StubItemResponse
   StubEntity get data;
 
   static Serializer<StubItemResponse> get serializer =>
-      _$StubItemResponseSerializer;
+      _$stubItemResponseSerializer;
 }
-
 
 class StubFields {
   // STARTER: fields - do not remove comment
 }
 
 abstract class StubEntity extends Object with BaseEntity implements Built<StubEntity, StubEntityBuilder> {
+
+  // STARTER: properties - do not remove comment
 
   static int counter = 0;
   factory StubEntity() {
@@ -44,8 +46,6 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
       // STARTER: constructor - do not remove comment
     );
   }
-
-  // STARTER: properties - do not remove comment
 
   String get displayName {
     // STARTER: display name - do not remove comment
@@ -67,28 +67,16 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
     }
   }
 
-  @override
-  bool matchesFilter(String filter) {
+  bool matchesSearch(String filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
 
     filter = filter.toLowerCase();
 
-    // STARTER: search - do not remove comment
+    // STARTER: filter - do not remove comment
 
     return false;
-  }
-
-  @override
-  String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    filter = filter.toLowerCase();
-
-    return null;
   }
 
   StubEntity._();

@@ -214,8 +214,8 @@ else
         code="${code}response = ${module}A.${element}.compareTo(${module}B.${element});${lineBreak}break;${lineBreak}"
         sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
 
-        comment="STARTER: search - do not remove comment"
-        code="if (${element}.toLowerCase().contains(search)){${lineBreak}"
+        comment="STARTER: filter - do not remove comment"
+        code="if (${element}.toLowerCase().contains(filter)){${lineBreak}"
         code="${code}return true;${lineBreak}"
         code="${code}}${lineBreak}"
         sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
