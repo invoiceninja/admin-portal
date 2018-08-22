@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
+//import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
   final localization = AppLocalization.of(context);
@@ -19,7 +19,15 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
       throw localization.anErrorOccurred;
     }
   } else {
-    showDialog<SimpleDialog>(
+    final String url =
+        'https://docs.google.com/viewer?url=' + invoice.invitationDownloadLink;
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true, forceWebView: true);
+    } else {
+      throw localization.anErrorOccurred;
+    }
+    /*
+  showDialog<SimpleDialog>(
       context: context,
       builder: (BuildContext context) => SimpleDialog(children: <Widget>[
             LoadingDialog(),
@@ -30,5 +38,6 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
         );
     navigator.pop();
     FlutterPdfViewer.loadBytes(base64Decode(response.body.substring(28)));
+  */
   }
 }
