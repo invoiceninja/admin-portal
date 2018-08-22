@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '0.1.5';
+const String kAppVersion = '0.1.6';
 
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
