@@ -7,6 +7,8 @@ import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:redux/redux.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+
 
 UIState uiReducer(UIState state, dynamic action) {
   return state.rebuild((b) => b
@@ -18,6 +20,8 @@ UIState uiReducer(UIState state, dynamic action) {
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
     // STARTER: reducer - do not remove comment
+..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
+
   );
 }
 

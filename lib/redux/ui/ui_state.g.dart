@@ -46,6 +46,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'quoteUIState',
+      serializers.serialize(object.quoteUIState,
+          specifiedType: const FullType(QuoteUIState)),
     ];
     if (object.filter != null) {
       result
@@ -96,6 +99,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'quoteUIState':
+          result.quoteUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(QuoteUIState)) as QuoteUIState);
+          break;
       }
     }
 
@@ -118,6 +125,8 @@ class _$UIState extends UIState {
   final InvoiceUIState invoiceUIState;
   @override
   final String filter;
+  @override
+  final QuoteUIState quoteUIState;
 
   factory _$UIState([void updates(UIStateBuilder b)]) =>
       (new UIStateBuilder()..update(updates)).build();
@@ -129,7 +138,8 @@ class _$UIState extends UIState {
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
-      this.filter})
+      this.filter,
+      this.quoteUIState})
       : super._() {
     if (selectedCompanyIndex == null)
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
@@ -143,6 +153,8 @@ class _$UIState extends UIState {
       throw new BuiltValueNullFieldError('UIState', 'clientUIState');
     if (invoiceUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    if (quoteUIState == null)
+      throw new BuiltValueNullFieldError('UIState', 'quoteUIState');
   }
 
   @override
@@ -162,7 +174,8 @@ class _$UIState extends UIState {
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
-        filter == other.filter;
+        filter == other.filter &&
+        quoteUIState == other.quoteUIState;
   }
 
   @override
@@ -172,13 +185,15 @@ class _$UIState extends UIState {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc(0, selectedCompanyIndex.hashCode),
-                            currentRoute.hashCode),
-                        enableDarkMode.hashCode),
-                    productUIState.hashCode),
-                clientUIState.hashCode),
-            invoiceUIState.hashCode),
-        filter.hashCode));
+                        $jc(
+                            $jc($jc(0, selectedCompanyIndex.hashCode),
+                                currentRoute.hashCode),
+                            enableDarkMode.hashCode),
+                        productUIState.hashCode),
+                    clientUIState.hashCode),
+                invoiceUIState.hashCode),
+            filter.hashCode),
+        quoteUIState.hashCode));
   }
 
   @override
@@ -190,7 +205,8 @@ class _$UIState extends UIState {
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
-          ..add('filter', filter))
+          ..add('filter', filter)
+          ..add('quoteUIState', quoteUIState))
         .toString();
   }
 }
@@ -234,6 +250,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
 
+  QuoteUIStateBuilder _quoteUIState;
+  QuoteUIStateBuilder get quoteUIState =>
+      _$this._quoteUIState ??= new QuoteUIStateBuilder();
+  set quoteUIState(QuoteUIStateBuilder quoteUIState) =>
+      _$this._quoteUIState = quoteUIState;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
@@ -245,6 +267,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
       _filter = _$v.filter;
+      _quoteUIState = _$v.quoteUIState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -273,7 +296,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
-              filter: filter);
+              filter: filter,
+              quoteUIState: quoteUIState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -283,6 +307,9 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
+
+        _$failedField = 'quoteUIState';
+        quoteUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UIState', _$failedField, e.toString());

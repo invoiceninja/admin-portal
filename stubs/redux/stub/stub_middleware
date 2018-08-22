@@ -175,8 +175,7 @@ Middleware<AppState> _loadStub(StubRepository repository) {
 
     store.dispatch(LoadStubRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.stubId,
-            action.loadActivities)
+        .loadItem(state.selectedCompany, state.authState, action.stubId)
         .then((stub) {
       store.dispatch(LoadStubSuccess(stub));
 

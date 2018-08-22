@@ -11,7 +11,9 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 
 part 'app_state.g.dart';
 
@@ -94,6 +96,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.quote:
+        return quoteUIState;
+
       default:
         return null;
     }
@@ -122,6 +127,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  QuoteState get quoteState => selectedCompanyState.quoteState;
+
+  ListUIState get quoteListState => uiState.quoteUIState.listUIState;
+
+  QuoteUIState get quoteUIState => uiState.quoteUIState;
 
   @override
   String toString() {

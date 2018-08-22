@@ -167,15 +167,13 @@ StubState _addStub(StubState stubState, AddStubSuccess action) {
 
 StubState _updateStub(StubState stubState, SaveStubSuccess action) {
   return stubState.rebuild((b) => b
-    ..map[action.stub.id] = action.stub.rebuild((b) =>
-        b..lastUpdatedActivities = DateTime.now().millisecondsSinceEpoch));
+    ..map[action.stub.id] = action.stub);
 }
 
 StubState _setLoadedStub(
     StubState stubState, LoadStubSuccess action) {
   return stubState.rebuild((b) => b
-    ..map[action.stub.id] = action.stub.rebuild((b) =>
-    b..lastUpdatedActivities = DateTime.now().millisecondsSinceEpoch));
+    ..map[action.stub.id] = action.stub);
 }
 
 StubState _setNoStubs(StubState stubState, LoadStubsFailure action) {

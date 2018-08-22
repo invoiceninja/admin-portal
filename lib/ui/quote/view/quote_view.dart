@@ -1,31 +1,31 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/stub/view/stub_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:flutter_redux_starter/ui/app/actions_menu_button.dart';
+import 'package:flutter_redux_starter/ui/quote/view/quote_view_vm.dart';
+import 'package:flutter_redux_starter/ui/app/form_card.dart';
 
-class StubView extends StatefulWidget {
-  final StubViewVM viewModel;
+class QuoteView extends StatefulWidget {
+  final QuoteViewVM viewModel;
 
-  StubView({
+  QuoteView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
   @override
-  _StubViewState createState() => new _StubViewState();
+  _QuoteViewState createState() => new _QuoteViewState();
 }
 
-class _StubViewState extends State<StubView> {
+class _QuoteViewState extends State<QuoteView> {
   @override
   Widget build(BuildContext context) {
     var viewModel = widget.viewModel;
-    var stub = viewModel.stub;
+    var quote = viewModel.quote;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(stub.displayName),
-        actions: stub.isNew
+        title: Text(quote.displayName),
+        actions: quote.isNew
             ? []
             : [
                 IconButton(
@@ -36,7 +36,7 @@ class _StubViewState extends State<StubView> {
                 ),
                 ActionMenuButton(
                   isLoading: viewModel.isLoading,
-                  entity: stub,
+                  entity: quote,
                   onSelected: viewModel.onActionSelected,
                 )
               ],

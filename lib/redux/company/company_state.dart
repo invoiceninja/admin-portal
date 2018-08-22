@@ -6,6 +6,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+
 
 part 'company_state.g.dart';
 
@@ -19,6 +21,8 @@ abstract class CompanyState implements Built<CompanyState, CompanyStateBuilder> 
       clientState: ClientState(),
       invoiceState: InvoiceState(),
       // STARTER: constructor - do not remove comment
+quoteState: QuoteState(),
+
     );
   }
   CompanyState._();
@@ -31,6 +35,8 @@ abstract class CompanyState implements Built<CompanyState, CompanyStateBuilder> 
   InvoiceState get invoiceState;
 
   // STARTER: fields - do not remove comment
+QuoteState get quoteState;
+
 
   //factory CompanyState([void updates(CompanyStateBuilder b)]) = _$CompanyState;
   static Serializer<CompanyState> get serializer => _$companyStateSerializer;

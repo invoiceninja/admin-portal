@@ -189,8 +189,8 @@ else
 
     comment="STARTER: state getters - do not remove comment"
     code="${Module}State get ${module}State => selectedCompanyState.${module}State;${lineBreak}"
-    code="${code}ListUIState get ${module}ListState => this.uiState.${module}UIState.listUIState;${lineBreak}"
-    code="${code}${Module}UIState get ${module}UIState => this.uiState.${module}UIState;${lineBreak}${lineBreak}"
+    code="${code}ListUIState get ${module}ListState => uiState.${module}UIState.listUIState;${lineBreak}"
+    code="${code}${Module}UIState get ${module}UIState => uiState.${module}UIState;${lineBreak}${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     for (( idx=${#fieldsArray[@]}-1 ; idx>=0 ; idx-- )) ; do

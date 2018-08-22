@@ -208,6 +208,12 @@ class AppLocalization {
       'payments': 'Payments',
       'quote': 'Quote',
       'quotes': 'Quotes',
+      'new_quote': 'New Quote',
+      'created_quote': 'Successfully created quote',
+      'updated_quote': 'Successfully updated quote',
+      'archived_quote': 'Successfully archived quote',
+      'deleted_quote': 'Successfully deleted quote',
+      'restored_quote': 'Successfully restored quote',
       'expense': 'Expense',
       'expenses': 'Expenses',
       'vendor': 'Vendor',
@@ -7510,6 +7516,23 @@ class AppLocalization {
   String get quote => _localizedValues[locale.languageCode]['quote'];
 
   String get quotes => _localizedValues[locale.languageCode]['quotes'];
+
+  String get newQuote => _localizedValues[locale.languageCode]['new_quote'];
+
+  String get createdQuote =>
+      _localizedValues[locale.languageCode]['created_quote'];
+
+  String get updatedQuote =>
+      _localizedValues[locale.languageCode]['updated_quote'];
+
+  String get archivedQuote =>
+      _localizedValues[locale.languageCode]['archived_quote'];
+
+  String get deletedQuote =>
+      _localizedValues[locale.languageCode]['deleted_quote'];
+
+  String get restoredQuote =>
+      _localizedValues[locale.languageCode]['restored_quote'];
 
   String get expense => _localizedValues[locale.languageCode]['expense'];
 

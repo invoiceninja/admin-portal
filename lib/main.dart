@@ -35,6 +35,12 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+
 
 void main() async {
   final prefs = await SharedPreferences.getInstance();
@@ -50,6 +56,8 @@ void main() async {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         // STARTER: middleware - do not remove comment
+..addAll(createStoreQuotesMiddleware())
+
         ..addAll([
           LoggingMiddleware<dynamic>.printer(),
         ]));
@@ -133,6 +141,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
+QuoteScreen.route: (context) {
+widget.store.dispatch(LoadQuotes());
+return QuoteScreen();
+},
+QuoteViewScreen.route: (context) => QuoteViewScreen(),
+QuoteEditScreen.route: (context) => QuoteEditScreen(),
+
             SettingsScreen.route: (context) => SettingsScreen(),
           },
         );
