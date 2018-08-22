@@ -12,6 +12,7 @@ if (flutterRoot == null) {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 def keystorePropertiesFile = rootProject.file("key.properties")
@@ -29,10 +30,9 @@ android {
         applicationId "com.invoiceninja.invoiceninja_flutter"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 9
-        versionName "0.1.7"
+        versionCode 11
+        versionName "0.1.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
     }
 
     signingConfigs {
@@ -62,9 +62,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-    implementation 'com.android.support:multidex:1.0.3'
-
 }
-
-apply plugin: 'com.google.gms.google-services'
