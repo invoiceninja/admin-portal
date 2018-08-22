@@ -40,4 +40,23 @@ class StubRepository {
 
     return stubResponse.data;
   }
+  
+  Future<StubEntity> saveData(
+      CompanyEntity company, AuthState auth, StubEntity stub,
+      [EntityAction action]) async {
+    final data = serializers.serializeWith(StubEntity.serializer, stub);
+    dynamic response;
+
+    if (stub.isNew) {
+      response = await webClient.post(
+          auth.url + '/stubs',
+          company.token,
+          json.encode(data));
+    } else {
+      var url = auth.url + '/stubs/' + stub.id.toString();
+      if (action != null) {
+        url += '?action=' + action.toString();
+      }
+      response = await webClient.put(url, company.token, json.encode(data));
+    }  
 }
