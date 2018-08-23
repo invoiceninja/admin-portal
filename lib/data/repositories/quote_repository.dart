@@ -17,7 +17,7 @@ class QuoteRepository {
   Future<InvoiceEntity> loadItem(
       CompanyEntity company, AuthState auth, int entityId) async {
     final dynamic response = await webClient.get(
-        '${auth.url}/invoices/$entityId', company.token);
+        '${auth.url}/invoices/$entityId?include=invitations', company.token);
 
     final InvoiceItemResponse quoteResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
@@ -27,7 +27,7 @@ class QuoteRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/quotes';
+    String url = auth.url + '/invoices?include=invitations&invoice_type_id=2&is_recurring=0';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - 600}';
@@ -49,11 +49,11 @@ class QuoteRepository {
 
     if (quote.isNew) {
       response = await webClient.post(
-          auth.url + '/quotes',
+          auth.url + '/invoices?include=invitations',
           company.token,
           json.encode(data));
     } else {
-      var url = auth.url + '/quotes/' + quote.id.toString();
+      var url = '${auth.url}/invoices/${quote.id}';
       if (action != null) {
         url += '?action=' + action.toString();
       }
