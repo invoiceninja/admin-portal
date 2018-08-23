@@ -17,64 +17,64 @@ class QuoteList extends StatelessWidget {
   }) : super(key: key);
 
   void _showMenu(
-      BuildContext context, InvoiceEntity invoice, ClientEntity client) async {
+      BuildContext context, InvoiceEntity quote, ClientEntity client) async {
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-          user.canCreate(EntityType.invoice)
+          user.canCreate(EntityType.quote)
               ? ListTile(
             leading: Icon(Icons.control_point_duplicate),
             title: Text(AppLocalization.of(context).clone),
             onTap: () => viewModel.onEntityAction(
-                context, invoice, EntityAction.clone),
+                context, quote, EntityAction.clone),
           )
               : Container(),
-          user.canEditEntity(invoice) && !invoice.isPublic
+          user.canEditEntity(quote) && !quote.isPublic
               ? ListTile(
             leading: Icon(Icons.publish),
             title: Text(AppLocalization.of(context).markSent),
             onTap: () => viewModel.onEntityAction(
-                context, invoice, EntityAction.markSent),
+                context, quote, EntityAction.markSent),
           )
               : Container(),
-          user.canEditEntity(invoice) && client.hasEmailAddress
+          user.canEditEntity(quote) && client.hasEmailAddress
               ? ListTile(
             leading: Icon(Icons.send),
             title: Text(AppLocalization.of(context).email),
             onTap: () => viewModel.onEntityAction(
-                context, invoice, EntityAction.email),
+                context, quote, EntityAction.email),
           )
               : Container(),
           ListTile(
             leading: Icon(Icons.picture_as_pdf),
             title: Text(AppLocalization.of(context).pdf),
             onTap: () => viewModel.onEntityAction(
-                context, invoice, EntityAction.pdf),
+                context, quote, EntityAction.pdf),
           ),
           Divider(),
-          user.canEditEntity(invoice) && !invoice.isActive
+          user.canEditEntity(quote) && !quote.isActive
               ? ListTile(
             leading: Icon(Icons.restore),
             title: Text(AppLocalization.of(context).restore),
             onTap: () => viewModel.onEntityAction(
-                context, invoice, EntityAction.restore),
+                context, quote, EntityAction.restore),
           )
               : Container(),
-          user.canEditEntity(invoice) && invoice.isActive
+          user.canEditEntity(quote) && quote.isActive
               ? ListTile(
             leading: Icon(Icons.archive),
             title: Text(AppLocalization.of(context).archive),
             onTap: () => viewModel.onEntityAction(
-                context, invoice, EntityAction.archive),
+                context, quote, EntityAction.archive),
           )
               : Container(),
-          user.canEditEntity(invoice) && !invoice.isDeleted
+          user.canEditEntity(quote) && !quote.isDeleted
               ? ListTile(
             leading: Icon(Icons.delete),
             title: Text(AppLocalization.of(context).delete),
             onTap: () => viewModel.onEntityAction(
-                context, invoice, EntityAction.delete),
+                context, quote, EntityAction.delete),
           )
               : Container(),
         ]));
@@ -132,7 +132,7 @@ class QuoteList extends StatelessWidget {
               ? LoadingIndicator()
               : RefreshIndicator(
             onRefresh: () => viewModel.onRefreshed(context),
-            child: viewModel.invoiceList.isEmpty
+            child: viewModel.quoteList.isEmpty
                 ? Opacity(
               opacity: 0.5,
               child: Center(
@@ -146,26 +146,26 @@ class QuoteList extends StatelessWidget {
             )
                 : ListView.builder(
               shrinkWrap: true,
-              itemCount: viewModel.invoiceList.length,
+              itemCount: viewModel.quoteList.length,
               itemBuilder: (BuildContext context, index) {
-                final invoiceId = viewModel.invoiceList[index];
-                final invoice = viewModel.invoiceMap[invoiceId];
+                final quoteId = viewModel.quoteList[index];
+                final quote = viewModel.quoteMap[quoteId];
                 final client =
-                viewModel.clientMap[invoice.clientId];
+                viewModel.clientMap[quote.clientId];
                 return Column(
                   children: <Widget>[
                     InvoiceListItem(
                       user: viewModel.user,
                       filter: viewModel.filter,
-                      invoice: invoice,
-                      client: viewModel.clientMap[invoice.clientId],
+                      invoice: quote,
+                      client: viewModel.clientMap[quote.clientId],
                       onDismissed: (DismissDirection direction) =>
                           viewModel.onDismissed(
-                              context, invoice, direction),
+                              context, quote, direction),
                       onTap: () =>
-                          viewModel.onQuoteTap(context, invoice),
+                          viewModel.onQuoteTap(context, quote),
                       onLongPress: () =>
-                          _showMenu(context, invoice, client),
+                          _showMenu(context, quote, client),
                     ),
                     Divider(
                       height: 1.0,

@@ -4,80 +4,80 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 ClientEntity quoteClientSelector(
-    InvoiceEntity invoice, BuiltMap<int, ClientEntity> clientMap) {
-  return clientMap[invoice.clientId];
+    InvoiceEntity quote, BuiltMap<int, ClientEntity> clientMap) {
+  return clientMap[quote.clientId];
 }
 
 var memoizedFilteredQuoteList = memo4(
-        (BuiltMap<int, InvoiceEntity> invoiceMap,
-        BuiltList<int> invoiceList,
+        (BuiltMap<int, InvoiceEntity> quoteMap,
+        BuiltList<int> quoteList,
         BuiltMap<int, ClientEntity> clientMap,
-        ListUIState invoiceListState) =>
+        ListUIState quoteListState) =>
         filteredQuotesSelector(
-            invoiceMap, invoiceList, clientMap, invoiceListState));
+            quoteMap, quoteList, clientMap, quoteListState));
 
 List<int> filteredQuotesSelector(
-    BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltList<int> invoiceList,
+    BuiltMap<int, InvoiceEntity> quoteMap,
+    BuiltList<int> quoteList,
     BuiltMap<int, ClientEntity> clientMap,
-    ListUIState invoiceListState) {
-  final list = invoiceList.where((invoiceId) {
-    final invoice = invoiceMap[invoiceId];
-    final client = clientMap[invoice.clientId];
+    ListUIState quoteListState) {
+  final list = quoteList.where((quoteId) {
+    final quote = quoteMap[quoteId];
+    final client = clientMap[quote.clientId];
     if (client == null || ! client.isActive) {
       return false;
     }
-    if (!invoice.matchesStates(invoiceListState.stateFilters)) {
+    if (!quote.matchesStates(quoteListState.stateFilters)) {
       return false;
     }
-    if (!invoice.matchesStatuses(invoiceListState.statusFilters)) {
+    if (!quote.matchesStatuses(quoteListState.statusFilters)) {
       return false;
     }
-    if (!invoice.matchesFilter(invoiceListState.filter) &&
-        !client.matchesFilter(invoiceListState.filter)) {
+    if (!quote.matchesFilter(quoteListState.filter) &&
+        !client.matchesFilter(quoteListState.filter)) {
       return false;
     }
-    if (invoiceListState.filterClientId != null &&
-        invoice.clientId != invoiceListState.filterClientId) {
+    if (quoteListState.filterClientId != null &&
+        quote.clientId != quoteListState.filterClientId) {
       return false;
     }
-    if (invoiceListState.custom1Filters.isNotEmpty &&
-        !invoiceListState.custom1Filters.contains(invoice.customTextValue1)) {
+    if (quoteListState.custom1Filters.isNotEmpty &&
+        !quoteListState.custom1Filters.contains(quote.customTextValue1)) {
       return false;
     }
-    if (invoiceListState.custom2Filters.isNotEmpty &&
-        !invoiceListState.custom2Filters.contains(invoice.customTextValue2)) {
+    if (quoteListState.custom2Filters.isNotEmpty &&
+        !quoteListState.custom2Filters.contains(quote.customTextValue2)) {
       return false;
     }
     return true;
   }).toList();
 
-  list.sort((invoiceAId, invoiceBId) {
-    return invoiceMap[invoiceAId].compareTo(invoiceMap[invoiceBId],
-        invoiceListState.sortField, invoiceListState.sortAscending);
+  list.sort((quoteAId, quoteBId) {
+    return quoteMap[quoteAId].compareTo(quoteMap[quoteBId],
+        quoteListState.sortField, quoteListState.sortAscending);
   });
 
   return list;
 }
 
 var memoizedQuoteStatsForClient = memo4((int clientId,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltMap<int, InvoiceEntity> quoteMap,
     String activeLabel,
     String archivedLabel) =>
-    quoteStatsForClient(clientId, invoiceMap, activeLabel, archivedLabel));
+    quoteStatsForClient(clientId, quoteMap, activeLabel, archivedLabel));
 
 String quoteStatsForClient(
     int clientId,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltMap<int, InvoiceEntity> quoteMap,
     String activeLabel,
     String archivedLabel) {
   int countActive = 0;
   int countArchived = 0;
-  invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice.clientId == clientId) {
-      if (invoice.isActive) {
+  quoteMap.forEach((quoteId, quote) {
+    if (quote.clientId == clientId) {
+      if (quote.isActive) {
         countActive++;
-      } else if (invoice.isArchived) {
+      } else if (quote.isArchived) {
         countArchived++;
       }
     }

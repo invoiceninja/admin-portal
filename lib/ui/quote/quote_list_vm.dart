@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class QuoteListBuilder extends StatelessWidget {
-  static const String route = '/invoices/edit';
+  static const String route = '/quote/edit';
 
   const QuoteListBuilder({Key key}) : super(key: key);
 
@@ -38,8 +38,8 @@ class QuoteListBuilder extends StatelessWidget {
 class QuoteListVM {
   final UserEntity user;
   final ListUIState listState;
-  final List<int> invoiceList;
-  final BuiltMap<int, InvoiceEntity> invoiceMap;
+  final List<int> quoteList;
+  final BuiltMap<int, InvoiceEntity> quoteMap;
   final BuiltMap<int, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
@@ -54,8 +54,8 @@ class QuoteListVM {
   QuoteListVM({
     @required this.user,
     @required this.listState,
-    @required this.invoiceList,
-    @required this.invoiceMap,
+    @required this.quoteList,
+    @required this.quoteMap,
     @required this.clientMap,
     @required this.isLoading,
     @required this.isLoaded,
@@ -83,26 +83,26 @@ class QuoteListVM {
 
     return QuoteListVM(
         user: state.user,
-        listState: state.invoiceListState,
-        invoiceList: memoizedFilteredQuoteList(
-            state.invoiceState.map,
-            state.invoiceState.list,
+        listState: state.quoteListState,
+        quoteList: memoizedFilteredQuoteList(
+            state.quoteState.map,
+            state.quoteState.list,
             state.clientState.map,
-            state.invoiceListState),
-        invoiceMap: state.invoiceState.map,
+            state.quoteListState),
+        quoteMap: state.quoteState.map,
         clientMap: state.clientState.map,
         isLoading: state.isLoading,
-        isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
-        filter: state.invoiceListState.filter,
-        onQuoteTap: (context, invoice) {
-          store.dispatch(ViewQuote(quoteId: invoice.id, context: context));
+        isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
+        filter: state.quoteListState.filter,
+        onQuoteTap: (context, quote) {
+          store.dispatch(ViewQuote(quoteId: quote.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onClearClientFilterPressed: () =>
             store.dispatch(FilterQuotesByClient()),
         onViewClientFilterPressed: (BuildContext context) => store.dispatch(
             ViewClient(
-                clientId: state.invoiceListState.filterClientId,
+                clientId: state.quoteListState.filterClientId,
                 context: context)),
         onEntityAction: (context, quote, action) {
           final localization = AppLocalization.of(context);
@@ -149,32 +149,32 @@ class QuoteListVM {
               break;
           }
         },
-        onDismissed: (BuildContext context, InvoiceEntity invoice,
+        onDismissed: (BuildContext context, InvoiceEntity quote,
             DismissDirection direction) {
           final localization = AppLocalization.of(context);
           if (direction == DismissDirection.endToStart) {
-            if (invoice.isDeleted || invoice.isArchived) {
+            if (quote.isDeleted || quote.isArchived) {
               store.dispatch(RestoreQuoteRequest(
                   snackBarCompleter(
                       context, localization.restoredQuote),
-                  invoice.id));
+                  quote.id));
             } else {
               store.dispatch(ArchiveQuoteRequest(
                   snackBarCompleter(
                       context, localization.archivedQuote),
-                  invoice.id));
+                  quote.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
-            if (invoice.isDeleted) {
+            if (quote.isDeleted) {
               store.dispatch(RestoreQuoteRequest(
                   snackBarCompleter(
                       context, localization.restoredQuote),
-                  invoice.id));
+                  quote.id));
             } else {
               store.dispatch(DeleteQuoteRequest(
                   snackBarCompleter(
                       context, localization.deletedQuote),
-                  invoice.id));
+                  quote.id));
             }
           }
         });
