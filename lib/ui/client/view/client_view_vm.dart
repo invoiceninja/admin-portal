@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -42,6 +43,7 @@ class ClientViewVM {
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onInvoicesPressed;
+  final Function(BuildContext) onQuotesPressed;
   final Function(BuildContext, bool) onRefreshed;
   final bool isSaving;
   final bool isLoading;
@@ -53,6 +55,7 @@ class ClientViewVM {
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.onInvoicesPressed,
+    @required this.onQuotesPressed,
     @required this.onBackPressed,
     @required this.isSaving,
     @required this.isLoading,
@@ -94,6 +97,10 @@ class ClientViewVM {
         onInvoicesPressed: (BuildContext context) {
           store.dispatch(FilterInvoicesByClient(client.id));
           store.dispatch(ViewInvoiceList(context));
+        },
+        onQuotesPressed: (BuildContext context) {
+          store.dispatch(FilterQuotesByClient(client.id));
+          store.dispatch(ViewQuoteList(context));
         },
         onRefreshed: (context, loadActivities) =>
             _handleRefresh(context, loadActivities),
