@@ -111,7 +111,7 @@ class QuoteViewVM {
                   snackBarCompleter(context, localization.markedQuoteAsSent),
                   quote.id));
               break;
-            case EntityAction.emailInvoice:
+            case EntityAction.email:
               store.dispatch(ShowEmailQuote(
                   completer:
                   snackBarCompleter(context, localization.emailedQuote),

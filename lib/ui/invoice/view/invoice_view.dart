@@ -294,7 +294,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       : null,
                   user.canEditEntity(invoice) && client.hasEmailAddress
                       ? ActionMenuChoice(
-                          action: EntityAction.emailInvoice,
+                          action: EntityAction.email,
                           icon: Icons.send,
                           label: AppLocalization.of(context).email,
                         )

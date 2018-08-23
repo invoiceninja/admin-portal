@@ -117,7 +117,7 @@ class InvoiceListVM {
                       context, localization.markedInvoiceAsSent),
                   invoice.id));
               break;
-            case EntityAction.emailInvoice:
+            case EntityAction.email:
               store.dispatch(ShowEmailInvoice(
                   completer: popCompleter(
                       context, localization.emailedInvoice),

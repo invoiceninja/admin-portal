@@ -111,7 +111,7 @@ class InvoiceViewVM {
                   snackBarCompleter(context, localization.markedInvoiceAsSent),
                   invoice.id));
               break;
-            case EntityAction.emailInvoice:
+            case EntityAction.email:
               store.dispatch(ShowEmailInvoice(
                   completer:
                       snackBarCompleter(context, localization.emailedInvoice),

@@ -43,7 +43,7 @@ class InvoiceList extends StatelessWidget {
                       leading: Icon(Icons.send),
                       title: Text(AppLocalization.of(context).email),
                       onTap: () => viewModel.onEntityAction(
-                          context, invoice, EntityAction.emailInvoice),
+                          context, invoice, EntityAction.email),
                     )
                   : Container(),
               ListTile(

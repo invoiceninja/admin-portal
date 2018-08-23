@@ -43,7 +43,7 @@ class QuoteList extends StatelessWidget {
             leading: Icon(Icons.send),
             title: Text(AppLocalization.of(context).email),
             onTap: () => viewModel.onEntityAction(
-                context, invoice, EntityAction.emailInvoice),
+                context, invoice, EntityAction.email),
           )
               : Container(),
           ListTile(
@@ -163,7 +163,7 @@ class QuoteList extends StatelessWidget {
                           viewModel.onDismissed(
                               context, invoice, direction),
                       onTap: () =>
-                          viewModel.onInvoiceTap(context, invoice),
+                          viewModel.onQuoteTap(context, invoice),
                       onLongPress: () =>
                           _showMenu(context, invoice, client),
                     ),
