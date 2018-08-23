@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class QuoteEditScreen extends StatelessWidget {

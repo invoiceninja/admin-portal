@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:http/http.dart' as http;
-import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
+//import 'dart:convert';
+//import 'package:http/http.dart' as http;
+//import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 //import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
   final localization = AppLocalization.of(context);
-  final navigator = Navigator.of(context);
+  //final navigator = Navigator.of(context);
   if (Theme.of(context).platform == TargetPlatform.iOS) {
     if (await canLaunch(invoice.invitationSilentLink)) {
       await launch(invoice.invitationSilentLink,
