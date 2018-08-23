@@ -21,7 +21,7 @@ final editingItemReducer = combineReducers<InvoiceItemEntity>([
 
 InvoiceItemEntity editInvoiceItem(
     InvoiceItemEntity invoiceItem, dynamic action) {
-  return action.invoiceItem ?? InvoiceItemEntity();
+  return action.quoteItem ?? InvoiceItemEntity();
 }
 
 Reducer<String> dropdownFilterReducer = combineReducers([
@@ -37,9 +37,9 @@ Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewInvoice>(
       (int selectedId, dynamic action) => action.invoiceId),
   TypedReducer<int, AddInvoiceSuccess>(
-          (int selectedId, dynamic action) => action.invoice.id),
+          (int selectedId, dynamic action) => action.quote.id),
   TypedReducer<int, ShowEmailInvoice>(
-          (int selectedId, dynamic action) => action.invoice.id),
+          (int selectedId, dynamic action) => action.quote.id),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -62,7 +62,7 @@ InvoiceEntity _clearEditing(InvoiceEntity client, dynamic action) {
 }
 
 InvoiceEntity _updateEditing(InvoiceEntity invoice, dynamic action) {
-  return action.invoice;
+  return action.quote;
 }
 
 InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
@@ -244,7 +244,7 @@ InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
 
 InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
   return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+      .rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 InvoiceState _setNoInvoices(

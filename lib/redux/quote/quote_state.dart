@@ -2,7 +2,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
@@ -13,7 +13,7 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   factory QuoteState() {
     return _$QuoteState._(
       lastUpdated: 0,
-      map: BuiltMap<int, QuoteEntity>(),
+      map: BuiltMap<int, InvoiceEntity>(),
       list: BuiltList<int>(),
     );
   }
@@ -22,7 +22,7 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, QuoteEntity> get map;
+  BuiltMap<int, InvoiceEntity> get map;
   BuiltList<int> get list;
 
   bool get isStale {
@@ -42,15 +42,19 @@ abstract class QuoteUIState extends Object with EntityUIState implements Built<Q
 
   factory QuoteUIState() {
     return _$QuoteUIState._(
-      listUIState: ListUIState(QuoteFields.quoteNumber),
-      editing: QuoteEntity(),
+      listUIState: ListUIState(InvoiceFields.invoiceNumber),
+      editing: InvoiceEntity(),
+
       selectedId: 0,
     );
   }
   QuoteUIState._();
 
   @nullable
-  QuoteEntity get editing;
+  InvoiceEntity get editing;
+
+  @nullable
+  InvoiceItemEntity get editingItem;
 
   @override
   bool get isCreatingNew => editing.isNew;

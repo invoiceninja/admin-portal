@@ -1,28 +1,35 @@
 import 'dart:async';
-import 'package:redux/redux.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
+import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_list.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 
 class QuoteListBuilder extends StatelessWidget {
+  static const String route = '/invoices/edit';
+
   const QuoteListBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteListVM>(
+      //rebuildOnChange: true,
       converter: QuoteListVM.fromStore,
-      builder: (context, viewModel) {
+      builder: (context, vm) {
         return QuoteList(
-          viewModel: viewModel,
+          viewModel: vm,
         );
       },
     );
@@ -31,28 +38,34 @@ class QuoteListBuilder extends StatelessWidget {
 
 class QuoteListVM {
   final UserEntity user;
-  final List<int> quoteList;
-  final BuiltMap<int, QuoteEntity> quoteMap;
+  final ListUIState listState;
+  final List<int> invoiceList;
+  final BuiltMap<int, InvoiceEntity> invoiceMap;
   final BuiltMap<int, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, QuoteEntity) onQuoteTap;
-  final Function(BuildContext, QuoteEntity, DismissDirection) onDismissed;
+  final Function(BuildContext, InvoiceEntity) onInvoiceTap;
+  final Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, QuoteEntity, EntityAction) onEntityAction;
+  final Function onClearClientFilterPressed;
+  final Function(BuildContext) onViewClientFilterPressed;
+  final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
 
   QuoteListVM({
     @required this.user,
-    @required this.quoteList,
-    @required this.quoteMap,
+    @required this.listState,
+    @required this.invoiceList,
+    @required this.invoiceMap,
     @required this.clientMap,
-    @required this.filter,
     @required this.isLoading,
     @required this.isLoaded,
-    @required this.onQuoteTap,
+    @required this.filter,
+    @required this.onInvoiceTap,
     @required this.onDismissed,
     @required this.onRefreshed,
+    @required this.onClearClientFilterPressed,
+    @required this.onViewClientFilterPressed,
     @required this.onEntityAction,
   });
 
@@ -63,7 +76,7 @@ class QuoteListVM {
       }
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadQuotes(completer: completer, force: true));
+      store.dispatch(LoadInvoices(completer: completer, force: true));
       return completer.future;
     }
 
@@ -71,66 +84,98 @@ class QuoteListVM {
 
     return QuoteListVM(
         user: state.user,
-        quoteList: memoizedFilteredQuoteList(state.quoteState.map,
-            state.quoteState.list, state.quoteListState),
-        quoteMap: state.quoteState.map,
+        listState: state.invoiceListState,
+        invoiceList: memoizedFilteredQuoteList(
+            state.invoiceState.map,
+            state.invoiceState.list,
+            state.clientState.map,
+            state.invoiceListState),
+        invoiceMap: state.invoiceState.map,
         clientMap: state.clientState.map,
         isLoading: state.isLoading,
-        isLoaded: state.quoteState.isLoaded,
-        filter: state.quoteUIState.listUIState.filter,
-        onQuoteTap: (context, quote) {
-          store.dispatch(EditQuote(quote: quote, context: context));
+        isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
+        filter: state.invoiceListState.filter,
+        onInvoiceTap: (context, invoice) {
+          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         },
-        onEntityAction: (context, quote, action) {
+        onRefreshed: (context) => _handleRefresh(context),
+        onClearClientFilterPressed: () =>
+            store.dispatch(FilterInvoicesByClient()),
+        onViewClientFilterPressed: (BuildContext context) => store.dispatch(
+            ViewClient(
+                clientId: state.invoiceListState.filterClientId,
+                context: context)),
+        onEntityAction: (context, invoice, action) {
+          final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.pdf:
+              Navigator.of(context).pop();
+              viewPdf(invoice, context);
+              break;
+            case EntityAction.markSent:
+              store.dispatch(MarkSentInvoiceRequest(
+                  popCompleter(
+                      context, localization.markedInvoiceAsSent),
+                  invoice.id));
+              break;
+            case EntityAction.emailInvoice:
+              store.dispatch(ShowEmailInvoice(
+                  completer: popCompleter(
+                      context, localization.emailedInvoice),
+                  invoice: invoice,
+                  context: context));
+              break;
             case EntityAction.clone:
               Navigator.of(context).pop();
               store.dispatch(
-                  EditQuote(context: context, quote: quote.clone));
+                  EditInvoice(context: context, invoice: invoice.clone));
               break;
             case EntityAction.restore:
-              store.dispatch(RestoreQuoteRequest(
+              store.dispatch(RestoreInvoiceRequest(
                   popCompleter(
-                      context, AppLocalization.of(context).restoredQuote),
-                  quote.id));
+                      context, localization.restoredInvoice),
+                  invoice.id));
               break;
             case EntityAction.archive:
-              store.dispatch(ArchiveQuoteRequest(
+              store.dispatch(ArchiveInvoiceRequest(
                   popCompleter(
-                      context, AppLocalization.of(context).archivedQuote),
-                  quote.id));
+                      context, localization.archivedInvoice),
+                  invoice.id));
               break;
             case EntityAction.delete:
-              store.dispatch(DeleteQuoteRequest(
+              store.dispatch(DeleteInvoiceRequest(
                   popCompleter(
-                      context, AppLocalization.of(context).deletedQuote),
-                  quote.id));
+                      context, localization.deletedInvoice),
+                  invoice.id));
               break;
           }
         },
-        onRefreshed: (context) => _handleRefresh(context),
-        onDismissed: (BuildContext context, QuoteEntity quote,
+        onDismissed: (BuildContext context, InvoiceEntity invoice,
             DismissDirection direction) {
           final localization = AppLocalization.of(context);
           if (direction == DismissDirection.endToStart) {
-            if (quote.isDeleted || quote.isArchived) {
-              store.dispatch(RestoreQuoteRequest(
-                  snackBarCompleter(context, localization.restoredQuote),
-                  quote.id));
+            if (invoice.isDeleted || invoice.isArchived) {
+              store.dispatch(RestoreInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.restoredInvoice),
+                  invoice.id));
             } else {
-              store.dispatch(ArchiveQuoteRequest(
-                  snackBarCompleter(context, localization.archivedQuote),
-                  quote.id));
+              store.dispatch(ArchiveInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.archivedInvoice),
+                  invoice.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
-            if (quote.isDeleted) {
-              store.dispatch(RestoreQuoteRequest(
-                  snackBarCompleter(context, localization.restoredQuote),
-                  quote.id));
+            if (invoice.isDeleted) {
+              store.dispatch(RestoreInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.restoredInvoice),
+                  invoice.id));
             } else {
-              store.dispatch(DeleteQuoteRequest(
-                  snackBarCompleter(context, localization.deletedQuote),
-                  quote.id));
+              store.dispatch(DeleteInvoiceRequest(
+                  snackBarCompleter(
+                      context, localization.deletedInvoice),
+                  invoice.id));
             }
           }
         });

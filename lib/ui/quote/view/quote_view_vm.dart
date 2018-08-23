@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class QuoteViewScreen extends StatelessWidget {
-  static const String route = '/invoice/view';
+  static const String route = '/quote/view';
 
   const QuoteViewScreen({Key key}) : super(key: key);
 
@@ -38,7 +38,7 @@ class QuoteViewScreen extends StatelessWidget {
 
 class QuoteViewVM {
   final CompanyEntity company;
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
   final ClientEntity client;
   final bool isSaving;
   final bool isDirty;
@@ -80,13 +80,13 @@ class QuoteViewVM {
         quote: quote,
         client: client,
         onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
-          final Completer<QuoteEntity> completer =
-          new Completer<QuoteEntity>();
+          final Completer<InvoiceEntity> completer =
+          new Completer<InvoiceEntity>();
           store.dispatch(EditQuote(
               quote: quote,
               context: context,
               completer: completer,
-              invoiceItem: invoiceItem));
+              quoteItem: invoiceItem));
           completer.future.then((invoice) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
@@ -104,39 +104,39 @@ class QuoteViewVM {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
-              viewPdf(invoice, context);
+              viewPdf(quote, context);
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentQuoteRequest(
                   snackBarCompleter(context, localization.markedQuoteAsSent),
-                  invoice.id));
+                  quote.id));
               break;
-            case EntityAction.emailQuote:
+            case EntityAction.emailInvoice:
               store.dispatch(ShowEmailQuote(
                   completer:
                   snackBarCompleter(context, localization.emailedQuote),
-                  invoice: invoice,
+                  quote: quote,
                   context: context));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveQuoteRequest(
                   popCompleter(context, localization.archivedQuote),
-                  invoice.id));
+                  quote.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteQuoteRequest(
                   popCompleter(context, localization.deletedQuote),
-                  invoice.id));
+                  quote.id));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreQuoteRequest(
                   snackBarCompleter(context, localization.restoredQuote),
-                  invoice.id));
+                  quote.id));
               break;
             case EntityAction.clone:
               Navigator.of(context).pop();
               store.dispatch(
-                  EditQuote(context: context, invoice: invoice.clone));
+                  EditQuote(context: context, quote: quote.clone));
               break;
           }
         });
@@ -146,7 +146,7 @@ class QuoteViewVM {
   bool operator ==(dynamic other) =>
       client == other.client &&
           company == other.company &&
-          invoice == other.invoice &&
+          quote == other.quote &&
           isSaving == other.isSaving &&
           isDirty == other.isDirty;
 
@@ -154,7 +154,7 @@ class QuoteViewVM {
   int get hashCode =>
       client.hashCode ^
       company.hashCode ^
-      invoice.hashCode ^
+      quote.hashCode ^
       isSaving.hashCode ^
       isDirty.hashCode;
 }

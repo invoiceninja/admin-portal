@@ -19,7 +19,7 @@ class ViewQuote implements PersistUI {
 }
 
 class EditQuote implements PersistUI {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
   final InvoiceItemEntity quoteItem;
   final BuildContext context;
   final Completer completer;
@@ -28,7 +28,7 @@ class EditQuote implements PersistUI {
 }
 
 class ShowEmailQuote {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
   final BuildContext context;
   final Completer completer;
 
@@ -42,7 +42,7 @@ class EditQuoteItem implements PersistUI {
 }
 
 class UpdateQuote implements PersistUI {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   UpdateQuote(this.quote);
 }
@@ -75,7 +75,7 @@ class LoadQuoteFailure implements StopLoading {
 }
 
 class LoadQuoteSuccess implements StopLoading, PersistData {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   LoadQuoteSuccess(this.quote);
 
@@ -99,7 +99,7 @@ class LoadQuotesFailure implements StopLoading {
 }
 
 class LoadQuotesSuccess implements StopLoading, PersistData {
-  final BuiltList<QuoteEntity> quotes;
+  final BuiltList<InvoiceEntity> quotes;
 
   LoadQuotesSuccess(this.quotes);
 
@@ -136,19 +136,19 @@ class DeleteQuoteItem implements PersistUI {
 
 class SaveQuoteRequest implements StartSaving {
   final Completer completer;
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   SaveQuoteRequest({this.completer, this.quote});
 }
 
 class SaveQuoteSuccess implements StopSaving, PersistData, PersistUI {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   SaveQuoteSuccess(this.quote);
 }
 
 class AddQuoteSuccess implements StopSaving, PersistData, PersistUI {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   AddQuoteSuccess(this.quote);
 }
@@ -186,13 +186,13 @@ class MarkSentQuoteRequest implements StartSaving {
 }
 
 class MarkSentQuoteSuccess implements StopSaving, PersistData {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   MarkSentQuoteSuccess(this.quote);
 }
 
 class MarkSentQuoteFailure implements StopSaving {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   MarkSentQuoteFailure(this.quote);
 }
@@ -205,13 +205,13 @@ class ArchiveQuoteRequest implements StartSaving {
 }
 
 class ArchiveQuoteSuccess implements StopSaving, PersistData {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   ArchiveQuoteSuccess(this.quote);
 }
 
 class ArchiveQuoteFailure implements StopSaving {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   ArchiveQuoteFailure(this.quote);
 }
@@ -224,13 +224,13 @@ class DeleteQuoteRequest implements StartSaving {
 }
 
 class DeleteQuoteSuccess implements StopSaving, PersistData {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   DeleteQuoteSuccess(this.quote);
 }
 
 class DeleteQuoteFailure implements StopSaving {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   DeleteQuoteFailure(this.quote);
 }
@@ -243,13 +243,13 @@ class RestoreQuoteRequest implements StartSaving {
 }
 
 class RestoreQuoteSuccess implements StopSaving, PersistData {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   RestoreQuoteSuccess(this.quote);
 }
 
 class RestoreQuoteFailure implements StopSaving {
-  final QuoteEntity quote;
+  final InvoiceEntity quote;
 
   RestoreQuoteFailure(this.quote);
 }

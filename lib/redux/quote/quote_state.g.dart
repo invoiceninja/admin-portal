@@ -33,7 +33,7 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap,
-              const [const FullType(int), const FullType(QuoteEntity)])),
+              const [const FullType(int), const FullType(InvoiceEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -68,7 +68,7 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
-                const FullType(QuoteEntity)
+                const FullType(InvoiceEntity)
               ])) as BuiltMap);
           break;
         case 'list':
@@ -105,7 +105,13 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
       result
         ..add('editing')
         ..add(serializers.serialize(object.editing,
-            specifiedType: const FullType(QuoteEntity)));
+            specifiedType: const FullType(InvoiceEntity)));
+    }
+    if (object.editingItem != null) {
+      result
+        ..add('editingItem')
+        ..add(serializers.serialize(object.editingItem,
+            specifiedType: const FullType(InvoiceItemEntity)));
     }
 
     return result;
@@ -124,7 +130,12 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(QuoteEntity)) as QuoteEntity);
+              specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
+          break;
+        case 'editingItem':
+          result.editingItem.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(InvoiceItemEntity))
+              as InvoiceItemEntity);
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
@@ -145,7 +156,7 @@ class _$QuoteState extends QuoteState {
   @override
   final int lastUpdated;
   @override
-  final BuiltMap<int, QuoteEntity> map;
+  final BuiltMap<int, InvoiceEntity> map;
   @override
   final BuiltList<int> list;
 
@@ -196,10 +207,10 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
   int get lastUpdated => _$this._lastUpdated;
   set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
-  MapBuilder<int, QuoteEntity> _map;
-  MapBuilder<int, QuoteEntity> get map =>
-      _$this._map ??= new MapBuilder<int, QuoteEntity>();
-  set map(MapBuilder<int, QuoteEntity> map) => _$this._map = map;
+  MapBuilder<int, InvoiceEntity> _map;
+  MapBuilder<int, InvoiceEntity> get map =>
+      _$this._map ??= new MapBuilder<int, InvoiceEntity>();
+  set map(MapBuilder<int, InvoiceEntity> map) => _$this._map = map;
 
   ListBuilder<int> _list;
   ListBuilder<int> get list => _$this._list ??= new ListBuilder<int>();
@@ -255,7 +266,9 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
 
 class _$QuoteUIState extends QuoteUIState {
   @override
-  final QuoteEntity editing;
+  final InvoiceEntity editing;
+  @override
+  final InvoiceItemEntity editingItem;
   @override
   final int selectedId;
   @override
@@ -264,7 +277,8 @@ class _$QuoteUIState extends QuoteUIState {
   factory _$QuoteUIState([void updates(QuoteUIStateBuilder b)]) =>
       (new QuoteUIStateBuilder()..update(updates)).build();
 
-  _$QuoteUIState._({this.editing, this.selectedId, this.listUIState})
+  _$QuoteUIState._(
+      {this.editing, this.editingItem, this.selectedId, this.listUIState})
       : super._() {
     if (selectedId == null)
       throw new BuiltValueNullFieldError('QuoteUIState', 'selectedId');
@@ -284,13 +298,16 @@ class _$QuoteUIState extends QuoteUIState {
     if (identical(other, this)) return true;
     if (other is! QuoteUIState) return false;
     return editing == other.editing &&
+        editingItem == other.editingItem &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, editing.hashCode), editingItem.hashCode),
+            selectedId.hashCode),
         listUIState.hashCode));
   }
 
@@ -298,6 +315,7 @@ class _$QuoteUIState extends QuoteUIState {
   String toString() {
     return (newBuiltValueToStringHelper('QuoteUIState')
           ..add('editing', editing)
+          ..add('editingItem', editingItem)
           ..add('selectedId', selectedId)
           ..add('listUIState', listUIState))
         .toString();
@@ -308,10 +326,16 @@ class QuoteUIStateBuilder
     implements Builder<QuoteUIState, QuoteUIStateBuilder> {
   _$QuoteUIState _$v;
 
-  QuoteEntityBuilder _editing;
-  QuoteEntityBuilder get editing =>
-      _$this._editing ??= new QuoteEntityBuilder();
-  set editing(QuoteEntityBuilder editing) => _$this._editing = editing;
+  InvoiceEntityBuilder _editing;
+  InvoiceEntityBuilder get editing =>
+      _$this._editing ??= new InvoiceEntityBuilder();
+  set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
+
+  InvoiceItemEntityBuilder _editingItem;
+  InvoiceItemEntityBuilder get editingItem =>
+      _$this._editingItem ??= new InvoiceItemEntityBuilder();
+  set editingItem(InvoiceItemEntityBuilder editingItem) =>
+      _$this._editingItem = editingItem;
 
   int _selectedId;
   int get selectedId => _$this._selectedId;
@@ -328,6 +352,7 @@ class QuoteUIStateBuilder
   QuoteUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
+      _editingItem = _$v.editingItem?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
@@ -353,6 +378,7 @@ class QuoteUIStateBuilder
       _$result = _$v ??
           new _$QuoteUIState._(
               editing: _editing?.build(),
+              editingItem: _editingItem?.build(),
               selectedId: selectedId,
               listUIState: listUIState.build());
     } catch (_) {
@@ -360,6 +386,8 @@ class QuoteUIStateBuilder
       try {
         _$failedField = 'editing';
         _editing?.build();
+        _$failedField = 'editingItem';
+        _editingItem?.build();
 
         _$failedField = 'listUIState';
         listUIState.build();

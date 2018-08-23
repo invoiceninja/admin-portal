@@ -146,7 +146,7 @@ class InvoiceViewVM {
   bool operator ==(dynamic other) =>
       client == other.client &&
       company == other.company &&
-      invoice == other.invoice &&
+      invoice == other.quote &&
       isSaving == other.isSaving &&
       isDirty == other.isDirty;
 

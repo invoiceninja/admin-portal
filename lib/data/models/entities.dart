@@ -367,7 +367,7 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
     //ContactEntity contact,
     PaymentEntity payment,
     CreditEntity credit,
-    //QuoteEntity quote,
+    //InvoiceEntity quote,
     TaskEntity task,
     ExpenseEntity expense,
     VendorEntity vendor,

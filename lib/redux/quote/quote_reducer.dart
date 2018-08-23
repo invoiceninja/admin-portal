@@ -20,22 +20,22 @@ Reducer<int> selectedIdReducer = combineReducers([
       (int selectedId, dynamic action) => action.quote.id),
 ]);
 
-final editingReducer = combineReducers<QuoteEntity>([
-  TypedReducer<QuoteEntity, SaveQuoteSuccess>(_updateEditing),
-  TypedReducer<QuoteEntity, AddQuoteSuccess>(_updateEditing),
-  TypedReducer<QuoteEntity, RestoreQuoteSuccess>(_updateEditing),
-  TypedReducer<QuoteEntity, ArchiveQuoteSuccess>(_updateEditing),
-  TypedReducer<QuoteEntity, DeleteQuoteSuccess>(_updateEditing),
-  TypedReducer<QuoteEntity, EditQuote>(_updateEditing),
-  TypedReducer<QuoteEntity, UpdateQuote>(_updateEditing),
-  TypedReducer<QuoteEntity, SelectCompany>(_clearEditing),
+final editingReducer = combineReducers<InvoiceEntity>([
+  TypedReducer<InvoiceEntity, SaveQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, AddQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, RestoreQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, ArchiveQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, DeleteQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, EditQuote>(_updateEditing),
+  TypedReducer<InvoiceEntity, UpdateQuote>(_updateEditing),
+  TypedReducer<InvoiceEntity, SelectCompany>(_clearEditing),
 ]);
 
-QuoteEntity _clearEditing(QuoteEntity quote, dynamic action) {
-  return QuoteEntity();
+InvoiceEntity _clearEditing(InvoiceEntity quote, dynamic action) {
+  return InvoiceEntity();
 }
 
-QuoteEntity _updateEditing(QuoteEntity quote, dynamic action) {
+InvoiceEntity _updateEditing(InvoiceEntity quote, dynamic action) {
   return action.quote;
 }
 

@@ -2,18 +2,21 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_redux_starter/redux/ui/ui_actions.dart';
-import 'package:flutter_redux_starter/ui/quote/quote_screen.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_redux_starter/redux/quote/quote_actions.dart';
-import 'package:flutter_redux_starter/data/models/quote_model.dart';
-import 'package:flutter_redux_starter/ui/quote/edit/quote_edit.dart';
-import 'package:flutter_redux_starter/redux/app/app_state.dart';
-import 'package:flutter_redux_starter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class QuoteEditScreen extends StatelessWidget {
-  static final String route = '/quote/edit';
-  QuoteEditScreen({Key key}) : super(key: key);
+  static const String route = '/quote/edit';
+
+  const QuoteEditScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,44 +34,61 @@ class QuoteEditScreen extends StatelessWidget {
 }
 
 class QuoteEditVM {
-  final QuoteEntity quote;
-  final Function(QuoteEntity) onChanged;
+  final CompanyEntity company;
+  final InvoiceEntity quote;
+  final InvoiceItemEntity quoteItem;
+  final InvoiceEntity origQuote;
   final Function(BuildContext) onSavePressed;
+  final Function(List<InvoiceItemEntity>) onItemsAdded;
   final Function onBackPressed;
-  final bool isLoading;
+  final bool isSaving;
 
   QuoteEditVM({
+    @required this.company,
     @required this.quote,
-    @required this.onChanged,
+    @required this.quoteItem,
+    @required this.origQuote,
     @required this.onSavePressed,
+    @required this.onItemsAdded,
     @required this.onBackPressed,
-    @required this.isLoading,
+    @required this.isSaving,
   });
 
   factory QuoteEditVM.fromStore(Store<AppState> store) {
-    final quote = store.state.quoteUIState.selected;
+    final AppState state = store.state;
+    final invoice = state.invoiceUIState.editing;
 
     return QuoteEditVM(
-      isLoading: store.state.isLoading,
-      quote: quote,
-      onChanged: (QuoteEntity quote) {
-        store.dispatch(UpdateQuote(quote));
-      },
-      onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
-      },
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      quote: invoice,
+      quoteItem: state.invoiceUIState.editingItem,
+      origQuote: store.state.invoiceState.map[invoice.id],
+      onBackPressed: () =>
+          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
       onSavePressed: (BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
-        return completer.future.then((_) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: IconMessage(
-                message: quote.isNew
-                    ? 'Successfully Created Quote'
-                    : 'Successfully Updated Quote',
-              ),
-              duration: Duration(seconds: 3)));
+        final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+        store.dispatch(
+            SaveInvoiceRequest(completer: completer, invoice: invoice));
+        return completer.future.then((savedInvoice) {
+          if (invoice.isNew) {
+            Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
+          } else {
+            Navigator.of(context).pop(savedInvoice);
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
+      },
+      onItemsAdded: (items) {
+        if (items.length == 1) {
+          store.dispatch(EditInvoiceItem(items[0]));
+        }
+        store.dispatch(AddInvoiceItems(items));
       },
     );
   }

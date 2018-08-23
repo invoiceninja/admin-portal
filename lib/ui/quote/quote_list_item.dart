@@ -12,7 +12,7 @@ class QuoteListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  final QuoteEntity quote;
+  final InvoiceEntity invoice;
   final ClientEntity client;
   final String filter;
 
@@ -21,7 +21,7 @@ class QuoteListItem extends StatelessWidget {
     @required this.onDismissed,
     @required this.onTap,
     @required this.onLongPress,
-    @required this.quote,
+    @required this.invoice,
     @required this.client,
     @required this.filter,
   });
@@ -30,12 +30,13 @@ class QuoteListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? (quote.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
+        ? (invoice.matchesFilterValue(filter) ??
+            client.matchesFilterValue(filter))
         : null;
 
     return DismissibleEntity(
       user: user,
-      entity: quote,
+      entity: invoice,
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
@@ -51,8 +52,8 @@ class QuoteListItem extends StatelessWidget {
                 ),
               ),
               Text(
-                  formatNumber(quote.amount, context,
-                      clientId: quote.clientId),
+                  formatNumber(invoice.amount, context,
+                      clientId: invoice.clientId),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -64,25 +65,29 @@ class QuoteListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text(quote.quoteNumber)
+                      ? Text(invoice.invoiceNumber)
                       : Text(
-                    filterMatch,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                          filterMatch,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                 ),
-                Text(quote.isPastDue ? localization.pastDue : localization.lookup('invoice_status_${quote.quoteStatusId}'),
+                Text(
+                    invoice.isPastDue
+                        ? localization.pastDue
+                        : localization.lookup(
+                            'invoice_status_${invoice.invoiceStatusId}'),
                     style: TextStyle(
-                      color:
-                      quote.isPastDue ? Colors.red : InvoiceStatusColors.colors[quote.quoteStatusId],
+                      color: invoice.isPastDue
+                          ? Colors.red
+                          : InvoiceStatusColors.colors[invoice.invoiceStatusId],
                     )),
               ],
             ),
-            EntityStateLabel(quote),
+            EntityStateLabel(invoice),
           ],
         ),
       ),
     );
   }
 }
-

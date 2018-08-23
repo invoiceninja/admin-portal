@@ -53,9 +53,9 @@ class QuoteScreen extends StatelessWidget {
           onSelectedCustom2: (value) =>
               store.dispatch(FilterQuotesByCustom2(value)),
           sortFields: [
-            QuoteFields.quoteNumber,
-            QuoteFields.quoteDate,
-            QuoteFields.updatedAt,
+            InvoiceFields.invoiceNumber,
+            InvoiceFields.invoiceDate,
+            InvoiceFields.updatedAt,
           ],
           onSelectedState: (EntityState state, value) {
             store.dispatch(FilterQuotesByState(state));
@@ -67,7 +67,7 @@ class QuoteScreen extends StatelessWidget {
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(
-                      EditQuote(quote: QuoteEntity(), context: context));
+                      EditQuote(quote: InvoiceEntity(), context: context));
                 },
                 child: Icon(
                   Icons.add,

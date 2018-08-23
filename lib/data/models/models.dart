@@ -13,7 +13,6 @@ export 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 export 'package:invoiceninja_flutter/data/models/task_model.dart';
 export 'package:invoiceninja_flutter/data/models/expense_model.dart';
 export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
-export 'package:invoiceninja_flutter/data/models/quote_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/size_model.dart';

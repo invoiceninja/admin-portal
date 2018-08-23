@@ -30,7 +30,8 @@ class InvoiceListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? (invoice.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
+        ? (invoice.matchesFilterValue(filter) ??
+            client.matchesFilterValue(filter))
         : null;
 
     return DismissibleEntity(
@@ -71,10 +72,15 @@ class InvoiceListItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                Text(invoice.isPastDue ? localization.pastDue : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
+                Text(
+                    invoice.isPastDue
+                        ? localization.pastDue
+                        : localization.lookup(
+                            'invoice_status_${invoice.invoiceStatusId}'),
                     style: TextStyle(
-                      color:
-                          invoice.isPastDue ? Colors.red : InvoiceStatusColors.colors[invoice.invoiceStatusId],
+                      color: invoice.isPastDue
+                          ? Colors.red
+                          : InvoiceStatusColors.colors[invoice.invoiceStatusId],
                     )),
               ],
             ),
@@ -85,4 +91,3 @@ class InvoiceListItem extends StatelessWidget {
     );
   }
 }
-

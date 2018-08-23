@@ -14,18 +14,18 @@ class QuoteRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<QuoteEntity> loadItem(
+  Future<InvoiceEntity> loadItem(
       CompanyEntity company, AuthState auth, int entityId) async {
     final dynamic response = await webClient.get(
-        '${auth.url}/quotes/$entityId', company.token);
+        '${auth.url}/invoices/$entityId', company.token);
 
-    final QuoteItemResponse quoteResponse =
-        serializers.deserializeWith(QuoteItemResponse.serializer, response);
+    final InvoiceItemResponse quoteResponse =
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return quoteResponse.data;
   }
 
-  Future<BuiltList<QuoteEntity>> loadList(
+  Future<BuiltList<InvoiceEntity>> loadList(
       CompanyEntity company, AuthState auth, int updatedAt) async {
     String url = auth.url + '/quotes';
 
@@ -35,16 +35,16 @@ class QuoteRepository {
 
     final dynamic response = await webClient.get(url, company.token);
 
-    final QuoteListResponse quoteResponse =
-        serializers.deserializeWith(QuoteListResponse.serializer, response);
+    final InvoiceListResponse quoteResponse =
+        serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
     return quoteResponse.data;
   }
   
-  Future<QuoteEntity> saveData(
-      CompanyEntity company, AuthState auth, QuoteEntity quote,
+  Future<InvoiceEntity> saveData(
+      CompanyEntity company, AuthState auth, InvoiceEntity quote,
       [EntityAction action]) async {
-    final data = serializers.serializeWith(QuoteEntity.serializer, quote);
+    final data = serializers.serializeWith(InvoiceEntity.serializer, quote);
     dynamic response;
 
     if (quote.isNew) {
@@ -60,8 +60,8 @@ class QuoteRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    final QuoteItemResponse quoteResponse =
-    serializers.deserializeWith(QuoteItemResponse.serializer, response);
+    final InvoiceItemResponse quoteResponse =
+    serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return quoteResponse.data;
   }

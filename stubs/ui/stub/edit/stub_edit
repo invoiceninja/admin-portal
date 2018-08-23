@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_starter/ui/app/form_card.dart';
-import 'package:flutter_redux_starter/ui/stub/edit/stub_edit_vm.dart';
-import 'package:flutter_redux_starter/ui/app/save_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/stub/edit/stub_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 
 class StubEdit extends StatefulWidget {
   final StubEditVM viewModel;
