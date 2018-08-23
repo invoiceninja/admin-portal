@@ -66,7 +66,7 @@ abstract class InvoiceEntity extends Object
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   static int counter = 0;
 
-  factory InvoiceEntity() {
+  factory InvoiceEntity({bool isQuote = false}) {
     return _$InvoiceEntity._(
       id: --InvoiceEntity.counter,
       amount: 0.0,
@@ -81,7 +81,7 @@ abstract class InvoiceEntity extends Object
       terms: '',
       publicNotes: '',
       privateNotes: '',
-      invoiceTypeId: 0,
+      invoiceTypeId: isQuote ? kInvoiceTypeQuote : kInvoiceTypeStandard,
       isRecurring: false,
       frequencyId: 0,
       startDate: '',

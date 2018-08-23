@@ -30,6 +30,9 @@ const int kInvoiceStatusPaid = 6;
 const int kDefaultDateFormat = 5;
 const int kDefaultDateTimeFormat = 5;
 
+const int kInvoiceTypeStandard = 1;
+const int kInvoiceTypeQuote = 2;
+
 const int kActivityEmailInvoice = 6;
 
 class InvoiceStatusColors {

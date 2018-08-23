@@ -14,9 +14,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-
 
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
@@ -179,12 +179,18 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
-ListTile(
-leading: Icon(Icons.widgets),
-title: Text('Quotes'),
-onTap: () => store.dispatch(ViewQuoteList(context)),
-),
-
+          DrawerTile(
+            user: user,
+            entityType: EntityType.quote,
+            icon: FontAwesomeIcons.fileAltO,
+            title: AppLocalization.of(context).quotes,
+            onTap: () => store.dispatch(ViewQuoteList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditQuote(
+                  quote: InvoiceEntity(isQuote: true), context: context));
+            },
+          ),
           DrawerTile(
             user: user,
             icon: FontAwesomeIcons.cog,
@@ -278,7 +284,6 @@ class DrawerTile extends StatelessWidget {
 'payments' => 'credit-card',
 'recurring_invoices' => 'files-o',
 'credits' => 'credit-card',
-'quotes' => 'file-text-o',
 'proposals' => 'th-large',
 'tasks' => 'clock-o',
 'expenses' => 'file-image-o',
