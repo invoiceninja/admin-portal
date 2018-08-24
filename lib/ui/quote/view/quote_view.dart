@@ -49,11 +49,11 @@ class _QuoteViewState extends State<QuoteView> {
       ];
 
       final Map<String, String> fields = {
-        InvoiceFields.invoiceStatusId: quote.isPastDue
+        QuoteFields.quoteStatusId: quote.isPastDue
             ? localization.pastDue
-            : localization.lookup('quote_status_${quote.invoiceStatusId}'),
-        InvoiceFields.invoiceDate: formatDate(quote.invoiceDate, context),
-        InvoiceFields.dueDate: formatDate(quote.dueDate, context),
+            : localization.lookup('invoice_status_${quote.invoiceStatusId}'),
+        QuoteFields.quoteDate: formatDate(quote.invoiceDate, context),
+        QuoteFields.validUntil: formatDate(quote.dueDate, context),
         InvoiceFields.partial: formatNumber(quote.partial, context,
             clientId: quote.clientId, zeroIsNull: true),
         InvoiceFields.partialDueDate: formatDate(quote.partialDueDate, context),

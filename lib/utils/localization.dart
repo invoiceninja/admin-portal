@@ -133,6 +133,7 @@ class AppLocalization {
       'partial_due_date': 'Partial Due Date',
       'status': 'Status',
       'invoice_status_id': 'Invoice Status',
+      'quote_status_id': 'Quote Status',
       'click_plus_to_add_item': 'Click + to add an item',
       'count_selected': ':count selected',
       'total': 'Total',
@@ -7348,6 +7349,9 @@ class AppLocalization {
 
   String get invoiceStatusId =>
       _localizedValues[locale.languageCode]['invoice_status_id'];
+
+  String get quoteStatusId =>
+      _localizedValues[locale.languageCode]['quote_status_id'];
 
   String get clickPlusToAddItem =>
       _localizedValues[locale.languageCode]['click_plus_to_add_item'];

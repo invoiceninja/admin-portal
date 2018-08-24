@@ -35,6 +35,13 @@ abstract class InvoiceItemResponse
       _$invoiceItemResponseSerializer;
 }
 
+class QuoteFields {
+  static const String quoteNumber = 'quoteNumber';
+  static const String quoteDate = 'quoteDate';
+  static const String validUntil = 'validUntil';
+  static const String quoteStatusId = 'quoteStatusId';
+}
+
 class InvoiceFields {
   static const String amount = 'amount';
   static const String balance = 'balance';
