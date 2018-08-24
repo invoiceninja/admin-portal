@@ -11,8 +11,7 @@ EntityUIState quoteUIReducer(QuoteUIState state, dynamic action) {
     ..listUIState.replace(quoteListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItem.replace(editingItemReducer(state.editingItem, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-      );
+    ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
 final editingItemReducer = combineReducers<InvoiceItemEntity>([
@@ -20,8 +19,7 @@ final editingItemReducer = combineReducers<InvoiceItemEntity>([
   TypedReducer<InvoiceItemEntity, EditQuoteItem>(editQuoteItem),
 ]);
 
-InvoiceItemEntity editQuoteItem(
-    InvoiceItemEntity quoteItem, dynamic action) {
+InvoiceItemEntity editQuoteItem(InvoiceItemEntity quoteItem, dynamic action) {
   return action.quoteItem ?? InvoiceItemEntity();
 }
 
@@ -36,11 +34,11 @@ String filterClientDropdownReducer(
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewQuote>(
-          (int selectedId, dynamic action) => action.quoteId),
+      (int selectedId, dynamic action) => action.quoteId),
   TypedReducer<int, AddQuoteSuccess>(
-          (int selectedId, dynamic action) => action.quote.id),
+      (int selectedId, dynamic action) => action.quote.id),
   TypedReducer<int, ShowEmailQuote>(
-          (int selectedId, dynamic action) => action.quote.id),
+      (int selectedId, dynamic action) => action.quote.id),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -68,22 +66,19 @@ InvoiceEntity _updateEditing(InvoiceEntity quote, dynamic action) {
 
 InvoiceEntity _addQuoteItem(InvoiceEntity quote, AddQuoteItem action) {
   return quote.rebuild(
-          (b) => b..invoiceItems.add(action.quoteItem ?? InvoiceItemEntity()));
+      (b) => b..invoiceItems.add(action.quoteItem ?? InvoiceItemEntity()));
 }
 
 InvoiceEntity _addQuoteItems(InvoiceEntity quote, AddQuoteItems action) {
   return quote.rebuild((b) => b..invoiceItems.addAll(action.quoteItems));
 }
 
-InvoiceEntity _removeQuoteItem(
-    InvoiceEntity quote, DeleteQuoteItem action) {
+InvoiceEntity _removeQuoteItem(InvoiceEntity quote, DeleteQuoteItem action) {
   return quote.rebuild((b) => b..invoiceItems.removeAt(action.index));
 }
 
-InvoiceEntity _updateQuoteItem(
-    InvoiceEntity quote, UpdateQuoteItem action) {
-  return quote
-      .rebuild((b) => b..invoiceItems[action.index] = action.quoteItem);
+InvoiceEntity _updateQuoteItem(InvoiceEntity quote, UpdateQuoteItem action) {
+  return quote.rebuild((b) => b..invoiceItems[action.index] = action.quoteItem);
 }
 
 final quoteListReducer = combineReducers<ListUIState>([
@@ -119,8 +114,7 @@ ListUIState _filterQuotesByCustom2(
 ListUIState _filterQuotesByState(
     ListUIState quoteListState, FilterQuotesByState action) {
   if (quoteListState.stateFilters.contains(action.state)) {
-    return quoteListState
-        .rebuild((b) => b..stateFilters.remove(action.state));
+    return quoteListState.rebuild((b) => b..stateFilters.remove(action.state));
   } else {
     return quoteListState.rebuild((b) => b..stateFilters.add(action.state));
   }
@@ -141,8 +135,7 @@ ListUIState _filterQuotesByClient(
   return quoteListState.rebuild((b) => b..filterClientId = action.clientId);
 }
 
-ListUIState _filterQuotes(
-    ListUIState quoteListState, FilterQuotes action) {
+ListUIState _filterQuotes(ListUIState quoteListState, FilterQuotes action) {
   return quoteListState.rebuild((b) => b..filter = action.filter);
 }
 
@@ -172,8 +165,7 @@ final quotesReducer = combineReducers<QuoteState>([
 
 QuoteState _markSentQuoteSuccess(
     QuoteState quoteState, MarkSentQuoteSuccess action) {
-  return quoteState
-      .rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 QuoteState _archiveQuoteRequest(
@@ -186,14 +178,12 @@ QuoteState _archiveQuoteRequest(
 
 QuoteState _archiveQuoteSuccess(
     QuoteState quoteState, ArchiveQuoteSuccess action) {
-  return quoteState
-      .rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 QuoteState _archiveQuoteFailure(
     QuoteState quoteState, ArchiveQuoteFailure action) {
-  return quoteState
-      .rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 QuoteState _deleteQuoteRequest(
@@ -207,14 +197,12 @@ QuoteState _deleteQuoteRequest(
 
 QuoteState _deleteQuoteSuccess(
     QuoteState quoteState, DeleteQuoteSuccess action) {
-  return quoteState
-      .rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 QuoteState _deleteQuoteFailure(
     QuoteState quoteState, DeleteQuoteFailure action) {
-  return quoteState
-      .rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 QuoteState _restoreQuoteRequest(
@@ -227,14 +215,12 @@ QuoteState _restoreQuoteRequest(
 
 QuoteState _restoreQuoteSuccess(
     QuoteState quoteState, RestoreQuoteSuccess action) {
-  return quoteState
-      .rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 QuoteState _restoreQuoteFailure(
     QuoteState quoteState, RestoreQuoteFailure action) {
-  return quoteState
-      .rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
@@ -244,17 +230,14 @@ QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
 }
 
 QuoteState _updateQuote(QuoteState quoteState, dynamic action) {
-  return quoteState
-      .rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
-QuoteState _setNoQuotes(
-    QuoteState quoteState, LoadQuotesFailure action) {
+QuoteState _setNoQuotes(QuoteState quoteState, LoadQuotesFailure action) {
   return quoteState;
 }
 
-QuoteState _setLoadedQuotes(
-    QuoteState quoteState, LoadQuotesSuccess action) {
+QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) {
   final state = quoteState.rebuild((b) => b
     ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
