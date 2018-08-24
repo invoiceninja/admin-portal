@@ -44,7 +44,7 @@ abstract class QuoteUIState extends Object with EntityUIState implements Built<Q
     return _$QuoteUIState._(
       listUIState: ListUIState(InvoiceFields.invoiceNumber),
       editing: InvoiceEntity(),
-
+      editingItem: InvoiceItemEntity(),
       selectedId: 0,
     );
   }

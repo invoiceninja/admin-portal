@@ -7,9 +7,9 @@ import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
-
 
 CompanyState companyReducer(CompanyState state, dynamic action) {
   if (action is RefreshData) {
@@ -17,22 +17,21 @@ CompanyState companyReducer(CompanyState state, dynamic action) {
   }
 
   return state.rebuild((b) => b
-      ..company.replace(companyEntityReducer(state.company, action))
-      ..clientState.replace(clientsReducer(state.clientState, action))
-      ..dashboardState.replace(dashboardReducer(state.dashboardState, action))
-      ..productState.replace(productsReducer(state.productState, action))
-      ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
-      // STARTER: reducer - do not remove comment
-..quoteState.replace(quotesReducer(state.quoteState, action))
-
-  );
+    ..company.replace(companyEntityReducer(state.company, action))
+    ..clientState.replace(clientsReducer(state.clientState, action))
+    ..dashboardState.replace(dashboardReducer(state.dashboardState, action))
+    ..productState.replace(productsReducer(state.productState, action))
+    ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
+    // STARTER: reducer - do not remove comment
+    ..quoteState.replace(quotesReducer(state.quoteState, action)));
 }
 
 Reducer<CompanyEntity> companyEntityReducer = combineReducers([
   TypedReducer<CompanyEntity, LoadCompanySuccess>(loadCompanySuccessReducer),
 ]);
 
-CompanyEntity loadCompanySuccessReducer(CompanyEntity company, LoadCompanySuccess action) {
+CompanyEntity loadCompanySuccessReducer(
+    CompanyEntity company, LoadCompanySuccess action) {
   return action.company;
 
   /*
