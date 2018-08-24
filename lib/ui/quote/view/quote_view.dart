@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -36,15 +37,12 @@ class _QuoteViewState extends State<QuoteView> {
       final quote = widget.viewModel.quote;
       final user = widget.viewModel.company.user;
       final widgets = <Widget>[
-        TwoValueHeader(
+        OneValueHeader(
           backgroundColor: quote.isPastDue
               ? Colors.red
               : InvoiceStatusColors.colors[quote.invoiceStatusId],
-          label1: localization.totalAmount,
-          value1: formatNumber(quote.amount, context, clientId: quote.clientId),
-          label2: localization.balanceDue,
-          value2:
-              formatNumber(quote.balance, context, clientId: quote.clientId),
+          label: localization.totalAmount,
+          value: formatNumber(quote.amount, context, clientId: quote.clientId),
         ),
       ];
 
