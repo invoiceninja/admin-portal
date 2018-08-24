@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -97,8 +97,8 @@ class _QuoteEditState extends State<QuoteEdit>
           child: TabBarView(
             controller: _controller,
             children: <Widget>[
-              InvoiceEditDetailsScreen(),
-              InvoiceEditItemsScreen(),
+              QuoteEditDetailsScreen(),
+              QuoteEditItemsScreen(),
             ],
           ),
         ),

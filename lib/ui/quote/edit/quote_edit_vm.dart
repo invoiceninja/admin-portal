@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -55,22 +55,22 @@ class QuoteEditVM {
 
   factory QuoteEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
-    final invoice = state.invoiceUIState.editing;
+    final quote = state.quoteUIState.editing;
 
     return QuoteEditVM(
       company: state.selectedCompany,
       isSaving: state.isSaving,
-      quote: invoice,
+      quote: quote,
       quoteItem: state.invoiceUIState.editingItem,
-      origQuote: store.state.invoiceState.map[invoice.id],
+      origQuote: store.state.invoiceState.map[quote.id],
       onBackPressed: () =>
           store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
       onSavePressed: (BuildContext context) {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(
-            SaveInvoiceRequest(completer: completer, invoice: invoice));
+            SaveQuoteRequest(completer: completer, quote: quote));
         return completer.future.then((savedInvoice) {
-          if (invoice.isNew) {
+          if (quote.isNew) {
             Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
           } else {
             Navigator.of(context).pop(savedInvoice);
@@ -85,9 +85,9 @@ class QuoteEditVM {
       },
       onItemsAdded: (items) {
         if (items.length == 1) {
-          store.dispatch(EditInvoiceItem(items[0]));
+          store.dispatch(EditQuoteItem(items[0]));
         }
-        store.dispatch(AddInvoiceItems(items));
+        store.dispatch(AddQuoteItems(items));
       },
     );
   }

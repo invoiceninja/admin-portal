@@ -67,7 +67,7 @@ class QuoteScreen extends StatelessWidget {
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(
-                      EditQuote(quote: InvoiceEntity(), context: context));
+                      EditQuote(quote: InvoiceEntity(isQuote: true), context: context));
                 },
                 child: Icon(
                   Icons.add,
