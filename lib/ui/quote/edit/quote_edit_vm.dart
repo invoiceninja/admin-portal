@@ -5,9 +5,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
-import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
+import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -61,19 +61,19 @@ class QuoteEditVM {
       company: state.selectedCompany,
       isSaving: state.isSaving,
       quote: quote,
-      quoteItem: state.invoiceUIState.editingItem,
-      origQuote: store.state.invoiceState.map[quote.id],
+      quoteItem: state.quoteUIState.editingItem,
+      origQuote: store.state.quoteState.map[quote.id],
       onBackPressed: () =>
-          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+          store.dispatch(UpdateCurrentRoute(QuoteScreen.route)),
       onSavePressed: (BuildContext context) {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(
             SaveQuoteRequest(completer: completer, quote: quote));
-        return completer.future.then((savedInvoice) {
+        return completer.future.then((savedQuote) {
           if (quote.isNew) {
-            Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
+            Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);
           } else {
-            Navigator.of(context).pop(savedInvoice);
+            Navigator.of(context).pop(savedQuote);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

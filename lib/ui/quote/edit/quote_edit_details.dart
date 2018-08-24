@@ -153,7 +153,7 @@ class QuoteEditDetailsState extends State<QuoteEditDetails> {
               },
             ),
             DatePicker(
-              labelText: localization.dueDate,
+              labelText: localization.validUntil,
               selectedDate: quote.dueDate,
               onSelected: (date) {
                 viewModel.onChanged(quote.rebuild((b) => b..dueDate = date));
