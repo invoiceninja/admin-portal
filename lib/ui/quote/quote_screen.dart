@@ -53,8 +53,8 @@ class QuoteScreen extends StatelessWidget {
           onSelectedCustom2: (value) =>
               store.dispatch(FilterQuotesByCustom2(value)),
           sortFields: [
-            InvoiceFields.invoiceNumber,
-            InvoiceFields.invoiceDate,
+            QuoteFields.quoteNumber,
+            QuoteFields.quoteDate,
             InvoiceFields.updatedAt,
           ],
           onSelectedState: (EntityState state, value) {
