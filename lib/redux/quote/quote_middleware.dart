@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
@@ -188,7 +187,6 @@ Middleware<AppState> _markSentQuote(QuoteRepository repository) {
 Middleware<AppState> _emailQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final origQuote = store.state.quoteState.map[action.quoteId];
-    /*
     repository
         .emailQuote(store.state.selectedCompany, store.state.authState,
         origQuote, action.template, action.subject, action.body)
@@ -205,7 +203,7 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
         action.completer.completeError(error);
       }
     });
-    */
+
     next(action);
   };
 }

@@ -65,4 +65,27 @@ class QuoteRepository {
 
     return quoteResponse.data;
   }
+
+  Future<Null> emailQuote(
+      CompanyEntity company,
+      AuthState auth,
+      InvoiceEntity quote,
+      EmailTemplate template,
+      String subject,
+      String body) async {
+
+    final data = {
+      'reminder': template == EmailTemplate.initial ? '' : template.toString(),
+      'template': {
+        'body': body,
+        'subject': subject,
+      }
+    };
+
+    await webClient.post(
+        auth.url + '/email_invoice?invoice_id=${quote.id}',
+        company.token,
+        json.encode(data));
+  }
+  
 }
