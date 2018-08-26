@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceView extends StatefulWidget {
-  final InvoiceViewVM viewModel;
+  final EntityViewVM viewModel;
 
   const InvoiceView({
     Key key,
@@ -35,18 +36,26 @@ class _InvoiceViewState extends State<InvoiceView> {
     List<Widget> _buildView() {
       final invoice = widget.viewModel.invoice;
       final user = widget.viewModel.company.user;
+      final color = invoice.isPastDue
+          ? Colors.red
+          : InvoiceStatusColors.colors[invoice.invoiceStatusId];
       final widgets = <Widget>[
-        TwoValueHeader(
-          backgroundColor: invoice.isPastDue
-              ? Colors.red
-              : InvoiceStatusColors.colors[invoice.invoiceStatusId],
-          label1: localization.totalAmount,
-          value1:
-              formatNumber(invoice.amount, context, clientId: invoice.clientId),
-          label2: localization.balanceDue,
-          value2: formatNumber(invoice.balance, context,
-              clientId: invoice.clientId),
-        ),
+        invoice.isQuote
+            ? OneValueHeader(
+                backgroundColor: color,
+                label: localization.totalAmount,
+                value: formatNumber(invoice.amount, context,
+                    clientId: invoice.clientId),
+              )
+            : TwoValueHeader(
+                backgroundColor: color,
+                label1: localization.totalAmount,
+                value1: formatNumber(invoice.amount, context,
+                    clientId: invoice.clientId),
+                label2: localization.balanceDue,
+                value2: formatNumber(invoice.balance, context,
+                    clientId: invoice.clientId),
+              ),
       ];
 
       final Map<String, String> fields = {
@@ -79,6 +88,9 @@ class _InvoiceViewState extends State<InvoiceView> {
 
       final List<Widget> fieldWidgets = [];
       fields.forEach((field, value) {
+        if (invoice.isQuote) {
+          field = QuoteFields.convertField(field);
+        }
         if (value != null && value.isNotEmpty) {
           fieldWidgets.add(Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +266,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     @required this.viewModel,
   });
 
-  final InvoiceViewVM viewModel;
+  final EntityViewVM viewModel;
 
   @override
   final Size preferredSize = const Size(double.infinity, 54.0);
@@ -271,10 +283,12 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: invoice.isNew
           ? []
           : [
-              user.canEditEntity(invoice) ? EditIconButton(
-                isVisible: !invoice.isDeleted,
-                onPressed: () => viewModel.onEditPressed(context),
-              ) : Container(),
+              user.canEditEntity(invoice)
+                  ? EditIconButton(
+                      isVisible: !invoice.isDeleted,
+                      onPressed: () => viewModel.onEditPressed(context),
+                    )
+                  : Container(),
               ActionMenuButton(
                 user: user,
                 customActions: [

@@ -40,6 +40,20 @@ class QuoteFields {
   static const String quoteDate = 'quoteDate';
   static const String validUntil = 'validUntil';
   static const String quoteStatusId = 'quoteStatusId';
+
+  static String convertField(String field) {
+    if (field == InvoiceFields.invoiceStatusId) {
+      return QuoteFields.quoteStatusId;
+    } else if (field == InvoiceFields.invoiceNumber) {
+      return QuoteFields.quoteNumber;
+    } else if (field == InvoiceFields.invoiceDate) {
+      return QuoteFields.quoteDate;
+    } else if (field == InvoiceFields.dueDate) {
+      return QuoteFields.validUntil;
+    } else {
+      return field;
+    }
+  }
 }
 
 class InvoiceFields {

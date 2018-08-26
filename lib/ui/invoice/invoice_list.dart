@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceList extends StatelessWidget {
-  final InvoiceListVM viewModel;
+  final EntityListVM viewModel;
 
   const InvoiceList({
     Key key,

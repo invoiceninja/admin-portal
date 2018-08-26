@@ -24,7 +24,6 @@ class InvoiceListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceListVM>(
-      //rebuildOnChange: true,
       converter: InvoiceListVM.fromStore,
       builder: (context, vm) {
         return InvoiceList(
@@ -35,7 +34,7 @@ class InvoiceListBuilder extends StatelessWidget {
   }
 }
 
-class InvoiceListVM {
+class EntityListVM {
   final UserEntity user;
   final ListUIState listState;
   final List<int> invoiceList;
@@ -51,7 +50,7 @@ class InvoiceListVM {
   final Function(BuildContext) onViewClientFilterPressed;
   final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
 
-  InvoiceListVM({
+  EntityListVM({
     @required this.user,
     @required this.listState,
     @required this.invoiceList,
@@ -67,6 +66,40 @@ class InvoiceListVM {
     @required this.onViewClientFilterPressed,
     @required this.onEntityAction,
   });
+}
+
+class InvoiceListVM extends EntityListVM {
+  InvoiceListVM({
+    UserEntity user,
+    ListUIState listState,
+    List<int> invoiceList,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltMap<int, ClientEntity> clientMap,
+    String filter,
+    bool isLoading,
+    bool isLoaded,
+    Function(BuildContext, InvoiceEntity) onInvoiceTap,
+    Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed,
+    Function(BuildContext) onRefreshed,
+    Function onClearClientFilterPressed,
+    Function(BuildContext) onViewClientFilterPressed,
+    Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
+  }) : super(
+          user: user,
+          listState: listState,
+          invoiceList: invoiceList,
+          invoiceMap: invoiceMap,
+          clientMap: clientMap,
+          filter: filter,
+          isLoading: isLoading,
+          isLoaded: isLoaded,
+          onInvoiceTap: onInvoiceTap,
+          onDismissed: onDismissed,
+          onRefreshed: onRefreshed,
+          onClearClientFilterPressed: onClearClientFilterPressed,
+          onViewClientFilterPressed: onViewClientFilterPressed,
+          onEntityAction: onEntityAction,
+        );
 
   static InvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -113,14 +146,12 @@ class InvoiceListVM {
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(
-                  popCompleter(
-                      context, localization.markedInvoiceAsSent),
+                  popCompleter(context, localization.markedInvoiceAsSent),
                   invoice.id));
               break;
             case EntityAction.email:
               store.dispatch(ShowEmailInvoice(
-                  completer: popCompleter(
-                      context, localization.emailedInvoice),
+                  completer: popCompleter(context, localization.emailedInvoice),
                   invoice: invoice,
                   context: context));
               break;
@@ -131,20 +162,17 @@ class InvoiceListVM {
               break;
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(
-                  popCompleter(
-                      context, localization.restoredInvoice),
+                  popCompleter(context, localization.restoredInvoice),
                   invoice.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveInvoiceRequest(
-                  popCompleter(
-                      context, localization.archivedInvoice),
+                  popCompleter(context, localization.archivedInvoice),
                   invoice.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteInvoiceRequest(
-                  popCompleter(
-                      context, localization.deletedInvoice),
+                  popCompleter(context, localization.deletedInvoice),
                   invoice.id));
               break;
           }
@@ -155,25 +183,21 @@ class InvoiceListVM {
           if (direction == DismissDirection.endToStart) {
             if (invoice.isDeleted || invoice.isArchived) {
               store.dispatch(RestoreInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.restoredInvoice),
+                  snackBarCompleter(context, localization.restoredInvoice),
                   invoice.id));
             } else {
               store.dispatch(ArchiveInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.archivedInvoice),
+                  snackBarCompleter(context, localization.archivedInvoice),
                   invoice.id));
             }
           } else if (direction == DismissDirection.startToEnd) {
             if (invoice.isDeleted) {
               store.dispatch(RestoreInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.restoredInvoice),
+                  snackBarCompleter(context, localization.restoredInvoice),
                   invoice.id));
             } else {
               store.dispatch(DeleteInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.deletedInvoice),
+                  snackBarCompleter(context, localization.deletedInvoice),
                   invoice.id));
             }
           }

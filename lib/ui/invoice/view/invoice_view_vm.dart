@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:redux/redux.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -8,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
@@ -36,7 +36,7 @@ class InvoiceViewScreen extends StatelessWidget {
   }
 }
 
-class InvoiceViewVM {
+class EntityViewVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
@@ -48,7 +48,7 @@ class InvoiceViewVM {
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;
 
-  InvoiceViewVM({
+  EntityViewVM({
     @required this.company,
     @required this.invoice,
     @required this.client,
@@ -60,6 +60,48 @@ class InvoiceViewVM {
     @required this.onClientPressed,
     @required this.onRefreshed,
   });
+
+  @override
+  bool operator ==(dynamic other) =>
+      client == other.client &&
+          company == other.company &&
+          invoice == other.quote &&
+          isSaving == other.isSaving &&
+          isDirty == other.isDirty;
+
+  @override
+  int get hashCode =>
+      client.hashCode ^
+      company.hashCode ^
+      invoice.hashCode ^
+      isSaving.hashCode ^
+      isDirty.hashCode;
+}
+
+class InvoiceViewVM extends EntityViewVM {
+  InvoiceViewVM({
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    ClientEntity client,
+    bool isSaving,
+    bool isDirty,
+    Function(BuildContext, EntityAction) onActionSelected,
+    Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
+    Function(BuildContext) onClientPressed,
+    Function(BuildContext) onRefreshed,
+    Function onBackPressed,
+  }) : super(
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onActionSelected,
+          onEditPressed: onEditPressed,
+          onClientPressed: onClientPressed,
+          onRefreshed: onRefreshed,
+          onBackPressed: onBackPressed,
+        );
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -141,20 +183,4 @@ class InvoiceViewVM {
           }
         });
   }
-
-  @override
-  bool operator ==(dynamic other) =>
-      client == other.client &&
-      company == other.company &&
-      invoice == other.quote &&
-      isSaving == other.isSaving &&
-      isDirty == other.isDirty;
-
-  @override
-  int get hashCode =>
-      client.hashCode ^
-      company.hashCode ^
-      invoice.hashCode ^
-      isSaving.hashCode ^
-      isDirty.hashCode;
 }

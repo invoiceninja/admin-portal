@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -11,7 +13,6 @@ import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/quote/view/quote_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
@@ -28,7 +29,7 @@ class QuoteViewScreen extends StatelessWidget {
         return QuoteViewVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return QuoteView(
+        return InvoiceView(
           viewModel: viewModel,
         );
       },
@@ -36,30 +37,31 @@ class QuoteViewScreen extends StatelessWidget {
   }
 }
 
-class QuoteViewVM {
-  final CompanyEntity company;
-  final InvoiceEntity quote;
-  final ClientEntity client;
-  final bool isSaving;
-  final bool isDirty;
-  final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
-  final Function(BuildContext) onClientPressed;
-  final Function(BuildContext) onRefreshed;
-  final Function onBackPressed;
+class QuoteViewVM extends EntityViewVM {
 
   QuoteViewVM({
-    @required this.company,
-    @required this.quote,
-    @required this.client,
-    @required this.isSaving,
-    @required this.isDirty,
-    @required this.onActionSelected,
-    @required this.onEditPressed,
-    @required this.onBackPressed,
-    @required this.onClientPressed,
-    @required this.onRefreshed,
-  });
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    ClientEntity client,
+    bool isSaving,
+    bool isDirty,
+    Function(BuildContext, EntityAction) onActionSelected,
+    Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
+    Function(BuildContext) onClientPressed,
+    Function(BuildContext) onRefreshed,
+    Function onBackPressed,
+  }) : super(
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onActionSelected,
+          onEditPressed: onEditPressed,
+          onClientPressed: onClientPressed,
+          onRefreshed: onRefreshed,
+          onBackPressed: onBackPressed,
+        );
 
   factory QuoteViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -77,11 +79,11 @@ class QuoteViewVM {
         company: state.selectedCompany,
         isSaving: state.isSaving,
         isDirty: quote.isNew,
-        quote: quote,
+        invoice: quote,
         client: client,
         onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
           final Completer<InvoiceEntity> completer =
-          new Completer<InvoiceEntity>();
+              new Completer<InvoiceEntity>();
           store.dispatch(EditQuote(
               quote: quote,
               context: context,
@@ -90,8 +92,8 @@ class QuoteViewVM {
           completer.future.then((invoice) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
-                  message: AppLocalization.of(context).updatedQuote,
-                )));
+              message: AppLocalization.of(context).updatedQuote,
+            )));
           });
         },
         onRefreshed: (context) => _handleRefresh(context),
@@ -114,19 +116,17 @@ class QuoteViewVM {
             case EntityAction.email:
               store.dispatch(ShowEmailQuote(
                   completer:
-                  snackBarCompleter(context, localization.emailedQuote),
+                      snackBarCompleter(context, localization.emailedQuote),
                   quote: quote,
                   context: context));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveQuoteRequest(
-                  popCompleter(context, localization.archivedQuote),
-                  quote.id));
+                  popCompleter(context, localization.archivedQuote), quote.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteQuoteRequest(
-                  popCompleter(context, localization.deletedQuote),
-                  quote.id));
+                  popCompleter(context, localization.deletedQuote), quote.id));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreQuoteRequest(
@@ -135,26 +135,9 @@ class QuoteViewVM {
               break;
             case EntityAction.clone:
               Navigator.of(context).pop();
-              store.dispatch(
-                  EditQuote(context: context, quote: quote.clone));
+              store.dispatch(EditQuote(context: context, quote: quote.clone));
               break;
           }
         });
   }
-
-  @override
-  bool operator ==(dynamic other) =>
-      client == other.client &&
-          company == other.company &&
-          quote == other.quote &&
-          isSaving == other.isSaving &&
-          isDirty == other.isDirty;
-
-  @override
-  int get hashCode =>
-      client.hashCode ^
-      company.hashCode ^
-      quote.hashCode ^
-      isSaving.hashCode ^
-      isDirty.hashCode;
 }

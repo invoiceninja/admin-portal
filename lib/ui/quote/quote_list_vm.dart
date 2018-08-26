@@ -8,7 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_list.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
@@ -24,10 +25,9 @@ class QuoteListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteListVM>(
-      //rebuildOnChange: true,
       converter: QuoteListVM.fromStore,
       builder: (context, vm) {
-        return QuoteList(
+        return InvoiceList(
           viewModel: vm,
         );
       },
@@ -35,38 +35,39 @@ class QuoteListBuilder extends StatelessWidget {
   }
 }
 
-class QuoteListVM {
-  final UserEntity user;
-  final ListUIState listState;
-  final List<int> quoteList;
-  final BuiltMap<int, InvoiceEntity> quoteMap;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, InvoiceEntity) onQuoteTap;
-  final Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed;
-  final Function(BuildContext) onRefreshed;
-  final Function onClearClientFilterPressed;
-  final Function(BuildContext) onViewClientFilterPressed;
-  final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
+class QuoteListVM extends EntityListVM {
 
   QuoteListVM({
-    @required this.user,
-    @required this.listState,
-    @required this.quoteList,
-    @required this.quoteMap,
-    @required this.clientMap,
-    @required this.isLoading,
-    @required this.isLoaded,
-    @required this.filter,
-    @required this.onQuoteTap,
-    @required this.onDismissed,
-    @required this.onRefreshed,
-    @required this.onClearClientFilterPressed,
-    @required this.onViewClientFilterPressed,
-    @required this.onEntityAction,
-  });
+    UserEntity user,
+    ListUIState listState,
+    List<int> invoiceList,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltMap<int, ClientEntity> clientMap,
+    String filter,
+    bool isLoading,
+    bool isLoaded,
+    Function(BuildContext, InvoiceEntity) onInvoiceTap,
+    Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed,
+    Function(BuildContext) onRefreshed,
+    Function onClearClientFilterPressed,
+    Function(BuildContext) onViewClientFilterPressed,
+    Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
+  }) : super(
+    user: user,
+    listState: listState,
+    invoiceList: invoiceList,
+    invoiceMap: invoiceMap,
+    clientMap: clientMap,
+    filter: filter,
+    isLoading: isLoading,
+    isLoaded: isLoaded,
+    onInvoiceTap: onInvoiceTap,
+    onDismissed: onDismissed,
+    onRefreshed: onRefreshed,
+    onClearClientFilterPressed: onClearClientFilterPressed,
+    onViewClientFilterPressed: onViewClientFilterPressed,
+    onEntityAction: onEntityAction,
+  );
 
   static QuoteListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -84,17 +85,17 @@ class QuoteListVM {
     return QuoteListVM(
         user: state.user,
         listState: state.quoteListState,
-        quoteList: memoizedFilteredQuoteList(
+        invoiceList: memoizedFilteredQuoteList(
             state.quoteState.map,
             state.quoteState.list,
             state.clientState.map,
             state.quoteListState),
-        quoteMap: state.quoteState.map,
+        invoiceMap: state.quoteState.map,
         clientMap: state.clientState.map,
         isLoading: state.isLoading,
         isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
         filter: state.quoteListState.filter,
-        onQuoteTap: (context, quote) {
+        onInvoiceTap: (context, quote) {
           store.dispatch(ViewQuote(quoteId: quote.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
