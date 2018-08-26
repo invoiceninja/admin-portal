@@ -1,7 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
@@ -146,6 +147,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             },
             QuoteViewScreen.route: (context) => QuoteViewScreen(),
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
+            QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             SettingsScreen.route: (context) => SettingsScreen(),
           },
         );

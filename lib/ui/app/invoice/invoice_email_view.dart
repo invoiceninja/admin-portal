@@ -2,7 +2,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/templates.dart';
 import 'package:html/parser.dart';
 
 class InvoiceEmailView extends StatefulWidget {
-  final EmailInvoiceVM viewModel;
+  final EmailEntityVM viewModel;
 
   const InvoiceEmailView({
     Key key,
@@ -68,14 +68,20 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   }
 
   void loadTemplate(EmailTemplate template) {
-    final company = widget.viewModel.company;
+    final viewModel = widget.viewModel;
+    final company = viewModel.company;
 
     selectedTemplate = template;
 
     switch (template) {
       case EmailTemplate.initial:
-        emailSubject = company.emailSubjectInvoice;
-        emailBody = company.emailBodyInvoice;
+        if (viewModel.invoice.isQuote) {
+          emailSubject = company.emailSubjectQuote;
+          emailBody = company.emailBodyQuote;
+        } else {
+          emailSubject = company.emailSubjectInvoice;
+          emailBody = company.emailBodyInvoice;
+        }
         break;
       case EmailTemplate.reminder1:
         emailSubject = company.emailSubjectReminder1;
