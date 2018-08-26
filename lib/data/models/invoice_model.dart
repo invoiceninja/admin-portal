@@ -103,6 +103,7 @@ abstract class InvoiceEntity extends Object
       publicNotes: '',
       privateNotes: '',
       invoiceTypeId: isQuote ? kInvoiceTypeQuote : kInvoiceTypeStandard,
+      isQuote: isQuote,
       isRecurring: false,
       frequencyId: 0,
       startDate: '',
@@ -152,6 +153,9 @@ abstract class InvoiceEntity extends Object
   double get amount;
 
   double get balance;
+
+  @BuiltValueField(wireName: 'is_quote')
+  bool get isQuote;
 
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
@@ -405,8 +409,6 @@ abstract class InvoiceEntity extends Object
   String get invitationSilentLink => invitations.first?.silentLink;
 
   String get invitationDownloadLink => invitations.first?.downloadLink;
-
-  bool get isQuote => invoiceTypeId == kInvoiceTypeQuote;
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }

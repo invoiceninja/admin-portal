@@ -93,7 +93,7 @@ class ItemEditDetails extends StatefulWidget {
 
   final int index;
   final InvoiceItemEntity invoiceItem;
-  final InvoiceEditItemsVM viewModel;
+  final EntityEditItemsVM viewModel;
 
   @override
   ItemEditDetailsState createState() => ItemEditDetailsState();
