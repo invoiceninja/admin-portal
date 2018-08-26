@@ -5,7 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:redux/redux.dart';
@@ -23,35 +24,35 @@ class QuoteEditScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         return QuoteEditVM.fromStore(store);
       },
-      builder: (context, vm) {
-        return QuoteEdit(
-          viewModel: vm,
+      builder: (context, viewModel) {
+        return InvoiceEdit(
+          viewModel: viewModel,
         );
       },
     );
   }
 }
 
-class QuoteEditVM {
-  final CompanyEntity company;
-  final InvoiceEntity quote;
-  final InvoiceItemEntity quoteItem;
-  final InvoiceEntity origQuote;
-  final Function(BuildContext) onSavePressed;
-  final Function(List<InvoiceItemEntity>) onItemsAdded;
-  final Function onBackPressed;
-  final bool isSaving;
-
+class QuoteEditVM extends EntityEditVM {
   QuoteEditVM({
-    @required this.company,
-    @required this.quote,
-    @required this.quoteItem,
-    @required this.origQuote,
-    @required this.onSavePressed,
-    @required this.onItemsAdded,
-    @required this.onBackPressed,
-    @required this.isSaving,
-  });
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    InvoiceItemEntity invoiceItem,
+    InvoiceEntity origInvoice,
+    Function(BuildContext) onSavePressed,
+    Function(List<InvoiceItemEntity>) onItemsAdded,
+    Function onBackPressed,
+    bool isSaving,
+  }) : super(
+          company: company,
+          invoice: invoice,
+          invoiceItem: invoiceItem,
+          origInvoice: origInvoice,
+          onSavePressed: onSavePressed,
+          onItemsAdded: onItemsAdded,
+          onBackPressed: onBackPressed,
+          isSaving: isSaving,
+        );
 
   factory QuoteEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -60,15 +61,14 @@ class QuoteEditVM {
     return QuoteEditVM(
       company: state.selectedCompany,
       isSaving: state.isSaving,
-      quote: quote,
-      quoteItem: state.quoteUIState.editingItem,
-      origQuote: store.state.quoteState.map[quote.id],
+      invoice: quote,
+      invoiceItem: state.quoteUIState.editingItem,
+      origInvoice: store.state.quoteState.map[quote.id],
       onBackPressed: () =>
           store.dispatch(UpdateCurrentRoute(QuoteScreen.route)),
       onSavePressed: (BuildContext context) {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-        store.dispatch(
-            SaveQuoteRequest(completer: completer, quote: quote));
+        store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
         return completer.future.then((savedQuote) {
           if (quote.isNew) {
             Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);

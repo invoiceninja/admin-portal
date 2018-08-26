@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -16,31 +17,32 @@ class QuoteEditItemsScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         return QuoteEditItemsVM.fromStore(store);
       },
-      builder: (context, vm) {
-        return QuoteEditItems(
-          viewModel: vm,
+      builder: (context, viewModel) {
+        return InvoiceEditItems(
+          viewModel: viewModel,
         );
       },
     );
   }
 }
 
-class QuoteEditItemsVM {
-  final CompanyEntity company;
-  final InvoiceEntity quote;
-  final InvoiceItemEntity quoteItem;
-  final Function(int) onRemoveQuoteItemPressed;
-  final Function onDoneQuoteItemPressed;
-  final Function(InvoiceItemEntity, int) onChangedQuoteItem;
+class QuoteEditItemsVM extends EntityEditItemsVM {
 
   QuoteEditItemsVM({
-    @required this.company,
-    @required this.quote,
-    @required this.quoteItem,
-    @required this.onRemoveQuoteItemPressed,
-    @required this.onDoneQuoteItemPressed,
-    @required this.onChangedQuoteItem,
-  });
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    InvoiceItemEntity invoiceItem,
+    Function(int) onRemoveInvoiceItemPressed,
+    Function onDoneInvoiceItemPressed,
+    Function(InvoiceItemEntity, int) onChangedInvoiceItem,
+  }) : super(
+    company: company,
+    invoice: invoice,
+    invoiceItem: invoiceItem,
+    onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+    onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
+    onChangedInvoiceItem: onChangedInvoiceItem,
+  );
 
   factory QuoteEditItemsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -48,12 +50,12 @@ class QuoteEditItemsVM {
 
     return QuoteEditItemsVM(
         company: state.selectedCompany,
-        quote: quote,
-        quoteItem: state.quoteUIState.editingItem,
-        onRemoveQuoteItemPressed: (index) =>
+        invoice: quote,
+        invoiceItem: state.quoteUIState.editingItem,
+        onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteQuoteItem(index)),
-        onDoneQuoteItemPressed: () => store.dispatch(EditQuoteItem()),
-        onChangedQuoteItem: (quoteItem, index) {
+        onDoneInvoiceItemPressed: () => store.dispatch(EditQuoteItem()),
+        onChangedInvoiceItem: (quoteItem, index) {
           store.dispatch(
               UpdateQuoteItem(quoteItem: quoteItem, index: index));
         });

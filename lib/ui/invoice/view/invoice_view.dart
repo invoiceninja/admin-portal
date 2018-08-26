@@ -279,7 +279,8 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
+      title: Text(
+          '${invoice.isQuote ? localization.quote : localization.invoice} ${invoice.invoiceNumber}'),
       actions: invoice.isNew
           ? []
           : [

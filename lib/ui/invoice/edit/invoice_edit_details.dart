@@ -16,7 +16,7 @@ class InvoiceEditDetails extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final InvoiceEditDetailsVM viewModel;
+  final EntityEditDetailsVM viewModel;
 
   @override
   InvoiceEditDetailsState createState() => InvoiceEditDetailsState();

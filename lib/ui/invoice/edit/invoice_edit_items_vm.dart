@@ -16,16 +16,16 @@ class InvoiceEditItemsScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         return InvoiceEditItemsVM.fromStore(store);
       },
-      builder: (context, vm) {
+      builder: (context, viewModel) {
         return InvoiceEditItems(
-          viewModel: vm,
+          viewModel: viewModel,
         );
       },
     );
   }
 }
 
-class InvoiceEditItemsVM {
+class EntityEditItemsVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
@@ -33,7 +33,7 @@ class InvoiceEditItemsVM {
   final Function onDoneInvoiceItemPressed;
   final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
 
-  InvoiceEditItemsVM({
+  EntityEditItemsVM({
     @required this.company,
     @required this.invoice,
     @required this.invoiceItem,
@@ -41,6 +41,24 @@ class InvoiceEditItemsVM {
     @required this.onDoneInvoiceItemPressed,
     @required this.onChangedInvoiceItem,
   });
+}
+
+class InvoiceEditItemsVM extends EntityEditItemsVM {
+  InvoiceEditItemsVM({
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    InvoiceItemEntity invoiceItem,
+    Function(int) onRemoveInvoiceItemPressed,
+    Function onDoneInvoiceItemPressed,
+    Function(InvoiceItemEntity, int) onChangedInvoiceItem,
+  }) : super(
+    company: company,
+    invoice: invoice,
+    invoiceItem: invoiceItem,
+    onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+    onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
+    onChangedInvoiceItem: onChangedInvoiceItem,
+  );
 
   factory InvoiceEditItemsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
