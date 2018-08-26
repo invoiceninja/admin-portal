@@ -60,6 +60,36 @@ class QuoteScreen extends StatelessWidget {
           onSelectedState: (EntityState state, value) {
             store.dispatch(FilterQuotesByState(state));
           },
+          onSelectedStatus: (EntityStatus status, value) {
+            store.dispatch(FilterQuotesByStatus(status));
+          },
+          statuses: [
+            InvoiceStatusEntity().rebuild(
+                  (b) => b
+                ..id = 1
+                ..name = localization.draft,
+            ),
+            InvoiceStatusEntity().rebuild(
+                  (b) => b
+                ..id = 2
+                ..name = localization.sent,
+            ),
+            InvoiceStatusEntity().rebuild(
+                  (b) => b
+                ..id = 3
+                ..name = localization.viewed,
+            ),
+            InvoiceStatusEntity().rebuild(
+                  (b) => b
+                ..id = 4
+                ..name = localization.approved,
+            ),
+            InvoiceStatusEntity().rebuild(
+                  (b) => b
+                ..id = -1
+                ..name = localization.expired,
+            ),
+          ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: user.canCreate(EntityType.quote)

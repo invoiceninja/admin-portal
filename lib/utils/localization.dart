@@ -272,6 +272,7 @@ class AppLocalization {
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'expired': 'Expired',
     },
     'sq': {
       'billing_address': 'Adresa e faturimit',
@@ -7696,6 +7697,9 @@ class AppLocalization {
 
   String get markedQuoteAsSent =>
       _localizedValues[locale.languageCode]['marked_quote_as_sent'];
+
+  String get expired =>
+      _localizedValues[locale.languageCode]['expired'];
 
   String lookup(String key) {
     return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? key;
