@@ -113,7 +113,6 @@ abstract class InvoiceEntity extends Object
       quoteInvoiceId: 0,
       customTextValue1: '',
       customTextValue2: '',
-      isQuote: false,
       isPublic: false,
       filename: '',
       invoiceItems: BuiltList<InvoiceItemEntity>(),
@@ -251,9 +250,6 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'custom_text_value2')
   String get customTextValue2;
-
-  @BuiltValueField(wireName: 'is_quote')
-  bool get isQuote;
 
   @BuiltValueField(wireName: 'is_public')
   bool get isPublic;
@@ -395,6 +391,8 @@ abstract class InvoiceEntity extends Object
   String get invitationSilentLink => invitations.first?.silentLink;
 
   String get invitationDownloadLink => invitations.first?.downloadLink;
+
+  bool get isQuote => invoiceTypeId == kInvoiceTypeQuote;
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
