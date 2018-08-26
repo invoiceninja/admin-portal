@@ -111,7 +111,7 @@ class InvoiceViewVM extends EntityViewVM {
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadInvoices(completer: completer, force: true));
+      store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
       return completer.future;
     }
 

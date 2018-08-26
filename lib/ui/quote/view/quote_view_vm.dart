@@ -71,7 +71,7 @@ class QuoteViewVM extends EntityViewVM {
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadQuotes(completer: completer, force: true));
+      store.dispatch(LoadQuote(completer: completer, quoteId: quote.id));
       return completer.future;
     }
 

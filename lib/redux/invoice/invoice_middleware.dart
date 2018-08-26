@@ -246,7 +246,7 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
       store.dispatch(LoadInvoiceSuccess(invoice));
 
       if (action.completer != null) {
-        action.completer.complete(invoice);
+        action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);

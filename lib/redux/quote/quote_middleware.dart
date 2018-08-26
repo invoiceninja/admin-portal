@@ -246,7 +246,7 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
       store.dispatch(LoadQuoteSuccess(quote));
 
       if (action.completer != null) {
-        action.completer.complete(quote);
+        action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
