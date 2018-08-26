@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
@@ -7,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/invoice_repository.dart';
@@ -212,9 +212,9 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .saveData(
-            store.state.selectedCompany, store.state.authState, action.quote)
+            store.state.selectedCompany, store.state.authState, action.invoice)
         .then((dynamic invoice) {
-      if (action.quote.isNew) {
+      if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));
       } else {
         store.dispatch(SaveInvoiceSuccess(invoice));
