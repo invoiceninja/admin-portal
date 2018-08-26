@@ -17,7 +17,7 @@ class QuoteEmailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, EmailInvoiceVM>(
+    return StoreConnector<AppState, EmailQuoteVM>(
       onInit: (Store<AppState> store) {
         final state = store.state;
         final quoteId = state.uiState.quoteUIState.selectedId;
@@ -31,7 +31,7 @@ class QuoteEmailScreen extends StatelessWidget {
         final state = store.state;
         final quoteId = state.uiState.quoteUIState.selectedId;
         final quote = state.quoteState.map[quoteId];
-        return EmailInvoiceVM.fromStore(store, quote);
+        return EmailQuoteVM.fromStore(store, quote);
       },
       builder: (context, viewModel) {
         return InvoiceEmailView(
