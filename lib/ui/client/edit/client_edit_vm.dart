@@ -12,11 +12,13 @@ import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
   static const String route = '/client/edit';
+
   const ClientEditScreen({Key key}) : super(key: key);
 
   @override
@@ -74,8 +76,7 @@ class ClientEditVM {
             showDialog<ErrorDialog>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ErrorDialog(AppLocalization
-                      .of(context)
+                  return ErrorDialog(AppLocalization.of(context)
                       .pleaseEnterAClientOrContactName);
                 });
             return null;
@@ -85,11 +86,12 @@ class ClientEditVM {
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
             if (client.isNew) {
-              if (store.state.uiState.currentRoute == InvoiceEditScreen.route) {
+              if ([InvoiceEditScreen.route, QuoteEditScreen.route]
+                  .contains(store.state.uiState.currentRoute)) {
                 Navigator.of(context).pop(savedClient);
               } else {
-                Navigator.of(context).pushReplacementNamed(
-                    ClientViewScreen.route);
+                Navigator.of(context)
+                    .pushReplacementNamed(ClientViewScreen.route);
               }
             } else {
               Navigator.of(context).pop(savedClient);
