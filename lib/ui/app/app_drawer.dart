@@ -182,12 +182,18 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
-ListTile(
-leading: Icon(Icons.widgets),
-title: Text('Payments'),
-onTap: () => store.dispatch(ViewPaymentList(context)),
-),
-
+          DrawerTile(
+            company: company,
+            entityType: EntityType.payment,
+            icon: FontAwesomeIcons.creditCard,
+            title: AppLocalization.of(context).payments,
+            onTap: () => store.dispatch(ViewPaymentList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditPayment(
+                  payment: PaymentEntity(), context: context));
+            },
+          ),
           DrawerTile(
             company: company,
             entityType: EntityType.quote,
@@ -274,7 +280,7 @@ class DrawerTile extends StatelessWidget {
 
     if (entityType != null && !user.canViewOrCreate(entityType)) {
       return Container();
-    } else if (! company.isModuleEnabled(entityType)) {
+    } else if (!company.isModuleEnabled(entityType)) {
       return Container();
     }
 
@@ -294,7 +300,6 @@ class DrawerTile extends StatelessWidget {
 }
 
 /*
-'payments' => 'credit-card',
 'recurring_invoices' => 'files-o',
 'credits' => 'credit-card',
 'proposals' => 'th-large',
