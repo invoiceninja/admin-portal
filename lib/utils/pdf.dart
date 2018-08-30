@@ -22,7 +22,8 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
     final String url =
         'https://docs.google.com/viewer?url=' + invoice.invitationDownloadLink;
     if (await canLaunch(url)) {
-      await launch(url, forceSafariVC: true, forceWebView: true);
+      await launch(url,
+          forceSafariVC: false, forceWebView: false);
     } else {
       throw localization.anErrorOccurred;
     }
