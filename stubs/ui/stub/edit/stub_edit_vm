@@ -46,7 +46,7 @@ class StubEditVM {
   });
 
   factory StubEditVM.fromStore(Store<AppState> store) {
-    final stub = store.state.stubUIState.selected;
+    final stub = store.state.stubUIState.editing;
 
     return StubEditVM(
       isLoading: store.state.isLoading,
