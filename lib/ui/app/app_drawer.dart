@@ -76,6 +76,7 @@ class AppDrawer extends StatelessWidget {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
     final user = store.state.user;
+    final company = viewModel.selectedCompany;
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
@@ -134,14 +135,14 @@ class AppDrawer extends StatelessWidget {
           ),
           user.isAdmin
               ? DrawerTile(
-                  user: user,
+                  company: company,
                   icon: FontAwesomeIcons.tachometerAlt,
                   title: AppLocalization.of(context).dashboard,
                   onTap: () => store.dispatch(ViewDashboard(context)),
                 )
               : Container(),
           DrawerTile(
-            user: user,
+            company: company,
             entityType: EntityType.client,
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
@@ -153,7 +154,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            user: user,
+            company: company,
             entityType: EntityType.product,
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
@@ -167,7 +168,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            user: user,
+            company: company,
             entityType: EntityType.invoice,
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
@@ -180,7 +181,7 @@ class AppDrawer extends StatelessWidget {
           ),
           // STARTER: menu - do not remove comment
           DrawerTile(
-            user: user,
+            company: company,
             entityType: EntityType.quote,
             icon: FontAwesomeIcons.fileAltO,
             title: AppLocalization.of(context).quotes,
@@ -192,7 +193,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            user: user,
+            company: company,
             icon: FontAwesomeIcons.cog,
             title: AppLocalization.of(context).settings,
             onTap: () {
@@ -244,7 +245,7 @@ class AppDrawer extends StatelessWidget {
 
 class DrawerTile extends StatelessWidget {
   const DrawerTile({
-    @required this.user,
+    @required this.company,
     @required this.icon,
     @required this.title,
     @required this.onTap,
@@ -252,7 +253,7 @@ class DrawerTile extends StatelessWidget {
     this.entityType,
   });
 
-  final UserEntity user;
+  final CompanyEntity company;
   final EntityType entityType;
   final IconData icon;
   final String title;
@@ -261,7 +262,11 @@ class DrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = company.user;
+
     if (entityType != null && !user.canViewOrCreate(entityType)) {
+      return Container();
+    } else if (! company.isModuleEnabled(entityType)) {
       return Container();
     }
 

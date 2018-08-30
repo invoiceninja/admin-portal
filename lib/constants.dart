@@ -36,6 +36,12 @@ const int kInvoiceTypeQuote = 2;
 
 const int kActivityEmailInvoice = 6;
 
+const int kModuleRecurringInvoice = 1;
+const int kModuleCredit = 2;
+const int kModuleQuote = 4;
+const int kModuleTask = 8;
+const int kModuleExpense = 16;
+
 class InvoiceStatusColors {
   static const colors = {
     1: Colors.grey, // draft

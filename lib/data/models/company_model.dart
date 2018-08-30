@@ -270,6 +270,27 @@ abstract class CompanyEntity
     }
   }
 
+  bool isModuleEnabled(EntityType entityType) {
+    if (entityType == EntityType.recurringInvoice &&
+        enabledModules & kModuleRecurringInvoice == 0) {
+      return false;
+    } else if (entityType == EntityType.credit &&
+        enabledModules & kModuleCredit == 0) {
+      return false;
+    } else if (entityType == EntityType.quote &&
+        enabledModules & kModuleQuote == 0) {
+      return false;
+    } else if ([EntityType.task, EntityType.project].contains(entityType) &&
+        enabledModules & kModuleTask == 0) {
+      return false;
+    } else if ([EntityType.expense, EntityType.vendor].contains(entityType) &&
+        enabledModules & kModuleExpense == 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 
