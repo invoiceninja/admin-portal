@@ -124,7 +124,7 @@ class ClientOverview extends StatelessWidget {
               localization.active,
               localization.archived),
         ),
-        EntityListTile(
+        company.isModuleEnabled(EntityType.quote) ? EntityListTile(
           icon: FontAwesomeIcons.fileAltO,
           title: localization.quotes,
           onTap: () => viewModel.onQuotesPressed(context),
@@ -133,7 +133,7 @@ class ClientOverview extends StatelessWidget {
               state.quoteState.map,
               localization.active,
               localization.archived),
-        ),
+        ) : Container(),
       ],
     );
   }

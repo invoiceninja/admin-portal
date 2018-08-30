@@ -47,7 +47,8 @@ class _ClientViewState extends State<ClientView>
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
-    final user = viewModel.company.user;
+    final company = viewModel.company;
+    final user = company.user;
 
     return WillPopScope(
       onWillPop: () async {
@@ -84,7 +85,8 @@ class _ClientViewState extends State<ClientView>
                             },
                           )
                         : Container(),
-                    user.canCreate(EntityType.quote)
+                    company.isModuleEnabled(EntityType.quote) &&
+                            user.canCreate(EntityType.quote)
                         ? ListTile(
                             dense: true,
                             leading: Icon(Icons.add_circle_outline),
