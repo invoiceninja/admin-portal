@@ -23,7 +23,7 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
         invoice.invitationDownloadLink;
     if (await canLaunch(url)) {
       await launch(url,
-          forceSafariVC: true, forceWebView: true);
+          forceSafariVC: false, forceWebView: false);
     } else {
       throw localization.anErrorOccurred;
     }
