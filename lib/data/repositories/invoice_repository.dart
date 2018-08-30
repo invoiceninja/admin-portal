@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 
@@ -31,7 +32,7 @@ class InvoiceRepository {
     String url = auth.url + '/invoices?include=invitations&invoice_type_id=1&is_recurring=0'; // invoice_type_id=1
 
     if (updatedAt > 0) {
-      url += '&updated_at=${updatedAt - 600}';
+      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
     final dynamic response = await webClient.get(url, company.token);

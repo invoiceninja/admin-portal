@@ -30,7 +30,7 @@ class StubRepository {
     String url = auth.url + '/stubs';
 
     if (updatedAt > 0) {
-      url += '&updated_at=${updatedAt - 600}';
+      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
     final dynamic response = await webClient.get(url, company.token);

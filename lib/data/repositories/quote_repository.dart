@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -30,7 +31,7 @@ class QuoteRepository {
     String url = auth.url + '/invoices?include=invitations&invoice_type_id=2&is_recurring=0';
 
     if (updatedAt > 0) {
-      url += '&updated_at=${updatedAt - 600}';
+      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
     final dynamic response = await webClient.get(url, company.token);
