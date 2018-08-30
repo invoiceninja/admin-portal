@@ -63,8 +63,7 @@ void main() async {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         // STARTER: middleware - do not remove comment
-..addAll(createStorePaymentsMiddleware())
-
+        ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
         ..addAll([
           LoggingMiddleware<dynamic>.printer(),
@@ -149,13 +148,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
-PaymentScreen.route: (context) {
-widget.store.dispatch(LoadPayments());
-return PaymentScreen();
-},
-PaymentViewScreen.route: (context) => PaymentViewScreen(),
-PaymentEditScreen.route: (context) => PaymentEditScreen(),
-
+            PaymentScreen.route: (context) {
+              widget.store.dispatch(LoadPayments());
+              return PaymentScreen();
+            },
+            PaymentViewScreen.route: (context) => PaymentViewScreen(),
+            PaymentEditScreen.route: (context) => PaymentEditScreen(),
             QuoteScreen.route: (context) {
               widget.store.dispatch(LoadQuotes());
               return QuoteScreen();

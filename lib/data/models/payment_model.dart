@@ -105,6 +105,16 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
     switch (sortField) {
       case PaymentFields.amount:
         response = paymentA.amount.compareTo(paymentB.amount);
+        break;
+      case PaymentFields.transactionReference:
+        response = paymentA.transactionReference.compareTo(paymentB.transactionReference);
+        break;
+      case PaymentFields.paymentDate:
+        response = paymentA.paymentDate.compareTo(paymentB.paymentDate);
+        break;
+      case PaymentFields.updatedAt:
+        response = paymentA.updatedAt.compareTo(paymentB.updatedAt);
+        break;
     }
     
     return response;
@@ -116,13 +126,25 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       return true;
     }
 
-    return privateNotes.contains(filter);
+    if (transactionReference.toLowerCase().contains(filter)) {
+      return true;
+    } else if (privateNotes.toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    return false;
   }
 
   @override
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    }
+
+    if (transactionReference.toLowerCase().contains(filter)) {
+      return transactionReference;
+    } else if (privateNotes.toLowerCase().contains(filter)) {
+      return privateNotes;
     }
 
     return null;
