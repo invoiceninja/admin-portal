@@ -6,6 +6,8 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
+
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 
 part 'ui_state.g.dart';
@@ -20,6 +22,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
+paymentUIState: PaymentUIState(),
+
       quoteUIState: QuoteUIState(),
     );
   }
@@ -42,6 +46,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   String get filter;
 
   // STARTER: properties - do not remove comment
+PaymentUIState get paymentUIState;
+
   QuoteUIState get quoteUIState;
 
   static Serializer<UIState> get serializer => _$uIStateSerializer;

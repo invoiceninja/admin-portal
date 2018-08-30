@@ -16,6 +16,8 @@ import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -180,6 +182,12 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
+ListTile(
+leading: Icon(Icons.widgets),
+title: Text('Payments'),
+onTap: () => store.dispatch(ViewPaymentList(context)),
+),
+
           DrawerTile(
             company: company,
             entityType: EntityType.quote,

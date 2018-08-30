@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/flutter_redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -31,19 +31,26 @@ class StubViewScreen extends StatelessWidget {
 
 class StubViewVM {
   final StubEntity stub;
+  final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
+  final bool isSaving;
   final bool isLoading;
+  final bool isDirty;
 
   StubViewVM({
     @required this.stub,
+    @required this.company,
     @required this.onActionSelected,
     @required this.onEditPressed,
+    @required this.isSaving,
     @required this.isLoading,
+    @required this.isDirty,
   });
 
   factory StubViewVM.fromStore(Store<AppState> store) {
-    final stub = store.state.stubUIState.selected;
+    final state = store.state;
+    final payment = state.stubState.map[state.stubUIState.selectedId];
 
     return StubViewVM(
         isLoading: store.state.isLoading,
@@ -52,24 +59,24 @@ class StubViewVM {
           store.dispatch(EditStub(stub: stub, context: context));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
-          final Completer<Null> completer = new Completer<Null>();
-          var message;
+          final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.archive:
+              store.dispatch(ArchiveStubRequest(
+                  popCompleter(context, localization.archivedStub),
+                  stub.id));
+              break;
             case EntityAction.delete:
-              store.dispatch(DeleteStubRequest(completer, stub.id));
-              message = 'Successfully Deleted Stub';
+              store.dispatch(DeleteStubRequest(
+                  popCompleter(context, localization.deletedStub),
+                  stub.id));
+              break;
+            case EntityAction.restore:
+              store.dispatch(RestoreStubRequest(
+                  snackBarCompleter(context, localization.restoredStub),
+                  stub.id));
               break;
           }
-          if (message != null) {
-            return completer.future.then((_) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  content: IconMessage(
-                    message: message,
-                  ),
-                  duration: Duration(seconds: 3)));
-            });
-          }
-        }
-    );
+        });
   }
 }

@@ -37,6 +37,12 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
+import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
+
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
@@ -57,6 +63,8 @@ void main() async {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         // STARTER: middleware - do not remove comment
+..addAll(createStorePaymentsMiddleware())
+
         ..addAll(createStoreQuotesMiddleware())
         ..addAll([
           LoggingMiddleware<dynamic>.printer(),
@@ -141,6 +149,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
+PaymentScreen.route: (context) {
+widget.store.dispatch(LoadPayments());
+return PaymentScreen();
+},
+PaymentViewScreen.route: (context) => PaymentViewScreen(),
+PaymentEditScreen.route: (context) => PaymentEditScreen(),
+
             QuoteScreen.route: (context) {
               widget.store.dispatch(LoadQuotes());
               return QuoteScreen();

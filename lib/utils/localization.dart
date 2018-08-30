@@ -207,6 +207,12 @@ class AppLocalization {
       'history': 'History',
       'payment': 'Payment',
       'payments': 'Payments',
+      'enter_payment': 'Enter Payment',
+      'created_payment': 'Successfully created payment',
+      'updated_payment': 'Successfully updated payment',
+      'archived_payment': 'Successfully archived payment',
+      'deleted_payment': 'Successfully deleted payment',
+      'restored_payment': 'Successfully restored payment',
       'quote': 'Quote',
       'quotes': 'Quotes',
       'new_quote': 'New Quote',
@@ -7520,6 +7526,23 @@ class AppLocalization {
 
   String get payments => _localizedValues[locale.languageCode]['payments'];
 
+  String get enterPayment => _localizedValues[locale.languageCode]['enter_payment'];
+
+  String get createdPayment =>
+      _localizedValues[locale.languageCode]['created_payment'];
+
+  String get updatedPayment =>
+      _localizedValues[locale.languageCode]['updated_payment'];
+
+  String get archivedPayment =>
+      _localizedValues[locale.languageCode]['archived_payment'];
+
+  String get deletedPayment =>
+      _localizedValues[locale.languageCode]['deleted_payment'];
+
+  String get restoredPayment =>
+      _localizedValues[locale.languageCode]['restored_payment'];
+
   String get quote => _localizedValues[locale.languageCode]['quote'];
 
   String get quotes => _localizedValues[locale.languageCode]['quotes'];
@@ -7698,8 +7721,7 @@ class AppLocalization {
   String get markedQuoteAsSent =>
       _localizedValues[locale.languageCode]['marked_quote_as_sent'];
 
-  String get expired =>
-      _localizedValues[locale.languageCode]['expired'];
+  String get expired => _localizedValues[locale.languageCode]['expired'];
 
   String lookup(String key) {
     return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? key;
