@@ -181,6 +181,7 @@ class AppLocalization {
       'industry': 'Industry',
       'size': 'Size',
       'payment_terms': 'Payment Terms',
+      'payment_date': 'Payment Date',
       'net': 'Net',
       'client_portal': 'Client Portal',
       'show_tasks': 'Show tasks',
@@ -7473,6 +7474,9 @@ class AppLocalization {
   String get paymentTerms =>
       _localizedValues[locale.languageCode]['payment_terms'];
 
+  String get paymentDate =>
+      _localizedValues[locale.languageCode]['payment_date'];
+
   String get net => _localizedValues[locale.languageCode]['net'];
 
   String get clientPortal =>
@@ -7526,7 +7530,8 @@ class AppLocalization {
 
   String get payments => _localizedValues[locale.languageCode]['payments'];
 
-  String get enterPayment => _localizedValues[locale.languageCode]['enter_payment'];
+  String get enterPayment =>
+      _localizedValues[locale.languageCode]['enter_payment'];
 
   String get createdPayment =>
       _localizedValues[locale.languageCode]['created_payment'];

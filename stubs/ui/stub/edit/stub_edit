@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 class StubEdit extends StatefulWidget {
   final StubEditVM viewModel;
 
-  StubEdit({
+  const StubEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -32,7 +32,7 @@ class _StubEditState extends State<StubEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    var stub = widget.viewModel.stub;
+    final stub = widget.viewModel.stub;
     // STARTER: read value - do not remove comment
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -51,7 +51,7 @@ class _StubEditState extends State<StubEdit> {
   }
 
   _onChanged() {
-    var stub = widget.viewModel.stub.rebuild((b) => b
+    final stub = widget.viewModel.stub.rebuild((b) => b
       // STARTER: set value - do not remove comment
     );
     if (stub != widget.viewModel.stub) {
@@ -61,7 +61,7 @@ class _StubEditState extends State<StubEdit> {
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = widget.viewModel;
+    final viewModel = widget.viewModel;
 
     return WillPopScope(
       onWillPop: () async {

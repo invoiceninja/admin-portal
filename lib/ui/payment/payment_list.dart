@@ -41,15 +41,6 @@ class PaymentList extends StatelessWidget {
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              user.canCreate(EntityType.payment)
-                  ? ListTile(
-                      leading: Icon(Icons.control_point_duplicate),
-                      title: Text(AppLocalization.of(context).clone),
-                      onTap: () => viewModel.onEntityAction(
-                          context, payment, EntityAction.clone),
-                    )
-                  : Container(),
-              Divider(),
               user.canEditEntity(payment) && !payment.isActive
                   ? ListTile(
                       leading: Icon(Icons.restore),

@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/payment/payment_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class PaymentScreen extends StatelessWidget {
   static const String route = '/payment';

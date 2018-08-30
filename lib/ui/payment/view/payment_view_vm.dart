@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -10,11 +9,11 @@ import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 
 class PaymentViewScreen extends StatelessWidget {
-  static final String route = '/payment/view';
-  PaymentViewScreen({Key key}) : super(key: key);
+  static const String route = '/payment/view';
+
+  const PaymentViewScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,6 @@ class PaymentViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
-
   });
 
   factory PaymentViewVM.fromStore(Store<AppState> store) {

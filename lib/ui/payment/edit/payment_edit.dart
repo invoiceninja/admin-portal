@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class PaymentEdit extends StatefulWidget {
   final PaymentEditVM viewModel;
 
-  PaymentEdit({
+  const PaymentEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -39,7 +39,7 @@ class _PaymentEditState extends State<PaymentEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    var payment = widget.viewModel.payment;
+    final payment = widget.viewModel.payment;
 
     //_amountController.text = payment.amount;
 
@@ -63,7 +63,7 @@ class _PaymentEditState extends State<PaymentEdit> {
   }
 
   void _onChanged() {
-    var payment = widget.viewModel.payment.rebuild((b) => b
+    final payment = widget.viewModel.payment.rebuild((b) => b
       //..amount = _amountController.text.trim()
       ..transactionReference = _transactionReferenceController.text.trim()
       ..privateNotes = _privateNotesController.text.trim());
