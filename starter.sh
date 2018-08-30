@@ -153,8 +153,8 @@ else
 
     # Create new module files
     declare -a files=(
-       './stubs/data/models/stub_model'
-       './stubs/data/repositories/stub_repository'
+       #'./stubs/data/models/stub_model'
+       #'./stubs/data/repositories/stub_repository'
        './stubs/redux/stub/stub_actions'
        './stubs/redux/stub/stub_reducer'
        './stubs/redux/stub/stub_state'
@@ -203,26 +203,26 @@ else
 
         comment="STARTER: fields - do not remove comment"
         code="static const String ${element} = '${element}';${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
 
         comment="STARTER: properties - do not remove comment"
         code="String get ${element};${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
 
         comment="STARTER: sort switch - do not remove comment"
         code="case ${Module}Fields.${element}:${lineBreak}"
         code="${code}response = ${module}A.${element}.compareTo(${module}B.${element});${lineBreak}break;${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
 
         comment="STARTER: filter - do not remove comment"
         code="if (${element}.toLowerCase().contains(filter)){${lineBreak}"
         code="${code}return true;${lineBreak}"
         code="${code}}${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
 
         comment="STARTER: constructor - do not remove comment"
         code="${element}: '',${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
 
         comment="STARTER: controllers - do not remove comment"
         code="final _${element}Controller = TextEditingController();${lineBreak}"
