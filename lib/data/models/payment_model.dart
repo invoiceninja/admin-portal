@@ -58,7 +58,8 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       privateNotes: '',
       exchangeRate: 0.0,
       exchangeCurrencyId: 0,
-      
+      refunded: 0.0,
+      paymentStatusId: 0,
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -72,6 +73,11 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   }
 
   double get amount;
+
+  double get refunded;
+
+  @BuiltValueField(wireName: 'payment_status_id')
+  int get paymentStatusId;
 
   @BuiltValueField(wireName: 'transaction_reference')
   String get transactionReference;

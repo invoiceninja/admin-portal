@@ -76,7 +76,7 @@ class PaymentListVM {
         isLoaded: state.paymentState.isLoaded,
         filter: state.paymentUIState.listUIState.filter,
         onPaymentTap: (context, payment) {
-          store.dispatch(EditPayment(payment: payment, context: context));
+          store.dispatch(ViewPayment(paymentId: payment.id, context: context));
         },
         onEntityAction: (context, payment, action) {
           switch (action) {

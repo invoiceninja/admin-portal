@@ -127,6 +127,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
+      'refunded',
+      serializers.serialize(object.refunded,
+          specifiedType: const FullType(double)),
+      'payment_status_id',
+      serializers.serialize(object.paymentStatusId,
+          specifiedType: const FullType(int)),
       'transaction_reference',
       serializers.serialize(object.transactionReference,
           specifiedType: const FullType(String)),
@@ -206,6 +212,14 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         case 'amount':
           result.amount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'refunded':
+          result.refunded = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'payment_status_id':
+          result.paymentStatusId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'transaction_reference':
           result.transactionReference = serializers.deserialize(value,
@@ -455,6 +469,10 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final double amount;
   @override
+  final double refunded;
+  @override
+  final int paymentStatusId;
+  @override
   final String transactionReference;
   @override
   final String paymentDate;
@@ -488,6 +506,8 @@ class _$PaymentEntity extends PaymentEntity {
 
   _$PaymentEntity._(
       {this.amount,
+      this.refunded,
+      this.paymentStatusId,
       this.transactionReference,
       this.paymentDate,
       this.paymentTypeId,
@@ -505,6 +525,10 @@ class _$PaymentEntity extends PaymentEntity {
       : super._() {
     if (amount == null)
       throw new BuiltValueNullFieldError('PaymentEntity', 'amount');
+    if (refunded == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'refunded');
+    if (paymentStatusId == null)
+      throw new BuiltValueNullFieldError('PaymentEntity', 'paymentStatusId');
     if (transactionReference == null)
       throw new BuiltValueNullFieldError(
           'PaymentEntity', 'transactionReference');
@@ -536,6 +560,8 @@ class _$PaymentEntity extends PaymentEntity {
     if (identical(other, this)) return true;
     if (other is! PaymentEntity) return false;
     return amount == other.amount &&
+        refunded == other.refunded &&
+        paymentStatusId == other.paymentStatusId &&
         transactionReference == other.transactionReference &&
         paymentDate == other.paymentDate &&
         paymentTypeId == other.paymentTypeId &&
@@ -569,8 +595,14 @@ class _$PaymentEntity extends PaymentEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                amount
+                                                                $jc(
+                                                                    $jc(
+                                                                        0,
+                                                                        amount
+                                                                            .hashCode),
+                                                                    refunded
+                                                                        .hashCode),
+                                                                paymentStatusId
                                                                     .hashCode),
                                                             transactionReference
                                                                 .hashCode),
@@ -593,6 +625,8 @@ class _$PaymentEntity extends PaymentEntity {
   String toString() {
     return (newBuiltValueToStringHelper('PaymentEntity')
           ..add('amount', amount)
+          ..add('refunded', refunded)
+          ..add('paymentStatusId', paymentStatusId)
           ..add('transactionReference', transactionReference)
           ..add('paymentDate', paymentDate)
           ..add('paymentTypeId', paymentTypeId)
@@ -618,6 +652,15 @@ class PaymentEntityBuilder
   double _amount;
   double get amount => _$this._amount;
   set amount(double amount) => _$this._amount = amount;
+
+  double _refunded;
+  double get refunded => _$this._refunded;
+  set refunded(double refunded) => _$this._refunded = refunded;
+
+  int _paymentStatusId;
+  int get paymentStatusId => _$this._paymentStatusId;
+  set paymentStatusId(int paymentStatusId) =>
+      _$this._paymentStatusId = paymentStatusId;
 
   String _transactionReference;
   String get transactionReference => _$this._transactionReference;
@@ -683,6 +726,8 @@ class PaymentEntityBuilder
   PaymentEntityBuilder get _$this {
     if (_$v != null) {
       _amount = _$v.amount;
+      _refunded = _$v.refunded;
+      _paymentStatusId = _$v.paymentStatusId;
       _transactionReference = _$v.transactionReference;
       _paymentDate = _$v.paymentDate;
       _paymentTypeId = _$v.paymentTypeId;
@@ -718,6 +763,8 @@ class PaymentEntityBuilder
     final _$result = _$v ??
         new _$PaymentEntity._(
             amount: amount,
+            refunded: refunded,
+            paymentStatusId: paymentStatusId,
             transactionReference: transactionReference,
             paymentDate: paymentDate,
             paymentTypeId: paymentTypeId,
