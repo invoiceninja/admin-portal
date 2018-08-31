@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -65,7 +66,7 @@ class _PaymentEditState extends State<PaymentEdit> {
 
   void _onChanged() {
     final payment = widget.viewModel.payment.rebuild((b) => b
-      //..amount = _amountController.text.trim()
+      ..amount = parseDouble(_amountController.text)
       ..transactionReference = _transactionReferenceController.text.trim()
       ..privateNotes = _privateNotesController.text.trim());
     if (payment != widget.viewModel.payment) {
@@ -77,6 +78,7 @@ class _PaymentEditState extends State<PaymentEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final payment = viewModel.payment;
+    final localization = AppLocalization.of(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -152,23 +154,37 @@ class _PaymentEditState extends State<PaymentEdit> {
                   TextFormField(
                     controller: _amountController,
                     autocorrect: false,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Amount',
+                      labelText: localization.amount,
                     ),
+                  ),
+                  DatePicker(
+                    validator: (String val) => val.trim().isEmpty
+                        ? AppLocalization.of(context).pleaseSelectADate
+                        : null,
+                    labelText: localization.paymentDate,
+                    selectedDate: payment.paymentDate,
+                    onSelected: (date) {
+                      viewModel.onChanged(
+                          payment.rebuild((b) => b..paymentDate = date));
+                    },
                   ),
                   TextFormField(
                     controller: _transactionReferenceController,
                     autocorrect: false,
                     decoration: InputDecoration(
-                      labelText: 'TransactionReference',
+                      labelText: localization.transactionReference,
                     ),
                   ),
                   TextFormField(
                     controller: _privateNotesController,
                     autocorrect: false,
                     decoration: InputDecoration(
-                      labelText: 'PrivateNotes',
+                      labelText: localization.privateNotes,
                     ),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 4,
                   ),
                 ],
               ),
