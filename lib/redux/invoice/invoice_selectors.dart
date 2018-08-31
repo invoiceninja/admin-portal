@@ -3,6 +3,30 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+var memoizedDropdownInvoiceList = memo3(
+        (BuiltMap<int, InvoiceEntity> invoiceMap, BuiltList<int> invoiceList, int clientId) =>
+        dropdownInvoiceSelector(invoiceMap, invoiceList, clientId));
+
+List<int> dropdownInvoiceSelector(
+    BuiltMap<int, InvoiceEntity> invoiceMap, BuiltList<int> invoiceList, int clientId) {
+  final list =
+  invoiceList.where((invoiceId) {
+    final invoice = invoiceMap[invoiceId];
+    if (clientId != null && invoice.clientId != clientId) {
+      return false;
+    }
+    return invoice.isActive && invoice.isUnpaid;
+  }).toList();
+
+  list.sort((invoiceAId, invoiceBId) {
+    final invoiceA = invoiceMap[invoiceAId];
+    final invoiceB = invoiceMap[invoiceBId];
+    return invoiceA.compareTo(invoiceB, ClientFields.name, true);
+  });
+
+  return list;
+}
+
 ClientEntity invoiceClientSelector(
     InvoiceEntity invoice, BuiltMap<int, ClientEntity> clientMap) {
   return clientMap[invoice.clientId];

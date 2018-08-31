@@ -385,12 +385,14 @@ abstract class InvoiceEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double get listDisplayAmount => balance;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   double get requestedAmount => partial > 0 ? partial : amount;
+
+  bool get isUnpaid => invoiceStatusId != kInvoiceStatusPaid;
 
   bool get isPastDue {
     if (dueDate.isEmpty) {
@@ -399,7 +401,7 @@ abstract class InvoiceEntity extends Object
 
     return !isDeleted &&
         isPublic &&
-        invoiceStatusId != kInvoiceStatusPaid &&
+        isUnpaid &&
         DateTime.tryParse(dueDate)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }

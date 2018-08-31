@@ -156,7 +156,7 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   }
 
   @override
-  double get listDisplayAmount => null;
+  double get listDisplayAmount => amount;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;

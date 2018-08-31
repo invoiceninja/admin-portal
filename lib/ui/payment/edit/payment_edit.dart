@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 
 class PaymentEdit extends StatefulWidget {
   final PaymentEditVM viewModel;
@@ -20,14 +24,13 @@ class PaymentEdit extends StatefulWidget {
 class _PaymentEditState extends State<PaymentEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // STARTER: controllers - do not remove comment
   final _amountController = TextEditingController();
-
   final _transactionReferenceController = TextEditingController();
-
   final _privateNotesController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+
+  int clientId;
 
   @override
   void didChangeDependencies() {
@@ -42,11 +45,8 @@ class _PaymentEditState extends State<PaymentEdit> {
     final payment = widget.viewModel.payment;
 
     //_amountController.text = payment.amount;
-
     _transactionReferenceController.text = payment.transactionReference;
-
     _privateNotesController.text = payment.privateNotes;
-
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
@@ -112,7 +112,33 @@ class _PaymentEditState extends State<PaymentEdit> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
-                  // STARTER: widgets - do not remove comment
+                  payment.isNew
+                      ? EntityDropdown(
+                          entityType: EntityType.client,
+                          labelText: AppLocalization.of(context).client,
+                          entityMap: viewModel.clientMap,
+                          initialValue: viewModel
+                              .clientMap[payment.invoiceId]?.listDisplayName,
+                          onSelected: (clientId) => setState(() => this.clientId = clientId),
+                          entityList: memoizedDropdownClientList(
+                              viewModel.clientMap, viewModel.clientList),
+                        )
+                      : Container(),
+                  payment.isNew
+                      ? EntityDropdown(
+                          entityType: EntityType.invoice,
+                          labelText: AppLocalization.of(context).invoice,
+                          entityMap: viewModel.invoiceMap,
+                          initialValue: viewModel
+                              .invoiceMap[payment.invoiceId]?.listDisplayName,
+                          entityList: memoizedDropdownInvoiceList(
+                              viewModel.invoiceMap, viewModel.invoiceList, clientId),
+                          onSelected: (invoiceId) {
+                            viewModel.onChanged(payment
+                                .rebuild((b) => b..invoiceId = invoiceId));
+                          },
+                        )
+                      : Container(),
                   TextFormField(
                     controller: _amountController,
                     autocorrect: false,
@@ -120,7 +146,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                       labelText: 'Amount',
                     ),
                   ),
-
                   TextFormField(
                     controller: _transactionReferenceController,
                     autocorrect: false,
@@ -128,7 +153,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                       labelText: 'TransactionReference',
                     ),
                   ),
-
                   TextFormField(
                     controller: _privateNotesController,
                     autocorrect: false,
