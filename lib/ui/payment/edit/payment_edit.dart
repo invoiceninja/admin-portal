@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 
@@ -118,8 +119,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                           entityType: EntityType.client,
                           labelText: AppLocalization.of(context).client,
                           entityMap: viewModel.clientMap,
-                          initialValue: viewModel
-                              .clientMap[clientId]?.listDisplayName,
+                          initialValue:
+                              viewModel.clientMap[clientId]?.listDisplayName,
                           onSelected: (clientId) =>
                               setState(() => this.clientId = clientId),
                           entityList: memoizedDropdownClientList(
@@ -138,8 +139,11 @@ class _PaymentEditState extends State<PaymentEdit> {
                               viewModel.invoiceList,
                               clientId),
                           onSelected: (invoiceId) {
-                            setState(() => clientId =
-                                viewModel.invoiceMap[invoiceId].clientId);
+                            final invoice = viewModel.invoiceMap[invoiceId];
+                            _amountController.text = formatNumber(
+                                invoice.balance, context,
+                                formatNumberType: FormatNumberType.input);
+                            setState(() => clientId = invoice.clientId);
                             viewModel.onChanged(payment
                                 .rebuild((b) => b..invoiceId = invoiceId));
                           },
