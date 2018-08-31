@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
@@ -285,8 +286,8 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.quoteState.isStale) {
-        store.dispatch(LoadQuotes());
+      if (state.paymentState.isStale) {
+        store.dispatch(LoadPayments());
       }
     }).catchError((Object error) {
       print(error);

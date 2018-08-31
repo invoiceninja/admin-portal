@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
@@ -218,8 +219,8 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.productState.isStale) {
-        store.dispatch(LoadProducts());
+      if (state.quoteState.isStale) {
+        store.dispatch(LoadQuotes());
       }
     }).catchError((Object error) {
       print(error);
