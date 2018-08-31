@@ -78,9 +78,7 @@ abstract class LanguageEntity extends Object with SelectableEntity implements Bu
   }
 
   @override
-  String get listDisplayName {
-    return name;
-  }
+  String get listDisplayName => name;
 
   @override
   double get listDisplayAmount => null;

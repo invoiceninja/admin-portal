@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
@@ -151,13 +152,25 @@ class _PaymentEditState extends State<PaymentEdit> {
                           },
                         )
                       : Container(),
-                  TextFormField(
+                  payment.isNew
+                      ? TextFormField(
                     controller: _amountController,
                     autocorrect: false,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: localization.amount,
                     ),
+                  ) : Container(),
+                  EntityDropdown(
+                    entityType: EntityType.paymentType,
+                    entityMap: viewModel.staticState.paymentTypeMap,
+                    entityList:
+                    memoizedPaymentTypeList(viewModel.staticState.paymentTypeMap),
+                    labelText: localization.paymentType,
+                    initialValue:
+                    viewModel.staticState.paymentTypeMap[payment.paymentTypeId]?.name,
+                    onSelected: (int paymentTypeId) => viewModel
+                        .onChanged(payment.rebuild((b) => b..paymentTypeId = paymentTypeId)),
                   ),
                   DatePicker(
                     validator: (String val) => val.trim().isEmpty

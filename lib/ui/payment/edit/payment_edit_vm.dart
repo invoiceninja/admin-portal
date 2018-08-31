@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -44,6 +45,7 @@ class PaymentEditVM {
   final BuiltMap<int, ClientEntity> clientMap;
   final BuiltList<int> clientList;
   final Function onBackPressed;
+  final StaticState staticState;
   final bool isSaving;
   final bool isDirty;
 
@@ -56,6 +58,7 @@ class PaymentEditVM {
     @required this.invoiceList,
     @required this.clientMap,
     @required this.clientList,
+    @required this.staticState,
     @required this.onBackPressed,
     @required this.isSaving,
     @required this.isDirty,
@@ -70,6 +73,7 @@ class PaymentEditVM {
       isDirty: payment.isNew,
       origPayment: state.paymentState.map[payment.id],
       payment: payment,
+      staticState: state.staticState,
       invoiceMap: state.invoiceState.map,
       invoiceList: state.invoiceState.list,
       clientMap: state.clientState.map,

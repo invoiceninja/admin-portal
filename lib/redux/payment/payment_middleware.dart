@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';

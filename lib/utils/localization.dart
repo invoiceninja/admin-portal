@@ -208,6 +208,7 @@ class AppLocalization {
       'history': 'History',
       'payment': 'Payment',
       'payments': 'Payments',
+      'payment_type': 'Payment Type',
       'transaction_reference': 'Transaction Reference',
       'enter_payment': 'Enter Payment',
       'created_payment': 'Successfully created payment',
@@ -7530,6 +7531,9 @@ class AppLocalization {
   String get payment => _localizedValues[locale.languageCode]['payment'];
 
   String get payments => _localizedValues[locale.languageCode]['payments'];
+
+  String get paymentType =>
+      _localizedValues[locale.languageCode]['payment_type'];
 
   String get transactionReference =>
       _localizedValues[locale.languageCode]['transaction_reference'];

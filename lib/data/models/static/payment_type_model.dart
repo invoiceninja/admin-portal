@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'payment_type_model.g.dart';
 
@@ -30,7 +31,7 @@ class PaymentTypeFields {
   
 }
 
-abstract class PaymentTypeEntity implements Built<PaymentTypeEntity, PaymentTypeEntityBuilder> {
+abstract class PaymentTypeEntity extends Object with SelectableEntity implements Built<PaymentTypeEntity, PaymentTypeEntityBuilder> {
 
   factory PaymentTypeEntity() {
     return _$PaymentTypeEntity._(
@@ -40,8 +41,39 @@ abstract class PaymentTypeEntity implements Built<PaymentTypeEntity, PaymentType
   }
   PaymentTypeEntity._();
 
-  int get id;
   String get name;
+
+  @override
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return true;
+    }
+
+    filter = filter.toLowerCase();
+
+    if (name.toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return null;
+    }
+
+    filter = filter.toLowerCase();
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName => name;
+
+  @override
+  double get listDisplayAmount => null;
 
   static Serializer<PaymentTypeEntity> get serializer => _$paymentTypeEntitySerializer;
 }
