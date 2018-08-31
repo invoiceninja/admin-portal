@@ -34,6 +34,7 @@ class _PaymentEditState extends State<PaymentEdit> {
   List<TextEditingController> _controllers = [];
 
   int clientId;
+  bool autoValidate = false;
 
   @override
   void didChangeDependencies() {
@@ -89,7 +90,7 @@ class _PaymentEditState extends State<PaymentEdit> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(viewModel.payment.isNew
-              ? 'New Payment'
+              ? localization.enterPayment
               : viewModel.payment.transactionReference),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
@@ -100,7 +101,13 @@ class _PaymentEditState extends State<PaymentEdit> {
                 isSaving: viewModel.isSaving,
                 isDirty: payment.isNew || payment != viewModel.origPayment,
                 onPressed: () {
-                  if (!_formKey.currentState.validate()) {
+                  final bool isValid = _formKey.currentState.validate();
+
+                  setState(() {
+                    autoValidate = !isValid;
+                  });
+
+                  if (!isValid) {
                     return;
                   }
 
@@ -137,6 +144,10 @@ class _PaymentEditState extends State<PaymentEdit> {
                           entityMap: viewModel.invoiceMap,
                           initialValue: viewModel
                               .invoiceMap[payment.invoiceId]?.listDisplayName,
+                          autoValidate: autoValidate,
+                          validator: (String val) => val.trim().isEmpty
+                              ? AppLocalization.of(context).pleaseSelectAnInvoice
+                              : null,
                           entityList: memoizedDropdownInvoiceList(
                               viewModel.invoiceMap,
                               viewModel.invoiceList,
@@ -154,28 +165,31 @@ class _PaymentEditState extends State<PaymentEdit> {
                       : Container(),
                   payment.isNew
                       ? TextFormField(
-                    controller: _amountController,
-                    autocorrect: false,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: localization.amount,
-                    ),
-                  ) : Container(),
+                          controller: _amountController,
+                          autocorrect: false,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: localization.amount,
+                          ),
+                        )
+                      : Container(),
                   EntityDropdown(
                     entityType: EntityType.paymentType,
                     entityMap: viewModel.staticState.paymentTypeMap,
-                    entityList:
-                    memoizedPaymentTypeList(viewModel.staticState.paymentTypeMap),
+                    entityList: memoizedPaymentTypeList(
+                        viewModel.staticState.paymentTypeMap),
                     labelText: localization.paymentType,
-                    initialValue:
-                    viewModel.staticState.paymentTypeMap[payment.paymentTypeId]?.name,
-                    onSelected: (int paymentTypeId) => viewModel
-                        .onChanged(payment.rebuild((b) => b..paymentTypeId = paymentTypeId)),
+                    initialValue: viewModel.staticState
+                        .paymentTypeMap[payment.paymentTypeId]?.name,
+                    onSelected: (int paymentTypeId) => viewModel.onChanged(
+                        payment
+                            .rebuild((b) => b..paymentTypeId = paymentTypeId)),
                   ),
                   DatePicker(
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseSelectADate
                         : null,
+                    autoValidate: autoValidate,
                     labelText: localization.paymentDate,
                     selectedDate: payment.paymentDate,
                     onSelected: (date) {

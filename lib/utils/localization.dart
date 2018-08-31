@@ -142,6 +142,7 @@ class AppLocalization {
       'dismiss': 'Dismiss',
       'please_select_a_date': 'Please select a date',
       'please_select_a_client': 'Please select a client',
+      'please_select_an_invoice': 'Please select an invoice',
       'task_rate': 'Task Rate',
       'settings': 'Settings',
       'language': 'Language',
@@ -7382,6 +7383,9 @@ class AppLocalization {
 
   String get pleaseSelectAClient =>
       _localizedValues[locale.languageCode]['please_select_a_client'];
+
+  String get pleaseSelectAnInvoice =>
+      _localizedValues[locale.languageCode]['please_select_an_invoice'];
 
   String get taskRate => _localizedValues[locale.languageCode]['task_rate'];
 

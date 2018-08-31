@@ -15,6 +15,7 @@ class EntityDropdown extends StatefulWidget {
     @required this.entityList,
     @required this.onSelected,
     this.validator,
+    this.autoValidate = false,
     this.initialValue,
     this.onAddPressed,
   })  : super(key: key);
@@ -26,6 +27,7 @@ class EntityDropdown extends StatefulWidget {
   final String initialValue;
   final Function(int) onSelected;
   final Function validator;
+  final bool autoValidate;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
 
   @override
@@ -73,6 +75,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
       child: IgnorePointer(
         child: TextFormField(
           validator: widget.validator,
+          autovalidate: widget.autoValidate,
           controller: _textController,
           decoration: InputDecoration(
             labelText: widget.labelText,

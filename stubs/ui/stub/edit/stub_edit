@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/stub/edit/stub_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class StubEdit extends StatefulWidget {
   final StubEditVM viewModel;
@@ -62,6 +63,7 @@ class _StubEditState extends State<StubEdit> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final localization = AppLocalization.of(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -71,7 +73,7 @@ class _StubEditState extends State<StubEdit> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(viewModel.stub.isNew
-              ? 'New Stub'
+              ? localization.newStub
               : viewModel.stub.displayName),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
