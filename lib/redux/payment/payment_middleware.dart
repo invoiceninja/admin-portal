@@ -45,7 +45,7 @@ Middleware<AppState> _editPayment() {
         await Navigator.of(action.context).pushNamed(PaymentEditScreen.route);
 
     if (action.completer != null && payment != null) {
-      action.completer.complete(payment);
+      action.completer.complete(null);
     }
   };
 }
@@ -149,7 +149,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
       } else {
         store.dispatch(SavePaymentSuccess(payment));
       }
-      action.completer.complete(payment);
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SavePaymentFailure(error));
