@@ -114,12 +114,14 @@ class _PaymentEditState extends State<PaymentEdit> {
                 children: <Widget>[
                   payment.isNew
                       ? EntityDropdown(
+                          key: Key('__${clientId}__'),
                           entityType: EntityType.client,
                           labelText: AppLocalization.of(context).client,
                           entityMap: viewModel.clientMap,
                           initialValue: viewModel
-                              .clientMap[payment.invoiceId]?.listDisplayName,
-                          onSelected: (clientId) => setState(() => this.clientId = clientId),
+                              .clientMap[clientId]?.listDisplayName,
+                          onSelected: (clientId) =>
+                              setState(() => this.clientId = clientId),
                           entityList: memoizedDropdownClientList(
                               viewModel.clientMap, viewModel.clientList),
                         )
@@ -132,8 +134,12 @@ class _PaymentEditState extends State<PaymentEdit> {
                           initialValue: viewModel
                               .invoiceMap[payment.invoiceId]?.listDisplayName,
                           entityList: memoizedDropdownInvoiceList(
-                              viewModel.invoiceMap, viewModel.invoiceList, clientId),
+                              viewModel.invoiceMap,
+                              viewModel.invoiceList,
+                              clientId),
                           onSelected: (invoiceId) {
+                            setState(() => clientId =
+                                viewModel.invoiceMap[invoiceId].clientId);
                             viewModel.onChanged(payment
                                 .rebuild((b) => b..invoiceId = invoiceId));
                           },
