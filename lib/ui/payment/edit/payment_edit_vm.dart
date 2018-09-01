@@ -26,9 +26,9 @@ class PaymentEditScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         return PaymentEditVM.fromStore(store);
       },
-      builder: (context, vm) {
+      builder: (context, viewModel) {
         return PaymentEdit(
-          viewModel: vm,
+          viewModel: viewModel,
         );
       },
     );

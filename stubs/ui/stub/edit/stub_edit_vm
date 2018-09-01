@@ -21,9 +21,9 @@ class StubEditScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         return StubEditVM.fromStore(store);
       },
-      builder: (context, vm) {
+      builder: (context, viewModel) {
         return StubEdit(
-          viewModel: vm,
+          viewModel: viewModel,
         );
       },
     );

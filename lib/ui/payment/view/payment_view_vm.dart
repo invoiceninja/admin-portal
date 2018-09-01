@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -35,6 +38,8 @@ class PaymentViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
+  final Function(BuildContext) onTapInvoice;
+  final Function(BuildContext) onTapClient;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
@@ -44,6 +49,8 @@ class PaymentViewVM {
     @required this.company,
     @required this.onActionSelected,
     @required this.onEditPressed,
+    @required this.onTapClient,
+    @required this.onTapInvoice,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -52,6 +59,7 @@ class PaymentViewVM {
   factory PaymentViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final payment = state.paymentState.map[state.paymentUIState.selectedId];
+    final client = paymentClientSelector(payment.id, state);
 
     return PaymentViewVM(
         company: state.selectedCompany,
@@ -62,6 +70,10 @@ class PaymentViewVM {
         onEditPressed: (BuildContext context) {
           store.dispatch(EditPayment(payment: payment, context: context));
         },
+        onTapClient: (context) =>
+            store.dispatch(ViewClient(clientId: client.id, context: context)),
+        onTapInvoice: (context) => store.dispatch(
+            ViewInvoice(invoiceId: payment.invoiceId, context: context)),
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {

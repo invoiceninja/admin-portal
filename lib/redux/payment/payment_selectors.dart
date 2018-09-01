@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-ClientEntity paymentClientSelector(int paymentId, BuildContext context) {
-  final state = StoreProvider.of<AppState>(context).state;
+InvoiceEntity paymentInvoiceSelector(int paymentId, AppState state) {
   final payment = state.paymentState.map[paymentId];
-  final invoice = state.invoiceState.map[payment.invoiceId];
+  return state.invoiceState.map[payment.invoiceId];
+}
+
+ClientEntity paymentClientSelector(int paymentId, AppState state) {
+  final invoice = paymentInvoiceSelector(paymentId, state);
   return state.clientState.map[invoice.clientId];
 }
 

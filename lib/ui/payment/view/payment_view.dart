@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
@@ -26,6 +29,9 @@ class _PaymentViewState extends State<PaymentView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final payment = viewModel.payment;
+    final state = StoreProvider.of<AppState>(context).state;
+    final client = paymentClientSelector(payment.id, state);
+    final invoice = paymentInvoiceSelector(payment.id, state);
     final localization = AppLocalization.of(context);
 
     return Scaffold(
@@ -54,19 +60,42 @@ class _PaymentViewState extends State<PaymentView> {
                 ? TwoValueHeader(
                     label1: localization.amount,
                     value1: formatNumber(payment.amount, context,
-                        clientId:
-                            paymentClientSelector(payment.id, context).id),
+                        clientId: client.id),
                     label2: localization.refunded,
                     value2: formatNumber(payment.refunded, context,
-                        clientId:
-                            paymentClientSelector(payment.id, context).id),
+                        clientId: client.id),
                   )
                 : OneValueHeader(
                     label: localization.amount,
                     value: formatNumber(payment.amount, context,
-                        clientId:
-                            paymentClientSelector(payment.id, context).id),
+                        clientId: client.id),
                   ),
+            Material(
+              color: Theme.of(context).canvasColor,
+              child: ListTile(
+                title: Text(client.displayName ?? ''),
+                leading: Icon(FontAwesomeIcons.users, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => viewModel.onTapClient(context),
+              ),
+            ),
+            Container(
+              color: Theme.of(context).backgroundColor,
+              height: 12.0,
+            ),
+            Material(
+              color: Theme.of(context).canvasColor,
+              child: ListTile(
+                title: Text('${localization.invoice} ${invoice.invoiceNumber}'),
+                leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => viewModel.onTapInvoice(context),
+              ),
+            ),
+            Container(
+              color: Theme.of(context).backgroundColor,
+              height: 12.0,
+            ),
             payment.privateNotes != null && payment.privateNotes.isNotEmpty
                 ? IconMessage(payment.privateNotes)
                 : Container(),
