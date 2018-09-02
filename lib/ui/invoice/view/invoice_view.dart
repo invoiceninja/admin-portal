@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -86,35 +87,6 @@ class _InvoiceViewState extends State<InvoiceView> {
         fields[label2] = invoice.customTextValue2;
       }
 
-      final List<Widget> fieldWidgets = [];
-      fields.forEach((field, value) {
-        if (invoice.isQuote) {
-          field = QuoteFields.convertField(field);
-        }
-        if (value != null && value.isNotEmpty) {
-          fieldWidgets.add(Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Flexible(
-                child: Text(
-                  localization.lookup(field),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-              Flexible(
-                  child: Text(
-                value,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-              )),
-            ],
-          ));
-        }
-      });
-
       widgets.addAll([
         Material(
           color: Theme.of(context).canvasColor,
@@ -129,20 +101,8 @@ class _InvoiceViewState extends State<InvoiceView> {
           color: Theme.of(context).backgroundColor,
           height: 12.0,
         ),
-        Container(
-          color: Theme.of(context).canvasColor,
-          child: Padding(
-            padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-            child: GridView.count(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              primary: true,
-              crossAxisCount: 2,
-              children: fieldWidgets,
-              childAspectRatio: 3.5,
-            ),
-          ),
-        ),
+        FieldGrid(fields,
+            fieldConverter: invoice.isQuote ? QuoteFields.convertField : null),
         Container(
           color: Theme.of(context).backgroundColor,
           height: 12.0,

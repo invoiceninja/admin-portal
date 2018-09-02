@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class FieldGrid extends StatelessWidget {
-
-  const FieldGrid(this.fields);
+  const FieldGrid(this.fields, {this.fieldConverter});
 
   final Map<String, String> fields;
+  final Function(String) fieldConverter;
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,9 @@ class FieldGrid extends StatelessWidget {
     final List<Widget> fieldWidgets = [];
 
     fields.forEach((field, value) {
+      if (fieldConverter != null) {
+        field = fieldConverter(field);
+      }
       if (value != null && value.isNotEmpty) {
         fieldWidgets.add(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,11 +30,11 @@ class FieldGrid extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-                  value,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                )),
+              value,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+            )),
           ],
         ));
       }
@@ -44,12 +47,9 @@ class FieldGrid extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          color: Theme
-              .of(context)
-              .canvasColor,
+          color: Theme.of(context).canvasColor,
           child: Padding(
-            padding:
-            EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
+            padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
             child: GridView.count(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -61,9 +61,7 @@ class FieldGrid extends StatelessWidget {
           ),
         ),
         Container(
-          color: Theme
-              .of(context)
-              .backgroundColor,
+          color: Theme.of(context).backgroundColor,
           height: 12.0,
         ),
       ],

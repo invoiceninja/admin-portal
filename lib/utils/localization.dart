@@ -133,7 +133,7 @@ class AppLocalization {
       'partial_due_date': 'Partial Due Date',
       'status': 'Status',
       'invoice_status_id': 'Invoice Status',
-      'quote_status_id': 'Quote Status',
+      'quote_status': 'Quote Status',
       'click_plus_to_add_item': 'Click + to add an item',
       'count_selected': ':count selected',
       'total': 'Total',
@@ -7370,7 +7370,7 @@ class AppLocalization {
       _localizedValues[locale.languageCode]['invoice_status_id'];
 
   String get quoteStatusId =>
-      _localizedValues[locale.languageCode]['quote_status_id'];
+      _localizedValues[locale.languageCode]['quote_status'];
 
   String get clickPlusToAddItem =>
       _localizedValues[locale.languageCode]['click_plus_to_add_item'];
@@ -7493,7 +7493,7 @@ class AppLocalization {
 
   String get paymentStatus =>
       _localizedValues[locale.languageCode]['payment_status'];
-  
+
   String get net => _localizedValues[locale.languageCode]['net'];
 
   String get clientPortal =>
@@ -7754,8 +7754,11 @@ class AppLocalization {
   String get expired => _localizedValues[locale.languageCode]['expired'];
 
   String lookup(String key) {
-    final lookupKey = toSnakeCase(key).replaceFirst('_id', '');
-    return _localizedValues[locale.languageCode][lookupKey] ?? key;
+    final lookupKey = toSnakeCase(key);
+    return _localizedValues[locale.languageCode][lookupKey] ??
+        _localizedValues[locale.languageCode]
+            [lookupKey.replaceFirst('_id', '')] ??
+        key;
   }
 }
 

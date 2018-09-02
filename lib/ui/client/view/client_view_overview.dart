@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -49,32 +50,6 @@ class ClientOverview extends StatelessWidget {
       fields[label2] = client.customValue2;
     }
 
-    final List<Widget> fieldWidgets = [];
-    fields.forEach((field, value) {
-      if (value != null && value.isNotEmpty) {
-        fieldWidgets.add(Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Flexible(
-              child: Text(
-                localization.lookup(field),
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ),
-            Flexible(
-                child: Text(
-              value,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
-            )),
-          ],
-        ));
-      }
-    });
-
     return ListView(
       children: <Widget>[
         TwoValueHeader(
@@ -86,31 +61,7 @@ class ClientOverview extends StatelessWidget {
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)
             : Container(),
-        fieldWidgets.isNotEmpty
-            ? Column(
-                children: <Widget>[
-                  Container(
-                    color: Theme.of(context).canvasColor,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-                      child: GridView.count(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        primary: true,
-                        crossAxisCount: 2,
-                        children: fieldWidgets,
-                        childAspectRatio: 3.5,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                ],
-              )
-            : Container(),
+        FieldGrid(fields),
         Divider(
           height: 1.0,
         ),
