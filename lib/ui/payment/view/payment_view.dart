@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
@@ -33,6 +35,21 @@ class _PaymentViewState extends State<PaymentView> {
     final client = paymentClientSelector(payment.id, state);
     final invoice = paymentInvoiceSelector(payment.id, state);
     final localization = AppLocalization.of(context);
+
+    final fields = <String, String>{};
+    fields[PaymentFields.paymentStatusId] =
+        localization.lookup('payment_status_${payment.paymentStatusId}');
+    if (payment.paymentDate.isNotEmpty) {
+      fields[PaymentFields.paymentDate] =
+          formatDate(payment.paymentDate, context);
+    }
+    if (payment.paymentTypeId > 0) {
+      fields[PaymentFields.paymentTypeId] =
+          state.staticState.paymentTypeMap[payment.paymentTypeId].name;
+    }
+    if (payment.transactionReference.isNotEmpty) {
+      fields[PaymentFields.transactionReference] = payment.transactionReference;
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -99,6 +116,11 @@ class _PaymentViewState extends State<PaymentView> {
             payment.privateNotes != null && payment.privateNotes.isNotEmpty
                 ? IconMessage(payment.privateNotes)
                 : Container(),
+            Container(
+              color: Theme.of(context).backgroundColor,
+              height: 12.0,
+            ),
+            FieldGrid(fields),
           ],
         ));
   }

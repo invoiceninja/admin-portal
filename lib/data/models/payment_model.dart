@@ -37,6 +37,7 @@ class PaymentFields {
   static const String privateNotes = 'privateNotes';
   static const String exchangeRate = 'exchangeRate';
   static const String exchangeCurrencyId = 'exchangeCurrencyId';
+  static const String paymentStatusId = 'paymentStatusId';
 
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';

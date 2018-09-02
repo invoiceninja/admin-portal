@@ -183,6 +183,13 @@ class AppLocalization {
       'size': 'Size',
       'payment_terms': 'Payment Terms',
       'payment_date': 'Payment Date',
+      'payment_status': 'Payment Status',
+      'payment_status_1': 'Pending',
+      'payment_status_2': 'Voided',
+      'payment_status_3': 'Failed',
+      'payment_status_4': 'Completed',
+      'payment_status_5': 'Partially Refunded',
+      'payment_status_6': 'Refunded',
       'net': 'Net',
       'client_portal': 'Client Portal',
       'show_tasks': 'Show tasks',
@@ -7484,6 +7491,9 @@ class AppLocalization {
   String get paymentDate =>
       _localizedValues[locale.languageCode]['payment_date'];
 
+  String get paymentStatus =>
+      _localizedValues[locale.languageCode]['payment_status'];
+  
   String get net => _localizedValues[locale.languageCode]['net'];
 
   String get clientPortal =>
@@ -7744,7 +7754,8 @@ class AppLocalization {
   String get expired => _localizedValues[locale.languageCode]['expired'];
 
   String lookup(String key) {
-    return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? key;
+    final lookupKey = toSnakeCase(key).replaceFirst('_id', '');
+    return _localizedValues[locale.languageCode][lookupKey] ?? key;
   }
 }
 
