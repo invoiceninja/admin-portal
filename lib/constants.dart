@@ -25,8 +25,19 @@ const int kCurrencyEuro = 3;
 const int kCountryUnitedStates = 840;
 
 const int kInvoiceStatusPastDue = -1;
+const int kInvoiceStatusDraft = 1;
 const int kInvoiceStatusSent = 2;
+const int kInvoiceStatusViewed = 3;
+const int kInvoiceStatusApproved = 4;
+const int kInvoiceStatusPartial = 5;
 const int kInvoiceStatusPaid = 6;
+
+const int kPaymentStatusPending = 1;
+const int kPaymentStatusVoided = 2;
+const int kPaymentStatusFailed = 3;
+const int kPaymentStatusCompleted = 4;
+const int kPaymentStatusPartiallyRefunded = 5;
+const int kPaymentStatusRefunded = 6;
 
 const int kDefaultDateFormat = 5;
 const int kDefaultDateTimeFormat = 5;
@@ -44,12 +55,23 @@ const int kModuleExpense = 16;
 
 class InvoiceStatusColors {
   static const colors = {
-    1: Colors.grey, // draft
-    2: Colors.blue, // sent
-    3: Colors.orange, // viewed
-    4: Colors.green, // approved
-    5: Colors.deepPurple, // partial
-    6: Colors.green, // paid
+    kInvoiceStatusDraft: Colors.grey,
+    kInvoiceStatusSent: Colors.blue,
+    kInvoiceStatusViewed: Colors.orange,
+    kInvoiceStatusApproved: Colors.green,
+    kInvoiceStatusPartial: Colors.deepPurple,
+    kInvoiceStatusPaid: Colors.green,
+  };
+}
+
+class PaymentStatusColors {
+  static const colors = {
+    kPaymentStatusPending: Colors.grey,
+    kPaymentStatusVoided: Colors.red,
+    kPaymentStatusFailed: Colors.red,
+    kPaymentStatusCompleted: Colors.green,
+    kPaymentStatusPartiallyRefunded: Colors.purple,
+    kPaymentStatusRefunded: Colors.red,
   };
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
@@ -75,6 +76,8 @@ class _PaymentViewState extends State<PaymentView> {
           children: <Widget>[
             payment.refunded > 0
                 ? TwoValueHeader(
+                    backgroundColor:
+                        PaymentStatusColors.colors[payment.paymentStatusId],
                     label1: localization.amount,
                     value1: formatNumber(payment.amount, context,
                         clientId: client.id),
@@ -83,6 +86,8 @@ class _PaymentViewState extends State<PaymentView> {
                         clientId: client.id),
                   )
                 : OneValueHeader(
+                    backgroundColor:
+                        PaymentStatusColors.colors[payment.paymentStatusId],
                     label: localization.amount,
                     value: formatNumber(payment.amount, context,
                         clientId: client.id),
