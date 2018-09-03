@@ -225,7 +225,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final EntityViewVM viewModel;
 
   @override
-  final Size preferredSize = const Size(double.infinity, 54.0);
+  final Size preferredSize = const Size(double.infinity, kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {

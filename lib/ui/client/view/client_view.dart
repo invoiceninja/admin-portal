@@ -199,7 +199,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController controller;
 
   @override
-  final Size preferredSize = const Size(double.infinity, 100.0);
+  final Size preferredSize = const Size(double.infinity, kToolbarHeight * 2);
 
   @override
   Widget build(BuildContext context) {
