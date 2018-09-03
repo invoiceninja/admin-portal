@@ -149,13 +149,17 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
             PaymentScreen.route: (context) {
-              widget.store.dispatch(LoadPayments());
+              if (widget.store.state.paymentState.isStale) {
+                widget.store.dispatch(LoadPayments());
+              }
               return PaymentScreen();
             },
             PaymentViewScreen.route: (context) => PaymentViewScreen(),
             PaymentEditScreen.route: (context) => PaymentEditScreen(),
             QuoteScreen.route: (context) {
-              widget.store.dispatch(LoadQuotes());
+              if (widget.store.state.quoteState.isStale) {
+                widget.store.dispatch(LoadQuotes());
+              }
               return QuoteScreen();
             },
             QuoteViewScreen.route: (context) => QuoteViewScreen(),
