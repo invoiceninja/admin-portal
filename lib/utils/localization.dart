@@ -14,6 +14,19 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'edit_client': 'Edit Client',
+      'edit_product': 'Edit Product',
+      'edit_invoice': 'Edit Invoice',
+      'edit_quote': 'Edit Quote',
+      'edit_payment': 'Edit Payment',
+      'edit_task': 'Edit Task',
+      'edit_expense': 'Edit Expense',
+      'edit_vendor': 'Edit Vendor',
+      'edit_project': 'Edit Project',
+      'edit_credit': 'Edit Credit',
+      'edit_recurring_invoice': 'Edit Recurring Invoice',
+      'edit_recurring_expense': 'Edit Recurring Expense',
+      'edit_recurring_quote': 'Edit Recurring Quote',
       'billing_address': 'Billing Address',
       'shipping_address': 'Shipping Address',
       'total_revenue': 'Total Revenue',
@@ -7087,6 +7100,40 @@ class AppLocalization {
       'activity_47': ':user masraf güncelledi :expense',
     },
   };
+
+  String get editClient => _localizedValues[locale.languageCode]['edit_client'];
+
+  String get editProduct =>
+      _localizedValues[locale.languageCode]['edit_product'];
+
+  String get editInvoice =>
+      _localizedValues[locale.languageCode]['edit_invoice'];
+
+  String get editQuote => _localizedValues[locale.languageCode]['edit_quote'];
+
+  String get editPayment =>
+      _localizedValues[locale.languageCode]['edit_payment'];
+
+  String get editTask => _localizedValues[locale.languageCode]['edit_task'];
+
+  String get editExpense =>
+      _localizedValues[locale.languageCode]['edit_expense'];
+
+  String get editVendor => _localizedValues[locale.languageCode]['edit_vendor'];
+
+  String get editProject =>
+      _localizedValues[locale.languageCode]['edit_project'];
+
+  String get editCredit => _localizedValues[locale.languageCode]['edit_credit'];
+
+  String get editRecurringInvoice =>
+      _localizedValues[locale.languageCode]['edit_recurring_invoice'];
+
+  String get editRecurringExpense =>
+      _localizedValues[locale.languageCode]['edit_recurring_expense'];
+
+  String get editRecurringQuote =>
+      _localizedValues[locale.languageCode]['edit_recurring_quote'];
 
   String get billingAddress =>
       _localizedValues[locale.languageCode]['billing_address'];
