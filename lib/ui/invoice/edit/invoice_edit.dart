@@ -64,7 +64,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
         appBar: AppBar(
           title: Text(invoice.isNew
               ? invoice.isQuote ? localization.newQuote : localization.newInvoice
-              : '${invoice.isQuote ? localization.quote : localization.invoice} ${viewModel.origInvoice.invoiceNumber}'),
+              : invoice.isQuote ? localization.editQuote: localization.editInvoice),
           actions: <Widget>[
             RefreshIconButton(
               icon: Icons.cloud_upload,

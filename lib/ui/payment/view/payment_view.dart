@@ -54,7 +54,9 @@ class _PaymentViewState extends State<PaymentView> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(payment.transactionReference),
+          title: Text(payment.transactionReference.isNotEmpty
+              ? payment.transactionReference
+              : localization.payment),
           actions: payment.isNew
               ? []
               : [

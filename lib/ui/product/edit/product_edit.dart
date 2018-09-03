@@ -103,7 +103,7 @@ class _ProductEditState extends State<ProductEdit> {
         appBar: AppBar(
           title: Text(viewModel.product.isNew
               ? localization.newProduct
-              : viewModel.origProduct.productKey),
+              : localization.editProduct),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
               if (!user.canEditEntity(product)) {

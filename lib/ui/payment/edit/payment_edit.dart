@@ -91,7 +91,7 @@ class _PaymentEditState extends State<PaymentEdit> {
         appBar: AppBar(
           title: Text(viewModel.payment.isNew
               ? localization.enterPayment
-              : viewModel.payment.transactionReference),
+              : localization.editPayment),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
               return RefreshIconButton(

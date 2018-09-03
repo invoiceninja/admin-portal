@@ -74,7 +74,7 @@ class _StubEditState extends State<StubEdit> {
         appBar: AppBar(
           title: Text(viewModel.stub.isNew
               ? localization.newStub
-              : viewModel.stub.displayName),
+              : localization.editStub),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
               return SaveIconButton(
