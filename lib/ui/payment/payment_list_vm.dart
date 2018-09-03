@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -31,20 +33,25 @@ class PaymentListBuilder extends StatelessWidget {
 
 class PaymentListVM {
   final UserEntity user;
+  final ListUIState listState;
   final List<int> paymentList;
   final BuiltMap<int, PaymentEntity> paymentMap;
+  final BuiltMap<int, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, PaymentEntity) onPaymentTap;
   final Function(BuildContext, PaymentEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
+  final Function onClearClientFilterPressed;
+  final Function(BuildContext) onViewClientFilterPressed;
   final Function(BuildContext, PaymentEntity, EntityAction) onEntityAction;
 
   PaymentListVM({
     @required this.user,
     @required this.paymentList,
     @required this.paymentMap,
+    @required this.clientMap,
     @required this.filter,
     @required this.isLoading,
     @required this.isLoaded,
@@ -52,6 +59,9 @@ class PaymentListVM {
     @required this.onDismissed,
     @required this.onRefreshed,
     @required this.onEntityAction,
+    @required this.onClearClientFilterPressed,
+    @required this.onViewClientFilterPressed,
+    @required this.listState,
   });
 
   static PaymentListVM fromStore(Store<AppState> store) {
@@ -72,9 +82,11 @@ class PaymentListVM {
         paymentList: memoizedFilteredPaymentList(state.paymentState.map,
             state.paymentState.list, state.paymentListState),
         paymentMap: state.paymentState.map,
+        clientMap: state.clientState.map,
         isLoading: state.isLoading,
         isLoaded: state.paymentState.isLoaded,
         filter: state.paymentUIState.listUIState.filter,
+        listState: state.paymentListState,
         onPaymentTap: (context, payment) {
           store.dispatch(ViewPayment(paymentId: payment.id, context: context));
         },
@@ -100,6 +112,12 @@ class PaymentListVM {
               break;
           }
         },
+        onClearClientFilterPressed: () =>
+            store.dispatch(FilterPaymentsByClient()),
+        onViewClientFilterPressed: (BuildContext context) => store.dispatch(
+            ViewClient(
+                clientId: state.paymentListState.filterClientId,
+                context: context)),
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, PaymentEntity payment,
             DismissDirection direction) {

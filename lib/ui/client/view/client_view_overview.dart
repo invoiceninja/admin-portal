@@ -68,17 +68,27 @@ class ClientOverview extends StatelessWidget {
         EntityListTile(
           icon: FontAwesomeIcons.filePdfO,
           title: localization.invoices,
-          onTap: () => viewModel.onInvoicesPressed(context),
+          onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
           subtitle: memoizedInvoiceStatsForClient(
               client.id,
               state.invoiceState.map,
               localization.active,
               localization.archived),
         ),
+        EntityListTile(
+          icon: FontAwesomeIcons.creditCard,
+          title: localization.payments,
+          onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
+          subtitle: memoizedQuoteStatsForClient(
+              client.id,
+              state.quoteState.map,
+              localization.active,
+              localization.archived),
+        ),
         company.isModuleEnabled(EntityType.quote) ? EntityListTile(
           icon: FontAwesomeIcons.fileAltO,
           title: localization.quotes,
-          onTap: () => viewModel.onQuotesPressed(context),
+          onTap: () => viewModel.onEntityPressed(context, EntityType.quote),
           subtitle: memoizedQuoteStatsForClient(
               client.id,
               state.quoteState.map,

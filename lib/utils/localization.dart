@@ -153,6 +153,7 @@ class AppLocalization {
       'please_enter_an_invoice_number': 'Please enter an invoice number',
       'please_enter_a_quote_number': 'Please enter a quote number',
       'clients_invoices': ':client\'s invoices',
+      'clients_payments': ':client\'s payments',
       'past_due': 'Past Due',
       'draft': 'Draft',
       'sent': 'Sent',
@@ -7417,6 +7418,9 @@ class AppLocalization {
 
   String get clientsInvoices =>
       _localizedValues[locale.languageCode]['clients_invoices'];
+
+  String get clientsPayments =>
+      _localizedValues[locale.languageCode]['clients_payments'];
 
   String get pastDue => _localizedValues[locale.languageCode]['past_due'];
 

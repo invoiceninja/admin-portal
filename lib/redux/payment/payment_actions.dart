@@ -198,3 +198,10 @@ class FilterPaymentsByCustom2 implements PersistUI {
 
   FilterPaymentsByCustom2(this.value);
 }
+
+class FilterPaymentsByClient implements PersistUI {
+  final int clientId;
+
+  FilterPaymentsByClient([this.clientId]);
+}
+
