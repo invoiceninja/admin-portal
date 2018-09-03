@@ -67,3 +67,43 @@ List<int> filteredPaymentsSelector(
 
   return list;
 }
+
+var memoizedPaymentStatsForClient = memo5((int clientId,
+        BuiltMap<int, PaymentEntity> paymentMap,
+        BuiltMap<int, InvoiceEntity> invoiceMap,
+        String activeLabel,
+        String archivedLabel) =>
+    invoiceStatsForClient(
+        clientId, paymentMap, invoiceMap, activeLabel, archivedLabel));
+
+String invoiceStatsForClient(
+    int clientId,
+    BuiltMap<int, PaymentEntity> paymentMap,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    String activeLabel,
+    String archivedLabel) {
+  int countActive = 0;
+  int countArchived = 0;
+  paymentMap.forEach((paymentId, payment) {
+    if (invoiceMap[payment.invoiceId].clientId == clientId) {
+      if (payment.isActive) {
+        countActive++;
+      } else if (payment.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  String str = '';
+  if (countActive > 0) {
+    str = '$countActive $activeLabel';
+    if (countArchived > 0) {
+      str += ' • ';
+    }
+  }
+  if (countArchived > 0) {
+    str += '$countArchived $archivedLabel';
+  }
+
+  return str;
+}

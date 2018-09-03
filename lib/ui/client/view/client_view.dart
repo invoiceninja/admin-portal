@@ -86,6 +86,20 @@ class _ClientViewState extends State<ClientView>
                             },
                           )
                         : Container(),
+                    user.canCreate(EntityType.payment)
+                        ? ListTile(
+                            //dense: true,
+                            leading: Icon(Icons.add_circle_outline),
+                            title: Text(localization.payment),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              store.dispatch(EditPayment(
+                                  payment: PaymentEntity()
+                                      .rebuild((b) => b.clientId = client.id),
+                                  context: context));
+                            },
+                          )
+                        : Container(),
                     company.isModuleEnabled(EntityType.quote) &&
                             user.canCreate(EntityType.quote)
                         ? ListTile(
@@ -96,20 +110,6 @@ class _ClientViewState extends State<ClientView>
                               Navigator.of(context).pop();
                               store.dispatch(EditQuote(
                                   quote: InvoiceEntity(isQuote: true)
-                                      .rebuild((b) => b.clientId = client.id),
-                                  context: context));
-                            },
-                          )
-                        : Container(),
-                    user.canCreate(EntityType.payment)
-                        ? ListTile(
-                            //dense: true,
-                            leading: Icon(Icons.add_circle_outline),
-                            title: Text(localization.payment),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              store.dispatch(EditPayment(
-                                  payment: PaymentEntity()
                                       .rebuild((b) => b.clientId = client.id),
                                   context: context));
                             },

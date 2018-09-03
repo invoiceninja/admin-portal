@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -79,9 +80,10 @@ class ClientOverview extends StatelessWidget {
           icon: FontAwesomeIcons.creditCard,
           title: localization.payments,
           onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
-          subtitle: memoizedQuoteStatsForClient(
+          subtitle: memoizedPaymentStatsForClient(
               client.id,
-              state.quoteState.map,
+              state.paymentState.map,
+              state.invoiceState.map,
               localization.active,
               localization.archived),
         ),
