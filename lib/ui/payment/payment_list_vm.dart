@@ -79,8 +79,11 @@ class PaymentListVM {
 
     return PaymentListVM(
         user: state.user,
-        paymentList: memoizedFilteredPaymentList(state.paymentState.map,
-            state.paymentState.list, state.paymentListState),
+        paymentList: memoizedFilteredPaymentList(
+            state.paymentState.map,
+            state.paymentState.list,
+            state.invoiceState.map,
+            state.paymentListState),
         paymentMap: state.paymentState.map,
         clientMap: state.clientState.map,
         isLoading: state.isLoading,

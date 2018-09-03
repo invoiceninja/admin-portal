@@ -40,6 +40,10 @@ List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
         !stubListState.custom2Filters.contains(stub.customValue2)) {
       return false;
     }
+    if (stubListState.filterClientId != null &&
+        stub.clientId != stubListState.filterClientId) {
+      return false;
+    }
     return stub.matchesFilter(stubListState.filter);
   }).toList();
 

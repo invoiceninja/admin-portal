@@ -46,7 +46,13 @@ final stubListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterStubs>(_filterStubs),
   TypedReducer<ListUIState, FilterStubsByCustom1>(_filterStubsByCustom1),
   TypedReducer<ListUIState, FilterStubsByCustom2>(_filterStubsByCustom2),
+  TypedReducer<ListUIState, FilterStubsByClient>(_filterStubsByClient),
 ]);
+
+ListUIState _filterStubsByClient(
+    ListUIState stubListState, FilterStubsByClient action) {
+  return stubListState.rebuild((b) => b..filterClientId = action.clientId);
+}
 
 ListUIState _filterStubsByCustom1(
     ListUIState stubListState, FilterStubsByCustom1 action) {

@@ -32,18 +32,29 @@ List<int> dropdownPaymentsSelector(
   return list;
 }
 
-var memoizedFilteredPaymentList = memo3((BuiltMap<int, PaymentEntity> paymentMap,
-        BuiltList<int> paymentList, ListUIState paymentListState) =>
-    filteredPaymentsSelector(paymentMap, paymentList, paymentListState));
+var memoizedFilteredPaymentList = memo4(
+    (BuiltMap<int, PaymentEntity> paymentMap,
+            BuiltList<int> paymentList,
+            BuiltMap<int, InvoiceEntity> invoiceMap,
+            ListUIState paymentListState) =>
+        filteredPaymentsSelector(
+            paymentMap, paymentList, invoiceMap, paymentListState));
 
-List<int> filteredPaymentsSelector(BuiltMap<int, PaymentEntity> paymentMap,
-    BuiltList<int> paymentList, ListUIState paymentListState) {
+List<int> filteredPaymentsSelector(
+    BuiltMap<int, PaymentEntity> paymentMap,
+    BuiltList<int> paymentList,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    ListUIState paymentListState) {
   final list = paymentList.where((paymentId) {
     final payment = paymentMap[paymentId];
     if (!payment.matchesStates(paymentListState.stateFilters)) {
       return false;
     }
-
+    if (paymentListState.filterClientId != null &&
+        invoiceMap[payment.invoiceId].clientId !=
+            paymentListState.filterClientId) {
+      return false;
+    }
     return payment.matchesFilter(paymentListState.filter);
   }).toList();
 
