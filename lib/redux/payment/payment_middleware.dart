@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -65,7 +67,8 @@ Middleware<AppState> _viewPaymentList() {
 
     store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(PaymentScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        PaymentScreen.route, (Route<dynamic> route) => false);
   };
 }
 
@@ -100,6 +103,8 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
             origPayment, EntityAction.delete)
         .then((dynamic payment) {
       store.dispatch(DeletePaymentSuccess(payment));
+      store.dispatch(LoadClient(
+          clientId: paymentInvoiceSelector(payment, store.state).clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -123,6 +128,8 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
             origPayment, EntityAction.restore)
         .then((dynamic payment) {
       store.dispatch(RestorePaymentSuccess(payment));
+      store.dispatch(LoadClient(
+          clientId: paymentInvoiceSelector(payment, store.state).clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -149,6 +156,8 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
       } else {
         store.dispatch(SavePaymentSuccess(payment));
       }
+      store.dispatch(LoadClient(
+          clientId: paymentInvoiceSelector(payment, store.state).clientId));
       action.completer.complete(null);
     }).catchError((Object error) {
       print(error);

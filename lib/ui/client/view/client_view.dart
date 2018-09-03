@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
@@ -96,6 +97,20 @@ class _ClientViewState extends State<ClientView>
                               store.dispatch(EditQuote(
                                   quote: InvoiceEntity(isQuote: true)
                                       .rebuild((b) => b.clientId = client.id),
+                                  context: context));
+                            },
+                          )
+                        : Container(),
+                    user.canCreate(EntityType.payment)
+                        ? ListTile(
+                            dense: true,
+                            leading: Icon(Icons.add_circle_outline),
+                            title: Text(localization.payment),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              store.dispatch(EditPayment(
+                                  payment: PaymentEntity(),
+                                  //    .rebuild((b) => b.clientId = client.id),
                                   context: context));
                             },
                           )
