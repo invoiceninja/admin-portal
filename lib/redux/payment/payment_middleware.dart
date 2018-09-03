@@ -43,6 +43,8 @@ Middleware<AppState> _editPayment() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
+    store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
+
     final payment =
         await Navigator.of(action.context).pushNamed(PaymentEditScreen.route);
 

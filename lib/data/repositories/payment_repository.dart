@@ -26,7 +26,7 @@ class PaymentRepository {
 
     final dynamic response =
         await webClient.get(url, company.token);
-    
+
     final PaymentListResponse paymentResponse =
         serializers.deserializeWith(PaymentListResponse.serializer, response);
 
