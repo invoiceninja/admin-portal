@@ -18,6 +18,10 @@ class InvoiceList extends StatelessWidget {
 
   void _showMenu(
       BuildContext context, InvoiceEntity invoice, ClientEntity client) async {
+    if (invoice == null || client == null) {
+      return;
+    }
+
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,

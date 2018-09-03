@@ -81,7 +81,8 @@ Middleware<AppState> _showEmailInvoice() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    final emailWasSent = await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
+    final emailWasSent =
+        await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
 
     if (action.completer != null && emailWasSent) {
       action.completer.complete(null);
@@ -243,7 +244,9 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
     repository
         .loadItem(state.selectedCompany, state.authState, action.invoiceId)
         .then((invoice) {
+
       store.dispatch(LoadInvoiceSuccess(invoice));
+      store.dispatch(LoadClient(clientId: invoice.clientId));
 
       if (action.completer != null) {
         action.completer.complete(null);

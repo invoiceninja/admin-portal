@@ -52,7 +52,7 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       id: --PaymentEntity.counter,
       amount: 0.0,
       transactionReference: '',
-      paymentDate: '',
+      paymentDate: convertDateTimeToSqlDate(),
       paymentTypeId: 0,
       invoiceId: 0,
       clientId: 0,

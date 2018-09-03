@@ -37,6 +37,9 @@ class ProductList extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context, ProductEntity product) async {
+    if (product == null) {
+      return;
+    }
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,

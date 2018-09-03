@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:redux/redux.dart';
@@ -105,8 +106,7 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
             origPayment, EntityAction.delete)
         .then((PaymentEntity payment) {
       store.dispatch(DeletePaymentSuccess(payment));
-      store.dispatch(LoadClient(
-          clientId: paymentInvoiceSelector(payment.id, store.state).clientId));
+      store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -130,8 +130,7 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
             origPayment, EntityAction.restore)
         .then((PaymentEntity payment) {
       store.dispatch(RestorePaymentSuccess(payment));
-      store.dispatch(LoadClient(
-          clientId: paymentInvoiceSelector(payment.id, store.state).clientId));
+      store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -158,8 +157,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
       } else {
         store.dispatch(SavePaymentSuccess(payment));
       }
-      store.dispatch(LoadClient(
-          clientId: paymentInvoiceSelector(payment.id, store.state).clientId));
+      store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
       action.completer.complete(null);
     }).catchError((Object error) {
       print(error);

@@ -92,12 +92,8 @@ class PaymentEditVM {
         final Completer<Null> completer = errorCompleter(context)
           ..future.then((_) {
             if (payment.isNew) {
-              if (store.state.uiState.currentRoute == PaymentEditScreen.route) {
-                Navigator.of(context).pop();
-              } else {
-                Navigator.of(context)
-                    .pushReplacementNamed(PaymentViewScreen.route);
-              }
+              Navigator.of(context)
+                  .pushReplacementNamed(PaymentViewScreen.route);
             } else {
               Navigator.of(context).pop();
             }

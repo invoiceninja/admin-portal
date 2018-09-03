@@ -37,6 +37,9 @@ class StubList extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context, StubEntity stub) async {
+  if (stub == null) {
+    return;
+  }
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,

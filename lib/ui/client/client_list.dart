@@ -37,6 +37,9 @@ class ClientList extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context, ClientEntity client) async {
+    if (client == null) {
+      return;
+    }
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,

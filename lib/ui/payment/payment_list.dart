@@ -18,6 +18,10 @@ class PaymentList extends StatelessWidget {
 
   void _showMenu(
       BuildContext context, PaymentEntity payment, ClientEntity client) async {
+    if (payment == null || client == null) {
+      return;
+    }
+
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
