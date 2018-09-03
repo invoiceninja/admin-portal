@@ -33,7 +33,6 @@ class _PaymentEditState extends State<PaymentEdit> {
 
   List<TextEditingController> _controllers = [];
 
-  int clientId;
   bool autoValidate = false;
 
   @override
@@ -125,14 +124,16 @@ class _PaymentEditState extends State<PaymentEdit> {
                 children: <Widget>[
                   payment.isNew
                       ? EntityDropdown(
-                          key: Key('__${clientId}__'),
+                          key: Key('__${payment.clientId}__'),
                           entityType: EntityType.client,
                           labelText: AppLocalization.of(context).client,
                           entityMap: viewModel.clientMap,
-                          initialValue:
-                              viewModel.clientMap[clientId]?.listDisplayName,
-                          onSelected: (clientId) =>
-                              setState(() => this.clientId = clientId),
+                          initialValue: viewModel
+                              .clientMap[payment.clientId]?.listDisplayName,
+                          onSelected: (clientId) {
+                            viewModel.onChanged(
+                                payment.rebuild((b) => b..clientId = clientId));
+                          },
                           entityList: memoizedDropdownClientList(
                               viewModel.clientMap, viewModel.clientList),
                         )
@@ -146,20 +147,21 @@ class _PaymentEditState extends State<PaymentEdit> {
                               .invoiceMap[payment.invoiceId]?.listDisplayName,
                           autoValidate: autoValidate,
                           validator: (String val) => val.trim().isEmpty
-                              ? AppLocalization.of(context).pleaseSelectAnInvoice
+                              ? AppLocalization.of(context)
+                                  .pleaseSelectAnInvoice
                               : null,
                           entityList: memoizedDropdownInvoiceList(
                               viewModel.invoiceMap,
                               viewModel.invoiceList,
-                              clientId),
+                              payment.clientId),
                           onSelected: (invoiceId) {
                             final invoice = viewModel.invoiceMap[invoiceId];
                             _amountController.text = formatNumber(
                                 invoice.balance, context,
                                 formatNumberType: FormatNumberType.input);
-                            setState(() => clientId = invoice.clientId);
-                            viewModel.onChanged(payment
-                                .rebuild((b) => b..invoiceId = invoiceId));
+                            viewModel.onChanged(payment.rebuild((b) => b
+                              ..invoiceId = invoiceId
+                              ..clientId = invoice.clientId));
                           },
                         )
                       : Container(),

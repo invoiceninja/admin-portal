@@ -4,15 +4,15 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownInvoiceList = memo3(
-        (BuiltMap<int, InvoiceEntity> invoiceMap, BuiltList<int> invoiceList, int clientId) =>
+    (BuiltMap<int, InvoiceEntity> invoiceMap, BuiltList<int> invoiceList,
+            int clientId) =>
         dropdownInvoiceSelector(invoiceMap, invoiceList, clientId));
 
-List<int> dropdownInvoiceSelector(
-    BuiltMap<int, InvoiceEntity> invoiceMap, BuiltList<int> invoiceList, int clientId) {
-  final list =
-  invoiceList.where((invoiceId) {
+List<int> dropdownInvoiceSelector(BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltList<int> invoiceList, int clientId) {
+  final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
-    if (clientId != null && invoice.clientId != clientId) {
+    if (clientId != null && clientId > 0 && invoice.clientId != clientId) {
       return false;
     }
     return invoice.isActive && invoice.isUnpaid;
@@ -48,7 +48,7 @@ List<int> filteredInvoicesSelector(
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId];
-    if (client == null || ! client.isActive) {
+    if (client == null || !client.isActive) {
       return false;
     }
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {

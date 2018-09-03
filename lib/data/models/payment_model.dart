@@ -55,6 +55,7 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       paymentDate: '',
       paymentTypeId: 0,
       invoiceId: 0,
+      clientId: 0,
       invoiceNumber: '',
       privateNotes: '',
       exchangeRate: 0.0,
@@ -91,6 +92,10 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
 
   @BuiltValueField(wireName: 'invoice_id')
   int get invoiceId;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_id')
+  int get clientId;
 
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;

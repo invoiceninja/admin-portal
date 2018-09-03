@@ -158,6 +158,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.exchangeCurrencyId,
           specifiedType: const FullType(int)),
     ];
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(int)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -235,6 +241,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'client_id':
+          result.clientId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'invoice_number':
@@ -481,6 +491,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final int invoiceId;
   @override
+  final int clientId;
+  @override
   final String invoiceNumber;
   @override
   final String privateNotes;
@@ -512,6 +524,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.paymentDate,
       this.paymentTypeId,
       this.invoiceId,
+      this.clientId,
       this.invoiceNumber,
       this.privateNotes,
       this.exchangeRate,
@@ -566,6 +579,7 @@ class _$PaymentEntity extends PaymentEntity {
         paymentDate == other.paymentDate &&
         paymentTypeId == other.paymentTypeId &&
         invoiceId == other.invoiceId &&
+        clientId == other.clientId &&
         invoiceNumber == other.invoiceNumber &&
         privateNotes == other.privateNotes &&
         exchangeRate == other.exchangeRate &&
@@ -597,18 +611,21 @@ class _$PaymentEntity extends PaymentEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        amount
+                                                                        $jc(
+                                                                            0,
+                                                                            amount
+                                                                                .hashCode),
+                                                                        refunded
                                                                             .hashCode),
-                                                                    refunded
+                                                                    paymentStatusId
                                                                         .hashCode),
-                                                                paymentStatusId
+                                                                transactionReference
                                                                     .hashCode),
-                                                            transactionReference
+                                                            paymentDate
                                                                 .hashCode),
-                                                        paymentDate.hashCode),
-                                                    paymentTypeId.hashCode),
-                                                invoiceId.hashCode),
+                                                        paymentTypeId.hashCode),
+                                                    invoiceId.hashCode),
+                                                clientId.hashCode),
                                             invoiceNumber.hashCode),
                                         privateNotes.hashCode),
                                     exchangeRate.hashCode),
@@ -631,6 +648,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('paymentDate', paymentDate)
           ..add('paymentTypeId', paymentTypeId)
           ..add('invoiceId', invoiceId)
+          ..add('clientId', clientId)
           ..add('invoiceNumber', invoiceNumber)
           ..add('privateNotes', privateNotes)
           ..add('exchangeRate', exchangeRate)
@@ -678,6 +696,10 @@ class PaymentEntityBuilder
   int _invoiceId;
   int get invoiceId => _$this._invoiceId;
   set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+
+  int _clientId;
+  int get clientId => _$this._clientId;
+  set clientId(int clientId) => _$this._clientId = clientId;
 
   String _invoiceNumber;
   String get invoiceNumber => _$this._invoiceNumber;
@@ -732,6 +754,7 @@ class PaymentEntityBuilder
       _paymentDate = _$v.paymentDate;
       _paymentTypeId = _$v.paymentTypeId;
       _invoiceId = _$v.invoiceId;
+      _clientId = _$v.clientId;
       _invoiceNumber = _$v.invoiceNumber;
       _privateNotes = _$v.privateNotes;
       _exchangeRate = _$v.exchangeRate;
@@ -769,6 +792,7 @@ class PaymentEntityBuilder
             paymentDate: paymentDate,
             paymentTypeId: paymentTypeId,
             invoiceId: invoiceId,
+            clientId: clientId,
             invoiceNumber: invoiceNumber,
             privateNotes: privateNotes,
             exchangeRate: exchangeRate,
