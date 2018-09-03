@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-
 class DatePicker extends StatefulWidget {
-
   const DatePicker({
     @required this.labelText,
     @required this.onSelected,
@@ -23,7 +21,6 @@ class DatePicker extends StatefulWidget {
 }
 
 class _DatePickerState extends State<DatePicker> {
-
   final _textController = TextEditingController();
 
   @override
@@ -42,10 +39,12 @@ class _DatePickerState extends State<DatePicker> {
   void _showDatePicker() async {
     final DateTime selectedDate = await showDatePicker(
         context: context,
-        initialDate: widget.selectedDate != null && widget.selectedDate.isNotEmpty ? DateTime.tryParse(widget.selectedDate) : DateTime.now(),
+        initialDate:
+            widget.selectedDate != null && widget.selectedDate.isNotEmpty
+                ? DateTime.tryParse(widget.selectedDate)
+                : DateTime.now(),
         firstDate: new DateTime(2015, 8),
-        lastDate: new DateTime(2101)
-    );
+        lastDate: new DateTime(2101));
 
     final date = convertDateTimeToSqlDate(selectedDate);
     _textController.text = formatDate(date, context);
