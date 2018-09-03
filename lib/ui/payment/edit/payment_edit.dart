@@ -47,7 +47,8 @@ class _PaymentEditState extends State<PaymentEdit> {
 
     final payment = widget.viewModel.payment;
 
-    //_amountController.text = payment.amount;
+    _amountController.text = formatNumber(payment.amount, context,
+        formatNumberType: FormatNumberType.input);
     _transactionReferenceController.text = payment.transactionReference;
     _privateNotesController.text = payment.privateNotes;
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -161,7 +162,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                                 formatNumberType: FormatNumberType.input);
                             viewModel.onChanged(payment.rebuild((b) => b
                               ..invoiceId = invoiceId
-                              ..clientId = invoice.clientId));
+                              ..clientId = invoice.clientId
+                              ..amount = invoice.balance));
                           },
                         )
                       : Container(),
