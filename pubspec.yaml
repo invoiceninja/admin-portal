@@ -27,7 +27,7 @@ dependencies:
   #flutter_html_view: ^0.5.2
   #flutter_html: ^0.5.3
   google_sign_in: ^3.0.4
-  #firebase_auth: ^0.5.19
+  firebase_auth: ^0.5.19
 
 dev_dependencies:
   flutter_driver:
