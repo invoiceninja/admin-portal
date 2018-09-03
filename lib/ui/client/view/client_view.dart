@@ -74,7 +74,7 @@ class _ClientViewState extends State<ClientView>
                   SimpleDialog(children: <Widget>[
                     user.canCreate(EntityType.client)
                         ? ListTile(
-                            dense: true,
+                            //dense: true,
                             leading: Icon(Icons.add_circle_outline),
                             title: Text(localization.invoice),
                             onTap: () {
@@ -89,7 +89,7 @@ class _ClientViewState extends State<ClientView>
                     company.isModuleEnabled(EntityType.quote) &&
                             user.canCreate(EntityType.quote)
                         ? ListTile(
-                            dense: true,
+                            //dense: true,
                             leading: Icon(Icons.add_circle_outline),
                             title: Text(localization.quote),
                             onTap: () {
@@ -103,14 +103,14 @@ class _ClientViewState extends State<ClientView>
                         : Container(),
                     user.canCreate(EntityType.payment)
                         ? ListTile(
-                            dense: true,
+                            //dense: true,
                             leading: Icon(Icons.add_circle_outline),
                             title: Text(localization.payment),
                             onTap: () {
                               Navigator.of(context).pop();
                               store.dispatch(EditPayment(
-                                  payment: PaymentEntity(),
-                                  //    .rebuild((b) => b.clientId = client.id),
+                                  payment: PaymentEntity()
+                                      .rebuild((b) => b.clientId = client.id),
                                   context: context));
                             },
                           )
