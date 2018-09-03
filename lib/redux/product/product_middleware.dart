@@ -56,7 +56,7 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.archive)
-        .then((dynamic product) {
+        .then((ProductEntity product) {
       store.dispatch(ArchiveProductSuccess(product));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -79,7 +79,7 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.delete)
-        .then((dynamic product) {
+        .then((ProductEntity product) {
       store.dispatch(DeleteProductSuccess(product));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -102,7 +102,7 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origProduct, EntityAction.restore)
-        .then((dynamic product) {
+        .then((ProductEntity product) {
       store.dispatch(RestoreProductSuccess(product));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -124,7 +124,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.product)
-        .then((dynamic product) {
+        .then((ProductEntity product) {
       if (action.product.isNew) {
         store.dispatch(AddProductSuccess(product));
       } else {

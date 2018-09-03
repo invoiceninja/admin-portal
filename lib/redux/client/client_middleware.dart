@@ -82,7 +82,7 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.archive)
-        .then((dynamic client) {
+        .then((ClientEntity client) {
       store.dispatch(ArchiveClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -105,7 +105,7 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.delete)
-        .then((dynamic client) {
+        .then((ClientEntity client) {
       store.dispatch(DeleteClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -128,7 +128,7 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.restore)
-        .then((dynamic client) {
+        .then((ClientEntity client) {
       store.dispatch(RestoreClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -150,7 +150,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.client)
-        .then((dynamic client) {
+        .then((ClientEntity client) {
       if (action.client.isNew) {
         store.dispatch(AddClientSuccess(client));
       } else {

@@ -15,19 +15,20 @@ class VendorRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<BuiltList<VendorEntity>> loadList(CompanyEntity company, AuthState auth) async {
+  Future<BuiltList<VendorEntity>> loadList(
+      CompanyEntity company, AuthState auth) async {
+    final dynamic response =
+        await webClient.get(auth.url + '/vendors?per_page=500', company.token);
 
-    final dynamic response = await webClient.get(
-        auth.url + '/vendors?per_page=500', company.token);
-
-    final VendorListResponse vendorResponse = serializers.deserializeWith(
-        VendorListResponse.serializer, response);
+    final VendorListResponse vendorResponse =
+        serializers.deserializeWith(VendorListResponse.serializer, response);
 
     return vendorResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, VendorEntity vendor, [EntityAction action]) async {
-
+  Future<VendorEntity> saveData(
+      CompanyEntity company, AuthState auth, VendorEntity vendor,
+      [EntityAction action]) async {
     final data = serializers.serializeWith(VendorEntity.serializer, vendor);
     dynamic response;
 
@@ -42,8 +43,8 @@ class VendorRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    final VendorItemResponse vendorResponse = serializers.deserializeWith(
-        VendorItemResponse.serializer, response);
+    final VendorItemResponse vendorResponse =
+        serializers.deserializeWith(VendorItemResponse.serializer, response);
 
     return vendorResponse.data;
   }

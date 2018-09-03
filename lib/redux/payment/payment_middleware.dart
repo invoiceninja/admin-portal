@@ -80,7 +80,7 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origPayment, EntityAction.archive)
-        .then((dynamic payment) {
+        .then((PaymentEntity payment) {
       store.dispatch(ArchivePaymentSuccess(payment));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -103,10 +103,10 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origPayment, EntityAction.delete)
-        .then((dynamic payment) {
+        .then((PaymentEntity payment) {
       store.dispatch(DeletePaymentSuccess(payment));
       store.dispatch(LoadClient(
-          clientId: paymentInvoiceSelector(payment, store.state).clientId));
+          clientId: paymentInvoiceSelector(payment.id, store.state).clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -128,10 +128,10 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origPayment, EntityAction.restore)
-        .then((dynamic payment) {
+        .then((PaymentEntity payment) {
       store.dispatch(RestorePaymentSuccess(payment));
       store.dispatch(LoadClient(
-          clientId: paymentInvoiceSelector(payment, store.state).clientId));
+          clientId: paymentInvoiceSelector(payment.id, store.state).clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -152,14 +152,14 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.payment)
-        .then((dynamic payment) {
+        .then((PaymentEntity payment) {
       if (action.payment.isNew) {
         store.dispatch(AddPaymentSuccess(payment));
       } else {
         store.dispatch(SavePaymentSuccess(payment));
       }
       store.dispatch(LoadClient(
-          clientId: paymentInvoiceSelector(payment, store.state).clientId));
+          clientId: paymentInvoiceSelector(payment.id, store.state).clientId));
       action.completer.complete(null);
     }).catchError((Object error) {
       print(error);

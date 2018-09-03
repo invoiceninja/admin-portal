@@ -75,7 +75,7 @@ Middleware<AppState> _archiveStub(StubRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origStub, EntityAction.archive)
-        .then((dynamic stub) {
+        .then((StubEntity stub) {
       store.dispatch(ArchiveStubSuccess(stub));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -98,7 +98,7 @@ Middleware<AppState> _deleteStub(StubRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origStub, EntityAction.delete)
-        .then((dynamic stub) {
+        .then((StubEntity stub) {
       store.dispatch(DeleteStubSuccess(stub));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -121,7 +121,7 @@ Middleware<AppState> _restoreStub(StubRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origStub, EntityAction.restore)
-        .then((dynamic stub) {
+        .then((StubEntity stub) {
       store.dispatch(RestoreStubSuccess(stub));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -143,7 +143,7 @@ Middleware<AppState> _saveStub(StubRepository repository) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.stub)
-        .then((dynamic stub) {
+        .then((StubEntity stub) {
       if (action.stub.isNew) {
         store.dispatch(AddStubSuccess(stub));
       } else {

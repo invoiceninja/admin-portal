@@ -95,7 +95,7 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origInvoice, EntityAction.archive)
-        .then((dynamic invoice) {
+        .then((InvoiceEntity invoice) {
       store.dispatch(ArchiveInvoiceSuccess(invoice));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -166,7 +166,7 @@ Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origInvoice, EntityAction.markSent)
-        .then((dynamic invoice) {
+        .then((InvoiceEntity invoice) {
       store.dispatch(MarkSentInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
       if (action.completer != null) {
@@ -213,7 +213,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.invoice)
-        .then((dynamic invoice) {
+        .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));
       } else {

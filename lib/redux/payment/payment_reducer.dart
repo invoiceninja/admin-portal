@@ -39,7 +39,6 @@ PaymentEntity _updateEditing(PaymentEntity payment, dynamic action) {
   return action.payment;
 }
 
-
 final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortPayments>(_sortPayments),
   TypedReducer<ListUIState, FilterPaymentsByState>(_filterPaymentsByState),
@@ -77,13 +76,15 @@ ListUIState _filterPaymentsByCustom2(
 ListUIState _filterPaymentsByState(
     ListUIState paymentListState, FilterPaymentsByState action) {
   if (paymentListState.stateFilters.contains(action.state)) {
-    return paymentListState.rebuild((b) => b..stateFilters.remove(action.state));
+    return paymentListState
+        .rebuild((b) => b..stateFilters.remove(action.state));
   } else {
     return paymentListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
-ListUIState _filterPayments(ListUIState paymentListState, FilterPayments action) {
+ListUIState _filterPayments(
+    ListUIState paymentListState, FilterPayments action) {
   return paymentListState.rebuild((b) => b..filter = action.filter);
 }
 
@@ -120,12 +121,14 @@ PaymentState _archivePaymentRequest(
 
 PaymentState _archivePaymentSuccess(
     PaymentState paymentState, ArchivePaymentSuccess action) {
-  return paymentState.rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState
+      .rebuild((b) => b..map[action.payment.id] = action.payment);
 }
 
 PaymentState _archivePaymentFailure(
     PaymentState paymentState, ArchivePaymentFailure action) {
-  return paymentState.rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState
+      .rebuild((b) => b..map[action.payment.id] = action.payment);
 }
 
 PaymentState _deletePaymentRequest(
@@ -139,12 +142,14 @@ PaymentState _deletePaymentRequest(
 
 PaymentState _deletePaymentSuccess(
     PaymentState paymentState, DeletePaymentSuccess action) {
-  return paymentState.rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState
+      .rebuild((b) => b..map[action.payment.id] = action.payment);
 }
 
 PaymentState _deletePaymentFailure(
     PaymentState paymentState, DeletePaymentFailure action) {
-  return paymentState.rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState
+      .rebuild((b) => b..map[action.payment.id] = action.payment);
 }
 
 PaymentState _restorePaymentRequest(
@@ -157,12 +162,14 @@ PaymentState _restorePaymentRequest(
 
 PaymentState _restorePaymentSuccess(
     PaymentState paymentState, RestorePaymentSuccess action) {
-  return paymentState.rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState
+      .rebuild((b) => b..map[action.payment.id] = action.payment);
 }
 
 PaymentState _restorePaymentFailure(
     PaymentState paymentState, RestorePaymentFailure action) {
-  return paymentState.rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState
+      .rebuild((b) => b..map[action.payment.id] = action.payment);
 }
 
 PaymentState _addPayment(PaymentState paymentState, AddPaymentSuccess action) {
@@ -171,18 +178,20 @@ PaymentState _addPayment(PaymentState paymentState, AddPaymentSuccess action) {
     ..list.add(action.payment.id));
 }
 
-PaymentState _updatePayment(PaymentState paymentState, SavePaymentSuccess action) {
-  return paymentState.rebuild((b) => b
-    ..map[action.payment.id] = action.payment);
+PaymentState _updatePayment(
+    PaymentState paymentState, SavePaymentSuccess action) {
+  return paymentState
+      .rebuild((b) => b..map[action.payment.id] = action.payment);
 }
 
 PaymentState _setLoadedPayment(
     PaymentState paymentState, LoadPaymentSuccess action) {
-  return paymentState.rebuild((b) => b
-    ..map[action.payment.id] = action.payment);
+  return paymentState
+      .rebuild((b) => b..map[action.payment.id] = action.payment);
 }
 
-PaymentState _setNoPayments(PaymentState paymentState, LoadPaymentsFailure action) {
+PaymentState _setNoPayments(
+    PaymentState paymentState, LoadPaymentsFailure action) {
   return paymentState;
 }
 

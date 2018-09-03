@@ -96,7 +96,7 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origQuote,
             EntityAction.archive)
-        .then((dynamic quote) {
+        .then((InvoiceEntity quote) {
       store.dispatch(ArchiveQuoteSuccess(quote));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -167,7 +167,7 @@ Middleware<AppState> _markSentQuote(QuoteRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origQuote,
             EntityAction.markSent)
-        .then((dynamic quote) {
+        .then((InvoiceEntity quote) {
       store.dispatch(MarkSentQuoteSuccess(quote));
       store.dispatch(LoadClient(clientId: quote.clientId));
       if (action.completer != null) {
@@ -214,7 +214,7 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.quote)
-        .then((dynamic quote) {
+        .then((InvoiceEntity quote) {
       if (action.quote.isNew) {
         store.dispatch(AddQuoteSuccess(quote));
       } else {

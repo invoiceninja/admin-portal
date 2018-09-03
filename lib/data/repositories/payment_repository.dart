@@ -33,7 +33,7 @@ class PaymentRepository {
     return paymentResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, PaymentEntity payment,
+  Future<PaymentEntity> saveData(CompanyEntity company, AuthState auth, PaymentEntity payment,
       [EntityAction action]) async {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
