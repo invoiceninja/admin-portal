@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,8 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
+import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -85,13 +89,21 @@ class PaymentEditVM {
         store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
       },
       onSavePressed: (BuildContext context) {
-        store.dispatch(SavePaymentRequest(
-            completer: snackBarCompleter(
-                context,
-                payment.isNew
-                    ? AppLocalization.of(context).createdPayment
-                    : AppLocalization.of(context).updatedPayment),
-            payment: payment));
+        final Completer<Null> completer = errorCompleter(context)
+          ..future.then((_) {
+            if (payment.isNew) {
+              if (store.state.uiState.currentRoute == PaymentEditScreen.route) {
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context)
+                    .pushReplacementNamed(PaymentViewScreen.route);
+              }
+            } else {
+              Navigator.of(context).pop();
+            }
+          });
+        store.dispatch(
+            SavePaymentRequest(completer: completer, payment: payment));
       },
     );
   }

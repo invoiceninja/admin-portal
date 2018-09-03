@@ -103,10 +103,6 @@ class _InvoiceViewState extends State<InvoiceView> {
         ),
         FieldGrid(fields,
             fieldConverter: invoice.isQuote ? QuoteFields.convertField : null),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
       ]);
 
       if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
