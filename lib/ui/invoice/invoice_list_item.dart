@@ -52,7 +52,9 @@ class InvoiceListItem extends StatelessWidget {
                 ),
               ),
               Text(
-                  formatNumber(invoice.amount, context,
+                  formatNumber(
+                      invoice.balance > 0 ? invoice.balance : invoice.amount,
+                      context,
                       clientId: invoice.clientId),
                   style: Theme.of(context).textTheme.title),
             ],
