@@ -105,7 +105,7 @@ class InvoiceList extends StatelessWidget {
                 color: Colors.orangeAccent,
                 elevation: 6.0,
                 child: InkWell(
-                  onTap: () => viewModel.onViewClientFilterPressed(context),
+                  onTap: () => viewModel.onViewEntityFilterPressed(context),
                   child: Row(
                     children: <Widget>[
                       SizedBox(width: 18.0),
@@ -124,7 +124,7 @@ class InvoiceList extends StatelessWidget {
                           Icons.close,
                           color: Colors.white,
                         ),
-                        onPressed: () => viewModel.onClearClientFilterPressed(),
+                        onPressed: () => viewModel.onClearEntityFilterPressed(),
                       )
                     ],
                   ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class PaymentListVM {
   final Function(BuildContext, PaymentEntity) onPaymentTap;
   final Function(BuildContext, PaymentEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
-  final Function onClearClientFilterPressed;
+  final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewClientFilterPressed;
   final Function(BuildContext, PaymentEntity, EntityAction) onEntityAction;
 
@@ -59,7 +60,7 @@ class PaymentListVM {
     @required this.onDismissed,
     @required this.onRefreshed,
     @required this.onEntityAction,
-    @required this.onClearClientFilterPressed,
+    @required this.onClearEntityFilterPressed,
     @required this.onViewClientFilterPressed,
     @required this.listState,
   });
@@ -115,12 +116,22 @@ class PaymentListVM {
               break;
           }
         },
-        onClearClientFilterPressed: () =>
+        onClearEntityFilterPressed: () =>
             store.dispatch(FilterPaymentsByEntity()),
-        onViewClientFilterPressed: (BuildContext context) => store.dispatch(
-            ViewClient(
-                clientId: state.paymentListState.filterEntityId,
-                context: context)),
+        onViewClientFilterPressed: (BuildContext context) {
+          switch (state.paymentListState.filterEntityType) {
+            case EntityType.client:
+              store.dispatch(ViewClient(
+                  clientId: state.paymentListState.filterEntityId,
+                  context: context));
+              break;
+            case EntityType.invoice:
+              store.dispatch(ViewInvoice(
+                  invoiceId: state.paymentListState.filterEntityId,
+                  context: context));
+              break;
+          }
+        },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, PaymentEntity payment,
             DismissDirection direction) {

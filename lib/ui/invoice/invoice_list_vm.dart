@@ -46,8 +46,8 @@ class EntityListVM {
   final Function(BuildContext, InvoiceEntity) onInvoiceTap;
   final Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
-  final Function onClearClientFilterPressed;
-  final Function(BuildContext) onViewClientFilterPressed;
+  final Function onClearEntityFilterPressed;
+  final Function(BuildContext) onViewEntityFilterPressed;
   final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
 
   EntityListVM({
@@ -62,8 +62,8 @@ class EntityListVM {
     @required this.onInvoiceTap,
     @required this.onDismissed,
     @required this.onRefreshed,
-    @required this.onClearClientFilterPressed,
-    @required this.onViewClientFilterPressed,
+    @required this.onClearEntityFilterPressed,
+    @required this.onViewEntityFilterPressed,
     @required this.onEntityAction,
   });
 }
@@ -81,8 +81,8 @@ class InvoiceListVM extends EntityListVM {
     Function(BuildContext, InvoiceEntity) onInvoiceTap,
     Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed,
     Function(BuildContext) onRefreshed,
-    Function onClearClientFilterPressed,
-    Function(BuildContext) onViewClientFilterPressed,
+    Function onClearEntityFilterPressed,
+    Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
   }) : super(
           user: user,
@@ -96,8 +96,8 @@ class InvoiceListVM extends EntityListVM {
           onInvoiceTap: onInvoiceTap,
           onDismissed: onDismissed,
           onRefreshed: onRefreshed,
-          onClearClientFilterPressed: onClearClientFilterPressed,
-          onViewClientFilterPressed: onViewClientFilterPressed,
+          onClearEntityFilterPressed: onClearEntityFilterPressed,
+          onViewEntityFilterPressed: onViewEntityFilterPressed,
           onEntityAction: onEntityAction,
         );
 
@@ -131,9 +131,9 @@ class InvoiceListVM extends EntityListVM {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onClearClientFilterPressed: () =>
+        onClearEntityFilterPressed: () =>
             store.dispatch(FilterInvoicesByEntity()),
-        onViewClientFilterPressed: (BuildContext context) => store.dispatch(
+        onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
             ViewClient(
                 clientId: state.invoiceListState.filterEntityId,
                 context: context)),

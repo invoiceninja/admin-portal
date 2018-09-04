@@ -49,8 +49,8 @@ class QuoteListVM extends EntityListVM {
     Function(BuildContext, InvoiceEntity) onInvoiceTap,
     Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed,
     Function(BuildContext) onRefreshed,
-    Function onClearClientFilterPressed,
-    Function(BuildContext) onViewClientFilterPressed,
+    Function onClearEntityFilterPressed,
+    Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
   }) : super(
     user: user,
@@ -64,8 +64,8 @@ class QuoteListVM extends EntityListVM {
     onInvoiceTap: onInvoiceTap,
     onDismissed: onDismissed,
     onRefreshed: onRefreshed,
-    onClearClientFilterPressed: onClearClientFilterPressed,
-    onViewClientFilterPressed: onViewClientFilterPressed,
+    onClearEntityFilterPressed: onClearEntityFilterPressed,
+    onViewEntityFilterPressed: onViewEntityFilterPressed,
     onEntityAction: onEntityAction,
   );
 
@@ -99,9 +99,9 @@ class QuoteListVM extends EntityListVM {
           store.dispatch(ViewQuote(quoteId: quote.id, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onClearClientFilterPressed: () =>
+        onClearEntityFilterPressed: () =>
             store.dispatch(FilterQuotesByEntity()),
-        onViewClientFilterPressed: (BuildContext context) => store.dispatch(
+        onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
             ViewClient(
                 clientId: state.quoteListState.filterEntityId,
                 context: context)),

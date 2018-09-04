@@ -105,9 +105,7 @@ class PaymentList extends StatelessWidget {
                       SizedBox(width: 18.0),
                       Expanded(
                         child: Text(
-                          localization.clientsPayments.replaceFirst(
-                              ':${listState.filterEntityType}',
-                              filteredEntity.listDisplayName),
+                          '${localization.filteredBy} ${filteredEntity.listDisplayName}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
@@ -119,7 +117,7 @@ class PaymentList extends StatelessWidget {
                           Icons.close,
                           color: Colors.white,
                         ),
-                        onPressed: () => viewModel.onClearClientFilterPressed(),
+                        onPressed: () => viewModel.onClearEntityFilterPressed(),
                       )
                     ],
                   ),
