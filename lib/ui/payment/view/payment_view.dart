@@ -123,12 +123,16 @@ class _PaymentViewState extends State<PaymentView> {
               height: 12.0,
             ),
             payment.privateNotes != null && payment.privateNotes.isNotEmpty
-                ? IconMessage(payment.privateNotes)
+                ? Column(
+                  children: <Widget>[
+                    IconMessage(payment.privateNotes),
+                    Container(
+                      color: Theme.of(context).backgroundColor,
+                      height: 12.0,
+                    ),
+                  ],
+                )
                 : Container(),
-            Container(
-              color: Theme.of(context).backgroundColor,
-              height: 12.0,
-            ),
             FieldGrid(fields),
           ],
         ));

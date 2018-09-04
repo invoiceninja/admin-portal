@@ -238,17 +238,15 @@ class _PaymentEditState extends State<PaymentEdit> {
                     ),
                   ],
                 ),
-                FormCard(children: <Widget>[
+                payment.isNew ? FormCard(children: <Widget>[
                   SwitchListTile(
                     activeColor: Theme.of(context).accentColor,
                     title: Text(localization.sendEmail),
-                    value: true,
+                    value: viewModel.uiState.emailPayment,
                     subtitle: Text(localization.sendReceiptToClient),
-                    //value: client.showTasksInPortal,
-                    //onChanged: (value) => viewModel
-                        //.onChanged(client.rebuild((b) => b..showTasksInPortal = value)),
+                    onChanged: (value) => viewModel.onEmailChanged(value),
                   ),
-                ]),
+                ]) : Container(),
               ],
             ),
           ),

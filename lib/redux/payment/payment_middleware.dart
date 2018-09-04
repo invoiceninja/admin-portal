@@ -78,7 +78,7 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-            origPayment, EntityAction.archive)
+            origPayment, action: EntityAction.archive)
         .then((PaymentEntity payment) {
       store.dispatch(ArchivePaymentSuccess(payment));
       if (action.completer != null) {
@@ -101,7 +101,7 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-            origPayment, EntityAction.delete)
+            origPayment, action: EntityAction.delete)
         .then((PaymentEntity payment) {
       store.dispatch(DeletePaymentSuccess(payment));
       store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
@@ -125,7 +125,7 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-            origPayment, EntityAction.restore)
+            origPayment, action: EntityAction.restore)
         .then((PaymentEntity payment) {
       store.dispatch(RestorePaymentSuccess(payment));
       store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
@@ -146,9 +146,11 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
 
 Middleware<AppState> _savePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final PaymentEntity payment = action.payment;
+    final bool sendEmail = payment.isNew ? store.state.uiState.emailPayment : false;
     repository
         .saveData(
-            store.state.selectedCompany, store.state.authState, action.payment)
+            store.state.selectedCompany, store.state.authState, action.payment, sendEmail: sendEmail)
         .then((PaymentEntity payment) {
       if (action.payment.isNew) {
         store.dispatch(AddPaymentSuccess(payment));

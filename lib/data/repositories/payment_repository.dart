@@ -24,8 +24,7 @@ class PaymentRepository {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    final dynamic response =
-        await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, company.token);
 
     final PaymentListResponse paymentResponse =
         serializers.deserializeWith(PaymentListResponse.serializer, response);
@@ -33,14 +32,18 @@ class PaymentRepository {
     return paymentResponse.data;
   }
 
-  Future<PaymentEntity> saveData(CompanyEntity company, AuthState auth, PaymentEntity payment,
-      [EntityAction action]) async {
+  Future<PaymentEntity> saveData(
+      CompanyEntity company, AuthState auth, PaymentEntity payment,
+      {EntityAction action, bool sendEmail}) async {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
     if (payment.isNew) {
-      response = await webClient.post(
-          auth.url + '/payments', company.token, json.encode(data));
+      var url = auth.url + '/payments';
+      if (sendEmail) {
+        url += '?email_receipt=true';
+      }
+      response = await webClient.post(url, company.token, json.encode(data));
     } else {
       var url = auth.url + '/payments/' + payment.id.toString();
       if (action != null) {
