@@ -379,6 +379,10 @@ abstract class InvoiceEntity extends Object
       actions.add(EntityAction.email);
     }
 
+    if (user.canEditEntity(this) && user.canCreate(EntityType.payment) && isUnpaid) {
+      actions.add(EntityAction.payment);
+    }
+
     actions.add(EntityAction.pdf);
 
     if (actions.isNotEmpty) {

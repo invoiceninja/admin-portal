@@ -19,6 +19,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.restore:
       return Icons.restore;
     case EntityAction.invoice:
+    case EntityAction.payment:
       return Icons.add_circle_outline;
     default:
       return null;

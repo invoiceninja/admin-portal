@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -159,6 +160,15 @@ class InvoiceListVM extends EntityListVM {
               Navigator.of(context).pop();
               store.dispatch(
                   EditInvoice(context: context, invoice: invoice.clone));
+              break;
+            case EntityAction.payment:
+              Navigator.of(context).pop();
+              store.dispatch(EditPayment(
+                  context: context,
+                  payment: PaymentEntity().rebuild((b) => b
+                    ..invoiceId = invoice.id
+                    ..clientId = invoice.clientId
+                    ..amount = invoice.balance)));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(

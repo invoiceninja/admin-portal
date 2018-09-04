@@ -43,6 +43,7 @@ class EntityAction extends EnumClass {
   static const EntityAction email = _$email;
   static const EntityAction markSent = _$markSent;
   static const EntityAction invoice = _$invoice;
+  static const EntityAction payment = _$payment;
   static const EntityAction pdf = _$pdf;
 
   static BuiltSet<EntityAction> get values => _$values;
