@@ -72,7 +72,8 @@ Middleware<AppState> _viewClientList() {
     //Navigator.of(action.context).pushNamedAndRemoveUntil(
     //    ClientScreen.route, ModalRoute.withName(DashboardScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(ClientScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        ClientScreen.route, (Route<dynamic> route) => false);
   };
 }
 

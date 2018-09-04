@@ -61,8 +61,8 @@ List<int> filteredInvoicesSelector(
         !client.matchesFilter(invoiceListState.filter)) {
       return false;
     }
-    if (invoiceListState.filterClientId != null &&
-        invoice.clientId != invoiceListState.filterClientId) {
+    if (invoiceListState.filterEntityId != null &&
+        invoice.clientId != invoiceListState.filterEntityId) {
       return false;
     }
     if (invoiceListState.custom1Filters.isNotEmpty &&

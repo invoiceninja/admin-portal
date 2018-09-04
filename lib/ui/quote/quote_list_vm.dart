@@ -100,10 +100,10 @@ class QuoteListVM extends EntityListVM {
         },
         onRefreshed: (context) => _handleRefresh(context),
         onClearClientFilterPressed: () =>
-            store.dispatch(FilterQuotesByClient()),
+            store.dispatch(FilterQuotesByEntity()),
         onViewClientFilterPressed: (BuildContext context) => store.dispatch(
             ViewClient(
-                clientId: state.quoteListState.filterClientId,
+                clientId: state.quoteListState.filterEntityId,
                 context: context)),
         onEntityAction: (context, quote, action) {
           final localization = AppLocalization.of(context);

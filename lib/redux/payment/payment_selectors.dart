@@ -50,9 +50,9 @@ List<int> filteredPaymentsSelector(
     if (!payment.matchesStates(paymentListState.stateFilters)) {
       return false;
     }
-    if (paymentListState.filterClientId != null &&
+    if (paymentListState.filterEntityId != null &&
         invoiceMap[payment.invoiceId].clientId !=
-            paymentListState.filterClientId) {
+            paymentListState.filterEntityId) {
       return false;
     }
     return payment.matchesFilter(paymentListState.filter);

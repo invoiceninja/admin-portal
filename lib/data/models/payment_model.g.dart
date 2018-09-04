@@ -579,7 +579,7 @@ class _$PaymentEntity extends PaymentEntity {
         paymentDate == other.paymentDate &&
         paymentTypeId == other.paymentTypeId &&
         invoiceId == other.invoiceId &&
-        clientId == other.clientId &&
+        clientId == other.entityId &&
         invoiceNumber == other.invoiceNumber &&
         privateNotes == other.privateNotes &&
         exchangeRate == other.exchangeRate &&

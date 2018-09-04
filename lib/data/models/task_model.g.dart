@@ -527,7 +527,7 @@ class _$TaskEntity extends TaskEntity {
     return description == other.description &&
         duration == other.duration &&
         invoiceId == other.invoiceId &&
-        clientId == other.clientId &&
+        clientId == other.entityId &&
         projectId == other.projectId &&
         timeLog == other.timeLog &&
         isRunning == other.isRunning &&

@@ -51,7 +51,9 @@ final stubListReducer = combineReducers<ListUIState>([
 
 ListUIState _filterStubsByClient(
     ListUIState stubListState, FilterStubsByClient action) {
-  return stubListState.rebuild((b) => b..filterClientId = action.clientId);
+  return stubListState.rebuild((b) => b
+  ..filterEntityId = action.entityId
+  ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterStubsByCustom1(

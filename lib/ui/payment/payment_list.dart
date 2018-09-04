@@ -72,7 +72,7 @@ class PaymentList extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
-    final filteredClientId = listState.filterClientId;
+    final filteredClientId = listState.filterEntityId;
     final filteredClient =
     filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
 

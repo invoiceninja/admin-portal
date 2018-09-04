@@ -132,10 +132,10 @@ class InvoiceListVM extends EntityListVM {
         },
         onRefreshed: (context) => _handleRefresh(context),
         onClearClientFilterPressed: () =>
-            store.dispatch(FilterInvoicesByClient()),
+            store.dispatch(FilterInvoicesByEntity()),
         onViewClientFilterPressed: (BuildContext context) => store.dispatch(
             ViewClient(
-                clientId: state.invoiceListState.filterClientId,
+                clientId: state.invoiceListState.filterEntityId,
                 context: context)),
         onEntityAction: (context, invoice, action) {
           final localization = AppLocalization.of(context);

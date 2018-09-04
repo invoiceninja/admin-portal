@@ -96,15 +96,18 @@ class ClientViewVM {
         onEntityPressed: (BuildContext context, EntityType entityType) {
           switch (entityType) {
             case EntityType.invoice:
-              store.dispatch(FilterInvoicesByClient(client.id));
+              store.dispatch(FilterInvoicesByEntity(
+                  entityId: client.id, entityType: EntityType.client));
               store.dispatch(ViewInvoiceList(context));
               break;
             case EntityType.quote:
-              store.dispatch(FilterQuotesByClient(client.id));
+              store.dispatch(FilterQuotesByEntity(
+                  entityId: client.id, entityType: EntityType.client));
               store.dispatch(ViewQuoteList(context));
               break;
             case EntityType.payment:
-              store.dispatch(FilterPaymentsByClient(client.id));
+              store.dispatch(FilterPaymentsByEntity(
+                  entityId: client.id, entityType: EntityType.client));
               store.dispatch(ViewPaymentList(context));
               break;
           }

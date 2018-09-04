@@ -85,7 +85,7 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortQuotes>(_sortQuotes),
   TypedReducer<ListUIState, FilterQuotesByState>(_filterQuotesByState),
   TypedReducer<ListUIState, FilterQuotesByStatus>(_filterQuotesByStatus),
-  TypedReducer<ListUIState, FilterQuotesByClient>(_filterQuotesByClient),
+  TypedReducer<ListUIState, FilterQuotesByEntity>(_filterQuotesByEntity),
   TypedReducer<ListUIState, FilterQuotes>(_filterQuotes),
   TypedReducer<ListUIState, FilterQuotesByCustom1>(_filterQuotesByCustom1),
   TypedReducer<ListUIState, FilterQuotesByCustom2>(_filterQuotesByCustom2),
@@ -130,9 +130,10 @@ ListUIState _filterQuotesByStatus(
   }
 }
 
-ListUIState _filterQuotesByClient(
-    ListUIState quoteListState, FilterQuotesByClient action) {
-  return quoteListState.rebuild((b) => b..filterClientId = action.clientId);
+ListUIState _filterQuotesByEntity(
+    ListUIState quoteListState, FilterQuotesByEntity action) {
+  return quoteListState.rebuild((b) => b
+    ..filterEntityId = action.entityId);
 }
 
 ListUIState _filterQuotes(ListUIState quoteListState, FilterQuotes action) {

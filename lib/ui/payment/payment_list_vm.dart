@@ -116,10 +116,10 @@ class PaymentListVM {
           }
         },
         onClearClientFilterPressed: () =>
-            store.dispatch(FilterPaymentsByClient()),
+            store.dispatch(FilterPaymentsByEntity()),
         onViewClientFilterPressed: (BuildContext context) => store.dispatch(
             ViewClient(
-                clientId: state.paymentListState.filterClientId,
+                clientId: state.paymentListState.filterEntityId,
                 context: context)),
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, PaymentEntity payment,

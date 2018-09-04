@@ -278,10 +278,11 @@ class FilterQuotesByStatus implements PersistUI {
   FilterQuotesByStatus(this.status);
 }
 
-class FilterQuotesByClient implements PersistUI {
-  final int clientId;
+class FilterQuotesByEntity implements PersistUI {
+  final int entityId;
+  final EntityType entityType;
 
-  FilterQuotesByClient([this.clientId]);
+  FilterQuotesByEntity({this.entityId, this.entityType});
 }
 
 class FilterQuoteDropdown {

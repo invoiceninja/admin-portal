@@ -37,8 +37,8 @@ List<int> filteredQuotesSelector(
         !client.matchesFilter(quoteListState.filter)) {
       return false;
     }
-    if (quoteListState.filterClientId != null &&
-        quote.clientId != quoteListState.filterClientId) {
+    if (quoteListState.filterEntityId != null &&
+        quote.clientId != quoteListState.filterEntityId) {
       return false;
     }
     if (quoteListState.custom1Filters.isNotEmpty &&
