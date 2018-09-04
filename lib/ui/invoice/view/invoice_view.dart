@@ -1,4 +1,7 @@
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
@@ -31,11 +34,15 @@ class _InvoiceViewState extends State<InvoiceView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final invoice = widget.viewModel.invoice;
     final client = viewModel.client;
     final company = viewModel.company;
 
+    final state = StoreProvider.of<AppState>(context).state;
+    final payments = memoizedPaymentsByInvoice(
+        invoice.id, state.paymentState.map, state.paymentState.list);
+
     List<Widget> _buildView() {
-      final invoice = widget.viewModel.invoice;
       final user = widget.viewModel.company.user;
       final color = invoice.isPastDue
           ? Colors.red
@@ -101,6 +108,51 @@ class _InvoiceViewState extends State<InvoiceView> {
           color: Theme.of(context).backgroundColor,
           height: 12.0,
         ),
+      ]);
+
+      if (payments.isNotEmpty) {
+        if (payments.length == 1) {
+          final payment = payments.first;
+          widgets.addAll([
+            Material(
+              color: Theme.of(context).canvasColor,
+              child: ListTile(
+                title: Text(payment.transactionReference.isNotEmpty
+                    ? payment.transactionReference
+                    : localization.payment),
+                subtitle: Text(
+                    formatNumber(payment.amount, context, clientId: client.id) +
+                        ' • ' +
+                        formatDate(payment.paymentDate, context)),
+                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => viewModel.onPaymentPressed(context, payment),
+              ),
+            ),
+          ]);
+        } else {
+          widgets.addAll([
+            Material(
+              color: Theme.of(context).canvasColor,
+              child: ListTile(
+                title: Text(localization.payments),
+                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => viewModel.onPaymentsPressed(context),
+              ),
+            ),
+          ]);
+        }
+
+        widgets.addAll([
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+        ]);
+      }
+
+      widgets.addAll([
         FieldGrid(fields,
             fieldConverter: invoice.isQuote ? QuoteFields.convertField : null),
       ]);

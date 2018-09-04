@@ -4,6 +4,18 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+var memoizedPaymentsByInvoice = memo3((int invoiceId,
+        BuiltMap<int, PaymentEntity> paymentMap, BuiltList<int> paymentList) =>
+    paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList));
+
+List<PaymentEntity> paymentsByInvoiceSelector(int invoiceId,
+    BuiltMap<int, PaymentEntity> paymentMap, BuiltList<int> paymentList) {
+  return paymentList
+      .map((paymentId) => paymentMap[paymentId])
+      .where((payment) => payment.invoiceId == invoiceId && !payment.isDeleted)
+      .toList();
+}
+
 InvoiceEntity paymentInvoiceSelector(int paymentId, AppState state) {
   final payment = state.paymentState.map[paymentId];
   return state.invoiceState.map[payment.invoiceId];
@@ -50,10 +62,15 @@ List<int> filteredPaymentsSelector(
     if (!payment.matchesStates(paymentListState.stateFilters)) {
       return false;
     }
-    if (paymentListState.filterEntityId != null &&
-        invoiceMap[payment.invoiceId].clientId !=
-            paymentListState.filterEntityId) {
-      return false;
+    if (paymentListState.filterEntityId != null) {
+      if (paymentListState.filterEntityType == EntityType.client &&
+          invoiceMap[payment.invoiceId].clientId !=
+              paymentListState.filterEntityId) {
+        return false;
+      } else if (paymentListState.filterEntityType == EntityType.invoice &&
+          payment.invoiceId != paymentListState.filterEntityId) {
+        return false;
+      }
     }
     return payment.matchesFilter(paymentListState.filter);
   }).toList();

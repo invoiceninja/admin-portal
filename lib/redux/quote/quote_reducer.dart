@@ -133,7 +133,8 @@ ListUIState _filterQuotesByStatus(
 ListUIState _filterQuotesByEntity(
     ListUIState quoteListState, FilterQuotesByEntity action) {
   return quoteListState.rebuild((b) => b
-    ..filterEntityId = action.entityId);
+    ..filterEntityId = action.entityId
+    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterQuotes(ListUIState quoteListState, FilterQuotes action) {

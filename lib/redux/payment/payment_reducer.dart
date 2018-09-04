@@ -51,7 +51,8 @@ final paymentListReducer = combineReducers<ListUIState>([
 ListUIState _filterPaymentsByEntity(
     ListUIState paymentListState, FilterPaymentsByEntity action) {
   return paymentListState.rebuild((b) => b
-    ..filterEntityId = action.entityId);
+    ..filterEntityId = action.entityId
+    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterPaymentsByCustom1(

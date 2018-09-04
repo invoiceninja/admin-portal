@@ -38,7 +38,6 @@ class QuoteViewScreen extends StatelessWidget {
 }
 
 class QuoteViewVM extends EntityViewVM {
-
   QuoteViewVM({
     CompanyEntity company,
     InvoiceEntity invoice,
@@ -48,6 +47,8 @@ class QuoteViewVM extends EntityViewVM {
     Function(BuildContext, EntityAction) onActionSelected,
     Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
     Function(BuildContext) onClientPressed,
+    Function(BuildContext) onPaymentsPressed,
+    Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
     Function onBackPressed,
   }) : super(
@@ -59,6 +60,8 @@ class QuoteViewVM extends EntityViewVM {
           onActionSelected: onActionSelected,
           onEditPressed: onEditPressed,
           onClientPressed: onClientPressed,
+          onPaymentsPressed: onPaymentsPressed,
+          onPaymentPressed: onPaymentPressed,
           onRefreshed: onRefreshed,
           onBackPressed: onBackPressed,
         );

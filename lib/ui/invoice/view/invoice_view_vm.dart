@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,8 @@ class EntityViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
   final Function(BuildContext) onClientPressed;
+  final Function(BuildContext) onPaymentsPressed;
+  final Function(BuildContext, PaymentEntity) onPaymentPressed;
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;
 
@@ -58,16 +61,18 @@ class EntityViewVM {
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onClientPressed,
+    @required this.onPaymentsPressed,
+    @required this.onPaymentPressed,
     @required this.onRefreshed,
   });
 
   @override
   bool operator ==(dynamic other) =>
       client == other.client &&
-          company == other.company &&
-          invoice == other.invoice &&
-          isSaving == other.isSaving &&
-          isDirty == other.isDirty;
+      company == other.company &&
+      invoice == other.invoice &&
+      isSaving == other.isSaving &&
+      isDirty == other.isDirty;
 
   @override
   int get hashCode =>
@@ -88,6 +93,8 @@ class InvoiceViewVM extends EntityViewVM {
     Function(BuildContext, EntityAction) onActionSelected,
     Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
     Function(BuildContext) onClientPressed,
+    Function(BuildContext, PaymentEntity) onPaymentPressed,
+    Function(BuildContext) onPaymentsPressed,
     Function(BuildContext) onRefreshed,
     Function onBackPressed,
   }) : super(
@@ -99,6 +106,8 @@ class InvoiceViewVM extends EntityViewVM {
           onActionSelected: onActionSelected,
           onEditPressed: onEditPressed,
           onClientPressed: onClientPressed,
+          onPaymentPressed: onPaymentPressed,
+          onPaymentsPressed: onPaymentsPressed,
           onRefreshed: onRefreshed,
           onBackPressed: onBackPressed,
         );
@@ -139,8 +148,14 @@ class InvoiceViewVM extends EntityViewVM {
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
-        onClientPressed: (BuildContext context) {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+        onClientPressed: (BuildContext context) =>
+            store.dispatch(ViewClient(clientId: client.id, context: context)),
+        onPaymentPressed: (BuildContext context, PaymentEntity payment) => store
+            .dispatch(ViewPayment(paymentId: payment.id, context: context)),
+        onPaymentsPressed: (BuildContext context) {
+          store.dispatch(FilterPaymentsByEntity(
+              entityId: invoice.id, entityType: EntityType.invoice));
+          store.dispatch(ViewPaymentList(context));
         },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
