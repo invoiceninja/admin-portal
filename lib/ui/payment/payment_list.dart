@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
@@ -21,6 +22,8 @@ class PaymentList extends StatelessWidget {
 
   void _showMenu(
       BuildContext context, PaymentEntity payment, ClientEntity client) async {
+
+    print('here');
     if (payment == null || client == null) {
       return;
     }
@@ -129,9 +132,8 @@ class PaymentList extends StatelessWidget {
                           itemCount: viewModel.paymentList.length,
                           itemBuilder: (BuildContext context, index) {
                             final paymentId = viewModel.paymentList[index];
-                            final payment = viewModel.paymentMap[paymentId];
-                            final client =
-                                viewModel.clientMap[payment.clientId];
+                            final payment = state.paymentState.map[paymentId];
+                            final client = paymentClientSelector(paymentId, state);
                             return Column(
                               children: <Widget>[
                                 PaymentListItem(
