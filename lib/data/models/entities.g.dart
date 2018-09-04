@@ -1821,7 +1821,7 @@ class _$ActivityEntity extends ActivityEntity {
     return notes == other.notes &&
         key == other.key &&
         activityTypeId == other.activityTypeId &&
-        clientId == other.entityId &&
+        clientId == other.clientId &&
         userId == other.userId &&
         invoiceId == other.invoiceId &&
         paymentId == other.paymentId &&

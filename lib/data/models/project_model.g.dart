@@ -522,7 +522,7 @@ class _$ProjectEntity extends ProjectEntity {
     if (identical(other, this)) return true;
     if (other is! ProjectEntity) return false;
     return name == other.name &&
-        clientId == other.entityId &&
+        clientId == other.clientId &&
         taskRate == other.taskRate &&
         dueDate == other.dueDate &&
         privateNotes == other.privateNotes &&

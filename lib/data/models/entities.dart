@@ -6,8 +6,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'entities.g.dart';
 
-
-
 class EntityType extends EnumClass {
   const EntityType._(String name) : super(name);
 
@@ -38,12 +36,11 @@ class EntityType extends EnumClass {
   }
 
   static BuiltSet<EntityType> get values => _$typeValues;
+
   static EntityType valueOf(String name) => _$typeValueOf(name);
 }
 
-
 class EntityState extends EnumClass {
-
   const EntityState._(String name) : super(name);
 
   static Serializer<EntityState> get serializer => _$entityStateSerializer;
@@ -53,11 +50,11 @@ class EntityState extends EnumClass {
   static const EntityState deleted = _$deleted;
 
   static BuiltSet<EntityState> get values => _$values;
+
   static EntityState valueOf(String name) => _$valueOf(name);
 }
 
 class EmailTemplate extends EnumClass {
-
   const EmailTemplate._(String name) : super(name);
 
   static Serializer<EmailTemplate> get serializer => _$emailTemplateSerializer;
@@ -68,27 +65,28 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate reminder3 = _$reminder3;
 
   static BuiltSet<EmailTemplate> get values => _$templateValues;
+
   static EmailTemplate valueOf(String name) => _$templateValueOf(name);
 }
 
-
 class UserPermission extends EnumClass {
-
   const UserPermission._(String name) : super(name);
 
-  static Serializer<UserPermission> get serializer => _$userPermissionSerializer;
+  static Serializer<UserPermission> get serializer =>
+      _$userPermissionSerializer;
 
   static const UserPermission create = _$create;
   static const UserPermission edit = _$edit;
   static const UserPermission view = _$view;
 
   static BuiltSet<UserPermission> get values => _$permissionValues;
+
   static UserPermission valueOf(String name) => _$permissionValueOf(name);
 }
 
-
 abstract class EntityStatus {
   int get id;
+
   String get name;
 }
 
@@ -97,16 +95,17 @@ abstract class SelectableEntity {
   int get id;
 
   bool matchesFilter(String filter) => true;
+
   String matchesFilterValue(String filter) => null;
 
   String get listDisplayName => 'Error: listDisplayName not set';
 
   double get listDisplayAmount => null;
+
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 }
 
 abstract class BaseEntity extends Object with SelectableEntity {
-
   @nullable
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
@@ -132,8 +131,10 @@ abstract class BaseEntity extends Object with SelectableEntity {
   EntityType get entityType => throw 'EntityType not set: ${this}';
 
   bool get isNew => id == null || id < 0;
+
   bool get isActive => archivedAt == null;
-  bool get isArchived => archivedAt != null && ! isDeleted;
+
+  bool get isArchived => archivedAt != null && !isDeleted;
 
   bool matchesStatuses(BuiltList<EntityStatus> statuses) {
     return true;
@@ -164,10 +165,10 @@ abstract class ConvertToInvoiceItem {
   InvoiceItemEntity get asInvoiceItem;
 }
 
-
-abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> {
-
+abstract class ErrorMessage
+    implements Built<ErrorMessage, ErrorMessageBuilder> {
   factory ErrorMessage([void updates(ErrorMessageBuilder b)]) = _$ErrorMessage;
+
   ErrorMessage._();
 
   String get message;
@@ -175,10 +176,11 @@ abstract class ErrorMessage implements Built<ErrorMessage, ErrorMessageBuilder> 
   static Serializer<ErrorMessage> get serializer => _$errorMessageSerializer;
 }
 
+abstract class LoginResponse
+    implements Built<LoginResponse, LoginResponseBuilder> {
+  factory LoginResponse([void updates(LoginResponseBuilder b)]) =
+      _$LoginResponse;
 
-abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilder> {
-
-  factory LoginResponse([void updates(LoginResponseBuilder b)]) = _$LoginResponse;
   LoginResponse._();
 
   LoginResponseData get data;
@@ -189,48 +191,64 @@ abstract class LoginResponse implements Built<LoginResponse, LoginResponseBuilde
   static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
 }
 
-abstract class LoginResponseData implements Built<LoginResponseData, LoginResponseDataBuilder> {
+abstract class LoginResponseData
+    implements Built<LoginResponseData, LoginResponseDataBuilder> {
+  factory LoginResponseData([void updates(LoginResponseDataBuilder b)]) =
+      _$LoginResponseData;
 
-  factory LoginResponseData([void updates(LoginResponseDataBuilder b)]) = _$LoginResponseData;
   LoginResponseData._();
 
   BuiltList<CompanyEntity> get accounts;
+
   String get version;
+
   StaticData get static;
 
-  static Serializer<LoginResponseData> get serializer => _$loginResponseDataSerializer;
+  static Serializer<LoginResponseData> get serializer =>
+      _$loginResponseDataSerializer;
 }
 
 abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
-
   factory StaticData([void updates(StaticDataBuilder b)]) = _$StaticData;
+
   StaticData._();
 
   BuiltList<CurrencyEntity> get currencies;
+
   BuiltList<SizeEntity> get sizes;
+
   BuiltList<IndustryEntity> get industries;
+
   BuiltList<TimezoneEntity> get timezones;
+
   BuiltList<DateFormatEntity> get dateFormats;
+
   BuiltList<DatetimeFormatEntity> get datetimeFormats;
+
   BuiltList<LanguageEntity> get languages;
+
   BuiltList<PaymentTypeEntity> get paymentTypes;
+
   BuiltList<CountryEntity> get countries;
+
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
+
   BuiltList<FrequencyEntity> get frequencies;
 
   static Serializer<StaticData> get serializer => _$staticDataSerializer;
 }
 
+abstract class DashboardResponse
+    implements Built<DashboardResponse, DashboardResponseBuilder> {
+  factory DashboardResponse([void updates(DashboardResponseBuilder b)]) =
+      _$DashboardResponse;
 
-
-abstract class DashboardResponse implements Built<DashboardResponse, DashboardResponseBuilder> {
-
-  factory DashboardResponse([void updates(DashboardResponseBuilder b)]) = _$DashboardResponse;
   DashboardResponse._();
 
   DashboardEntity get data;
 
-  static Serializer<DashboardResponse> get serializer => _$dashboardResponseSerializer;
+  static Serializer<DashboardResponse> get serializer =>
+      _$dashboardResponseSerializer;
 }
 
 class CustomFieldType {
@@ -254,9 +272,11 @@ class CustomFieldType {
   static const String surcharge2 = 'invoice2';
 }
 
-abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntityBuilder> {
+abstract class DashboardEntity
+    implements Built<DashboardEntity, DashboardEntityBuilder> {
+  factory DashboardEntity([void updates(DashboardEntityBuilder b)]) =
+      _$DashboardEntity;
 
-  factory DashboardEntity([void updates(DashboardEntityBuilder b)]) = _$DashboardEntity;
   DashboardEntity._();
 
   @nullable
@@ -285,13 +305,15 @@ abstract class DashboardEntity implements Built<DashboardEntity, DashboardEntity
 
   BuiltList<ActivityEntity> get activities;
 
-  static Serializer<DashboardEntity> get serializer => _$dashboardEntitySerializer;
+  static Serializer<DashboardEntity> get serializer =>
+      _$dashboardEntitySerializer;
 }
 
+abstract class ActivityEntity
+    implements Built<ActivityEntity, ActivityEntityBuilder> {
+  factory ActivityEntity([void updates(ActivityEntityBuilder b)]) =
+      _$ActivityEntity;
 
-abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBuilder> {
-
-  factory ActivityEntity([void updates(ActivityEntityBuilder b)]) = _$ActivityEntity;
   ActivityEntity._();
 
   String get notes;
@@ -362,14 +384,15 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
     }
   }
 
-  String getDescription(String activity, {
+  String getDescription(
+    String activity, {
     UserEntity user,
     ClientEntity client,
     InvoiceEntity invoice,
     //ContactEntity contact,
     PaymentEntity payment,
     CreditEntity credit,
-    //InvoiceEntity quote,
+    InvoiceEntity quote,
     TaskEntity task,
     ExpenseEntity expense,
     VendorEntity vendor,
@@ -377,16 +400,19 @@ abstract class ActivityEntity implements Built<ActivityEntity, ActivityEntityBui
     activity = activity.replaceFirst(':user', user?.fullName ?? '');
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
-    //activity = activity.replaceFirst(':quote', invoice?.invoiceNumber ?? '');
+    activity = activity.replaceFirst(':quote', quote?.invoiceNumber ?? '');
     activity = activity.replaceFirst(':contact', client?.displayName ?? '');
-    activity = activity.replaceFirst(':payment', payment?.transactionReference ?? '');
+    activity =
+        activity.replaceFirst(':payment', payment?.transactionReference ?? '');
     activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');
     activity = activity.replaceFirst(':task', task?.description ?? '');
     activity = activity.replaceFirst(':expense', expense?.privateNotes ?? '');
     activity = activity.replaceFirst(':vendor', vendor?.name ?? '');
+    activity = activity.replaceAll('  ', ' ');
 
     return activity;
   }
 
-  static Serializer<ActivityEntity> get serializer => _$activityEntitySerializer;
+  static Serializer<ActivityEntity> get serializer =>
+      _$activityEntitySerializer;
 }

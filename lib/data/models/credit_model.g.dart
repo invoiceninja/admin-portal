@@ -510,7 +510,7 @@ class _$CreditEntity extends CreditEntity {
         creditNumber == other.creditNumber &&
         privateNotes == other.privateNotes &&
         publicNotes == other.publicNotes &&
-        clientId == other.entityId &&
+        clientId == other.clientId &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&

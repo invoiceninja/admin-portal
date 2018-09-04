@@ -1239,7 +1239,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     return amount == other.amount &&
         balance == other.balance &&
         isQuote == other.isQuote &&
-        clientId == other.entityId &&
+        clientId == other.clientId &&
         invoiceStatusId == other.invoiceStatusId &&
         invoiceNumber == other.invoiceNumber &&
         discount == other.discount &&

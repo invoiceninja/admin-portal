@@ -803,7 +803,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxRate2 == other.taxRate2 &&
-        clientId == other.entityId &&
+        clientId == other.clientId &&
         invoiceId == other.invoiceId &&
         vendorId == other.vendorId &&
         customValue1 == other.customValue1 &&
