@@ -223,6 +223,7 @@ class AppLocalization {
       'subject': 'Subject',
       'body': 'Body',
       'send_email': 'Send Email',
+      'send_receipt_to_client': 'Send receipt to the client',
       'documents': 'Documents',
       'auto_billing': 'Auto billing',
       'button': 'Button',
@@ -7470,8 +7471,7 @@ class AppLocalization {
   String get clientsPayments =>
       _localizedValues[locale.languageCode]['clients_payments'];
 
-  String get filteredBy =>
-      _localizedValues[locale.languageCode]['filtered_by'];
+  String get filteredBy => _localizedValues[locale.languageCode]['filtered_by'];
 
   String get pastDue => _localizedValues[locale.languageCode]['past_due'];
 
@@ -7584,6 +7584,9 @@ class AppLocalization {
   String get body => _localizedValues[locale.languageCode]['body'];
 
   String get sendEmail => _localizedValues[locale.languageCode]['send_email'];
+
+  String get sendReceiptToClient =>
+      _localizedValues[locale.languageCode]['send_receipt_to_client'];
 
   String get documents => _localizedValues[locale.languageCode]['documents'];
 

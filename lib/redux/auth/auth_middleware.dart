@@ -42,7 +42,8 @@ void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
-  store.dispatch(UserSettingsChanged(enableDarkMode: enableDarkMode));
+  final bool emailPayment = prefs.getBool(kSharedPrefEmailPayment) ?? false;
+  store.dispatch(UserSettingsChanged(enableDarkMode: enableDarkMode, emailPayment: emailPayment));
 
   Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
 }

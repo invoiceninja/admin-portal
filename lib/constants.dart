@@ -7,6 +7,7 @@ const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefSecret = 'secret';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
+const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAppVersion = 'app_version';
 
 const int kMinMajorAppVersion = 4;

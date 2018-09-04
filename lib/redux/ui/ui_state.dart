@@ -19,6 +19,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       selectedCompanyIndex: 0,
       currentRoute: LoginScreen.route,
       enableDarkMode: enableDarkMode ?? false,
+      emailPayment: false,
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
@@ -36,6 +37,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   String get currentRoute;
 
   bool get enableDarkMode;
+
+  bool get emailPayment;
 
   ProductUIState get productUIState;
 

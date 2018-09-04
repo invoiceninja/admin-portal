@@ -19,14 +19,13 @@ UIState uiReducer(UIState state, dynamic action) {
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..emailPayment = emailPaymentReducer(state.emailPayment, action)
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
     // STARTER: reducer - do not remove comment
-..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
-
-    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
-  );
+    ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
+    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action)));
 }
 
 Reducer<String> filterReducer = combineReducers([
@@ -37,12 +36,20 @@ String updateFilter(String filter, FilterCompany action) {
   return action.filter;
 }
 
+Reducer<bool> emailPaymentReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>(updateEmailPaymentReducer),
+]);
+
+bool updateEmailPaymentReducer(bool emailPayment, UserSettingsChanged action) {
+  return action.emailPayment ?? emailPayment;
+}
+
 Reducer<bool> darkModeReducer = combineReducers([
   TypedReducer<bool, UserSettingsChanged>(updateDarkModeReducer),
 ]);
 
 bool updateDarkModeReducer(bool enableDarkMode, UserSettingsChanged action) {
-  return action.enableDarkMode;
+  return action.enableDarkMode ?? enableDarkMode;
 }
 
 Reducer<String> currentRouteReducer = combineReducers([
