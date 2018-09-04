@@ -31,7 +31,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState3: CompanyState(),
       companyState4: CompanyState(),
       companyState5: CompanyState(),
-      uiState: UIState(enableDarkMode: enableDarkMode),
+      uiState: UIState(CompanyEntity(), enableDarkMode: enableDarkMode),
     );
   }
 

@@ -7,26 +7,31 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'payment_model.g.dart';
 
-abstract class PaymentListResponse implements Built<PaymentListResponse, PaymentListResponseBuilder> {
+abstract class PaymentListResponse
+    implements Built<PaymentListResponse, PaymentListResponseBuilder> {
+  factory PaymentListResponse([void updates(PaymentListResponseBuilder b)]) =
+      _$PaymentListResponse;
 
-  factory PaymentListResponse([void updates(PaymentListResponseBuilder b)]) = _$PaymentListResponse;
   PaymentListResponse._();
 
   BuiltList<PaymentEntity> get data;
 
-  static Serializer<PaymentListResponse> get serializer => _$paymentListResponseSerializer;
+  static Serializer<PaymentListResponse> get serializer =>
+      _$paymentListResponseSerializer;
 }
 
-abstract class PaymentItemResponse implements Built<PaymentItemResponse, PaymentItemResponseBuilder> {
+abstract class PaymentItemResponse
+    implements Built<PaymentItemResponse, PaymentItemResponseBuilder> {
+  factory PaymentItemResponse([void updates(PaymentItemResponseBuilder b)]) =
+      _$PaymentItemResponse;
 
-  factory PaymentItemResponse([void updates(PaymentItemResponseBuilder b)]) = _$PaymentItemResponse;
   PaymentItemResponse._();
 
   PaymentEntity get data;
 
-  static Serializer<PaymentItemResponse> get serializer => _$paymentItemResponseSerializer;
+  static Serializer<PaymentItemResponse> get serializer =>
+      _$paymentItemResponseSerializer;
 }
-
 
 class PaymentFields {
   static const String amount = 'amount';
@@ -45,16 +50,19 @@ class PaymentFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class PaymentEntity extends Object with BaseEntity implements Built<PaymentEntity, PaymentEntityBuilder> {
-
+abstract class PaymentEntity extends Object
+    with BaseEntity
+    implements Built<PaymentEntity, PaymentEntityBuilder> {
   static int counter = 0;
-  factory PaymentEntity() {
+
+  factory PaymentEntity(CompanyEntity company) {
     return _$PaymentEntity._(
       id: --PaymentEntity.counter,
       amount: 0.0,
       transactionReference: '',
       paymentDate: convertDateTimeToSqlDate(),
-      paymentTypeId: 0,
+      paymentTypeId:
+          company.defaultPaymentTypeId > 0 ? company.defaultPaymentTypeId : 0,
       invoiceId: 0,
       clientId: 0,
       invoiceNumber: '',
@@ -68,6 +76,7 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       isDeleted: false,
     );
   }
+
   PaymentEntity._();
 
   @override
@@ -109,18 +118,19 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
 
   @BuiltValueField(wireName: 'exchange_currency_id')
   int get exchangeCurrencyId;
-  
+
   int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
     int response = 0;
     final PaymentEntity paymentA = sortAscending ? this : credit;
-    final PaymentEntity paymentB = sortAscending ? credit: this;
+    final PaymentEntity paymentB = sortAscending ? credit : this;
 
     switch (sortField) {
       case PaymentFields.amount:
         response = paymentA.amount.compareTo(paymentB.amount);
         break;
       case PaymentFields.transactionReference:
-        response = paymentA.transactionReference.compareTo(paymentB.transactionReference);
+        response = paymentA.transactionReference
+            .compareTo(paymentB.transactionReference);
         break;
       case PaymentFields.paymentDate:
         response = paymentA.paymentDate.compareTo(paymentB.paymentDate);
@@ -129,7 +139,7 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
         response = paymentA.updatedAt.compareTo(paymentB.updatedAt);
         break;
     }
-    
+
     return response;
   }
 
@@ -176,7 +186,6 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
 
     return actions..addAll(getEntityBaseActions(user: user));
   }
-
 
   @override
   String get listDisplayName {

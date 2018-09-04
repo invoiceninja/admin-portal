@@ -198,7 +198,7 @@ class InvoiceViewVM extends EntityViewVM {
             case EntityAction.payment:
               store.dispatch(EditPayment(
                   context: context,
-                  payment: invoice.newPayment));
+                  payment: invoice.createPayment(state.selectedCompany)));
               break;
 
           }

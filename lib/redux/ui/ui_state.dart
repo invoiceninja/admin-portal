@@ -1,5 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
@@ -13,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
-  factory UIState({bool enableDarkMode}) {
+  factory UIState(CompanyEntity company, {bool enableDarkMode}) {
     return _$UIState._(
       selectedCompanyIndex: 0,
       currentRoute: LoginScreen.route,
@@ -22,7 +23,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
-paymentUIState: PaymentUIState(),
+      paymentUIState: PaymentUIState(company),
 
       quoteUIState: QuoteUIState(),
     );
@@ -46,7 +47,7 @@ paymentUIState: PaymentUIState(),
   String get filter;
 
   // STARTER: properties - do not remove comment
-PaymentUIState get paymentUIState;
+  PaymentUIState get paymentUIState;
 
   QuoteUIState get quoteUIState;
 

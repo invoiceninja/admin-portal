@@ -94,7 +94,7 @@ class _ClientViewState extends State<ClientView>
                             onTap: () {
                               Navigator.of(context).pop();
                               store.dispatch(EditPayment(
-                                  payment: PaymentEntity()
+                                  payment: PaymentEntity(company)
                                       .rebuild((b) => b.clientId = client.id),
                                   context: context));
                             },

@@ -443,10 +443,12 @@ abstract class InvoiceEntity extends Object
 
   String get invitationDownloadLink => invitations.first?.downloadLink;
 
-  PaymentEntity get newPayment => PaymentEntity().rebuild((b) => b
-    ..invoiceId = id
-    ..clientId = clientId
-    ..amount = balance);
+  PaymentEntity createPayment(CompanyEntity company) {
+    return PaymentEntity(company).rebuild((b) => b
+      ..invoiceId = id
+      ..clientId = clientId
+      ..amount = balance);
+  }
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }

@@ -165,7 +165,7 @@ class InvoiceListVM extends EntityListVM {
               Navigator.of(context).pop();
               store.dispatch(EditPayment(
                   context: context,
-                  payment: invoice.newPayment));
+                  payment: invoice.createPayment(state.selectedCompany)));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(

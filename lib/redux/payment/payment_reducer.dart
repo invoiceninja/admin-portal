@@ -32,7 +32,7 @@ final editingReducer = combineReducers<PaymentEntity>([
 ]);
 
 PaymentEntity _clearEditing(PaymentEntity payment, dynamic action) {
-  return PaymentEntity();
+  return PaymentEntity(action.company);
 }
 
 PaymentEntity _updateEditing(PaymentEntity payment, dynamic action) {

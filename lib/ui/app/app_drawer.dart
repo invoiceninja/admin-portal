@@ -191,7 +191,7 @@ class AppDrawer extends StatelessWidget {
             onCreateTap: () {
               navigator.pop();
               store.dispatch(EditPayment(
-                  payment: PaymentEntity(), context: context));
+                  payment: PaymentEntity(company), context: context));
             },
           ),
           DrawerTile(
