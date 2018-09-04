@@ -31,8 +31,8 @@ final editingReducer = combineReducers<PaymentEntity>([
   TypedReducer<PaymentEntity, SelectCompany>(_clearEditing),
 ]);
 
-PaymentEntity _clearEditing(PaymentEntity payment, dynamic action) {
-  return PaymentEntity(action.company);
+PaymentEntity _clearEditing(PaymentEntity payment, SelectCompany action) {
+  return PaymentEntity();
 }
 
 PaymentEntity _updateEditing(PaymentEntity payment, dynamic action) {

@@ -55,14 +55,15 @@ abstract class PaymentEntity extends Object
     implements Built<PaymentEntity, PaymentEntityBuilder> {
   static int counter = 0;
 
-  factory PaymentEntity(CompanyEntity company) {
+  factory PaymentEntity([CompanyEntity company]) {
     return _$PaymentEntity._(
       id: --PaymentEntity.counter,
       amount: 0.0,
       transactionReference: '',
       paymentDate: convertDateTimeToSqlDate(),
-      paymentTypeId:
-          company.defaultPaymentTypeId > 0 ? company.defaultPaymentTypeId : 0,
+      paymentTypeId: company != null && company.defaultPaymentTypeId > 0
+          ? company.defaultPaymentTypeId
+          : 0,
       invoiceId: 0,
       clientId: 0,
       invoiceNumber: '',

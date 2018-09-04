@@ -23,7 +23,7 @@ abstract class CompanyState
       clientState: ClientState(),
       invoiceState: InvoiceState(),
       // STARTER: constructor - do not remove comment
-paymentState: PaymentState(),
+      paymentState: PaymentState(),
 
       quoteState: QuoteState(),
     );
@@ -43,7 +43,7 @@ paymentState: PaymentState(),
   InvoiceState get invoiceState;
 
   // STARTER: fields - do not remove comment
-PaymentState get paymentState;
+  PaymentState get paymentState;
 
   QuoteState get quoteState;
 
