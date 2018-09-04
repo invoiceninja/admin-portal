@@ -355,10 +355,10 @@ abstract class ClientEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user}) {
+  List<EntityAction> getEntityActions({UserEntity user, bool includeCreate = false}) {
     final actions = <EntityAction>[];
 
-    if (user.canCreate(EntityType.client) && isActive) {
+    if (includeCreate && user.canCreate(EntityType.client) && isActive) {
       actions.add(EntityAction.invoice);
     }
 
