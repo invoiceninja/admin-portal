@@ -379,7 +379,9 @@ abstract class InvoiceEntity extends Object
       actions.add(EntityAction.email);
     }
 
-    if (user.canEditEntity(this) && user.canCreate(EntityType.payment) && isUnpaid) {
+    if (user.canEditEntity(this) &&
+        user.canCreate(EntityType.payment) &&
+        isUnpaid) {
       actions.add(EntityAction.payment);
     }
 
@@ -440,6 +442,11 @@ abstract class InvoiceEntity extends Object
   String get invitationSilentLink => invitations.first?.silentLink;
 
   String get invitationDownloadLink => invitations.first?.downloadLink;
+
+  PaymentEntity get newPayment => PaymentEntity().rebuild((b) => b
+    ..invoiceId = id
+    ..clientId = clientId
+    ..amount = balance);
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }

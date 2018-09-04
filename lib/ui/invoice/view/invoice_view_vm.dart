@@ -195,6 +195,12 @@ class InvoiceViewVM extends EntityViewVM {
               store.dispatch(
                   EditInvoice(context: context, invoice: invoice.clone));
               break;
+            case EntityAction.payment:
+              store.dispatch(EditPayment(
+                  context: context,
+                  payment: invoice.newPayment));
+              break;
+
           }
         });
   }

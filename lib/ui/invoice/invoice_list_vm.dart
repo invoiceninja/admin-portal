@@ -165,10 +165,7 @@ class InvoiceListVM extends EntityListVM {
               Navigator.of(context).pop();
               store.dispatch(EditPayment(
                   context: context,
-                  payment: PaymentEntity().rebuild((b) => b
-                    ..invoiceId = invoice.id
-                    ..clientId = invoice.clientId
-                    ..amount = invoice.balance)));
+                  payment: invoice.newPayment));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreInvoiceRequest(
