@@ -137,13 +137,7 @@ class _ProductEditState extends State<ProductEdit> {
                     user: viewModel.company.user,
                     entity: viewModel.product,
                     onSelected: viewModel.onActionSelected,
-                    customActions: [
-                      ActionMenuChoice(
-                        label: localization.clone,
-                        icon: Icons.control_point_duplicate,
-                        action: EntityAction.clone,
-                      ),
-                    ],
+                    entityActions: product.getEntityActions(user: user),
                   )
           ],
         ),

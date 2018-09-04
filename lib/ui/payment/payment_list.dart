@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentList extends StatelessWidget {
@@ -27,41 +28,23 @@ class PaymentList extends StatelessWidget {
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              user.canEditEntity(payment) && client.hasEmailAddress
-                  ? ListTile(
-                      leading: Icon(Icons.send),
-                      title: Text(AppLocalization.of(context).email),
-                      onTap: () => viewModel.onEntityAction(
-                          context, payment, EntityAction.email),
-                    )
-                  : Container(),
-              Divider(),
-              user.canEditEntity(payment) && !payment.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.restore),
-                      title: Text(AppLocalization.of(context).restore),
-                      onTap: () => viewModel.onEntityAction(
-                          context, payment, EntityAction.restore),
-                    )
-                  : Container(),
-              user.canEditEntity(payment) && payment.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.archive),
-                      title: Text(AppLocalization.of(context).archive),
-                      onTap: () => viewModel.onEntityAction(
-                          context, payment, EntityAction.archive),
-                    )
-                  : Container(),
-              user.canEditEntity(payment) && !payment.isDeleted
-                  ? ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text(AppLocalization.of(context).delete),
-                      onTap: () => viewModel.onEntityAction(
-                          context, payment, EntityAction.delete),
-                    )
-                  : Container(),
-            ]));
+        builder: (BuildContext context) => SimpleDialog(
+                children: payment
+                    .getEntityActions(user: user, client: client)
+                    .map((entityAction) {
+              if (entityAction == null) {
+                return Divider();
+              } else {
+                return ListTile(
+                  leading: Icon(getEntityActionIcon(entityAction)),
+                  title: Text(AppLocalization.of(context)
+                      .lookup(entityAction.toString())),
+                  onTap: () =>
+                      viewModel.onEntityAction(context, payment, entityAction),
+                );
+              }
+            }).toList()));
+
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(

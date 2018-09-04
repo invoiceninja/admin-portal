@@ -38,7 +38,7 @@ class ActivityListTile extends StatelessWidget {
     );
 
     return ListTile(
-      leading: Icon(getIconData(activity.entityType)),
+      leading: Icon(getEntityIcon(activity.entityType)),
       title: Text(title),
       onTap: !enableNavigation
           ? null

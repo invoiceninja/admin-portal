@@ -298,34 +298,8 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   : Container(),
               ActionMenuButton(
                 user: user,
-                customActions: [
-                  user.canCreate(EntityType.invoice)
-                      ? ActionMenuChoice(
-                          action: EntityAction.clone,
-                          icon: Icons.control_point_duplicate,
-                          label: AppLocalization.of(context).clone,
-                        )
-                      : null,
-                  user.canEditEntity(invoice) && !invoice.isPublic
-                      ? ActionMenuChoice(
-                          action: EntityAction.markSent,
-                          icon: Icons.publish,
-                          label: AppLocalization.of(context).markSent,
-                        )
-                      : null,
-                  user.canEditEntity(invoice) && client.hasEmailAddress
-                      ? ActionMenuChoice(
-                          action: EntityAction.email,
-                          icon: Icons.send,
-                          label: AppLocalization.of(context).email,
-                        )
-                      : null,
-                  ActionMenuChoice(
-                    action: EntityAction.pdf,
-                    icon: Icons.picture_as_pdf,
-                    label: AppLocalization.of(context).pdf,
-                  ),
-                ],
+                entityActions:
+                    invoice.getEntityActions(client: client, user: user),
                 isSaving: viewModel.isSaving,
                 entity: invoice,
                 onSelected: viewModel.onActionSelected,

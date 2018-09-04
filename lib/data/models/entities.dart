@@ -136,6 +136,24 @@ abstract class BaseEntity extends Object with SelectableEntity {
 
   bool get isArchived => archivedAt != null && !isDeleted;
 
+  List<EntityAction> getEntityBaseActions({UserEntity user}) {
+    final actions = <EntityAction>[];
+
+    if (user.canEditEntity(this) && (isArchived || isDeleted)) {
+      actions.add(EntityAction.restore);
+    }
+
+    if (user.canEditEntity(this) && isActive) {
+      actions.add(EntityAction.archive);
+    }
+
+    if (user.canEditEntity(this) && (isActive || isArchived)) {
+      actions.add(EntityAction.delete);
+    }
+
+    return actions;
+  }
+
   bool matchesStatuses(BuiltList<EntityStatus> statuses) {
     return true;
   }

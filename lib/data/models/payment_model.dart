@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'payment_model.g.dart';
@@ -161,6 +162,21 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
 
     return null;
   }
+
+  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+    final actions = <EntityAction>[];
+
+    if (user.canEditEntity(this) && client.hasEmailAddress) {
+      actions.add(EntityAction.email);
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(getEntityBaseActions(user: user));
+  }
+
 
   @override
   String get listDisplayName {

@@ -110,7 +110,7 @@ class CustomTabBarView extends StatelessWidget {
             final subtitle = entity.matchesFilterValue(viewModel.filter);
             return ListTile(
               title: Text(entity.listDisplayName),
-              leading: Icon(getIconData(entity.entityType)),
+              leading: Icon(getEntityIcon(entity.entityType)),
               trailing: Icon(Icons.navigate_next),
               subtitle: subtitle != null ? Text(subtitle) : Container(),
               onTap: () {

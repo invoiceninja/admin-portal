@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'product_model.g.dart';
@@ -189,6 +190,20 @@ abstract class ProductEntity extends Object
       return customValue2;
     }
     return null;
+  }
+
+  List<EntityAction> getEntityActions({UserEntity user}) {
+    final actions = <EntityAction>[];
+
+    if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.clone);
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(getEntityBaseActions(user: user));
   }
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;

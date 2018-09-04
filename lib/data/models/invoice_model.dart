@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'invoice_model.g.dart';
@@ -361,6 +362,30 @@ abstract class InvoiceEntity extends Object
       return customTextValue2;
     }
     return null;
+  }
+
+  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+    final actions = <EntityAction>[];
+
+    if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.clone);
+    }
+
+    if (user.canEditEntity(this) && !isPublic) {
+      actions.add(EntityAction.markSent);
+    }
+
+    if (user.canEditEntity(this) && client.hasEmailAddress) {
+      actions.add(EntityAction.email);
+    }
+
+    actions.add(EntityAction.pdf);
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(getEntityBaseActions(user: user));
   }
 
   InvoiceEntity applyTax(TaxRateEntity taxRate) {
