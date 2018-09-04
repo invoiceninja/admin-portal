@@ -117,9 +117,7 @@ class _InvoiceViewState extends State<InvoiceView> {
             Material(
               color: Theme.of(context).canvasColor,
               child: ListTile(
-                title: Text(payment.transactionReference.isNotEmpty
-                    ? payment.transactionReference
-                    : localization.payment),
+                title: Text(localization.payment),
                 subtitle: Text(
                     formatNumber(payment.amount, context, clientId: client.id) +
                         ' • ' +

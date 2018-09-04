@@ -18,6 +18,16 @@ List<BaseEntity> filteredSelector(String filter, CompanyState state) {
         .where((client) {
       return client.matchesFilter(filter);
     }).toList())
+    ..addAll(state.quoteState.list
+        .map((quoteId) => state.quoteState.map[quoteId])
+        .where((quote) {
+      return quote.matchesFilter(filter);
+    }).toList())
+    ..addAll(state.paymentState.list
+        .map((paymentId) => state.paymentState.map[paymentId])
+        .where((payment) {
+      return payment.matchesFilter(filter);
+    }).toList())
     ..addAll(state.invoiceState.list
         .map((invoiceId) => state.invoiceState.map[invoiceId])
         .where((invoice) {
