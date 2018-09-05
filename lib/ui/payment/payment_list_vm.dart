@@ -95,28 +95,25 @@ class PaymentListVM {
           store.dispatch(ViewPayment(paymentId: payment.id, context: context));
         },
         onEntityAction: (context, payment, action) {
+          final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.email:
               store.dispatch(EmailPaymentRequest(
-                  popCompleter(context, AppLocalization.of(context).emailedPayment), payment
-              ));
+                  popCompleter(context, localization.emailedPayment), payment));
               break;
             case EntityAction.restore:
               store.dispatch(RestorePaymentRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).restoredPayment),
+                  popCompleter(context, localization.restoredPayment),
                   payment.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchivePaymentRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).archivedPayment),
+                  popCompleter(context, localization.archivedPayment),
                   payment.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeletePaymentRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).deletedPayment),
+                  popCompleter(context, localization.deletedPayment),
                   payment.id));
               break;
           }

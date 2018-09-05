@@ -77,6 +77,12 @@ class PaymentViewVM {
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.email:
+              store.dispatch(EmailPaymentRequest(
+                  popCompleter(
+                      context, localization.emailedPayment),
+                  payment));
+              break;
             case EntityAction.archive:
               store.dispatch(ArchivePaymentRequest(
                   popCompleter(context, localization.archivedClient),
