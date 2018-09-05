@@ -96,6 +96,11 @@ class PaymentListVM {
         },
         onEntityAction: (context, payment, action) {
           switch (action) {
+            case EntityAction.email:
+              store.dispatch(EmailPaymentRequest(
+                  popCompleter(context, AppLocalization.of(context).emailedPayment), payment
+              ));
+              break;
             case EntityAction.restore:
               store.dispatch(RestorePaymentRequest(
                   popCompleter(

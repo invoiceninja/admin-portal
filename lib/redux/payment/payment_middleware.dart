@@ -24,6 +24,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
   final archivePayment = _archivePayment(repository);
   final deletePayment = _deletePayment(repository);
   final restorePayment = _restorePayment(repository);
+  final emailPayment = _emailPayment(repository);
 
   return [
     TypedMiddleware<AppState, ViewPaymentList>(viewPaymentList),
@@ -35,6 +36,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
     TypedMiddleware<AppState, ArchivePaymentRequest>(archivePayment),
     TypedMiddleware<AppState, DeletePaymentRequest>(deletePayment),
     TypedMiddleware<AppState, RestorePaymentRequest>(restorePayment),
+    TypedMiddleware<AppState, EmailPaymentRequest>(emailPayment),
   ];
 }
 
@@ -168,6 +170,25 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
     next(action);
   };
 }
+
+Middleware<AppState> _emailPayment(PaymentRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    repository
+        .saveData(
+        store.state.selectedCompany, store.state.authState, action.payment, sendEmail: true)
+        .then((PaymentEntity payment) {
+      store.dispatch(SavePaymentSuccess(payment));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SavePaymentFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
 
 /*
 Middleware<AppState> _loadPayment(PaymentRepository repository) {

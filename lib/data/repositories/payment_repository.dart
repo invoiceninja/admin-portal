@@ -45,9 +45,12 @@ class PaymentRepository {
       }
       response = await webClient.post(url, company.token, json.encode(data));
     } else {
-      var url = auth.url + '/payments/' + payment.id.toString();
+      var url = '${auth.url}/payments/${payment.id}?';
+      if (sendEmail) {
+        url += '&email_receipt=true';
+      }
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response = await webClient.put(url, company.token, json.encode(data));
     }

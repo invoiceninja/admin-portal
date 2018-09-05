@@ -6,12 +6,14 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewPaymentList implements PersistUI {
   final BuildContext context;
+
   ViewPaymentList(this.context);
 }
 
 class ViewPayment implements PersistUI {
   final int paymentId;
   final BuildContext context;
+
   ViewPayment({this.paymentId, this.context});
 }
 
@@ -20,11 +22,14 @@ class EditPayment implements PersistUI {
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
-  EditPayment({this.payment, this.context, this.completer, this.trackRoute = true});
+
+  EditPayment(
+      {this.payment, this.context, this.completer, this.trackRoute = true});
 }
 
 class UpdatePayment implements PersistUI {
   final PaymentEntity payment;
+
   UpdatePayment(this.payment);
 }
 
@@ -54,6 +59,7 @@ class LoadPaymentRequest implements StartLoading {}
 
 class LoadPaymentFailure implements StopLoading {
   final dynamic error;
+
   LoadPaymentFailure(this.error);
 
   @override
@@ -64,6 +70,7 @@ class LoadPaymentFailure implements StopLoading {
 
 class LoadPaymentSuccess implements StopLoading, PersistData {
   final PaymentEntity payment;
+
   LoadPaymentSuccess(this.payment);
 
   @override
@@ -76,6 +83,7 @@ class LoadPaymentsRequest implements StartLoading {}
 
 class LoadPaymentsFailure implements StopLoading {
   final dynamic error;
+
   LoadPaymentsFailure(this.error);
 
   @override
@@ -86,6 +94,7 @@ class LoadPaymentsFailure implements StopLoading {
 
 class LoadPaymentsSuccess implements StopLoading, PersistData {
   final BuiltList<PaymentEntity> payments;
+
   LoadPaymentsSuccess(this.payments);
 
   @override
@@ -94,11 +103,10 @@ class LoadPaymentsSuccess implements StopLoading, PersistData {
   }
 }
 
-
-
 class SavePaymentRequest implements StartSaving {
   final Completer completer;
   final PaymentEntity payment;
+
   SavePaymentRequest({this.completer, this.payment});
 }
 
@@ -110,12 +118,14 @@ class SavePaymentSuccess implements StopSaving, PersistData, PersistUI {
 
 class AddPaymentSuccess implements StopSaving, PersistData, PersistUI {
   final PaymentEntity payment;
+
   AddPaymentSuccess(this.payment);
 }
 
 class SavePaymentFailure implements StopSaving {
   final Object error;
-  SavePaymentFailure (this.error);
+
+  SavePaymentFailure(this.error);
 }
 
 class ArchivePaymentRequest implements StartSaving {
@@ -127,11 +137,13 @@ class ArchivePaymentRequest implements StartSaving {
 
 class ArchivePaymentSuccess implements StopSaving, PersistData {
   final PaymentEntity payment;
+
   ArchivePaymentSuccess(this.payment);
 }
 
 class ArchivePaymentFailure implements StopSaving {
   final PaymentEntity payment;
+
   ArchivePaymentFailure(this.payment);
 }
 
@@ -144,40 +156,59 @@ class DeletePaymentRequest implements StartSaving {
 
 class DeletePaymentSuccess implements StopSaving, PersistData {
   final PaymentEntity payment;
+
   DeletePaymentSuccess(this.payment);
 }
 
 class DeletePaymentFailure implements StopSaving {
   final PaymentEntity payment;
+
   DeletePaymentFailure(this.payment);
 }
 
 class RestorePaymentRequest implements StartSaving {
   final Completer completer;
   final int paymentId;
+
   RestorePaymentRequest(this.completer, this.paymentId);
 }
 
 class RestorePaymentSuccess implements StopSaving, PersistData {
   final PaymentEntity payment;
+
   RestorePaymentSuccess(this.payment);
 }
 
 class RestorePaymentFailure implements StopSaving {
   final PaymentEntity payment;
+
   RestorePaymentFailure(this.payment);
 }
 
+class EmailPaymentRequest implements StartSaving {
+  final Completer completer;
+  final PaymentEntity payment;
 
+  EmailPaymentRequest(this.completer, this.payment);
+}
 
+class EmailPaymentSuccess implements StopSaving, PersistData {}
+
+class EmailPaymentFailure implements StopSaving {
+  final dynamic error;
+
+  EmailPaymentFailure(this.error);
+}
 
 class FilterPayments {
   final String filter;
+
   FilterPayments(this.filter);
 }
 
 class SortPayments implements PersistUI {
   final String field;
+
   SortPayments(this.field);
 }
 
@@ -205,4 +236,3 @@ class FilterPaymentsByEntity implements PersistUI {
 
   FilterPaymentsByEntity({this.entityId, this.entityType});
 }
-

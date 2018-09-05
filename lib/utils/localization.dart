@@ -118,6 +118,7 @@ class AppLocalization {
       'deleted_invoice': 'Successfully deleted invoice',
       'restored_invoice': 'Successfully restored invoice',
       'emailed_invoice': 'Successfully emailed invoice',
+      'emailed_payment': 'Successfully emailed payment',
       'amount': 'Amount',
       'invoice_number': 'Invoice Number',
       'invoice_date': 'Invoice Date',
@@ -7352,6 +7353,9 @@ class AppLocalization {
 
   String get emailedInvoice =>
       _localizedValues[locale.languageCode]['emailed_invoice'];
+
+  String get emailedPayment =>
+      _localizedValues[locale.languageCode]['emailed_payment'];
 
   String get amount => _localizedValues[locale.languageCode]['amount'];
 
