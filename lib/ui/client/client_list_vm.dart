@@ -81,6 +81,7 @@ class ClientListVM {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },
         onEntityAction: (context, client, action) {
+          final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.invoice:
               store.dispatch(EditInvoice(
@@ -90,23 +91,22 @@ class ClientListVM {
               break;
             case EntityAction.restore:
               store.dispatch(RestoreClientRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).restoredClient),
+                  snackBarCompleter(context, localization.restoredClient),
                   client.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveClientRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).archivedClient),
+                  snackBarCompleter(context, localization.archivedClient),
                   client.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteClientRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).deletedClient),
+                  snackBarCompleter(context, localization.deletedClient),
                   client.id));
               break;
           }
+
+          return false;
         },
         onRefreshed: (context) => _handleRefresh(context),
         onDismissed: (BuildContext context, ClientEntity client,

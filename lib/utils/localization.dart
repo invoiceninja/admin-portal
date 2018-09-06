@@ -14,6 +14,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'more': 'More',
       'edit_client': 'Edit Client',
       'edit_product': 'Edit Product',
       'edit_invoice': 'Edit Invoice',
@@ -7103,6 +7104,8 @@ class AppLocalization {
       'activity_47': ':user masraf güncelledi :expense',
     },
   };
+
+  String get more => _localizedValues[locale.languageCode]['more'];
 
   String get editClient => _localizedValues[locale.languageCode]['edit_client'];
 

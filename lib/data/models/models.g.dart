@@ -26,6 +26,7 @@ const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$invoice = const EntityAction._('invoice');
 const EntityAction _$payment = const EntityAction._('payment');
 const EntityAction _$pdf = const EntityAction._('pdf');
+const EntityAction _$more = const EntityAction._('more');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -49,6 +50,8 @@ EntityAction _$valueOf(String name) {
       return _$payment;
     case 'pdf':
       return _$pdf;
+    case 'more':
+      return _$more;
     default:
       throw new ArgumentError(name);
   }
@@ -66,6 +69,7 @@ final BuiltSet<EntityAction> _$values =
   _$invoice,
   _$payment,
   _$pdf,
+  _$more,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

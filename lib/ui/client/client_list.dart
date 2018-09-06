@@ -44,19 +44,20 @@ class ClientList extends StatelessWidget {
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(
-            children: client
-                .getEntityActions(user: user)
-                .map((entityAction) {
+        builder: (BuildContext dialogContext) => SimpleDialog(
+                children:
+                    client.getEntityActions(user: user).map((entityAction) {
               if (entityAction == null) {
                 return Divider();
               } else {
                 return ListTile(
                   leading: Icon(getEntityActionIcon(entityAction)),
-                  title: Text(AppLocalization.of(context)
+                  title: Text(AppLocalization.of(dialogContext)
                       .lookup(entityAction.toString())),
-                  onTap: () =>
-                      viewModel.onEntityAction(context, client, entityAction),
+                  onTap: () {
+                    viewModel.onEntityAction(context, client, entityAction);
+                    Navigator.of(dialogContext).pop();
+                  },
                 );
               }
             }).toList()));
@@ -82,6 +83,13 @@ class ClientList extends StatelessWidget {
                 user: viewModel.user,
                 filter: viewModel.filter,
                 client: client,
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    _showMenu(context, client);
+                  } else {
+                    viewModel.onEntityAction(context, client, action);
+                  }
+                },
                 onDismissed: (DismissDirection direction) =>
                     viewModel.onDismissed(context, client, direction),
                 onTap: () => viewModel.onClientTap(context, client),
