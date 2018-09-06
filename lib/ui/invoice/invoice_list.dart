@@ -26,7 +26,7 @@ class InvoiceList extends StatelessWidget {
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(
+        builder: (BuildContext dialogContext) => SimpleDialog(
                 children: invoice
                     .getEntityActions(user: user, client: client)
                     .map((entityAction) {
@@ -37,8 +37,10 @@ class InvoiceList extends StatelessWidget {
                   leading: Icon(getEntityActionIcon(entityAction)),
                   title: Text(AppLocalization.of(context)
                       .lookup(entityAction.toString())),
-                  onTap: () =>
-                      viewModel.onEntityAction(context, invoice, entityAction),
+                  onTap: () {
+                    Navigator.of(dialogContext).pop();
+                    viewModel.onEntityAction(context, invoice, entityAction);
+                  },
                 );
               }
             }).toList()));
@@ -124,11 +126,16 @@ class InvoiceList extends StatelessWidget {
                                   filter: viewModel.filter,
                                   invoice: invoice,
                                   client: viewModel.clientMap[invoice.clientId],
-                                  onDismissed: (DismissDirection direction) =>
-                                      viewModel.onDismissed(
-                                          context, invoice, direction),
                                   onTap: () =>
                                       viewModel.onInvoiceTap(context, invoice),
+                                  onEntityAction: (EntityAction action) {
+                                    if (action == EntityAction.more) {
+                                      _showMenu(context, invoice, client);
+                                    } else {
+                                      viewModel.onEntityAction(
+                                          context, invoice, action);
+                                    }
+                                  },
                                   onLongPress: () =>
                                       _showMenu(context, invoice, client),
                                 ),

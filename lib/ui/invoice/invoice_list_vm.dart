@@ -45,7 +45,6 @@ class EntityListVM {
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, InvoiceEntity) onInvoiceTap;
-  final Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
@@ -61,7 +60,6 @@ class EntityListVM {
     @required this.isLoaded,
     @required this.filter,
     @required this.onInvoiceTap,
-    @required this.onDismissed,
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
@@ -80,7 +78,6 @@ class InvoiceListVM extends EntityListVM {
     bool isLoading,
     bool isLoaded,
     Function(BuildContext, InvoiceEntity) onInvoiceTap,
-    Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed,
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
@@ -95,7 +92,6 @@ class InvoiceListVM extends EntityListVM {
           isLoading: isLoading,
           isLoaded: isLoaded,
           onInvoiceTap: onInvoiceTap,
-          onDismissed: onDismissed,
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
@@ -116,98 +112,72 @@ class InvoiceListVM extends EntityListVM {
     final state = store.state;
 
     return InvoiceListVM(
-        user: state.user,
-        listState: state.invoiceListState,
-        invoiceList: memoizedFilteredInvoiceList(
-            state.invoiceState.map,
-            state.invoiceState.list,
-            state.clientState.map,
-            state.invoiceListState),
-        invoiceMap: state.invoiceState.map,
-        clientMap: state.clientState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
-        filter: state.invoiceListState.filter,
-        onInvoiceTap: (context, invoice) {
-          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onClearEntityFilterPressed: () =>
-            store.dispatch(FilterInvoicesByEntity()),
-        onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-            ViewClient(
-                clientId: state.invoiceListState.filterEntityId,
-                context: context)),
-        onEntityAction: (context, invoice, action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.pdf:
-              Navigator.of(context).pop();
-              viewPdf(invoice, context);
-              break;
-            case EntityAction.markSent:
-              store.dispatch(MarkSentInvoiceRequest(
-                  popCompleter(context, localization.markedInvoiceAsSent),
-                  invoice.id));
-              break;
-            case EntityAction.email:
-              store.dispatch(ShowEmailInvoice(
-                  completer: popCompleter(context, localization.emailedInvoice),
-                  invoice: invoice,
-                  context: context));
-              break;
-            case EntityAction.clone:
-              Navigator.of(context).pop();
-              store.dispatch(
-                  EditInvoice(context: context, invoice: invoice.clone));
-              break;
-            case EntityAction.payment:
-              Navigator.of(context).pop();
-              store.dispatch(EditPayment(
-                  context: context,
-                  payment: invoice.createPayment(state.selectedCompany)));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreInvoiceRequest(
-                  popCompleter(context, localization.restoredInvoice),
-                  invoice.id));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveInvoiceRequest(
-                  popCompleter(context, localization.archivedInvoice),
-                  invoice.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteInvoiceRequest(
-                  popCompleter(context, localization.deletedInvoice),
-                  invoice.id));
-              break;
-          }
-        },
-        onDismissed: (BuildContext context, InvoiceEntity invoice,
-            DismissDirection direction) {
-          final localization = AppLocalization.of(context);
-          if (direction == DismissDirection.endToStart) {
-            if (invoice.isDeleted || invoice.isArchived) {
-              store.dispatch(RestoreInvoiceRequest(
-                  snackBarCompleter(context, localization.restoredInvoice),
-                  invoice.id));
-            } else {
-              store.dispatch(ArchiveInvoiceRequest(
-                  snackBarCompleter(context, localization.archivedInvoice),
-                  invoice.id));
-            }
-          } else if (direction == DismissDirection.startToEnd) {
-            if (invoice.isDeleted) {
-              store.dispatch(RestoreInvoiceRequest(
-                  snackBarCompleter(context, localization.restoredInvoice),
-                  invoice.id));
-            } else {
-              store.dispatch(DeleteInvoiceRequest(
-                  snackBarCompleter(context, localization.deletedInvoice),
-                  invoice.id));
-            }
-          }
-        });
+      user: state.user,
+      listState: state.invoiceListState,
+      invoiceList: memoizedFilteredInvoiceList(
+          state.invoiceState.map,
+          state.invoiceState.list,
+          state.clientState.map,
+          state.invoiceListState),
+      invoiceMap: state.invoiceState.map,
+      clientMap: state.clientState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
+      filter: state.invoiceListState.filter,
+      onInvoiceTap: (context, invoice) {
+        store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onClearEntityFilterPressed: () =>
+          store.dispatch(FilterInvoicesByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewClient(
+              clientId: state.invoiceListState.filterEntityId,
+              context: context)),
+      onEntityAction: (context, invoice, action) {
+        final localization = AppLocalization.of(context);
+        switch (action) {
+          case EntityAction.pdf:
+            viewPdf(invoice, context);
+            break;
+          case EntityAction.markSent:
+            store.dispatch(MarkSentInvoiceRequest(
+                snackBarCompleter(context, localization.markedInvoiceAsSent),
+                invoice.id));
+            break;
+          case EntityAction.email:
+            store.dispatch(ShowEmailInvoice(
+                completer:
+                    snackBarCompleter(context, localization.emailedInvoice),
+                invoice: invoice,
+                context: context));
+            break;
+          case EntityAction.clone:
+            store.dispatch(
+                EditInvoice(context: context, invoice: invoice.clone));
+            break;
+          case EntityAction.payment:
+            store.dispatch(EditPayment(
+                context: context,
+                payment: invoice.createPayment(state.selectedCompany)));
+            break;
+          case EntityAction.restore:
+            store.dispatch(RestoreInvoiceRequest(
+                snackBarCompleter(context, localization.restoredInvoice),
+                invoice.id));
+            break;
+          case EntityAction.archive:
+            store.dispatch(ArchiveInvoiceRequest(
+                snackBarCompleter(context, localization.archivedInvoice),
+                invoice.id));
+            break;
+          case EntityAction.delete:
+            store.dispatch(DeleteInvoiceRequest(
+                snackBarCompleter(context, localization.deletedInvoice),
+                invoice.id));
+            break;
+        }
+      },
+    );
   }
 }

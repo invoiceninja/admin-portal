@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentListItem extends StatelessWidget {
   final UserEntity user;
-  final DismissDirectionCallback onDismissed;
+  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final PaymentEntity payment;
@@ -22,7 +22,7 @@ class PaymentListItem extends StatelessWidget {
 
   const PaymentListItem({
     @required this.user,
-    @required this.onDismissed,
+    @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
     @required this.payment,
@@ -44,7 +44,7 @@ class PaymentListItem extends StatelessWidget {
     return DismissibleEntity(
       user: user,
       entity: payment,
-      onDismissed: onDismissed,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,

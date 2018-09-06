@@ -52,11 +52,11 @@ class ClientList extends StatelessWidget {
               } else {
                 return ListTile(
                   leading: Icon(getEntityActionIcon(entityAction)),
-                  title: Text(AppLocalization.of(dialogContext)
+                  title: Text(AppLocalization.of(context)
                       .lookup(entityAction.toString())),
                   onTap: () {
-                    viewModel.onEntityAction(context, client, entityAction);
                     Navigator.of(dialogContext).pop();
+                    viewModel.onEntityAction(context, client, entityAction);
                   },
                 );
               }
@@ -90,8 +90,6 @@ class ClientList extends StatelessWidget {
                     viewModel.onEntityAction(context, client, action);
                   }
                 },
-                onDismissed: (DismissDirection direction) =>
-                    viewModel.onDismissed(context, client, direction),
                 onTap: () => viewModel.onClientTap(context, client),
                 onLongPress: () => _showMenu(context, client),
               ),

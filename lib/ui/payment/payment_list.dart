@@ -31,7 +31,7 @@ class PaymentList extends StatelessWidget {
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(
+        builder: (BuildContext dialogContext) => SimpleDialog(
                 children: payment
                     .getEntityActions(user: user, client: client)
                     .map((entityAction) {
@@ -42,8 +42,10 @@ class PaymentList extends StatelessWidget {
                   leading: Icon(getEntityActionIcon(entityAction)),
                   title: Text(AppLocalization.of(context)
                       .lookup(entityAction.toString())),
-                  onTap: () =>
-                      viewModel.onEntityAction(context, payment, entityAction),
+                  onTap: () {
+                    Navigator.of(dialogContext).pop();
+                    viewModel.onEntityAction(context, payment, entityAction);
+                  },
                 );
               }
             }).toList()));
@@ -140,11 +142,15 @@ class PaymentList extends StatelessWidget {
                                   user: viewModel.user,
                                   filter: viewModel.filter,
                                   payment: payment,
-                                  onDismissed: (DismissDirection direction) =>
-                                      viewModel.onDismissed(
-                                          context, payment, direction),
                                   onTap: () =>
                                       viewModel.onPaymentTap(context, payment),
+                                  onEntityAction: (EntityAction action) {
+                                    if (action == EntityAction.more) {
+                                      _showMenu(context, payment, client);
+                                    } else {
+                                      viewModel.onEntityAction(context, payment, action);
+                                    }
+                                  },
                                   onLongPress: () =>
                                       _showMenu(context, payment, client),
                                 ),

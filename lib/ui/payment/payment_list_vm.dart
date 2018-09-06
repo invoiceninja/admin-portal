@@ -42,7 +42,6 @@ class PaymentListVM {
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, PaymentEntity) onPaymentTap;
-  final Function(BuildContext, PaymentEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewClientFilterPressed;
@@ -57,7 +56,6 @@ class PaymentListVM {
     @required this.isLoading,
     @required this.isLoaded,
     @required this.onPaymentTap,
-    @required this.onDismissed,
     @required this.onRefreshed,
     @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
@@ -79,86 +77,63 @@ class PaymentListVM {
     final state = store.state;
 
     return PaymentListVM(
-        user: state.user,
-        paymentList: memoizedFilteredPaymentList(
-            state.paymentState.map,
-            state.paymentState.list,
-            state.invoiceState.map,
-            state.paymentListState),
-        paymentMap: state.paymentState.map,
-        clientMap: state.clientState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.paymentState.isLoaded,
-        filter: state.paymentUIState.listUIState.filter,
-        listState: state.paymentListState,
-        onPaymentTap: (context, payment) {
-          store.dispatch(ViewPayment(paymentId: payment.id, context: context));
-        },
-        onEntityAction: (context, payment, action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.email:
-              store.dispatch(EmailPaymentRequest(
-                  popCompleter(context, localization.emailedPayment), payment));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestorePaymentRequest(
-                  popCompleter(context, localization.restoredPayment),
-                  payment.id));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchivePaymentRequest(
-                  popCompleter(context, localization.archivedPayment),
-                  payment.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeletePaymentRequest(
-                  popCompleter(context, localization.deletedPayment),
-                  payment.id));
-              break;
-          }
-        },
-        onClearEntityFilterPressed: () =>
-            store.dispatch(FilterPaymentsByEntity()),
-        onViewClientFilterPressed: (BuildContext context) {
-          switch (state.paymentListState.filterEntityType) {
-            case EntityType.client:
-              store.dispatch(ViewClient(
-                  clientId: state.paymentListState.filterEntityId,
-                  context: context));
-              break;
-            case EntityType.invoice:
-              store.dispatch(ViewInvoice(
-                  invoiceId: state.paymentListState.filterEntityId,
-                  context: context));
-              break;
-          }
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onDismissed: (BuildContext context, PaymentEntity payment,
-            DismissDirection direction) {
-          final localization = AppLocalization.of(context);
-          if (direction == DismissDirection.endToStart) {
-            if (payment.isDeleted || payment.isArchived) {
-              store.dispatch(RestorePaymentRequest(
-                  snackBarCompleter(context, localization.restoredPayment),
-                  payment.id));
-            } else {
-              store.dispatch(ArchivePaymentRequest(
-                  snackBarCompleter(context, localization.archivedPayment),
-                  payment.id));
-            }
-          } else if (direction == DismissDirection.startToEnd) {
-            if (payment.isDeleted) {
-              store.dispatch(RestorePaymentRequest(
-                  snackBarCompleter(context, localization.restoredPayment),
-                  payment.id));
-            } else {
-              store.dispatch(DeletePaymentRequest(
-                  snackBarCompleter(context, localization.deletedPayment),
-                  payment.id));
-            }
-          }
-        });
+      user: state.user,
+      paymentList: memoizedFilteredPaymentList(
+          state.paymentState.map,
+          state.paymentState.list,
+          state.invoiceState.map,
+          state.paymentListState),
+      paymentMap: state.paymentState.map,
+      clientMap: state.clientState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.paymentState.isLoaded,
+      filter: state.paymentUIState.listUIState.filter,
+      listState: state.paymentListState,
+      onPaymentTap: (context, payment) {
+        store.dispatch(ViewPayment(paymentId: payment.id, context: context));
+      },
+      onEntityAction: (context, payment, action) {
+        final localization = AppLocalization.of(context);
+        switch (action) {
+          case EntityAction.email:
+            store.dispatch(EmailPaymentRequest(
+                snackBarCompleter(context, localization.emailedPayment),
+                payment));
+            break;
+          case EntityAction.restore:
+            store.dispatch(RestorePaymentRequest(
+                snackBarCompleter(context, localization.restoredPayment),
+                payment.id));
+            break;
+          case EntityAction.archive:
+            store.dispatch(ArchivePaymentRequest(
+                snackBarCompleter(context, localization.archivedPayment),
+                payment.id));
+            break;
+          case EntityAction.delete:
+            store.dispatch(DeletePaymentRequest(
+                snackBarCompleter(context, localization.deletedPayment),
+                payment.id));
+            break;
+        }
+      },
+      onClearEntityFilterPressed: () =>
+          store.dispatch(FilterPaymentsByEntity()),
+      onViewClientFilterPressed: (BuildContext context) {
+        switch (state.paymentListState.filterEntityType) {
+          case EntityType.client:
+            store.dispatch(ViewClient(
+                clientId: state.paymentListState.filterEntityId,
+                context: context));
+            break;
+          case EntityType.invoice:
+            store.dispatch(ViewInvoice(
+                invoiceId: state.paymentListState.filterEntityId,
+                context: context));
+            break;
+        }
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+    );
   }
 }

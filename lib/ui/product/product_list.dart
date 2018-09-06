@@ -25,7 +25,9 @@ class ProductList extends StatelessWidget {
         opacity: 0.5,
         child: Center(
           child: Text(
-            AppLocalization.of(context).noRecordsFound,
+            AppLocalization
+                .of(context)
+                .noRecordsFound,
             style: TextStyle(
               fontSize: 18.0,
             ),
@@ -44,28 +46,31 @@ class ProductList extends StatelessWidget {
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(
-            children: product
-                .getEntityActions(user: user)
-                .map((entityAction) {
-              if (entityAction == null) {
-                return Divider();
-              } else {
-                return ListTile(
-                  leading: Icon(getEntityActionIcon(entityAction)),
-                  title: Text(AppLocalization.of(context)
-                      .lookup(entityAction.toString())),
-                  onTap: () =>
-                      viewModel.onEntityAction(context, product, entityAction),
-                );
-              }
-            }).toList()));
+        builder: (BuildContext dialogContext) =>
+            SimpleDialog(
+                children:
+                product.getEntityActions(user: user).map((entityAction) {
+                  if (entityAction == null) {
+                    return Divider();
+                  } else {
+                    return ListTile(
+                      leading: Icon(getEntityActionIcon(entityAction)),
+                      title: Text(AppLocalization.of(context)
+                          .lookup(entityAction.toString())),
+                      onTap: () {
+                        Navigator.of(dialogContext).pop();
+                        viewModel.onEntityAction(
+                            context, product, entityAction);
+                      },
+                    );
+                  }
+                }).toList()));
 
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(
-        message: message,
-      )));
+            message: message,
+          )));
     }
   }
 
@@ -82,8 +87,13 @@ class ProductList extends StatelessWidget {
                 user: viewModel.user,
                 filter: viewModel.filter,
                 product: product,
-                onDismissed: (DismissDirection direction) =>
-                    viewModel.onDismissed(context, product, direction),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    _showMenu(context, product);
+                  } else {
+                    viewModel.onEntityAction(context, product, action);
+                  }
+                },
                 onTap: () => viewModel.onProductTap(context, product),
                 onLongPress: () => _showMenu(context, product),
               ),

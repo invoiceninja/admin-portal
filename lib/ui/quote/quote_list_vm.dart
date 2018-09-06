@@ -36,7 +36,6 @@ class QuoteListBuilder extends StatelessWidget {
 }
 
 class QuoteListVM extends EntityListVM {
-
   QuoteListVM({
     UserEntity user,
     ListUIState listState,
@@ -47,27 +46,25 @@ class QuoteListVM extends EntityListVM {
     bool isLoading,
     bool isLoaded,
     Function(BuildContext, InvoiceEntity) onInvoiceTap,
-    Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed,
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
   }) : super(
-    user: user,
-    listState: listState,
-    invoiceList: invoiceList,
-    invoiceMap: invoiceMap,
-    clientMap: clientMap,
-    filter: filter,
-    isLoading: isLoading,
-    isLoaded: isLoaded,
-    onInvoiceTap: onInvoiceTap,
-    onDismissed: onDismissed,
-    onRefreshed: onRefreshed,
-    onClearEntityFilterPressed: onClearEntityFilterPressed,
-    onViewEntityFilterPressed: onViewEntityFilterPressed,
-    onEntityAction: onEntityAction,
-  );
+          user: user,
+          listState: listState,
+          invoiceList: invoiceList,
+          invoiceMap: invoiceMap,
+          clientMap: clientMap,
+          filter: filter,
+          isLoading: isLoading,
+          isLoaded: isLoaded,
+          onInvoiceTap: onInvoiceTap,
+          onRefreshed: onRefreshed,
+          onClearEntityFilterPressed: onClearEntityFilterPressed,
+          onViewEntityFilterPressed: onViewEntityFilterPressed,
+          onEntityAction: onEntityAction,
+        );
 
   static QuoteListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -83,101 +80,60 @@ class QuoteListVM extends EntityListVM {
     final state = store.state;
 
     return QuoteListVM(
-        user: state.user,
-        listState: state.quoteListState,
-        invoiceList: memoizedFilteredQuoteList(
-            state.quoteState.map,
-            state.quoteState.list,
-            state.clientState.map,
-            state.quoteListState),
-        invoiceMap: state.quoteState.map,
-        clientMap: state.clientState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
-        filter: state.quoteListState.filter,
-        onInvoiceTap: (context, quote) {
-          store.dispatch(ViewQuote(quoteId: quote.id, context: context));
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onClearEntityFilterPressed: () =>
-            store.dispatch(FilterQuotesByEntity()),
-        onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-            ViewClient(
-                clientId: state.quoteListState.filterEntityId,
-                context: context)),
-        onEntityAction: (context, quote, action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.pdf:
-              Navigator.of(context).pop();
-              viewPdf(quote, context);
-              break;
-            case EntityAction.markSent:
-              store.dispatch(MarkSentQuoteRequest(
-                  popCompleter(
-                      context, localization.markedQuoteAsSent),
-                  quote.id));
-              break;
-            case EntityAction.email:
-              store.dispatch(ShowEmailQuote(
-                  completer: popCompleter(
-                      context, localization.emailedQuote),
-                  quote: quote,
-                  context: context));
-              break;
-            case EntityAction.clone:
-              Navigator.of(context).pop();
-              store.dispatch(
-                  EditQuote(context: context, quote: quote.clone));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreQuoteRequest(
-                  popCompleter(
-                      context, localization.restoredQuote),
-                  quote.id));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveQuoteRequest(
-                  popCompleter(
-                      context, localization.archivedQuote),
-                  quote.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteQuoteRequest(
-                  popCompleter(
-                      context, localization.deletedQuote),
-                  quote.id));
-              break;
-          }
-        },
-        onDismissed: (BuildContext context, InvoiceEntity quote,
-            DismissDirection direction) {
-          final localization = AppLocalization.of(context);
-          if (direction == DismissDirection.endToStart) {
-            if (quote.isDeleted || quote.isArchived) {
-              store.dispatch(RestoreQuoteRequest(
-                  snackBarCompleter(
-                      context, localization.restoredQuote),
-                  quote.id));
-            } else {
-              store.dispatch(ArchiveQuoteRequest(
-                  snackBarCompleter(
-                      context, localization.archivedQuote),
-                  quote.id));
-            }
-          } else if (direction == DismissDirection.startToEnd) {
-            if (quote.isDeleted) {
-              store.dispatch(RestoreQuoteRequest(
-                  snackBarCompleter(
-                      context, localization.restoredQuote),
-                  quote.id));
-            } else {
-              store.dispatch(DeleteQuoteRequest(
-                  snackBarCompleter(
-                      context, localization.deletedQuote),
-                  quote.id));
-            }
-          }
-        });
+      user: state.user,
+      listState: state.quoteListState,
+      invoiceList: memoizedFilteredQuoteList(state.quoteState.map,
+          state.quoteState.list, state.clientState.map, state.quoteListState),
+      invoiceMap: state.quoteState.map,
+      clientMap: state.clientState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
+      filter: state.quoteListState.filter,
+      onInvoiceTap: (context, quote) {
+        store.dispatch(ViewQuote(quoteId: quote.id, context: context));
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onClearEntityFilterPressed: () => store.dispatch(FilterQuotesByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewClient(
+              clientId: state.quoteListState.filterEntityId, context: context)),
+      onEntityAction: (context, quote, action) {
+        final localization = AppLocalization.of(context);
+        switch (action) {
+          case EntityAction.pdf:
+            viewPdf(quote, context);
+            break;
+          case EntityAction.markSent:
+            store.dispatch(MarkSentQuoteRequest(
+                snackBarCompleter(context, localization.markedQuoteAsSent),
+                quote.id));
+            break;
+          case EntityAction.email:
+            store.dispatch(ShowEmailQuote(
+                completer: snackBarCompleter(context, localization.emailedQuote),
+                quote: quote,
+                context: context));
+            break;
+          case EntityAction.clone:
+            store.dispatch(EditQuote(context: context, quote: quote.clone));
+            break;
+          case EntityAction.restore:
+            store.dispatch(RestoreQuoteRequest(
+                snackBarCompleter(context, localization.restoredQuote),
+                quote.id));
+            break;
+          case EntityAction.archive:
+            store.dispatch(ArchiveQuoteRequest(
+                snackBarCompleter(context, localization.archivedQuote),
+                quote.id));
+            break;
+          case EntityAction.delete:
+            store.dispatch(DeleteQuoteRequest(
+                snackBarCompleter(context, localization.deletedQuote),
+                quote.id));
+            break;
+        }
+      },
+    );
   }
 }

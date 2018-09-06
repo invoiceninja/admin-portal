@@ -10,14 +10,12 @@ class DismissibleEntity extends StatelessWidget {
     @required this.user,
     @required this.entity,
     @required this.child,
-    @required this.onDismissed,
     @required this.onEntityAction,
   });
 
   final UserEntity user;
   final BaseEntity entity;
   final Widget child;
-  final Function onDismissed;
   final Function(EntityAction entityAction) onEntityAction;
 
   @override

@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class ProductListItem extends StatelessWidget {
   final UserEntity user;
-  final DismissDirectionCallback onDismissed;
+  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   //final ValueChanged<bool> onCheckboxChanged;
@@ -18,7 +18,7 @@ class ProductListItem extends StatelessWidget {
 
   const ProductListItem({
     @required this.user,
-    @required this.onDismissed,
+    @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
     //@required this.onCheckboxChanged,
@@ -36,7 +36,7 @@ class ProductListItem extends StatelessWidget {
     return DismissibleEntity(
       user: user,
       entity: product,
-      onDismissed: onDismissed,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
