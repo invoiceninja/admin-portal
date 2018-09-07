@@ -1,4 +1,4 @@
-package com.invoiceninja.invoiceninja_flutter;
+package com.invoiceninja.flutter;
 
 import android.os.Bundle;
 

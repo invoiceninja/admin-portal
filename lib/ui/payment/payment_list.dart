@@ -23,7 +23,6 @@ class PaymentList extends StatelessWidget {
   void _showMenu(
       BuildContext context, PaymentEntity payment, ClientEntity client) async {
 
-    print('here');
     if (payment == null || client == null) {
       return;
     }

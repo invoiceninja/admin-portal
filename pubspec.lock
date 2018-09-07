@@ -155,13 +155,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.1"
-  firebase_auth:
-    dependency: "direct main"
-    description:
-      name: firebase_auth
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.19"
   fixnum:
     dependency: transitive
     description:
@@ -231,13 +224,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.7"
-  google_sign_in:
-    dependency: "direct main"
-    description:
-      name: google_sign_in
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.5"
   graphs:
     dependency: transitive
     description:

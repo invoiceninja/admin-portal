@@ -12,7 +12,7 @@ if (flutterRoot == null) {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 def keystorePropertiesFile = rootProject.file("key.properties")
@@ -27,11 +27,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.invoiceninja.invoiceninja_flutter"
+        applicationId "com.invoiceninja.flutter"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 13
-        versionName "0.1.11"
+        versionCode 14
+        versionName "0.1.12"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
