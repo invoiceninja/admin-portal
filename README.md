@@ -18,7 +18,7 @@ Join the Android beta: https://play.google.com/apps/testing/com.invoiceninja.inv
 - [x] Products
 - [x] Invoices
 - [x] Quotes
-- [ ] Payments
+- [x] Payments
 - [ ] Credits
 - [ ] Recurring
 - [ ] Vendors
