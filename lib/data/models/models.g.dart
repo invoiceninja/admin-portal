@@ -21,10 +21,12 @@ const EntityAction _$delete = const EntityAction._('delete');
 const EntityAction _$restore = const EntityAction._('restore');
 const EntityAction _$clone = const EntityAction._('clone');
 const EntityAction _$download = const EntityAction._('download');
-const EntityAction _$email = const EntityAction._('emailInvoice');
+const EntityAction _$email = const EntityAction._('email');
 const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$invoice = const EntityAction._('invoice');
+const EntityAction _$payment = const EntityAction._('payment');
 const EntityAction _$pdf = const EntityAction._('pdf');
+const EntityAction _$more = const EntityAction._('more');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -38,14 +40,18 @@ EntityAction _$valueOf(String name) {
       return _$clone;
     case 'download':
       return _$download;
-    case 'emailInvoice':
+    case 'email':
       return _$email;
     case 'markSent':
       return _$markSent;
     case 'invoice':
       return _$invoice;
+    case 'payment':
+      return _$payment;
     case 'pdf':
       return _$pdf;
+    case 'more':
+      return _$more;
     default:
       throw new ArgumentError(name);
   }
@@ -61,7 +67,9 @@ final BuiltSet<EntityAction> _$values =
   _$email,
   _$markSent,
   _$invoice,
+  _$payment,
   _$pdf,
+  _$more,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

@@ -37,9 +37,9 @@ Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewInvoice>(
       (int selectedId, dynamic action) => action.invoiceId),
   TypedReducer<int, AddInvoiceSuccess>(
-          (int selectedId, dynamic action) => action.invoice.id),
+      (int selectedId, dynamic action) => action.invoice.id),
   TypedReducer<int, ShowEmailInvoice>(
-          (int selectedId, dynamic action) => action.invoice.id),
+      (int selectedId, dynamic action) => action.invoice.id),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -89,7 +89,7 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortInvoices>(_sortInvoices),
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
   TypedReducer<ListUIState, FilterInvoicesByStatus>(_filterInvoicesByStatus),
-  TypedReducer<ListUIState, FilterInvoicesByClient>(_filterInvoicesByClient),
+  TypedReducer<ListUIState, FilterInvoicesByEntity>(_filterInvoicesByEntity),
   TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
   TypedReducer<ListUIState, FilterInvoicesByCustom1>(_filterInvoicesByCustom1),
   TypedReducer<ListUIState, FilterInvoicesByCustom2>(_filterInvoicesByCustom2),
@@ -135,9 +135,11 @@ ListUIState _filterInvoicesByStatus(
   }
 }
 
-ListUIState _filterInvoicesByClient(
-    ListUIState invoiceListState, FilterInvoicesByClient action) {
-  return invoiceListState.rebuild((b) => b..filterClientId = action.clientId);
+ListUIState _filterInvoicesByEntity(
+    ListUIState invoiceListState, FilterInvoicesByEntity action) {
+  return invoiceListState.rebuild((b) => b
+    ..filterEntityId = action.entityId
+    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterInvoices(

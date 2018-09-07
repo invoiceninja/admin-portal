@@ -41,6 +41,12 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
       'invoiceState',
       serializers.serialize(object.invoiceState,
           specifiedType: const FullType(InvoiceState)),
+      'paymentState',
+      serializers.serialize(object.paymentState,
+          specifiedType: const FullType(PaymentState)),
+      'quoteState',
+      serializers.serialize(object.quoteState,
+          specifiedType: const FullType(QuoteState)),
     ];
     if (object.company != null) {
       result
@@ -83,6 +89,14 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
           result.invoiceState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceState)) as InvoiceState);
           break;
+        case 'paymentState':
+          result.paymentState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(PaymentState)) as PaymentState);
+          break;
+        case 'quoteState':
+          result.quoteState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(QuoteState)) as QuoteState);
+          break;
       }
     }
 
@@ -101,6 +115,10 @@ class _$CompanyState extends CompanyState {
   final ClientState clientState;
   @override
   final InvoiceState invoiceState;
+  @override
+  final PaymentState paymentState;
+  @override
+  final QuoteState quoteState;
 
   factory _$CompanyState([void updates(CompanyStateBuilder b)]) =>
       (new CompanyStateBuilder()..update(updates)).build();
@@ -110,7 +128,9 @@ class _$CompanyState extends CompanyState {
       this.dashboardState,
       this.productState,
       this.clientState,
-      this.invoiceState})
+      this.invoiceState,
+      this.paymentState,
+      this.quoteState})
       : super._() {
     if (dashboardState == null)
       throw new BuiltValueNullFieldError('CompanyState', 'dashboardState');
@@ -120,6 +140,10 @@ class _$CompanyState extends CompanyState {
       throw new BuiltValueNullFieldError('CompanyState', 'clientState');
     if (invoiceState == null)
       throw new BuiltValueNullFieldError('CompanyState', 'invoiceState');
+    if (paymentState == null)
+      throw new BuiltValueNullFieldError('CompanyState', 'paymentState');
+    if (quoteState == null)
+      throw new BuiltValueNullFieldError('CompanyState', 'quoteState');
   }
 
   @override
@@ -137,17 +161,23 @@ class _$CompanyState extends CompanyState {
         dashboardState == other.dashboardState &&
         productState == other.productState &&
         clientState == other.clientState &&
-        invoiceState == other.invoiceState;
+        invoiceState == other.invoiceState &&
+        paymentState == other.paymentState &&
+        quoteState == other.quoteState;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, company.hashCode), dashboardState.hashCode),
-                productState.hashCode),
-            clientState.hashCode),
-        invoiceState.hashCode));
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, company.hashCode), dashboardState.hashCode),
+                        productState.hashCode),
+                    clientState.hashCode),
+                invoiceState.hashCode),
+            paymentState.hashCode),
+        quoteState.hashCode));
   }
 
   @override
@@ -157,7 +187,9 @@ class _$CompanyState extends CompanyState {
           ..add('dashboardState', dashboardState)
           ..add('productState', productState)
           ..add('clientState', clientState)
-          ..add('invoiceState', invoiceState))
+          ..add('invoiceState', invoiceState)
+          ..add('paymentState', paymentState)
+          ..add('quoteState', quoteState))
         .toString();
   }
 }
@@ -195,6 +227,18 @@ class CompanyStateBuilder
   set invoiceState(InvoiceStateBuilder invoiceState) =>
       _$this._invoiceState = invoiceState;
 
+  PaymentStateBuilder _paymentState;
+  PaymentStateBuilder get paymentState =>
+      _$this._paymentState ??= new PaymentStateBuilder();
+  set paymentState(PaymentStateBuilder paymentState) =>
+      _$this._paymentState = paymentState;
+
+  QuoteStateBuilder _quoteState;
+  QuoteStateBuilder get quoteState =>
+      _$this._quoteState ??= new QuoteStateBuilder();
+  set quoteState(QuoteStateBuilder quoteState) =>
+      _$this._quoteState = quoteState;
+
   CompanyStateBuilder();
 
   CompanyStateBuilder get _$this {
@@ -204,6 +248,8 @@ class CompanyStateBuilder
       _productState = _$v.productState?.toBuilder();
       _clientState = _$v.clientState?.toBuilder();
       _invoiceState = _$v.invoiceState?.toBuilder();
+      _paymentState = _$v.paymentState?.toBuilder();
+      _quoteState = _$v.quoteState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -230,7 +276,9 @@ class CompanyStateBuilder
               dashboardState: dashboardState.build(),
               productState: productState.build(),
               clientState: clientState.build(),
-              invoiceState: invoiceState.build());
+              invoiceState: invoiceState.build(),
+              paymentState: paymentState.build(),
+              quoteState: quoteState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -244,6 +292,10 @@ class CompanyStateBuilder
         clientState.build();
         _$failedField = 'invoiceState';
         invoiceState.build();
+        _$failedField = 'paymentState';
+        paymentState.build();
+        _$failedField = 'quoteState';
+        quoteState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyState', _$failedField, e.toString());

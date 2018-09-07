@@ -1,0 +1,135 @@
+import 'dart:async';
+import 'package:redux/redux.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/stub/stub_selectors.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/stub/stub_list.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
+
+class StubListBuilder extends StatelessWidget {
+  const StubListBuilder({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, StubListVM>(
+      converter: StubListVM.fromStore,
+      builder: (context, viewModel) {
+        return StubList(
+          viewModel: viewModel,
+        );
+      },
+    );
+  }
+}
+
+class StubListVM {
+  final UserEntity user;
+  final List<int> stubList;
+  final BuiltMap<int, StubEntity> stubMap;
+  final String filter;
+  final bool isLoading;
+  final bool isLoaded;
+  final Function(BuildContext, StubEntity) onStubTap;
+  final Function(BuildContext, StubEntity, DismissDirection) onDismissed;
+  final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, StubEntity, EntityAction) onEntityAction;
+
+  StubListVM({
+    @required this.user,
+    @required this.stubList,
+    @required this.stubMap,
+    @required this.filter,
+    @required this.isLoading,
+    @required this.isLoaded,
+    @required this.onStubTap,
+    @required this.onDismissed,
+    @required this.onRefreshed,
+    @required this.onEntityAction,
+  });
+
+  static StubListVM fromStore(Store<AppState> store) {
+    Future<Null> _handleRefresh(BuildContext context) {
+      if (store.state.isLoading) {
+        return Future<Null>(null);
+      }
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
+      store.dispatch(LoadStubs(completer: completer, force: true));
+      return completer.future;
+    }
+
+    final state = store.state;
+
+    return StubListVM(
+        user: state.user,
+        stubList: memoizedFilteredStubList(state.stubState.map,
+            state.stubState.list, state.stubListState),
+        stubMap: state.stubState.map,
+        isLoading: state.isLoading,
+        isLoaded: state.stubState.isLoaded,
+        filter: state.stubUIState.listUIState.filter,
+        onStubTap: (context, stub) {
+          store.dispatch(EditStub(stub: stub, context: context));
+        },
+        onEntityAction: (context, stub, action) {
+          switch (action) {
+            case EntityAction.clone:
+              Navigator.of(context).pop();
+              store.dispatch(
+                  EditStub(context: context, stub: stub.clone));
+              break;
+            case EntityAction.restore:
+              store.dispatch(RestoreStubRequest(
+                  popCompleter(
+                      context, AppLocalization.of(context).restoredStub),
+                  stub.id));
+              break;
+            case EntityAction.archive:
+              store.dispatch(ArchiveStubRequest(
+                  popCompleter(
+                      context, AppLocalization.of(context).archivedStub),
+                  stub.id));
+              break;
+            case EntityAction.delete:
+              store.dispatch(DeleteStubRequest(
+                  popCompleter(
+                      context, AppLocalization.of(context).deletedStub),
+                  stub.id));
+              break;
+          }
+        },
+        onRefreshed: (context) => _handleRefresh(context),
+        onDismissed: (BuildContext context, StubEntity stub,
+            DismissDirection direction) {
+          final localization = AppLocalization.of(context);
+          if (direction == DismissDirection.endToStart) {
+            if (stub.isDeleted || stub.isArchived) {
+              store.dispatch(RestoreStubRequest(
+                  snackBarCompleter(context, localization.restoredStub),
+                  stub.id));
+            } else {
+              store.dispatch(ArchiveStubRequest(
+                  snackBarCompleter(context, localization.archivedStub),
+                  stub.id));
+            }
+          } else if (direction == DismissDirection.startToEnd) {
+            if (stub.isDeleted) {
+              store.dispatch(RestoreStubRequest(
+                  snackBarCompleter(context, localization.restoredStub),
+                  stub.id));
+            } else {
+              store.dispatch(DeleteStubRequest(
+                  snackBarCompleter(context, localization.deletedStub),
+                  stub.id));
+            }
+          }
+        });
+  }
+}

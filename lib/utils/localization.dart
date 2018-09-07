@@ -14,6 +14,20 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'more': 'More',
+      'edit_client': 'Edit Client',
+      'edit_product': 'Edit Product',
+      'edit_invoice': 'Edit Invoice',
+      'edit_quote': 'Edit Quote',
+      'edit_payment': 'Edit Payment',
+      'edit_task': 'Edit Task',
+      'edit_expense': 'Edit Expense',
+      'edit_vendor': 'Edit Vendor',
+      'edit_project': 'Edit Project',
+      'edit_credit': 'Edit Credit',
+      'edit_recurring_invoice': 'Edit Recurring Invoice',
+      'edit_recurring_expense': 'Edit Recurring Expense',
+      'edit_recurring_quote': 'Edit Recurring Quote',
       'billing_address': 'Billing Address',
       'shipping_address': 'Shipping Address',
       'total_revenue': 'Total Revenue',
@@ -105,6 +119,7 @@ class AppLocalization {
       'deleted_invoice': 'Successfully deleted invoice',
       'restored_invoice': 'Successfully restored invoice',
       'emailed_invoice': 'Successfully emailed invoice',
+      'emailed_payment': 'Successfully emailed payment',
       'amount': 'Amount',
       'invoice_number': 'Invoice Number',
       'invoice_date': 'Invoice Date',
@@ -133,6 +148,7 @@ class AppLocalization {
       'partial_due_date': 'Partial Due Date',
       'status': 'Status',
       'invoice_status_id': 'Invoice Status',
+      'quote_status': 'Quote Status',
       'click_plus_to_add_item': 'Click + to add an item',
       'count_selected': ':count selected',
       'total': 'Total',
@@ -141,6 +157,7 @@ class AppLocalization {
       'dismiss': 'Dismiss',
       'please_select_a_date': 'Please select a date',
       'please_select_a_client': 'Please select a client',
+      'please_select_an_invoice': 'Please select an invoice',
       'task_rate': 'Task Rate',
       'settings': 'Settings',
       'language': 'Language',
@@ -151,6 +168,8 @@ class AppLocalization {
       'please_enter_an_invoice_number': 'Please enter an invoice number',
       'please_enter_a_quote_number': 'Please enter a quote number',
       'clients_invoices': ':client\'s invoices',
+      'clients_payments': ':client\'s payments',
+      'filtered_by': 'Filtered by',
       'past_due': 'Past Due',
       'draft': 'Draft',
       'sent': 'Sent',
@@ -180,6 +199,14 @@ class AppLocalization {
       'industry': 'Industry',
       'size': 'Size',
       'payment_terms': 'Payment Terms',
+      'payment_date': 'Payment Date',
+      'payment_status': 'Payment Status',
+      'payment_status_1': 'Pending',
+      'payment_status_2': 'Voided',
+      'payment_status_3': 'Failed',
+      'payment_status_4': 'Completed',
+      'payment_status_5': 'Partially Refunded',
+      'payment_status_6': 'Refunded',
       'net': 'Net',
       'client_portal': 'Client Portal',
       'show_tasks': 'Show tasks',
@@ -198,6 +225,7 @@ class AppLocalization {
       'subject': 'Subject',
       'body': 'Body',
       'send_email': 'Send Email',
+      'send_receipt_to_client': 'Send receipt to the client',
       'documents': 'Documents',
       'auto_billing': 'Auto billing',
       'button': 'Button',
@@ -206,8 +234,23 @@ class AppLocalization {
       'history': 'History',
       'payment': 'Payment',
       'payments': 'Payments',
+      'refunded': 'Refunded',
+      'payment_type': 'Payment Type',
+      'transaction_reference': 'Transaction Reference',
+      'enter_payment': 'Enter Payment',
+      'created_payment': 'Successfully created payment',
+      'updated_payment': 'Successfully updated payment',
+      'archived_payment': 'Successfully archived payment',
+      'deleted_payment': 'Successfully deleted payment',
+      'restored_payment': 'Successfully restored payment',
       'quote': 'Quote',
       'quotes': 'Quotes',
+      'new_quote': 'New Quote',
+      'created_quote': 'Successfully created quote',
+      'updated_quote': 'Successfully updated quote',
+      'archived_quote': 'Successfully archived quote',
+      'deleted_quote': 'Successfully deleted quote',
+      'restored_quote': 'Successfully restored quote',
       'expense': 'Expense',
       'expenses': 'Expenses',
       'vendor': 'Vendor',
@@ -262,6 +305,10 @@ class AppLocalization {
       'activity_45': ':user deleted task :task',
       'activity_46': ':user restored task :task',
       'activity_47': ':user updated expense :expense',
+      'one_time_password': 'One Time Password',
+      'emailed_quote': 'Successfully emailed quote',
+      'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'expired': 'Expired',
     },
     'sq': {
       'billing_address': 'Adresa e faturimit',
@@ -7058,6 +7105,42 @@ class AppLocalization {
     },
   };
 
+  String get more => _localizedValues[locale.languageCode]['more'];
+
+  String get editClient => _localizedValues[locale.languageCode]['edit_client'];
+
+  String get editProduct =>
+      _localizedValues[locale.languageCode]['edit_product'];
+
+  String get editInvoice =>
+      _localizedValues[locale.languageCode]['edit_invoice'];
+
+  String get editQuote => _localizedValues[locale.languageCode]['edit_quote'];
+
+  String get editPayment =>
+      _localizedValues[locale.languageCode]['edit_payment'];
+
+  String get editTask => _localizedValues[locale.languageCode]['edit_task'];
+
+  String get editExpense =>
+      _localizedValues[locale.languageCode]['edit_expense'];
+
+  String get editVendor => _localizedValues[locale.languageCode]['edit_vendor'];
+
+  String get editProject =>
+      _localizedValues[locale.languageCode]['edit_project'];
+
+  String get editCredit => _localizedValues[locale.languageCode]['edit_credit'];
+
+  String get editRecurringInvoice =>
+      _localizedValues[locale.languageCode]['edit_recurring_invoice'];
+
+  String get editRecurringExpense =>
+      _localizedValues[locale.languageCode]['edit_recurring_expense'];
+
+  String get editRecurringQuote =>
+      _localizedValues[locale.languageCode]['edit_recurring_quote'];
+
   String get billingAddress =>
       _localizedValues[locale.languageCode]['billing_address'];
 
@@ -7274,6 +7357,9 @@ class AppLocalization {
   String get emailedInvoice =>
       _localizedValues[locale.languageCode]['emailed_invoice'];
 
+  String get emailedPayment =>
+      _localizedValues[locale.languageCode]['emailed_payment'];
+
   String get amount => _localizedValues[locale.languageCode]['amount'];
 
   String get invoiceNumber =>
@@ -7340,6 +7426,9 @@ class AppLocalization {
   String get invoiceStatusId =>
       _localizedValues[locale.languageCode]['invoice_status_id'];
 
+  String get quoteStatusId =>
+      _localizedValues[locale.languageCode]['quote_status'];
+
   String get clickPlusToAddItem =>
       _localizedValues[locale.languageCode]['click_plus_to_add_item'];
 
@@ -7359,6 +7448,9 @@ class AppLocalization {
 
   String get pleaseSelectAClient =>
       _localizedValues[locale.languageCode]['please_select_a_client'];
+
+  String get pleaseSelectAnInvoice =>
+      _localizedValues[locale.languageCode]['please_select_an_invoice'];
 
   String get taskRate => _localizedValues[locale.languageCode]['task_rate'];
 
@@ -7382,6 +7474,11 @@ class AppLocalization {
 
   String get clientsInvoices =>
       _localizedValues[locale.languageCode]['clients_invoices'];
+
+  String get clientsPayments =>
+      _localizedValues[locale.languageCode]['clients_payments'];
+
+  String get filteredBy => _localizedValues[locale.languageCode]['filtered_by'];
 
   String get pastDue => _localizedValues[locale.languageCode]['past_due'];
 
@@ -7453,6 +7550,12 @@ class AppLocalization {
   String get paymentTerms =>
       _localizedValues[locale.languageCode]['payment_terms'];
 
+  String get paymentDate =>
+      _localizedValues[locale.languageCode]['payment_date'];
+
+  String get paymentStatus =>
+      _localizedValues[locale.languageCode]['payment_status'];
+
   String get net => _localizedValues[locale.languageCode]['net'];
 
   String get clientPortal =>
@@ -7489,6 +7592,9 @@ class AppLocalization {
 
   String get sendEmail => _localizedValues[locale.languageCode]['send_email'];
 
+  String get sendReceiptToClient =>
+      _localizedValues[locale.languageCode]['send_receipt_to_client'];
+
   String get documents => _localizedValues[locale.languageCode]['documents'];
 
   String get autoBilling =>
@@ -7506,9 +7612,52 @@ class AppLocalization {
 
   String get payments => _localizedValues[locale.languageCode]['payments'];
 
+  String get refunded => _localizedValues[locale.languageCode]['refunded'];
+
+  String get paymentType =>
+      _localizedValues[locale.languageCode]['payment_type'];
+
+  String get transactionReference =>
+      _localizedValues[locale.languageCode]['transaction_reference'];
+
+  String get enterPayment =>
+      _localizedValues[locale.languageCode]['enter_payment'];
+
+  String get createdPayment =>
+      _localizedValues[locale.languageCode]['created_payment'];
+
+  String get updatedPayment =>
+      _localizedValues[locale.languageCode]['updated_payment'];
+
+  String get archivedPayment =>
+      _localizedValues[locale.languageCode]['archived_payment'];
+
+  String get deletedPayment =>
+      _localizedValues[locale.languageCode]['deleted_payment'];
+
+  String get restoredPayment =>
+      _localizedValues[locale.languageCode]['restored_payment'];
+
   String get quote => _localizedValues[locale.languageCode]['quote'];
 
   String get quotes => _localizedValues[locale.languageCode]['quotes'];
+
+  String get newQuote => _localizedValues[locale.languageCode]['new_quote'];
+
+  String get createdQuote =>
+      _localizedValues[locale.languageCode]['created_quote'];
+
+  String get updatedQuote =>
+      _localizedValues[locale.languageCode]['updated_quote'];
+
+  String get archivedQuote =>
+      _localizedValues[locale.languageCode]['archived_quote'];
+
+  String get deletedQuote =>
+      _localizedValues[locale.languageCode]['deleted_quote'];
+
+  String get restoredQuote =>
+      _localizedValues[locale.languageCode]['restored_quote'];
 
   String get expense => _localizedValues[locale.languageCode]['expense'];
 
@@ -7658,8 +7807,23 @@ class AppLocalization {
   String get activity_47 =>
       _localizedValues[locale.languageCode]['activity_47'];
 
+  String get oneTimePassword =>
+      _localizedValues[locale.languageCode]['one_time_password'];
+
+  String get emailedQuote =>
+      _localizedValues[locale.languageCode]['emailed_quote'];
+
+  String get markedQuoteAsSent =>
+      _localizedValues[locale.languageCode]['marked_quote_as_sent'];
+
+  String get expired => _localizedValues[locale.languageCode]['expired'];
+
   String lookup(String key) {
-    return _localizedValues[locale.languageCode][toSnakeCase(key)] ?? key;
+    final lookupKey = toSnakeCase(key);
+    return _localizedValues[locale.languageCode][lookupKey] ??
+        _localizedValues[locale.languageCode]
+            [lookupKey.replaceFirst('_id', '')] ??
+        key;
   }
 }
 

@@ -1,0 +1,85 @@
+import 'package:built_value/built_value.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+
+part 'stub_model.g.dart';
+
+
+abstract class StubListResponse
+    implements Built<StubListResponse, StubListResponseBuilder> {
+  factory StubListResponse([void updates(StubListResponseBuilder b)]) =
+      _$StubListResponse;
+
+  StubListResponse._();
+
+  BuiltList<StubEntity> get data;
+
+  static Serializer<StubListResponse> get serializer =>
+      _$stubListResponseSerializer;
+}
+
+abstract class StubItemResponse
+    implements Built<StubItemResponse, StubItemResponseBuilder> {
+  factory StubItemResponse([void updates(StubItemResponseBuilder b)]) =
+      _$StubItemResponse;
+
+  StubItemResponse._();
+
+  StubEntity get data;
+
+  static Serializer<StubItemResponse> get serializer =>
+      _$stubItemResponseSerializer;
+}
+
+class StubFields {
+  // STARTER: fields - do not remove comment
+}
+
+abstract class StubEntity extends Object with BaseEntity implements Built<StubEntity, StubEntityBuilder> {
+
+  // STARTER: properties - do not remove comment
+
+  static int counter = 0;
+  factory StubEntity() {
+    return _$StubEntity._(
+      id: 0,
+      // STARTER: constructor - do not remove comment
+    );
+  }
+
+  String get displayName {
+    // STARTER: display name - do not remove comment
+  }
+
+  int compareTo(StubEntity stub, String sortField, bool sortAscending) {
+    int response = 0;
+    StubEntity stubA = sortAscending ? this : stub;
+    StubEntity stubB = sortAscending ? stub: this; 
+
+    switch (sortField) {
+      // STARTER: sort switch - do not remove comment
+    }
+
+    if (response == 0) {
+      // STARTER: sort default - do not remove comment
+    } else {
+      return response;
+    }
+  }
+
+  bool matchesSearch(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return true;
+    }
+
+    filter = filter.toLowerCase();
+
+    // STARTER: filter - do not remove comment
+
+    return false;
+  }
+
+  StubEntity._();
+  static Serializer<StubEntity> get serializer => _$stubEntitySerializer;
+}

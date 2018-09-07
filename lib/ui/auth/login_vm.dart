@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
-import 'package:invoiceninja_flutter/ui/auth/login.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_view.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -36,13 +36,20 @@ class LoginScreen extends StatelessWidget {
 class LoginVM {
   bool isLoading;
   AuthState authState;
-  final Function(BuildContext, String, String, String, String) onLoginPressed;
+  final Function() onCancel2FAPressed;
+  final Function(BuildContext,
+      {String email,
+      String password,
+      String url,
+      String secret,
+      String oneTimePassword}) onLoginPressed;
   final Function(BuildContext, String, String) onGoogleLoginPressed;
 
   LoginVM({
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginPressed,
+    @required this.onCancel2FAPressed,
     @required this.onGoogleLoginPressed,
   });
 
@@ -61,6 +68,7 @@ class LoginVM {
     return LoginVM(
         isLoading: store.state.isLoading,
         authState: store.state.authState,
+        onCancel2FAPressed: () => store.dispatch(ClearAuthError()),
         onGoogleLoginPressed:
             (BuildContext context, String url, String secret) async {
           try {
@@ -83,8 +91,12 @@ class LoginVM {
             print(error);
           }
         },
-        onLoginPressed: (BuildContext context, String email, String password,
-            String url, String secret) async {
+        onLoginPressed: (BuildContext context,
+            {String email,
+            String password,
+            String url,
+            String secret,
+            String oneTimePassword}) async {
           if (store.state.isLoading) {
             return;
           }
@@ -97,6 +109,7 @@ class LoginVM {
             url: url.trim(),
             secret: secret.trim(),
             platform: getPlatform(context),
+            oneTimePassword: oneTimePassword.trim(),
           ));
           completer.future.then((_) => _handleLogin(context));
         });

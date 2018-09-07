@@ -1,0 +1,75 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
+import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
+import 'package:invoiceninja_flutter/data/models/stub_model.dart';
+import 'package:invoiceninja_flutter/ui/stub/edit/stub_edit.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+
+class StubEditScreen extends StatelessWidget {
+  static const String route = '/stub/edit';
+  StubEditScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, StubEditVM>(
+      converter: (Store<AppState> store) {
+        return StubEditVM.fromStore(store);
+      },
+      builder: (context, viewModel) {
+        return StubEdit(
+          viewModel: viewModel,
+        );
+      },
+    );
+  }
+}
+
+class StubEditVM {
+  final StubEntity stub;
+  final Function(StubEntity) onChanged;
+  final Function(BuildContext) onSavePressed;
+  final Function onBackPressed;
+  final bool isLoading;
+
+  StubEditVM({
+    @required this.stub,
+    @required this.onChanged,
+    @required this.onSavePressed,
+    @required this.onBackPressed,
+    @required this.isLoading,
+  });
+
+  factory StubEditVM.fromStore(Store<AppState> store) {
+    final stub = store.state.stubUIState.editing;
+
+    return StubEditVM(
+      isLoading: store.state.isLoading,
+      stub: stub,
+      onChanged: (StubEntity stub) {
+        store.dispatch(UpdateStub(stub));
+      },
+      onBackPressed: () {
+        store.dispatch(UpdateCurrentRoute(StubScreen.route));
+      },
+      onSavePressed: (BuildContext context) {
+        final Completer<Null> completer = new Completer<Null>();
+        store.dispatch(SaveStubRequest(completer: completer, stub: stub));
+        return completer.future.then((_) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: IconMessage(
+                message: stub.isNew
+                    ? 'Successfully Created Stub'
+                    : 'Successfully Updated Stub',
+              ),
+              duration: Duration(seconds: 3)));
+        });
+      },
+    );
+  }
+}

@@ -278,10 +278,11 @@ class FilterInvoicesByStatus implements PersistUI {
   FilterInvoicesByStatus(this.status);
 }
 
-class FilterInvoicesByClient implements PersistUI {
-  final int clientId;
+class FilterInvoicesByEntity implements PersistUI {
+  final int entityId;
+  final EntityType entityType;
 
-  FilterInvoicesByClient([this.clientId]);
+  FilterInvoicesByEntity({this.entityId, this.entityType});
 }
 
 class FilterInvoiceDropdown {

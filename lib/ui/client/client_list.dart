@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientList extends StatelessWidget {
@@ -37,44 +38,30 @@ class ClientList extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context, ClientEntity client) async {
+    if (client == null) {
+      return;
+    }
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              user.canCreate(EntityType.client) && client.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.add_circle_outline),
-                      title: Text(AppLocalization.of(context).newInvoice),
-                      onTap: () => viewModel.onEntityAction(
-                          context, client, EntityAction.invoice),
-                    )
-                  : Container(),
-              Divider(),
-              user.canEditEntity(client) && !client.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.restore),
-                      title: Text(AppLocalization.of(context).restore),
-                      onTap: () => viewModel.onEntityAction(
-                          context, client, EntityAction.restore),
-                    )
-                  : Container(),
-              user.canEditEntity(client) && client.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.archive),
-                      title: Text(AppLocalization.of(context).archive),
-                      onTap: () => viewModel.onEntityAction(
-                          context, client, EntityAction.archive),
-                    )
-                  : Container(),
-              user.canEditEntity(client) && !client.isDeleted
-                  ? ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text(AppLocalization.of(context).delete),
-                      onTap: () => viewModel.onEntityAction(
-                          context, client, EntityAction.delete),
-                    )
-                  : Container(),
-            ]));
+        builder: (BuildContext dialogContext) => SimpleDialog(
+                children:
+                    client.getEntityActions(user: user).map((entityAction) {
+              if (entityAction == null) {
+                return Divider();
+              } else {
+                return ListTile(
+                  leading: Icon(getEntityActionIcon(entityAction)),
+                  title: Text(AppLocalization.of(context)
+                      .lookup(entityAction.toString())),
+                  onTap: () {
+                    Navigator.of(dialogContext).pop();
+                    viewModel.onEntityAction(context, client, entityAction);
+                  },
+                );
+              }
+            }).toList()));
+
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(
@@ -96,8 +83,13 @@ class ClientList extends StatelessWidget {
                 user: viewModel.user,
                 filter: viewModel.filter,
                 client: client,
-                onDismissed: (DismissDirection direction) =>
-                    viewModel.onDismissed(context, client, direction),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    _showMenu(context, client);
+                  } else {
+                    viewModel.onEntityAction(context, client, action);
+                  }
+                },
                 onTap: () => viewModel.onClientTap(context, client),
                 onLongPress: () => _showMenu(context, client),
               ),

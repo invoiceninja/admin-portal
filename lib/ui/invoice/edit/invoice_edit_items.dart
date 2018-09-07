@@ -15,7 +15,7 @@ class InvoiceEditItems extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final InvoiceEditItemsVM viewModel;
+  final EntityEditItemsVM viewModel;
 
   @override
   _InvoiceEditItemsState createState() => _InvoiceEditItemsState();
@@ -29,11 +29,15 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     showDialog<ItemEditDetails>(
         context: context,
         builder: (BuildContext context) {
+          final viewModel = widget.viewModel;
+          final invoice = viewModel.invoice;
+
           return ItemEditDetails(
-            viewModel: widget.viewModel,
+            viewModel: viewModel,
             key: Key(invoiceItem.entityKey),
             invoiceItem: invoiceItem,
-            index: widget.viewModel.invoice.invoiceItems.indexOf(invoiceItem),
+            index: invoice.invoiceItems.indexOf(
+                invoice.invoiceItems.firstWhere((i) => i.id == invoiceItem.id)),
           );
         });
   }
@@ -89,7 +93,7 @@ class ItemEditDetails extends StatefulWidget {
 
   final int index;
   final InvoiceItemEntity invoiceItem;
-  final InvoiceEditItemsVM viewModel;
+  final EntityEditItemsVM viewModel;
 
   @override
   ItemEditDetailsState createState() => ItemEditDetailsState();
@@ -202,7 +206,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom, // stay clear of the keyboard
+        bottom: MediaQuery.of(context)
+            .viewInsets
+            .bottom, // stay clear of the keyboard
       ),
       child: SingleChildScrollView(
         child: FormCard(
@@ -284,10 +290,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        invoiceItem.rebuild((b) => b
-                          ..taxRate1 = taxRate.rate
-                          ..taxName1 = taxRate.name),
-                        widget.index),
+                        invoiceItem.applyTax(taxRate), widget.index),
                     labelText: localization.tax,
                     initialTaxName: invoiceItem.taxName1,
                     initialTaxRate: invoiceItem.taxRate1,
@@ -297,10 +300,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        invoiceItem.rebuild((b) => b
-                          ..taxRate2 = taxRate.rate
-                          ..taxName2 = taxRate.name),
-                        widget.index),
+                        invoiceItem.applyTax(taxRate), widget.index),
                     labelText: localization.tax,
                     initialTaxName: invoiceItem.taxName2,
                     initialTaxRate: invoiceItem.taxRate2,

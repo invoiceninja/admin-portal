@@ -1,7 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,19 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
+import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
+
+import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+
 void main() async {
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode);
@@ -48,6 +62,9 @@ void main() async {
         ..addAll(createStoreClientsMiddleware())
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
+        // STARTER: middleware - do not remove comment
+        ..addAll(createStorePaymentsMiddleware())
+        ..addAll(createStoreQuotesMiddleware())
         ..addAll([
           LoggingMiddleware<dynamic>.printer(),
         ]));
@@ -130,6 +147,24 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
+            // STARTER: routes - do not remove comment
+            PaymentScreen.route: (context) {
+              if (widget.store.state.paymentState.isStale) {
+                widget.store.dispatch(LoadPayments());
+              }
+              return PaymentScreen();
+            },
+            PaymentViewScreen.route: (context) => PaymentViewScreen(),
+            PaymentEditScreen.route: (context) => PaymentEditScreen(),
+            QuoteScreen.route: (context) {
+              if (widget.store.state.quoteState.isStale) {
+                widget.store.dispatch(LoadQuotes());
+              }
+              return QuoteScreen();
+            },
+            QuoteViewScreen.route: (context) => QuoteViewScreen(),
+            QuoteEditScreen.route: (context) => QuoteEditScreen(),
+            QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             SettingsScreen.route: (context) => SettingsScreen(),
           },
         );

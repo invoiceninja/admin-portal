@@ -20,6 +20,11 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
+
+import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+
 
 part 'serializers.g.dart';
 
@@ -67,8 +72,11 @@ part 'serializers.g.dart';
   SizeItemResponse,
   SizeListResponse,
   TimezoneItemResponse,
-  TimezoneListResponse
-  
+  TimezoneListResponse,
+  // STARTER: serializers - do not remove comment
+PaymentEntity,
+
+
 ])
 final Serializers serializers =
 (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

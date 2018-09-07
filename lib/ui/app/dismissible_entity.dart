@@ -2,19 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DismissibleEntity extends StatelessWidget {
   const DismissibleEntity({
     @required this.user,
     @required this.entity,
     @required this.child,
-    @required this.onDismissed,
+    @required this.onEntityAction,
   });
 
   final UserEntity user;
   final BaseEntity entity;
   final Widget child;
-  final Function onDismissed;
+  final Function(EntityAction entityAction) onEntityAction;
 
   @override
   Widget build(BuildContext context) {
@@ -22,36 +24,53 @@ class DismissibleEntity extends StatelessWidget {
       return child;
     }
 
-    return Dismissible(
-      // TODO fix this properly https://github.com/flutter/flutter/issues/11825
-      //key: Key(entity.entityKey),
-      key: Key(entity.entityKey + Random().nextInt(100000).toString()),
-      onDismissed: onDismissed,
+    final localization = AppLocalization.of(context);
+
+    return Slidable(
       child: child,
-      background: entity.isDeleted
-          ? Container(
-              color: Colors.blue,
-              child: const ListTile(
-                  leading: const Icon(Icons.restore,
-                      color: Colors.white, size: 36.0)),
-            )
-          : Container(
-              color: Colors.red,
-              child: const ListTile(
-                  leading: const Icon(Icons.delete,
-                      color: Colors.white, size: 36.0))),
-      secondaryBackground: entity.isArchived || entity.isDeleted
-          ? Container(
-              color: Colors.blue,
-              child: const ListTile(
-                  trailing: const Icon(Icons.restore,
-                      color: Colors.white, size: 36.0)),
-            )
-          : Container(
-              color: Colors.orange,
-              child: const ListTile(
-                  trailing: const Icon(Icons.archive,
-                      color: Colors.white, size: 36.0))),
+      delegate: SlidableDrawerDelegate(),
+      key: Key(entity.entityKey + Random().nextInt(100000).toString()),
+      actions: <Widget>[
+        entity.isActive
+            ? IconSlideAction(
+                caption: localization.archive,
+                color: Colors.orange,
+                foregroundColor: Colors.white,
+                icon: Icons.archive,
+                onTap: () => onEntityAction(EntityAction.archive),
+              )
+            : IconSlideAction(
+                caption: localization.restore,
+                color: Colors.blue,
+                foregroundColor: Colors.white,
+                icon: Icons.restore,
+                onTap: () => onEntityAction(EntityAction.restore),
+              ),
+        IconSlideAction(
+          caption: localization.more,
+          color: Colors.black45,
+          foregroundColor: Colors.white,
+          icon: Icons.more_horiz,
+          onTap: () => onEntityAction(EntityAction.more),
+        ),
+      ],
+      secondaryActions: <Widget>[
+        entity.isDeleted
+            ? IconSlideAction(
+                caption: localization.restore,
+                color: Colors.blue,
+                foregroundColor: Colors.white,
+                icon: Icons.restore,
+                onTap: () => onEntityAction(EntityAction.restore),
+              )
+            : IconSlideAction(
+                caption: localization.delete,
+                color: Colors.red,
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                onTap: () => onEntityAction(EntityAction.delete),
+              ),
+      ],
     );
   }
 }

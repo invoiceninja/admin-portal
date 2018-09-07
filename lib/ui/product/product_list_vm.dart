@@ -37,7 +37,6 @@ class ProductListVM {
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
-  final Function(BuildContext, ProductEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, ProductEntity, EntityAction) onEntityAction;
 
@@ -49,7 +48,6 @@ class ProductListVM {
     @required this.isLoading,
     @required this.isLoaded,
     @required this.onProductTap,
-    @required this.onDismissed,
     @required this.onRefreshed,
     @required this.onEntityAction,
   });
@@ -68,68 +66,41 @@ class ProductListVM {
     final state = store.state;
 
     return ProductListVM(
-        user: state.user,
-        productList: memoizedFilteredProductList(state.productState.map,
-            state.productState.list, state.productListState),
-        productMap: state.productState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.productState.isLoaded,
-        filter: state.productUIState.listUIState.filter,
-        onProductTap: (context, product) {
-          store.dispatch(EditProduct(product: product, context: context));
-        },
-        onEntityAction: (context, product, action) {
-          switch (action) {
-            case EntityAction.clone:
-              Navigator.of(context).pop();
-              store.dispatch(
-                  EditProduct(context: context, product: product.clone));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreProductRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).restoredProduct),
-                  product.id));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveProductRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).archivedProduct),
-                  product.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteProductRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).deletedProduct),
-                  product.id));
-              break;
-          }
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onDismissed: (BuildContext context, ProductEntity product,
-            DismissDirection direction) {
-          final localization = AppLocalization.of(context);
-          if (direction == DismissDirection.endToStart) {
-            if (product.isDeleted || product.isArchived) {
-              store.dispatch(RestoreProductRequest(
-                  snackBarCompleter(context, localization.restoredProduct),
-                  product.id));
-            } else {
-              store.dispatch(ArchiveProductRequest(
-                  snackBarCompleter(context, localization.archivedProduct),
-                  product.id));
-            }
-          } else if (direction == DismissDirection.startToEnd) {
-            if (product.isDeleted) {
-              store.dispatch(RestoreProductRequest(
-                  snackBarCompleter(context, localization.restoredProduct),
-                  product.id));
-            } else {
-              store.dispatch(DeleteProductRequest(
-                  snackBarCompleter(context, localization.deletedProduct),
-                  product.id));
-            }
-          }
-        });
+      user: state.user,
+      productList: memoizedFilteredProductList(state.productState.map,
+          state.productState.list, state.productListState),
+      productMap: state.productState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.productState.isLoaded,
+      filter: state.productUIState.listUIState.filter,
+      onProductTap: (context, product) {
+        store.dispatch(EditProduct(product: product, context: context));
+      },
+      onEntityAction: (context, product, action) {
+        final localization = AppLocalization.of(context);
+        switch (action) {
+          case EntityAction.clone:
+            store.dispatch(
+                EditProduct(context: context, product: product.clone));
+            break;
+          case EntityAction.restore:
+            store.dispatch(RestoreProductRequest(
+                snackBarCompleter(context, localization.restoredProduct),
+                product.id));
+            break;
+          case EntityAction.archive:
+            store.dispatch(ArchiveProductRequest(
+                snackBarCompleter(context, localization.archivedProduct),
+                product.id));
+            break;
+          case EntityAction.delete:
+            store.dispatch(DeleteProductRequest(
+                snackBarCompleter(context, localization.deletedProduct),
+                product.id));
+            break;
+        }
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+    );
   }
 }

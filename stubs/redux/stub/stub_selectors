@@ -1,0 +1,60 @@
+import 'package:memoize/memoize.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+
+var memoizedDropdownStubList = memo2(
+    (BuiltMap<int, StubEntity> stubMap, BuiltList<int> stubList) =>
+        dropdownStubsSelector(stubMap, stubList));
+
+List<int> dropdownStubsSelector(
+    BuiltMap<int, StubEntity> stubMap, BuiltList<int> stubList) {
+  final list =
+      stubList.where((stubId) => stubMap[stubId].isActive).toList();
+
+  list.sort((stubAId, stubBId) {
+    final stubA = stubMap[stubAId];
+    final stubB = stubMap[stubBId];
+    return stubA.compareTo(stubB, StubFields.name, true);
+  });
+
+  return list;
+}
+
+var memoizedFilteredStubList = memo3((BuiltMap<int, StubEntity> stubMap,
+        BuiltList<int> stubList, ListUIState stubListState) =>
+    filteredStubsSelector(stubMap, stubList, stubListState));
+
+List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
+    BuiltList<int> stubList, ListUIState stubListState) {
+  final list = stubList.where((stubId) {
+    final stub = stubMap[stubId];
+    if (!stub.matchesStates(stubListState.stateFilters)) {
+      return false;
+    }
+    if (stubListState.custom1Filters.isNotEmpty &&
+        !stubListState.custom1Filters.contains(stub.customValue1)) {
+      return false;
+    }
+    if (stubListState.custom2Filters.isNotEmpty &&
+        !stubListState.custom2Filters.contains(stub.customValue2)) {
+      return false;
+    }
+    /*
+    if (stubListState.filterEntityId != null &&
+        stub.entityId != stubListState.filterEntityId) {
+      return false;
+    }
+    */
+    return stub.matchesFilter(stubListState.filter);
+  }).toList();
+
+  list.sort((stubAId, stubBId) {
+    final stubA = stubMap[stubAId];
+    final stubB = stubMap[stubBId];
+    return stubA.compareTo(
+        stubB, stubListState.sortField, stubListState.sortAscending);
+  });
+
+  return list;
+}

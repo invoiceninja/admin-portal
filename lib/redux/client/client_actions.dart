@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';

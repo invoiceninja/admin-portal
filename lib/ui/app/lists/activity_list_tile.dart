@@ -5,6 +5,8 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -31,10 +33,12 @@ class ActivityListTile extends StatelessWidget {
       user: state.selectedCompany.user,
       client: state.clientState.map[activity.clientId],
       invoice: state.invoiceState.map[activity.invoiceId],
+      quote: state.quoteState.map[activity.invoiceId],
+      payment: state.paymentState.map[activity.paymentId],
     );
 
     return ListTile(
-      leading: Icon(getIconData(activity.entityType)),
+      leading: Icon(getEntityIcon(activity.entityType)),
       title: Text(title),
       onTap: !enableNavigation
           ? null
@@ -47,6 +51,14 @@ class ActivityListTile extends StatelessWidget {
                 case EntityType.invoice:
                   store.dispatch(ViewInvoice(
                       invoiceId: activity.invoiceId, context: context));
+                  break;
+                case EntityType.quote:
+                  store.dispatch(ViewQuote(
+                      quoteId: activity.invoiceId, context: context));
+                  break;
+                case EntityType.payment:
+                  store.dispatch(ViewPayment(
+                      paymentId: activity.paymentId, context: context));
                   break;
               }
             },

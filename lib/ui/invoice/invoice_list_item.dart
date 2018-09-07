@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceListItem extends StatelessWidget {
   final UserEntity user;
-  final DismissDirectionCallback onDismissed;
+  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final InvoiceEntity invoice;
@@ -18,7 +18,7 @@ class InvoiceListItem extends StatelessWidget {
 
   const InvoiceListItem({
     @required this.user,
-    @required this.onDismissed,
+    @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
     @required this.invoice,
@@ -30,13 +30,14 @@ class InvoiceListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? (invoice.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
+        ? (invoice.matchesFilterValue(filter) ??
+            client.matchesFilterValue(filter))
         : null;
 
     return DismissibleEntity(
       user: user,
       entity: invoice,
-      onDismissed: onDismissed,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
@@ -51,7 +52,9 @@ class InvoiceListItem extends StatelessWidget {
                 ),
               ),
               Text(
-                  formatNumber(invoice.amount, context,
+                  formatNumber(
+                      invoice.balance > 0 ? invoice.balance : invoice.amount,
+                      context,
                       clientId: invoice.clientId),
                   style: Theme.of(context).textTheme.title),
             ],
@@ -71,10 +74,15 @@ class InvoiceListItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                Text(invoice.isPastDue ? localization.pastDue : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
+                Text(
+                    invoice.isPastDue
+                        ? localization.pastDue
+                        : localization.lookup(
+                            'invoice_status_${invoice.invoiceStatusId}'),
                     style: TextStyle(
-                      color:
-                          invoice.isPastDue ? Colors.red : InvoiceStatusColors.colors[invoice.invoiceStatusId],
+                      color: invoice.isPastDue
+                          ? Colors.red
+                          : InvoiceStatusColors.colors[invoice.invoiceStatusId],
                     )),
               ],
             ),
@@ -85,4 +93,3 @@ class InvoiceListItem extends StatelessWidget {
     );
   }
 }
-

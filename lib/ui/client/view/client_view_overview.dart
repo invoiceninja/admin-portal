@@ -3,6 +3,9 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +27,7 @@ class ClientOverview extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
     final company = viewModel.company;
-    final state = StoreProvider
-        .of<AppState>(context)
-        .state;
+    final state = StoreProvider.of<AppState>(context).state;
     final statics = state.staticState;
     final fields = <String, String>{};
 
@@ -50,32 +51,6 @@ class ClientOverview extends StatelessWidget {
       fields[label2] = client.customValue2;
     }
 
-    final List<Widget> fieldWidgets = [];
-    fields.forEach((field, value) {
-      if (value != null && value.isNotEmpty) {
-        fieldWidgets.add(Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Flexible(
-              child: Text(
-                localization.lookup(field),
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ),
-            Flexible(
-                child: Text(
-                  value,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                )),
-          ],
-        ));
-      }
-    });
-
     return ListView(
       children: <Widget>[
         TwoValueHeader(
@@ -87,141 +62,69 @@ class ClientOverview extends StatelessWidget {
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)
             : Container(),
-        fieldWidgets.isNotEmpty
-            ? Column(
-          children: <Widget>[
-            Container(
-              color: Theme
-                  .of(context)
-                  .canvasColor,
-              child: Padding(
-                padding:
-                EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-                child: GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  primary: true,
-                  crossAxisCount: 2,
-                  children: fieldWidgets,
-                  childAspectRatio: 3.5,
-                ),
-              ),
-            ),
-            Container(
-              color: Theme
-                  .of(context)
-                  .backgroundColor,
-              height: 12.0,
-            ),
-          ],
-        )
-            : Container(),
+        FieldGrid(fields),
         Divider(
           height: 1.0,
         ),
+        EntityListTile(
+          icon: FontAwesomeIcons.filePdfO,
+          title: localization.invoices,
+          onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
+          subtitle: memoizedInvoiceStatsForClient(
+              client.id,
+              state.invoiceState.map,
+              localization.active,
+              localization.archived),
+        ),
+        EntityListTile(
+          icon: FontAwesomeIcons.creditCard,
+          title: localization.payments,
+          onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
+          subtitle: memoizedPaymentStatsForClient(
+              client.id,
+              state.paymentState.map,
+              state.invoiceState.map,
+              localization.active,
+              localization.archived),
+        ),
+        company.isModuleEnabled(EntityType.quote) ? EntityListTile(
+          icon: FontAwesomeIcons.fileAltO,
+          title: localization.quotes,
+          onTap: () => viewModel.onEntityPressed(context, EntityType.quote),
+          subtitle: memoizedQuoteStatsForClient(
+              client.id,
+              state.quoteState.map,
+              localization.active,
+              localization.archived),
+        ) : Container(),
+      ],
+    );
+  }
+}
+
+class EntityListTile extends StatelessWidget {
+  const EntityListTile({this.icon, this.onTap, this.title, this.subtitle});
+
+  final Function onTap;
+  final IconData icon;
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
         Material(
-          color: Theme
-              .of(context)
-              .canvasColor,
+          color: Theme.of(context).canvasColor,
           child: ListTile(
-            title: Text(localization.invoices),
-            subtitle: Text(memoizedInvoiceStatsForClient(
-                client.id, state.invoiceState.map, localization.active,
-                localization.archived)),
-            leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
+            title: Text(title),
+            subtitle: Text(subtitle),
+            leading: Icon(icon, size: 18.0),
             trailing: Icon(Icons.navigate_next),
-            onTap: () => viewModel.onInvoicesPressed(context),
+            onTap: onTap,
           ),
         ),
-        Divider(
-          height: 1.0,
-        ),
-        /*
-        Material(
-          color: Theme
-              .of(context)
-              .canvasColor,
-          child: ListTile(
-            title: Text(localization.payments),
-            leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {},
-          ),
-        ),
-        Divider(
-          height: 1.0,
-        ),
-        Material(
-          color: Theme
-              .of(context)
-              .canvasColor,
-          child: ListTile(
-            title: Text(localization.quotes),
-            leading: Icon(FontAwesomeIcons.fileAltO, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {},
-          ),
-        ),
-        Divider(
-          height: 1.0,
-        ),
-        Material(
-          color: Theme
-              .of(context)
-              .canvasColor,
-          child: ListTile(
-            title: Text(localization.projects),
-            leading: Icon(FontAwesomeIcons.briefcase, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {},
-          ),
-        ),
-        Divider(
-          height: 1.0,
-        ),
-        Material(
-          color: Theme
-              .of(context)
-              .canvasColor,
-          child: ListTile(
-            title: Text(localization.tasks),
-            leading: Icon(FontAwesomeIcons.clockO, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {},
-          ),
-        ),
-        Divider(
-          height: 1.0,
-        ),
-        Material(
-          color: Theme
-              .of(context)
-              .canvasColor,
-          child: ListTile(
-            title: Text(localization.expenses),
-            leading: Icon(FontAwesomeIcons.fileImageO, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {},
-          ),
-        ),
-        Divider(
-          height: 1.0,
-        ),
-        Material(
-          color: Theme
-              .of(context)
-              .canvasColor,
-          child: ListTile(
-            title: Text(localization.vendors),
-            leading: Icon(FontAwesomeIcons.building, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {},
-          ),
-        ),
-        Divider(
-          height: 1.0,
-        ),
-        */
+        Divider(),
       ],
     );
   }

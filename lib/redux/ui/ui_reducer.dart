@@ -7,16 +7,25 @@ import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:redux/redux.dart';
 
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
+
+import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+
 UIState uiReducer(UIState state, dynamic action) {
   return state.rebuild((b) => b
     ..filter = filterReducer(state.filter, action)
-    ..selectedCompanyIndex = selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
+    ..selectedCompanyIndex =
+        selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..emailPayment = emailPaymentReducer(state.emailPayment, action)
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
-  );
+    // STARTER: reducer - do not remove comment
+    ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
+    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action)));
 }
 
 Reducer<String> filterReducer = combineReducers([
@@ -27,19 +36,28 @@ String updateFilter(String filter, FilterCompany action) {
   return action.filter;
 }
 
+Reducer<bool> emailPaymentReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>(updateEmailPaymentReducer),
+]);
+
+bool updateEmailPaymentReducer(bool emailPayment, UserSettingsChanged action) {
+  return action.emailPayment ?? emailPayment;
+}
+
 Reducer<bool> darkModeReducer = combineReducers([
   TypedReducer<bool, UserSettingsChanged>(updateDarkModeReducer),
 ]);
 
 bool updateDarkModeReducer(bool enableDarkMode, UserSettingsChanged action) {
-  return action.enableDarkMode;
+  return action.enableDarkMode ?? enableDarkMode;
 }
 
 Reducer<String> currentRouteReducer = combineReducers([
   TypedReducer<String, UpdateCurrentRoute>(updateCurrentRouteReducer),
 ]);
 
-String updateCurrentRouteReducer(String currentRoute, UpdateCurrentRoute action) {
+String updateCurrentRouteReducer(
+    String currentRoute, UpdateCurrentRoute action) {
   return action.route;
 }
 

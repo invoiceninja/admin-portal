@@ -8,13 +8,17 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
@@ -74,6 +78,7 @@ class AppDrawer extends StatelessWidget {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
     final user = store.state.user;
+    final company = viewModel.selectedCompany;
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
@@ -132,14 +137,14 @@ class AppDrawer extends StatelessWidget {
           ),
           user.isAdmin
               ? DrawerTile(
-                  user: user,
+                  company: company,
                   icon: FontAwesomeIcons.tachometerAlt,
                   title: AppLocalization.of(context).dashboard,
                   onTap: () => store.dispatch(ViewDashboard(context)),
                 )
               : Container(),
           DrawerTile(
-            user: user,
+            company: company,
             entityType: EntityType.client,
             icon: FontAwesomeIcons.users,
             title: AppLocalization.of(context).clients,
@@ -151,7 +156,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            user: user,
+            company: company,
             entityType: EntityType.product,
             icon: FontAwesomeIcons.cube,
             title: AppLocalization.of(context).products,
@@ -165,7 +170,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            user: user,
+            company: company,
             entityType: EntityType.invoice,
             icon: FontAwesomeIcons.filePdfO,
             title: AppLocalization.of(context).invoices,
@@ -176,8 +181,33 @@ class AppDrawer extends StatelessWidget {
                   EditInvoice(invoice: InvoiceEntity(), context: context));
             },
           ),
+          // STARTER: menu - do not remove comment
           DrawerTile(
-            user: user,
+            company: company,
+            entityType: EntityType.payment,
+            icon: FontAwesomeIcons.creditCard,
+            title: AppLocalization.of(context).payments,
+            onTap: () => store.dispatch(ViewPaymentList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditPayment(
+                  payment: PaymentEntity(company), context: context));
+            },
+          ),
+          DrawerTile(
+            company: company,
+            entityType: EntityType.quote,
+            icon: FontAwesomeIcons.fileAltO,
+            title: AppLocalization.of(context).quotes,
+            onTap: () => store.dispatch(ViewQuoteList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditQuote(
+                  quote: InvoiceEntity(isQuote: true), context: context));
+            },
+          ),
+          DrawerTile(
+            company: company,
             icon: FontAwesomeIcons.cog,
             title: AppLocalization.of(context).settings,
             onTap: () {
@@ -229,7 +259,7 @@ class AppDrawer extends StatelessWidget {
 
 class DrawerTile extends StatelessWidget {
   const DrawerTile({
-    @required this.user,
+    @required this.company,
     @required this.icon,
     @required this.title,
     @required this.onTap,
@@ -237,7 +267,7 @@ class DrawerTile extends StatelessWidget {
     this.entityType,
   });
 
-  final UserEntity user;
+  final CompanyEntity company;
   final EntityType entityType;
   final IconData icon;
   final String title;
@@ -246,7 +276,11 @@ class DrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = company.user;
+
     if (entityType != null && !user.canViewOrCreate(entityType)) {
+      return Container();
+    } else if (!company.isModuleEnabled(entityType)) {
       return Container();
     }
 
@@ -266,10 +300,8 @@ class DrawerTile extends StatelessWidget {
 }
 
 /*
-'payments' => 'credit-card',
 'recurring_invoices' => 'files-o',
 'credits' => 'credit-card',
-'quotes' => 'file-text-o',
 'proposals' => 'th-large',
 'tasks' => 'clock-o',
 'expenses' => 'file-image-o',

@@ -24,7 +24,8 @@ Completer<Null> refreshCompleter(BuildContext context) {
 }
 */
 
-Completer<Null> snackBarCompleter(BuildContext context, String message, {bool shouldPop = false}) {
+Completer<Null> snackBarCompleter(BuildContext context, String message,
+    {bool shouldPop = false}) {
   final Completer<Null> completer = Completer<Null>();
 
   completer.future.then((_) {
@@ -33,8 +34,8 @@ Completer<Null> snackBarCompleter(BuildContext context, String message, {bool sh
     }
     Scaffold.of(context).showSnackBar(SnackBar(
         content: SnackBarRow(
-          message: message,
-        )));
+      message: message,
+    )));
   }).catchError((Object error) {
     showDialog<ErrorDialog>(
         context: context,
@@ -52,6 +53,20 @@ Completer<Null> popCompleter(BuildContext context, dynamic result) {
   completer.future.then((_) {
     Navigator.of(context).pop<dynamic>(result);
   }).catchError((Object error) {
+    showDialog<ErrorDialog>(
+        context: context,
+        builder: (BuildContext context) {
+          return ErrorDialog(error);
+        });
+  });
+
+  return completer;
+}
+
+Completer<Null> errorCompleter(BuildContext context) {
+  final Completer<Null> completer = Completer<Null>();
+
+  completer.future.catchError((Object error) {
     showDialog<ErrorDialog>(
         context: context,
         builder: (BuildContext context) {

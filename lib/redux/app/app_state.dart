@@ -12,6 +12,11 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
+
+import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+
 part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
@@ -26,7 +31,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState3: CompanyState(),
       companyState4: CompanyState(),
       companyState5: CompanyState(),
-      uiState: UIState(enableDarkMode: enableDarkMode),
+      uiState: UIState(CompanyEntity(), enableDarkMode: enableDarkMode),
     );
   }
 
@@ -92,6 +97,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return clientUIState;
       case EntityType.invoice:
         return invoiceUIState;
+      // STARTER: states switch - do not remove comment
+case EntityType.payment:
+return paymentUIState;
+
+      case EntityType.quote:
+        return quoteUIState;
+
       default:
         return null;
     }
@@ -118,6 +130,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   InvoiceUIState get invoiceUIState => uiState.invoiceUIState;
 
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
+
+  // STARTER: state getters - do not remove comment
+PaymentState get paymentState => selectedCompanyState.paymentState;
+ListUIState get paymentListState => uiState.paymentUIState.listUIState;
+PaymentUIState get paymentUIState => uiState.paymentUIState;
+
+
+  QuoteState get quoteState => selectedCompanyState.quoteState;
+
+  ListUIState get quoteListState => uiState.quoteUIState.listUIState;
+
+  QuoteUIState get quoteUIState => uiState.quoteUIState;
 
   @override
   String toString() {

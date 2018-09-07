@@ -4,6 +4,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
@@ -46,7 +48,8 @@ class _ClientViewState extends State<ClientView>
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
-    final user = viewModel.company.user;
+    final company = viewModel.company;
+    final user = company.user;
 
     return WillPopScope(
       onWillPop: () async {
@@ -69,44 +72,49 @@ class _ClientViewState extends State<ClientView>
               context: context,
               builder: (BuildContext context) =>
                   SimpleDialog(children: <Widget>[
-                    user.canCreate(EntityType.client) ? ListTile(
-                      dense: true,
-                      leading: Icon(Icons.add_circle_outline),
-                      title: Text(localization.invoice),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        store.dispatch(EditInvoice(
-                            invoice: InvoiceEntity()
-                                .rebuild((b) => b.clientId = client.id),
-                            context: context));
-                      },
-                    ) : Container(),
-                    /*
-                    ListTile(
-                      dense: true,
-                      leading: Icon(Icons.add_circle_outline),
-                      title: Text(localization.quote),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      dense: true,
-                      leading: Icon(Icons.add_circle_outline),
-                      title: Text(localization.payment),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      dense: true,
-                      leading: Icon(Icons.add_circle_outline),
-                      title: Text(localization.expense),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      dense: true,
-                      leading: Icon(Icons.add_circle_outline),
-                      title: Text(localization.task),
-                      onTap: () {},
-                    ),
-                    */
+                    user.canCreate(EntityType.client)
+                        ? ListTile(
+                            //dense: true,
+                            leading: Icon(Icons.add_circle_outline),
+                            title: Text(localization.invoice),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              store.dispatch(EditInvoice(
+                                  invoice: InvoiceEntity()
+                                      .rebuild((b) => b.clientId = client.id),
+                                  context: context));
+                            },
+                          )
+                        : Container(),
+                    user.canCreate(EntityType.payment)
+                        ? ListTile(
+                            //dense: true,
+                            leading: Icon(Icons.add_circle_outline),
+                            title: Text(localization.payment),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              store.dispatch(EditPayment(
+                                  payment: PaymentEntity(company)
+                                      .rebuild((b) => b.clientId = client.id),
+                                  context: context));
+                            },
+                          )
+                        : Container(),
+                    company.isModuleEnabled(EntityType.quote) &&
+                            user.canCreate(EntityType.quote)
+                        ? ListTile(
+                            //dense: true,
+                            leading: Icon(Icons.add_circle_outline),
+                            title: Text(localization.quote),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              store.dispatch(EditQuote(
+                                  quote: InvoiceEntity(isQuote: true)
+                                      .rebuild((b) => b.clientId = client.id),
+                                  context: context));
+                            },
+                          )
+                        : Container(),
                   ]),
             );
           },
@@ -191,7 +199,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController controller;
 
   @override
-  final Size preferredSize = const Size(double.infinity, 100.0);
+  final Size preferredSize = const Size(double.infinity, kToolbarHeight * 2);
 
   @override
   Widget build(BuildContext context) {
@@ -220,15 +228,18 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: client.isNew
           ? []
           : [
-              user.canEditEntity(client) ? EditIconButton(
-                isVisible: !client.isDeleted,
-                onPressed: () => viewModel.onEditPressed(context),
-              ) : Container(),
+              user.canEditEntity(client)
+                  ? EditIconButton(
+                      isVisible: !client.isDeleted,
+                      onPressed: () => viewModel.onEditPressed(context),
+                    )
+                  : Container(),
               ActionMenuButton(
                 user: viewModel.company.user,
                 isSaving: viewModel.isSaving,
                 entity: client,
                 onSelected: viewModel.onActionSelected,
+                entityActions: viewModel.client.getEntityActions(user: user),
               )
             ],
     );

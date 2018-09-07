@@ -62,3 +62,16 @@ List<int> sizeList(BuiltMap<int, SizeEntity> sizeMap) {
   return list;
 }
 
+var memoizedPaymentTypeList = memo1((BuiltMap<int, PaymentTypeEntity> paymentTypeMap) =>
+    paymentTypeList(paymentTypeMap));
+
+List<int> paymentTypeList(BuiltMap<int, PaymentTypeEntity> paymentTypeMap) {
+  final list = paymentTypeMap.keys.toList();
+
+  list.sort((idA, idB) => paymentTypeMap[idA].id
+      .compareTo(paymentTypeMap[idB].id));
+
+  return list;
+}
+
+

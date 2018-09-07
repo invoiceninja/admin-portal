@@ -4,12 +4,14 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dar
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 
 class InvoiceEdit extends StatefulWidget {
-  final InvoiceEditVM viewModel;
+  final EntityEditVM viewModel;
 
   const InvoiceEdit({
     Key key,
@@ -35,10 +37,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final invoice = widget.viewModel.invoice;
     final invoiceItem = widget.viewModel.invoiceItem;
 
-    final index =
-        invoice.invoiceItems.contains(invoiceItem) ? kItemScreen : kDetailsScreen;
-    _controller =
-        TabController(vsync: this, length: 2, initialIndex: index);
+    final index = invoice.invoiceItems.contains(invoiceItem)
+        ? kItemScreen
+        : kDetailsScreen;
+    _controller = TabController(vsync: this, length: 2, initialIndex: index);
   }
 
   @override
@@ -61,8 +63,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
       child: Scaffold(
         appBar: AppBar(
           title: Text(invoice.isNew
-              ? localization.newInvoice
-              : '${localization.invoice} ${viewModel.origInvoice.invoiceNumber}'),
+              ? invoice.isQuote ? localization.newQuote : localization.newInvoice
+              : invoice.isQuote ? localization.editQuote: localization.editInvoice),
           actions: <Widget>[
             RefreshIconButton(
               icon: Icons.cloud_upload,
@@ -96,10 +98,15 @@ class _InvoiceEditState extends State<InvoiceEdit>
           key: _formKey,
           child: TabBarView(
             controller: _controller,
-            children: <Widget>[
-              InvoiceEditDetailsScreen(),
-              InvoiceEditItemsScreen(),
-            ],
+            children: invoice.isQuote
+                ? <Widget>[
+                    QuoteEditDetailsScreen(),
+                    QuoteEditItemsScreen(),
+                  ]
+                : <Widget>[
+                    InvoiceEditDetailsScreen(),
+                    InvoiceEditItemsScreen(),
+                  ],
           ),
         ),
         bottomNavigationBar: BottomAppBar(

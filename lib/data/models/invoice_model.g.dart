@@ -134,6 +134,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
+      'is_quote',
+      serializers.serialize(object.isQuote,
+          specifiedType: const FullType(bool)),
       'client_id',
       serializers.serialize(object.clientId,
           specifiedType: const FullType(int)),
@@ -239,9 +242,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'custom_text_value2',
       serializers.serialize(object.customTextValue2,
           specifiedType: const FullType(String)),
-      'is_quote',
-      serializers.serialize(object.isQuote,
-          specifiedType: const FullType(bool)),
       'is_public',
       serializers.serialize(object.isPublic,
           specifiedType: const FullType(bool)),
@@ -315,6 +315,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'balance':
           result.balance = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'is_quote':
+          result.isQuote = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
@@ -455,10 +459,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'custom_text_value2':
           result.customTextValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'is_quote':
-          result.isQuote = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'is_public':
           result.isPublic = serializers.deserialize(value,
@@ -994,6 +994,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final double balance;
   @override
+  final bool isQuote;
+  @override
   final int clientId;
   @override
   final int invoiceStatusId;
@@ -1064,8 +1066,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String customTextValue2;
   @override
-  final bool isQuote;
-  @override
   final bool isPublic;
   @override
   final String filename;
@@ -1092,6 +1092,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   _$InvoiceEntity._(
       {this.amount,
       this.balance,
+      this.isQuote,
       this.clientId,
       this.invoiceStatusId,
       this.invoiceNumber,
@@ -1127,7 +1128,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.quoteInvoiceId,
       this.customTextValue1,
       this.customTextValue2,
-      this.isQuote,
       this.isPublic,
       this.filename,
       this.invoiceItems,
@@ -1143,6 +1143,8 @@ class _$InvoiceEntity extends InvoiceEntity {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'amount');
     if (balance == null)
       throw new BuiltValueNullFieldError('InvoiceEntity', 'balance');
+    if (isQuote == null)
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'isQuote');
     if (clientId == null)
       throw new BuiltValueNullFieldError('InvoiceEntity', 'clientId');
     if (invoiceStatusId == null)
@@ -1213,8 +1215,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customTextValue1');
     if (customTextValue2 == null)
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customTextValue2');
-    if (isQuote == null)
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'isQuote');
     if (isPublic == null)
       throw new BuiltValueNullFieldError('InvoiceEntity', 'isPublic');
     if (filename == null)
@@ -1238,6 +1238,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (other is! InvoiceEntity) return false;
     return amount == other.amount &&
         balance == other.balance &&
+        isQuote == other.isQuote &&
         clientId == other.clientId &&
         invoiceStatusId == other.invoiceStatusId &&
         invoiceNumber == other.invoiceNumber &&
@@ -1273,7 +1274,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         quoteInvoiceId == other.quoteInvoiceId &&
         customTextValue1 == other.customTextValue1 &&
         customTextValue2 == other.customTextValue2 &&
-        isQuote == other.isQuote &&
         isPublic == other.isPublic &&
         filename == other.filename &&
         invoiceItems == other.invoiceItems &&
@@ -1306,16 +1306,16 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), invoiceTypeId.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode),
-                                                                                customValue1.hashCode),
-                                                                            customValue2.hashCode),
-                                                                        customTaxes1.hashCode),
-                                                                    customTaxes2.hashCode),
-                                                                hasExpenses.hashCode),
-                                                            quoteInvoiceId.hashCode),
-                                                        customTextValue1.hashCode),
-                                                    customTextValue2.hashCode),
-                                                isQuote.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), isQuote.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), invoiceTypeId.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode),
+                                                                                autoBill.hashCode),
+                                                                            customValue1.hashCode),
+                                                                        customValue2.hashCode),
+                                                                    customTaxes1.hashCode),
+                                                                customTaxes2.hashCode),
+                                                            hasExpenses.hashCode),
+                                                        quoteInvoiceId.hashCode),
+                                                    customTextValue1.hashCode),
+                                                customTextValue2.hashCode),
                                             isPublic.hashCode),
                                         filename.hashCode),
                                     invoiceItems.hashCode),
@@ -1333,6 +1333,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     return (newBuiltValueToStringHelper('InvoiceEntity')
           ..add('amount', amount)
           ..add('balance', balance)
+          ..add('isQuote', isQuote)
           ..add('clientId', clientId)
           ..add('invoiceStatusId', invoiceStatusId)
           ..add('invoiceNumber', invoiceNumber)
@@ -1368,7 +1369,6 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('quoteInvoiceId', quoteInvoiceId)
           ..add('customTextValue1', customTextValue1)
           ..add('customTextValue2', customTextValue2)
-          ..add('isQuote', isQuote)
           ..add('isPublic', isPublic)
           ..add('filename', filename)
           ..add('invoiceItems', invoiceItems)
@@ -1394,6 +1394,10 @@ class InvoiceEntityBuilder
   double _balance;
   double get balance => _$this._balance;
   set balance(double balance) => _$this._balance = balance;
+
+  bool _isQuote;
+  bool get isQuote => _$this._isQuote;
+  set isQuote(bool isQuote) => _$this._isQuote = isQuote;
 
   int _clientId;
   int get clientId => _$this._clientId;
@@ -1544,10 +1548,6 @@ class InvoiceEntityBuilder
   set customTextValue2(String customTextValue2) =>
       _$this._customTextValue2 = customTextValue2;
 
-  bool _isQuote;
-  bool get isQuote => _$this._isQuote;
-  set isQuote(bool isQuote) => _$this._isQuote = isQuote;
-
   bool _isPublic;
   bool get isPublic => _$this._isPublic;
   set isPublic(bool isPublic) => _$this._isPublic = isPublic;
@@ -1598,6 +1598,7 @@ class InvoiceEntityBuilder
     if (_$v != null) {
       _amount = _$v.amount;
       _balance = _$v.balance;
+      _isQuote = _$v.isQuote;
       _clientId = _$v.clientId;
       _invoiceStatusId = _$v.invoiceStatusId;
       _invoiceNumber = _$v.invoiceNumber;
@@ -1633,7 +1634,6 @@ class InvoiceEntityBuilder
       _quoteInvoiceId = _$v.quoteInvoiceId;
       _customTextValue1 = _$v.customTextValue1;
       _customTextValue2 = _$v.customTextValue2;
-      _isQuote = _$v.isQuote;
       _isPublic = _$v.isPublic;
       _filename = _$v.filename;
       _invoiceItems = _$v.invoiceItems?.toBuilder();
@@ -1668,6 +1668,7 @@ class InvoiceEntityBuilder
           new _$InvoiceEntity._(
               amount: amount,
               balance: balance,
+              isQuote: isQuote,
               clientId: clientId,
               invoiceStatusId: invoiceStatusId,
               invoiceNumber: invoiceNumber,
@@ -1703,7 +1704,6 @@ class InvoiceEntityBuilder
               quoteInvoiceId: quoteInvoiceId,
               customTextValue1: customTextValue1,
               customTextValue2: customTextValue2,
-              isQuote: isQuote,
               isPublic: isPublic,
               filename: filename,
               invoiceItems: invoiceItems.build(),

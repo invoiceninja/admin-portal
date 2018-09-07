@@ -2,8 +2,10 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'invoice_model.g.dart';
@@ -12,6 +14,7 @@ abstract class InvoiceListResponse
     implements Built<InvoiceListResponse, InvoiceListResponseBuilder> {
   factory InvoiceListResponse([void updates(InvoiceListResponseBuilder b)]) =
       _$InvoiceListResponse;
+
   InvoiceListResponse._();
 
   BuiltList<InvoiceEntity> get data;
@@ -24,12 +27,34 @@ abstract class InvoiceItemResponse
     implements Built<InvoiceItemResponse, InvoiceItemResponseBuilder> {
   factory InvoiceItemResponse([void updates(InvoiceItemResponseBuilder b)]) =
       _$InvoiceItemResponse;
+
   InvoiceItemResponse._();
 
   InvoiceEntity get data;
 
   static Serializer<InvoiceItemResponse> get serializer =>
       _$invoiceItemResponseSerializer;
+}
+
+class QuoteFields {
+  static const String quoteNumber = 'quoteNumber';
+  static const String quoteDate = 'quoteDate';
+  static const String validUntil = 'validUntil';
+  static const String quoteStatusId = 'quoteStatusId';
+
+  static String convertField(String field) {
+    if (field == InvoiceFields.invoiceStatusId) {
+      return QuoteFields.quoteStatusId;
+    } else if (field == InvoiceFields.invoiceNumber) {
+      return QuoteFields.quoteNumber;
+    } else if (field == InvoiceFields.invoiceDate) {
+      return QuoteFields.quoteDate;
+    } else if (field == InvoiceFields.dueDate) {
+      return QuoteFields.validUntil;
+    } else {
+      return field;
+    }
+  }
 }
 
 class InvoiceFields {
@@ -62,7 +87,8 @@ abstract class InvoiceEntity extends Object
     with BaseEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   static int counter = 0;
-  factory InvoiceEntity() {
+
+  factory InvoiceEntity({bool isQuote = false}) {
     return _$InvoiceEntity._(
       id: --InvoiceEntity.counter,
       amount: 0.0,
@@ -77,7 +103,8 @@ abstract class InvoiceEntity extends Object
       terms: '',
       publicNotes: '',
       privateNotes: '',
-      invoiceTypeId: 0,
+      invoiceTypeId: isQuote ? kInvoiceTypeQuote : kInvoiceTypeStandard,
+      isQuote: isQuote,
       isRecurring: false,
       frequencyId: 0,
       startDate: '',
@@ -102,7 +129,6 @@ abstract class InvoiceEntity extends Object
       quoteInvoiceId: 0,
       customTextValue1: '',
       customTextValue2: '',
-      isQuote: false,
       isPublic: false,
       filename: '',
       invoiceItems: BuiltList<InvoiceItemEntity>(),
@@ -112,13 +138,13 @@ abstract class InvoiceEntity extends Object
       isDeleted: false,
     );
   }
+
   InvoiceEntity._();
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
     ..invoiceNumber = ''
-    ..isPublic = false
-  );
+    ..isPublic = false);
 
   @override
   EntityType get entityType {
@@ -128,6 +154,9 @@ abstract class InvoiceEntity extends Object
   double get amount;
 
   double get balance;
+
+  @BuiltValueField(wireName: 'is_quote')
+  bool get isQuote;
 
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
@@ -241,9 +270,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'custom_text_value2')
   String get customTextValue2;
 
-  @BuiltValueField(wireName: 'is_quote')
-  bool get isQuote;
-
   @BuiltValueField(wireName: 'is_public')
   bool get isPublic;
 
@@ -271,6 +297,7 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
       case InvoiceFields.invoiceDate:
+      case QuoteFields.quoteDate:
         response = invoiceA.invoiceDate.compareTo(invoiceB.invoiceDate);
         break;
     }
@@ -337,18 +364,66 @@ abstract class InvoiceEntity extends Object
     return null;
   }
 
+  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+    final actions = <EntityAction>[];
+
+    if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.clone);
+    }
+
+    if (user.canEditEntity(this) && !isPublic) {
+      actions.add(EntityAction.markSent);
+    }
+
+    if (user.canEditEntity(this) && client.hasEmailAddress) {
+      actions.add(EntityAction.email);
+    }
+
+    if (user.canEditEntity(this) &&
+        user.canCreate(EntityType.payment) &&
+        isUnpaid) {
+      actions.add(EntityAction.payment);
+    }
+
+    actions.add(EntityAction.pdf);
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(getEntityBaseActions(user: user));
+  }
+
+  InvoiceEntity applyTax(TaxRateEntity taxRate) {
+    InvoiceEntity invoice = rebuild((b) => b
+      ..taxRate1 = taxRate.rate
+      ..taxName1 = taxRate.name);
+
+    if (taxRate.isInclusive) {
+      invoice = invoice.rebuild((b) => b
+        ..invoiceItems.replace(invoiceItems
+            .map((item) => item.rebuild(
+                (b) => b.cost = round(b.cost / (100 + taxRate.rate) * 100, 2)))
+            .toList()));
+    }
+
+    return invoice;
+  }
+
   @override
   String get listDisplayName {
     return invoiceNumber;
   }
 
   @override
-  double get listDisplayAmount => null;
+  double get listDisplayAmount => balance;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   double get requestedAmount => partial > 0 ? partial : amount;
+
+  bool get isUnpaid => invoiceStatusId != kInvoiceStatusPaid;
 
   bool get isPastDue {
     if (dueDate.isEmpty) {
@@ -357,15 +432,23 @@ abstract class InvoiceEntity extends Object
 
     return !isDeleted &&
         isPublic &&
-        invoiceStatusId != kInvoiceStatusPaid &&
-        DateTime
-            .tryParse(dueDate)
+        isUnpaid &&
+        DateTime.tryParse(dueDate)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
   String get invitationLink => invitations.first?.link;
+
   String get invitationSilentLink => invitations.first?.silentLink;
+
   String get invitationDownloadLink => invitations.first?.downloadLink;
+
+  PaymentEntity createPayment(CompanyEntity company) {
+    return PaymentEntity(company).rebuild((b) => b
+      ..invoiceId = id
+      ..clientId = clientId
+      ..amount = balance);
+  }
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
@@ -374,6 +457,7 @@ abstract class InvoiceItemEntity extends Object
     with BaseEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   static int counter = 0;
+
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
       id: --InvoiceItemEntity.counter,
@@ -394,6 +478,7 @@ abstract class InvoiceItemEntity extends Object
       isDeleted: false,
     );
   }
+
   InvoiceItemEntity._();
 
   @override
@@ -453,6 +538,19 @@ abstract class InvoiceItemEntity extends Object
     return null;
   }
 
+  InvoiceItemEntity applyTax(TaxRateEntity taxRate) {
+    InvoiceItemEntity item = rebuild((b) => b
+      ..taxRate1 = taxRate.rate
+      ..taxName1 = taxRate.name);
+
+    if (taxRate.isInclusive) {
+      item = item.rebuild(
+          (b) => b..cost = round(b.cost / (100 + taxRate.rate) * 100, 2));
+    }
+
+    return item;
+  }
+
   @override
   String get listDisplayName {
     return '';
@@ -472,6 +570,7 @@ abstract class InvitationEntity extends Object
     with BaseEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
   static int counter = 0;
+
   factory InvitationEntity() {
     return _$InvitationEntity._(
       id: --InvitationEntity.counter,
@@ -484,6 +583,7 @@ abstract class InvitationEntity extends Object
       isDeleted: false,
     );
   }
+
   InvitationEntity._();
 
   String get key;
@@ -500,6 +600,7 @@ abstract class InvitationEntity extends Object
   String get viewedDate;
 
   String get silentLink => link + '?silent=true&borderless=true';
+
   String get downloadLink => link.replaceFirst('/view/', '/download/');
 
   @override

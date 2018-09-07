@@ -39,7 +39,6 @@ class ClientListVM {
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, ClientEntity) onClientTap;
-  final Function(BuildContext, ClientEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
 
@@ -51,7 +50,6 @@ class ClientListVM {
     @required this.isLoaded,
     @required this.filter,
     @required this.onClientTap,
-    @required this.onDismissed,
     @required this.onRefreshed,
     @required this.onEntityAction,
   });
@@ -70,69 +68,43 @@ class ClientListVM {
     final state = store.state;
 
     return ClientListVM(
-        user: state.user,
-        clientList: memoizedFilteredClientList(state.clientState.map,
-            state.clientState.list, state.clientListState),
-        clientMap: state.clientState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.clientState.isLoaded,
-        filter: state.clientListState.filter,
-        onClientTap: (context, client) {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
-        },
-        onEntityAction: (context, client, action) {
-          switch (action) {
-            case EntityAction.invoice:
-              store.dispatch(EditInvoice(
-                  invoice:
-                      InvoiceEntity().rebuild((b) => b.clientId = client.id),
-                  context: context));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreClientRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).restoredClient),
-                  client.id));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveClientRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).archivedClient),
-                  client.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteClientRequest(
-                  popCompleter(
-                      context, AppLocalization.of(context).deletedClient),
-                  client.id));
-              break;
-          }
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onDismissed: (BuildContext context, ClientEntity client,
-            DismissDirection direction) {
-          final localization = AppLocalization.of(context);
-          if (direction == DismissDirection.endToStart) {
-            if (client.isDeleted || client.isArchived) {
-              store.dispatch(RestoreClientRequest(
-                  snackBarCompleter(context, localization.restoredClient),
-                  client.id));
-            } else {
-              store.dispatch(ArchiveClientRequest(
-                  snackBarCompleter(context, localization.archivedClient),
-                  client.id));
-            }
-          } else if (direction == DismissDirection.startToEnd) {
-            if (client.isDeleted) {
-              store.dispatch(RestoreClientRequest(
-                  snackBarCompleter(context, localization.restoredClient),
-                  client.id));
-            } else {
-              store.dispatch(DeleteClientRequest(
-                  snackBarCompleter(context, localization.deletedClient),
-                  client.id));
-            }
-          }
-        });
+      user: state.user,
+      clientList: memoizedFilteredClientList(
+          state.clientState.map, state.clientState.list, state.clientListState),
+      clientMap: state.clientState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.clientState.isLoaded,
+      filter: state.clientListState.filter,
+      onClientTap: (context, client) {
+        store.dispatch(ViewClient(clientId: client.id, context: context));
+      },
+      onEntityAction: (context, client, action) {
+        final localization = AppLocalization.of(context);
+        switch (action) {
+          case EntityAction.invoice:
+            store.dispatch(EditInvoice(
+                invoice: InvoiceEntity().rebuild((b) => b.clientId = client.id),
+                context: context));
+            break;
+          case EntityAction.restore:
+            store.dispatch(RestoreClientRequest(
+                snackBarCompleter(context, localization.restoredClient),
+                client.id));
+            break;
+          case EntityAction.archive:
+            store.dispatch(ArchiveClientRequest(
+                snackBarCompleter(context, localization.archivedClient),
+                client.id));
+            break;
+          case EntityAction.delete:
+            store.dispatch(DeleteClientRequest(
+                snackBarCompleter(context, localization.deletedClient),
+                client.id));
+            break;
+        }
+        return false;
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+    );
   }
 }

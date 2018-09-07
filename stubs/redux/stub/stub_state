@@ -1,0 +1,59 @@
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/stub_model.dart';
+import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+
+part 'stub_state.g.dart';
+
+abstract class StubState implements Built<StubState, StubStateBuilder> {
+
+  factory StubState() {
+    return _$StubState._(
+      lastUpdated: 0,
+      map: BuiltMap<int, StubEntity>(),
+      list: BuiltList<int>(),
+    );
+  }
+  StubState._();
+
+  @nullable
+  int get lastUpdated;
+
+  BuiltMap<int, StubEntity> get map;
+  BuiltList<int> get list;
+
+  bool get isStale {
+    if (! isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+  }
+
+  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
+
+  static Serializer<StubState> get serializer => _$stubStateSerializer;
+}
+
+abstract class StubUIState extends Object with EntityUIState implements Built<StubUIState, StubUIStateBuilder> {
+
+  factory StubUIState() {
+    return _$StubUIState._(
+      listUIState: ListUIState(StubFields.name),
+      editing: StubEntity(),
+      selectedId: 0,
+    );
+  }
+  StubUIState._();
+
+  @nullable
+  StubEntity get editing;
+
+  @override
+  bool get isCreatingNew => editing.isNew;
+
+  static Serializer<StubUIState> get serializer => _$stubUIStateSerializer;
+}

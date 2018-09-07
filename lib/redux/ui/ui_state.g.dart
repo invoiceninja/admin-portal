@@ -37,6 +37,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'enableDarkMode',
       serializers.serialize(object.enableDarkMode,
           specifiedType: const FullType(bool)),
+      'emailPayment',
+      serializers.serialize(object.emailPayment,
+          specifiedType: const FullType(bool)),
       'productUIState',
       serializers.serialize(object.productUIState,
           specifiedType: const FullType(ProductUIState)),
@@ -46,6 +49,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'paymentUIState',
+      serializers.serialize(object.paymentUIState,
+          specifiedType: const FullType(PaymentUIState)),
+      'quoteUIState',
+      serializers.serialize(object.quoteUIState,
+          specifiedType: const FullType(QuoteUIState)),
     ];
     if (object.filter != null) {
       result
@@ -80,6 +89,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.enableDarkMode = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'emailPayment':
+          result.emailPayment = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'productUIState':
           result.productUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ProductUIState)) as ProductUIState);
@@ -96,6 +109,14 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'paymentUIState':
+          result.paymentUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(PaymentUIState)) as PaymentUIState);
+          break;
+        case 'quoteUIState':
+          result.quoteUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(QuoteUIState)) as QuoteUIState);
+          break;
       }
     }
 
@@ -111,6 +132,8 @@ class _$UIState extends UIState {
   @override
   final bool enableDarkMode;
   @override
+  final bool emailPayment;
+  @override
   final ProductUIState productUIState;
   @override
   final ClientUIState clientUIState;
@@ -118,6 +141,10 @@ class _$UIState extends UIState {
   final InvoiceUIState invoiceUIState;
   @override
   final String filter;
+  @override
+  final PaymentUIState paymentUIState;
+  @override
+  final QuoteUIState quoteUIState;
 
   factory _$UIState([void updates(UIStateBuilder b)]) =>
       (new UIStateBuilder()..update(updates)).build();
@@ -126,10 +153,13 @@ class _$UIState extends UIState {
       {this.selectedCompanyIndex,
       this.currentRoute,
       this.enableDarkMode,
+      this.emailPayment,
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
-      this.filter})
+      this.filter,
+      this.paymentUIState,
+      this.quoteUIState})
       : super._() {
     if (selectedCompanyIndex == null)
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
@@ -137,12 +167,18 @@ class _$UIState extends UIState {
       throw new BuiltValueNullFieldError('UIState', 'currentRoute');
     if (enableDarkMode == null)
       throw new BuiltValueNullFieldError('UIState', 'enableDarkMode');
+    if (emailPayment == null)
+      throw new BuiltValueNullFieldError('UIState', 'emailPayment');
     if (productUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'productUIState');
     if (clientUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'clientUIState');
     if (invoiceUIState == null)
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    if (paymentUIState == null)
+      throw new BuiltValueNullFieldError('UIState', 'paymentUIState');
+    if (quoteUIState == null)
+      throw new BuiltValueNullFieldError('UIState', 'quoteUIState');
   }
 
   @override
@@ -159,10 +195,13 @@ class _$UIState extends UIState {
     return selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         enableDarkMode == other.enableDarkMode &&
+        emailPayment == other.emailPayment &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
-        filter == other.filter;
+        filter == other.filter &&
+        paymentUIState == other.paymentUIState &&
+        quoteUIState == other.quoteUIState;
   }
 
   @override
@@ -172,13 +211,19 @@ class _$UIState extends UIState {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc(0, selectedCompanyIndex.hashCode),
-                            currentRoute.hashCode),
-                        enableDarkMode.hashCode),
-                    productUIState.hashCode),
-                clientUIState.hashCode),
-            invoiceUIState.hashCode),
-        filter.hashCode));
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc($jc(0, selectedCompanyIndex.hashCode),
+                                        currentRoute.hashCode),
+                                    enableDarkMode.hashCode),
+                                emailPayment.hashCode),
+                            productUIState.hashCode),
+                        clientUIState.hashCode),
+                    invoiceUIState.hashCode),
+                filter.hashCode),
+            paymentUIState.hashCode),
+        quoteUIState.hashCode));
   }
 
   @override
@@ -187,10 +232,13 @@ class _$UIState extends UIState {
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('enableDarkMode', enableDarkMode)
+          ..add('emailPayment', emailPayment)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
-          ..add('filter', filter))
+          ..add('filter', filter)
+          ..add('paymentUIState', paymentUIState)
+          ..add('quoteUIState', quoteUIState))
         .toString();
   }
 }
@@ -211,6 +259,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool get enableDarkMode => _$this._enableDarkMode;
   set enableDarkMode(bool enableDarkMode) =>
       _$this._enableDarkMode = enableDarkMode;
+
+  bool _emailPayment;
+  bool get emailPayment => _$this._emailPayment;
+  set emailPayment(bool emailPayment) => _$this._emailPayment = emailPayment;
 
   ProductUIStateBuilder _productUIState;
   ProductUIStateBuilder get productUIState =>
@@ -234,6 +286,18 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
 
+  PaymentUIStateBuilder _paymentUIState;
+  PaymentUIStateBuilder get paymentUIState =>
+      _$this._paymentUIState ??= new PaymentUIStateBuilder();
+  set paymentUIState(PaymentUIStateBuilder paymentUIState) =>
+      _$this._paymentUIState = paymentUIState;
+
+  QuoteUIStateBuilder _quoteUIState;
+  QuoteUIStateBuilder get quoteUIState =>
+      _$this._quoteUIState ??= new QuoteUIStateBuilder();
+  set quoteUIState(QuoteUIStateBuilder quoteUIState) =>
+      _$this._quoteUIState = quoteUIState;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
@@ -241,10 +305,13 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
       _enableDarkMode = _$v.enableDarkMode;
+      _emailPayment = _$v.emailPayment;
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
       _filter = _$v.filter;
+      _paymentUIState = _$v.paymentUIState?.toBuilder();
+      _quoteUIState = _$v.quoteUIState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -270,10 +337,13 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
               enableDarkMode: enableDarkMode,
+              emailPayment: emailPayment,
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
-              filter: filter);
+              filter: filter,
+              paymentUIState: paymentUIState.build(),
+              quoteUIState: quoteUIState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -283,6 +353,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
+
+        _$failedField = 'paymentUIState';
+        paymentUIState.build();
+        _$failedField = 'quoteUIState';
+        quoteUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UIState', _$failedField, e.toString());

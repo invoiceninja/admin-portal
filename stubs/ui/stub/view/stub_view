@@ -1,0 +1,52 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/stub/view/stub_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+
+class StubView extends StatefulWidget {
+  final StubViewVM viewModel;
+
+  const StubView({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  @override
+  _StubViewState createState() => new _StubViewState();
+}
+
+class _StubViewState extends State<StubView> {
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = widget.viewModel;
+    final stub = viewModel.stub;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(stub.displayName),
+        actions: stub.isNew
+            ? []
+            : [
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    viewModel.onEditPressed(context);
+                  },
+                ),
+                ActionMenuButton(
+                  user: viewModel.company.user,
+                  isSaving: viewModel.isSaving,
+                  entity: stub,
+                  onSelected: viewModel.onActionSelected,
+                ),
+              ],
+      ),
+      body: FormCard(
+        children: [
+          // STARTER: widgets - do not remove comment
+        ]
+      ),
+    );
+  }
+}

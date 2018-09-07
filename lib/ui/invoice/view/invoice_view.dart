@@ -1,5 +1,10 @@
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +18,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceView extends StatefulWidget {
-  final InvoiceViewVM viewModel;
+  final EntityViewVM viewModel;
 
   const InvoiceView({
     Key key,
@@ -29,24 +34,36 @@ class _InvoiceViewState extends State<InvoiceView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final invoice = widget.viewModel.invoice;
     final client = viewModel.client;
     final company = viewModel.company;
 
+    final state = StoreProvider.of<AppState>(context).state;
+    final payments = memoizedPaymentsByInvoice(
+        invoice.id, state.paymentState.map, state.paymentState.list);
+
     List<Widget> _buildView() {
-      final invoice = widget.viewModel.invoice;
       final user = widget.viewModel.company.user;
+      final color = invoice.isPastDue
+          ? Colors.red
+          : InvoiceStatusColors.colors[invoice.invoiceStatusId];
       final widgets = <Widget>[
-        TwoValueHeader(
-          backgroundColor: invoice.isPastDue
-              ? Colors.red
-              : InvoiceStatusColors.colors[invoice.invoiceStatusId],
-          label1: localization.totalAmount,
-          value1:
-              formatNumber(invoice.amount, context, clientId: invoice.clientId),
-          label2: localization.balanceDue,
-          value2: formatNumber(invoice.balance, context,
-              clientId: invoice.clientId),
-        ),
+        invoice.isQuote
+            ? OneValueHeader(
+                backgroundColor: color,
+                label: localization.totalAmount,
+                value: formatNumber(invoice.amount, context,
+                    clientId: invoice.clientId),
+              )
+            : TwoValueHeader(
+                backgroundColor: color,
+                label1: localization.totalAmount,
+                value1: formatNumber(invoice.amount, context,
+                    clientId: invoice.clientId),
+                label2: localization.balanceDue,
+                value2: formatNumber(invoice.balance, context,
+                    clientId: invoice.clientId),
+              ),
       ];
 
       final Map<String, String> fields = {
@@ -77,32 +94,6 @@ class _InvoiceViewState extends State<InvoiceView> {
         fields[label2] = invoice.customTextValue2;
       }
 
-      final List<Widget> fieldWidgets = [];
-      fields.forEach((field, value) {
-        if (value != null && value.isNotEmpty) {
-          fieldWidgets.add(Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Flexible(
-                child: Text(
-                  localization.lookup(field),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-              Flexible(
-                  child: Text(
-                value,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-              )),
-            ],
-          ));
-        }
-      });
-
       widgets.addAll([
         Material(
           color: Theme.of(context).canvasColor,
@@ -117,24 +108,51 @@ class _InvoiceViewState extends State<InvoiceView> {
           color: Theme.of(context).backgroundColor,
           height: 12.0,
         ),
-        Container(
-          color: Theme.of(context).canvasColor,
-          child: Padding(
-            padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
-            child: GridView.count(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              primary: true,
-              crossAxisCount: 2,
-              children: fieldWidgets,
-              childAspectRatio: 3.5,
+      ]);
+
+      if (payments.isNotEmpty) {
+        if (payments.length == 1) {
+          final payment = payments.first;
+          widgets.addAll([
+            Material(
+              color: Theme.of(context).canvasColor,
+              child: ListTile(
+                title: Text(localization.payment),
+                subtitle: Text(
+                    formatNumber(payment.amount, context, clientId: client.id) +
+                        ' • ' +
+                        formatDate(payment.paymentDate, context)),
+                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => viewModel.onPaymentPressed(context, payment),
+              ),
             ),
+          ]);
+        } else {
+          widgets.addAll([
+            Material(
+              color: Theme.of(context).canvasColor,
+              child: ListTile(
+                title: Text(localization.payments),
+                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => viewModel.onPaymentsPressed(context),
+              ),
+            ),
+          ]);
+        }
+
+        widgets.addAll([
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
           ),
-        ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
+        ]);
+      }
+
+      widgets.addAll([
+        FieldGrid(fields,
+            fieldConverter: invoice.isQuote ? QuoteFields.convertField : null),
       ]);
 
       if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
@@ -254,10 +272,10 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     @required this.viewModel,
   });
 
-  final InvoiceViewVM viewModel;
+  final EntityViewVM viewModel;
 
   @override
-  final Size preferredSize = const Size(double.infinity, 54.0);
+  final Size preferredSize = const Size(double.infinity, kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -267,44 +285,21 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text((localization.invoice + ' ' + invoice.invoiceNumber) ?? ''),
+      title: Text(
+          '${invoice.isQuote ? localization.quote : localization.invoice} ${invoice.invoiceNumber}'),
       actions: invoice.isNew
           ? []
           : [
-              user.canEditEntity(invoice) ? EditIconButton(
-                isVisible: !invoice.isDeleted,
-                onPressed: () => viewModel.onEditPressed(context),
-              ) : Container(),
+              user.canEditEntity(invoice)
+                  ? EditIconButton(
+                      isVisible: !invoice.isDeleted,
+                      onPressed: () => viewModel.onEditPressed(context),
+                    )
+                  : Container(),
               ActionMenuButton(
                 user: user,
-                customActions: [
-                  user.canCreate(EntityType.invoice)
-                      ? ActionMenuChoice(
-                          action: EntityAction.clone,
-                          icon: Icons.control_point_duplicate,
-                          label: AppLocalization.of(context).clone,
-                        )
-                      : null,
-                  user.canEditEntity(invoice) && !invoice.isPublic
-                      ? ActionMenuChoice(
-                          action: EntityAction.markSent,
-                          icon: Icons.publish,
-                          label: AppLocalization.of(context).markSent,
-                        )
-                      : null,
-                  user.canEditEntity(invoice) && client.hasEmailAddress
-                      ? ActionMenuChoice(
-                          action: EntityAction.emailInvoice,
-                          icon: Icons.send,
-                          label: AppLocalization.of(context).email,
-                        )
-                      : null,
-                  ActionMenuChoice(
-                    action: EntityAction.pdf,
-                    icon: Icons.picture_as_pdf,
-                    label: AppLocalization.of(context).pdf,
-                  ),
-                ],
+                entityActions:
+                    invoice.getEntityActions(client: client, user: user),
                 isSaving: viewModel.isSaving,
                 entity: invoice,
                 onSelected: viewModel.onActionSelected,

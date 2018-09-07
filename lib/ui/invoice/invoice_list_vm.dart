@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -24,7 +25,6 @@ class InvoiceListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceListVM>(
-      //rebuildOnChange: true,
       converter: InvoiceListVM.fromStore,
       builder: (context, vm) {
         return InvoiceList(
@@ -35,7 +35,7 @@ class InvoiceListBuilder extends StatelessWidget {
   }
 }
 
-class InvoiceListVM {
+class EntityListVM {
   final UserEntity user;
   final ListUIState listState;
   final List<int> invoiceList;
@@ -45,13 +45,12 @@ class InvoiceListVM {
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, InvoiceEntity) onInvoiceTap;
-  final Function(BuildContext, InvoiceEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
-  final Function onClearClientFilterPressed;
-  final Function(BuildContext) onViewClientFilterPressed;
+  final Function onClearEntityFilterPressed;
+  final Function(BuildContext) onViewEntityFilterPressed;
   final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
 
-  InvoiceListVM({
+  EntityListVM({
     @required this.user,
     @required this.listState,
     @required this.invoiceList,
@@ -61,12 +60,43 @@ class InvoiceListVM {
     @required this.isLoaded,
     @required this.filter,
     @required this.onInvoiceTap,
-    @required this.onDismissed,
     @required this.onRefreshed,
-    @required this.onClearClientFilterPressed,
-    @required this.onViewClientFilterPressed,
+    @required this.onClearEntityFilterPressed,
+    @required this.onViewEntityFilterPressed,
     @required this.onEntityAction,
   });
+}
+
+class InvoiceListVM extends EntityListVM {
+  InvoiceListVM({
+    UserEntity user,
+    ListUIState listState,
+    List<int> invoiceList,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltMap<int, ClientEntity> clientMap,
+    String filter,
+    bool isLoading,
+    bool isLoaded,
+    Function(BuildContext, InvoiceEntity) onInvoiceTap,
+    Function(BuildContext) onRefreshed,
+    Function onClearEntityFilterPressed,
+    Function(BuildContext) onViewEntityFilterPressed,
+    Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
+  }) : super(
+          user: user,
+          listState: listState,
+          invoiceList: invoiceList,
+          invoiceMap: invoiceMap,
+          clientMap: clientMap,
+          filter: filter,
+          isLoading: isLoading,
+          isLoaded: isLoaded,
+          onInvoiceTap: onInvoiceTap,
+          onRefreshed: onRefreshed,
+          onClearEntityFilterPressed: onClearEntityFilterPressed,
+          onViewEntityFilterPressed: onViewEntityFilterPressed,
+          onEntityAction: onEntityAction,
+        );
 
   static InvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -82,101 +112,72 @@ class InvoiceListVM {
     final state = store.state;
 
     return InvoiceListVM(
-        user: state.user,
-        listState: state.invoiceListState,
-        invoiceList: memoizedFilteredInvoiceList(
-            state.invoiceState.map,
-            state.invoiceState.list,
-            state.clientState.map,
-            state.invoiceListState),
-        invoiceMap: state.invoiceState.map,
-        clientMap: state.clientState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
-        filter: state.invoiceListState.filter,
-        onInvoiceTap: (context, invoice) {
-          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onClearClientFilterPressed: () =>
-            store.dispatch(FilterInvoicesByClient()),
-        onViewClientFilterPressed: (BuildContext context) => store.dispatch(
-            ViewClient(
-                clientId: state.invoiceListState.filterClientId,
-                context: context)),
-        onEntityAction: (context, invoice, action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.pdf:
-              Navigator.of(context).pop();
-              viewPdf(invoice, context);
-              break;
-            case EntityAction.markSent:
-              store.dispatch(MarkSentInvoiceRequest(
-                  popCompleter(
-                      context, localization.markedInvoiceAsSent),
-                  invoice.id));
-              break;
-            case EntityAction.emailInvoice:
-              store.dispatch(ShowEmailInvoice(
-                  completer: popCompleter(
-                      context, localization.emailedInvoice),
-                  invoice: invoice,
-                  context: context));
-              break;
-            case EntityAction.clone:
-              Navigator.of(context).pop();
-              store.dispatch(
-                  EditInvoice(context: context, invoice: invoice.clone));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreInvoiceRequest(
-                  popCompleter(
-                      context, localization.restoredInvoice),
-                  invoice.id));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveInvoiceRequest(
-                  popCompleter(
-                      context, localization.archivedInvoice),
-                  invoice.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteInvoiceRequest(
-                  popCompleter(
-                      context, localization.deletedInvoice),
-                  invoice.id));
-              break;
-          }
-        },
-        onDismissed: (BuildContext context, InvoiceEntity invoice,
-            DismissDirection direction) {
-          final localization = AppLocalization.of(context);
-          if (direction == DismissDirection.endToStart) {
-            if (invoice.isDeleted || invoice.isArchived) {
-              store.dispatch(RestoreInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.restoredInvoice),
-                  invoice.id));
-            } else {
-              store.dispatch(ArchiveInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.archivedInvoice),
-                  invoice.id));
-            }
-          } else if (direction == DismissDirection.startToEnd) {
-            if (invoice.isDeleted) {
-              store.dispatch(RestoreInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.restoredInvoice),
-                  invoice.id));
-            } else {
-              store.dispatch(DeleteInvoiceRequest(
-                  snackBarCompleter(
-                      context, localization.deletedInvoice),
-                  invoice.id));
-            }
-          }
-        });
+      user: state.user,
+      listState: state.invoiceListState,
+      invoiceList: memoizedFilteredInvoiceList(
+          state.invoiceState.map,
+          state.invoiceState.list,
+          state.clientState.map,
+          state.invoiceListState),
+      invoiceMap: state.invoiceState.map,
+      clientMap: state.clientState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
+      filter: state.invoiceListState.filter,
+      onInvoiceTap: (context, invoice) {
+        store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onClearEntityFilterPressed: () =>
+          store.dispatch(FilterInvoicesByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewClient(
+              clientId: state.invoiceListState.filterEntityId,
+              context: context)),
+      onEntityAction: (context, invoice, action) {
+        final localization = AppLocalization.of(context);
+        switch (action) {
+          case EntityAction.pdf:
+            viewPdf(invoice, context);
+            break;
+          case EntityAction.markSent:
+            store.dispatch(MarkSentInvoiceRequest(
+                snackBarCompleter(context, localization.markedInvoiceAsSent),
+                invoice.id));
+            break;
+          case EntityAction.email:
+            store.dispatch(ShowEmailInvoice(
+                completer:
+                    snackBarCompleter(context, localization.emailedInvoice),
+                invoice: invoice,
+                context: context));
+            break;
+          case EntityAction.clone:
+            store.dispatch(
+                EditInvoice(context: context, invoice: invoice.clone));
+            break;
+          case EntityAction.payment:
+            store.dispatch(EditPayment(
+                context: context,
+                payment: invoice.createPayment(state.selectedCompany)));
+            break;
+          case EntityAction.restore:
+            store.dispatch(RestoreInvoiceRequest(
+                snackBarCompleter(context, localization.restoredInvoice),
+                invoice.id));
+            break;
+          case EntityAction.archive:
+            store.dispatch(ArchiveInvoiceRequest(
+                snackBarCompleter(context, localization.archivedInvoice),
+                invoice.id));
+            break;
+          case EntityAction.delete:
+            store.dispatch(DeleteInvoiceRequest(
+                snackBarCompleter(context, localization.deletedInvoice),
+                invoice.id));
+            break;
+        }
+      },
+    );
   }
 }

@@ -9,7 +9,13 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, OAuthLoginRequest>(oauthLoginRequestReducer),
   TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
   TypedReducer<AuthState, UserLoginFailure>(userLoginFailureReducer),
+  TypedReducer<AuthState, ClearAuthError>(clearAuthErrorReducer),
 ]);
+
+AuthState clearAuthErrorReducer(
+    AuthState authState, ClearAuthError action) {
+  return authState.rebuild((b) => b..error = null);
+}
 
 AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
   return authState.rebuild((b) => b

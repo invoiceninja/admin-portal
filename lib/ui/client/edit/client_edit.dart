@@ -54,7 +54,7 @@ class _ClientEditState extends State<ClientEdit>
         appBar: AppBar(
           title: Text(client.isNew
               ? localization.newClient
-              : viewModel.origClient.displayName), // Text(localizations.clientDetails),
+              : localization.editClient),
           actions: <Widget>[
             RefreshIconButton(
               icon: Icons.cloud_upload,

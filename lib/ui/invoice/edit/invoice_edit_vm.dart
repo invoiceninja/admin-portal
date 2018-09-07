@@ -23,16 +23,16 @@ class InvoiceEditScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         return InvoiceEditVM.fromStore(store);
       },
-      builder: (context, vm) {
+      builder: (context, viewModel) {
         return InvoiceEdit(
-          viewModel: vm,
+          viewModel: viewModel,
         );
       },
     );
   }
 }
 
-class InvoiceEditVM {
+class EntityEditVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
@@ -42,7 +42,7 @@ class InvoiceEditVM {
   final Function onBackPressed;
   final bool isSaving;
 
-  InvoiceEditVM({
+  EntityEditVM({
     @required this.company,
     @required this.invoice,
     @required this.invoiceItem,
@@ -52,6 +52,29 @@ class InvoiceEditVM {
     @required this.onBackPressed,
     @required this.isSaving,
   });
+}
+
+class InvoiceEditVM extends EntityEditVM {
+
+  InvoiceEditVM({
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    InvoiceItemEntity invoiceItem,
+    InvoiceEntity origInvoice,
+    Function(BuildContext) onSavePressed,
+    Function(List<InvoiceItemEntity>) onItemsAdded,
+    Function onBackPressed,
+    bool isSaving,
+  }) : super(
+          company: company,
+          invoice: invoice,
+          invoiceItem: invoiceItem,
+          origInvoice: origInvoice,
+          onSavePressed: onSavePressed,
+          onItemsAdded: onItemsAdded,
+          onBackPressed: onBackPressed,
+          isSaving: isSaving,
+        );
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

@@ -2,7 +2,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'client_model.g.dart';
@@ -352,6 +354,21 @@ abstract class ClientEntity extends Object
 
     return null;
   }
+
+  List<EntityAction> getEntityActions({UserEntity user, bool includeCreate = false}) {
+    final actions = <EntityAction>[];
+
+    if (includeCreate && user.canCreate(EntityType.client) && isActive) {
+      actions.add(EntityAction.invoice);
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(getEntityBaseActions(user: user));
+  }
+
 
   @override
   double get listDisplayAmount => null;

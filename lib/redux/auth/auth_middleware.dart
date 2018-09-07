@@ -42,7 +42,8 @@ void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
-  store.dispatch(UserSettingsChanged(enableDarkMode: enableDarkMode));
+  final bool emailPayment = prefs.getBool(kSharedPrefEmailPayment) ?? false;
+  store.dispatch(UserSettingsChanged(enableDarkMode: enableDarkMode, emailPayment: emailPayment));
 
   Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
 }
@@ -63,7 +64,8 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
             password: action.password,
             url: action.url,
             secret: action.secret,
-            platform: action.platform)
+            platform: action.platform,
+            oneTimePassword: action.oneTimePassword)
         .then((data) {
       _saveAuthLocal(action);
 

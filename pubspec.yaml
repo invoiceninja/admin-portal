@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Mobile app for Invoice Ninja
-version: 0.1.10
+version: 0.1.11
 author: Hillel Coren
 homepage: https://www.invoiceninja.com
 documentation: http://docs.invoiceninja.com
@@ -25,8 +25,10 @@ dependencies:
   intl: ^0.15.6
   #flutter_pdf_viewer: ^0.0.2
   #flutter_html_view: ^0.5.2
+  #flutter_html: ^0.5.3
   google_sign_in: ^3.0.4
   firebase_auth: ^0.5.19
+  flutter_slidable: ^0.4.5
 
 dev_dependencies:
   flutter_driver:

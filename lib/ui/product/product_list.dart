@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductList extends StatelessWidget {
@@ -24,7 +25,9 @@ class ProductList extends StatelessWidget {
         opacity: 0.5,
         child: Center(
           child: Text(
-            AppLocalization.of(context).noRecordsFound,
+            AppLocalization
+                .of(context)
+                .noRecordsFound,
             style: TextStyle(
               fontSize: 18.0,
             ),
@@ -37,49 +40,37 @@ class ProductList extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context, ProductEntity product) async {
+    if (product == null) {
+      return;
+    }
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              user.canCreate(EntityType.product)
-                  ? ListTile(
-                      leading: Icon(Icons.control_point_duplicate),
-                      title: Text(AppLocalization.of(context).clone),
-                      onTap: () => viewModel.onEntityAction(
-                          context, product, EntityAction.clone),
-                    )
-                  : Container(),
-              Divider(),
-              user.canEditEntity(product) && !product.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.restore),
-                      title: Text(AppLocalization.of(context).restore),
-                      onTap: () => viewModel.onEntityAction(
-                          context, product, EntityAction.restore),
-                    )
-                  : Container(),
-              user.canEditEntity(product) && product.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.archive),
-                      title: Text(AppLocalization.of(context).archive),
-                      onTap: () => viewModel.onEntityAction(
-                          context, product, EntityAction.archive),
-                    )
-                  : Container(),
-              user.canEditEntity(product) && !product.isDeleted
-                  ? ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text(AppLocalization.of(context).delete),
-                      onTap: () => viewModel.onEntityAction(
-                          context, product, EntityAction.delete),
-                    )
-                  : Container(),
-            ]));
+        builder: (BuildContext dialogContext) =>
+            SimpleDialog(
+                children:
+                product.getEntityActions(user: user).map((entityAction) {
+                  if (entityAction == null) {
+                    return Divider();
+                  } else {
+                    return ListTile(
+                      leading: Icon(getEntityActionIcon(entityAction)),
+                      title: Text(AppLocalization.of(context)
+                          .lookup(entityAction.toString())),
+                      onTap: () {
+                        Navigator.of(dialogContext).pop();
+                        viewModel.onEntityAction(
+                            context, product, entityAction);
+                      },
+                    );
+                  }
+                }).toList()));
+
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(
-        message: message,
-      )));
+            message: message,
+          )));
     }
   }
 
@@ -96,8 +87,13 @@ class ProductList extends StatelessWidget {
                 user: viewModel.user,
                 filter: viewModel.filter,
                 product: product,
-                onDismissed: (DismissDirection direction) =>
-                    viewModel.onDismissed(context, product, direction),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    _showMenu(context, product);
+                  } else {
+                    viewModel.onEntityAction(context, product, action);
+                  }
+                },
                 onTap: () => viewModel.onProductTap(context, product),
                 onLongPress: () => _showMenu(context, product),
               ),

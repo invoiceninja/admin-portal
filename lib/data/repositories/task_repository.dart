@@ -15,19 +15,20 @@ class TasksRepository {
     this.webClient = const WebClient(),
   });
 
-  Future<BuiltList<TaskEntity>> loadList(CompanyEntity company, AuthState auth) async {
+  Future<BuiltList<TaskEntity>> loadList(
+      CompanyEntity company, AuthState auth) async {
+    final dynamic response =
+        await webClient.get(auth.url + '/tasks?per_page=500', company.token);
 
-    final dynamic response = await webClient.get(
-        auth.url + '/tasks?per_page=500', company.token);
-
-    final TaskListResponse taskResponse = serializers.deserializeWith(
-        TaskListResponse.serializer, response);
+    final TaskListResponse taskResponse =
+        serializers.deserializeWith(TaskListResponse.serializer, response);
 
     return taskResponse.data;
   }
 
-  Future saveData(CompanyEntity company, AuthState auth, TaskEntity task, [EntityAction action]) async {
-
+  Future<TaskEntity> saveData(
+      CompanyEntity company, AuthState auth, TaskEntity task,
+      [EntityAction action]) async {
     final data = serializers.serializeWith(TaskEntity.serializer, task);
     dynamic response;
 
@@ -42,8 +43,8 @@ class TasksRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    final TaskItemResponse taskResponse = serializers.deserializeWith(
-        TaskItemResponse.serializer, response);
+    final TaskItemResponse taskResponse =
+        serializers.deserializeWith(TaskItemResponse.serializer, response);
 
     return taskResponse.data;
   }

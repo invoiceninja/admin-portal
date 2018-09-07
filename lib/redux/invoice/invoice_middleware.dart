@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/invoice_repository.dart';
@@ -81,7 +81,8 @@ Middleware<AppState> _showEmailInvoice() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    final emailWasSent = await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
+    final emailWasSent =
+        await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
 
     if (action.completer != null && emailWasSent) {
       action.completer.complete(null);
@@ -95,7 +96,7 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origInvoice, EntityAction.archive)
-        .then((dynamic invoice) {
+        .then((InvoiceEntity invoice) {
       store.dispatch(ArchiveInvoiceSuccess(invoice));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -166,7 +167,7 @@ Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origInvoice, EntityAction.markSent)
-        .then((dynamic invoice) {
+        .then((InvoiceEntity invoice) {
       store.dispatch(MarkSentInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
       if (action.completer != null) {
@@ -213,7 +214,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.invoice)
-        .then((dynamic invoice) {
+        .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));
       } else {
@@ -243,10 +244,12 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
     repository
         .loadItem(state.selectedCompany, state.authState, action.invoiceId)
         .then((invoice) {
+
       store.dispatch(LoadInvoiceSuccess(invoice));
+      store.dispatch(LoadClient(clientId: invoice.clientId));
 
       if (action.completer != null) {
-        action.completer.complete(invoice);
+        action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
@@ -285,8 +288,8 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
+      if (state.paymentState.isStale) {
+        store.dispatch(LoadPayments());
       }
     }).catchError((Object error) {
       print(error);

@@ -5,15 +5,19 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class LoadStateRequest {
   final BuildContext context;
+
   LoadStateRequest(this.context);
 }
+
 class LoadStateSuccess {
   final AppState state;
+
   LoadStateSuccess(this.state);
 }
 
 class LoadUserLogin {
   final BuildContext context;
+
   LoadUserLogin(this.context);
 }
 
@@ -31,7 +35,9 @@ class OAuthLoginRequest implements StartLoading {
   final String url;
   final String secret;
   final String platform;
-  OAuthLoginRequest({this.completer, this.token, this.url, this.secret, this.platform});
+
+  OAuthLoginRequest(
+      {this.completer, this.token, this.url, this.secret, this.platform});
 }
 
 class UserLoginRequest implements StartLoading {
@@ -41,8 +47,16 @@ class UserLoginRequest implements StartLoading {
   final String url;
   final String secret;
   final String platform;
+  final String oneTimePassword;
 
-  UserLoginRequest({this.completer, this.email, this.password, this.url, this.secret, this.platform});
+  UserLoginRequest(
+      {this.completer,
+      this.email,
+      this.password,
+      this.url,
+      this.secret,
+      this.platform,
+      this.oneTimePassword});
 }
 
 class UserLoginSuccess implements StopLoading {}
@@ -54,4 +68,4 @@ class UserLoginFailure implements StopLoading {
 }
 
 class UserLogout implements PersistData {}
-
+class ClearAuthError {}

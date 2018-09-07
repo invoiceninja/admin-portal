@@ -22,24 +22,25 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         return InvoiceEditDetailsVM.fromStore(store);
       },
-      builder: (context, vm) {
+      builder: (context, viewModel) {
         return InvoiceEditDetails(
-          viewModel: vm,
+          viewModel: viewModel,
         );
       },
     );
   }
 }
 
-class InvoiceEditDetailsVM {
+class EntityEditDetailsVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
   final BuiltMap<int, ClientEntity> clientMap;
   final BuiltList<int> clientList;
-  final Function(BuildContext context, Completer<SelectableEntity> completer) onAddClientPressed;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddClientPressed;
 
-  InvoiceEditDetailsVM({
+  EntityEditDetailsVM({
     @required this.company,
     @required this.invoice,
     @required this.onChanged,
@@ -47,29 +48,50 @@ class InvoiceEditDetailsVM {
     @required this.clientList,
     @required this.onAddClientPressed,
   });
+}
+
+class InvoiceEditDetailsVM extends EntityEditDetailsVM {
+  InvoiceEditDetailsVM({
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    Function(InvoiceEntity) onChanged,
+    BuiltMap<int, ClientEntity> clientMap,
+    BuiltList<int> clientList,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddClientPressed,
+  }) : super(
+    company: company,
+    invoice: invoice,
+    onChanged: onChanged,
+    clientMap: clientMap,
+    clientList: clientList,
+    onAddClientPressed: onAddClientPressed,
+  );
 
   factory InvoiceEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditDetailsVM(
-        company: state.selectedCompany,
-        invoice: invoice,
-        onChanged: (InvoiceEntity invoice) =>
-            store.dispatch(UpdateInvoice(invoice)),
-        clientMap: state.clientState.map,
-        clientList: state.clientState.list,
-        onAddClientPressed: (context, completer) {
-          store.dispatch(
-              EditClient(client: ClientEntity(), context: context, completer: completer, trackRoute: false));
-          completer.future.then((SelectableEntity client) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization.of(context).createdClient,
-                )
-            ));
-          });
-        },
+      company: state.selectedCompany,
+      invoice: invoice,
+      onChanged: (InvoiceEntity invoice) =>
+          store.dispatch(UpdateInvoice(invoice)),
+      clientMap: state.clientState.map,
+      clientList: state.clientState.list,
+      onAddClientPressed: (context, completer) {
+        store.dispatch(EditClient(
+            client: ClientEntity(),
+            context: context,
+            completer: completer,
+            trackRoute: false));
+        completer.future.then((SelectableEntity client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).createdClient,
+          )));
+        });
+      },
     );
   }
 }

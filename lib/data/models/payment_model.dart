@@ -2,30 +2,36 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'payment_model.g.dart';
 
-abstract class PaymentListResponse implements Built<PaymentListResponse, PaymentListResponseBuilder> {
+abstract class PaymentListResponse
+    implements Built<PaymentListResponse, PaymentListResponseBuilder> {
+  factory PaymentListResponse([void updates(PaymentListResponseBuilder b)]) =
+      _$PaymentListResponse;
 
-  factory PaymentListResponse([void updates(PaymentListResponseBuilder b)]) = _$PaymentListResponse;
   PaymentListResponse._();
 
   BuiltList<PaymentEntity> get data;
 
-  static Serializer<PaymentListResponse> get serializer => _$paymentListResponseSerializer;
+  static Serializer<PaymentListResponse> get serializer =>
+      _$paymentListResponseSerializer;
 }
 
-abstract class PaymentItemResponse implements Built<PaymentItemResponse, PaymentItemResponseBuilder> {
+abstract class PaymentItemResponse
+    implements Built<PaymentItemResponse, PaymentItemResponseBuilder> {
+  factory PaymentItemResponse([void updates(PaymentItemResponseBuilder b)]) =
+      _$PaymentItemResponse;
 
-  factory PaymentItemResponse([void updates(PaymentItemResponseBuilder b)]) = _$PaymentItemResponse;
   PaymentItemResponse._();
 
   PaymentEntity get data;
 
-  static Serializer<PaymentItemResponse> get serializer => _$paymentItemResponseSerializer;
+  static Serializer<PaymentItemResponse> get serializer =>
+      _$paymentItemResponseSerializer;
 }
-
 
 class PaymentFields {
   static const String amount = 'amount';
@@ -37,33 +43,41 @@ class PaymentFields {
   static const String privateNotes = 'privateNotes';
   static const String exchangeRate = 'exchangeRate';
   static const String exchangeCurrencyId = 'exchangeCurrencyId';
+  static const String paymentStatusId = 'paymentStatusId';
 
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class PaymentEntity extends Object with BaseEntity implements Built<PaymentEntity, PaymentEntityBuilder> {
-
+abstract class PaymentEntity extends Object
+    with BaseEntity
+    implements Built<PaymentEntity, PaymentEntityBuilder> {
   static int counter = 0;
-  factory PaymentEntity() {
+
+  factory PaymentEntity([CompanyEntity company]) {
     return _$PaymentEntity._(
       id: --PaymentEntity.counter,
       amount: 0.0,
       transactionReference: '',
-      paymentDate: '',
-      paymentTypeId: 0,
+      paymentDate: convertDateTimeToSqlDate(),
+      paymentTypeId: company != null && company.defaultPaymentTypeId > 0
+          ? company.defaultPaymentTypeId
+          : 0,
       invoiceId: 0,
+      clientId: 0,
       invoiceNumber: '',
       privateNotes: '',
       exchangeRate: 0.0,
       exchangeCurrencyId: 0,
-      
+      refunded: 0.0,
+      paymentStatusId: 0,
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
     );
   }
+
   PaymentEntity._();
 
   @override
@@ -72,6 +86,11 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   }
 
   double get amount;
+
+  double get refunded;
+
+  @BuiltValueField(wireName: 'payment_status_id')
+  int get paymentStatusId;
 
   @BuiltValueField(wireName: 'transaction_reference')
   String get transactionReference;
@@ -85,6 +104,10 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   @BuiltValueField(wireName: 'invoice_id')
   int get invoiceId;
 
+  @nullable
+  @BuiltValueField(wireName: 'client_id')
+  int get clientId;
+
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
 
@@ -96,17 +119,28 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
 
   @BuiltValueField(wireName: 'exchange_currency_id')
   int get exchangeCurrencyId;
-  
+
   int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
     int response = 0;
     final PaymentEntity paymentA = sortAscending ? this : credit;
-    final PaymentEntity paymentB = sortAscending ? credit: this;
+    final PaymentEntity paymentB = sortAscending ? credit : this;
 
     switch (sortField) {
       case PaymentFields.amount:
         response = paymentA.amount.compareTo(paymentB.amount);
+        break;
+      case PaymentFields.transactionReference:
+        response = paymentA.transactionReference
+            .compareTo(paymentB.transactionReference);
+        break;
+      case PaymentFields.paymentDate:
+        response = paymentA.paymentDate.compareTo(paymentB.paymentDate);
+        break;
+      case PaymentFields.updatedAt:
+        response = paymentA.updatedAt.compareTo(paymentB.updatedAt);
+        break;
     }
-    
+
     return response;
   }
 
@@ -116,7 +150,13 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       return true;
     }
 
-    return privateNotes.contains(filter);
+    if (transactionReference.toLowerCase().contains(filter)) {
+      return true;
+    } else if (privateNotes.toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    return false;
   }
 
   @override
@@ -125,7 +165,27 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
       return null;
     }
 
+    if (transactionReference.toLowerCase().contains(filter)) {
+      return transactionReference;
+    } else if (privateNotes.toLowerCase().contains(filter)) {
+      return privateNotes;
+    }
+
     return null;
+  }
+
+  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+    final actions = <EntityAction>[];
+
+    if (user.canEditEntity(this) && client.hasEmailAddress) {
+      actions.add(EntityAction.email);
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(getEntityBaseActions(user: user));
   }
 
   @override
@@ -134,7 +194,7 @@ abstract class PaymentEntity extends Object with BaseEntity implements Built<Pay
   }
 
   @override
-  double get listDisplayAmount => null;
+  double get listDisplayAmount => amount;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;

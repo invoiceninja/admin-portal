@@ -66,7 +66,7 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     }
 
     final options = taxRates
-        .where((taxRate) => taxRate.archivedAt == null && !taxRate.isInclusive)
+        .where((taxRate) => taxRate.archivedAt == null)
         .map((taxRate) => PopupMenuItem<TaxRateEntity>(
               value: taxRate,
               child: Row(

@@ -16,7 +16,7 @@ class InvoiceEditDetails extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final InvoiceEditDetailsVM viewModel;
+  final EntityEditDetailsVM viewModel;
 
   @override
   InvoiceEditDetailsState createState() => InvoiceEditDetailsState();
@@ -56,19 +56,15 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     _invoiceNumberController.text = invoice.invoiceNumber;
     _invoiceDateController.text = invoice.invoiceDate;
     _poNumberController.text = invoice.poNumber;
-    _discountController.text = formatNumber(
-        invoice.discount, context,
+    _discountController.text = formatNumber(invoice.discount, context,
         formatNumberType: FormatNumberType.input);
-    _partialController.text = formatNumber(
-        invoice.partial, context,
+    _partialController.text = formatNumber(invoice.partial, context,
         formatNumberType: FormatNumberType.input);
     _custom1Controller.text = invoice.customTextValue1;
     _custom2Controller.text = invoice.customTextValue2;
-    _surcharge1Controller.text = formatNumber(
-        invoice.customValue1, context,
+    _surcharge1Controller.text = formatNumber(invoice.customValue1, context,
         formatNumberType: FormatNumberType.input);
-    _surcharge2Controller.text = formatNumber(
-        invoice.customValue2, context,
+    _surcharge2Controller.text = formatNumber(invoice.customValue2, context,
         formatNumberType: FormatNumberType.input);
 
     _controllers
@@ -98,8 +94,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       ..customTextValue1 = _custom1Controller.text.trim()
       ..customTextValue2 = _custom2Controller.text.trim()
       ..customValue1 = parseDouble(_surcharge1Controller.text)
-      ..customValue2 = parseDouble(_surcharge2Controller.text)
-    );
+      ..customValue2 = parseDouble(_surcharge2Controller.text));
     if (invoice != widget.viewModel.invoice) {
       widget.viewModel.onChanged(invoice);
     }
@@ -242,27 +237,31 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               labelText: company.getCustomFieldLabel(CustomFieldType.invoice2),
               options: company.getCustomFieldValues(CustomFieldType.invoice2),
             ),
-            company.getCustomFieldLabel(CustomFieldType.surcharge1).isNotEmpty ? TextFormField(
-              controller: _surcharge1Controller,
-              decoration: InputDecoration(
-                labelText: company.getCustomFieldLabel(CustomFieldType.surcharge1),
-              ),
-              keyboardType: TextInputType.number,
-            ) : Container(),
-            company.getCustomFieldLabel(CustomFieldType.surcharge2).isNotEmpty ? TextFormField(
-              controller: _surcharge2Controller,
-              decoration: InputDecoration(
-                labelText: company.getCustomFieldLabel(CustomFieldType.surcharge2),
-              ),
-              keyboardType: TextInputType.number,
-            ) : Container(),
+            company.getCustomFieldLabel(CustomFieldType.surcharge1).isNotEmpty
+                ? TextFormField(
+                    controller: _surcharge1Controller,
+                    decoration: InputDecoration(
+                      labelText: company
+                          .getCustomFieldLabel(CustomFieldType.surcharge1),
+                    ),
+                    keyboardType: TextInputType.number,
+                  )
+                : Container(),
+            company.getCustomFieldLabel(CustomFieldType.surcharge2).isNotEmpty
+                ? TextFormField(
+                    controller: _surcharge2Controller,
+                    decoration: InputDecoration(
+                      labelText: company
+                          .getCustomFieldLabel(CustomFieldType.surcharge2),
+                    ),
+                    keyboardType: TextInputType.number,
+                  )
+                : Container(),
             company.enableInvoiceTaxes
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
-                        viewModel.onChanged(invoice.rebuild((b) => b
-                          ..taxRate1 = taxRate.rate
-                          ..taxName1 = taxRate.name)),
+                        viewModel.onChanged(invoice.applyTax(taxRate)),
                     labelText: localization.tax,
                     initialTaxName: invoice.taxName1,
                     initialTaxRate: invoice.taxRate1,
@@ -272,9 +271,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
-                        viewModel.onChanged(invoice.rebuild((b) => b
-                          ..taxRate2 = taxRate.rate
-                          ..taxName2 = taxRate.name)),
+                        viewModel.onChanged(invoice.applyTax(taxRate)),
                     labelText: localization.tax,
                     initialTaxName: invoice.taxName2,
                     initialTaxRate: invoice.taxRate2,

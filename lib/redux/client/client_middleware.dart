@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -73,7 +72,8 @@ Middleware<AppState> _viewClientList() {
     //Navigator.of(action.context).pushNamedAndRemoveUntil(
     //    ClientScreen.route, ModalRoute.withName(DashboardScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(ClientScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        ClientScreen.route, (Route<dynamic> route) => false);
   };
 }
 
@@ -83,7 +83,7 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.archive)
-        .then((dynamic client) {
+        .then((ClientEntity client) {
       store.dispatch(ArchiveClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -106,7 +106,7 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.delete)
-        .then((dynamic client) {
+        .then((ClientEntity client) {
       store.dispatch(DeleteClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -129,7 +129,7 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
             origClient, EntityAction.restore)
-        .then((dynamic client) {
+        .then((ClientEntity client) {
       store.dispatch(RestoreClientSuccess(client));
       if (action.completer != null) {
         action.completer.complete(null);
@@ -151,7 +151,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.client)
-        .then((dynamic client) {
+        .then((ClientEntity client) {
       if (action.client.isNew) {
         store.dispatch(AddClientSuccess(client));
       } else {

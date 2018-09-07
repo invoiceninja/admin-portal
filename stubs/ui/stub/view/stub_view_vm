@@ -1,0 +1,82 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
+import 'package:invoiceninja_flutter/data/models/stub_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/stub/view/stub_view.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+
+class StubViewScreen extends StatelessWidget {
+  static const String route = '/stub/view';
+  const StubViewScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, StubViewVM>(
+      converter: (Store<AppState> store) {
+        return StubViewVM.fromStore(store);
+      },
+      builder: (context, vm) {
+        return StubView(
+          viewModel: vm,
+        );
+      },
+    );
+  }
+}
+
+class StubViewVM {
+  final StubEntity stub;
+  final CompanyEntity company;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext) onEditPressed;
+  final bool isSaving;
+  final bool isLoading;
+  final bool isDirty;
+
+  StubViewVM({
+    @required this.stub,
+    @required this.company,
+    @required this.onActionSelected,
+    @required this.onEditPressed,
+    @required this.isSaving,
+    @required this.isLoading,
+    @required this.isDirty,
+  });
+
+  factory StubViewVM.fromStore(Store<AppState> store) {
+    final state = store.state;
+    final payment = state.stubState.map[state.stubUIState.selectedId];
+
+    return StubViewVM(
+        isLoading: store.state.isLoading,
+        stub: stub,
+        onEditPressed: (BuildContext context) {
+          store.dispatch(EditStub(stub: stub, context: context));
+        },
+        onActionSelected: (BuildContext context, EntityAction action) {
+          final localization = AppLocalization.of(context);
+          switch (action) {
+            case EntityAction.archive:
+              store.dispatch(ArchiveStubRequest(
+                  popCompleter(context, localization.archivedStub),
+                  stub.id));
+              break;
+            case EntityAction.delete:
+              store.dispatch(DeleteStubRequest(
+                  popCompleter(context, localization.deletedStub),
+                  stub.id));
+              break;
+            case EntityAction.restore:
+              store.dispatch(RestoreStubRequest(
+                  snackBarCompleter(context, localization.restoredStub),
+                  stub.id));
+              break;
+          }
+        });
+  }
+}
