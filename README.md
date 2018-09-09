@@ -6,6 +6,8 @@ This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/
 - Android: https://play.google.com/apps/testing/com.invoiceninja.flutter
 - iOS: Email contact@invoiceninja.com for a Test Flight code
 
+Note: the beta is currently available to self host users and requires the latest version of the web app (v4.5.4).
+
 <p align="center">
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_01.png" alt="View Invoice" width="200"/>
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_02.png" alt="List Invoices" width="200"/>
