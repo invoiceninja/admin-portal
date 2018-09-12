@@ -74,8 +74,7 @@ class InvoiceList extends StatelessWidget {
                       SizedBox(width: 18.0),
                       Expanded(
                         child: Text(
-                          localization.clientsInvoices.replaceFirst(
-                              ':client', filteredClient.displayName),
+                          '${localization.filteredBy} ${filteredClient.listDisplayName}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,

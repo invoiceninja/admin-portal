@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Mobile app for Invoice Ninja
-version: 0.1.12
+version: 0.1.14
 author: Hillel Coren
 homepage: https://www.invoiceninja.com
 documentation: http://docs.invoiceninja.com
@@ -76,5 +76,5 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-  # For details regarding fonts from package dependencies, 
+  # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
