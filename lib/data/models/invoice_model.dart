@@ -144,6 +144,8 @@ abstract class InvoiceEntity extends Object
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
     ..invoiceNumber = ''
+    ..invoiceDate = convertDateTimeToSqlDate()
+    ..dueDate = ''
     ..isPublic = false);
 
   @override
