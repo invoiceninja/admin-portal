@@ -172,7 +172,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.invoice,
-            icon: FontAwesomeIcons.filePdfO,
+            icon: FontAwesomeIcons.filePdf,
             title: AppLocalization.of(context).invoices,
             onTap: () => store.dispatch(ViewInvoiceList(context)),
             onCreateTap: () {
@@ -197,7 +197,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.quote,
-            icon: FontAwesomeIcons.fileAltO,
+            icon: FontAwesomeIcons.fileAlt,
             title: AppLocalization.of(context).quotes,
             onTap: () => store.dispatch(ViewQuoteList(context)),
             onCreateTap: () {

@@ -33,19 +33,19 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.client:
       return FontAwesomeIcons.users;
     case EntityType.invoice:
-      return FontAwesomeIcons.filePdfO;
+      return FontAwesomeIcons.filePdf;
     case EntityType.payment:
       return FontAwesomeIcons.creditCard;
     case EntityType.credit:
       return FontAwesomeIcons.creditCard;
     case EntityType.quote:
-      return FontAwesomeIcons.fileAltO;
+      return FontAwesomeIcons.fileAlt;
     case EntityType.vendor:
       return FontAwesomeIcons.building;
     case EntityType.expense:
-      return FontAwesomeIcons.fileImageO;
+      return FontAwesomeIcons.fileImage;
     case EntityType.task:
-      return FontAwesomeIcons.clockO;
+      return FontAwesomeIcons.clock;
     default:
       return null;
   }
