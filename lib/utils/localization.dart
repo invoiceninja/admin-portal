@@ -223,7 +223,7 @@ class AppLocalization {
       'subject': 'Subject',
       'body': 'Body',
       'send_email': 'Send Email',
-      'send_receipt_to_client': 'Send receipt to the client',
+      'email_receipt': 'Email payment receipt to the client',
       'documents': 'Documents',
       'auto_billing': 'Auto billing',
       'button': 'Button',
@@ -8799,8 +8799,8 @@ class AppLocalization {
 
   String get sendEmail => _localizedValues[locale.languageCode]['send_email'];
 
-  String get sendReceiptToClient =>
-      _localizedValues[locale.languageCode]['send_receipt_to_client'];
+  String get emailReceipt =>
+      _localizedValues[locale.languageCode]['email_receipt'];
 
   String get documents => _localizedValues[locale.languageCode]['documents'];
 

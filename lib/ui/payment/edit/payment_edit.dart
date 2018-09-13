@@ -243,7 +243,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     activeColor: Theme.of(context).accentColor,
                     title: Text(localization.sendEmail),
                     value: viewModel.uiState.emailPayment,
-                    subtitle: Text(localization.sendReceiptToClient),
+                    subtitle: Text(localization.emailReceipt),
                     onChanged: (value) => viewModel.onEmailChanged(value),
                   ),
                 ]) : Container(),
