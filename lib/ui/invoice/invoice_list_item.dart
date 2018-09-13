@@ -34,6 +34,10 @@ class InvoiceListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
+    final invoiceStatusId = invoice.isQuote && invoice.quoteInvoiceId > 0
+        ? kInvoiceStatusApproved
+        : invoice.invoiceStatusId;
+
     return DismissibleEntity(
       user: user,
       entity: invoice,
@@ -77,12 +81,12 @@ class InvoiceListItem extends StatelessWidget {
                 Text(
                     invoice.isPastDue
                         ? localization.pastDue
-                        : localization.lookup(
-                            'invoice_status_${invoice.invoiceStatusId}'),
+                        : localization
+                            .lookup('invoice_status_$invoiceStatusId'),
                     style: TextStyle(
                       color: invoice.isPastDue
                           ? Colors.red
-                          : InvoiceStatusColors.colors[invoice.invoiceStatusId],
+                          : InvoiceStatusColors.colors[invoiceStatusId],
                     )),
               ],
             ),
