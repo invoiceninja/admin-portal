@@ -306,8 +306,9 @@ class FilterQuotesByCustom2 implements PersistUI {
 
 class ConvertQuote implements PersistData {
   final int quoteId;
+  final Completer completer;
 
-  ConvertQuote(this.quoteId);
+  ConvertQuote(this.completer, this.quoteId);
 }
 
 class ConvertQuoteSuccess implements StopSaving, PersistData {

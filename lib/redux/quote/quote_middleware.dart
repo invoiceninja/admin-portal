@@ -171,7 +171,7 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
         EntityAction.convert)
         .then((InvoiceEntity invoice) {
       store.dispatch(ConvertQuoteSuccess(quote: quote, invoice: invoice));
-      action.completer.complete(null);
+      action.completer.complete(invoice);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertQuoteFailure(error));

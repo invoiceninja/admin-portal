@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,11 @@ class QuoteListVM extends EntityListVM {
             viewPdf(quote, context);
             break;
           case EntityAction.convert:
-            store.dispatch(ConvertQuote(quote.id));
+            final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+            store.dispatch(ConvertQuote(completer, quote.id));
+            completer.future.then((InvoiceEntity invoice) {
+              store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+            });
             break;
           case EntityAction.markSent:
             store.dispatch(MarkSentQuoteRequest(

@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
@@ -229,6 +230,7 @@ QuoteState _convertQuoteSuccess(
     QuoteState quoteState, ConvertQuoteSuccess action) {
   final quote = action.quote.rebuild((b) => b
       ..quoteInvoiceId = action.invoice.id
+      ..invoiceStatusId = kInvoiceStatusApproved
   );
   return quoteState.rebuild((b) => b..map[action.quote.id] = quote);
 }
