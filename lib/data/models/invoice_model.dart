@@ -371,6 +371,10 @@ abstract class InvoiceEntity extends Object
 
     if (user.canCreate(EntityType.invoice)) {
       actions.add(EntityAction.clone);
+
+      if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {
+        actions.add(EntityAction.convert);
+      }
     }
 
     if (user.canEditEntity(this) && !isPublic) {
@@ -383,7 +387,7 @@ abstract class InvoiceEntity extends Object
 
     if (user.canEditEntity(this) &&
         user.canCreate(EntityType.payment) &&
-        isUnpaid) {
+        isUnpaid && !isQuote) {
       actions.add(EntityAction.payment);
     }
 

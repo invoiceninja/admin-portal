@@ -15,6 +15,9 @@ part of 'payment_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<PaymentState> _$paymentStateSerializer =
     new _$PaymentStateSerializer();
@@ -155,9 +158,12 @@ class _$PaymentState extends PaymentState {
       (new PaymentStateBuilder()..update(updates)).build();
 
   _$PaymentState._({this.lastUpdated, this.map, this.list}) : super._() {
-    if (map == null) throw new BuiltValueNullFieldError('PaymentState', 'map');
-    if (list == null)
+    if (map == null) {
+      throw new BuiltValueNullFieldError('PaymentState', 'map');
+    }
+    if (list == null) {
       throw new BuiltValueNullFieldError('PaymentState', 'list');
+    }
   }
 
   @override
@@ -168,10 +174,10 @@ class _$PaymentState extends PaymentState {
   PaymentStateBuilder toBuilder() => new PaymentStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! PaymentState) return false;
-    return lastUpdated == other.lastUpdated &&
+    return other is PaymentState &&
+        lastUpdated == other.lastUpdated &&
         map == other.map &&
         list == other.list;
   }
@@ -223,7 +229,9 @@ class PaymentStateBuilder
 
   @override
   void replace(PaymentState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$PaymentState;
   }
 
@@ -270,10 +278,12 @@ class _$PaymentUIState extends PaymentUIState {
 
   _$PaymentUIState._({this.editing, this.selectedId, this.listUIState})
       : super._() {
-    if (selectedId == null)
+    if (selectedId == null) {
       throw new BuiltValueNullFieldError('PaymentUIState', 'selectedId');
-    if (listUIState == null)
+    }
+    if (listUIState == null) {
       throw new BuiltValueNullFieldError('PaymentUIState', 'listUIState');
+    }
   }
 
   @override
@@ -285,10 +295,10 @@ class _$PaymentUIState extends PaymentUIState {
       new PaymentUIStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! PaymentUIState) return false;
-    return editing == other.editing &&
+    return other is PaymentUIState &&
+        editing == other.editing &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
   }
@@ -342,7 +352,9 @@ class PaymentUIStateBuilder
 
   @override
   void replace(PaymentUIState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$PaymentUIState;
   }
 

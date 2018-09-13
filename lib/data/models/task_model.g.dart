@@ -15,6 +15,9 @@ part of 'task_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<TaskListResponse> _$taskListResponseSerializer =
     new _$TaskListResponseSerializer();
@@ -270,8 +273,9 @@ class _$TaskListResponse extends TaskListResponse {
       (new TaskListResponseBuilder()..update(updates)).build();
 
   _$TaskListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('TaskListResponse', 'data');
+    }
   }
 
   @override
@@ -283,10 +287,9 @@ class _$TaskListResponse extends TaskListResponse {
       new TaskListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TaskListResponse) return false;
-    return data == other.data;
+    return other is TaskListResponse && data == other.data;
   }
 
   @override
@@ -322,7 +325,9 @@ class TaskListResponseBuilder
 
   @override
   void replace(TaskListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$TaskListResponse;
   }
 
@@ -360,8 +365,9 @@ class _$TaskItemResponse extends TaskItemResponse {
       (new TaskItemResponseBuilder()..update(updates)).build();
 
   _$TaskItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('TaskItemResponse', 'data');
+    }
   }
 
   @override
@@ -373,10 +379,9 @@ class _$TaskItemResponse extends TaskItemResponse {
       new TaskItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TaskItemResponse) return false;
-    return data == other.data;
+    return other is TaskItemResponse && data == other.data;
   }
 
   @override
@@ -411,7 +416,9 @@ class TaskItemResponseBuilder
 
   @override
   void replace(TaskItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$TaskItemResponse;
   }
 
@@ -493,24 +500,33 @@ class _$TaskEntity extends TaskEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (description == null)
+    if (description == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'description');
-    if (duration == null)
+    }
+    if (duration == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'duration');
-    if (invoiceId == null)
+    }
+    if (invoiceId == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'invoiceId');
-    if (clientId == null)
+    }
+    if (clientId == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'clientId');
-    if (projectId == null)
+    }
+    if (projectId == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'projectId');
-    if (timeLog == null)
+    }
+    if (timeLog == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'timeLog');
-    if (isRunning == null)
+    }
+    if (isRunning == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'isRunning');
-    if (customValue1 == null)
+    }
+    if (customValue1 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue1');
-    if (customValue2 == null)
+    }
+    if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
+    }
   }
 
   @override
@@ -521,10 +537,10 @@ class _$TaskEntity extends TaskEntity {
   TaskEntityBuilder toBuilder() => new TaskEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TaskEntity) return false;
-    return description == other.description &&
+    return other is TaskEntity &&
+        description == other.description &&
         duration == other.duration &&
         invoiceId == other.invoiceId &&
         clientId == other.clientId &&
@@ -688,7 +704,9 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
 
   @override
   void replace(TaskEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$TaskEntity;
   }
 

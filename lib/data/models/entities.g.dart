@@ -15,6 +15,9 @@ part of 'entities.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 const EntityType _$invoice = const EntityType._('invoice');
 const EntityType _$recurringInvoice = const EntityType._('recurringInvoice');
@@ -881,8 +884,9 @@ class _$ErrorMessage extends ErrorMessage {
       (new ErrorMessageBuilder()..update(updates)).build();
 
   _$ErrorMessage._({this.message}) : super._() {
-    if (message == null)
+    if (message == null) {
       throw new BuiltValueNullFieldError('ErrorMessage', 'message');
+    }
   }
 
   @override
@@ -893,10 +897,9 @@ class _$ErrorMessage extends ErrorMessage {
   ErrorMessageBuilder toBuilder() => new ErrorMessageBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ErrorMessage) return false;
-    return message == other.message;
+    return other is ErrorMessage && message == other.message;
   }
 
   @override
@@ -932,7 +935,9 @@ class ErrorMessageBuilder
 
   @override
   void replace(ErrorMessage other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ErrorMessage;
   }
 
@@ -959,8 +964,9 @@ class _$LoginResponse extends LoginResponse {
       (new LoginResponseBuilder()..update(updates)).build();
 
   _$LoginResponse._({this.data, this.error}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('LoginResponse', 'data');
+    }
   }
 
   @override
@@ -971,10 +977,9 @@ class _$LoginResponse extends LoginResponse {
   LoginResponseBuilder toBuilder() => new LoginResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! LoginResponse) return false;
-    return data == other.data && error == other.error;
+    return other is LoginResponse && data == other.data && error == other.error;
   }
 
   @override
@@ -1017,7 +1022,9 @@ class LoginResponseBuilder
 
   @override
   void replace(LoginResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$LoginResponse;
   }
 
@@ -1063,12 +1070,15 @@ class _$LoginResponseData extends LoginResponseData {
 
   _$LoginResponseData._({this.accounts, this.version, this.static})
       : super._() {
-    if (accounts == null)
+    if (accounts == null) {
       throw new BuiltValueNullFieldError('LoginResponseData', 'accounts');
-    if (version == null)
+    }
+    if (version == null) {
       throw new BuiltValueNullFieldError('LoginResponseData', 'version');
-    if (static == null)
+    }
+    if (static == null) {
       throw new BuiltValueNullFieldError('LoginResponseData', 'static');
+    }
   }
 
   @override
@@ -1080,10 +1090,10 @@ class _$LoginResponseData extends LoginResponseData {
       new LoginResponseDataBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! LoginResponseData) return false;
-    return accounts == other.accounts &&
+    return other is LoginResponseData &&
+        accounts == other.accounts &&
         version == other.version &&
         static == other.static;
   }
@@ -1136,7 +1146,9 @@ class LoginResponseDataBuilder
 
   @override
   void replace(LoginResponseData other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$LoginResponseData;
   }
 
@@ -1213,28 +1225,39 @@ class _$StaticData extends StaticData {
       this.invoiceStatus,
       this.frequencies})
       : super._() {
-    if (currencies == null)
+    if (currencies == null) {
       throw new BuiltValueNullFieldError('StaticData', 'currencies');
-    if (sizes == null)
+    }
+    if (sizes == null) {
       throw new BuiltValueNullFieldError('StaticData', 'sizes');
-    if (industries == null)
+    }
+    if (industries == null) {
       throw new BuiltValueNullFieldError('StaticData', 'industries');
-    if (timezones == null)
+    }
+    if (timezones == null) {
       throw new BuiltValueNullFieldError('StaticData', 'timezones');
-    if (dateFormats == null)
+    }
+    if (dateFormats == null) {
       throw new BuiltValueNullFieldError('StaticData', 'dateFormats');
-    if (datetimeFormats == null)
+    }
+    if (datetimeFormats == null) {
       throw new BuiltValueNullFieldError('StaticData', 'datetimeFormats');
-    if (languages == null)
+    }
+    if (languages == null) {
       throw new BuiltValueNullFieldError('StaticData', 'languages');
-    if (paymentTypes == null)
+    }
+    if (paymentTypes == null) {
       throw new BuiltValueNullFieldError('StaticData', 'paymentTypes');
-    if (countries == null)
+    }
+    if (countries == null) {
       throw new BuiltValueNullFieldError('StaticData', 'countries');
-    if (invoiceStatus == null)
+    }
+    if (invoiceStatus == null) {
       throw new BuiltValueNullFieldError('StaticData', 'invoiceStatus');
-    if (frequencies == null)
+    }
+    if (frequencies == null) {
       throw new BuiltValueNullFieldError('StaticData', 'frequencies');
+    }
   }
 
   @override
@@ -1245,10 +1268,10 @@ class _$StaticData extends StaticData {
   StaticDataBuilder toBuilder() => new StaticDataBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! StaticData) return false;
-    return currencies == other.currencies &&
+    return other is StaticData &&
+        currencies == other.currencies &&
         sizes == other.sizes &&
         industries == other.industries &&
         timezones == other.timezones &&
@@ -1393,7 +1416,9 @@ class StaticDataBuilder implements Builder<StaticData, StaticDataBuilder> {
 
   @override
   void replace(StaticData other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$StaticData;
   }
 
@@ -1463,8 +1488,9 @@ class _$DashboardResponse extends DashboardResponse {
       (new DashboardResponseBuilder()..update(updates)).build();
 
   _$DashboardResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('DashboardResponse', 'data');
+    }
   }
 
   @override
@@ -1476,10 +1502,9 @@ class _$DashboardResponse extends DashboardResponse {
       new DashboardResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DashboardResponse) return false;
-    return data == other.data;
+    return other is DashboardResponse && data == other.data;
   }
 
   @override
@@ -1515,7 +1540,9 @@ class DashboardResponseBuilder
 
   @override
   void replace(DashboardResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DashboardResponse;
   }
 
@@ -1579,8 +1606,9 @@ class _$DashboardEntity extends DashboardEntity {
       this.activeClients,
       this.activities})
       : super._() {
-    if (activities == null)
+    if (activities == null) {
       throw new BuiltValueNullFieldError('DashboardEntity', 'activities');
+    }
   }
 
   @override
@@ -1592,10 +1620,10 @@ class _$DashboardEntity extends DashboardEntity {
       new DashboardEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DashboardEntity) return false;
-    return paidToDate == other.paidToDate &&
+    return other is DashboardEntity &&
+        paidToDate == other.paidToDate &&
         paidToDateCurrency == other.paidToDateCurrency &&
         balances == other.balances &&
         balancesCurrency == other.balancesCurrency &&
@@ -1708,7 +1736,9 @@ class DashboardEntityBuilder
 
   @override
   void replace(DashboardEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DashboardEntity;
   }
 
@@ -1794,16 +1824,21 @@ class _$ActivityEntity extends ActivityEntity {
       this.contactId,
       this.taskId})
       : super._() {
-    if (notes == null)
+    if (notes == null) {
       throw new BuiltValueNullFieldError('ActivityEntity', 'notes');
-    if (key == null)
+    }
+    if (key == null) {
       throw new BuiltValueNullFieldError('ActivityEntity', 'key');
-    if (activityTypeId == null)
+    }
+    if (activityTypeId == null) {
       throw new BuiltValueNullFieldError('ActivityEntity', 'activityTypeId');
-    if (userId == null)
+    }
+    if (userId == null) {
       throw new BuiltValueNullFieldError('ActivityEntity', 'userId');
-    if (updatedAt == null)
+    }
+    if (updatedAt == null) {
       throw new BuiltValueNullFieldError('ActivityEntity', 'updatedAt');
+    }
   }
 
   @override
@@ -1815,10 +1850,10 @@ class _$ActivityEntity extends ActivityEntity {
       new ActivityEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ActivityEntity) return false;
-    return notes == other.notes &&
+    return other is ActivityEntity &&
+        notes == other.notes &&
         key == other.key &&
         activityTypeId == other.activityTypeId &&
         clientId == other.clientId &&
@@ -1962,7 +1997,9 @@ class ActivityEntityBuilder
 
   @override
   void replace(ActivityEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ActivityEntity;
   }
 

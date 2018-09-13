@@ -15,6 +15,9 @@ part of 'ui_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<UIState> _$uIStateSerializer = new _$UIStateSerializer();
 
@@ -161,24 +164,33 @@ class _$UIState extends UIState {
       this.paymentUIState,
       this.quoteUIState})
       : super._() {
-    if (selectedCompanyIndex == null)
+    if (selectedCompanyIndex == null) {
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
-    if (currentRoute == null)
+    }
+    if (currentRoute == null) {
       throw new BuiltValueNullFieldError('UIState', 'currentRoute');
-    if (enableDarkMode == null)
+    }
+    if (enableDarkMode == null) {
       throw new BuiltValueNullFieldError('UIState', 'enableDarkMode');
-    if (emailPayment == null)
+    }
+    if (emailPayment == null) {
       throw new BuiltValueNullFieldError('UIState', 'emailPayment');
-    if (productUIState == null)
+    }
+    if (productUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'productUIState');
-    if (clientUIState == null)
+    }
+    if (clientUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'clientUIState');
-    if (invoiceUIState == null)
+    }
+    if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
-    if (paymentUIState == null)
+    }
+    if (paymentUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'paymentUIState');
-    if (quoteUIState == null)
+    }
+    if (quoteUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'quoteUIState');
+    }
   }
 
   @override
@@ -189,10 +201,10 @@ class _$UIState extends UIState {
   UIStateBuilder toBuilder() => new UIStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! UIState) return false;
-    return selectedCompanyIndex == other.selectedCompanyIndex &&
+    return other is UIState &&
+        selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         enableDarkMode == other.enableDarkMode &&
         emailPayment == other.emailPayment &&
@@ -319,7 +331,9 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   @override
   void replace(UIState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$UIState;
   }
 

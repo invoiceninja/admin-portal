@@ -15,6 +15,9 @@ part of 'client_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<ClientListResponse> _$clientListResponseSerializer =
     new _$ClientListResponseSerializer();
@@ -639,8 +642,9 @@ class _$ClientListResponse extends ClientListResponse {
       (new ClientListResponseBuilder()..update(updates)).build();
 
   _$ClientListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('ClientListResponse', 'data');
+    }
   }
 
   @override
@@ -652,10 +656,9 @@ class _$ClientListResponse extends ClientListResponse {
       new ClientListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ClientListResponse) return false;
-    return data == other.data;
+    return other is ClientListResponse && data == other.data;
   }
 
   @override
@@ -692,7 +695,9 @@ class ClientListResponseBuilder
 
   @override
   void replace(ClientListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ClientListResponse;
   }
 
@@ -730,8 +735,9 @@ class _$ClientItemResponse extends ClientItemResponse {
       (new ClientItemResponseBuilder()..update(updates)).build();
 
   _$ClientItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('ClientItemResponse', 'data');
+    }
   }
 
   @override
@@ -743,10 +749,9 @@ class _$ClientItemResponse extends ClientItemResponse {
       new ClientItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ClientItemResponse) return false;
-    return data == other.data;
+    return other is ClientItemResponse && data == other.data;
   }
 
   @override
@@ -782,7 +787,9 @@ class ClientItemResponseBuilder
 
   @override
   void replace(ClientItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ClientItemResponse;
   }
 
@@ -951,81 +958,118 @@ class _$ClientEntity extends ClientEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'name');
-    if (displayName == null)
+    }
+    if (displayName == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'displayName');
-    if (balance == null)
+    }
+    if (balance == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'balance');
-    if (paidToDate == null)
+    }
+    if (paidToDate == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'paidToDate');
-    if (address1 == null)
+    }
+    if (address1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'address1');
-    if (address2 == null)
+    }
+    if (address2 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'address2');
-    if (city == null)
+    }
+    if (city == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'city');
-    if (state == null)
+    }
+    if (state == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'state');
-    if (postalCode == null)
+    }
+    if (postalCode == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'postalCode');
-    if (countryId == null)
+    }
+    if (countryId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'countryId');
-    if (workPhone == null)
+    }
+    if (workPhone == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'workPhone');
-    if (privateNotes == null)
+    }
+    if (privateNotes == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'privateNotes');
-    if (publicNotes == null)
+    }
+    if (publicNotes == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'publicNotes');
-    if (website == null)
+    }
+    if (website == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'website');
-    if (industryId == null)
+    }
+    if (industryId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'industryId');
-    if (sizeId == null)
+    }
+    if (sizeId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'sizeId');
-    if (paymentTerms == null)
+    }
+    if (paymentTerms == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'paymentTerms');
-    if (vatNumber == null)
+    }
+    if (vatNumber == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'vatNumber');
-    if (idNumber == null)
+    }
+    if (idNumber == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'idNumber');
-    if (languageId == null)
+    }
+    if (languageId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'languageId');
-    if (currencyId == null)
+    }
+    if (currencyId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'currencyId');
-    if (invoiceNumberCounter == null)
+    }
+    if (invoiceNumberCounter == null) {
       throw new BuiltValueNullFieldError(
           'ClientEntity', 'invoiceNumberCounter');
-    if (quoteNumberCounter == null)
+    }
+    if (quoteNumberCounter == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'quoteNumberCounter');
-    if (taskRate == null)
+    }
+    if (taskRate == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'taskRate');
-    if (shippingAddress1 == null)
+    }
+    if (shippingAddress1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress1');
-    if (shippingAddress2 == null)
+    }
+    if (shippingAddress2 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress2');
-    if (shippingCity == null)
+    }
+    if (shippingCity == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingCity');
-    if (shippingState == null)
+    }
+    if (shippingState == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingState');
-    if (shippingPostalCode == null)
+    }
+    if (shippingPostalCode == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingPostalCode');
-    if (shippingCountryId == null)
+    }
+    if (shippingCountryId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingCountryId');
-    if (showTasksInPortal == null)
+    }
+    if (showTasksInPortal == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'showTasksInPortal');
-    if (sendReminders == null)
+    }
+    if (sendReminders == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'sendReminders');
-    if (creditNumberCounter == null)
+    }
+    if (creditNumberCounter == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'creditNumberCounter');
-    if (customValue1 == null)
+    }
+    if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue1');
-    if (customValue2 == null)
+    }
+    if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue2');
-    if (contacts == null)
+    }
+    if (contacts == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'contacts');
-    if (activities == null)
+    }
+    if (activities == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'activities');
+    }
   }
 
   @override
@@ -1036,10 +1080,10 @@ class _$ClientEntity extends ClientEntity {
   ClientEntityBuilder toBuilder() => new ClientEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ClientEntity) return false;
-    return lastUpdatedActivities == other.lastUpdatedActivities &&
+    return other is ClientEntity &&
+        lastUpdatedActivities == other.lastUpdatedActivities &&
         name == other.name &&
         displayName == other.displayName &&
         balance == other.balance &&
@@ -1428,7 +1472,9 @@ class ClientEntityBuilder
 
   @override
   void replace(ClientEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ClientEntity;
   }
 
@@ -1557,24 +1603,33 @@ class _$ContactEntity extends ContactEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (firstName == null)
+    if (firstName == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'firstName');
-    if (lastName == null)
+    }
+    if (lastName == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'lastName');
-    if (email == null)
+    }
+    if (email == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'email');
-    if (phone == null)
+    }
+    if (phone == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'phone');
-    if (contactKey == null)
+    }
+    if (contactKey == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'contactKey');
-    if (isPrimary == null)
+    }
+    if (isPrimary == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'isPrimary');
-    if (sendInvoice == null)
+    }
+    if (sendInvoice == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'sendInvoice');
-    if (customValue1 == null)
+    }
+    if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue1');
-    if (customValue2 == null)
+    }
+    if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue2');
+    }
   }
 
   @override
@@ -1585,10 +1640,10 @@ class _$ContactEntity extends ContactEntity {
   ContactEntityBuilder toBuilder() => new ContactEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ContactEntity) return false;
-    return firstName == other.firstName &&
+    return other is ContactEntity &&
+        firstName == other.firstName &&
         lastName == other.lastName &&
         email == other.email &&
         phone == other.phone &&
@@ -1753,7 +1808,9 @@ class ContactEntityBuilder
 
   @override
   void replace(ContactEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ContactEntity;
   }
 

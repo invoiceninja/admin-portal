@@ -15,6 +15,9 @@ part of 'industry_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<IndustryListResponse> _$industryListResponseSerializer =
     new _$IndustryListResponseSerializer();
@@ -173,8 +176,9 @@ class _$IndustryListResponse extends IndustryListResponse {
       (new IndustryListResponseBuilder()..update(updates)).build();
 
   _$IndustryListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('IndustryListResponse', 'data');
+    }
   }
 
   @override
@@ -186,10 +190,9 @@ class _$IndustryListResponse extends IndustryListResponse {
       new IndustryListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! IndustryListResponse) return false;
-    return data == other.data;
+    return other is IndustryListResponse && data == other.data;
   }
 
   @override
@@ -226,7 +229,9 @@ class IndustryListResponseBuilder
 
   @override
   void replace(IndustryListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$IndustryListResponse;
   }
 
@@ -265,8 +270,9 @@ class _$IndustryItemResponse extends IndustryItemResponse {
       (new IndustryItemResponseBuilder()..update(updates)).build();
 
   _$IndustryItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('IndustryItemResponse', 'data');
+    }
   }
 
   @override
@@ -278,10 +284,9 @@ class _$IndustryItemResponse extends IndustryItemResponse {
       new IndustryItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! IndustryItemResponse) return false;
-    return data == other.data;
+    return other is IndustryItemResponse && data == other.data;
   }
 
   @override
@@ -318,7 +323,9 @@ class IndustryItemResponseBuilder
 
   @override
   void replace(IndustryItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$IndustryItemResponse;
   }
 
@@ -358,8 +365,9 @@ class _$IndustryEntity extends IndustryEntity {
       (new IndustryEntityBuilder()..update(updates)).build();
 
   _$IndustryEntity._({this.name, this.id}) : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('IndustryEntity', 'name');
+    }
   }
 
   @override
@@ -371,10 +379,9 @@ class _$IndustryEntity extends IndustryEntity {
       new IndustryEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! IndustryEntity) return false;
-    return name == other.name && id == other.id;
+    return other is IndustryEntity && name == other.name && id == other.id;
   }
 
   @override
@@ -416,7 +423,9 @@ class IndustryEntityBuilder
 
   @override
   void replace(IndustryEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$IndustryEntity;
   }
 

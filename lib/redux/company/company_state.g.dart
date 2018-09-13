@@ -15,6 +15,9 @@ part of 'company_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<CompanyState> _$companyStateSerializer =
     new _$CompanyStateSerializer();
@@ -132,18 +135,24 @@ class _$CompanyState extends CompanyState {
       this.paymentState,
       this.quoteState})
       : super._() {
-    if (dashboardState == null)
+    if (dashboardState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'dashboardState');
-    if (productState == null)
+    }
+    if (productState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'productState');
-    if (clientState == null)
+    }
+    if (clientState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'clientState');
-    if (invoiceState == null)
+    }
+    if (invoiceState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'invoiceState');
-    if (paymentState == null)
+    }
+    if (paymentState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'paymentState');
-    if (quoteState == null)
+    }
+    if (quoteState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'quoteState');
+    }
   }
 
   @override
@@ -154,10 +163,10 @@ class _$CompanyState extends CompanyState {
   CompanyStateBuilder toBuilder() => new CompanyStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CompanyState) return false;
-    return company == other.company &&
+    return other is CompanyState &&
+        company == other.company &&
         dashboardState == other.dashboardState &&
         productState == other.productState &&
         clientState == other.clientState &&
@@ -257,7 +266,9 @@ class CompanyStateBuilder
 
   @override
   void replace(CompanyState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CompanyState;
   }
 

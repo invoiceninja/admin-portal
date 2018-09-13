@@ -15,6 +15,9 @@ part of 'invoice_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<InvoiceListResponse> _$invoiceListResponseSerializer =
     new _$InvoiceListResponseSerializer();
@@ -815,8 +818,9 @@ class _$InvoiceListResponse extends InvoiceListResponse {
       (new InvoiceListResponseBuilder()..update(updates)).build();
 
   _$InvoiceListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('InvoiceListResponse', 'data');
+    }
   }
 
   @override
@@ -828,10 +832,9 @@ class _$InvoiceListResponse extends InvoiceListResponse {
       new InvoiceListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! InvoiceListResponse) return false;
-    return data == other.data;
+    return other is InvoiceListResponse && data == other.data;
   }
 
   @override
@@ -868,7 +871,9 @@ class InvoiceListResponseBuilder
 
   @override
   void replace(InvoiceListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$InvoiceListResponse;
   }
 
@@ -906,8 +911,9 @@ class _$InvoiceItemResponse extends InvoiceItemResponse {
       (new InvoiceItemResponseBuilder()..update(updates)).build();
 
   _$InvoiceItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('InvoiceItemResponse', 'data');
+    }
   }
 
   @override
@@ -919,10 +925,9 @@ class _$InvoiceItemResponse extends InvoiceItemResponse {
       new InvoiceItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! InvoiceItemResponse) return false;
-    return data == other.data;
+    return other is InvoiceItemResponse && data == other.data;
   }
 
   @override
@@ -958,7 +963,9 @@ class InvoiceItemResponseBuilder
 
   @override
   void replace(InvoiceItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$InvoiceItemResponse;
   }
 
@@ -1139,90 +1146,132 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (amount == null)
+    if (amount == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'amount');
-    if (balance == null)
+    }
+    if (balance == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'balance');
-    if (isQuote == null)
+    }
+    if (isQuote == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'isQuote');
-    if (clientId == null)
+    }
+    if (clientId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'clientId');
-    if (invoiceStatusId == null)
+    }
+    if (invoiceStatusId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceStatusId');
-    if (invoiceNumber == null)
+    }
+    if (invoiceNumber == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceNumber');
-    if (discount == null)
+    }
+    if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'discount');
-    if (poNumber == null)
+    }
+    if (poNumber == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'poNumber');
-    if (invoiceDate == null)
+    }
+    if (invoiceDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceDate');
-    if (dueDate == null)
+    }
+    if (dueDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'dueDate');
-    if (terms == null)
+    }
+    if (terms == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'terms');
-    if (publicNotes == null)
+    }
+    if (publicNotes == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'publicNotes');
-    if (privateNotes == null)
+    }
+    if (privateNotes == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'privateNotes');
-    if (invoiceTypeId == null)
+    }
+    if (invoiceTypeId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceTypeId');
-    if (isRecurring == null)
+    }
+    if (isRecurring == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'isRecurring');
-    if (frequencyId == null)
+    }
+    if (frequencyId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'frequencyId');
-    if (startDate == null)
+    }
+    if (startDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'startDate');
-    if (endDate == null)
+    }
+    if (endDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'endDate');
-    if (lastSentDate == null)
+    }
+    if (lastSentDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'lastSentDate');
-    if (recurringInvoiceId == null)
+    }
+    if (recurringInvoiceId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'recurringInvoiceId');
-    if (taxName1 == null)
+    }
+    if (taxName1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'taxName1');
-    if (taxRate1 == null)
+    }
+    if (taxRate1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'taxRate1');
-    if (taxName2 == null)
+    }
+    if (taxName2 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'taxName2');
-    if (taxRate2 == null)
+    }
+    if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'taxRate2');
-    if (isAmountDiscount == null)
+    }
+    if (isAmountDiscount == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'isAmountDiscount');
-    if (invoiceFooter == null)
+    }
+    if (invoiceFooter == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceFooter');
-    if (partial == null)
+    }
+    if (partial == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'partial');
-    if (partialDueDate == null)
+    }
+    if (partialDueDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'partialDueDate');
-    if (hasTasks == null)
+    }
+    if (hasTasks == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasTasks');
-    if (autoBill == null)
+    }
+    if (autoBill == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'autoBill');
-    if (customValue1 == null)
+    }
+    if (customValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customValue1');
-    if (customValue2 == null)
+    }
+    if (customValue2 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customValue2');
-    if (customTaxes1 == null)
+    }
+    if (customTaxes1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes1');
-    if (customTaxes2 == null)
+    }
+    if (customTaxes2 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes2');
-    if (hasExpenses == null)
+    }
+    if (hasExpenses == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasExpenses');
-    if (quoteInvoiceId == null)
+    }
+    if (quoteInvoiceId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'quoteInvoiceId');
-    if (customTextValue1 == null)
+    }
+    if (customTextValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customTextValue1');
-    if (customTextValue2 == null)
+    }
+    if (customTextValue2 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customTextValue2');
-    if (isPublic == null)
+    }
+    if (isPublic == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'isPublic');
-    if (filename == null)
+    }
+    if (filename == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'filename');
-    if (invoiceItems == null)
+    }
+    if (invoiceItems == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceItems');
-    if (invitations == null)
+    }
+    if (invitations == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invitations');
+    }
   }
 
   @override
@@ -1233,10 +1282,10 @@ class _$InvoiceEntity extends InvoiceEntity {
   InvoiceEntityBuilder toBuilder() => new InvoiceEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! InvoiceEntity) return false;
-    return amount == other.amount &&
+    return other is InvoiceEntity &&
+        amount == other.amount &&
         balance == other.balance &&
         isQuote == other.isQuote &&
         clientId == other.clientId &&
@@ -1651,7 +1700,9 @@ class InvoiceEntityBuilder
 
   @override
   void replace(InvoiceEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$InvoiceEntity;
   }
 
@@ -1793,31 +1844,43 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (productKey == null)
+    if (productKey == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'productKey');
-    if (notes == null)
+    }
+    if (notes == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'notes');
-    if (cost == null)
+    }
+    if (cost == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'cost');
-    if (qty == null)
+    }
+    if (qty == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'qty');
-    if (taxName1 == null)
+    }
+    if (taxName1 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'taxName1');
-    if (taxRate1 == null)
+    }
+    if (taxRate1 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'taxRate1');
-    if (taxName2 == null)
+    }
+    if (taxName2 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'taxName2');
-    if (taxRate2 == null)
+    }
+    if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'taxRate2');
-    if (invoiceItemTypeId == null)
+    }
+    if (invoiceItemTypeId == null) {
       throw new BuiltValueNullFieldError(
           'InvoiceItemEntity', 'invoiceItemTypeId');
-    if (customValue1 == null)
+    }
+    if (customValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue1');
-    if (customValue2 == null)
+    }
+    if (customValue2 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue2');
-    if (discount == null)
+    }
+    if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'discount');
+    }
   }
 
   @override
@@ -1829,10 +1892,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       new InvoiceItemEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! InvoiceItemEntity) return false;
-    return productKey == other.productKey &&
+    return other is InvoiceItemEntity &&
+        productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
         qty == other.qty &&
@@ -2026,7 +2089,9 @@ class InvoiceItemEntityBuilder
 
   @override
   void replace(InvoiceItemEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$InvoiceItemEntity;
   }
 
@@ -2099,14 +2164,18 @@ class _$InvitationEntity extends InvitationEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (key == null)
+    if (key == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'key');
-    if (link == null)
+    }
+    if (link == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'link');
-    if (sentDate == null)
+    }
+    if (sentDate == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'sentDate');
-    if (viewedDate == null)
+    }
+    if (viewedDate == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'viewedDate');
+    }
   }
 
   @override
@@ -2118,10 +2187,10 @@ class _$InvitationEntity extends InvitationEntity {
       new InvitationEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! InvitationEntity) return false;
-    return key == other.key &&
+    return other is InvitationEntity &&
+        key == other.key &&
         link == other.link &&
         sentDate == other.sentDate &&
         viewedDate == other.viewedDate &&
@@ -2235,7 +2304,9 @@ class InvitationEntityBuilder
 
   @override
   void replace(InvitationEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$InvitationEntity;
   }
 

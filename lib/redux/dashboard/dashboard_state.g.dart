@@ -15,6 +15,9 @@ part of 'dashboard_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<DashboardState> _$dashboardStateSerializer =
     new _$DashboardStateSerializer();
@@ -93,10 +96,11 @@ class _$DashboardState extends DashboardState {
       new DashboardStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DashboardState) return false;
-    return lastUpdated == other.lastUpdated && data == other.data;
+    return other is DashboardState &&
+        lastUpdated == other.lastUpdated &&
+        data == other.data;
   }
 
   @override
@@ -139,7 +143,9 @@ class DashboardStateBuilder
 
   @override
   void replace(DashboardState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DashboardState;
   }
 

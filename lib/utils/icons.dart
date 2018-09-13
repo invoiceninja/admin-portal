@@ -18,6 +18,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.delete;
     case EntityAction.restore:
       return Icons.restore;
+    case EntityAction.convert:
+      return Icons.check_box;
     case EntityAction.invoice:
     case EntityAction.payment:
       return Icons.add_circle_outline;

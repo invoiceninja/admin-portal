@@ -15,6 +15,9 @@ part of 'invoice_design_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<InvoiceDesignListResponse> _$invoiceDesignListResponseSerializer =
     new _$InvoiceDesignListResponseSerializer();
@@ -189,8 +192,9 @@ class _$InvoiceDesignListResponse extends InvoiceDesignListResponse {
       (new InvoiceDesignListResponseBuilder()..update(updates)).build();
 
   _$InvoiceDesignListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('InvoiceDesignListResponse', 'data');
+    }
   }
 
   @override
@@ -203,10 +207,9 @@ class _$InvoiceDesignListResponse extends InvoiceDesignListResponse {
       new InvoiceDesignListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! InvoiceDesignListResponse) return false;
-    return data == other.data;
+    return other is InvoiceDesignListResponse && data == other.data;
   }
 
   @override
@@ -244,7 +247,9 @@ class InvoiceDesignListResponseBuilder
 
   @override
   void replace(InvoiceDesignListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$InvoiceDesignListResponse;
   }
 
@@ -283,8 +288,9 @@ class _$InvoiceDesignItemResponse extends InvoiceDesignItemResponse {
       (new InvoiceDesignItemResponseBuilder()..update(updates)).build();
 
   _$InvoiceDesignItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('InvoiceDesignItemResponse', 'data');
+    }
   }
 
   @override
@@ -297,10 +303,9 @@ class _$InvoiceDesignItemResponse extends InvoiceDesignItemResponse {
       new InvoiceDesignItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! InvoiceDesignItemResponse) return false;
-    return data == other.data;
+    return other is InvoiceDesignItemResponse && data == other.data;
   }
 
   @override
@@ -338,7 +343,9 @@ class InvoiceDesignItemResponseBuilder
 
   @override
   void replace(InvoiceDesignItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$InvoiceDesignItemResponse;
   }
 
@@ -383,14 +390,18 @@ class _$InvoiceDesignEntity extends InvoiceDesignEntity {
 
   _$InvoiceDesignEntity._({this.id, this.name, this.javascript, this.pdfmake})
       : super._() {
-    if (id == null)
+    if (id == null) {
       throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'id');
-    if (name == null)
+    }
+    if (name == null) {
       throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'name');
-    if (javascript == null)
+    }
+    if (javascript == null) {
       throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'javascript');
-    if (pdfmake == null)
+    }
+    if (pdfmake == null) {
       throw new BuiltValueNullFieldError('InvoiceDesignEntity', 'pdfmake');
+    }
   }
 
   @override
@@ -402,10 +413,10 @@ class _$InvoiceDesignEntity extends InvoiceDesignEntity {
       new InvoiceDesignEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! InvoiceDesignEntity) return false;
-    return id == other.id &&
+    return other is InvoiceDesignEntity &&
+        id == other.id &&
         name == other.name &&
         javascript == other.javascript &&
         pdfmake == other.pdfmake;
@@ -464,7 +475,9 @@ class InvoiceDesignEntityBuilder
 
   @override
   void replace(InvoiceDesignEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$InvoiceDesignEntity;
   }
 

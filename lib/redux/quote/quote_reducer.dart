@@ -162,6 +162,7 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, RestoreQuoteRequest>(_restoreQuoteRequest),
   TypedReducer<QuoteState, RestoreQuoteSuccess>(_restoreQuoteSuccess),
   TypedReducer<QuoteState, RestoreQuoteFailure>(_restoreQuoteFailure),
+  TypedReducer<QuoteState, ConvertQuoteSuccess>(_convertQuoteSuccess),
 ]);
 
 QuoteState _markSentQuoteSuccess(
@@ -222,6 +223,14 @@ QuoteState _restoreQuoteSuccess(
 QuoteState _restoreQuoteFailure(
     QuoteState quoteState, RestoreQuoteFailure action) {
   return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+}
+
+QuoteState _convertQuoteSuccess(
+    QuoteState quoteState, ConvertQuoteSuccess action) {
+  final quote = action.quote.rebuild((b) => b
+      ..quoteInvoiceId = action.invoice.id
+  );
+  return quoteState.rebuild((b) => b..map[action.quote.id] = quote);
 }
 
 QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {

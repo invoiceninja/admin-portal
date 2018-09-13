@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
@@ -168,6 +169,7 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, RestoreInvoiceRequest>(_restoreInvoiceRequest),
   TypedReducer<InvoiceState, RestoreInvoiceSuccess>(_restoreInvoiceSuccess),
   TypedReducer<InvoiceState, RestoreInvoiceFailure>(_restoreInvoiceFailure),
+  TypedReducer<InvoiceState, ConvertQuoteSuccess>(_convertQuoteSuccess),
 ]);
 
 InvoiceState _markSentInvoiceSuccess(
@@ -238,6 +240,13 @@ InvoiceState _restoreInvoiceFailure(
 }
 
 InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
+  return invoiceState.rebuild((b) => b
+    ..map[action.invoice.id] = action.invoice
+    ..list.add(action.invoice.id));
+}
+
+InvoiceState _convertQuoteSuccess(
+    InvoiceState invoiceState, ConvertQuoteSuccess action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
     ..list.add(action.invoice.id));

@@ -15,6 +15,9 @@ part of 'frequency_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<FrequencyListResponse> _$frequencyListResponseSerializer =
     new _$FrequencyListResponseSerializer();
@@ -179,8 +182,9 @@ class _$FrequencyListResponse extends FrequencyListResponse {
       (new FrequencyListResponseBuilder()..update(updates)).build();
 
   _$FrequencyListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('FrequencyListResponse', 'data');
+    }
   }
 
   @override
@@ -192,10 +196,9 @@ class _$FrequencyListResponse extends FrequencyListResponse {
       new FrequencyListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! FrequencyListResponse) return false;
-    return data == other.data;
+    return other is FrequencyListResponse && data == other.data;
   }
 
   @override
@@ -232,7 +235,9 @@ class FrequencyListResponseBuilder
 
   @override
   void replace(FrequencyListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$FrequencyListResponse;
   }
 
@@ -271,8 +276,9 @@ class _$FrequencyItemResponse extends FrequencyItemResponse {
       (new FrequencyItemResponseBuilder()..update(updates)).build();
 
   _$FrequencyItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('FrequencyItemResponse', 'data');
+    }
   }
 
   @override
@@ -284,10 +290,9 @@ class _$FrequencyItemResponse extends FrequencyItemResponse {
       new FrequencyItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! FrequencyItemResponse) return false;
-    return data == other.data;
+    return other is FrequencyItemResponse && data == other.data;
   }
 
   @override
@@ -324,7 +329,9 @@ class FrequencyItemResponseBuilder
 
   @override
   void replace(FrequencyItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$FrequencyItemResponse;
   }
 
@@ -366,11 +373,15 @@ class _$FrequencyEntity extends FrequencyEntity {
       (new FrequencyEntityBuilder()..update(updates)).build();
 
   _$FrequencyEntity._({this.id, this.name, this.dateInterval}) : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('FrequencyEntity', 'id');
-    if (name == null)
+    if (id == null) {
+      throw new BuiltValueNullFieldError('FrequencyEntity', 'id');
+    }
+    if (name == null) {
       throw new BuiltValueNullFieldError('FrequencyEntity', 'name');
-    if (dateInterval == null)
+    }
+    if (dateInterval == null) {
       throw new BuiltValueNullFieldError('FrequencyEntity', 'dateInterval');
+    }
   }
 
   @override
@@ -382,10 +393,10 @@ class _$FrequencyEntity extends FrequencyEntity {
       new FrequencyEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! FrequencyEntity) return false;
-    return id == other.id &&
+    return other is FrequencyEntity &&
+        id == other.id &&
         name == other.name &&
         dateInterval == other.dateInterval;
   }
@@ -436,7 +447,9 @@ class FrequencyEntityBuilder
 
   @override
   void replace(FrequencyEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$FrequencyEntity;
   }
 

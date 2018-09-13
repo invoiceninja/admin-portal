@@ -15,6 +15,9 @@ part of 'expense_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<ExpenseListResponse> _$expenseListResponseSerializer =
     new _$ExpenseListResponseSerializer();
@@ -471,8 +474,9 @@ class _$ExpenseListResponse extends ExpenseListResponse {
       (new ExpenseListResponseBuilder()..update(updates)).build();
 
   _$ExpenseListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('ExpenseListResponse', 'data');
+    }
   }
 
   @override
@@ -484,10 +488,9 @@ class _$ExpenseListResponse extends ExpenseListResponse {
       new ExpenseListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ExpenseListResponse) return false;
-    return data == other.data;
+    return other is ExpenseListResponse && data == other.data;
   }
 
   @override
@@ -524,7 +527,9 @@ class ExpenseListResponseBuilder
 
   @override
   void replace(ExpenseListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ExpenseListResponse;
   }
 
@@ -562,8 +567,9 @@ class _$ExpenseItemResponse extends ExpenseItemResponse {
       (new ExpenseItemResponseBuilder()..update(updates)).build();
 
   _$ExpenseItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('ExpenseItemResponse', 'data');
+    }
   }
 
   @override
@@ -575,10 +581,9 @@ class _$ExpenseItemResponse extends ExpenseItemResponse {
       new ExpenseItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ExpenseItemResponse) return false;
-    return data == other.data;
+    return other is ExpenseItemResponse && data == other.data;
   }
 
   @override
@@ -614,7 +619,9 @@ class ExpenseItemResponseBuilder
 
   @override
   void replace(ExpenseItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ExpenseItemResponse;
   }
 
@@ -732,49 +739,70 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (privateNotes == null)
+    if (privateNotes == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'privateNotes');
-    if (publicNotes == null)
+    }
+    if (publicNotes == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'publicNotes');
-    if (shouldBeInvoiced == null)
+    }
+    if (shouldBeInvoiced == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'shouldBeInvoiced');
-    if (transactionId == null)
+    }
+    if (transactionId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'transactionId');
-    if (transactionReference == null)
+    }
+    if (transactionReference == null) {
       throw new BuiltValueNullFieldError(
           'ExpenseEntity', 'transactionReference');
-    if (bankId == null)
+    }
+    if (bankId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'bankId');
-    if (expenseCurrencyId == null)
+    }
+    if (expenseCurrencyId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCurrencyId');
-    if (exchangeCurrencyId == null)
+    }
+    if (exchangeCurrencyId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'exchangeCurrencyId');
-    if (amount == null)
+    }
+    if (amount == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'amount');
-    if (expenseDate == null)
+    }
+    if (expenseDate == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseDate');
-    if (exchangeRate == null)
+    }
+    if (exchangeRate == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'exchangeRate');
-    if (invoiceCurrencyId == null)
+    }
+    if (invoiceCurrencyId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceCurrencyId');
-    if (taxName1 == null)
+    }
+    if (taxName1 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'taxName1');
-    if (taxRate1 == null)
+    }
+    if (taxRate1 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate1');
-    if (taxRate2 == null)
+    }
+    if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate2');
-    if (clientId == null)
+    }
+    if (clientId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'clientId');
-    if (invoiceId == null)
+    }
+    if (invoiceId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceId');
-    if (vendorId == null)
+    }
+    if (vendorId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'vendorId');
-    if (customValue1 == null)
+    }
+    if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue1');
-    if (customValue2 == null)
+    }
+    if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue2');
-    if (expenseCategories == null)
+    }
+    if (expenseCategories == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCategories');
+    }
   }
 
   @override
@@ -785,10 +813,10 @@ class _$ExpenseEntity extends ExpenseEntity {
   ExpenseEntityBuilder toBuilder() => new ExpenseEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ExpenseEntity) return false;
-    return privateNotes == other.privateNotes &&
+    return other is ExpenseEntity &&
+        privateNotes == other.privateNotes &&
         publicNotes == other.publicNotes &&
         shouldBeInvoiced == other.shouldBeInvoiced &&
         transactionId == other.transactionId &&
@@ -1051,7 +1079,9 @@ class ExpenseEntityBuilder
 
   @override
   void replace(ExpenseEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ExpenseEntity;
   }
 
@@ -1138,8 +1168,9 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'name');
+    }
   }
 
   @override
@@ -1151,10 +1182,10 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       new ExpenseCategoryEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ExpenseCategoryEntity) return false;
-    return name == other.name &&
+    return other is ExpenseCategoryEntity &&
+        name == other.name &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1241,7 +1272,9 @@ class ExpenseCategoryEntityBuilder
 
   @override
   void replace(ExpenseCategoryEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ExpenseCategoryEntity;
   }
 

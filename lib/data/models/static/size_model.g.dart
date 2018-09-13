@@ -15,6 +15,9 @@ part of 'size_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<SizeListResponse> _$sizeListResponseSerializer =
     new _$SizeListResponseSerializer();
@@ -163,8 +166,9 @@ class _$SizeListResponse extends SizeListResponse {
       (new SizeListResponseBuilder()..update(updates)).build();
 
   _$SizeListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('SizeListResponse', 'data');
+    }
   }
 
   @override
@@ -176,10 +180,9 @@ class _$SizeListResponse extends SizeListResponse {
       new SizeListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! SizeListResponse) return false;
-    return data == other.data;
+    return other is SizeListResponse && data == other.data;
   }
 
   @override
@@ -215,7 +218,9 @@ class SizeListResponseBuilder
 
   @override
   void replace(SizeListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$SizeListResponse;
   }
 
@@ -253,8 +258,9 @@ class _$SizeItemResponse extends SizeItemResponse {
       (new SizeItemResponseBuilder()..update(updates)).build();
 
   _$SizeItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('SizeItemResponse', 'data');
+    }
   }
 
   @override
@@ -266,10 +272,9 @@ class _$SizeItemResponse extends SizeItemResponse {
       new SizeItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! SizeItemResponse) return false;
-    return data == other.data;
+    return other is SizeItemResponse && data == other.data;
   }
 
   @override
@@ -304,7 +309,9 @@ class SizeItemResponseBuilder
 
   @override
   void replace(SizeItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$SizeItemResponse;
   }
 
@@ -344,7 +351,9 @@ class _$SizeEntity extends SizeEntity {
       (new SizeEntityBuilder()..update(updates)).build();
 
   _$SizeEntity._({this.name, this.id}) : super._() {
-    if (name == null) throw new BuiltValueNullFieldError('SizeEntity', 'name');
+    if (name == null) {
+      throw new BuiltValueNullFieldError('SizeEntity', 'name');
+    }
   }
 
   @override
@@ -355,10 +364,9 @@ class _$SizeEntity extends SizeEntity {
   SizeEntityBuilder toBuilder() => new SizeEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! SizeEntity) return false;
-    return name == other.name && id == other.id;
+    return other is SizeEntity && name == other.name && id == other.id;
   }
 
   @override
@@ -399,7 +407,9 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
 
   @override
   void replace(SizeEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$SizeEntity;
   }
 

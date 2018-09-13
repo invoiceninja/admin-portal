@@ -15,6 +15,9 @@ part of 'client_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<ClientState> _$clientStateSerializer = new _$ClientStateSerializer();
 Serializer<ClientUIState> _$clientUIStateSerializer =
@@ -163,8 +166,12 @@ class _$ClientState extends ClientState {
       (new ClientStateBuilder()..update(updates)).build();
 
   _$ClientState._({this.lastUpdated, this.map, this.list}) : super._() {
-    if (map == null) throw new BuiltValueNullFieldError('ClientState', 'map');
-    if (list == null) throw new BuiltValueNullFieldError('ClientState', 'list');
+    if (map == null) {
+      throw new BuiltValueNullFieldError('ClientState', 'map');
+    }
+    if (list == null) {
+      throw new BuiltValueNullFieldError('ClientState', 'list');
+    }
   }
 
   @override
@@ -175,10 +182,10 @@ class _$ClientState extends ClientState {
   ClientStateBuilder toBuilder() => new ClientStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ClientState) return false;
-    return lastUpdated == other.lastUpdated &&
+    return other is ClientState &&
+        lastUpdated == other.lastUpdated &&
         map == other.map &&
         list == other.list;
   }
@@ -229,7 +236,9 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
 
   @override
   void replace(ClientState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ClientState;
   }
 
@@ -279,10 +288,12 @@ class _$ClientUIState extends ClientUIState {
   _$ClientUIState._(
       {this.editing, this.editingContact, this.selectedId, this.listUIState})
       : super._() {
-    if (selectedId == null)
+    if (selectedId == null) {
       throw new BuiltValueNullFieldError('ClientUIState', 'selectedId');
-    if (listUIState == null)
+    }
+    if (listUIState == null) {
       throw new BuiltValueNullFieldError('ClientUIState', 'listUIState');
+    }
   }
 
   @override
@@ -293,10 +304,10 @@ class _$ClientUIState extends ClientUIState {
   ClientUIStateBuilder toBuilder() => new ClientUIStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ClientUIState) return false;
-    return editing == other.editing &&
+    return other is ClientUIState &&
+        editing == other.editing &&
         editingContact == other.editingContact &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
@@ -361,7 +372,9 @@ class ClientUIStateBuilder
 
   @override
   void replace(ClientUIState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ClientUIState;
   }
 

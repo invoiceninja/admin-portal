@@ -103,6 +103,9 @@ class QuoteListVM extends EntityListVM {
           case EntityAction.pdf:
             viewPdf(quote, context);
             break;
+          case EntityAction.convert:
+            store.dispatch(ConvertQuote(quote.id));
+            break;
           case EntityAction.markSent:
             store.dispatch(MarkSentQuoteRequest(
                 snackBarCompleter(context, localization.markedQuoteAsSent),

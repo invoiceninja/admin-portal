@@ -15,11 +15,15 @@ part of 'models.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 const EntityAction _$archive = const EntityAction._('archive');
 const EntityAction _$delete = const EntityAction._('delete');
 const EntityAction _$restore = const EntityAction._('restore');
 const EntityAction _$clone = const EntityAction._('clone');
+const EntityAction _$convert = const EntityAction._('convert');
 const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$email = const EntityAction._('email');
 const EntityAction _$markSent = const EntityAction._('markSent');
@@ -38,6 +42,8 @@ EntityAction _$valueOf(String name) {
       return _$restore;
     case 'clone':
       return _$clone;
+    case 'convert':
+      return _$convert;
     case 'download':
       return _$download;
     case 'email':
@@ -63,6 +69,7 @@ final BuiltSet<EntityAction> _$values =
   _$delete,
   _$restore,
   _$clone,
+  _$convert,
   _$download,
   _$email,
   _$markSent,

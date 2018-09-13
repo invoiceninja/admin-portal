@@ -15,6 +15,9 @@ part of 'date_format_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<DateFormatListResponse> _$dateFormatListResponseSerializer =
     new _$DateFormatListResponseSerializer();
@@ -173,8 +176,9 @@ class _$DateFormatListResponse extends DateFormatListResponse {
       (new DateFormatListResponseBuilder()..update(updates)).build();
 
   _$DateFormatListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('DateFormatListResponse', 'data');
+    }
   }
 
   @override
@@ -187,10 +191,9 @@ class _$DateFormatListResponse extends DateFormatListResponse {
       new DateFormatListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DateFormatListResponse) return false;
-    return data == other.data;
+    return other is DateFormatListResponse && data == other.data;
   }
 
   @override
@@ -227,7 +230,9 @@ class DateFormatListResponseBuilder
 
   @override
   void replace(DateFormatListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DateFormatListResponse;
   }
 
@@ -266,8 +271,9 @@ class _$DateFormatItemResponse extends DateFormatItemResponse {
       (new DateFormatItemResponseBuilder()..update(updates)).build();
 
   _$DateFormatItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('DateFormatItemResponse', 'data');
+    }
   }
 
   @override
@@ -280,10 +286,9 @@ class _$DateFormatItemResponse extends DateFormatItemResponse {
       new DateFormatItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DateFormatItemResponse) return false;
-    return data == other.data;
+    return other is DateFormatItemResponse && data == other.data;
   }
 
   @override
@@ -320,7 +325,9 @@ class DateFormatItemResponseBuilder
 
   @override
   void replace(DateFormatItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DateFormatItemResponse;
   }
 
@@ -360,10 +367,12 @@ class _$DateFormatEntity extends DateFormatEntity {
       (new DateFormatEntityBuilder()..update(updates)).build();
 
   _$DateFormatEntity._({this.id, this.format}) : super._() {
-    if (id == null)
+    if (id == null) {
       throw new BuiltValueNullFieldError('DateFormatEntity', 'id');
-    if (format == null)
+    }
+    if (format == null) {
       throw new BuiltValueNullFieldError('DateFormatEntity', 'format');
+    }
   }
 
   @override
@@ -375,10 +384,11 @@ class _$DateFormatEntity extends DateFormatEntity {
       new DateFormatEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DateFormatEntity) return false;
-    return id == other.id && format == other.format;
+    return other is DateFormatEntity &&
+        id == other.id &&
+        format == other.format;
   }
 
   @override
@@ -420,7 +430,9 @@ class DateFormatEntityBuilder
 
   @override
   void replace(DateFormatEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DateFormatEntity;
   }
 
