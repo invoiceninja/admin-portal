@@ -117,7 +117,6 @@ final clientsReducer = combineReducers<ClientState>([
   TypedReducer<ClientState, SaveClientSuccess>(_updateClient),
   TypedReducer<ClientState, AddClientSuccess>(_addClient),
   TypedReducer<ClientState, LoadClientsSuccess>(_setLoadedClients),
-  TypedReducer<ClientState, LoadClientsFailure>(_setNoClients),
   TypedReducer<ClientState, LoadClientSuccess>(_setLoadedClient),
   TypedReducer<ClientState, ArchiveClientRequest>(_archiveClientRequest),
   TypedReducer<ClientState, ArchiveClientSuccess>(_archiveClientSuccess),
@@ -202,10 +201,6 @@ ClientState _setLoadedClient(
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client.rebuild((b) =>
     b..lastUpdatedActivities = DateTime.now().millisecondsSinceEpoch));
-}
-
-ClientState _setNoClients(ClientState clientState, LoadClientsFailure action) {
-  return clientState;
 }
 
 ClientState _setLoadedClients(

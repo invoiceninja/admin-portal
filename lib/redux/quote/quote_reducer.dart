@@ -151,7 +151,6 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, SaveQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, AddQuoteSuccess>(_addQuote),
   TypedReducer<QuoteState, LoadQuotesSuccess>(_setLoadedQuotes),
-  TypedReducer<QuoteState, LoadQuotesFailure>(_setNoQuotes),
   TypedReducer<QuoteState, LoadQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, MarkSentQuoteSuccess>(_markSentQuoteSuccess),
   TypedReducer<QuoteState, ArchiveQuoteRequest>(_archiveQuoteRequest),
@@ -233,10 +232,6 @@ QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
 
 QuoteState _updateQuote(QuoteState quoteState, dynamic action) {
   return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
-}
-
-QuoteState _setNoQuotes(QuoteState quoteState, LoadQuotesFailure action) {
-  return quoteState;
 }
 
 QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) {
