@@ -140,16 +140,19 @@ class CustomTabBarView extends StatelessWidget {
           });
     }
 
-    return RefreshIndicator(
-        onRefresh: () => viewModel.onRefreshed(context),
-        child: TabBarView(
-          controller: controller,
-          children: <Widget>[
-            DashboardPanels(
-              viewModel: viewModel,
-            ),
-            DashboardActivity(viewModel: viewModel),
-          ],
-        ));
+    return TabBarView(
+      controller: controller,
+      children: <Widget>[
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: DashboardPanels(
+            viewModel: viewModel,
+          ),
+        ),
+        RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context),
+            child: DashboardActivity(viewModel: viewModel)),
+      ],
+    );
   }
 }
