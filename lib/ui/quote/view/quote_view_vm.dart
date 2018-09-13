@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
@@ -110,6 +111,16 @@ class QuoteViewVM extends EntityViewVM {
           switch (action) {
             case EntityAction.pdf:
               viewPdf(quote, context);
+              break;
+            case EntityAction.viewInvoice:
+              store.dispatch(ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
+              break;
+            case EntityAction.convert:
+              final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+              store.dispatch(ConvertQuote(completer, quote.id));
+              completer.future.then((InvoiceEntity invoice) {
+                store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+              });
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentQuoteRequest(

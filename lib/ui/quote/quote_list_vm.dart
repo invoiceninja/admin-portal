@@ -104,6 +104,9 @@ class QuoteListVM extends EntityListVM {
           case EntityAction.pdf:
             viewPdf(quote, context);
             break;
+          case EntityAction.viewInvoice:
+            store.dispatch(ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
+            break;
           case EntityAction.convert:
             final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
             store.dispatch(ConvertQuote(completer, quote.id));

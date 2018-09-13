@@ -391,6 +391,10 @@ abstract class InvoiceEntity extends Object
       actions.add(EntityAction.payment);
     }
 
+    if (isQuote && quoteInvoiceId > 0) {
+      actions.add(EntityAction.viewInvoice);
+    }
+
     actions.add(EntityAction.pdf);
 
     if (actions.isNotEmpty) {
