@@ -113,13 +113,16 @@ class QuoteViewVM extends EntityViewVM {
               viewPdf(quote, context);
               break;
             case EntityAction.viewInvoice:
-              store.dispatch(ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
+              store.dispatch(ViewInvoice(
+                  context: context, invoiceId: quote.quoteInvoiceId));
               break;
             case EntityAction.convert:
-              final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+              final Completer<InvoiceEntity> completer =
+                  Completer<InvoiceEntity>();
               store.dispatch(ConvertQuote(completer, quote.id));
               completer.future.then((InvoiceEntity invoice) {
-                store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+                store.dispatch(
+                    ViewInvoice(invoiceId: invoice.id, context: context));
               });
               break;
             case EntityAction.markSent:
@@ -147,9 +150,15 @@ class QuoteViewVM extends EntityViewVM {
                   snackBarCompleter(context, localization.restoredQuote),
                   quote.id));
               break;
-            case EntityAction.clone:
+            case EntityAction.cloneToInvoice:
               Navigator.of(context).pop();
-              store.dispatch(EditQuote(context: context, quote: quote.clone));
+              store.dispatch(
+                  EditInvoice(context: context, invoice: quote.cloneToInvoice));
+              break;
+            case EntityAction.cloneToQuote:
+              Navigator.of(context).pop();
+              store.dispatch(
+                  EditQuote(context: context, quote: quote.cloneToQuote));
               break;
           }
         });

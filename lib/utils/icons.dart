@@ -7,6 +7,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.pdf:
       return Icons.picture_as_pdf;
     case EntityAction.clone:
+    case EntityAction.cloneToInvoice:
+    case EntityAction.cloneToQuote:
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
       return Icons.publish;

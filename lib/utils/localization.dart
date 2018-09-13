@@ -14,6 +14,8 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'clone_to_invoice': 'Clone to Invoice',
+      'clone_to_quote': 'Clone to Quote',
       'view_invoice': 'View Invoice',
       'convert': 'Convert',
       'more': 'More',
@@ -8319,6 +8321,10 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get cloneToInvoice => _localizedValues[locale.languageCode]['clone_to_invoice'];
+
+  String get cloneToQuote => _localizedValues[locale.languageCode]['clone_to_quote'];
 
   String get viewInvoice => _localizedValues[locale.languageCode]['view_invoice'];
 

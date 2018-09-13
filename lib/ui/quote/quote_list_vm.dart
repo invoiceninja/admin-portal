@@ -125,8 +125,13 @@ class QuoteListVM extends EntityListVM {
                 quote: quote,
                 context: context));
             break;
-          case EntityAction.clone:
-            store.dispatch(EditQuote(context: context, quote: quote.clone));
+          case EntityAction.cloneToInvoice:
+            store.dispatch(
+                EditInvoice(context: context, invoice: quote.cloneToInvoice));
+            break;
+          case EntityAction.cloneToQuote:
+            store.dispatch(
+                EditQuote(context: context, quote: quote.cloneToQuote));
             break;
           case EntityAction.restore:
             store.dispatch(RestoreQuoteRequest(

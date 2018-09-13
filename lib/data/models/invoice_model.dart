@@ -143,10 +143,20 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
+    ..invoiceStatusId = kInvoiceStatusDraft
+    ..quoteInvoiceId = 0
     ..invoiceNumber = ''
     ..invoiceDate = convertDateTimeToSqlDate()
     ..dueDate = ''
     ..isPublic = false);
+
+  InvoiceEntity get cloneToInvoice => clone.rebuild((b) => b
+    ..isQuote = false
+    ..invoiceTypeId = kInvoiceTypeStandard);
+
+  InvoiceEntity get cloneToQuote => clone.rebuild((b) => b
+    ..isQuote = true
+    ..invoiceTypeId = kInvoiceTypeQuote);
 
   @override
   EntityType get entityType {
@@ -370,8 +380,6 @@ abstract class InvoiceEntity extends Object
     final actions = <EntityAction>[];
 
     if (user.canCreate(EntityType.invoice)) {
-      actions.add(EntityAction.clone);
-
       if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {
         actions.add(EntityAction.convert);
       }
@@ -387,7 +395,8 @@ abstract class InvoiceEntity extends Object
 
     if (user.canEditEntity(this) &&
         user.canCreate(EntityType.payment) &&
-        isUnpaid && !isQuote) {
+        isUnpaid &&
+        !isQuote) {
       actions.add(EntityAction.payment);
     }
 
@@ -398,6 +407,12 @@ abstract class InvoiceEntity extends Object
     actions.add(EntityAction.pdf);
 
     if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.cloneToInvoice);
+      actions.add(EntityAction.cloneToQuote);
       actions.add(null);
     }
 

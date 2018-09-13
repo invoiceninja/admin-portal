@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -190,10 +191,15 @@ class InvoiceViewVM extends EntityViewVM {
                   snackBarCompleter(context, localization.restoredInvoice),
                   invoice.id));
               break;
-            case EntityAction.clone:
+            case EntityAction.cloneToInvoice:
               Navigator.of(context).pop();
               store.dispatch(
-                  EditInvoice(context: context, invoice: invoice.clone));
+                  EditInvoice(context: context, invoice: invoice.cloneToInvoice));
+              break;
+            case EntityAction.cloneToQuote:
+              Navigator.of(context).pop();
+              store.dispatch(
+                  EditQuote(context: context, quote: invoice.cloneToQuote));
               break;
             case EntityAction.payment:
               store.dispatch(EditPayment(
