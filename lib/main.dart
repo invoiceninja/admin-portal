@@ -55,8 +55,7 @@ void main() async {
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
 
   final store = Store<AppState>(appReducer,
-      initialState: AppState(
-          enableDarkMode: enableDarkMode),
+      initialState: AppState(enableDarkMode: enableDarkMode),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDashboardMiddleware())
@@ -112,6 +111,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         Intl.defaultLocale = localeSelector(state);
 
         return MaterialApp(
+          supportedLocales: kLanguages.map((locale) => Locale(locale)).toList(),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),

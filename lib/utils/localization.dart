@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class AppLocalization {
@@ -9053,35 +9054,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
   const AppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => [
-        'ca',
-        'cs',
-        'da',
-        'de',
-        'el',
-        'en',
-        'en_GB',
-        'es',
-        'es_ES',
-        'fi',
-        'fr',
-        'fr_CA',
-        'hr',
-        'it',
-        'ja',
-        'lt',
-        'nb_NO',
-        'nl',
-        'pl',
-        'pt_BR',
-        'pt_PT',
-        'ro',
-        'sl',
-        'sq',
-        'sv',
-        'th',
-        'tr_TR',
-      ].contains(locale.languageCode);
+  bool isSupported(Locale locale) => kLanguages.contains(locale.languageCode);
 
   @override
   Future<AppLocalization> load(Locale locale) {
