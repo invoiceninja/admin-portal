@@ -23,16 +23,6 @@ class SettingsList extends StatelessWidget {
           secondary: Icon(FontAwesomeIcons.moon),
           activeColor: Theme.of(context).accentColor,
         ),
-        SwitchListTile(
-          title: Text(AppLocalization.of(context).biometricAuthentication),
-          value: viewModel.requireAuthentication,
-          onChanged: (value) =>
-              viewModel.onRequireAuthenticationChanged(context, value),
-          secondary: Icon(viewModel.requireAuthentication
-              ? FontAwesomeIcons.lock
-              : FontAwesomeIcons.unlockAlt),
-          activeColor: Theme.of(context).accentColor,
-        ),
         ListTile(
           leading: Icon(FontAwesomeIcons.syncAlt),
           title: Text(AppLocalization.of(context).refreshData),

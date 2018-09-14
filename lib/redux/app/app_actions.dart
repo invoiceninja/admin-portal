@@ -28,12 +28,8 @@ class LoadStaticSuccess {
 class UserSettingsChanged implements PersistUI {
   final bool enableDarkMode;
   final bool emailPayment;
-  final bool requireAuthentication;
 
-  UserSettingsChanged(
-      {this.enableDarkMode,
-      this.emailPayment,
-      this.requireAuthentication});
+  UserSettingsChanged({this.enableDarkMode, this.emailPayment});
 }
 
 class LoadDataSuccess {

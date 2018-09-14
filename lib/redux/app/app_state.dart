@@ -21,7 +21,7 @@ part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState(
-      {String appVersion, bool enableDarkMode, bool requireAuthentication}) {
+      {String appVersion, bool enableDarkMode}) {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
@@ -33,8 +33,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState4: CompanyState(),
       companyState5: CompanyState(),
       uiState: UIState(CompanyEntity(),
-          enableDarkMode: enableDarkMode,
-          requireAuthentication: requireAuthentication),
+          enableDarkMode: enableDarkMode),
     );
   }
 

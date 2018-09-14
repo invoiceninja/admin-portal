@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -38,7 +35,6 @@ import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:local_auth/local_auth.dart';
 //import 'package:quick_actions/quick_actions.dart';
 
 // STARTER: import - do not remove comment
@@ -57,13 +53,10 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 void main() async {
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
-  final requireAuthentication =
-      prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(
-          enableDarkMode: enableDarkMode,
-          requireAuthentication: requireAuthentication),
+          enableDarkMode: enableDarkMode),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDashboardMiddleware())
@@ -91,26 +84,6 @@ class InvoiceNinjaApp extends StatefulWidget {
 }
 
 class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
-  bool _authenticated = false;
-
-  Future<Null> _authenticate() async {
-    bool authenticated = false;
-    try {
-      authenticated = await LocalAuthentication().authenticateWithBiometrics(
-          localizedReason: 'Please authenticate to access the app',
-          useErrorDialogs: true,
-          stickyAuth: false);
-    } catch (e) {
-      print(e);
-    }
-
-    if (mounted) {
-      setState(() {
-        _authenticated = authenticated;
-      });
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -131,23 +104,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   }
 
   @override
-  void didChangeDependencies() {
-    final state = widget.store.state;
-    if (state.uiState.requireAuthentication && !_authenticated) {
-      _authenticate();
-    }
-
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: widget.store,
       child: AppBuilder(builder: (context) {
         final state = widget.store.state;
         Intl.defaultLocale = localeSelector(state);
-        final localization = AppLocalization(Locale(Intl.defaultLocale));
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -155,40 +117,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
           ],
-          home: state.uiState.requireAuthentication && !_authenticated
-              ? Material(
-                  color: Colors.grey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            FontAwesomeIcons.lock,
-                            size: 24.0,
-                            color: Colors.grey[400],
-                          ),
-                          SizedBox(
-                            width: 12.0,
-                          ),
-                          Text(
-                            localization.locked,
-                            style: TextStyle(
-                              fontSize: 32.0,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      ),
-                      RaisedButton(
-                        onPressed: () => _authenticate(),
-                        child: Text(localization.authenticate),
-                      )
-                    ],
-                  ),
-                )
-              : InitScreen(),
+          home: InitScreen(),
           locale: Locale(localeSelector(state)),
           theme: state.uiState.enableDarkMode
               ? ThemeData(
