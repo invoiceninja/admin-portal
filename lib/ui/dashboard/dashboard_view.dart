@@ -51,7 +51,7 @@ class _DashboardViewState extends State<DashboardView>
     final store = StoreProvider.of<AppState>(context);
 
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => true,
       child: Scaffold(
         drawer: AppDrawerBuilder(),
         appBar: AppBar(
