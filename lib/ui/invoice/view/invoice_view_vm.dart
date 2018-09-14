@@ -116,7 +116,8 @@ class InvoiceViewVM extends EntityViewVM {
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final invoice = state.invoiceState.map[state.invoiceUIState.selectedId];
-    final client = store.state.clientState.map[invoice.clientId];
+    final client =
+        store.state.clientState.map[invoice.clientId] ?? ClientEntity();
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -193,8 +194,8 @@ class InvoiceViewVM extends EntityViewVM {
               break;
             case EntityAction.cloneToInvoice:
               Navigator.of(context).pop();
-              store.dispatch(
-                  EditInvoice(context: context, invoice: invoice.cloneToInvoice));
+              store.dispatch(EditInvoice(
+                  context: context, invoice: invoice.cloneToInvoice));
               break;
             case EntityAction.cloneToQuote:
               Navigator.of(context).pop();
@@ -206,7 +207,6 @@ class InvoiceViewVM extends EntityViewVM {
                   context: context,
                   payment: invoice.createPayment(state.selectedCompany)));
               break;
-
           }
         });
   }

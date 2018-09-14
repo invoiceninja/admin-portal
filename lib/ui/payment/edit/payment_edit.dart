@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -67,8 +68,7 @@ class _PaymentEditState extends State<PaymentEdit> {
   }
 
   void _onChanged() {
-    final payment = widget.viewModel.payment.rebuild((b) =>
-    b
+    final payment = widget.viewModel.payment.rebuild((b) => b
       ..amount = parseDouble(_amountController.text)
       ..transactionReference = _transactionReferenceController.text.trim()
       ..privateNotes = _privateNotesController.text.trim());
@@ -97,9 +97,7 @@ class _PaymentEditState extends State<PaymentEdit> {
               Builder(builder: (BuildContext context) {
                 return RefreshIconButton(
                   icon: Icons.cloud_upload,
-                  tooltip: AppLocalization
-                      .of(context)
-                      .save,
+                  tooltip: AppLocalization.of(context).save,
                   isVisible: !payment.isDeleted,
                   isSaving: viewModel.isSaving,
                   isDirty: payment.isNew || payment != viewModel.origPayment,
@@ -128,66 +126,59 @@ class _PaymentEditState extends State<PaymentEdit> {
                   children: <Widget>[
                     payment.isNew
                         ? EntityDropdown(
-                      key: Key('__${payment.clientId}__'),
-                      entityType: EntityType.client,
-                      labelText: AppLocalization
-                          .of(context)
-                          .client,
-                      entityMap: viewModel.clientMap,
-                      initialValue: viewModel
-                          .clientMap[payment.clientId]?.listDisplayName,
-                      onSelected: (clientId) {
-                        viewModel.onChanged(
-                            payment.rebuild((b) => b..clientId = clientId));
-                      },
-                      entityList: memoizedDropdownClientList(
-                          viewModel.clientMap, viewModel.clientList),
-                    )
+                            key: Key('__${payment.clientId}__'),
+                            entityType: EntityType.client,
+                            labelText: AppLocalization.of(context).client,
+                            entityMap: viewModel.clientMap,
+                            initialValue:
+                                (viewModel.clientMap[payment.clientId] ??
+                                        ClientEntity())
+                                    .listDisplayName,
+                            onSelected: (clientId) {
+                              viewModel.onChanged(payment
+                                  .rebuild((b) => b..clientId = clientId));
+                            },
+                            entityList: memoizedDropdownClientList(
+                                viewModel.clientMap, viewModel.clientList),
+                          )
                         : Container(),
                     payment.isNew
                         ? EntityDropdown(
-                      entityType: EntityType.invoice,
-                      labelText: AppLocalization
-                          .of(context)
-                          .invoice,
-                      entityMap: viewModel.invoiceMap,
-                      initialValue: viewModel
-                          .invoiceMap[payment.invoiceId]?.listDisplayName,
-                      autoValidate: autoValidate,
-                      validator: (String val) =>
-                      val
-                          .trim()
-                          .isEmpty
-                          ? AppLocalization
-                          .of(context)
-                          .pleaseSelectAnInvoice
-                          : null,
-                      entityList: memoizedDropdownInvoiceList(
-                          viewModel.invoiceMap,
-                          viewModel.invoiceList,
-                          payment.clientId),
-                      onSelected: (invoiceId) {
-                        final invoice = viewModel.invoiceMap[invoiceId];
-                        _amountController.text = formatNumber(
-                            invoice.balance, context,
-                            formatNumberType: FormatNumberType.input);
-                        viewModel.onChanged(payment.rebuild((b) =>
-                        b
-                          ..invoiceId = invoiceId
-                          ..clientId = invoice.clientId
-                          ..amount = invoice.balance));
-                      },
-                    )
+                            entityType: EntityType.invoice,
+                            labelText: AppLocalization.of(context).invoice,
+                            entityMap: viewModel.invoiceMap,
+                            initialValue: viewModel
+                                .invoiceMap[payment.invoiceId]?.listDisplayName,
+                            autoValidate: autoValidate,
+                            validator: (String val) => val.trim().isEmpty
+                                ? AppLocalization.of(context)
+                                    .pleaseSelectAnInvoice
+                                : null,
+                            entityList: memoizedDropdownInvoiceList(
+                                viewModel.invoiceMap,
+                                viewModel.invoiceList,
+                                payment.clientId),
+                            onSelected: (invoiceId) {
+                              final invoice = viewModel.invoiceMap[invoiceId];
+                              _amountController.text = formatNumber(
+                                  invoice.balance, context,
+                                  formatNumberType: FormatNumberType.input);
+                              viewModel.onChanged(payment.rebuild((b) => b
+                                ..invoiceId = invoiceId
+                                ..clientId = invoice.clientId
+                                ..amount = invoice.balance));
+                            },
+                          )
                         : Container(),
                     payment.isNew
                         ? TextFormField(
-                      controller: _amountController,
-                      autocorrect: false,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: localization.amount,
-                      ),
-                    )
+                            controller: _amountController,
+                            autocorrect: false,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              labelText: localization.amount,
+                            ),
+                          )
                         : Container(),
                     EntityDropdown(
                       entityType: EntityType.paymentType,
@@ -197,20 +188,13 @@ class _PaymentEditState extends State<PaymentEdit> {
                       labelText: localization.paymentType,
                       initialValue: viewModel.staticState
                           .paymentTypeMap[payment.paymentTypeId]?.name,
-                      onSelected: (int paymentTypeId) =>
-                          viewModel.onChanged(
-                              payment
-                                  .rebuild((
-                                  b) => b..paymentTypeId = paymentTypeId)),
+                      onSelected: (int paymentTypeId) => viewModel.onChanged(
+                          payment.rebuild(
+                              (b) => b..paymentTypeId = paymentTypeId)),
                     ),
                     DatePicker(
-                      validator: (String val) =>
-                      val
-                          .trim()
-                          .isEmpty
-                          ? AppLocalization
-                          .of(context)
-                          .pleaseSelectADate
+                      validator: (String val) => val.trim().isEmpty
+                          ? AppLocalization.of(context).pleaseSelectADate
                           : null,
                       autoValidate: autoValidate,
                       labelText: localization.paymentDate,
@@ -238,19 +222,20 @@ class _PaymentEditState extends State<PaymentEdit> {
                     ),
                   ],
                 ),
-                payment.isNew ? FormCard(children: <Widget>[
-                  SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.sendEmail),
-                    value: viewModel.uiState.emailPayment,
-                    subtitle: Text(localization.emailReceipt),
-                    onChanged: (value) => viewModel.onEmailChanged(value),
-                  ),
-                ]) : Container(),
+                payment.isNew
+                    ? FormCard(children: <Widget>[
+                        SwitchListTile(
+                          activeColor: Theme.of(context).accentColor,
+                          title: Text(localization.sendEmail),
+                          value: viewModel.uiState.emailPayment,
+                          subtitle: Text(localization.emailReceipt),
+                          onChanged: (value) => viewModel.onEmailChanged(value),
+                        ),
+                      ])
+                    : Container(),
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }

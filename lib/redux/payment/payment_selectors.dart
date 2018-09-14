@@ -23,7 +23,7 @@ InvoiceEntity paymentInvoiceSelector(int paymentId, AppState state) {
 
 ClientEntity paymentClientSelector(int paymentId, AppState state) {
   final invoice = paymentInvoiceSelector(paymentId, state);
-  return state.clientState.map[invoice.clientId];
+  return state.clientState.map[invoice.clientId] ?? ClientEntity();
 }
 
 var memoizedDropdownPaymentList = memo2(

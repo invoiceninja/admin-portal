@@ -117,14 +117,17 @@ class InvoiceList extends StatelessWidget {
                             final invoiceId = viewModel.invoiceList[index];
                             final invoice = viewModel.invoiceMap[invoiceId];
                             final client =
-                                viewModel.clientMap[invoice.clientId];
+                                viewModel.clientMap[invoice.clientId] ??
+                                    ClientEntity();
                             return Column(
                               children: <Widget>[
                                 InvoiceListItem(
                                   user: viewModel.user,
                                   filter: viewModel.filter,
                                   invoice: invoice,
-                                  client: viewModel.clientMap[invoice.clientId],
+                                  client:
+                                      viewModel.clientMap[invoice.clientId] ??
+                                          ClientEntity(),
                                   onTap: () =>
                                       viewModel.onInvoiceTap(context, invoice),
                                   onEntityAction: (EntityAction action) {
