@@ -107,7 +107,8 @@ class SettingsListVM {
         try {
           authenticated = await LocalAuthentication()
               .authenticateWithBiometrics(
-                  localizedReason: 'Please authenticate to change the setting',
+                  localizedReason:
+                      AppLocalization.of(context).authenticateToChangeSetting,
                   useErrorDialogs: true,
                   stickyAuth: false);
         } catch (e) {
@@ -117,9 +118,7 @@ class SettingsListVM {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool(kSharedPrefRequireAuthentication, value);
           store.dispatch(UserSettingsChanged(requireAuthentication: value));
-        } else {
-
-        }
+        } else {}
       },
       enableDarkMode: store.state.uiState.enableDarkMode,
       requireAuthentication: store.state.uiState.requireAuthentication,

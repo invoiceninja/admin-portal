@@ -14,7 +14,8 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
-
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -8327,19 +8328,28 @@ class AppLocalization {
     },
   };
 
+  String get authenticateToChangeSetting =>
+      _localizedValues[locale.languageCode]['authenticate_to_change_setting'];
+
   String get locked => _localizedValues[locale.languageCode]['locked'];
 
-  String get authenticate => _localizedValues[locale.languageCode]['authenticate'];
+  String get authenticate =>
+      _localizedValues[locale.languageCode]['authenticate'];
 
-  String get pleaseAuthenticate => _localizedValues[locale.languageCode]['please_authenticate'];
+  String get pleaseAuthenticate =>
+      _localizedValues[locale.languageCode]['please_authenticate'];
 
-  String get biometricAuthentication => _localizedValues[locale.languageCode]['biometric_authentication'];
+  String get biometricAuthentication =>
+      _localizedValues[locale.languageCode]['biometric_authentication'];
 
-  String get cloneToInvoice => _localizedValues[locale.languageCode]['clone_to_invoice'];
+  String get cloneToInvoice =>
+      _localizedValues[locale.languageCode]['clone_to_invoice'];
 
-  String get cloneToQuote => _localizedValues[locale.languageCode]['clone_to_quote'];
+  String get cloneToQuote =>
+      _localizedValues[locale.languageCode]['clone_to_quote'];
 
-  String get viewInvoice => _localizedValues[locale.languageCode]['view_invoice'];
+  String get viewInvoice =>
+      _localizedValues[locale.languageCode]['view_invoice'];
 
   String get convert => _localizedValues[locale.languageCode]['convert'];
 
