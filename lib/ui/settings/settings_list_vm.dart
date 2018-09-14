@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list.dart';
@@ -101,15 +102,27 @@ class SettingsListVM {
         store.dispatch(UserSettingsChanged(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
       },
-      onRequireAuthenticationChanged:
-          (BuildContext context, bool value) async {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool(kSharedPrefRequireAuthentication, value);
-        store.dispatch(UserSettingsChanged(requireAuthentication: value));
+      onRequireAuthenticationChanged: (BuildContext context, bool value) async {
+        bool authenticated = false;
+        try {
+          authenticated = await LocalAuthentication()
+              .authenticateWithBiometrics(
+                  localizedReason: 'Please authenticate to change the setting',
+                  useErrorDialogs: true,
+                  stickyAuth: false);
+        } catch (e) {
+          print(e);
+        }
+        if (authenticated) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool(kSharedPrefRequireAuthentication, value);
+          store.dispatch(UserSettingsChanged(requireAuthentication: value));
+        } else {
+
+        }
       },
       enableDarkMode: store.state.uiState.enableDarkMode,
-      requireAuthentication:
-          store.state.uiState.requireAuthentication,
+      requireAuthentication: store.state.uiState.requireAuthentication,
     );
   }
 }

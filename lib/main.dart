@@ -166,7 +166,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         children: <Widget>[
                           Icon(
                             FontAwesomeIcons.lock,
-                            size: 26.0,
+                            size: 24.0,
                             color: Colors.grey[400],
                           ),
                           SizedBox(

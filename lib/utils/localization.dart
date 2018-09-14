@@ -14,6 +14,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
