@@ -55,8 +55,9 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 
 void main() async {
   final prefs = await SharedPreferences.getInstance();
-  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode);
-  final requireAuthentication = prefs.getBool(kSharedPrefRequireAuthentication);
+  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
+  final requireAuthentication =
+      prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(
