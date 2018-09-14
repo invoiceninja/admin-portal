@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -93,12 +94,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   bool _authenticated = false;
 
   Future<Null> _authenticate() async {
-    final LocalAuthentication auth = LocalAuthentication();
     bool authenticated = false;
     try {
-      authenticated = await auth.authenticateWithBiometrics(
-          //localizedReason: AppLocalization.of(context).pleaseAuthenticate,
-          localizedReason: 'Please Authenticate',
+      authenticated = await LocalAuthentication().authenticateWithBiometrics(
+          localizedReason: 'Please authenticate to access the app',
           useErrorDialogs: true,
           stickyAuth: false);
     } catch (e) {
@@ -148,6 +147,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       child: AppBuilder(builder: (context) {
         final state = widget.store.state;
         Intl.defaultLocale = localeSelector(state);
+        final localization = AppLocalization(Locale(Intl.defaultLocale));
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -156,9 +156,37 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             GlobalMaterialLocalizations.delegate,
           ],
           home: state.uiState.requireAuthentication && !_authenticated
-              ? RaisedButton(
-                  onPressed: () => _authenticate(),
-                  child: Text('Authenticate'),
+              ? Material(
+                  color: Colors.grey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            FontAwesomeIcons.lock,
+                            size: 26.0,
+                            color: Colors.grey[400],
+                          ),
+                          SizedBox(
+                            width: 12.0,
+                          ),
+                          Text(
+                            localization.locked,
+                            style: TextStyle(
+                              fontSize: 32.0,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        ],
+                      ),
+                      RaisedButton(
+                        onPressed: () => _authenticate(),
+                        child: Text(localization.authenticate),
+                      )
+                    ],
+                  ),
                 )
               : InitScreen(),
           locale: Locale(localeSelector(state)),
