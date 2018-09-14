@@ -20,7 +20,8 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
-  factory AppState({String appVersion, bool enableDarkMode}) {
+  factory AppState(
+      {String appVersion, bool enableDarkMode, bool requireAuthentication}) {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
@@ -31,7 +32,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState3: CompanyState(),
       companyState4: CompanyState(),
       companyState5: CompanyState(),
-      uiState: UIState(CompanyEntity(), enableDarkMode: enableDarkMode),
+      uiState: UIState(CompanyEntity(),
+          enableDarkMode: enableDarkMode,
+          requireAuthentication: requireAuthentication),
     );
   }
 
@@ -98,8 +101,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
-case EntityType.payment:
-return paymentUIState;
+      case EntityType.payment:
+        return paymentUIState;
 
       case EntityType.quote:
         return quoteUIState;
@@ -132,10 +135,11 @@ return paymentUIState;
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
-PaymentState get paymentState => selectedCompanyState.paymentState;
-ListUIState get paymentListState => uiState.paymentUIState.listUIState;
-PaymentUIState get paymentUIState => uiState.paymentUIState;
+  PaymentState get paymentState => selectedCompanyState.paymentState;
 
+  ListUIState get paymentListState => uiState.paymentUIState.listUIState;
+
+  PaymentUIState get paymentUIState => uiState.paymentUIState;
 
   QuoteState get quoteState => selectedCompanyState.quoteState;
 

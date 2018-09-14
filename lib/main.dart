@@ -56,9 +56,12 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 void main() async {
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode);
+  final requireAuthentication = prefs.getBool(kSharedPrefRequireAuthentication);
 
   final store = Store<AppState>(appReducer,
-      initialState: AppState(enableDarkMode: enableDarkMode),
+      initialState: AppState(
+          enableDarkMode: enableDarkMode,
+          requireAuthentication: requireAuthentication),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDashboardMiddleware())
@@ -86,14 +89,15 @@ class InvoiceNinjaApp extends StatefulWidget {
 }
 
 class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
-  bool _authenticated = true;
+  bool _authenticated = false;
 
   Future<Null> _authenticate() async {
     final LocalAuthentication auth = LocalAuthentication();
     bool authenticated = false;
     try {
       authenticated = await auth.authenticateWithBiometrics(
-          localizedReason: 'Scan your fingerprint to authenticate',
+          //localizedReason: AppLocalization.of(context).pleaseAuthenticate,
+          localizedReason: 'Please Authenticate',
           useErrorDialogs: true,
           stickyAuth: false);
     } catch (e) {
@@ -107,10 +111,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     }
   }
 
-  /*
   @override
   void initState() {
     super.initState();
+
+    /*
     const QuickActions quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
       if (shortcutType == 'action_main') {
@@ -122,8 +127,18 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       const ShortcutItem(
           type: 'action_main', localizedTitle: 'Main view 123', icon: 'AppIcon'),
     ]);
+    */
   }
-  */
+
+  @override
+  void didChangeDependencies() {
+    final state = widget.store.state;
+    if (state.uiState.requireAuthentication && !_authenticated) {
+      _authenticate();
+    }
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,12 +154,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
           ],
-          home: _authenticated
-              ? InitScreen()
-              : RaisedButton(
+          home: state.uiState.requireAuthentication && !_authenticated
+              ? RaisedButton(
                   onPressed: () => _authenticate(),
                   child: Text('Authenticate'),
-                ),
+                )
+              : InitScreen(),
           locale: Locale(localeSelector(state)),
           theme: state.uiState.enableDarkMode
               ? ThemeData(
