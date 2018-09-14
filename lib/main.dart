@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -35,6 +37,8 @@ import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:local_auth/local_auth.dart';
+//import 'package:quick_actions/quick_actions.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
@@ -82,6 +86,45 @@ class InvoiceNinjaApp extends StatefulWidget {
 }
 
 class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
+  bool _authenticated = true;
+
+  Future<Null> _authenticate() async {
+    final LocalAuthentication auth = LocalAuthentication();
+    bool authenticated = false;
+    try {
+      authenticated = await auth.authenticateWithBiometrics(
+          localizedReason: 'Scan your fingerprint to authenticate',
+          useErrorDialogs: true,
+          stickyAuth: false);
+    } catch (e) {
+      print(e);
+    }
+
+    if (mounted) {
+      setState(() {
+        _authenticated = authenticated;
+      });
+    }
+  }
+
+  /*
+  @override
+  void initState() {
+    super.initState();
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((String shortcutType) {
+      if (shortcutType == 'action_main') {
+        print('The user tapped on the "Main view" action.');
+      }
+    });
+
+    quickActions.setShortcutItems(<ShortcutItem>[
+      const ShortcutItem(
+          type: 'action_main', localizedTitle: 'Main view 123', icon: 'AppIcon'),
+    ]);
+  }
+  */
+
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
@@ -96,6 +139,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
           ],
+          home: _authenticated
+              ? InitScreen()
+              : RaisedButton(
+                  onPressed: () => _authenticate(),
+                  child: Text('Authenticate'),
+                ),
           locale: Locale(localeSelector(state)),
           theme: state.uiState.enableDarkMode
               ? ThemeData(
@@ -113,7 +162,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 ),
           title: 'Invoice Ninja',
           routes: {
-            InitScreen.route: (context) => InitScreen(),
             LoginScreen.route: (context) {
               return LoginScreen();
             },

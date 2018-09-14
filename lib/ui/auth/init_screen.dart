@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 
 class InitScreen extends StatelessWidget {
-  static const String route = '/';
 
   @override
   Widget build(BuildContext context) {

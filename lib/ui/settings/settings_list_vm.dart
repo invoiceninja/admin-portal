@@ -34,13 +34,18 @@ class SettingsListVM {
   final Function(BuildContext context) onLogoutTap;
   final Function(BuildContext context) onRefreshTap;
   final Function(BuildContext context, bool value) onDarkModeChanged;
+  final Function(BuildContext context, bool value)
+      onRequireAuthenticationChanged;
   final bool enableDarkMode;
+  final bool requireAuthentication;
 
   SettingsListVM({
     @required this.onLogoutTap,
     @required this.onRefreshTap,
     @required this.onDarkModeChanged,
+    @required this.onRequireAuthenticationChanged,
     @required this.enableDarkMode,
+    @required this.requireAuthentication,
   });
 
   static SettingsListVM fromStore(Store<AppState> store) {
@@ -88,14 +93,23 @@ class SettingsListVM {
     }
 
     return SettingsListVM(
-        onLogoutTap: (BuildContext context) => _confirmLogout(context),
-        onRefreshTap: (BuildContext context) => _refreshData(context),
-        onDarkModeChanged: (BuildContext context, bool value) async {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(kSharedPrefEnableDarkMode, value);
-          store.dispatch(UserSettingsChanged(enableDarkMode: value));
-          AppBuilder.of(context).rebuild();
-        },
-        enableDarkMode: store.state.uiState.enableDarkMode);
+      onLogoutTap: (BuildContext context) => _confirmLogout(context),
+      onRefreshTap: (BuildContext context) => _refreshData(context),
+      onDarkModeChanged: (BuildContext context, bool value) async {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool(kSharedPrefEnableDarkMode, value);
+        store.dispatch(UserSettingsChanged(enableDarkMode: value));
+        AppBuilder.of(context).rebuild();
+      },
+      onRequireAuthenticationChanged:
+          (BuildContext context, bool value) async {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool(kSharedPrefRequireAuthentication, value);
+        store.dispatch(UserSettingsChanged(requireAuthentication: value));
+      },
+      enableDarkMode: store.state.uiState.enableDarkMode,
+      requireAuthentication:
+          store.state.uiState.requireAuthentication,
+    );
   }
 }

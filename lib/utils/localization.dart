@@ -14,6 +14,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'biometric_authentication': 'Biometric Authentication',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
       'view_invoice': 'View Invoice',
@@ -8321,6 +8322,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get biometricAuthentication => _localizedValues[locale.languageCode]['biometric_authentication'];
 
   String get cloneToInvoice => _localizedValues[locale.languageCode]['clone_to_invoice'];
 
