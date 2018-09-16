@@ -296,8 +296,7 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       return;
     }
 
-    final int updatedAt =
-        action.force ? 0 : (state.quoteState.lastUpdated / 1000).round();
+    final int updatedAt = (state.quoteState.lastUpdated / 1000).round();
 
     store.dispatch(LoadQuotesRequest());
     repository

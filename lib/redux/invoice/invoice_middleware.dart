@@ -277,8 +277,7 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
       return;
     }
 
-    final int updatedAt =
-        action.force ? 0 : (state.invoiceState.lastUpdated / 1000).round();
+    final int updatedAt = (state.clientState.lastUpdated / 1000).round();
 
     store.dispatch(LoadInvoicesRequest());
     repository

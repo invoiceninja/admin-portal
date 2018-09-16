@@ -155,7 +155,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
       return;
     }
 
-    final int updatedAt = action.force ? 0 : (state.productState.lastUpdated / 1000).round();
+    final int updatedAt = (state.clientState.lastUpdated / 1000).round();
 
     store.dispatch(LoadProductsRequest());
     repository.loadList(state.selectedCompany, state.authState, updatedAt).then((data) {

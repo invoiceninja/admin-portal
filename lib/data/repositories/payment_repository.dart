@@ -18,7 +18,7 @@ class PaymentRepository {
 
   Future<BuiltList<PaymentEntity>> loadList(
       CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/payments';
+    String url = auth.url + '/payments?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
