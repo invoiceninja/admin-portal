@@ -61,13 +61,26 @@ class _LoginState extends State<LoginView> {
     super.dispose();
   }
 
+  void _submitForm() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+
+    widget.viewModel.onLoginPressed(context,
+        email: _emailController.text,
+        password: _passwordController.text,
+        url: _urlController.text,
+        secret: _secretController.text,
+        oneTimePassword: _oneTimePasswordController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final error = viewModel.authState.error;
-    final isOneTimePassword = error == OTP_ERROR ||
-        _oneTimePasswordController.text.isNotEmpty;
+    final isOneTimePassword =
+        error == OTP_ERROR || _oneTimePasswordController.text.isNotEmpty;
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -99,6 +112,7 @@ class _LoginState extends State<LoginView> {
                           controller: _emailController,
                           key: _emailKey,
                           autocorrect: false,
+                          textInputAction: TextInputAction.next,
                           decoration:
                               InputDecoration(labelText: localization.email),
                           keyboardType: TextInputType.emailAddress,
@@ -119,6 +133,7 @@ class _LoginState extends State<LoginView> {
                               : null,
                           obscureText: true,
                           focusNode: focusNode1,
+                          onFieldSubmitted: (value) => _submitForm(),
                         ),
                         TextFormField(
                           controller: _urlController,
@@ -161,19 +176,9 @@ class _LoginState extends State<LoginView> {
         ProgressButton(
           label: localization.login.toUpperCase(),
           isLoading: viewModel.isLoading,
-          onPressed: () {
-            if (!_formKey.currentState.validate()) {
-              return;
-            }
-            viewModel.onLoginPressed(context,
-                email: _emailController.text,
-                password: _passwordController.text,
-                url: _urlController.text,
-                secret: _secretController.text,
-                oneTimePassword: _oneTimePasswordController.text);
-          },
+          onPressed: () => _submitForm(),
         ),
-        isOneTimePassword && ! viewModel.isLoading
+        isOneTimePassword && !viewModel.isLoading
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: ElevatedButton(
