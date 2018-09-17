@@ -203,6 +203,10 @@ class DateRangePicker extends StatefulWidget {
 }
 
 class _DateRangePickerState extends State<DateRangePicker> {
+  DateRange _dateRange;
+  String _startDate;
+  String _endDate;
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -221,18 +225,30 @@ class _DateRangePickerState extends State<DateRangePicker> {
                         .map((dateRange) => DropdownMenuItem<DateRange>(
                               child: Text(localization
                                   .lookup(dateRange.toString().split('.')[1])),
+                              value: dateRange,
                             ))
                         .toList(),
+                    onChanged: (dateRange) {
+                      print('set date range to: $dateRange');
+                      setState(() => _dateRange = dateRange);
+                    },
+                    value: _dateRange,
                   ),
-                  DatePicker(
-                    labelText: localization.startDate,
-                  ),
-                  DatePicker(
-                    labelText: localization.endDate,
-                  ),
+                  _dateRange != DateRange.custom
+                      ? Container()
+                      : DatePicker(
+                          labelText: localization.startDate,
+                          onSelected: (date) => _startDate = date,
+                        ),
+                  _dateRange != DateRange.custom
+                      ? Container()
+                      : DatePicker(
+                          labelText: localization.endDate,
+                          onSelected: (date) => _endDate = date,
+                        ),
                   SwitchListTile(
                     value: true,
-                    title: Text('test'),
+                    title: Text(localization.compareTo),
                     selected: true,
                   ),
                 ],
