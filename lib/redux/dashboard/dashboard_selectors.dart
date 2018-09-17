@@ -15,6 +15,12 @@ enum DateRange {
   custom,
 }
 
+enum DateRangeComparison {
+  previousPeriod,
+  previousYear,
+  custom,
+}
+
 var memoizedChartOutstandingInvoices = memo1(
     (BuiltMap<int, InvoiceEntity> invoiceMap) =>
         chartOutstandingInvoices(invoiceMap));
