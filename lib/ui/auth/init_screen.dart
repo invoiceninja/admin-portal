@@ -13,7 +13,7 @@ class InitScreen extends StatelessWidget {
             store.dispatch(LoadStateRequest(context)),
         builder: (BuildContext context, Store<AppState> store) {
           return Container(
-            color: Colors.grey,
+            color: Colors.white,
             child: Column(
               children: <Widget>[
                 Expanded(
