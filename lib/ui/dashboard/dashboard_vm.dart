@@ -30,6 +30,7 @@ class DashboardBuilder extends StatelessWidget {
 }
 
 class DashboardVM {
+  final AppState state;
   final DashboardState dashboardState;
   final String filter;
   final List<BaseEntity> filteredList;
@@ -37,6 +38,7 @@ class DashboardVM {
   final Function(BuildContext) onRefreshed;
 
   DashboardVM({
+    @required this.state,
     @required this.dashboardState,
     @required this.isLoading,
     @required this.filter,
@@ -59,6 +61,7 @@ class DashboardVM {
     final filter = state.uiState.filter;
 
     return DashboardVM(
+      state: state,
       dashboardState: state.dashboardState,
       isLoading: state.isLoading,
       onRefreshed: (context) => _handleRefresh(context),
