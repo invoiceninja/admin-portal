@@ -12,6 +12,7 @@ class ChartMoneyData {
 
 List<ChartMoneyData> chartOutstandingInvoices(
     BuiltMap<int, InvoiceEntity> invoiceMap) {
+  print('== CALCULATING CHART DATA ==');
   final Map<String, double> totals = {};
   invoiceMap.forEach((int, invoice) {
     if (invoice.isDeleted || invoice.isQuote || invoice.isRecurring) {

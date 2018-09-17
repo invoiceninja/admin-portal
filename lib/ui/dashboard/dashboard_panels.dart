@@ -17,6 +17,23 @@ class DashboardPanels extends StatelessWidget {
     print('show date options');
   }
 
+  void _onSelectionChanged(charts.SelectionModel model) {
+    final selectedDatum = model.selectedDatum;
+
+    DateTime date;
+    final measures = <String, num>{};
+
+    if (selectedDatum.isNotEmpty) {
+      date = selectedDatum.first.datum.date;
+      selectedDatum.forEach((charts.SeriesDatum datumPair) {
+        measures[datumPair.series.displayName] = datumPair.datum.amount;
+      });
+    }
+
+    print('time: $date');
+    print('measure: $measures');
+  }
+
   Widget _header(BuildContext context) {
     return Material(
       color: Theme.of(context).backgroundColor,
@@ -80,6 +97,12 @@ class DashboardPanels extends StatelessWidget {
     final chart = charts.TimeSeriesChart(
       series,
       animate: true,
+      selectionModels: [
+        new charts.SelectionModelConfig(
+          type: charts.SelectionModelType.info,
+          listener: _onSelectionChanged,
+        )
+      ],
       /*
       behaviors: [
         charts.RangeAnnotation([
@@ -114,11 +137,4 @@ class DashboardPanels extends StatelessWidget {
       ],
     );
   }
-}
-
-class ChartMoneyData1 {
-  final int year;
-  final double clicks;
-
-  ChartMoneyData1(this.year, this.clicks);
 }
