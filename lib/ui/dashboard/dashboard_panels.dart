@@ -14,6 +14,58 @@ class DashboardPanels extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
+  void _showDateOptions(BuildContext context) {
+    print('show date options');
+  }
+
+  Widget _header(BuildContext context) {
+    return Material(
+      color: Theme.of(context).backgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text('Aug 15 - Sep 15',
+                          style: Theme.of(context).textTheme.title),
+                    ],
+                  ),
+                ),
+                onTap: () {},
+              ),
+            ),
+            IconButton(
+                icon: Icon(Icons.navigate_before),
+                onPressed: () {
+                  print('prev');
+                }),
+            SizedBox(width: 8.0),
+            IconButton(
+                icon: Icon(Icons.navigate_next),
+                onPressed: () {
+                  print('next');
+                }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        _header(context),
+      ],
+    );
+  }
+
+/*
   @override
   Widget build(BuildContext context) {
     return AppLoading(builder: (context, loading) {
@@ -30,53 +82,52 @@ class DashboardPanels extends StatelessWidget {
 
     final localization = AppLocalization.of(context);
 
-    return RefreshIndicator(
-      onRefresh: () => viewModel.onRefreshed(context),
-      child: ListView(
-          padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
-          children: <Widget>[
-            DashboardRow(
-                title: localization.totalRevenue,
-                color: Color(0xFF117CC1),
-                icon: Icons.show_chart,
-                amount: viewModel.dashboardState.data.paidToDate),
-            Row(
-              children: <Widget>[
-                DashboardColumn(
-                    title: localization.invoicesSent,
-                    color: Color(0xFFFCAB10),
-                    icon: Icons.send,
-                    isMoney: false,
-                    amount:
-                        viewModel.dashboardState.data.invoicesSent.toDouble()),
-                DashboardColumn(
-                    title: localization.activeClients,
-                    color: Color(0xFFDBD5B5),
-                    icon: Icons.people,
-                    isMoney: false,
-                    amount:
-                        viewModel.dashboardState.data.activeClients.toDouble()),
-              ],
-            ),
-            DashboardRow(
-              amount: viewModel.dashboardState.data.averageInvoice,
-              icon: Icons.email,
-              color: Color(0xFF44AF69),
-              title: localization.averageInvoice,
-            ),
-            DashboardRow(
-              amount: viewModel.dashboardState.data.balances,
-              icon: Icons.schedule,
-              color: Color(0xFFF8333C),
-              title: localization.outstanding,
-            ),
-          ]),
-    );
+    return ListView(
+        padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
+        children: <Widget>[
+          DashboardRow(
+              title: localization.totalRevenue,
+              color: Color(0xFF117CC1),
+              icon: Icons.show_chart,
+              amount: viewModel.dashboardState.data.paidToDate),
+          Row(
+            children: <Widget>[
+              DashboardColumn(
+                  title: localization.invoicesSent,
+                  color: Color(0xFFFCAB10),
+                  icon: Icons.send,
+                  isMoney: false,
+                  amount:
+                      viewModel.dashboardState.data.invoicesSent.toDouble()),
+              DashboardColumn(
+                  title: localization.activeClients,
+                  color: Color(0xFFDBD5B5),
+                  icon: Icons.people,
+                  isMoney: false,
+                  amount:
+                      viewModel.dashboardState.data.activeClients.toDouble()),
+            ],
+          ),
+          DashboardRow(
+            amount: viewModel.dashboardState.data.averageInvoice,
+            icon: Icons.email,
+            color: Color(0xFF44AF69),
+            title: localization.averageInvoice,
+          ),
+          DashboardRow(
+            amount: viewModel.dashboardState.data.balances,
+            icon: Icons.schedule,
+            color: Color(0xFFF8333C),
+            title: localization.outstanding,
+          ),
+        ]);
   }
+  */
 }
 
 class ColorIcon extends StatelessWidget {
   const ColorIcon(this.icon, this.backgroundColor);
+
   final IconData icon;
   final Color backgroundColor;
 
@@ -98,6 +149,7 @@ class ColorIcon extends StatelessWidget {
   }
 }
 
+/*
 class DashboardRow extends StatelessWidget {
   const DashboardRow(
       {@required this.title,
@@ -192,3 +244,4 @@ class DashboardColumn extends StatelessWidget {
     );
   }
 }
+*/
