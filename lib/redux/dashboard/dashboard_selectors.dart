@@ -11,7 +11,12 @@ class ChartMoneyData {
 
 enum DateRange {
   last7Days,
+  lastWeek,
   last30Days,
+  thisMonth,
+  lastMonth,
+  thisYear,
+  lastYear,
   custom,
 }
 

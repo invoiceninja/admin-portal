@@ -92,51 +92,6 @@ class DashboardPanels extends StatelessWidget {
   }
 }
 
-class DateRangePicker extends StatefulWidget {
-  @override
-  _DateRangePickerState createState() => _DateRangePickerState();
-}
-
-class _DateRangePickerState extends State<DateRangePicker> {
-  @override
-  Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-    return Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(children: <Widget>[
-          Material(
-            child: Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  DropdownButton<DateRange>(
-                    items: DateRange.values
-                        .map((dateRange) => DropdownMenuItem<DateRange>(
-                              child: Text(dateRange.toString()),
-                            ))
-                        .toList(),
-                  ),
-                  DatePicker(
-                    labelText: localization.startDate,
-                  ),
-                  DatePicker(
-                    labelText: localization.endDate,
-                  ),
-                  SwitchListTile(
-                    value: true,
-                    title: Text('test'),
-                    selected: true,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ]));
-  }
-}
-
 class DashboardChart extends StatefulWidget {
   const DashboardChart(this.series);
 
@@ -202,7 +157,7 @@ class _DashboardChartState extends State<DashboardChart> {
       widget.series,
       animate: true,
       selectionModels: [
-        new charts.SelectionModelConfig(
+        charts.SelectionModelConfig(
           type: charts.SelectionModelType.info,
           listener: _onSelectionChanged,
         )
@@ -239,5 +194,51 @@ class _DashboardChartState extends State<DashboardChart> {
         )
       ],
     );
+  }
+}
+
+class DateRangePicker extends StatefulWidget {
+  @override
+  _DateRangePickerState createState() => _DateRangePickerState();
+}
+
+class _DateRangePickerState extends State<DateRangePicker> {
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    return Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(children: <Widget>[
+          Material(
+            child: Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  DropdownButton<DateRange>(
+                    items: DateRange.values
+                        .map((dateRange) => DropdownMenuItem<DateRange>(
+                              child: Text(localization
+                                  .lookup(dateRange.toString().split('.')[1])),
+                            ))
+                        .toList(),
+                  ),
+                  DatePicker(
+                    labelText: localization.startDate,
+                  ),
+                  DatePicker(
+                    labelText: localization.endDate,
+                  ),
+                  SwitchListTile(
+                    value: true,
+                    title: Text('test'),
+                    selected: true,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ]));
   }
 }

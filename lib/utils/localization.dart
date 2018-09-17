@@ -15,6 +15,14 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'last7_days': 'Last 7 Days',
+      'last_week': 'Last Week',
+      'last30_days': 'Last 30 days',
+      'this_month': 'This Month',
+      'last_month': 'Last Month',
+      'this_year': 'This Year',
+      'last_year': 'Last Year',
+      'custom': 'Custom',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
       'view_invoice': 'View Invoice',
@@ -8322,6 +8330,22 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get last7Days => _localizedValues[locale.languageCode]['last7_days'];
+
+  String get lastWeek => _localizedValues[locale.languageCode]['last_week'];
+
+  String get last30Days => _localizedValues[locale.languageCode]['last30_days'];
+
+  String get thisMonth => _localizedValues[locale.languageCode]['this_month'];
+
+  String get lastMonth => _localizedValues[locale.languageCode]['last_month'];
+
+  String get thisYear => _localizedValues[locale.languageCode]['this_year'];
+
+  String get lastYear => _localizedValues[locale.languageCode]['last_year'];
+
+  String get custom => _localizedValues[locale.languageCode]['custom'];
 
   String get cloneToInvoice =>
       _localizedValues[locale.languageCode]['clone_to_invoice'];
