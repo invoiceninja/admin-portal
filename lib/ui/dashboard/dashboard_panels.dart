@@ -96,46 +96,52 @@ class DashboardChart extends StatefulWidget {
 }
 
 class _DashboardChartState extends State<DashboardChart> {
-  String _label;
-  String _labelOrig;
+  String _title;
+  String _titleOrig;
 
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
+  String _subtitle;
+  String _subtitleOrig;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final data = widget.series[0].data;
+    final series = widget.series[0];
+    final data = series.data;
 
     double total = 0.0;
     data.forEach((dynamic item) {
       total += item.amount;
     });
 
-    _label = _labelOrig = formatNumber(total, context);
+    _title = _titleOrig = formatNumber(total, context);
+    //_subtitle = _subtitleOrig = series.displayName;
+    _subtitle = _subtitleOrig = '';
   }
-
 
   void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
 
     DateTime date;
+    double total = 0.0;
     final measures = <String, num>{};
 
     if (selectedDatum.isNotEmpty) {
       date = selectedDatum.first.datum.date;
       selectedDatum.forEach((charts.SeriesDatum datumPair) {
+        total += datumPair.datum.amount;
         measures[datumPair.series.displayName] = datumPair.datum.amount;
       });
     }
 
     setState(() {
-      _label = date != null ? date.toString() : _labelOrig;
+      if (date != null) {
+        _title = formatNumber(total, context);
+        _subtitle = formatDate(date.toIso8601String(), context);
+      } else {
+        _title = _titleOrig;
+        _subtitle = _subtitleOrig;
+      }
     });
   }
 
@@ -165,8 +171,17 @@ class _DashboardChartState extends State<DashboardChart> {
             height: 200.0,
             child: Stack(
               children: <Widget>[
-                chart,
-                Text(_label),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: chart,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(_title, style: Theme.of(context).textTheme.title),
+                    Text(_subtitle, style: Theme.of(context).textTheme.subhead),
+                  ],
+                )
               ],
             ),
           ),
