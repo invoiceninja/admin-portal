@@ -1,10 +1,8 @@
-import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/app_loading.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class DashboardPanels extends StatelessWidget {
   final DashboardVM viewModel;
@@ -54,192 +52,58 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
+  Widget _invoiceChart(BuildContext context) {
+    final data = [
+      new ClicksPerYear('2016', 12, Colors.red),
+      new ClicksPerYear('2017', 42, Colors.yellow),
+      new ClicksPerYear('2018', 38, Colors.green),
+    ];
+
+    final series = [
+      charts.Series(
+        domainFn: (ClicksPerYear clickData, _) => clickData.year,
+        measureFn: (ClicksPerYear clickData, _) => clickData.clicks,
+        colorFn: (ClicksPerYear clickData, _) => clickData.color,
+        id: 'Clicks',
+        data: data,
+      ),
+    ];
+
+    final chart = charts.BarChart(
+      series,
+      animate: true,
+    );
+
+    return FormCard(
+      children: <Widget>[
+        Padding(
+          padding: new EdgeInsets.all(14.0),
+          child: new SizedBox(
+            height: 200.0,
+            child: chart,
+          ),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
         _header(context),
+        _invoiceChart(context),
       ],
     );
   }
-
-/*
-  @override
-  Widget build(BuildContext context) {
-    return AppLoading(builder: (context, loading) {
-      return !viewModel.dashboardState.isLoaded
-          ? LoadingIndicator()
-          : _buildPanels(context);
-    });
-  }
-
-  Widget _buildPanels(BuildContext context) {
-    if (!viewModel.dashboardState.isLoaded) {
-      return LoadingIndicator();
-    }
-
-    final localization = AppLocalization.of(context);
-
-    return ListView(
-        padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
-        children: <Widget>[
-          DashboardRow(
-              title: localization.totalRevenue,
-              color: Color(0xFF117CC1),
-              icon: Icons.show_chart,
-              amount: viewModel.dashboardState.data.paidToDate),
-          Row(
-            children: <Widget>[
-              DashboardColumn(
-                  title: localization.invoicesSent,
-                  color: Color(0xFFFCAB10),
-                  icon: Icons.send,
-                  isMoney: false,
-                  amount:
-                      viewModel.dashboardState.data.invoicesSent.toDouble()),
-              DashboardColumn(
-                  title: localization.activeClients,
-                  color: Color(0xFFDBD5B5),
-                  icon: Icons.people,
-                  isMoney: false,
-                  amount:
-                      viewModel.dashboardState.data.activeClients.toDouble()),
-            ],
-          ),
-          DashboardRow(
-            amount: viewModel.dashboardState.data.averageInvoice,
-            icon: Icons.email,
-            color: Color(0xFF44AF69),
-            title: localization.averageInvoice,
-          ),
-          DashboardRow(
-            amount: viewModel.dashboardState.data.balances,
-            icon: Icons.schedule,
-            color: Color(0xFFF8333C),
-            title: localization.outstanding,
-          ),
-        ]);
-  }
-  */
 }
 
-class ColorIcon extends StatelessWidget {
-  const ColorIcon(this.icon, this.backgroundColor);
+class ClicksPerYear {
+  final String year;
+  final int clicks;
+  final charts.Color color;
 
-  final IconData icon;
-  final Color backgroundColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 52.0,
-      height: 52.0,
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: 30.0,
-      ),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: backgroundColor,
-      ),
-    );
-  }
+  ClicksPerYear(this.year, this.clicks, Color color)
+      : this.color = new charts.Color(
+            r: color.red, g: color.green, b: color.blue, a: color.alpha);
 }
-
-/*
-class DashboardRow extends StatelessWidget {
-  const DashboardRow(
-      {@required this.title,
-      @required this.icon,
-      @required this.amount,
-      @required this.color,
-      this.isMoney = true});
-
-  final String title;
-  final IconData icon;
-  final num amount;
-  final Color color;
-  final bool isMoney;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 3.0, bottom: 3.0),
-      child: Card(
-        elevation: 2.0,
-        child: ListTile(
-          title: Padding(
-            padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(title, style: TextStyle()),
-                Text(
-                  formatNumber(amount, context,
-                      formatNumberType: isMoney
-                          ? FormatNumberType.money
-                          : FormatNumberType.int),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
-          ),
-          trailing: ColorIcon(icon, color),
-        ),
-      ),
-    );
-  }
-}
-
-class DashboardColumn extends StatelessWidget {
-  const DashboardColumn(
-      {@required this.title,
-      @required this.icon,
-      @required this.amount,
-      @required this.color,
-      this.isMoney = true});
-
-  final String title;
-  final IconData icon;
-  final num amount;
-  final Color color;
-  final bool isMoney;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.only(top: 3.0, bottom: 3.0),
-        child: Card(
-          elevation: 2.0,
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Center(child: ColorIcon(icon, color)),
-                SizedBox(height: 18.0),
-                Text(title, style: TextStyle()),
-                Text(
-                  formatNumber(isMoney ? round(amount, 2) : amount, context,
-                      formatNumberType: isMoney
-                          ? FormatNumberType.money
-                          : FormatNumberType.int),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-*/
