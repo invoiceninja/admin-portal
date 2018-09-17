@@ -21,37 +21,35 @@ class DashboardPanels extends StatelessWidget {
   Widget _header(BuildContext context) {
     return Material(
       color: Theme.of(context).backgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text('Aug 15 - Sep 15',
-                          style: Theme.of(context).textTheme.title),
-                    ],
-                  ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: InkWell(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: <Widget>[
+                    Text('Aug 15 - Sep 15',
+                        style: Theme.of(context).textTheme.title),
+                  ],
                 ),
-                onTap: () {},
               ),
+              onTap: () {},
             ),
-            IconButton(
-                icon: Icon(Icons.navigate_before),
-                onPressed: () {
-                  print('prev');
-                }),
-            SizedBox(width: 8.0),
-            IconButton(
-                icon: Icon(Icons.navigate_next),
-                onPressed: () {
-                  print('next');
-                }),
-          ],
-        ),
+          ),
+          SizedBox(width: 18.0),
+          IconButton(
+              icon: Icon(Icons.navigate_before),
+              onPressed: () {
+                print('prev');
+              }),
+          SizedBox(width: 8.0),
+          IconButton(
+              icon: Icon(Icons.navigate_next),
+              onPressed: () {
+                print('next');
+              }),
+        ],
       ),
     );
   }
