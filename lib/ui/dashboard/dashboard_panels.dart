@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -17,6 +18,44 @@ class DashboardPanels extends StatelessWidget {
 
   void _showDateOptions(BuildContext context) {
     print('show date options');
+    showDialog<Widget>(
+        context: context,
+        builder: (BuildContext context) {
+          final localization = AppLocalization.of(context);
+          return Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(children: <Widget>[
+                Material(
+                  child: Padding(
+                    padding: const EdgeInsets.all(28.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        DropdownButton<DateRange>(
+                          items: DateRange.values
+                              .map((dateRange) => DropdownMenuItem<DateRange>(
+                                    child: Text(dateRange.toString()),
+                                  ))
+                              .toList(),
+                        ),
+                        DatePicker(
+                          labelText: localization.startDate,
+                        ),
+                        DatePicker(
+                          labelText: localization.endDate,
+                        ),
+                        SwitchListTile(
+                          value: true,
+                          title: Text('test'),
+                          selected: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ]));
+        });
   }
 
   Widget _header(BuildContext context) {
@@ -35,7 +74,7 @@ class DashboardPanels extends StatelessWidget {
                   ],
                 ),
               ),
-              onTap: () {},
+              onTap: () => _showDateOptions(context),
             ),
           ),
           SizedBox(width: 18.0),
@@ -58,7 +97,8 @@ class DashboardPanels extends StatelessWidget {
 
   Widget _invoiceChart(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final data = memoizedChartOutstandingInvoices(viewModel.state.invoiceState.map);
+    final data =
+        memoizedChartOutstandingInvoices(viewModel.state.invoiceState.map);
 
     final series = [
       charts.Series<ChartMoneyData, DateTime>(

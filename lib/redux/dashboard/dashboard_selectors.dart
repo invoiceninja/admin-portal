@@ -6,8 +6,13 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 class ChartMoneyData {
   final DateTime date;
   final double amount;
-
   ChartMoneyData(this.date, this.amount);
+}
+
+enum DateRange {
+  last7Days,
+  last30Days,
+  custom,
 }
 
 var memoizedChartOutstandingInvoices = memo1(
