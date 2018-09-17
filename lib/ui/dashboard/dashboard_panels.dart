@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardPanels extends StatelessWidget {
   final DashboardVM viewModel;
@@ -81,6 +82,7 @@ class DashboardPanels extends StatelessWidget {
     ];
     */
 
+    final localization = AppLocalization.of(context);
     final data = chartOutstandingInvoices(viewModel.state.invoiceState.map);
 
     final series = [
@@ -89,7 +91,8 @@ class DashboardPanels extends StatelessWidget {
         measureFn: (ChartMoneyData clickData, _) => clickData.amount,
         colorFn: (ChartMoneyData clickData, _) =>
             charts.MaterialPalette.blue.shadeDefault,
-        id: 'Clicks',
+        id: 'invoices',
+        displayName: localization.invoices,
         data: data,
       ),
     ];
@@ -103,16 +106,7 @@ class DashboardPanels extends StatelessWidget {
           listener: _onSelectionChanged,
         )
       ],
-      /*
-      behaviors: [
-        charts.RangeAnnotation([
-          charts.RangeAnnotationSegment<dynamic>(
-              DateTime(2018, 09, 4),
-              DateTime(2018, 09, 17),
-              charts.RangeAnnotationAxisType.values),
-        ]),
-      ],
-      */
+      behaviors: [new charts.SeriesLegend()],
     );
 
     return FormCard(
