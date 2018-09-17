@@ -18,23 +18,6 @@ class DashboardPanels extends StatelessWidget {
     print('show date options');
   }
 
-  void _onSelectionChanged(charts.SelectionModel model) {
-    final selectedDatum = model.selectedDatum;
-
-    DateTime date;
-    final measures = <String, num>{};
-
-    if (selectedDatum.isNotEmpty) {
-      date = selectedDatum.first.datum.date;
-      selectedDatum.forEach((charts.SeriesDatum datumPair) {
-        measures[datumPair.series.displayName] = datumPair.datum.amount;
-      });
-    }
-
-    print('time: $date');
-    print('measure: $measures');
-  }
-
   Widget _header(BuildContext context) {
     return Material(
       color: Theme.of(context).backgroundColor,
@@ -73,15 +56,6 @@ class DashboardPanels extends StatelessWidget {
   }
 
   Widget _invoiceChart(BuildContext context) {
-    /*
-    final data = [
-      new ChartMoneyData1(0, 0.0),
-      new ChartMoneyData1(10, 10.0),
-      //new ChartMoneyData(20, 20),
-      new ChartMoneyData1(30, 30.0),
-    ];
-    */
-
     final localization = AppLocalization.of(context);
     final data = chartOutstandingInvoices(viewModel.state.invoiceState.map);
 
@@ -97,29 +71,7 @@ class DashboardPanels extends StatelessWidget {
       ),
     ];
 
-    final chart = charts.TimeSeriesChart(
-      series,
-      animate: true,
-      selectionModels: [
-        new charts.SelectionModelConfig(
-          type: charts.SelectionModelType.info,
-          listener: _onSelectionChanged,
-        )
-      ],
-      behaviors: [new charts.SeriesLegend()],
-    );
-
-    return FormCard(
-      children: <Widget>[
-        Padding(
-          padding: new EdgeInsets.all(14.0),
-          child: new SizedBox(
-            height: 200.0,
-            child: chart,
-          ),
-        )
-      ],
-    );
+    return DashboardChart(series);
   }
 
   @override
@@ -128,6 +80,70 @@ class DashboardPanels extends StatelessWidget {
       children: <Widget>[
         _header(context),
         _invoiceChart(context),
+      ],
+    );
+  }
+}
+
+class DashboardChart extends StatefulWidget {
+  const DashboardChart(this.series);
+
+  final List<charts.Series> series;
+
+  @override
+  _DashboardChartState createState() => _DashboardChartState();
+}
+
+class _DashboardChartState extends State<DashboardChart> {
+  void _onSelectionChanged(charts.SelectionModel model) {
+    final selectedDatum = model.selectedDatum;
+
+    DateTime date;
+    final measures = <String, num>{};
+
+    if (selectedDatum.isNotEmpty) {
+      date = selectedDatum.first.datum.date;
+      selectedDatum.forEach((charts.SeriesDatum datumPair) {
+        measures[datumPair.series.displayName] = datumPair.datum.amount;
+      });
+    }
+
+    print('time: $date');
+    print('measure: $measures');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final chart = charts.TimeSeriesChart(
+      widget.series,
+      animate: true,
+      selectionModels: [
+        new charts.SelectionModelConfig(
+          type: charts.SelectionModelType.info,
+          listener: _onSelectionChanged,
+        )
+      ],
+      behaviors: [
+        charts.SeriesLegend(
+          outsideJustification: charts.OutsideJustification.endDrawArea,
+        )
+      ],
+    );
+
+    return FormCard(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(14.0),
+          child: SizedBox(
+            height: 200.0,
+            child: Stack(
+              children: <Widget>[
+                chart,
+                Text('tst'),
+              ],
+            ),
+          ),
+        )
       ],
     );
   }
