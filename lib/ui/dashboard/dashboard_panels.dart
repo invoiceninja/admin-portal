@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardPanels extends StatelessWidget {
@@ -103,6 +104,12 @@ class _DashboardChartState extends State<DashboardChart> {
   void initState() {
     super.initState();
 
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     final data = widget.series[0].data;
 
     double total = 0.0;
@@ -110,8 +117,9 @@ class _DashboardChartState extends State<DashboardChart> {
       total += item.amount;
     });
 
-    _label = _labelOrig = total.toString();
+    _label = _labelOrig = formatNumber(total, context);
   }
+
 
   void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
