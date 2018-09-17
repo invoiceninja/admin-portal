@@ -45,6 +45,10 @@ class WebClient {
     );
 
     if (response.statusCode >= 400) {
+      print('==== FAILED ====');
+      print('url: $url');
+      print('body: ${response.body}');
+
       throw _parseError(response.body);
     }
 
