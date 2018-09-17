@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 class ChartMoneyData {
   final DateTime date;
   final double amount;
-
   ChartMoneyData(this.date, this.amount);
 }
 
@@ -22,7 +21,7 @@ List<ChartMoneyData> chartOutstandingInvoices(
         totals[invoice.invoiceDate] = 0.0;
       }
       totals[invoice.invoiceDate] += invoice.amount;
-      print('${invoice.invoiceDate}: ${invoice.amount}');
+      //print('${invoice.invoiceDate}: ${invoice.amount}');
     }
   });
 

@@ -95,6 +95,24 @@ class DashboardChart extends StatefulWidget {
 }
 
 class _DashboardChartState extends State<DashboardChart> {
+  String _label;
+  String _labelOrig;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    final data = widget.series[0].data;
+
+    double total = 0.0;
+    data.forEach((dynamic item) {
+      total += item.amount;
+    });
+
+    _label = _labelOrig = total.toString();
+  }
+
   void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
 
@@ -108,8 +126,9 @@ class _DashboardChartState extends State<DashboardChart> {
       });
     }
 
-    print('time: $date');
-    print('measure: $measures');
+    setState(() {
+      _label = date != null ? date.toString() : _labelOrig;
+    });
   }
 
   @override
@@ -139,7 +158,7 @@ class _DashboardChartState extends State<DashboardChart> {
             child: Stack(
               children: <Widget>[
                 chart,
-                Text('tst'),
+                Text(_label),
               ],
             ),
           ),
