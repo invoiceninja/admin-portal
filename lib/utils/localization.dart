@@ -15,6 +15,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'date_range': 'Date Range',
       'current_period': 'Current Period',
       'comparison_period': 'Comparison Period',
       'previous_period': 'Previous Period',
@@ -8335,6 +8336,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get dateRange =>
+      _localizedValues[locale.languageCode]['date_range'];
 
   String get currentPeriod =>
       _localizedValues[locale.languageCode]['current_period'];

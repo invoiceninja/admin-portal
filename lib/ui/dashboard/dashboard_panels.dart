@@ -240,11 +240,14 @@ class _DateRangePickerState extends State<DateRangePicker> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(28.0),
+                  padding: const EdgeInsets.all(24.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Text(localization.dateRange,
+                          style: Theme.of(context).textTheme.title),
+                      SizedBox(height: 16.0),
                       Row(
                         children: <Widget>[
                           DropdownButtonHideUnderline(
@@ -311,8 +314,15 @@ class _DateRangePickerState extends State<DateRangePicker> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          ElevatedButton(
-                            label: localization.done,
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 10.0, right: 10.0),
+                            child: ElevatedButton(
+                              label: localization.done,
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
                           ),
                         ],
                       ),
