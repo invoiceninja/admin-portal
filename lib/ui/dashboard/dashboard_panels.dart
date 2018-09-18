@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -214,6 +215,7 @@ class DateRangePicker extends StatefulWidget {
 
 class _DateRangePickerState extends State<DateRangePicker> {
   DateRange _dateRange;
+  DateRangeComparison _compareDateRange;
   String _startDate;
   String _endDate;
   bool _compareTo;
@@ -224,6 +226,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
 
     final state = widget.state;
     _dateRange = state.dateRange;
+    _compareDateRange = state.compareDateRange;
     _compareTo = state.enableComparison;
   }
 
@@ -237,18 +240,18 @@ class _DateRangePickerState extends State<DateRangePicker> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 28.0, top: 28.0, right: 28.0, bottom: 10.0),
+                  padding: const EdgeInsets.all(28.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Expanded(
+                          DropdownButtonHideUnderline(
                             child: DropdownButton<DateRange>(
                               items: DateRange.values
-                                  .map((dateRange) => DropdownMenuItem<DateRange>(
+                                  .map((dateRange) =>
+                                      DropdownMenuItem<DateRange>(
                                         child: Text(localization
                                             .lookup(dateRange.toString())),
                                         value: dateRange,
@@ -260,6 +263,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                               value: _dateRange,
                             ),
                           ),
+                          Expanded(child: Container()),
                           Text(localization.compareTo),
                           Switch(
                             value: _compareTo,
@@ -281,6 +285,37 @@ class _DateRangePickerState extends State<DateRangePicker> {
                               labelText: localization.endDate,
                               onSelected: (date) => _endDate = date,
                             ),
+                      _compareTo
+                          ? Column(
+                              children: <Widget>[
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton<DateRangeComparison>(
+                                    items: DateRangeComparison.values
+                                        .map((dateRange) => DropdownMenuItem<
+                                                DateRangeComparison>(
+                                              child: Text(localization.lookup(
+                                                  dateRange.toString())),
+                                              value: dateRange,
+                                            ))
+                                        .toList(),
+                                    onChanged: (dateRange) {
+                                      setState(
+                                          () => _compareDateRange = dateRange);
+                                    },
+                                    value: _compareDateRange,
+                                  ),
+                                )
+                              ],
+                            )
+                          : Container(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          ElevatedButton(
+                            label: localization.done,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
