@@ -43,6 +43,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'emailPayment',
       serializers.serialize(object.emailPayment,
           specifiedType: const FullType(bool)),
+      'dashboardUIState',
+      serializers.serialize(object.dashboardUIState,
+          specifiedType: const FullType(DashboardUIState)),
       'productUIState',
       serializers.serialize(object.productUIState,
           specifiedType: const FullType(ProductUIState)),
@@ -96,6 +99,11 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.emailPayment = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'dashboardUIState':
+          result.dashboardUIState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(DashboardUIState))
+              as DashboardUIState);
+          break;
         case 'productUIState':
           result.productUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ProductUIState)) as ProductUIState);
@@ -137,6 +145,8 @@ class _$UIState extends UIState {
   @override
   final bool emailPayment;
   @override
+  final DashboardUIState dashboardUIState;
+  @override
   final ProductUIState productUIState;
   @override
   final ClientUIState clientUIState;
@@ -157,6 +167,7 @@ class _$UIState extends UIState {
       this.currentRoute,
       this.enableDarkMode,
       this.emailPayment,
+      this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
@@ -175,6 +186,9 @@ class _$UIState extends UIState {
     }
     if (emailPayment == null) {
       throw new BuiltValueNullFieldError('UIState', 'emailPayment');
+    }
+    if (dashboardUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
     }
     if (productUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'productUIState');
@@ -208,6 +222,7 @@ class _$UIState extends UIState {
         currentRoute == other.currentRoute &&
         enableDarkMode == other.enableDarkMode &&
         emailPayment == other.emailPayment &&
+        dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
@@ -226,10 +241,14 @@ class _$UIState extends UIState {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, selectedCompanyIndex.hashCode),
-                                        currentRoute.hashCode),
-                                    enableDarkMode.hashCode),
-                                emailPayment.hashCode),
+                                    $jc(
+                                        $jc(
+                                            $jc(0,
+                                                selectedCompanyIndex.hashCode),
+                                            currentRoute.hashCode),
+                                        enableDarkMode.hashCode),
+                                    emailPayment.hashCode),
+                                dashboardUIState.hashCode),
                             productUIState.hashCode),
                         clientUIState.hashCode),
                     invoiceUIState.hashCode),
@@ -245,6 +264,7 @@ class _$UIState extends UIState {
           ..add('currentRoute', currentRoute)
           ..add('enableDarkMode', enableDarkMode)
           ..add('emailPayment', emailPayment)
+          ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
@@ -275,6 +295,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool _emailPayment;
   bool get emailPayment => _$this._emailPayment;
   set emailPayment(bool emailPayment) => _$this._emailPayment = emailPayment;
+
+  DashboardUIStateBuilder _dashboardUIState;
+  DashboardUIStateBuilder get dashboardUIState =>
+      _$this._dashboardUIState ??= new DashboardUIStateBuilder();
+  set dashboardUIState(DashboardUIStateBuilder dashboardUIState) =>
+      _$this._dashboardUIState = dashboardUIState;
 
   ProductUIStateBuilder _productUIState;
   ProductUIStateBuilder get productUIState =>
@@ -318,6 +344,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _currentRoute = _$v.currentRoute;
       _enableDarkMode = _$v.enableDarkMode;
       _emailPayment = _$v.emailPayment;
+      _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
@@ -352,6 +379,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               currentRoute: currentRoute,
               enableDarkMode: enableDarkMode,
               emailPayment: emailPayment,
+              dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
@@ -361,6 +389,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'dashboardUIState';
+        dashboardUIState.build();
         _$failedField = 'productUIState';
         productUIState.build();
         _$failedField = 'clientUIState';

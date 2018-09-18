@@ -21,6 +21,8 @@ part of 'dashboard_state.dart';
 
 Serializer<DashboardState> _$dashboardStateSerializer =
     new _$DashboardStateSerializer();
+Serializer<DashboardUIState> _$dashboardUIStateSerializer =
+    new _$DashboardUIStateSerializer();
 
 class _$DashboardStateSerializer
     implements StructuredSerializer<DashboardState> {
@@ -68,6 +70,90 @@ class _$DashboardStateSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(DashboardEntity))
               as DashboardEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$DashboardUIStateSerializer
+    implements StructuredSerializer<DashboardUIState> {
+  @override
+  final Iterable<Type> types = const [DashboardUIState, _$DashboardUIState];
+  @override
+  final String wireName = 'DashboardUIState';
+
+  @override
+  Iterable serialize(Serializers serializers, DashboardUIState object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'dateRange',
+      serializers.serialize(object.dateRange,
+          specifiedType: const FullType(DateRange)),
+      'startDate',
+      serializers.serialize(object.startDate,
+          specifiedType: const FullType(String)),
+      'endDate',
+      serializers.serialize(object.endDate,
+          specifiedType: const FullType(String)),
+      'enableComparison',
+      serializers.serialize(object.enableComparison,
+          specifiedType: const FullType(bool)),
+      'compareDateRange',
+      serializers.serialize(object.compareDateRange,
+          specifiedType: const FullType(DateRangeComparison)),
+      'compareStartDate',
+      serializers.serialize(object.compareStartDate,
+          specifiedType: const FullType(String)),
+      'compareEndDate',
+      serializers.serialize(object.compareEndDate,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  DashboardUIState deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new DashboardUIStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'dateRange':
+          result.dateRange = serializers.deserialize(value,
+              specifiedType: const FullType(DateRange)) as DateRange;
+          break;
+        case 'startDate':
+          result.startDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'endDate':
+          result.endDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'enableComparison':
+          result.enableComparison = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'compareDateRange':
+          result.compareDateRange = serializers.deserialize(value,
+                  specifiedType: const FullType(DateRangeComparison))
+              as DateRangeComparison;
+          break;
+        case 'compareStartDate':
+          result.compareStartDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'compareEndDate':
+          result.compareEndDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -172,6 +258,190 @@ class DashboardStateBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$DashboardUIState extends DashboardUIState {
+  @override
+  final DateRange dateRange;
+  @override
+  final String startDate;
+  @override
+  final String endDate;
+  @override
+  final bool enableComparison;
+  @override
+  final DateRangeComparison compareDateRange;
+  @override
+  final String compareStartDate;
+  @override
+  final String compareEndDate;
+
+  factory _$DashboardUIState([void updates(DashboardUIStateBuilder b)]) =>
+      (new DashboardUIStateBuilder()..update(updates)).build();
+
+  _$DashboardUIState._(
+      {this.dateRange,
+      this.startDate,
+      this.endDate,
+      this.enableComparison,
+      this.compareDateRange,
+      this.compareStartDate,
+      this.compareEndDate})
+      : super._() {
+    if (dateRange == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'dateRange');
+    }
+    if (startDate == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'startDate');
+    }
+    if (endDate == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'endDate');
+    }
+    if (enableComparison == null) {
+      throw new BuiltValueNullFieldError(
+          'DashboardUIState', 'enableComparison');
+    }
+    if (compareDateRange == null) {
+      throw new BuiltValueNullFieldError(
+          'DashboardUIState', 'compareDateRange');
+    }
+    if (compareStartDate == null) {
+      throw new BuiltValueNullFieldError(
+          'DashboardUIState', 'compareStartDate');
+    }
+    if (compareEndDate == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'compareEndDate');
+    }
+  }
+
+  @override
+  DashboardUIState rebuild(void updates(DashboardUIStateBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  DashboardUIStateBuilder toBuilder() =>
+      new DashboardUIStateBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is DashboardUIState &&
+        dateRange == other.dateRange &&
+        startDate == other.startDate &&
+        endDate == other.endDate &&
+        enableComparison == other.enableComparison &&
+        compareDateRange == other.compareDateRange &&
+        compareStartDate == other.compareStartDate &&
+        compareEndDate == other.compareEndDate;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, dateRange.hashCode), startDate.hashCode),
+                        endDate.hashCode),
+                    enableComparison.hashCode),
+                compareDateRange.hashCode),
+            compareStartDate.hashCode),
+        compareEndDate.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('DashboardUIState')
+          ..add('dateRange', dateRange)
+          ..add('startDate', startDate)
+          ..add('endDate', endDate)
+          ..add('enableComparison', enableComparison)
+          ..add('compareDateRange', compareDateRange)
+          ..add('compareStartDate', compareStartDate)
+          ..add('compareEndDate', compareEndDate))
+        .toString();
+  }
+}
+
+class DashboardUIStateBuilder
+    implements Builder<DashboardUIState, DashboardUIStateBuilder> {
+  _$DashboardUIState _$v;
+
+  DateRange _dateRange;
+  DateRange get dateRange => _$this._dateRange;
+  set dateRange(DateRange dateRange) => _$this._dateRange = dateRange;
+
+  String _startDate;
+  String get startDate => _$this._startDate;
+  set startDate(String startDate) => _$this._startDate = startDate;
+
+  String _endDate;
+  String get endDate => _$this._endDate;
+  set endDate(String endDate) => _$this._endDate = endDate;
+
+  bool _enableComparison;
+  bool get enableComparison => _$this._enableComparison;
+  set enableComparison(bool enableComparison) =>
+      _$this._enableComparison = enableComparison;
+
+  DateRangeComparison _compareDateRange;
+  DateRangeComparison get compareDateRange => _$this._compareDateRange;
+  set compareDateRange(DateRangeComparison compareDateRange) =>
+      _$this._compareDateRange = compareDateRange;
+
+  String _compareStartDate;
+  String get compareStartDate => _$this._compareStartDate;
+  set compareStartDate(String compareStartDate) =>
+      _$this._compareStartDate = compareStartDate;
+
+  String _compareEndDate;
+  String get compareEndDate => _$this._compareEndDate;
+  set compareEndDate(String compareEndDate) =>
+      _$this._compareEndDate = compareEndDate;
+
+  DashboardUIStateBuilder();
+
+  DashboardUIStateBuilder get _$this {
+    if (_$v != null) {
+      _dateRange = _$v.dateRange;
+      _startDate = _$v.startDate;
+      _endDate = _$v.endDate;
+      _enableComparison = _$v.enableComparison;
+      _compareDateRange = _$v.compareDateRange;
+      _compareStartDate = _$v.compareStartDate;
+      _compareEndDate = _$v.compareEndDate;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(DashboardUIState other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$DashboardUIState;
+  }
+
+  @override
+  void update(void updates(DashboardUIStateBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$DashboardUIState build() {
+    final _$result = _$v ??
+        new _$DashboardUIState._(
+            dateRange: dateRange,
+            startDate: startDate,
+            endDate: endDate,
+            enableComparison: enableComparison,
+            compareDateRange: compareDateRange,
+            compareStartDate: compareStartDate,
+            compareEndDate: compareEndDate);
     replace(_$result);
     return _$result;
   }

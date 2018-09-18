@@ -1,4 +1,6 @@
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class DashboardPanels extends StatelessWidget {
     showDialog<DateRangePicker>(
         context: context,
         builder: (BuildContext context) {
-          return DateRangePicker();
+          return DateRangePicker(viewModel.state.uiState.dashboardUIState);
         });
   }
 
@@ -37,6 +39,8 @@ class DashboardPanels extends StatelessWidget {
                   children: <Widget>[
                     Text('Aug 15 - Sep 15',
                         style: Theme.of(context).textTheme.title),
+                    SizedBox(width: 6.0),
+                    Icon(Icons.arrow_drop_down),
                   ],
                 ),
               ),
@@ -198,6 +202,10 @@ class _DashboardChartState extends State<DashboardChart> {
 }
 
 class DateRangePicker extends StatefulWidget {
+  const DateRangePicker(this.state);
+
+  final DashboardUIState state;
+
   @override
   _DateRangePickerState createState() => _DateRangePickerState();
 }
@@ -206,6 +214,15 @@ class _DateRangePickerState extends State<DateRangePicker> {
   DateRange _dateRange;
   String _startDate;
   String _endDate;
+  bool _compareTo;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final state = widget.state;
+    _compareTo = state.enableComparison;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -249,7 +266,10 @@ class _DateRangePickerState extends State<DateRangePicker> {
                   SwitchListTile(
                     value: true,
                     title: Text(localization.compareTo),
-                    selected: true,
+                    selected: _compareTo,
+                    onChanged: (value) {
+                      setState(() => _compareTo = value);
+                    },
                   ),
                 ],
               ),

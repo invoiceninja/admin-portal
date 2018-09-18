@@ -2,6 +2,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
@@ -21,12 +22,12 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       currentRoute: LoginScreen.route,
       enableDarkMode: enableDarkMode ?? false,
       emailPayment: false,
+      dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       paymentUIState: PaymentUIState(company),
-
       quoteUIState: QuoteUIState(),
     );
   }
@@ -40,6 +41,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   bool get enableDarkMode;
 
   bool get emailPayment;
+
+  DashboardUIState get dashboardUIState;
 
   ProductUIState get productUIState;
 

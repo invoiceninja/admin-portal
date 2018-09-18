@@ -1,7 +1,6 @@
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 class ChartMoneyData {
   final DateTime date;
@@ -9,22 +8,6 @@ class ChartMoneyData {
   ChartMoneyData(this.date, this.amount);
 }
 
-enum DateRange {
-  last7Days,
-  lastWeek,
-  last30Days,
-  thisMonth,
-  lastMonth,
-  thisYear,
-  lastYear,
-  custom,
-}
-
-enum DateRangeComparison {
-  previousPeriod,
-  previousYear,
-  custom,
-}
 
 var memoizedChartOutstandingInvoices = memo1(
     (BuiltMap<int, InvoiceEntity> invoiceMap) =>
