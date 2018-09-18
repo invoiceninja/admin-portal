@@ -17,7 +17,7 @@ List<PaymentEntity> paymentsByInvoiceSelector(int invoiceId,
 }
 
 InvoiceEntity paymentInvoiceSelector(int paymentId, AppState state) {
-  final payment = state.paymentState.map[paymentId];
+  final payment = state.paymentState.map[paymentId] ?? PaymentEntity();
   return state.invoiceState.map[payment.invoiceId];
 }
 

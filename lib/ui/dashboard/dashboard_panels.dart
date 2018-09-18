@@ -67,8 +67,10 @@ class DashboardPanels extends StatelessWidget {
 
   Widget _invoiceChart(BuildContext context) {
     final localization = AppLocalization.of(context);
+
     final data =
         memoizedChartOutstandingInvoices(viewModel.state.invoiceState.map);
+    print('data: $data');
 
     final series = [
       charts.Series<ChartMoneyData, DateTime>(
@@ -90,7 +92,7 @@ class DashboardPanels extends StatelessWidget {
     return ListView(
       children: <Widget>[
         _header(context),
-        _invoiceChart(context),
+        //_invoiceChart(context),
       ],
     );
   }
@@ -246,7 +248,6 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             ))
                         .toList(),
                     onChanged: (dateRange) {
-                      print('set date range to: $dateRange');
                       setState(() => _dateRange = dateRange);
                     },
                     value: _dateRange,
