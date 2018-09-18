@@ -234,46 +234,57 @@ class _DateRangePickerState extends State<DateRangePicker> {
         padding: EdgeInsets.all(16.0),
         child: Column(children: <Widget>[
           Material(
-            child: Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  DropdownButton<DateRange>(
-                    items: DateRange.values
-                        .map((dateRange) => DropdownMenuItem<DateRange>(
-                              child: Text(localization
-                                  .lookup(dateRange.toString())),
-                              value: dateRange,
-                            ))
-                        .toList(),
-                    onChanged: (dateRange) {
-                      setState(() => _dateRange = dateRange);
-                    },
-                    value: _dateRange,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 28.0, top: 28.0, right: 28.0, bottom: 10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: DropdownButton<DateRange>(
+                              items: DateRange.values
+                                  .map((dateRange) => DropdownMenuItem<DateRange>(
+                                        child: Text(localization
+                                            .lookup(dateRange.toString())),
+                                        value: dateRange,
+                                      ))
+                                  .toList(),
+                              onChanged: (dateRange) {
+                                setState(() => _dateRange = dateRange);
+                              },
+                              value: _dateRange,
+                            ),
+                          ),
+                          Text(localization.compareTo),
+                          Switch(
+                            value: _compareTo,
+                            onChanged: (value) {
+                              setState(() => _compareTo = value);
+                            },
+                          ),
+                        ],
+                      ),
+                      _dateRange != DateRange.custom
+                          ? Container()
+                          : DatePicker(
+                              labelText: localization.startDate,
+                              onSelected: (date) => _startDate = date,
+                            ),
+                      _dateRange != DateRange.custom
+                          ? Container()
+                          : DatePicker(
+                              labelText: localization.endDate,
+                              onSelected: (date) => _endDate = date,
+                            ),
+                    ],
                   ),
-                  _dateRange != DateRange.custom
-                      ? Container()
-                      : DatePicker(
-                          labelText: localization.startDate,
-                          onSelected: (date) => _startDate = date,
-                        ),
-                  _dateRange != DateRange.custom
-                      ? Container()
-                      : DatePicker(
-                          labelText: localization.endDate,
-                          onSelected: (date) => _endDate = date,
-                        ),
-                  SwitchListTile(
-                    value: _compareTo,
-                    title: Text(localization.compareTo),
-                    onChanged: (value) {
-                      setState(() => _compareTo = value);
-                    },
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ]));
