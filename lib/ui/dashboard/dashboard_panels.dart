@@ -92,7 +92,7 @@ class DashboardPanels extends StatelessWidget {
     return ListView(
       children: <Widget>[
         _header(context),
-        //_invoiceChart(context),
+        _invoiceChart(context),
       ],
     );
   }
@@ -223,6 +223,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
     super.initState();
 
     final state = widget.state;
+    _dateRange = state.dateRange;
     _compareTo = state.enableComparison;
   }
 
@@ -243,7 +244,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                     items: DateRange.values
                         .map((dateRange) => DropdownMenuItem<DateRange>(
                               child: Text(localization
-                                  .lookup(dateRange.toString().split('.')[1])),
+                                  .lookup(dateRange.toString())),
                               value: dateRange,
                             ))
                         .toList(),
@@ -265,9 +266,8 @@ class _DateRangePickerState extends State<DateRangePicker> {
                           onSelected: (date) => _endDate = date,
                         ),
                   SwitchListTile(
-                    value: true,
+                    value: _compareTo,
                     title: Text(localization.compareTo),
-                    selected: _compareTo,
                     onChanged: (value) {
                       setState(() => _compareTo = value);
                     },
