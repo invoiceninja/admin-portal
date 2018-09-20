@@ -12,3 +12,19 @@ DashboardState _setLoadedDashboards(DashboardState dashboardState, LoadDashboard
       ..data.replace(action.data)
   );
 }
+
+DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
+  if (action is UpdateDashboardSettings) {
+    final settings = action.settings;
+    return state.rebuild((b) => b
+        ..dateRange = settings.dateRange
+        ..startDate = settings.startDate
+        ..endDate = settings.endDate
+        ..enableComparison = settings.enableComparison
+        ..compareDateRange = settings.compareDateRange
+        ..compareStartDate = settings.compareStartDate
+        ..compareEndDate = settings.compareEndDate
+    );
+  }
+  return state;
+}
