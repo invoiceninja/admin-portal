@@ -39,6 +39,7 @@ class DashboardVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
+  final Function(int) onOffsetChanged;
 
   DashboardVM({
     @required this.state,
@@ -49,6 +50,7 @@ class DashboardVM {
     @required this.filteredList,
     @required this.onRefreshed,
     @required this.onSettingsChanged,
+    @required this.onOffsetChanged,
   });
 
   static DashboardVM fromStore(Store<AppState> store) {
@@ -72,7 +74,9 @@ class DashboardVM {
       isLoading: state.isLoading,
       onRefreshed: (context) => _handleRefresh(context),
       onSettingsChanged: (DashboardSettings settings) =>
-          store.dispatch(UpdateDashboardSettings(settings)),
+          store.dispatch(UpdateDashboardSettings(settings: settings)),
+      onOffsetChanged: (offset) =>
+          store.dispatch(UpdateDashboardSettings(offset: offset)),
       filter: filter,
       filteredList:
           memoizedFilteredSelector(filter, state.selectedCompanyState),

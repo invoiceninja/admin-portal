@@ -92,11 +92,11 @@ class _$DashboardUIStateSerializer
       'dateRange',
       serializers.serialize(object.dateRange,
           specifiedType: const FullType(DateRange)),
-      'startDate',
-      serializers.serialize(object.startDate,
+      'customStartDate',
+      serializers.serialize(object.customStartDate,
           specifiedType: const FullType(String)),
-      'endDate',
-      serializers.serialize(object.endDate,
+      'customEndDate',
+      serializers.serialize(object.customEndDate,
           specifiedType: const FullType(String)),
       'enableComparison',
       serializers.serialize(object.enableComparison,
@@ -104,12 +104,14 @@ class _$DashboardUIStateSerializer
       'compareDateRange',
       serializers.serialize(object.compareDateRange,
           specifiedType: const FullType(DateRangeComparison)),
-      'compareStartDate',
-      serializers.serialize(object.compareStartDate,
+      'compareCustomStartDate',
+      serializers.serialize(object.compareCustomStartDate,
           specifiedType: const FullType(String)),
-      'compareEndDate',
-      serializers.serialize(object.compareEndDate,
+      'compareCustomEndDate',
+      serializers.serialize(object.compareCustomEndDate,
           specifiedType: const FullType(String)),
+      'offset',
+      serializers.serialize(object.offset, specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -130,12 +132,12 @@ class _$DashboardUIStateSerializer
           result.dateRange = serializers.deserialize(value,
               specifiedType: const FullType(DateRange)) as DateRange;
           break;
-        case 'startDate':
-          result.startDate = serializers.deserialize(value,
+        case 'customStartDate':
+          result.customStartDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'endDate':
-          result.endDate = serializers.deserialize(value,
+        case 'customEndDate':
+          result.customEndDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'enableComparison':
@@ -147,13 +149,17 @@ class _$DashboardUIStateSerializer
                   specifiedType: const FullType(DateRangeComparison))
               as DateRangeComparison;
           break;
-        case 'compareStartDate':
-          result.compareStartDate = serializers.deserialize(value,
+        case 'compareCustomStartDate':
+          result.compareCustomStartDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'compareEndDate':
-          result.compareEndDate = serializers.deserialize(value,
+        case 'compareCustomEndDate':
+          result.compareCustomEndDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'offset':
+          result.offset = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -267,38 +273,41 @@ class _$DashboardUIState extends DashboardUIState {
   @override
   final DateRange dateRange;
   @override
-  final String startDate;
+  final String customStartDate;
   @override
-  final String endDate;
+  final String customEndDate;
   @override
   final bool enableComparison;
   @override
   final DateRangeComparison compareDateRange;
   @override
-  final String compareStartDate;
+  final String compareCustomStartDate;
   @override
-  final String compareEndDate;
+  final String compareCustomEndDate;
+  @override
+  final int offset;
 
   factory _$DashboardUIState([void updates(DashboardUIStateBuilder b)]) =>
       (new DashboardUIStateBuilder()..update(updates)).build();
 
   _$DashboardUIState._(
       {this.dateRange,
-      this.startDate,
-      this.endDate,
+      this.customStartDate,
+      this.customEndDate,
       this.enableComparison,
       this.compareDateRange,
-      this.compareStartDate,
-      this.compareEndDate})
+      this.compareCustomStartDate,
+      this.compareCustomEndDate,
+      this.offset})
       : super._() {
     if (dateRange == null) {
       throw new BuiltValueNullFieldError('DashboardUIState', 'dateRange');
     }
-    if (startDate == null) {
-      throw new BuiltValueNullFieldError('DashboardUIState', 'startDate');
+    if (customStartDate == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'customStartDate');
     }
-    if (endDate == null) {
-      throw new BuiltValueNullFieldError('DashboardUIState', 'endDate');
+    if (customEndDate == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'customEndDate');
     }
     if (enableComparison == null) {
       throw new BuiltValueNullFieldError(
@@ -308,12 +317,16 @@ class _$DashboardUIState extends DashboardUIState {
       throw new BuiltValueNullFieldError(
           'DashboardUIState', 'compareDateRange');
     }
-    if (compareStartDate == null) {
+    if (compareCustomStartDate == null) {
       throw new BuiltValueNullFieldError(
-          'DashboardUIState', 'compareStartDate');
+          'DashboardUIState', 'compareCustomStartDate');
     }
-    if (compareEndDate == null) {
-      throw new BuiltValueNullFieldError('DashboardUIState', 'compareEndDate');
+    if (compareCustomEndDate == null) {
+      throw new BuiltValueNullFieldError(
+          'DashboardUIState', 'compareCustomEndDate');
+    }
+    if (offset == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'offset');
     }
   }
 
@@ -330,12 +343,13 @@ class _$DashboardUIState extends DashboardUIState {
     if (identical(other, this)) return true;
     return other is DashboardUIState &&
         dateRange == other.dateRange &&
-        startDate == other.startDate &&
-        endDate == other.endDate &&
+        customStartDate == other.customStartDate &&
+        customEndDate == other.customEndDate &&
         enableComparison == other.enableComparison &&
         compareDateRange == other.compareDateRange &&
-        compareStartDate == other.compareStartDate &&
-        compareEndDate == other.compareEndDate;
+        compareCustomStartDate == other.compareCustomStartDate &&
+        compareCustomEndDate == other.compareCustomEndDate &&
+        offset == other.offset;
   }
 
   @override
@@ -344,24 +358,29 @@ class _$DashboardUIState extends DashboardUIState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, dateRange.hashCode), startDate.hashCode),
-                        endDate.hashCode),
-                    enableComparison.hashCode),
-                compareDateRange.hashCode),
-            compareStartDate.hashCode),
-        compareEndDate.hashCode));
+                    $jc(
+                        $jc(
+                            $jc($jc(0, dateRange.hashCode),
+                                customStartDate.hashCode),
+                            customEndDate.hashCode),
+                        enableComparison.hashCode),
+                    compareDateRange.hashCode),
+                compareCustomStartDate.hashCode),
+            compareCustomEndDate.hashCode),
+        offset.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DashboardUIState')
           ..add('dateRange', dateRange)
-          ..add('startDate', startDate)
-          ..add('endDate', endDate)
+          ..add('customStartDate', customStartDate)
+          ..add('customEndDate', customEndDate)
           ..add('enableComparison', enableComparison)
           ..add('compareDateRange', compareDateRange)
-          ..add('compareStartDate', compareStartDate)
-          ..add('compareEndDate', compareEndDate))
+          ..add('compareCustomStartDate', compareCustomStartDate)
+          ..add('compareCustomEndDate', compareCustomEndDate)
+          ..add('offset', offset))
         .toString();
   }
 }
@@ -374,13 +393,15 @@ class DashboardUIStateBuilder
   DateRange get dateRange => _$this._dateRange;
   set dateRange(DateRange dateRange) => _$this._dateRange = dateRange;
 
-  String _startDate;
-  String get startDate => _$this._startDate;
-  set startDate(String startDate) => _$this._startDate = startDate;
+  String _customStartDate;
+  String get customStartDate => _$this._customStartDate;
+  set customStartDate(String customStartDate) =>
+      _$this._customStartDate = customStartDate;
 
-  String _endDate;
-  String get endDate => _$this._endDate;
-  set endDate(String endDate) => _$this._endDate = endDate;
+  String _customEndDate;
+  String get customEndDate => _$this._customEndDate;
+  set customEndDate(String customEndDate) =>
+      _$this._customEndDate = customEndDate;
 
   bool _enableComparison;
   bool get enableComparison => _$this._enableComparison;
@@ -392,27 +413,32 @@ class DashboardUIStateBuilder
   set compareDateRange(DateRangeComparison compareDateRange) =>
       _$this._compareDateRange = compareDateRange;
 
-  String _compareStartDate;
-  String get compareStartDate => _$this._compareStartDate;
-  set compareStartDate(String compareStartDate) =>
-      _$this._compareStartDate = compareStartDate;
+  String _compareCustomStartDate;
+  String get compareCustomStartDate => _$this._compareCustomStartDate;
+  set compareCustomStartDate(String compareCustomStartDate) =>
+      _$this._compareCustomStartDate = compareCustomStartDate;
 
-  String _compareEndDate;
-  String get compareEndDate => _$this._compareEndDate;
-  set compareEndDate(String compareEndDate) =>
-      _$this._compareEndDate = compareEndDate;
+  String _compareCustomEndDate;
+  String get compareCustomEndDate => _$this._compareCustomEndDate;
+  set compareCustomEndDate(String compareCustomEndDate) =>
+      _$this._compareCustomEndDate = compareCustomEndDate;
+
+  int _offset;
+  int get offset => _$this._offset;
+  set offset(int offset) => _$this._offset = offset;
 
   DashboardUIStateBuilder();
 
   DashboardUIStateBuilder get _$this {
     if (_$v != null) {
       _dateRange = _$v.dateRange;
-      _startDate = _$v.startDate;
-      _endDate = _$v.endDate;
+      _customStartDate = _$v.customStartDate;
+      _customEndDate = _$v.customEndDate;
       _enableComparison = _$v.enableComparison;
       _compareDateRange = _$v.compareDateRange;
-      _compareStartDate = _$v.compareStartDate;
-      _compareEndDate = _$v.compareEndDate;
+      _compareCustomStartDate = _$v.compareCustomStartDate;
+      _compareCustomEndDate = _$v.compareCustomEndDate;
+      _offset = _$v.offset;
       _$v = null;
     }
     return this;
@@ -436,12 +462,13 @@ class DashboardUIStateBuilder
     final _$result = _$v ??
         new _$DashboardUIState._(
             dateRange: dateRange,
-            startDate: startDate,
-            endDate: endDate,
+            customStartDate: customStartDate,
+            customEndDate: customEndDate,
             enableComparison: enableComparison,
             compareDateRange: compareDateRange,
-            compareStartDate: compareStartDate,
-            compareEndDate: compareEndDate);
+            compareCustomStartDate: compareCustomStartDate,
+            compareCustomEndDate: compareCustomEndDate,
+            offset: offset);
     replace(_$result);
     return _$result;
   }

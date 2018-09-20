@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -22,7 +23,7 @@ List<ChartMoneyData> chartOutstandingInvoices(
     if (invoice.isDeleted || invoice.isQuote || invoice.isRecurring) {
       // skip it
     } else if (!invoice.isBetween(
-        settings.calculatedStartDate, settings.calculatedEndDate)) {
+        settings.startDate, settings.endDate)) {
       // skip it
     } else {
       if (totals[invoice.invoiceDate] == null) {
@@ -33,11 +34,18 @@ List<ChartMoneyData> chartOutstandingInvoices(
   });
 
   final List<ChartMoneyData> data = [];
-  totals.forEach((date, total) {
-    data.add(ChartMoneyData(DateTime.parse(date), total));
-  });
 
-  data.sort((data1, data2) => data1.date.compareTo(data2.date));
+  var date = DateTime.parse(settings.startDate);
+  final endDate = DateTime.parse(settings.endDate);
+  while (date.isBefore(endDate)) {
+    final key = convertDateTimeToSqlDate(date);
+    if (totals.containsKey(key)) {
+      data.add(ChartMoneyData(date, totals[key]));
+    } else {
+      data.add(ChartMoneyData(date, 0.0));
+    }
+    date = date.add(Duration(days: 1));
+  }
 
   return data;
 }

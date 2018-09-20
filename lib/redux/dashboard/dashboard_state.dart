@@ -44,27 +44,29 @@ abstract class DashboardUIState implements Built<DashboardUIState, DashboardUISt
   factory DashboardUIState() {
     return _$DashboardUIState._(
       dateRange: DateRange.last30Days,
-      startDate: '',
-      endDate: convertDateTimeToSqlDate(),
+      customStartDate: '',
+      customEndDate: convertDateTimeToSqlDate(),
       enableComparison: true,
       compareDateRange: DateRangeComparison.previousPeriod,
-      compareStartDate: '',
-      compareEndDate: convertDateTimeToSqlDate(),
+      compareCustomStartDate: '',
+      compareCustomEndDate: convertDateTimeToSqlDate(),
+      offset: 0,
     );
   }
   DashboardUIState._();
 
   DateRange get dateRange;
-  String get startDate;
-  String get endDate;
+  String get customStartDate;
+  String get customEndDate;
   bool get enableComparison;
   DateRangeComparison get compareDateRange;
-  String get compareStartDate;
-  String get compareEndDate;
+  String get compareCustomStartDate;
+  String get compareCustomEndDate;
+  int get offset;
 
   static Serializer<DashboardUIState> get serializer => _$dashboardUIStateSerializer;
 
-  String get calculatedStartDate {
+  String get startDate {
     final today = DateTime.now();
     switch (dateRange) {
       case DateRange.last7Days:
@@ -94,12 +96,12 @@ abstract class DashboardUIState implements Built<DashboardUIState, DashboardUISt
       case DateRange.lastYear:
         final date = DateTime.utc(today.year - 1, 1, 1);
         return convertDateTimeToSqlDate(date);
-      case DateRange.custom:
-        return startDate;
+      default:
+        return customStartDate;
     }
   }
 
-  String get calculatedEndDate {
+  String get endDate {
     switch (dateRange) {
       case DateRange.lastMonth:
         final today = DateTime.now();
@@ -110,7 +112,7 @@ abstract class DashboardUIState implements Built<DashboardUIState, DashboardUISt
         final date = DateTime.utc(today.year, 1, 1);
         return convertDateTimeToSqlDate(date);
       case DateRange.custom:
-        return endDate;
+        return customEndDate;
       default:
         return convertDateTimeToSqlDate();
     }

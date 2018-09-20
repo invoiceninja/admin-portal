@@ -50,12 +50,12 @@ class DashboardSettings {
   static DashboardSettings fromState(DashboardUIState state) {
     final settings = DashboardSettings()
       ..dateRange = state.dateRange
-      ..startDate = state.startDate
-      ..endDate = state.endDate
+      ..startDate = state.customStartDate
+      ..endDate = state.customEndDate
       ..enableComparison = state.enableComparison
       ..compareDateRange = state.compareDateRange
-      ..compareStartDate = state.compareStartDate
-      ..compareEndDate = state.compareEndDate;
+      ..compareStartDate = state.compareCustomStartDate
+      ..compareEndDate = state.compareCustomEndDate;
     return settings;
   }
 }

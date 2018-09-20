@@ -41,8 +41,8 @@ class DashboardPanels extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: Text(
-                          formatDateRange(uiState.calculatedStartDate,
-                              uiState.calculatedEndDate, context),
+                          formatDateRange(
+                              uiState.startDate, uiState.endDate, context),
                           style: Theme.of(context).textTheme.title),
                     ),
                     SizedBox(width: 6.0),
@@ -55,16 +55,14 @@ class DashboardPanels extends StatelessWidget {
           ),
           SizedBox(width: 8.0),
           IconButton(
-              icon: Icon(Icons.navigate_before),
-              onPressed: () {
-                print('prev');
-              }),
+            icon: Icon(Icons.navigate_before),
+            onPressed: () => viewModel.onOffsetChanged(1),
+          ),
           SizedBox(width: 8.0),
           IconButton(
-              icon: Icon(Icons.navigate_next),
-              onPressed: () {
-                print('next');
-              }),
+            icon: Icon(Icons.navigate_next),
+            onPressed: () => viewModel.onOffsetChanged(-1),
+          ),
           SizedBox(width: 8.0),
         ],
       ),
