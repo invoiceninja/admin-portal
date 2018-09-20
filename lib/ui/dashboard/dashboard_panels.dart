@@ -210,7 +210,8 @@ class _DashboardChartState extends State<DashboardChart> {
 }
 
 class DateRangePicker extends StatefulWidget {
-  const DateRangePicker({this.state, this.onSettingsChanged});
+  const DateRangePicker({Key key, this.state, this.onSettingsChanged})
+      : super(key: key);
 
   final DashboardUIState state;
   final Function(DashboardSettings) onSettingsChanged;
@@ -223,10 +224,11 @@ class _DateRangePickerState extends State<DateRangePicker> {
   DashboardSettings _settings;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     _settings = DashboardSettings.fromState(widget.state);
+
   }
 
   @override

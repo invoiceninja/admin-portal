@@ -82,6 +82,7 @@ class DashboardVM {
   @override
   bool operator ==(dynamic other) =>
       dashboardState == other.dashboardState &&
+      dashboardUIState == other.dashboardUIState &&
       isLoading == other.isLoading &&
       filter == other.filter &&
       filteredList == other.filteredList;
@@ -89,6 +90,7 @@ class DashboardVM {
   @override
   int get hashCode =>
       dashboardState.hashCode ^
+      dashboardUIState.hashCode ^
       isLoading.hashCode ^
       filter.hashCode ^
       filteredList.hashCode;
