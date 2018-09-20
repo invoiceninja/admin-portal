@@ -110,6 +110,39 @@ abstract class DashboardUIState
   }
 
   String get endDate {
+    final today = DateTime.now();
+    final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
+    final firstDayOfYear = DateTime.utc(today.year, 1, 1);
+    switch (dateRange) {
+      case DateRange.last7Days:
+        final date = today.subtract(Duration(days: 7 * offset));
+        return convertDateTimeToSqlDate(date);
+      case DateRange.last30Days:
+        final date = today.subtract(Duration(days: 30 * offset));
+        return convertDateTimeToSqlDate(date);
+      case DateRange.thisMonth:
+        final date = addMonths(firstDayOfMonth, (offset + 1) * -1);
+        return convertDateTimeToSqlDate(date);
+      case DateRange.lastMonth:
+        final date = addMonths(firstDayOfMonth, offset * -1);
+        return convertDateTimeToSqlDate(date);
+      case DateRange.thisYear:
+        final date = addYears(firstDayOfYear, (offset + 1) * -1);
+        return convertDateTimeToSqlDate(date);
+      case DateRange.lastYear:
+        final date = addYears(firstDayOfYear, offset * -1);
+        return convertDateTimeToSqlDate(date);
+      default:
+        final startDate = DateTime.parse(customStartDate);
+        final endDate = DateTime.parse(customEndDate);
+        final days = endDate.difference(startDate).inDays;
+        return convertDateTimeToSqlDate(
+            startDate.subtract(Duration(days: days * offset)));
+    }
+  }
+
+  /*
+  String get endDate {
     switch (dateRange) {
       case DateRange.lastMonth:
         final today = DateTime.now();
@@ -125,4 +158,5 @@ abstract class DashboardUIState
         return convertDateTimeToSqlDate();
     }
   }
+  */
 }
