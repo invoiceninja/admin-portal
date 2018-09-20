@@ -184,13 +184,23 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
   endDate = formatDate(endDate, context, dateFormatId: kDefaultDateFormat);
 
   final length = min(startDate.length, endDate.length);
+  int matchLength = 0;
 
-  for (int i = length; i >= 0; i--) {
-    if (startDate.substring(i) == endDate.substring(i)) {
-      startDate = startDate.substring(0, i);
-      endDate = endDate.substring(0, i);
+  for (int i = 1; i < length; i++) {
+    final startIndex = startDate.length - i;
+    final endIndex = endDate.length - i;
+    final start = startDate.substring(startIndex);
+    final end = endDate.substring(endIndex);
+
+    if (start == end) {
+      matchLength = i;
+    } else {
+      break;
     }
   }
+
+  startDate = startDate.substring(0, startDate.length - matchLength);
+  endDate = endDate.substring(0, endDate.length - matchLength);
 
   if (startDate.isEmpty && endDate.isEmpty) {
     return AppLocalization.of(context).today;
