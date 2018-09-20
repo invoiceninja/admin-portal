@@ -11,7 +11,6 @@ class DateRange extends EnumClass {
   static Serializer<DateRange> get serializer => _$dateRangeSerializer;
 
   static const DateRange last7Days = _$last7Days;
-  static const DateRange lastWeek = _$lastWeek;
   static const DateRange last30Days = _$last30Days;
   static const DateRange thisMonth = _$thisMonth;
   static const DateRange lastMonth = _$lastMonth;

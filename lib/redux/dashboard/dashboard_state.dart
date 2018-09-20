@@ -65,16 +65,35 @@ abstract class DashboardUIState implements Built<DashboardUIState, DashboardUISt
   static Serializer<DashboardUIState> get serializer => _$dashboardUIStateSerializer;
 
   String get calculatedStartDate {
+    final today = DateTime.now();
     switch (dateRange) {
       case DateRange.last7Days:
         final date = DateTime.now().subtract(Duration(days: 7));
         return convertDateTimeToSqlDate(date);
-      case DateRange.lastWeek:
       case DateRange.last30Days:
+        final date = DateTime.now().subtract(Duration(days: 30));
+        return convertDateTimeToSqlDate(date);
       case DateRange.thisMonth:
+        final date = DateTime.utc(today.year, today.month, 1);
+        return convertDateTimeToSqlDate(date);
       case DateRange.lastMonth:
+        int lastMonth;
+        int lastYear;
+        if (today.month == 1) {
+          lastMonth = 12;
+          lastYear = today.year - 1;
+        } else {
+          lastMonth = today.month - 1;
+          lastYear = today.year;
+        }
+        final date = DateTime.utc(lastYear, lastMonth, 1);
+        return convertDateTimeToSqlDate(date);
       case DateRange.thisYear:
+        final date = DateTime.utc(today.year, 1, 1);
+        return convertDateTimeToSqlDate(date);
       case DateRange.lastYear:
+        final date = DateTime.utc(today.year - 1, 1, 1);
+        return convertDateTimeToSqlDate(date);
       case DateRange.custom:
         return startDate;
     }
@@ -82,6 +101,14 @@ abstract class DashboardUIState implements Built<DashboardUIState, DashboardUISt
 
   String get calculatedEndDate {
     switch (dateRange) {
+      case DateRange.lastMonth:
+        final today = DateTime.now();
+        final date = DateTime.utc(today.year, today.month, 1);
+        return convertDateTimeToSqlDate(date);
+      case DateRange.lastYear:
+        final today = DateTime.now();
+        final date = DateTime.utc(today.year, 1, 1);
+        return convertDateTimeToSqlDate(date);
       case DateRange.custom:
         return endDate;
       default:

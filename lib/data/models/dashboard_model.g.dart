@@ -20,7 +20,6 @@ part of 'dashboard_model.dart';
 // ignore_for_file: test_types_in_equals
 
 const DateRange _$last7Days = const DateRange._('last7Days');
-const DateRange _$lastWeek = const DateRange._('lastWeek');
 const DateRange _$last30Days = const DateRange._('last30Days');
 const DateRange _$thisMonth = const DateRange._('thisMonth');
 const DateRange _$lastMonth = const DateRange._('lastMonth');
@@ -32,8 +31,6 @@ DateRange _$valueOf(String name) {
   switch (name) {
     case 'last7Days':
       return _$last7Days;
-    case 'lastWeek':
-      return _$lastWeek;
     case 'last30Days':
       return _$last30Days;
     case 'thisMonth':
@@ -53,7 +50,6 @@ DateRange _$valueOf(String name) {
 
 final BuiltSet<DateRange> _$values = new BuiltSet<DateRange>(const <DateRange>[
   _$last7Days,
-  _$lastWeek,
   _$last30Days,
   _$thisMonth,
   _$lastMonth,
