@@ -92,13 +92,13 @@ abstract class DashboardUIState
         final date = addMonths(firstDayOfMonth, offset * -1);
         return convertDateTimeToSqlDate(date);
       case DateRange.lastMonth:
-        final date = addMonths(firstDayOfMonth, -1 + (offset * -1));
+        final date = addMonths(firstDayOfMonth, (1 + offset ) * -1);
         return convertDateTimeToSqlDate(date);
       case DateRange.thisYear:
         final date = addYears(firstDayOfYear, offset * -1);
         return convertDateTimeToSqlDate(date);
       case DateRange.lastYear:
-        final date = addYears(firstDayOfYear, -1 + (offset * -1));
+        final date = addYears(firstDayOfYear, 1 + (offset * -1));
         return convertDateTimeToSqlDate(date);
       default:
         final startDate = DateTime.parse(customStartDate);
@@ -121,13 +121,13 @@ abstract class DashboardUIState
         final date = today.subtract(Duration(days: 30 * offset));
         return convertDateTimeToSqlDate(date);
       case DateRange.thisMonth:
-        final date = addMonths(firstDayOfMonth, (offset + 1) * -1);
+        final date = addMonths(firstDayOfMonth, (offset - 1) * -1);
         return convertDateTimeToSqlDate(date);
       case DateRange.lastMonth:
         final date = addMonths(firstDayOfMonth, offset * -1);
         return convertDateTimeToSqlDate(date);
       case DateRange.thisYear:
-        final date = addYears(firstDayOfYear, (offset + 1) * -1);
+        final date = addYears(firstDayOfYear, (offset - 1) * -1);
         return convertDateTimeToSqlDate(date);
       case DateRange.lastYear:
         final date = addYears(firstDayOfYear, offset * -1);
@@ -137,26 +137,7 @@ abstract class DashboardUIState
         final endDate = DateTime.parse(customEndDate);
         final days = endDate.difference(startDate).inDays;
         return convertDateTimeToSqlDate(
-            startDate.subtract(Duration(days: days * offset)));
+            endDate.subtract(Duration(days: days * offset)));
     }
   }
-
-  /*
-  String get endDate {
-    switch (dateRange) {
-      case DateRange.lastMonth:
-        final today = DateTime.now();
-        final date = DateTime.utc(today.year, today.month, 1);
-        return convertDateTimeToSqlDate(date);
-      case DateRange.lastYear:
-        final today = DateTime.now();
-        final date = DateTime.utc(today.year, 1, 1);
-        return convertDateTimeToSqlDate(date);
-      case DateRange.custom:
-        return customEndDate;
-      default:
-        return convertDateTimeToSqlDate();
-    }
-  }
-  */
 }

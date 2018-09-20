@@ -182,7 +182,7 @@ String convertTimestampToSqlDate(int timestamp) {
 String formatDateRange(String startDate, String endDate, BuildContext context) {
   startDate = formatDate(startDate, context, dateFormatId: kDefaultDateFormat);
   endDate = formatDate(endDate, context, dateFormatId: kDefaultDateFormat);
-
+  /*
   final length = min(startDate.length, endDate.length);
   int matchLength = 0;
 
@@ -201,6 +201,7 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
 
   startDate = startDate.substring(0, startDate.length - matchLength);
   endDate = endDate.substring(0, endDate.length - matchLength);
+  */
 
   if (startDate.isEmpty && endDate.isEmpty) {
     return AppLocalization.of(context).today;
