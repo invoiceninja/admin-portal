@@ -446,6 +446,15 @@ abstract class InvoiceEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  bool isBetween(String startDate, String endDate) {
+    print('\nDATE: $invoiceDate');
+    print('compare start to today: ${startDate.compareTo(invoiceDate)}');
+    print('compare end to today: ${endDate.compareTo(invoiceDate)}');
+
+    return startDate.compareTo(invoiceDate) <= 0 &&
+        endDate.compareTo(invoiceDate) == 1;
+  }
+
   double get requestedAmount => partial > 0 ? partial : amount;
 
   bool get isUnpaid => invoiceStatusId != kInvoiceStatusPaid;

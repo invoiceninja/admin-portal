@@ -74,8 +74,8 @@ class DashboardPanels extends StatelessWidget {
   Widget _invoiceChart(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    final data =
-        memoizedChartOutstandingInvoices(viewModel.state.invoiceState.map);
+    final data = memoizedChartOutstandingInvoices(
+        viewModel.dashboardUIState, viewModel.state.invoiceState.map);
 
     final series = [
       charts.Series<ChartMoneyData, DateTime>(

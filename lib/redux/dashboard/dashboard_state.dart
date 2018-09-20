@@ -63,5 +63,19 @@ abstract class DashboardUIState implements Built<DashboardUIState, DashboardUISt
   String get compareEndDate;
 
   static Serializer<DashboardUIState> get serializer => _$dashboardUIStateSerializer;
+
+  String get calculatedStartDate {
+    if (dateRange == DateRange.custom) {
+      return startDate;
+    }
+  }
+
+  String get calculatedEndDate {
+    if (dateRange == DateRange.custom) {
+      return endDate;
+    } else {
+      return convertDateTimeToSqlDate();
+    }
+  }
 }
 
