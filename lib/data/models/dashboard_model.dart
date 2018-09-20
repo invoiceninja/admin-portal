@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
 part 'dashboard_model.g.dart';
 
@@ -26,7 +27,8 @@ class DateRange extends EnumClass {
 class DateRangeComparison extends EnumClass {
   const DateRangeComparison._(String name) : super(name);
 
-  static Serializer<DateRangeComparison> get serializer => _$dateRangeComparisonSerializer;
+  static Serializer<DateRangeComparison> get serializer =>
+      _$dateRangeComparisonSerializer;
 
   static const DateRangeComparison previousPeriod = _$previousPeriod;
   static const DateRangeComparison previousYear = _$previousYear;
@@ -45,4 +47,16 @@ class DashboardSettings {
   DateRangeComparison compareDateRange;
   String compareStartDate;
   String compareEndDate;
+
+  static DashboardSettings fromState(DashboardUIState state) {
+    final settings = DashboardSettings()
+      ..dateRange = state.dateRange
+      ..startDate = state.startDate
+      ..endDate = state.endDate
+      ..enableComparison = state.enableComparison
+      ..compareDateRange = state.compareDateRange
+      ..compareStartDate = state.compareStartDate
+      ..compareEndDate = state.compareEndDate;
+    return settings;
+  }
 }

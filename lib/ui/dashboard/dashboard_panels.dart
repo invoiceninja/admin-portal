@@ -226,10 +226,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
   void initState() {
     super.initState();
 
-    final state = widget.state;
-    _settings.dateRange = state.dateRange;
-    _settings.compareDateRange = state.compareDateRange;
-    _settings.enableComparison = state.enableComparison;
+    _settings = DashboardSettings.fromState(widget.state);
   }
 
   @override
@@ -333,21 +330,20 @@ class _DateRangePickerState extends State<DateRangePicker> {
                               ],
                             )
                           : Container(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(top: 10.0, right: 10.0),
-                            child: ElevatedButton(
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0, right: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ElevatedButton(
                               label: localization.done,
                               onPressed: () {
                                 widget.onSettingsChanged(_settings);
                                 Navigator.of(context).pop();
                               },
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
