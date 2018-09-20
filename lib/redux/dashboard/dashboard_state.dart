@@ -65,16 +65,27 @@ abstract class DashboardUIState implements Built<DashboardUIState, DashboardUISt
   static Serializer<DashboardUIState> get serializer => _$dashboardUIStateSerializer;
 
   String get calculatedStartDate {
-    if (dateRange == DateRange.custom) {
-      return startDate;
+    switch (dateRange) {
+      case DateRange.last7Days:
+        final date = DateTime.now().subtract(Duration(days: 7));
+        return convertDateTimeToSqlDate(date);
+      case DateRange.lastWeek:
+      case DateRange.last30Days:
+      case DateRange.thisMonth:
+      case DateRange.lastMonth:
+      case DateRange.thisYear:
+      case DateRange.lastYear:
+      case DateRange.custom:
+        return startDate;
     }
   }
 
   String get calculatedEndDate {
-    if (dateRange == DateRange.custom) {
-      return endDate;
-    } else {
-      return convertDateTimeToSqlDate();
+    switch (dateRange) {
+      case DateRange.custom:
+        return endDate;
+      default:
+        return convertDateTimeToSqlDate();
     }
   }
 }
