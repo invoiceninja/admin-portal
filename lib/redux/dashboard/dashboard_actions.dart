@@ -1,12 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewDashboard implements PersistUI {
   final BuildContext context;
+
   ViewDashboard([this.context]);
+}
+
+class UpdateDashboardSettings implements PersistUI {
+  DashboardSettings settings;
+
+  UpdateDashboardSettings(this.settings);
 }
 
 class LoadDashboard {

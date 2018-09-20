@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -37,6 +38,7 @@ class DashboardVM {
   final List<BaseEntity> filteredList;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
+  final Function(DashboardSettings) onSettingsChanged;
 
   DashboardVM({
     @required this.state,
@@ -46,6 +48,7 @@ class DashboardVM {
     @required this.filter,
     @required this.filteredList,
     @required this.onRefreshed,
+    @required this.onSettingsChanged,
   });
 
   static DashboardVM fromStore(Store<AppState> store) {
@@ -68,6 +71,8 @@ class DashboardVM {
       dashboardState: state.dashboardState,
       isLoading: state.isLoading,
       onRefreshed: (context) => _handleRefresh(context),
+      onSettingsChanged: (DashboardSettings settings) =>
+          store.dispatch(UpdateDashboardSettings(settings)),
       filter: filter,
       filteredList:
           memoizedFilteredSelector(filter, state.selectedCompanyState),

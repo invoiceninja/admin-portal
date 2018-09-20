@@ -36,3 +36,13 @@ class DateRangeComparison extends EnumClass {
 
   static DateRangeComparison valueOf(String name) => _$comparisonValueOf(name);
 }
+
+class DashboardSettings {
+  DateRange dateRange;
+  String startDate;
+  String endDate;
+  bool enableComparison;
+  DateRangeComparison compareDateRange;
+  String compareStartDate;
+  String compareEndDate;
+}
