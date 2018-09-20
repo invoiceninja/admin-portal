@@ -180,38 +180,21 @@ String convertTimestampToSqlDate(int timestamp) {
 }
 
 String formatDateRange(String startDate, String endDate, BuildContext context) {
-  startDate = formatDate(startDate, context, dateFormatId: kDefaultDateFormat);
-  endDate = formatDate(endDate, context, dateFormatId: kDefaultDateFormat);
-  /*
-  final length = min(startDate.length, endDate.length);
-  int matchLength = 0;
+  final today = DateTime.now();
 
-  for (int i = 1; i < length; i++) {
-    final startIndex = startDate.length - i;
-    final endIndex = endDate.length - i;
-    final start = startDate.substring(startIndex);
-    final end = endDate.substring(endIndex);
+  final startDateTime = DateTime.tryParse(startDate).toLocal();
+  final startFormatter = DateFormat(today.year == startDateTime.year ? 'MMM d' : 'MMM d, yyy');
+  final startDateTimeString = startFormatter.format(startDateTime);
 
-    if (start == end) {
-      matchLength = i;
-    } else {
-      break;
-    }
-  }
+  final endDateTime = DateTime.tryParse(endDate).toLocal();
+  final endFormatter = DateFormat(today.year == endDateTime.year ? 'MMM d' : 'MMM d, yyy');
+  final endDateTimeString = endFormatter.format(endDateTime);
 
-  startDate = startDate.substring(0, startDate.length - matchLength);
-  endDate = endDate.substring(0, endDate.length - matchLength);
-  */
-
-  if (startDate.isEmpty && endDate.isEmpty) {
-    return AppLocalization.of(context).today;
-  } else {
-    return '$startDate - $endDate';
-  }
+  return '$startDateTimeString - $endDateTimeString';
 }
 
 String formatDate(String value, BuildContext context,
-    {bool showTime = false, int dateFormatId = 0}) {
+    {bool showTime = false}) {
   if (value == null || value.isEmpty) {
     return '';
   }
@@ -221,19 +204,15 @@ String formatDate(String value, BuildContext context,
 
   if (showTime) {
     final dateFormats = state.staticState.datetimeFormatMap;
-    if (dateFormatId == 0) {
-      dateFormatId = company.datetimeFormatId > 0
+    final dateFormatId = company.datetimeFormatId > 0
           ? company.datetimeFormatId
           : kDefaultDateTimeFormat;
-    }
     final formatter = DateFormat(dateFormats[dateFormatId].format);
     return formatter.format(DateTime.tryParse(value).toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;
-    if (dateFormatId == 0) {
-      dateFormatId =
+    final dateFormatId =
           company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
-    }
     final formatter = DateFormat(dateFormats[dateFormatId].format);
     return formatter.format(DateTime.tryParse(value));
   }
