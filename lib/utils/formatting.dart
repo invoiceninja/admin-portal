@@ -186,7 +186,7 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
   final length = min(startDate.length, endDate.length);
 
   for (int i = length; i >= 0; i--) {
-    if (startDate.substring(0, i) == endDate.substring(0, i)) {
+    if (startDate.substring(i) == endDate.substring(i)) {
       startDate = startDate.substring(0, i);
       endDate = endDate.substring(0, i);
     }

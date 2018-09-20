@@ -39,10 +39,12 @@ class DashboardPanels extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: <Widget>[
-                    Text(
-                        formatDateRange(
-                            uiState.startDate, uiState.endDate, context),
-                        style: Theme.of(context).textTheme.title),
+                    Flexible(
+                      child: Text(
+                          formatDateRange(
+                              uiState.startDate, uiState.endDate, context),
+                          style: Theme.of(context).textTheme.title),
+                    ),
                     SizedBox(width: 6.0),
                     Icon(Icons.arrow_drop_down),
                   ],
@@ -51,7 +53,7 @@ class DashboardPanels extends StatelessWidget {
               onTap: () => _showDateOptions(context),
             ),
           ),
-          SizedBox(width: 18.0),
+          SizedBox(width: 8.0),
           IconButton(
               icon: Icon(Icons.navigate_before),
               onPressed: () {
