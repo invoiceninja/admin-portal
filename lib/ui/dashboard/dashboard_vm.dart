@@ -37,6 +37,7 @@ class DashboardVM {
   final String filter;
   final List<BaseEntity> filteredList;
   final bool isLoading;
+  final bool isNextEnabled;
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
   final Function(int) onOffsetChanged;
@@ -46,6 +47,7 @@ class DashboardVM {
     @required this.dashboardUIState,
     @required this.dashboardState,
     @required this.isLoading,
+    @required this.isNextEnabled,
     @required this.filter,
     @required this.filteredList,
     @required this.onRefreshed,
@@ -72,6 +74,8 @@ class DashboardVM {
       dashboardUIState: state.dashboardUIState,
       dashboardState: state.dashboardState,
       isLoading: state.isLoading,
+      isNextEnabled: DateTime.parse(state.dashboardUIState.endDate)
+          .isBefore(DateTime.now()),
       onRefreshed: (context) => _handleRefresh(context),
       onSettingsChanged: (DashboardSettings settings) =>
           store.dispatch(UpdateDashboardSettings(settings: settings)),

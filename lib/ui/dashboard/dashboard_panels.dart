@@ -61,7 +61,7 @@ class DashboardPanels extends StatelessWidget {
           SizedBox(width: 8.0),
           IconButton(
             icon: Icon(Icons.navigate_next),
-            onPressed: () => viewModel.onOffsetChanged(-1),
+            onPressed: () => viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
           ),
           SizedBox(width: 8.0),
         ],
