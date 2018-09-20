@@ -28,6 +28,8 @@ class DashboardPanels extends StatelessWidget {
   }
 
   Widget _header(BuildContext context) {
+    final uiState = viewModel.dashboardUIState;
+
     return Material(
       color: Theme.of(context).backgroundColor,
       child: Row(
@@ -38,7 +40,9 @@ class DashboardPanels extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: <Widget>[
-                    Text('Aug 15 - Sep 15',
+                    Text(
+                        formatDateRange(
+                            uiState.startDate, uiState.endDate, context),
                         style: Theme.of(context).textTheme.title),
                     SizedBox(width: 6.0),
                     Icon(Icons.arrow_drop_down),

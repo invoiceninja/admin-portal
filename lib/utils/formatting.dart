@@ -8,6 +8,7 @@ import 'package:intl/number_symbols.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 double round(double value, int precision) {
   final int fac = pow(10, precision);
@@ -175,6 +176,25 @@ String convertDateTimeToSqlDate([DateTime date]) {
 String convertTimestampToSqlDate(int timestamp) {
   final DateTime date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   return date.toIso8601String();
+}
+
+String formatDateRange(String startDate, String endDate, BuildContext context) {
+  startDate = formatDate(startDate, context);
+  endDate = formatDate(endDate, context);
+
+  final length = min(startDate.length, endDate.length);
+  for (int i=length; i>=0; i--) {
+    if (startDate.substring(0, i) == endDate.substring(0, i)) {
+      startDate = startDate.substring(0, i);
+      endDate = endDate.substring(0, i);
+    }
+  }
+
+  if (startDate.isEmpty && endDate.isEmpty) {
+    return AppLocalization.of(context).today;
+  } else {
+    return '$startDate - $endDate';
+  }
 }
 
 String formatDate(String value, BuildContext context, {bool showTime = false}) {

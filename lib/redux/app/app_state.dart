@@ -89,6 +89,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   DashboardState get dashboardState => selectedCompanyState.dashboardState;
 
+  DashboardUIState get dashboardUIState => uiState.dashboardUIState;
+
   UserEntity get user => selectedCompany.user;
 
   EntityUIState getUIState(EntityType type) {
