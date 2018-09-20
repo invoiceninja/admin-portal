@@ -23,7 +23,9 @@ class DashboardPanels extends StatelessWidget {
     showDialog<DateRangePicker>(
         context: context,
         builder: (BuildContext context) {
-          return DateRangePicker(viewModel.state.uiState.dashboardUIState);
+          return DateRangePicker(
+              state: viewModel.dashboardUIState,
+              onSettingsChanged: viewModel.onSettingsChanged);
         });
   }
 
@@ -208,9 +210,10 @@ class _DashboardChartState extends State<DashboardChart> {
 }
 
 class DateRangePicker extends StatefulWidget {
-  const DateRangePicker(this.state);
+  const DateRangePicker({this.state, this.onSettingsChanged});
 
   final DashboardUIState state;
+  final Function(DashboardSettings) onSettingsChanged;
 
   @override
   _DateRangePickerState createState() => _DateRangePickerState();
@@ -339,6 +342,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             child: ElevatedButton(
                               label: localization.done,
                               onPressed: () {
+                                widget.onSettingsChanged(_settings);
                                 Navigator.of(context).pop();
                               },
                             ),
