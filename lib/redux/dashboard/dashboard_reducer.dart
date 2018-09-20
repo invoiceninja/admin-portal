@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
@@ -16,6 +17,12 @@ DashboardState _setLoadedDashboards(DashboardState dashboardState, LoadDashboard
 DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
   if (action is UpdateDashboardSettings) {
     final settings = action.settings;
+    String startDate;
+    String endDate;
+    if (settings.dateRange == DateRange.last7Days) {
+      //startDate =
+    }
+
     return state.rebuild((b) => b
         ..dateRange = settings.dateRange
         ..startDate = settings.startDate

@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DateRangePicker extends StatefulWidget {
@@ -25,6 +25,16 @@ class _DateRangePickerState extends State<DateRangePicker> {
     super.didChangeDependencies();
 
     _settings = DashboardSettings.fromState(widget.state);
+
+    if (_settings.dateRange != DateRange.custom) {
+      _settings.startDate = '';
+      _settings.endDate = convertDateTimeToSqlDate();
+    }
+
+    if (_settings.compareDateRange != DateRangeComparison.customRange) {
+      _settings.compareStartDate = '';
+      _settings.compareEndDate = convertDateTimeToSqlDate();
+    }
   }
 
   @override
@@ -50,11 +60,11 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             child: DropdownButton<DateRange>(
                               items: DateRange.values
                                   .map((dateRange) =>
-                                  DropdownMenuItem<DateRange>(
-                                    child: Text(localization
-                                        .lookup(dateRange.toString())),
-                                    value: dateRange,
-                                  ))
+                                      DropdownMenuItem<DateRange>(
+                                        child: Text(localization
+                                            .lookup(dateRange.toString())),
+                                        value: dateRange,
+                                      ))
                                   .toList(),
                               onChanged: (dateRange) {
                                 setState(() => _settings.dateRange = dateRange);
@@ -68,7 +78,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             value: _settings.enableComparison,
                             onChanged: (value) {
                               setState(
-                                      () => _settings.enableComparison = value);
+                                  () => _settings.enableComparison = value);
                             },
                           ),
                         ],
@@ -76,60 +86,60 @@ class _DateRangePickerState extends State<DateRangePicker> {
                       _settings.dateRange != DateRange.custom
                           ? Container()
                           : DatePicker(
-                        selectedDate: _settings.startDate,
-                        labelText: localization.startDate,
-                        onSelected: (date) => _settings.startDate = date,
-                      ),
+                              selectedDate: _settings.startDate,
+                              labelText: localization.startDate,
+                              onSelected: (date) => _settings.startDate = date,
+                            ),
                       _settings.dateRange != DateRange.custom
                           ? Container()
                           : DatePicker(
-                        selectedDate: _settings.endDate,
-                        labelText: localization.endDate,
-                        onSelected: (date) => _settings.endDate = date,
-                      ),
+                              selectedDate: _settings.endDate,
+                              labelText: localization.endDate,
+                              onSelected: (date) => _settings.endDate = date,
+                            ),
                       SizedBox(height: 6.0),
                       _settings.enableComparison
                           ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          DropdownButtonHideUnderline(
-                            child: DropdownButton<DateRangeComparison>(
-                              items: DateRangeComparison.values
-                                  .map((dateRange) => DropdownMenuItem<
-                                  DateRangeComparison>(
-                                child: Text(localization.lookup(
-                                    dateRange.toString())),
-                                value: dateRange,
-                              ))
-                                  .toList(),
-                              onChanged: (dateRange) {
-                                setState(() => _settings
-                                    .compareDateRange = dateRange);
-                              },
-                              value: _settings.compareDateRange,
-                            ),
-                          ),
-                          _settings.compareDateRange !=
-                              DateRangeComparison.customRange
-                              ? Container()
-                              : DatePicker(
-                            labelText: localization.startDate,
-                            selectedDate:
-                            _settings.compareStartDate,
-                            onSelected: (date) =>
-                            _settings.compareStartDate = date,
-                          ),
-                          _settings.compareDateRange !=
-                              DateRangeComparison.customRange
-                              ? Container()
-                              : DatePicker(
-                            labelText: localization.endDate,
-                            selectedDate: _settings.compareEndDate,
-                            onSelected: (date) =>
-                            _settings.compareEndDate = date,
-                          ),
-                        ],
-                      )
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton<DateRangeComparison>(
+                                    items: DateRangeComparison.values
+                                        .map((dateRange) => DropdownMenuItem<
+                                                DateRangeComparison>(
+                                              child: Text(localization.lookup(
+                                                  dateRange.toString())),
+                                              value: dateRange,
+                                            ))
+                                        .toList(),
+                                    onChanged: (dateRange) {
+                                      setState(() => _settings
+                                          .compareDateRange = dateRange);
+                                    },
+                                    value: _settings.compareDateRange,
+                                  ),
+                                ),
+                                _settings.compareDateRange !=
+                                        DateRangeComparison.customRange
+                                    ? Container()
+                                    : DatePicker(
+                                        labelText: localization.startDate,
+                                        selectedDate:
+                                            _settings.compareStartDate,
+                                        onSelected: (date) =>
+                                            _settings.compareStartDate = date,
+                                      ),
+                                _settings.compareDateRange !=
+                                        DateRangeComparison.customRange
+                                    ? Container()
+                                    : DatePicker(
+                                        labelText: localization.endDate,
+                                        selectedDate: _settings.compareEndDate,
+                                        onSelected: (date) =>
+                                            _settings.compareEndDate = date,
+                                      ),
+                              ],
+                            )
                           : Container(),
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0, right: 10.0),

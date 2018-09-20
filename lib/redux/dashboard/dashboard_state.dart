@@ -44,11 +44,11 @@ abstract class DashboardUIState implements Built<DashboardUIState, DashboardUISt
   factory DashboardUIState() {
     return _$DashboardUIState._(
       dateRange: DateRange.last30Days,
-      startDate: convertDateTimeToSqlDate(),
+      startDate: '',
       endDate: convertDateTimeToSqlDate(),
       enableComparison: true,
       compareDateRange: DateRangeComparison.previousPeriod,
-      compareStartDate: convertDateTimeToSqlDate(),
+      compareStartDate: '',
       compareEndDate: convertDateTimeToSqlDate(),
     );
   }
