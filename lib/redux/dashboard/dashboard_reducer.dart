@@ -27,7 +27,8 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
         ..enableComparison = settings.enableComparison
         ..compareDateRange = settings.compareDateRange
         ..compareCustomStartDate = settings.compareStartDate
-        ..compareCustomStartDate = settings.compareEndDate);
+        ..compareCustomStartDate = settings.compareEndDate
+        ..offset = 0);
     } else if (offset != null) {
       return state.rebuild((b) => b..offset += offset);
     }
