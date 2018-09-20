@@ -71,7 +71,6 @@ class DashboardPanels extends StatelessWidget {
 
     final data =
         memoizedChartOutstandingInvoices(viewModel.state.invoiceState.map);
-    print('data: $data');
 
     final series = [
       charts.Series<ChartMoneyData, DateTime>(
@@ -241,9 +240,10 @@ class _DateRangePickerState extends State<DateRangePicker> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: ListView(
+                    shrinkWrap: true,
+                    //mainAxisAlignment: MainAxisAlignment.start,
+                    //crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(localization.dateRange,
                           style: Theme.of(context).textTheme.title),
@@ -288,8 +288,10 @@ class _DateRangePickerState extends State<DateRangePicker> {
                               labelText: localization.endDate,
                               onSelected: (date) => _endDate = date,
                             ),
+                      SizedBox(height: 6.0),
                       _compareTo
                           ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 DropdownButtonHideUnderline(
                                   child: DropdownButton<DateRangeComparison>(
@@ -307,7 +309,21 @@ class _DateRangePickerState extends State<DateRangePicker> {
                                     },
                                     value: _compareDateRange,
                                   ),
-                                )
+                                ),
+                                _compareDateRange !=
+                                        DateRangeComparison.customRange
+                                    ? Container()
+                                    : DatePicker(
+                                        labelText: localization.startDate,
+                                        onSelected: (date) => _startDate = date,
+                                      ),
+                                _compareDateRange !=
+                                        DateRangeComparison.customRange
+                                    ? Container()
+                                    : DatePicker(
+                                        labelText: localization.endDate,
+                                        onSelected: (date) => _endDate = date,
+                                      ),
                               ],
                             )
                           : Container(),
