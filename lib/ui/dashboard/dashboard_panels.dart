@@ -228,7 +228,6 @@ class _DateRangePickerState extends State<DateRangePicker> {
     super.didChangeDependencies();
 
     _settings = DashboardSettings.fromState(widget.state);
-
   }
 
   @override
@@ -282,12 +281,14 @@ class _DateRangePickerState extends State<DateRangePicker> {
                       _settings.dateRange != DateRange.custom
                           ? Container()
                           : DatePicker(
+                              selectedDate: _settings.startDate,
                               labelText: localization.startDate,
                               onSelected: (date) => _settings.startDate = date,
                             ),
                       _settings.dateRange != DateRange.custom
                           ? Container()
                           : DatePicker(
+                              selectedDate: _settings.endDate,
                               labelText: localization.endDate,
                               onSelected: (date) => _settings.endDate = date,
                             ),
@@ -318,6 +319,8 @@ class _DateRangePickerState extends State<DateRangePicker> {
                                     ? Container()
                                     : DatePicker(
                                         labelText: localization.startDate,
+                                        selectedDate:
+                                            _settings.compareStartDate,
                                         onSelected: (date) =>
                                             _settings.compareStartDate = date,
                                       ),
@@ -326,6 +329,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                                     ? Container()
                                     : DatePicker(
                                         labelText: localization.endDate,
+                                        selectedDate: _settings.compareEndDate,
                                         onSelected: (date) =>
                                             _settings.compareEndDate = date,
                                       ),
