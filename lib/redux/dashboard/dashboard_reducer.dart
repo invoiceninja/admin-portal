@@ -1,4 +1,3 @@
-import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
