@@ -30,7 +30,9 @@ class DashboardPanels extends StatelessWidget {
     final uiState = viewModel.dashboardUIState;
 
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme
+          .of(context)
+          .backgroundColor,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -43,7 +45,10 @@ class DashboardPanels extends StatelessWidget {
                       child: Text(
                           formatDateRange(
                               uiState.startDate, uiState.endDate, context),
-                          style: Theme.of(context).textTheme.title),
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .title),
                     ),
                     SizedBox(width: 6.0),
                     Icon(Icons.arrow_drop_down),
@@ -62,7 +67,7 @@ class DashboardPanels extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.navigate_next),
             onPressed: () =>
-                viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
+            viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
           ),
           SizedBox(width: 8.0),
         ],
@@ -81,12 +86,33 @@ class DashboardPanels extends StatelessWidget {
         domainFn: (ChartMoneyData clickData, _) => clickData.date,
         measureFn: (ChartMoneyData clickData, _) => clickData.amount,
         colorFn: (ChartMoneyData clickData, _) =>
-            charts.MaterialPalette.blue.shadeDefault,
+        charts.MaterialPalette.blue.shadeDefault,
         id: 'invoices',
         displayName: localization.invoices,
         data: data,
       ),
     ];
+
+    final offsetData = memoizedChartOutstandingInvoices(
+        viewModel.dashboardUIState.rebuild((b) => b..offset += 1),
+        viewModel.state.invoiceState.map);
+
+    final List<ChartMoneyData> previousData = [];
+    for (int i = 0; i < data.length; i++) {
+      previousData.add(ChartMoneyData(data[i].date, offsetData[i].amount));
+    }
+
+    series.add(
+      charts.Series<ChartMoneyData, DateTime>(
+        domainFn: (ChartMoneyData clickData, _) => clickData.date,
+        measureFn: (ChartMoneyData clickData, _) => clickData.amount,
+        colorFn: (ChartMoneyData clickData, _) =>
+        charts.MaterialPalette.red.shadeDefault,
+        id: 'previous',
+        displayName: localization.previousPeriod,
+        data: previousData,
+      ),
+    );
 
     double total = 0.0;
     data.forEach((dynamic item) {
@@ -153,7 +179,6 @@ class _DashboardChartState extends State<DashboardChart> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final chart = charts.TimeSeriesChart(
       widget.series,
       animate: true,
@@ -182,23 +207,35 @@ class _DashboardChartState extends State<DashboardChart> {
                     child: Column(
                       children: <Widget>[
                         Text(widget.subheading,
-                            style: Theme.of(context).textTheme.subhead),
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .subhead),
                         Text(widget.heading,
-                            style: Theme.of(context).textTheme.headline),
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .headline),
                       ],
                       crossAxisAlignment: CrossAxisAlignment.start,
                     ),
                   ),
                   _title != null
                       ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(_subtitle,
-                                style: Theme.of(context).textTheme.subhead),
-                            Text(_title,
-                                style: Theme.of(context).textTheme.headline),
-                          ],
-                        )
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text(_subtitle,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .subhead),
+                      Text(_title,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline),
+                    ],
+                  )
                       : Container(),
                 ],
               ),
