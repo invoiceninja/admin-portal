@@ -51,3 +51,42 @@ List<ChartMoneyData> chartOutstandingInvoices(
 
   return data;
 }
+
+
+var memoizedChartPayments = memo2(
+        (DashboardUIState settings, BuiltMap<int, PaymentEntity> paymentMap) =>
+        chartPayments(settings, paymentMap));
+
+List<ChartMoneyData> chartPayments(
+    DashboardUIState settings, BuiltMap<int, PaymentEntity> paymentMap) {
+  final Map<String, double> totals = {};
+
+  paymentMap.forEach((int, payment) {
+    if (payment.isDeleted) {
+      // skip it
+    } else if (!payment.isBetween(settings.startDate, settings.endDate)) {
+      // skip it
+    } else {
+      if (totals[payment.paymentDate] == null) {
+        totals[payment.paymentDate] = 0.0;
+      }
+      totals[payment.paymentDate] += payment.amount;
+    }
+  });
+
+  final List<ChartMoneyData> data = [];
+
+  var date = DateTime.parse(settings.startDate);
+  final endDate = DateTime.parse(settings.endDate);
+  while (date.isBefore(endDate)) {
+    final key = convertDateTimeToSqlDate(date);
+    if (totals.containsKey(key)) {
+      data.add(ChartMoneyData(date, totals[key]));
+    } else {
+      data.add(ChartMoneyData(date, 0.0));
+    }
+    date = date.add(Duration(days: 1));
+  }
+
+  return data;
+}

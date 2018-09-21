@@ -196,6 +196,11 @@ abstract class PaymentEntity extends Object
   @override
   double get listDisplayAmount => amount;
 
+  bool isBetween(String startDate, String endDate) {
+    return startDate.compareTo(paymentDate) <= 0 &&
+        endDate.compareTo(paymentDate) == 1;
+  }
+
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 

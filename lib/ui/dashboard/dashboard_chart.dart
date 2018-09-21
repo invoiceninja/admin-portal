@@ -67,17 +67,12 @@ class _DashboardChartState extends State<DashboardChart> {
     final bool isIncrease = widget.amount >= widget.previousAmount;
     final String changeAmount = (isIncrease ? '+' : '') +
         formatNumber(widget.amount - widget.previousAmount, context);
-    String changePercent;
-    if (widget.amount == 0) {
-      changePercent = '0%';
-    } else if (widget.previousAmount == 0) {
-      changePercent = '∞%';
-    } else {
-      changePercent = (isIncrease ? '+' : '-') +
-          formatNumber(widget.previousAmount / widget.amount * 100, context,
-              formatNumberType: FormatNumberType.percent);
-    }
-    final String changeString = '$changeAmount ($changePercent)';
+    final changePercent = (isIncrease ? '+' : '-') +
+        formatNumber(widget.previousAmount / widget.amount * 100, context,
+            formatNumberType: FormatNumberType.percent);
+    final String changeString = widget.amount == 0 || widget.previousAmount == 0
+        ? ''
+        : '$changeAmount ($changePercent)';
 
     return FormCard(
       children: <Widget>[
