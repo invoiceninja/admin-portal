@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 class DashboardPanels extends StatelessWidget {
   final DashboardVM viewModel;
@@ -29,6 +31,8 @@ class DashboardPanels extends StatelessWidget {
 
   Widget _header(BuildContext context) {
     final uiState = viewModel.dashboardUIState;
+    final company = viewModel.state.selectedCompany;
+    final clientMap = viewModel.state.clientState.map;
 
     return Material(
       color: Theme.of(context).backgroundColor,
@@ -66,6 +70,20 @@ class DashboardPanels extends StatelessWidget {
                 viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
           ),
           SizedBox(width: 8.0),
+          memoizedHasMultipleCurrencies(company, clientMap)
+              ? Column(
+                  children: <Widget>[
+                    DropdownButton<CurrencyEntity>(
+                      items: memoizedGetCurrencyIds(company, clientMap)
+                          .map((currencyId) => DropdownMenuItem<CurrencyEntity>(
+                                child: Text(currencyId.toString()),
+                              ))
+                          .toList(),
+                    ),
+                    SizedBox(width: 8.0),
+                  ],
+                )
+              : Container(),
         ],
       ),
     );

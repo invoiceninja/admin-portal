@@ -40,6 +40,7 @@ const int kPaymentStatusCompleted = 4;
 const int kPaymentStatusPartiallyRefunded = 5;
 const int kPaymentStatusRefunded = 6;
 
+const int kDefaultCurrencyId = 1;
 const int kDefaultDateFormat = 5;
 const int kDefaultDateTimeFormat = 5;
 

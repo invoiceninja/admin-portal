@@ -24,7 +24,6 @@ abstract class CompanyState
       invoiceState: InvoiceState(),
       // STARTER: constructor - do not remove comment
       paymentState: PaymentState(),
-
       quoteState: QuoteState(),
     );
   }
