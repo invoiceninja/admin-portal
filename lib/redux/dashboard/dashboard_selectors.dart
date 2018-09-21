@@ -20,10 +20,12 @@ List<ChartMoneyData> chartOutstandingInvoices(
   final Map<String, double> totals = {};
 
   invoiceMap.forEach((int, invoice) {
-    if (invoice.isDeleted || invoice.isQuote || invoice.isRecurring) {
+    if (!invoice.isPublic ||
+        invoice.isDeleted ||
+        invoice.isQuote ||
+        invoice.isRecurring) {
       // skip it
-    } else if (!invoice.isBetween(
-        settings.startDate, settings.endDate)) {
+    } else if (!invoice.isBetween(settings.startDate, settings.endDate)) {
       // skip it
     } else {
       if (totals[invoice.invoiceDate] == null) {
