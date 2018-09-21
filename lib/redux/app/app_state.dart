@@ -20,8 +20,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
-  factory AppState(
-      {String appVersion, bool enableDarkMode}) {
+  factory AppState({String appVersion, bool enableDarkMode}) {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
@@ -32,8 +31,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState3: CompanyState(),
       companyState4: CompanyState(),
       companyState5: CompanyState(),
-      uiState: UIState(CompanyEntity(),
-          enableDarkMode: enableDarkMode),
+      uiState: UIState(CompanyEntity(), enableDarkMode: enableDarkMode),
     );
   }
 
@@ -152,6 +150,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Date Formats: ${staticState.dateFormatMap}';
-    return 'Route: ${uiState.currentRoute}, Offset: ${dashboardUIState.offset}, Range: ${dashboardUIState.dateRange}';
+    return 'Route: ${uiState.currentRoute}, CurrencyId: ${dashboardUIState.currencyId}';
   }
 }

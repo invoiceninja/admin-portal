@@ -31,8 +31,10 @@ class DashboardPanels extends StatelessWidget {
 
   Widget _header(BuildContext context) {
     final uiState = viewModel.dashboardUIState;
-    final company = viewModel.state.selectedCompany;
-    final clientMap = viewModel.state.clientState.map;
+    final state = viewModel.state;
+    final company = state.selectedCompany;
+    final clientMap = state.clientState.map;
+    final currencyMap = state.staticState.currencyMap;
 
     return Material(
       color: Theme.of(context).backgroundColor,
@@ -71,16 +73,19 @@ class DashboardPanels extends StatelessWidget {
           ),
           SizedBox(width: 8.0),
           memoizedHasMultipleCurrencies(company, clientMap)
-              ? Column(
+              ? Row(
                   children: <Widget>[
-                    DropdownButton<CurrencyEntity>(
+                    DropdownButton<int>(
                       items: memoizedGetCurrencyIds(company, clientMap)
-                          .map((currencyId) => DropdownMenuItem<CurrencyEntity>(
-                                child: Text(currencyId.toString()),
+                          .map((currencyId) => DropdownMenuItem<int>(
+                                child: Text(currencyMap[currencyId].code),
+                                value: currencyId,
                               ))
                           .toList(),
+                      onChanged: (currencyId) =>
+                          viewModel.onCurrencyChanged(currencyId),
                     ),
-                    SizedBox(width: 8.0),
+                    SizedBox(width: 16.0),
                   ],
                 )
               : Container(),

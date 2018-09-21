@@ -112,6 +112,9 @@ class _$DashboardUIStateSerializer
           specifiedType: const FullType(String)),
       'offset',
       serializers.serialize(object.offset, specifiedType: const FullType(int)),
+      'currencyId',
+      serializers.serialize(object.currencyId,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -159,6 +162,10 @@ class _$DashboardUIStateSerializer
           break;
         case 'offset':
           result.offset = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'currencyId':
+          result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
       }
@@ -286,6 +293,8 @@ class _$DashboardUIState extends DashboardUIState {
   final String compareCustomEndDate;
   @override
   final int offset;
+  @override
+  final int currencyId;
 
   factory _$DashboardUIState([void updates(DashboardUIStateBuilder b)]) =>
       (new DashboardUIStateBuilder()..update(updates)).build();
@@ -298,7 +307,8 @@ class _$DashboardUIState extends DashboardUIState {
       this.compareDateRange,
       this.compareCustomStartDate,
       this.compareCustomEndDate,
-      this.offset})
+      this.offset,
+      this.currencyId})
       : super._() {
     if (dateRange == null) {
       throw new BuiltValueNullFieldError('DashboardUIState', 'dateRange');
@@ -328,6 +338,9 @@ class _$DashboardUIState extends DashboardUIState {
     if (offset == null) {
       throw new BuiltValueNullFieldError('DashboardUIState', 'offset');
     }
+    if (currencyId == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'currencyId');
+    }
   }
 
   @override
@@ -349,7 +362,8 @@ class _$DashboardUIState extends DashboardUIState {
         compareDateRange == other.compareDateRange &&
         compareCustomStartDate == other.compareCustomStartDate &&
         compareCustomEndDate == other.compareCustomEndDate &&
-        offset == other.offset;
+        offset == other.offset &&
+        currencyId == other.currencyId;
   }
 
   @override
@@ -360,14 +374,16 @@ class _$DashboardUIState extends DashboardUIState {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc(0, dateRange.hashCode),
-                                customStartDate.hashCode),
-                            customEndDate.hashCode),
-                        enableComparison.hashCode),
-                    compareDateRange.hashCode),
-                compareCustomStartDate.hashCode),
-            compareCustomEndDate.hashCode),
-        offset.hashCode));
+                            $jc(
+                                $jc($jc(0, dateRange.hashCode),
+                                    customStartDate.hashCode),
+                                customEndDate.hashCode),
+                            enableComparison.hashCode),
+                        compareDateRange.hashCode),
+                    compareCustomStartDate.hashCode),
+                compareCustomEndDate.hashCode),
+            offset.hashCode),
+        currencyId.hashCode));
   }
 
   @override
@@ -380,7 +396,8 @@ class _$DashboardUIState extends DashboardUIState {
           ..add('compareDateRange', compareDateRange)
           ..add('compareCustomStartDate', compareCustomStartDate)
           ..add('compareCustomEndDate', compareCustomEndDate)
-          ..add('offset', offset))
+          ..add('offset', offset)
+          ..add('currencyId', currencyId))
         .toString();
   }
 }
@@ -427,6 +444,10 @@ class DashboardUIStateBuilder
   int get offset => _$this._offset;
   set offset(int offset) => _$this._offset = offset;
 
+  int _currencyId;
+  int get currencyId => _$this._currencyId;
+  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+
   DashboardUIStateBuilder();
 
   DashboardUIStateBuilder get _$this {
@@ -439,6 +460,7 @@ class DashboardUIStateBuilder
       _compareCustomStartDate = _$v.compareCustomStartDate;
       _compareCustomEndDate = _$v.compareCustomEndDate;
       _offset = _$v.offset;
+      _currencyId = _$v.currencyId;
       _$v = null;
     }
     return this;
@@ -468,7 +490,8 @@ class DashboardUIStateBuilder
             compareDateRange: compareDateRange,
             compareCustomStartDate: compareCustomStartDate,
             compareCustomEndDate: compareCustomEndDate,
-            offset: offset);
+            offset: offset,
+            currencyId: currencyId);
     replace(_$result);
     return _$result;
   }

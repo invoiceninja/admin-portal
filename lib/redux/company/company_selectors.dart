@@ -26,7 +26,9 @@ List<int> getCurrencyIds(
     currencyIds.add(kDefaultCurrencyId);
   }
   clientMap.forEach((clientId, client) {
-    if (client.currencyId > 0 && !currencyIds.contains(client.currencyId)) {
+    if (client.currencyId > 0 &&
+        !client.isDeleted &&
+        !currencyIds.contains(client.currencyId)) {
       currencyIds.add(client.currencyId);
     }
   });

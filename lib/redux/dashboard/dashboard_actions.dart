@@ -14,8 +14,9 @@ class ViewDashboard implements PersistUI {
 class UpdateDashboardSettings implements PersistUI {
   DashboardSettings settings;
   int offset;
+  int currencyId;
 
-  UpdateDashboardSettings({this.settings, this.offset});
+  UpdateDashboardSettings({this.settings, this.offset, this.currencyId});
 }
 
 class LoadDashboard {

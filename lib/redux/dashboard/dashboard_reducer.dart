@@ -16,8 +16,6 @@ DashboardState _setLoadedDashboards(
 DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
   if (action is UpdateDashboardSettings) {
     final settings = action.settings;
-    final offset = action.offset;
-
     if (settings != null) {
       return state.rebuild((b) => b
         ..dateRange = settings.dateRange
@@ -28,8 +26,10 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
         ..compareCustomStartDate = settings.compareStartDate
         ..compareCustomStartDate = settings.compareEndDate
         ..offset = 0);
-    } else if (offset != null) {
-      return state.rebuild((b) => b..offset += offset);
+    } else if (action.offset != null) {
+      return state.rebuild((b) => b..offset += action.offset);
+    } else if (action.currencyId != null) {
+      return state.rebuild((b) => b..currencyId = action.currencyId);
     }
   }
 

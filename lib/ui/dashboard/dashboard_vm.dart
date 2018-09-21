@@ -41,6 +41,7 @@ class DashboardVM {
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
   final Function(int) onOffsetChanged;
+  final Function(int) onCurrencyChanged;
 
   DashboardVM({
     @required this.state,
@@ -53,6 +54,7 @@ class DashboardVM {
     @required this.onRefreshed,
     @required this.onSettingsChanged,
     @required this.onOffsetChanged,
+    @required this.onCurrencyChanged,
   });
 
   static DashboardVM fromStore(Store<AppState> store) {
@@ -81,6 +83,8 @@ class DashboardVM {
           store.dispatch(UpdateDashboardSettings(settings: settings)),
       onOffsetChanged: (offset) =>
           store.dispatch(UpdateDashboardSettings(offset: offset)),
+      onCurrencyChanged: (currencyId) =>
+          store.dispatch(UpdateDashboardSettings(currencyId: currencyId)),
       filter: filter,
       filteredList:
           memoizedFilteredSelector(filter, state.selectedCompanyState),
