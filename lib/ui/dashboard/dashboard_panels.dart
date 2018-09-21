@@ -1,8 +1,8 @@
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_range_picker.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -92,6 +92,7 @@ class DashboardPanels extends StatelessWidget {
     ];
 
     double total = 0.0;
+    double previousTotal = 0.0;
     data.forEach((dynamic item) {
       total += item.amount;
     });
@@ -118,16 +119,16 @@ class DashboardPanels extends StatelessWidget {
         ),
       );
 
-      double previousTotal = 0.0;
-      data.forEach((dynamic item) {
+      previousData.forEach((dynamic item) {
         previousTotal += item.amount;
       });
     }
 
     return DashboardChart(
         series: series,
-        heading: formatNumber(total, context),
-        subheading: localization.invoices);
+        amount: total,
+        previousAmount: previousTotal,
+        title: localization.invoices);
   }
 
   @override
@@ -141,108 +142,3 @@ class DashboardPanels extends StatelessWidget {
   }
 }
 
-class DashboardChart extends StatefulWidget {
-  const DashboardChart({this.series, this.heading, this.subheading});
-
-  final List<charts.Series> series;
-  final String heading;
-  final String subheading;
-
-  @override
-  _DashboardChartState createState() => _DashboardChartState();
-}
-
-class _DashboardChartState extends State<DashboardChart> {
-  String _title;
-  String _subtitle;
-
-  void _onSelectionChanged(charts.SelectionModel model) {
-    final selectedDatum = model.selectedDatum;
-
-    DateTime date;
-    double total = 0.0;
-    final measures = <String, num>{};
-
-    if (selectedDatum.isNotEmpty) {
-      date = selectedDatum.first.datum.date;
-      selectedDatum.forEach((charts.SeriesDatum datumPair) {
-        total += datumPair.datum.amount;
-        measures[datumPair.series.displayName] = datumPair.datum.amount;
-      });
-    }
-
-    setState(() {
-      if (date != null) {
-        _title = formatNumber(total, context);
-        _subtitle = formatDate(date.toIso8601String(), context);
-      } else {
-        _title = null;
-        _subtitle = null;
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final chart = charts.TimeSeriesChart(
-      widget.series,
-      animate: true,
-      selectionModels: [
-        charts.SelectionModelConfig(
-          type: charts.SelectionModelType.info,
-          listener: _onSelectionChanged,
-        )
-      ],
-      behaviors: [
-        charts.SeriesLegend(
-          outsideJustification: charts.OutsideJustification.endDrawArea,
-        )
-      ],
-    );
-
-    return FormCard(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(14.0),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        Text(widget.subheading,
-                            style: Theme.of(context).textTheme.subhead),
-                        Text(widget.heading,
-                            style: Theme.of(context).textTheme.headline),
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                    ),
-                  ),
-                  _title != null
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(_subtitle,
-                                style: Theme.of(context).textTheme.subhead),
-                            Text(_title,
-                                style: Theme.of(context).textTheme.headline),
-                          ],
-                        )
-                      : Container(),
-                ],
-              ),
-              SizedBox(
-                height: 200.0,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: chart,
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-}
