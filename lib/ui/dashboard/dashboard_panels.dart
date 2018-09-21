@@ -84,6 +84,7 @@ class DashboardPanels extends StatelessWidget {
                           .toList(),
                       onChanged: (currencyId) =>
                           viewModel.onCurrencyChanged(currencyId),
+                      value: state.dashboardUIState.currencyId,
                     ),
                     SizedBox(width: 16.0),
                   ],
