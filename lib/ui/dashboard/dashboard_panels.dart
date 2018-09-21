@@ -95,8 +95,8 @@ class DashboardPanels extends StatelessWidget {
 
     return DashboardChart(
         series: series,
-        heading: localization.invoices,
-        subheading: formatNumber(total, context));
+        heading: formatNumber(total, context),
+        subheading: localization.invoices);
   }
 
   @override
@@ -181,9 +181,9 @@ class _DashboardChartState extends State<DashboardChart> {
                   Expanded(
                     child: Column(
                       children: <Widget>[
-                        Text(widget.heading,
-                            style: Theme.of(context).textTheme.subhead),
                         Text(widget.subheading,
+                            style: Theme.of(context).textTheme.subhead),
+                        Text(widget.heading,
                             style: Theme.of(context).textTheme.headline),
                       ],
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,6 +191,7 @@ class _DashboardChartState extends State<DashboardChart> {
                   ),
                   _title != null
                       ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
                             Text(_subtitle,
                                 style: Theme.of(context).textTheme.subhead),
