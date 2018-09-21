@@ -70,7 +70,7 @@ List<ChartMoneyData> chartPayments(
       if (totals[payment.paymentDate] == null) {
         totals[payment.paymentDate] = 0.0;
       }
-      totals[payment.paymentDate] += payment.amount;
+      totals[payment.paymentDate] += payment.completedAmount;
     }
   });
 

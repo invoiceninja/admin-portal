@@ -68,7 +68,11 @@ class _DashboardChartState extends State<DashboardChart> {
     final String changeAmount = (isIncrease ? '+' : '') +
         formatNumber(widget.amount - widget.previousAmount, context);
     final changePercent = (isIncrease ? '+' : '-') +
-        formatNumber(widget.previousAmount / widget.amount * 100, context,
+        formatNumber(
+            widget.amount != 0 && widget.previousAmount != 0
+                ? round(widget.previousAmount / widget.amount * 100, 2)
+                : 0.0,
+            context,
             formatNumberType: FormatNumberType.percent);
     final String changeString = widget.amount == 0 || widget.previousAmount == 0
         ? ''

@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -203,6 +204,15 @@ abstract class PaymentEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  double get completedAmount {
+    if ([kPaymentStatusVoided, kPaymentStatusFailed]
+        .contains(paymentStatusId)) {
+      return 0.0;
+    }
+
+    return amount - refunded;
+  }
 
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
 }
