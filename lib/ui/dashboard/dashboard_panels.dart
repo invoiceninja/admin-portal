@@ -61,7 +61,8 @@ class DashboardPanels extends StatelessWidget {
           SizedBox(width: 8.0),
           IconButton(
             icon: Icon(Icons.navigate_next),
-            onPressed: () => viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
+            onPressed: () =>
+                viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
           ),
           SizedBox(width: 8.0),
         ],
@@ -87,7 +88,15 @@ class DashboardPanels extends StatelessWidget {
       ),
     ];
 
-    return DashboardChart(series);
+    double total = 0.0;
+    data.forEach((dynamic item) {
+      total += item.amount;
+    });
+
+    return DashboardChart(
+        series: series,
+        heading: localization.invoices,
+        subheading: formatNumber(total, context));
   }
 
   @override
@@ -102,9 +111,11 @@ class DashboardPanels extends StatelessWidget {
 }
 
 class DashboardChart extends StatefulWidget {
-  const DashboardChart(this.series);
+  const DashboardChart({this.series, this.heading, this.subheading});
 
   final List<charts.Series> series;
+  final String heading;
+  final String subheading;
 
   @override
   _DashboardChartState createState() => _DashboardChartState();
@@ -112,27 +123,7 @@ class DashboardChart extends StatefulWidget {
 
 class _DashboardChartState extends State<DashboardChart> {
   String _title;
-  String _titleOrig;
-
   String _subtitle;
-  String _subtitleOrig;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final series = widget.series[0];
-    final data = series.data;
-
-    double total = 0.0;
-    data.forEach((dynamic item) {
-      total += item.amount;
-    });
-
-    _title = _titleOrig = formatNumber(total, context);
-    //_subtitle = _subtitleOrig = series.displayName;
-    _subtitle = _subtitleOrig = '';
-  }
 
   void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
@@ -154,14 +145,15 @@ class _DashboardChartState extends State<DashboardChart> {
         _title = formatNumber(total, context);
         _subtitle = formatDate(date.toIso8601String(), context);
       } else {
-        _title = _titleOrig;
-        _subtitle = _subtitleOrig;
+        _title = null;
+        _subtitle = null;
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final chart = charts.TimeSeriesChart(
       widget.series,
       animate: true,
@@ -182,23 +174,41 @@ class _DashboardChartState extends State<DashboardChart> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.all(14.0),
-          child: SizedBox(
-            height: 200.0,
-            child: Stack(
-              children: <Widget>[
-                Padding(
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Text(widget.heading,
+                            style: Theme.of(context).textTheme.subhead),
+                        Text(widget.subheading,
+                            style: Theme.of(context).textTheme.headline),
+                      ],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ),
+                  _title != null
+                      ? Column(
+                          children: <Widget>[
+                            Text(_subtitle,
+                                style: Theme.of(context).textTheme.subhead),
+                            Text(_title,
+                                style: Theme.of(context).textTheme.headline),
+                          ],
+                        )
+                      : Container(),
+                ],
+              ),
+              SizedBox(
+                height: 200.0,
+                child: Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: chart,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(_title, style: Theme.of(context).textTheme.title),
-                    Text(_subtitle, style: Theme.of(context).textTheme.subhead),
-                  ],
-                )
-              ],
-            ),
+              ),
+            ],
           ),
         )
       ],
