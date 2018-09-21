@@ -73,6 +73,10 @@ String formatNumber(
   final CurrencyEntity currency = state.staticState.currencyMap[currencyId];
   final CountryEntity country = state.staticState.countryMap[countryId];
 
+  if (currency == null) {
+    return '';
+  }
+
   String thousandSeparator = currency.thousandSeparator;
   String decimalSeparator = currency.decimalSeparator;
   bool swapCurrencySymbol = currency.swapCurrencySymbol;
