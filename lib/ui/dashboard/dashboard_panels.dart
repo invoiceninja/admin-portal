@@ -91,6 +91,11 @@ class DashboardPanels extends StatelessWidget {
       ),
     ];
 
+    double total = 0.0;
+    data.forEach((dynamic item) {
+      total += item.amount;
+    });
+
     if (settings.enableComparison) {
       final offsetData = memoizedChartOutstandingInvoices(
           viewModel.dashboardUIState.rebuild((b) => b..offset += 1),
@@ -106,18 +111,18 @@ class DashboardPanels extends StatelessWidget {
           domainFn: (ChartMoneyData clickData, _) => clickData.date,
           measureFn: (ChartMoneyData clickData, _) => clickData.amount,
           colorFn: (ChartMoneyData clickData, _) =>
-              charts.MaterialPalette.red.shadeDefault,
+              charts.MaterialPalette.gray.shadeDefault,
           id: 'previous',
           displayName: localization.previousPeriod,
           data: previousData,
         ),
       );
-    }
 
-    double total = 0.0;
-    data.forEach((dynamic item) {
-      total += item.amount;
-    });
+      double previousTotal = 0.0;
+      data.forEach((dynamic item) {
+        previousTotal += item.amount;
+      });
+    }
 
     return DashboardChart(
         series: series,
