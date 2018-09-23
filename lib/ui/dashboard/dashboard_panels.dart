@@ -1,4 +1,3 @@
-import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -75,16 +74,18 @@ class DashboardPanels extends StatelessWidget {
           memoizedHasMultipleCurrencies(company, clientMap)
               ? Row(
                   children: <Widget>[
-                    DropdownButton<int>(
-                      items: memoizedGetCurrencyIds(company, clientMap)
-                          .map((currencyId) => DropdownMenuItem<int>(
-                                child: Text(currencyMap[currencyId].code),
-                                value: currencyId,
-                              ))
-                          .toList(),
-                      onChanged: (currencyId) =>
-                          viewModel.onCurrencyChanged(currencyId),
-                      value: state.dashboardUIState.currencyId,
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<int>(
+                        items: memoizedGetCurrencyIds(company, clientMap)
+                            .map((currencyId) => DropdownMenuItem<int>(
+                                  child: Text(currencyMap[currencyId].code),
+                                  value: currencyId,
+                                ))
+                            .toList(),
+                        onChanged: (currencyId) =>
+                            viewModel.onCurrencyChanged(currencyId),
+                        value: state.dashboardUIState.currencyId,
+                      ),
                     ),
                     SizedBox(width: 16.0),
                   ],
@@ -102,9 +103,10 @@ class DashboardPanels extends StatelessWidget {
 
     final localization = AppLocalization.of(context);
     final settings = viewModel.dashboardUIState;
+    final state = viewModel.state;
 
-    final data = memoizedChartOutstandingInvoices(
-        settings, viewModel.state.invoiceState.map);
+    final data = memoizedChartOutstandingInvoices(state.selectedCompany,
+        settings, state.invoiceState.map, state.clientState.map);
 
     final series = [
       charts.Series<ChartMoneyData, DateTime>(
@@ -128,8 +130,10 @@ class DashboardPanels extends StatelessWidget {
 
     if (settings.enableComparison) {
       final offsetData = memoizedChartOutstandingInvoices(
-          viewModel.dashboardUIState.rebuild((b) => b..offset += 1),
-          viewModel.state.invoiceState.map);
+          state.selectedCompany,
+          settings.rebuild((b) => b..offset += 1),
+          state.invoiceState.map,
+          state.clientState.map);
 
       final List<ChartMoneyData> previousData = [];
       for (int i = 0; i < data.length; i++) {
@@ -192,9 +196,9 @@ class DashboardPanels extends StatelessWidget {
     });
 
     if (settings.enableComparison) {
-      final offsetData = memoizedChartOutstandingInvoices(
+      final offsetData = memoizedChartPayments(
           viewModel.dashboardUIState.rebuild((b) => b..offset += 1),
-          viewModel.state.invoiceState.map);
+          viewModel.state.paymentState.map);
 
       final List<ChartMoneyData> previousData = [];
       for (int i = 0; i < data.length; i++) {

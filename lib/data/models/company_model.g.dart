@@ -48,7 +48,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.logoUrl,
           specifiedType: const FullType(String)),
       'currency_id',
-      serializers.serialize(object.currencyId,
+      serializers.serialize(object.companyCurrencyId,
           specifiedType: const FullType(int)),
       'timezone_id',
       serializers.serialize(object.timezoneId,
@@ -230,7 +230,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'currency_id':
-          result.currencyId = serializers.deserialize(value,
+          result.companyCurrencyId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'timezone_id':
@@ -662,7 +662,7 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String logoUrl;
   @override
-  final int currencyId;
+  final int companyCurrencyId;
   @override
   final int timezoneId;
   @override
@@ -768,7 +768,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.token,
       this.plan,
       this.logoUrl,
-      this.currencyId,
+      this.companyCurrencyId,
       this.timezoneId,
       this.countryId,
       this.dateFormatId,
@@ -830,8 +830,8 @@ class _$CompanyEntity extends CompanyEntity {
     if (logoUrl == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'logoUrl');
     }
-    if (currencyId == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'currencyId');
+    if (companyCurrencyId == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'companyCurrencyId');
     }
     if (timezoneId == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'timezoneId');
@@ -1012,7 +1012,7 @@ class _$CompanyEntity extends CompanyEntity {
         token == other.token &&
         plan == other.plan &&
         logoUrl == other.logoUrl &&
-        currencyId == other.currencyId &&
+        companyCurrencyId == other.companyCurrencyId &&
         timezoneId == other.timezoneId &&
         countryId == other.countryId &&
         dateFormatId == other.dateFormatId &&
@@ -1083,7 +1083,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode),
                                                                                 enableCustomInvoiceTaxes2.hashCode),
                                                                             taxRates.hashCode),
                                                                         user.hashCode),
@@ -1112,7 +1112,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('token', token)
           ..add('plan', plan)
           ..add('logoUrl', logoUrl)
-          ..add('currencyId', currencyId)
+          ..add('companyCurrencyId', companyCurrencyId)
           ..add('timezoneId', timezoneId)
           ..add('countryId', countryId)
           ..add('dateFormatId', dateFormatId)
@@ -1185,9 +1185,10 @@ class CompanyEntityBuilder
   String get logoUrl => _$this._logoUrl;
   set logoUrl(String logoUrl) => _$this._logoUrl = logoUrl;
 
-  int _currencyId;
-  int get currencyId => _$this._currencyId;
-  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+  int _companyCurrencyId;
+  int get companyCurrencyId => _$this._companyCurrencyId;
+  set companyCurrencyId(int companyCurrencyId) =>
+      _$this._companyCurrencyId = companyCurrencyId;
 
   int _timezoneId;
   int get timezoneId => _$this._timezoneId;
@@ -1433,7 +1434,7 @@ class CompanyEntityBuilder
       _token = _$v.token;
       _plan = _$v.plan;
       _logoUrl = _$v.logoUrl;
-      _currencyId = _$v.currencyId;
+      _companyCurrencyId = _$v.companyCurrencyId;
       _timezoneId = _$v.timezoneId;
       _countryId = _$v.countryId;
       _dateFormatId = _$v.dateFormatId;
@@ -1510,7 +1511,7 @@ class CompanyEntityBuilder
               token: token,
               plan: plan,
               logoUrl: logoUrl,
-              currencyId: currencyId,
+              companyCurrencyId: companyCurrencyId,
               timezoneId: timezoneId,
               countryId: countryId,
               dateFormatId: dateFormatId,
