@@ -146,7 +146,7 @@ class DashboardPanels extends StatelessWidget {
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
               charts.MaterialPalette.gray.shadeDefault,
-          id: 'previous',
+          id: 'previousInvoices',
           displayName: localization.previousPeriod,
           data: previousData,
         ),
@@ -173,9 +173,14 @@ class DashboardPanels extends StatelessWidget {
 
     final localization = AppLocalization.of(context);
     final settings = viewModel.dashboardUIState;
+    final state = viewModel.state;
 
-    final data =
-        memoizedChartPayments(settings, viewModel.state.paymentState.map);
+    final data = memoizedChartPayments(
+        state.selectedCompany,
+        settings,
+        state.invoiceState.map,
+        state.clientState.map,
+        viewModel.state.paymentState.map);
 
     final series = [
       charts.Series<ChartMoneyData, DateTime>(
@@ -199,8 +204,11 @@ class DashboardPanels extends StatelessWidget {
 
     if (settings.enableComparison) {
       final offsetData = memoizedChartPayments(
-          viewModel.dashboardUIState.rebuild((b) => b..offset += 1),
-          viewModel.state.paymentState.map);
+          state.selectedCompany,
+          settings.rebuild((b) => b..offset += 1),
+          state.invoiceState.map,
+          state.clientState.map,
+          state.paymentState.map);
 
       final List<ChartMoneyData> previousData = [];
       for (int i = 0; i < data.length; i++) {
@@ -213,7 +221,7 @@ class DashboardPanels extends StatelessWidget {
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
               charts.MaterialPalette.gray.shadeDefault,
-          id: 'previous',
+          id: 'previousPayments',
           displayName: localization.previousPeriod,
           data: previousData,
         ),
@@ -225,10 +233,12 @@ class DashboardPanels extends StatelessWidget {
     }
 
     return DashboardChart(
-        series: series,
-        amount: total,
-        previousAmount: previousTotal,
-        title: localization.payments);
+      series: series,
+      amount: total,
+      previousAmount: previousTotal,
+      title: localization.payments,
+      currencyId: settings.currencyId,
+    );
   }
 
   @override

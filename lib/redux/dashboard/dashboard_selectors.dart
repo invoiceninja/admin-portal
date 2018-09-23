@@ -68,18 +68,32 @@ List<ChartMoneyData> chartOutstandingInvoices({
   return data;
 }
 
-var memoizedChartPayments = memo2(
-    (DashboardUIState settings, BuiltMap<int, PaymentEntity> paymentMap) =>
-        chartPayments(settings, paymentMap));
+var memoizedChartPayments = memo5((CompanyEntity company,
+        DashboardUIState settings,
+        BuiltMap<int, InvoiceEntity> invoiceMap,
+        BuiltMap<int, ClientEntity> clientMap,
+        BuiltMap<int, PaymentEntity> paymentMap) =>
+    chartPayments(company, settings, invoiceMap, clientMap, paymentMap));
 
 List<ChartMoneyData> chartPayments(
-    DashboardUIState settings, BuiltMap<int, PaymentEntity> paymentMap) {
+    CompanyEntity company,
+    DashboardUIState settings,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltMap<int, ClientEntity> clientMap,
+    BuiltMap<int, PaymentEntity> paymentMap) {
   final Map<String, double> totals = {};
 
   paymentMap.forEach((int, payment) {
+    final invoice = invoiceMap[payment.invoiceId] ?? InvoiceEntity();
+    final client = clientMap[invoice.clientId] ?? ClientEntity();
+    final currencyId =
+        client.currencyId > 0 ? client.currencyId : company.currencyId;
+
     if (payment.isDeleted) {
       // skip it
     } else if (!payment.isBetween(settings.startDate, settings.endDate)) {
+      // skip it
+    } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
       // skip it
     } else {
       if (totals[payment.paymentDate] == null) {
