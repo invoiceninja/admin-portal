@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -67,8 +69,9 @@ class DashboardPanels extends StatelessWidget {
           SizedBox(width: 8.0),
           IconButton(
             icon: Icon(Icons.navigate_next),
-            onPressed: () =>
-                viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
+            onPressed: () => viewModel.isNextEnabled
+                ? viewModel.onOffsetChanged(-1)
+                : null,
           ),
           SizedBox(width: 8.0),
           memoizedHasMultipleCurrencies(company, clientMap)
@@ -136,7 +139,7 @@ class DashboardPanels extends StatelessWidget {
           state.clientState.map);
 
       final List<ChartMoneyData> previousData = [];
-      for (int i = 0; i < data.length; i++) {
+      for (int i = 0; i < min(data.length, offsetData.length); i++) {
         previousData.add(ChartMoneyData(data[i].date, offsetData[i].amount));
       }
 
@@ -211,7 +214,7 @@ class DashboardPanels extends StatelessWidget {
           state.paymentState.map);
 
       final List<ChartMoneyData> previousData = [];
-      for (int i = 0; i < data.length; i++) {
+      for (int i = 0; i < min(data.length, offsetData.length); i++) {
         previousData.add(ChartMoneyData(data[i].date, offsetData[i].amount));
       }
 
