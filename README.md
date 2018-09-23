@@ -1,6 +1,6 @@
 # Invoice Ninja
 
-This is a companion app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja) web app.
+Companion app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja) web app.
 
 ## Open Beta
 - Android: https://play.google.com/apps/testing/com.invoiceninja.flutter
