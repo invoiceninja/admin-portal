@@ -39,6 +39,7 @@ class DashboardPanels extends StatelessWidget {
 
     return Material(
       color: Theme.of(context).backgroundColor,
+      elevation: 6.0,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -69,9 +70,8 @@ class DashboardPanels extends StatelessWidget {
           SizedBox(width: 8.0),
           IconButton(
             icon: Icon(Icons.navigate_next),
-            onPressed: () => viewModel.isNextEnabled
-                ? viewModel.onOffsetChanged(-1)
-                : null,
+            onPressed: () =>
+                viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
           ),
           SizedBox(width: 8.0),
           memoizedHasMultipleCurrencies(company, clientMap)
@@ -246,11 +246,23 @@ class DashboardPanels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Stack(
       children: <Widget>[
-        _header(context),
-        _invoiceChart(context),
-        _paymentChart(context),
+        ListView(
+          children: <Widget>[
+            SizedBox(
+              height: 74.0,
+            ),
+            _invoiceChart(context),
+            _paymentChart(context),
+          ],
+        ),
+        ConstrainedBox(
+          child: _header(context),
+          constraints: BoxConstraints.loose(
+            Size(double.infinity, 74.0),
+          ),
+        ),
       ],
     );
   }
