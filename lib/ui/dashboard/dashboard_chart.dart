@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class DashboardChart extends StatefulWidget {
   const DashboardChart(
-      {this.series, this.amount, this.previousAmount, this.title, this.currencyId});
+      {this.series,
+      this.amount,
+      this.previousAmount,
+      this.title,
+      this.currencyId});
 
   final List<charts.Series> series;
   final double previousAmount;
@@ -49,6 +55,11 @@ class _DashboardChartState extends State<DashboardChart> {
 
   @override
   Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
+    final color = state.uiState.enableDarkMode
+        ? charts.MaterialPalette.white
+        : charts.MaterialPalette.gray.shade700;
+
     final chart = charts.TimeSeriesChart(
       widget.series,
       animate: true,
@@ -63,18 +74,28 @@ class _DashboardChartState extends State<DashboardChart> {
           outsideJustification: charts.OutsideJustification.endDrawArea,
         )
       ],
+      domainAxis: charts.DateTimeAxisSpec(
+          renderSpec: charts.SmallTickRendererSpec(
+              labelStyle: charts.TextStyleSpec(color: color),
+              lineStyle: charts.LineStyleSpec(color: color))),
+      primaryMeasureAxis: charts.NumericAxisSpec(
+          renderSpec: charts.GridlineRendererSpec(
+              labelStyle: charts.TextStyleSpec(color: color),
+              lineStyle: charts.LineStyleSpec(color: color))),
     );
 
     final bool isIncrease = widget.amount >= widget.previousAmount;
     final String changeAmount = (isIncrease ? '+' : '') +
-        formatNumber(widget.amount - widget.previousAmount, context, currencyId: widget.currencyId);
+        formatNumber(widget.amount - widget.previousAmount, context,
+            currencyId: widget.currencyId);
     final changePercent = (isIncrease ? '+' : '-') +
         formatNumber(
             widget.amount != 0 && widget.previousAmount != 0
                 ? round(widget.previousAmount / widget.amount * 100, 2)
                 : 0.0,
             context,
-            formatNumberType: FormatNumberType.percent, currencyId: widget.currencyId);
+            formatNumberType: FormatNumberType.percent,
+            currencyId: widget.currencyId);
     final String changeString = widget.amount == 0 || widget.previousAmount == 0
         ? ''
         : '$changeAmount ($changePercent)';
@@ -94,7 +115,9 @@ class _DashboardChartState extends State<DashboardChart> {
                             style: Theme.of(context).textTheme.subhead),
                         Row(
                           children: <Widget>[
-                            Text(formatNumber(widget.amount, context, currencyId: widget.currencyId),
+                            Text(
+                                formatNumber(widget.amount, context,
+                                    currencyId: widget.currencyId),
                                 style: Theme.of(context).textTheme.headline),
                             SizedBox(width: 12.0),
                             Text(
