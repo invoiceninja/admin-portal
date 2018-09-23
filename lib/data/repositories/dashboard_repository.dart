@@ -16,7 +16,7 @@ class DashboardRepository {
   Future<DashboardEntity> loadItem(CompanyEntity company, AuthState auth) async {
 
     final dynamic response = await webClient.get(
-        auth.url + '/dashboard', company.token);
+        auth.url + '/dashboard?only_activity=true', company.token);
 
     final DashboardResponse dashboardResponse = serializers.deserializeWith(
         DashboardResponse.serializer, response);

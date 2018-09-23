@@ -621,54 +621,6 @@ class _$DashboardEntitySerializer
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
     ];
-    if (object.paidToDate != null) {
-      result
-        ..add('paidToDate')
-        ..add(serializers.serialize(object.paidToDate,
-            specifiedType: const FullType(double)));
-    }
-    if (object.paidToDateCurrency != null) {
-      result
-        ..add('paidToDateCurrency')
-        ..add(serializers.serialize(object.paidToDateCurrency,
-            specifiedType: const FullType(int)));
-    }
-    if (object.balances != null) {
-      result
-        ..add('balances')
-        ..add(serializers.serialize(object.balances,
-            specifiedType: const FullType(double)));
-    }
-    if (object.balancesCurrency != null) {
-      result
-        ..add('balancesCurrency')
-        ..add(serializers.serialize(object.balancesCurrency,
-            specifiedType: const FullType(int)));
-    }
-    if (object.averageInvoice != null) {
-      result
-        ..add('averageInvoice')
-        ..add(serializers.serialize(object.averageInvoice,
-            specifiedType: const FullType(double)));
-    }
-    if (object.averageInvoiceCurrency != null) {
-      result
-        ..add('averageInvoiceCurrency')
-        ..add(serializers.serialize(object.averageInvoiceCurrency,
-            specifiedType: const FullType(int)));
-    }
-    if (object.invoicesSent != null) {
-      result
-        ..add('invoicesSent')
-        ..add(serializers.serialize(object.invoicesSent,
-            specifiedType: const FullType(int)));
-    }
-    if (object.activeClients != null) {
-      result
-        ..add('activeClients')
-        ..add(serializers.serialize(object.activeClients,
-            specifiedType: const FullType(int)));
-    }
 
     return result;
   }
@@ -684,38 +636,6 @@ class _$DashboardEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'paidToDate':
-          result.paidToDate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-        case 'paidToDateCurrency':
-          result.paidToDateCurrency = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'balances':
-          result.balances = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-        case 'balancesCurrency':
-          result.balancesCurrency = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'averageInvoice':
-          result.averageInvoice = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-        case 'averageInvoiceCurrency':
-          result.averageInvoiceCurrency = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'invoicesSent':
-          result.invoicesSent = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'activeClients':
-          result.activeClients = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -1574,38 +1494,12 @@ class DashboardResponseBuilder
 
 class _$DashboardEntity extends DashboardEntity {
   @override
-  final double paidToDate;
-  @override
-  final int paidToDateCurrency;
-  @override
-  final double balances;
-  @override
-  final int balancesCurrency;
-  @override
-  final double averageInvoice;
-  @override
-  final int averageInvoiceCurrency;
-  @override
-  final int invoicesSent;
-  @override
-  final int activeClients;
-  @override
   final BuiltList<ActivityEntity> activities;
 
   factory _$DashboardEntity([void updates(DashboardEntityBuilder b)]) =>
       (new DashboardEntityBuilder()..update(updates)).build();
 
-  _$DashboardEntity._(
-      {this.paidToDate,
-      this.paidToDateCurrency,
-      this.balances,
-      this.balancesCurrency,
-      this.averageInvoice,
-      this.averageInvoiceCurrency,
-      this.invoicesSent,
-      this.activeClients,
-      this.activities})
-      : super._() {
+  _$DashboardEntity._({this.activities}) : super._() {
     if (activities == null) {
       throw new BuiltValueNullFieldError('DashboardEntity', 'activities');
     }
@@ -1622,49 +1516,17 @@ class _$DashboardEntity extends DashboardEntity {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is DashboardEntity &&
-        paidToDate == other.paidToDate &&
-        paidToDateCurrency == other.paidToDateCurrency &&
-        balances == other.balances &&
-        balancesCurrency == other.balancesCurrency &&
-        averageInvoice == other.averageInvoice &&
-        averageInvoiceCurrency == other.averageInvoiceCurrency &&
-        invoicesSent == other.invoicesSent &&
-        activeClients == other.activeClients &&
-        activities == other.activities;
+    return other is DashboardEntity && activities == other.activities;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc($jc(0, paidToDate.hashCode),
-                                    paidToDateCurrency.hashCode),
-                                balances.hashCode),
-                            balancesCurrency.hashCode),
-                        averageInvoice.hashCode),
-                    averageInvoiceCurrency.hashCode),
-                invoicesSent.hashCode),
-            activeClients.hashCode),
-        activities.hashCode));
+    return $jf($jc(0, activities.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DashboardEntity')
-          ..add('paidToDate', paidToDate)
-          ..add('paidToDateCurrency', paidToDateCurrency)
-          ..add('balances', balances)
-          ..add('balancesCurrency', balancesCurrency)
-          ..add('averageInvoice', averageInvoice)
-          ..add('averageInvoiceCurrency', averageInvoiceCurrency)
-          ..add('invoicesSent', invoicesSent)
-          ..add('activeClients', activeClients)
           ..add('activities', activities))
         .toString();
   }
@@ -1673,42 +1535,6 @@ class _$DashboardEntity extends DashboardEntity {
 class DashboardEntityBuilder
     implements Builder<DashboardEntity, DashboardEntityBuilder> {
   _$DashboardEntity _$v;
-
-  double _paidToDate;
-  double get paidToDate => _$this._paidToDate;
-  set paidToDate(double paidToDate) => _$this._paidToDate = paidToDate;
-
-  int _paidToDateCurrency;
-  int get paidToDateCurrency => _$this._paidToDateCurrency;
-  set paidToDateCurrency(int paidToDateCurrency) =>
-      _$this._paidToDateCurrency = paidToDateCurrency;
-
-  double _balances;
-  double get balances => _$this._balances;
-  set balances(double balances) => _$this._balances = balances;
-
-  int _balancesCurrency;
-  int get balancesCurrency => _$this._balancesCurrency;
-  set balancesCurrency(int balancesCurrency) =>
-      _$this._balancesCurrency = balancesCurrency;
-
-  double _averageInvoice;
-  double get averageInvoice => _$this._averageInvoice;
-  set averageInvoice(double averageInvoice) =>
-      _$this._averageInvoice = averageInvoice;
-
-  int _averageInvoiceCurrency;
-  int get averageInvoiceCurrency => _$this._averageInvoiceCurrency;
-  set averageInvoiceCurrency(int averageInvoiceCurrency) =>
-      _$this._averageInvoiceCurrency = averageInvoiceCurrency;
-
-  int _invoicesSent;
-  int get invoicesSent => _$this._invoicesSent;
-  set invoicesSent(int invoicesSent) => _$this._invoicesSent = invoicesSent;
-
-  int _activeClients;
-  int get activeClients => _$this._activeClients;
-  set activeClients(int activeClients) => _$this._activeClients = activeClients;
 
   ListBuilder<ActivityEntity> _activities;
   ListBuilder<ActivityEntity> get activities =>
@@ -1720,14 +1546,6 @@ class DashboardEntityBuilder
 
   DashboardEntityBuilder get _$this {
     if (_$v != null) {
-      _paidToDate = _$v.paidToDate;
-      _paidToDateCurrency = _$v.paidToDateCurrency;
-      _balances = _$v.balances;
-      _balancesCurrency = _$v.balancesCurrency;
-      _averageInvoice = _$v.averageInvoice;
-      _averageInvoiceCurrency = _$v.averageInvoiceCurrency;
-      _invoicesSent = _$v.invoicesSent;
-      _activeClients = _$v.activeClients;
       _activities = _$v.activities?.toBuilder();
       _$v = null;
     }
@@ -1751,17 +1569,7 @@ class DashboardEntityBuilder
   _$DashboardEntity build() {
     _$DashboardEntity _$result;
     try {
-      _$result = _$v ??
-          new _$DashboardEntity._(
-              paidToDate: paidToDate,
-              paidToDateCurrency: paidToDateCurrency,
-              balances: balances,
-              balancesCurrency: balancesCurrency,
-              averageInvoice: averageInvoice,
-              averageInvoiceCurrency: averageInvoiceCurrency,
-              invoicesSent: invoicesSent,
-              activeClients: activeClients,
-              activities: activities.build());
+      _$result = _$v ?? new _$DashboardEntity._(activities: activities.build());
     } catch (_) {
       String _$failedField;
       try {

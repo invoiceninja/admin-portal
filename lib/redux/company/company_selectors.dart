@@ -11,7 +11,7 @@ var memoizedHasMultipleCurrencies = memo2(
 
 bool hasMultipleCurrencies(
         CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
-    memoizedGetCurrencyIds(company, clientMap).isNotEmpty;
+    memoizedGetCurrencyIds(company, clientMap).length > 1;
 
 var memoizedGetCurrencyIds = memo2(
     (CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
