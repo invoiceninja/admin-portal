@@ -158,10 +158,12 @@ class DashboardPanels extends StatelessWidget {
     }
 
     return DashboardChart(
-        series: series,
-        amount: total,
-        previousAmount: previousTotal,
-        title: localization.invoices);
+      series: series,
+      amount: total,
+      previousAmount: previousTotal,
+      title: localization.invoices,
+      currencyId: settings.currencyId,
+    );
   }
 
   Widget _paymentChart(BuildContext context) {

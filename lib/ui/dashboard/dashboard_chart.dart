@@ -5,12 +5,13 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class DashboardChart extends StatefulWidget {
   const DashboardChart(
-      {this.series, this.amount, this.previousAmount, this.title});
+      {this.series, this.amount, this.previousAmount, this.title, this.currencyId});
 
   final List<charts.Series> series;
   final double previousAmount;
   final double amount;
   final String title;
+  final int currencyId;
 
   @override
   _DashboardChartState createState() => _DashboardChartState();
@@ -37,7 +38,7 @@ class _DashboardChartState extends State<DashboardChart> {
 
     setState(() {
       if (date != null) {
-        _title = formatNumber(total, context);
+        _title = formatNumber(total, context, currencyId: widget.currencyId);
         _subtitle = formatDate(date.toIso8601String(), context);
       } else {
         _title = null;
@@ -66,14 +67,14 @@ class _DashboardChartState extends State<DashboardChart> {
 
     final bool isIncrease = widget.amount >= widget.previousAmount;
     final String changeAmount = (isIncrease ? '+' : '') +
-        formatNumber(widget.amount - widget.previousAmount, context);
+        formatNumber(widget.amount - widget.previousAmount, context, currencyId: widget.currencyId);
     final changePercent = (isIncrease ? '+' : '-') +
         formatNumber(
             widget.amount != 0 && widget.previousAmount != 0
                 ? round(widget.previousAmount / widget.amount * 100, 2)
                 : 0.0,
             context,
-            formatNumberType: FormatNumberType.percent);
+            formatNumberType: FormatNumberType.percent, currencyId: widget.currencyId);
     final String changeString = widget.amount == 0 || widget.previousAmount == 0
         ? ''
         : '$changeAmount ($changePercent)';
@@ -93,7 +94,7 @@ class _DashboardChartState extends State<DashboardChart> {
                             style: Theme.of(context).textTheme.subhead),
                         Row(
                           children: <Widget>[
-                            Text(formatNumber(widget.amount, context),
+                            Text(formatNumber(widget.amount, context, currencyId: widget.currencyId),
                                 style: Theme.of(context).textTheme.headline),
                             SizedBox(width: 12.0),
                             Text(
