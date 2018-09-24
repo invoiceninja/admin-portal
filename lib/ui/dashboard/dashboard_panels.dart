@@ -51,7 +51,7 @@ class DashboardPanels extends StatelessWidget {
                     Flexible(
                       child: Text(
                           formatDateRange(
-                              uiState.startDate, uiState.endDate, context),
+                              uiState.startDate(company), uiState.endDate(company), context),
                           style: Theme.of(context).textTheme.title),
                     ),
                     SizedBox(width: 6.0),

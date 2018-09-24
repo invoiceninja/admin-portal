@@ -39,7 +39,7 @@ List<ChartMoneyData> chartOutstandingInvoices({
         invoice.isQuote ||
         invoice.isRecurring) {
       // skip it
-    } else if (!invoice.isBetween(settings.startDate, settings.endDate)) {
+    } else if (!invoice.isBetween(settings.startDate(company), settings.endDate(company))) {
       // skip it
     } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
       // skip it
@@ -53,8 +53,8 @@ List<ChartMoneyData> chartOutstandingInvoices({
 
   final List<ChartMoneyData> data = [];
 
-  var date = DateTime.parse(settings.startDate);
-  final endDate = DateTime.parse(settings.endDate);
+  var date = DateTime.parse(settings.startDate(company));
+  final endDate = DateTime.parse(settings.endDate(company));
   while (date.isBefore(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals.containsKey(key)) {
@@ -91,7 +91,7 @@ List<ChartMoneyData> chartPayments(
 
     if (payment.isDeleted) {
       // skip it
-    } else if (!payment.isBetween(settings.startDate, settings.endDate)) {
+    } else if (!payment.isBetween(settings.startDate(company), settings.endDate(company))) {
       // skip it
     } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
       // skip it
@@ -105,8 +105,8 @@ List<ChartMoneyData> chartPayments(
 
   final List<ChartMoneyData> data = [];
 
-  var date = DateTime.parse(settings.startDate);
-  final endDate = DateTime.parse(settings.endDate);
+  var date = DateTime.parse(settings.startDate(company));
+  final endDate = DateTime.parse(settings.endDate(company));
   while (date.isBefore(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals.containsKey(key)) {

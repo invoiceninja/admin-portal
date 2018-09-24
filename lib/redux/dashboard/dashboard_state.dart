@@ -80,9 +80,10 @@ abstract class DashboardUIState
   static Serializer<DashboardUIState> get serializer =>
       _$dashboardUIStateSerializer;
 
-  String get startDate {
+  String startDate(CompanyEntity company) {
     final today = DateTime.now();
     final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
+    //final firstDayOfYear = DateTime.utc(today.year, company.financialYearStart + 1, 1);
     final firstDayOfYear = DateTime.utc(today.year, 1, 1);
     switch (dateRange) {
       case DateRange.last7Days:
@@ -112,9 +113,10 @@ abstract class DashboardUIState
     }
   }
 
-  String get endDate {
+  String endDate(CompanyEntity company) {
     final today = DateTime.now();
     final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
+    //final firstDayOfYear = DateTime.utc(today.year, company.financialYearStart + 1, 1);
     final firstDayOfYear = DateTime.utc(today.year, 1, 1);
     switch (dateRange) {
       case DateRange.last7Days:

@@ -76,8 +76,9 @@ class DashboardVM {
       dashboardUIState: state.dashboardUIState,
       dashboardState: state.dashboardState,
       isLoading: state.isLoading,
-      isNextEnabled: DateTime.parse(state.dashboardUIState.endDate)
-          .isBefore(DateTime.now()),
+      isNextEnabled:
+          DateTime.parse(state.dashboardUIState.endDate(state.selectedCompany))
+              .isBefore(DateTime.now()),
       onRefreshed: (context) => _handleRefresh(context),
       onSettingsChanged: (DashboardSettings settings) =>
           store.dispatch(UpdateDashboardSettings(settings: settings)),
