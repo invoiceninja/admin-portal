@@ -199,7 +199,7 @@ abstract class PaymentEntity extends Object
 
   bool isBetween(String startDate, String endDate) {
     return startDate.compareTo(paymentDate) <= 0 &&
-        endDate.compareTo(paymentDate) == 1;
+        endDate.compareTo(paymentDate) >= 0;
   }
 
   @override

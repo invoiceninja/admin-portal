@@ -448,7 +448,7 @@ abstract class InvoiceEntity extends Object
 
   bool isBetween(String startDate, String endDate) {
     return startDate.compareTo(invoiceDate) <= 0 &&
-        endDate.compareTo(invoiceDate) == 1;
+        endDate.compareTo(invoiceDate) >= 0;
   }
 
   double get requestedAmount => partial > 0 ? partial : amount;

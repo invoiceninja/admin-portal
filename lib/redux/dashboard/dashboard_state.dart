@@ -126,16 +126,20 @@ abstract class DashboardUIState
         final date = today.subtract(Duration(days: 30 * offset));
         return convertDateTimeToSqlDate(date);
       case DateRange.thisMonth:
-        final date = addMonths(firstDayOfMonth, (offset - 1) * -1);
+        final date = addMonths(firstDayOfMonth, (offset - 1) * -1)
+            .subtract(Duration(days: 1));
         return convertDateTimeToSqlDate(date);
       case DateRange.lastMonth:
-        final date = addMonths(firstDayOfMonth, offset * -1);
+        final date =
+            addMonths(firstDayOfMonth, offset * -1).subtract(Duration(days: 1));
         return convertDateTimeToSqlDate(date);
       case DateRange.thisYear:
-        final date = addYears(firstDayOfYear, (offset - 1) * -1);
+        final date = addYears(firstDayOfYear, (offset - 1) * -1)
+            .subtract(Duration(days: 1));
         return convertDateTimeToSqlDate(date);
       case DateRange.lastYear:
-        final date = addYears(firstDayOfYear, offset * -1);
+        final date =
+            addYears(firstDayOfYear, offset * -1).subtract(Duration(days: 1));
         return convertDateTimeToSqlDate(date);
       default:
         final startDate = DateTime.parse(customStartDate);

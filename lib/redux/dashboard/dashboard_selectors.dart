@@ -55,7 +55,7 @@ List<ChartMoneyData> chartOutstandingInvoices({
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
-  while (date.isBefore(endDate)) {
+  while (! date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals.containsKey(key)) {
       data.add(ChartMoneyData(date, totals[key]));
@@ -107,7 +107,7 @@ List<ChartMoneyData> chartPayments(
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
-  while (date.isBefore(endDate)) {
+  while (! date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals.containsKey(key)) {
       data.add(ChartMoneyData(date, totals[key]));
