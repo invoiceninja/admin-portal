@@ -76,6 +76,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                           Text(localization.compareTo),
                           Switch(
                             value: _settings.enableComparison,
+                            activeColor: Theme.of(context).accentColor,
                             onChanged: (value) {
                               setState(
                                   () => _settings.enableComparison = value);
