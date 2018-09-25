@@ -8,6 +8,19 @@ class WebClient {
 
   const WebClient();
 
+  String _checkUrl(String url) {
+
+    if (! url.startsWith('http')) {
+      url = 'https://' + url;
+    }
+
+    if (! url.contains('?')) {
+      url += '?';
+    }
+
+    return url;
+  }
+
   String _parseError(String response) {
     dynamic message = response;
 
@@ -28,8 +41,8 @@ class WebClient {
 
   Future<dynamic> get(String url, String token) async {
 
-    if (! url.contains('?')) 
-      url += '?';
+    url = _checkUrl(url);
+    print('GET: $url');
 
     if (url.contains('invoiceninja.com')) {
       url += '&per_page=$kMaxRecordsPerApiPage';
@@ -43,8 +56,6 @@ class WebClient {
         'X-Ninja-Token': token,
       },
     );
-
-    print('url: $url');
 
     if (response.statusCode >= 400) {
       print('==== FAILED ====');
@@ -61,6 +72,9 @@ class WebClient {
   }
 
   Future<dynamic> post(String url, String token, [dynamic data]) async {
+    url = _checkUrl(url);
+    print('POST: $url');
+
     final http.Response response = await http.Client().post(
       url,
       body: data,
@@ -84,6 +98,9 @@ class WebClient {
   }
 
   Future<dynamic> put(String url, String token, dynamic data) async {
+    url = _checkUrl(url);
+    print('PUT: $url');
+
     final http.Response response = await http.Client().put(
       url,
       body: data,

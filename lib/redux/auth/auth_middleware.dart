@@ -83,7 +83,12 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(UserLoginFailure(error.toString()));
+      if (error.toString().contains('No host specified in URI')) {
+        store.dispatch(UserLoginFailure(
+            'Please check the URL is correct'));
+      } else {
+        store.dispatch(UserLoginFailure(error.toString()));
+      }
     });
 
     next(action);
