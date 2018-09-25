@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId "com.invoiceninja.flutter"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 27
         versionCode 16
         versionName "0.1.14"

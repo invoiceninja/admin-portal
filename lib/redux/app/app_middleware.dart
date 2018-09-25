@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_keychain/flutter_keychain.dart';
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository authRepository = const PersistenceRepository(
@@ -146,11 +147,11 @@ Middleware<AppState> _createLoadState(
       authState = await authRepository.loadAuthState();
       uiState = await uiRepository.loadUIState();
       staticState = await staticRepository.loadStaticState();
-      company1State = await company1Repository.loadCompanyState();
-      company2State = await company2Repository.loadCompanyState();
-      company3State = await company3Repository.loadCompanyState();
-      company4State = await company4Repository.loadCompanyState();
-      company5State = await company5Repository.loadCompanyState();
+      company1State = await company1Repository.loadCompanyState(1);
+      company2State = await company2Repository.loadCompanyState(2);
+      company3State = await company3Repository.loadCompanyState(3);
+      company4State = await company4Repository.loadCompanyState(4);
+      company5State = await company5Repository.loadCompanyState(5);
 
       final AppState appState = AppState().rebuild((b) => b
         ..authState.replace(authState)
@@ -254,13 +255,17 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 }
 
 Middleware<AppState> _createDataLoaded() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     final dynamic data = action.loginResponse;
     store.dispatch(LoadStaticSuccess(data.static));
 
     for (int i = 0; i < data.accounts.length; i++) {
+      final CompanyEntity company = data.accounts[i];
+      await FlutterKeychain.put(
+          key: getKeychainTokenKey(i), value: company.token);
+
       store.dispatch(SelectCompany(i + 1));
-      store.dispatch(LoadCompanySuccess(data.accounts[i]));
+      store.dispatch(LoadCompanySuccess(company));
     }
 
     store.dispatch(SelectCompany(1));
