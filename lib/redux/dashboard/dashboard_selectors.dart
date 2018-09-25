@@ -21,11 +21,23 @@ var memoizedChartOutstandingInvoices = memo4((CompanyEntity company,
         invoiceMap: invoiceMap,
         clientMap: clientMap));
 
+var memoizedChartOutstandingQuotes = memo4((CompanyEntity company,
+    DashboardUIState settings,
+    BuiltMap<int, InvoiceEntity> quoteMap,
+    BuiltMap<int, ClientEntity> clientMap) =>
+    chartOutstandingInvoices(
+        company: company,
+        settings: settings,
+        invoiceMap: quoteMap,
+        clientMap: clientMap,
+        isQuote: true));
+
 List<ChartMoneyData> chartOutstandingInvoices({
   CompanyEntity company,
   DashboardUIState settings,
   BuiltMap<int, InvoiceEntity> invoiceMap,
   BuiltMap<int, ClientEntity> clientMap,
+  bool isQuote = false,
 }) {
   final Map<String, double> totals = {};
 
@@ -37,8 +49,9 @@ List<ChartMoneyData> chartOutstandingInvoices({
 
     if (!invoice.isPublic ||
         invoice.isDeleted ||
-        invoice.isQuote ||
         invoice.isRecurring) {
+      // skip it
+    } else if ((isQuote && ! invoice.isQuote) || (!isQuote && invoice.isQuote)) {
       // skip it
     } else if (!invoice.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -125,61 +138,3 @@ List<ChartMoneyData> chartPayments(
   return data;
 }
 
-var memoizedChartOutstandingQuotes = memo4((CompanyEntity company,
-    DashboardUIState settings,
-    BuiltMap<int, InvoiceEntity> quoteMap,
-    BuiltMap<int, ClientEntity> clientMap) =>
-    chartOutstandingQuotes(
-        company: company,
-        settings: settings,
-        quoteMap: quoteMap,
-        clientMap: clientMap));
-
-List<ChartMoneyData> chartOutstandingQuotes({
-  CompanyEntity company,
-  DashboardUIState settings,
-  BuiltMap<int, InvoiceEntity> quoteMap,
-  BuiltMap<int, ClientEntity> clientMap,
-}) {
-  final Map<String, double> totals = {};
-
-  quoteMap.forEach((int, quote) {
-    final client =
-        clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
-    final currencyId =
-    client.currencyId > 0 ? client.currencyId : company.currencyId;
-
-    if (!quote.isPublic ||
-        quote.isDeleted ||
-        ! quote.isQuote ||
-        quote.isRecurring) {
-      // skip it
-    } else if (!quote.isBetween(
-        settings.startDate(company), settings.endDate(company))) {
-      // skip it
-    } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
-      // skip it
-    } else {
-      if (totals[quote.invoiceDate] == null) {
-        totals[quote.invoiceDate] = 0.0;
-      }
-      totals[quote.invoiceDate] += quote.amount;
-    }
-  });
-
-  final List<ChartMoneyData> data = [];
-
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
-  while (!date.isAfter(endDate)) {
-    final key = convertDateTimeToSqlDate(date);
-    if (totals.containsKey(key)) {
-      data.add(ChartMoneyData(date, totals[key]));
-    } else {
-      data.add(ChartMoneyData(date, 0.0));
-    }
-    date = date.add(Duration(days: 1));
-  }
-
-  return data;
-}
