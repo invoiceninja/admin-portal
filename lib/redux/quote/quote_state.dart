@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 part 'quote_state.g.dart';
 
 abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
-
   factory QuoteState() {
     return _$QuoteState._(
       lastUpdated: 0,
@@ -17,20 +16,23 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
       list: BuiltList<int>(),
     );
   }
+
   QuoteState._();
 
   @nullable
   int get lastUpdated;
 
   BuiltMap<int, InvoiceEntity> get map;
+
   BuiltList<int> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -38,16 +40,18 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   static Serializer<QuoteState> get serializer => _$quoteStateSerializer;
 }
 
-abstract class QuoteUIState extends Object with EntityUIState implements Built<QuoteUIState, QuoteUIStateBuilder> {
-
+abstract class QuoteUIState extends Object
+    with EntityUIState
+    implements Built<QuoteUIState, QuoteUIStateBuilder> {
   factory QuoteUIState() {
     return _$QuoteUIState._(
-      listUIState: ListUIState(QuoteFields.quoteNumber, false),
+      listUIState: ListUIState(QuoteFields.quoteNumber, sortAscending: false),
       editing: InvoiceEntity(),
       editingItem: InvoiceItemEntity(),
       selectedId: 0,
     );
   }
+
   QuoteUIState._();
 
   @nullable
