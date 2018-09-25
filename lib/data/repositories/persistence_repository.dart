@@ -23,7 +23,6 @@ class PersistenceRepository {
   Future<File> saveCompanyState(CompanyState state) async {
     final stateWithoutToken = state.rebuild(
         (b) => b..company.replace(state.company.rebuild((b) => b..token = '')));
-    print('saveCompanyState - token: ${stateWithoutToken.company.token}');
     final data =
         serializers.serializeWith(CompanyState.serializer, stateWithoutToken);
     return await fileStorage.save(json.encode(data));
