@@ -111,14 +111,16 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         Intl.defaultLocale = localeSelector(state);
 
         return MaterialApp(
-          supportedLocales: kLanguages.map((locale) => Locale(locale)).toList(),
+          supportedLocales: kLanguages
+              .map((String locale) => AppLocalization.createLocale(locale))
+              .toList(),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
           ],
           home: InitScreen(),
-          locale: Locale(localeSelector(state)),
+          locale: AppLocalization.createLocale(localeSelector(state)),
           theme: state.uiState.enableDarkMode
               ? ThemeData(
                   brightness: Brightness.dark,

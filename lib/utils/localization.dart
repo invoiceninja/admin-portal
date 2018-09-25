@@ -9,6 +9,11 @@ class AppLocalization {
 
   final Locale locale;
 
+  static Locale createLocale(String locale) {
+    final parts = locale.split('_');
+    return Locale(parts[0], parts.length > 1 ? parts[1] : null);
+  }
+
   static AppLocalization of(BuildContext context) {
     return Localizations.of<AppLocalization>(context, AppLocalization);
   }
@@ -8339,767 +8344,708 @@ class AppLocalization {
     },
   };
 
-  String get today =>
-      _localizedValues[locale.languageCode]['today'];
+  String get today => _localizedValues[locale.toString()]['today'];
 
-  String get customRange =>
-      _localizedValues[locale.languageCode]['custom_range'];
+  String get customRange => _localizedValues[locale.toString()]['custom_range'];
 
-  String get dateRange =>
-      _localizedValues[locale.languageCode]['date_range'];
+  String get dateRange => _localizedValues[locale.toString()]['date_range'];
 
   String get currentPeriod =>
-      _localizedValues[locale.languageCode]['current_period'];
+      _localizedValues[locale.toString()]['current_period'];
 
   String get comparisonPeriod =>
-      _localizedValues[locale.languageCode]['comparison_period'];
+      _localizedValues[locale.toString()]['comparison_period'];
 
   String get previousPeriod =>
-      _localizedValues[locale.languageCode]['previous_period'];
+      _localizedValues[locale.toString()]['previous_period'];
 
   String get previousYear =>
-      _localizedValues[locale.languageCode]['previous_year'];
+      _localizedValues[locale.toString()]['previous_year'];
 
-  String get compareTo => _localizedValues[locale.languageCode]['compare_to'];
+  String get compareTo => _localizedValues[locale.toString()]['compare_to'];
 
-  String get last7Days => _localizedValues[locale.languageCode]['last7_days'];
+  String get last7Days => _localizedValues[locale.toString()]['last7_days'];
 
-  String get lastWeek => _localizedValues[locale.languageCode]['last_week'];
+  String get lastWeek => _localizedValues[locale.toString()]['last_week'];
 
-  String get last30Days => _localizedValues[locale.languageCode]['last30_days'];
+  String get last30Days => _localizedValues[locale.toString()]['last30_days'];
 
-  String get thisMonth => _localizedValues[locale.languageCode]['this_month'];
+  String get thisMonth => _localizedValues[locale.toString()]['this_month'];
 
-  String get lastMonth => _localizedValues[locale.languageCode]['last_month'];
+  String get lastMonth => _localizedValues[locale.toString()]['last_month'];
 
-  String get thisYear => _localizedValues[locale.languageCode]['this_year'];
+  String get thisYear => _localizedValues[locale.toString()]['this_year'];
 
-  String get lastYear => _localizedValues[locale.languageCode]['last_year'];
+  String get lastYear => _localizedValues[locale.toString()]['last_year'];
 
-  String get custom => _localizedValues[locale.languageCode]['custom'];
+  String get custom => _localizedValues[locale.toString()]['custom'];
 
   String get cloneToInvoice =>
-      _localizedValues[locale.languageCode]['clone_to_invoice'];
+      _localizedValues[locale.toString()]['clone_to_invoice'];
 
   String get cloneToQuote =>
-      _localizedValues[locale.languageCode]['clone_to_quote'];
+      _localizedValues[locale.toString()]['clone_to_quote'];
 
-  String get viewInvoice =>
-      _localizedValues[locale.languageCode]['view_invoice'];
+  String get viewInvoice => _localizedValues[locale.toString()]['view_invoice'];
 
-  String get convert => _localizedValues[locale.languageCode]['convert'];
+  String get convert => _localizedValues[locale.toString()]['convert'];
 
-  String get more => _localizedValues[locale.languageCode]['more'];
+  String get more => _localizedValues[locale.toString()]['more'];
 
-  String get editClient => _localizedValues[locale.languageCode]['edit_client'];
+  String get editClient => _localizedValues[locale.toString()]['edit_client'];
 
-  String get editProduct =>
-      _localizedValues[locale.languageCode]['edit_product'];
+  String get editProduct => _localizedValues[locale.toString()]['edit_product'];
 
-  String get editInvoice =>
-      _localizedValues[locale.languageCode]['edit_invoice'];
+  String get editInvoice => _localizedValues[locale.toString()]['edit_invoice'];
 
-  String get editQuote => _localizedValues[locale.languageCode]['edit_quote'];
+  String get editQuote => _localizedValues[locale.toString()]['edit_quote'];
 
-  String get editPayment =>
-      _localizedValues[locale.languageCode]['edit_payment'];
+  String get editPayment => _localizedValues[locale.toString()]['edit_payment'];
 
-  String get editTask => _localizedValues[locale.languageCode]['edit_task'];
+  String get editTask => _localizedValues[locale.toString()]['edit_task'];
 
-  String get editExpense =>
-      _localizedValues[locale.languageCode]['edit_expense'];
+  String get editExpense => _localizedValues[locale.toString()]['edit_expense'];
 
-  String get editVendor => _localizedValues[locale.languageCode]['edit_vendor'];
+  String get editVendor => _localizedValues[locale.toString()]['edit_vendor'];
 
-  String get editProject =>
-      _localizedValues[locale.languageCode]['edit_project'];
+  String get editProject => _localizedValues[locale.toString()]['edit_project'];
 
-  String get editCredit => _localizedValues[locale.languageCode]['edit_credit'];
+  String get editCredit => _localizedValues[locale.toString()]['edit_credit'];
 
   String get editRecurringInvoice =>
-      _localizedValues[locale.languageCode]['edit_recurring_invoice'];
+      _localizedValues[locale.toString()]['edit_recurring_invoice'];
 
   String get editRecurringExpense =>
-      _localizedValues[locale.languageCode]['edit_recurring_expense'];
+      _localizedValues[locale.toString()]['edit_recurring_expense'];
 
   String get editRecurringQuote =>
-      _localizedValues[locale.languageCode]['edit_recurring_quote'];
+      _localizedValues[locale.toString()]['edit_recurring_quote'];
 
   String get billingAddress =>
-      _localizedValues[locale.languageCode]['billing_address'];
+      _localizedValues[locale.toString()]['billing_address'];
 
   String get shippingAddress =>
-      _localizedValues[locale.languageCode]['shipping_address'];
+      _localizedValues[locale.toString()]['shipping_address'];
 
   String get totalRevenue =>
-      _localizedValues[locale.languageCode]['total_revenue'];
+      _localizedValues[locale.toString()]['total_revenue'];
 
   String get averageInvoice =>
-      _localizedValues[locale.languageCode]['average_invoice'];
+      _localizedValues[locale.toString()]['average_invoice'];
 
-  String get outstanding =>
-      _localizedValues[locale.languageCode]['outstanding'];
+  String get outstanding => _localizedValues[locale.toString()]['outstanding'];
 
   String get invoicesSent =>
-      _localizedValues[locale.languageCode]['invoices_sent'];
+      _localizedValues[locale.toString()]['invoices_sent'];
 
   String get activeClients =>
-      _localizedValues[locale.languageCode]['active_clients'];
+      _localizedValues[locale.toString()]['active_clients'];
 
-  String get close => _localizedValues[locale.languageCode]['close'];
+  String get close => _localizedValues[locale.toString()]['close'];
 
-  String get email => _localizedValues[locale.languageCode]['email'];
+  String get email => _localizedValues[locale.toString()]['email'];
 
-  String get password => _localizedValues[locale.languageCode]['password'];
+  String get password => _localizedValues[locale.toString()]['password'];
 
-  String get url => _localizedValues[locale.languageCode]['url'];
+  String get url => _localizedValues[locale.toString()]['url'];
 
-  String get secret => _localizedValues[locale.languageCode]['secret'];
+  String get secret => _localizedValues[locale.toString()]['secret'];
 
-  String get name => _localizedValues[locale.languageCode]['name'];
+  String get name => _localizedValues[locale.toString()]['name'];
 
-  String get logout => _localizedValues[locale.languageCode]['logout'];
+  String get logout => _localizedValues[locale.toString()]['logout'];
 
-  String get login => _localizedValues[locale.languageCode]['login'];
+  String get login => _localizedValues[locale.toString()]['login'];
 
-  String get filter => _localizedValues[locale.languageCode]['filter'];
+  String get filter => _localizedValues[locale.toString()]['filter'];
 
-  String get sort => _localizedValues[locale.languageCode]['sort'];
+  String get sort => _localizedValues[locale.toString()]['sort'];
 
-  String get search => _localizedValues[locale.languageCode]['search'];
+  String get search => _localizedValues[locale.toString()]['search'];
 
-  String get active => _localizedValues[locale.languageCode]['active'];
+  String get active => _localizedValues[locale.toString()]['active'];
 
-  String get archived => _localizedValues[locale.languageCode]['archived'];
+  String get archived => _localizedValues[locale.toString()]['archived'];
 
-  String get deleted => _localizedValues[locale.languageCode]['deleted'];
+  String get deleted => _localizedValues[locale.toString()]['deleted'];
 
-  String get dashboard => _localizedValues[locale.languageCode]['dashboard'];
+  String get dashboard => _localizedValues[locale.toString()]['dashboard'];
 
-  String get archive => _localizedValues[locale.languageCode]['archive'];
+  String get archive => _localizedValues[locale.toString()]['archive'];
 
-  String get delete => _localizedValues[locale.languageCode]['delete'];
+  String get delete => _localizedValues[locale.toString()]['delete'];
 
-  String get restore => _localizedValues[locale.languageCode]['restore'];
+  String get restore => _localizedValues[locale.toString()]['restore'];
 
   String get refreshComplete =>
-      _localizedValues[locale.languageCode]['refresh_complete'];
+      _localizedValues[locale.toString()]['refresh_complete'];
 
   String get pleaseEnterYourEmail =>
-      _localizedValues[locale.languageCode]['please_enter_your_email'];
+      _localizedValues[locale.toString()]['please_enter_your_email'];
 
   String get pleaseEnterYourPassword =>
-      _localizedValues[locale.languageCode]['please_enter_your_password'];
+      _localizedValues[locale.toString()]['please_enter_your_password'];
 
   String get pleaseEnterYourUrl =>
-      _localizedValues[locale.languageCode]['please_enter_your_urll'];
+      _localizedValues[locale.toString()]['please_enter_your_urll'];
 
   String get pleaseEnterAProductKey =>
-      _localizedValues[locale.languageCode]['please_enter_a_product_key'];
+      _localizedValues[locale.toString()]['please_enter_a_product_key'];
 
-  String get ascending => _localizedValues[locale.languageCode]['ascending'];
+  String get ascending => _localizedValues[locale.toString()]['ascending'];
 
-  String get descending => _localizedValues[locale.languageCode]['descending'];
+  String get descending => _localizedValues[locale.toString()]['descending'];
 
-  String get save => _localizedValues[locale.languageCode]['save'];
+  String get save => _localizedValues[locale.toString()]['save'];
 
   String get anErrorOccurred =>
-      _localizedValues[locale.languageCode]['an_error_occurred'];
+      _localizedValues[locale.toString()]['an_error_occurred'];
 
-  String get paidToDate =>
-      _localizedValues[locale.languageCode]['paid_to_date'];
+  String get paidToDate => _localizedValues[locale.toString()]['paid_to_date'];
 
-  String get balanceDue => _localizedValues[locale.languageCode]['balance_due'];
+  String get balanceDue => _localizedValues[locale.toString()]['balance_due'];
 
-  String get balance => _localizedValues[locale.languageCode]['balance'];
+  String get balance => _localizedValues[locale.toString()]['balance'];
 
-  String get overview => _localizedValues[locale.languageCode]['overview'];
+  String get overview => _localizedValues[locale.toString()]['overview'];
 
-  String get details => _localizedValues[locale.languageCode]['details'];
+  String get details => _localizedValues[locale.toString()]['details'];
 
-  String get phone => _localizedValues[locale.languageCode]['phone'];
+  String get phone => _localizedValues[locale.toString()]['phone'];
 
-  String get website => _localizedValues[locale.languageCode]['website'];
+  String get website => _localizedValues[locale.toString()]['website'];
 
-  String get vatNumber => _localizedValues[locale.languageCode]['vat_number'];
+  String get vatNumber => _localizedValues[locale.toString()]['vat_number'];
 
-  String get idNumber => _localizedValues[locale.languageCode]['id_number'];
+  String get idNumber => _localizedValues[locale.toString()]['id_number'];
 
-  String get create => _localizedValues[locale.languageCode]['create'];
+  String get create => _localizedValues[locale.toString()]['create'];
 
   String get copiedToClipboard =>
-      _localizedValues[locale.languageCode]['copied_to_clipboard'];
+      _localizedValues[locale.toString()]['copied_to_clipboard'];
 
-  String get error => _localizedValues[locale.languageCode]['error'];
+  String get error => _localizedValues[locale.toString()]['error'];
 
   String get couldNotLaunch =>
-      _localizedValues[locale.languageCode]['could_not_launch'];
+      _localizedValues[locale.toString()]['could_not_launch'];
 
-  String get contacts => _localizedValues[locale.languageCode]['contacts'];
+  String get contacts => _localizedValues[locale.toString()]['contacts'];
 
-  String get additional => _localizedValues[locale.languageCode]['additional'];
+  String get additional => _localizedValues[locale.toString()]['additional'];
 
-  String get firstName => _localizedValues[locale.languageCode]['first_name'];
+  String get firstName => _localizedValues[locale.toString()]['first_name'];
 
-  String get lastName => _localizedValues[locale.languageCode]['last_name'];
+  String get lastName => _localizedValues[locale.toString()]['last_name'];
 
-  String get addContact => _localizedValues[locale.languageCode]['add_contact'];
+  String get addContact => _localizedValues[locale.toString()]['add_contact'];
 
-  String get areYouSure =>
-      _localizedValues[locale.languageCode]['are_you_sure'];
+  String get areYouSure => _localizedValues[locale.toString()]['are_you_sure'];
 
-  String get cancel => _localizedValues[locale.languageCode]['cancel'];
+  String get cancel => _localizedValues[locale.toString()]['cancel'];
 
-  String get ok => _localizedValues[locale.languageCode]['ok'];
+  String get ok => _localizedValues[locale.toString()]['ok'];
 
-  String get remove => _localizedValues[locale.languageCode]['remove'];
+  String get remove => _localizedValues[locale.toString()]['remove'];
 
   String get emailIsInvalid =>
-      _localizedValues[locale.languageCode]['email_is_invalid'];
+      _localizedValues[locale.toString()]['email_is_invalid'];
 
-  String get product => _localizedValues[locale.languageCode]['product'];
+  String get product => _localizedValues[locale.toString()]['product'];
 
-  String get products => _localizedValues[locale.languageCode]['products'];
+  String get products => _localizedValues[locale.toString()]['products'];
 
-  String get newProduct => _localizedValues[locale.languageCode]['new_product'];
+  String get newProduct => _localizedValues[locale.toString()]['new_product'];
 
   String get createdProduct =>
-      _localizedValues[locale.languageCode]['created_product'];
+      _localizedValues[locale.toString()]['created_product'];
 
   String get updatedProduct =>
-      _localizedValues[locale.languageCode]['updated_product'];
+      _localizedValues[locale.toString()]['updated_product'];
 
   String get archivedProduct =>
-      _localizedValues[locale.languageCode]['archived_product'];
+      _localizedValues[locale.toString()]['archived_product'];
 
   String get deletedProduct =>
-      _localizedValues[locale.languageCode]['deleted_product'];
+      _localizedValues[locale.toString()]['deleted_product'];
 
   String get restoredProduct =>
-      _localizedValues[locale.languageCode]['restored_product'];
+      _localizedValues[locale.toString()]['restored_product'];
 
-  String get productKey => _localizedValues[locale.languageCode]['product_key'];
+  String get productKey => _localizedValues[locale.toString()]['product_key'];
 
-  String get notes => _localizedValues[locale.languageCode]['notes'];
+  String get notes => _localizedValues[locale.toString()]['notes'];
 
-  String get cost => _localizedValues[locale.languageCode]['cost'];
+  String get cost => _localizedValues[locale.toString()]['cost'];
 
-  String get client => _localizedValues[locale.languageCode]['client'];
+  String get client => _localizedValues[locale.toString()]['client'];
 
-  String get clients => _localizedValues[locale.languageCode]['clients'];
+  String get clients => _localizedValues[locale.toString()]['clients'];
 
-  String get newClient => _localizedValues[locale.languageCode]['new_client'];
+  String get newClient => _localizedValues[locale.toString()]['new_client'];
 
   String get createdClient =>
-      _localizedValues[locale.languageCode]['created_client'];
+      _localizedValues[locale.toString()]['created_client'];
 
   String get updatedClient =>
-      _localizedValues[locale.languageCode]['updated_client'];
+      _localizedValues[locale.toString()]['updated_client'];
 
   String get archivedClient =>
-      _localizedValues[locale.languageCode]['archived_client'];
+      _localizedValues[locale.toString()]['archived_client'];
 
   String get deletedClient =>
-      _localizedValues[locale.languageCode]['deleted_client'];
+      _localizedValues[locale.toString()]['deleted_client'];
 
   String get restoredClient =>
-      _localizedValues[locale.languageCode]['restored_client'];
+      _localizedValues[locale.toString()]['restored_client'];
 
-  String get address1 => _localizedValues[locale.languageCode]['address1'];
+  String get address1 => _localizedValues[locale.toString()]['address1'];
 
-  String get address2 => _localizedValues[locale.languageCode]['address2'];
+  String get address2 => _localizedValues[locale.toString()]['address2'];
 
-  String get city => _localizedValues[locale.languageCode]['city'];
+  String get city => _localizedValues[locale.toString()]['city'];
 
-  String get state => _localizedValues[locale.languageCode]['state'];
+  String get state => _localizedValues[locale.toString()]['state'];
 
-  String get postalCode => _localizedValues[locale.languageCode]['postal_code'];
+  String get postalCode => _localizedValues[locale.toString()]['postal_code'];
 
-  String get country => _localizedValues[locale.languageCode]['country'];
+  String get country => _localizedValues[locale.toString()]['country'];
 
-  String get invoice => _localizedValues[locale.languageCode]['invoice'];
+  String get invoice => _localizedValues[locale.toString()]['invoice'];
 
-  String get invoices => _localizedValues[locale.languageCode]['invoices'];
+  String get invoices => _localizedValues[locale.toString()]['invoices'];
 
-  String get newInvoice => _localizedValues[locale.languageCode]['new_invoice'];
+  String get newInvoice => _localizedValues[locale.toString()]['new_invoice'];
 
   String get createdInvoice =>
-      _localizedValues[locale.languageCode]['created_invoice'];
+      _localizedValues[locale.toString()]['created_invoice'];
 
   String get updatedInvoice =>
-      _localizedValues[locale.languageCode]['updated_invoice'];
+      _localizedValues[locale.toString()]['updated_invoice'];
 
   String get archivedInvoice =>
-      _localizedValues[locale.languageCode]['archived_invoice'];
+      _localizedValues[locale.toString()]['archived_invoice'];
 
   String get deletedInvoice =>
-      _localizedValues[locale.languageCode]['deleted_invoice'];
+      _localizedValues[locale.toString()]['deleted_invoice'];
 
   String get restoredInvoice =>
-      _localizedValues[locale.languageCode]['restored_invoice'];
+      _localizedValues[locale.toString()]['restored_invoice'];
 
   String get emailedInvoice =>
-      _localizedValues[locale.languageCode]['emailed_invoice'];
+      _localizedValues[locale.toString()]['emailed_invoice'];
 
   String get emailedPayment =>
-      _localizedValues[locale.languageCode]['emailed_payment'];
+      _localizedValues[locale.toString()]['emailed_payment'];
 
-  String get amount => _localizedValues[locale.languageCode]['amount'];
+  String get amount => _localizedValues[locale.toString()]['amount'];
 
   String get invoiceNumber =>
-      _localizedValues[locale.languageCode]['invoice_number'];
+      _localizedValues[locale.toString()]['invoice_number'];
 
-  String get invoiceDate =>
-      _localizedValues[locale.languageCode]['invoice_date'];
+  String get invoiceDate => _localizedValues[locale.toString()]['invoice_date'];
 
-  String get discount => _localizedValues[locale.languageCode]['discount'];
+  String get discount => _localizedValues[locale.toString()]['discount'];
 
-  String get poNumber => _localizedValues[locale.languageCode]['po_number'];
+  String get poNumber => _localizedValues[locale.toString()]['po_number'];
 
-  String get terms => _localizedValues[locale.languageCode]['terms'];
+  String get terms => _localizedValues[locale.toString()]['terms'];
 
-  String get publicNotes =>
-      _localizedValues[locale.languageCode]['public_notes'];
+  String get publicNotes => _localizedValues[locale.toString()]['public_notes'];
 
   String get privateNotes =>
-      _localizedValues[locale.languageCode]['private_notes'];
+      _localizedValues[locale.toString()]['private_notes'];
 
-  String get frequency => _localizedValues[locale.languageCode]['frequency'];
+  String get frequency => _localizedValues[locale.toString()]['frequency'];
 
-  String get startDate => _localizedValues[locale.languageCode]['start_date'];
+  String get startDate => _localizedValues[locale.toString()]['start_date'];
 
-  String get endDate => _localizedValues[locale.languageCode]['end_date'];
+  String get endDate => _localizedValues[locale.toString()]['end_date'];
 
-  String get quoteNumber =>
-      _localizedValues[locale.languageCode]['quote_number'];
+  String get quoteNumber => _localizedValues[locale.toString()]['quote_number'];
 
-  String get quoteDate => _localizedValues[locale.languageCode]['quote_date'];
+  String get quoteDate => _localizedValues[locale.toString()]['quote_date'];
 
-  String get validUntil => _localizedValues[locale.languageCode]['valid_until'];
+  String get validUntil => _localizedValues[locale.toString()]['valid_until'];
 
-  String get items => _localizedValues[locale.languageCode]['items'];
+  String get items => _localizedValues[locale.toString()]['items'];
 
   String get partialDeposit =>
-      _localizedValues[locale.languageCode]['partial_deposit'];
+      _localizedValues[locale.toString()]['partial_deposit'];
 
-  String get description =>
-      _localizedValues[locale.languageCode]['description'];
+  String get description => _localizedValues[locale.toString()]['description'];
 
-  String get unitCost => _localizedValues[locale.languageCode]['unit_cost'];
+  String get unitCost => _localizedValues[locale.toString()]['unit_cost'];
 
-  String get quantity => _localizedValues[locale.languageCode]['quantity'];
+  String get quantity => _localizedValues[locale.toString()]['quantity'];
 
-  String get addItem => _localizedValues[locale.languageCode]['add_item'];
+  String get addItem => _localizedValues[locale.toString()]['add_item'];
 
-  String get contact => _localizedValues[locale.languageCode]['contact'];
+  String get contact => _localizedValues[locale.toString()]['contact'];
 
-  String get workPhone => _localizedValues[locale.languageCode]['work_phone'];
+  String get workPhone => _localizedValues[locale.toString()]['work_phone'];
 
-  String get totalAmount =>
-      _localizedValues[locale.languageCode]['total_amount'];
+  String get totalAmount => _localizedValues[locale.toString()]['total_amount'];
 
-  String get pdf => _localizedValues[locale.languageCode]['pdf'];
+  String get pdf => _localizedValues[locale.toString()]['pdf'];
 
-  String get dueDate => _localizedValues[locale.languageCode]['due_date'];
+  String get dueDate => _localizedValues[locale.toString()]['due_date'];
 
   String get partialDueDate =>
-      _localizedValues[locale.languageCode]['partial_due_date'];
+      _localizedValues[locale.toString()]['partial_due_date'];
 
-  String get status => _localizedValues[locale.languageCode]['status'];
+  String get status => _localizedValues[locale.toString()]['status'];
 
   String get invoiceStatusId =>
-      _localizedValues[locale.languageCode]['invoice_status_id'];
+      _localizedValues[locale.toString()]['invoice_status_id'];
 
   String get quoteStatusId =>
-      _localizedValues[locale.languageCode]['quote_status'];
+      _localizedValues[locale.toString()]['quote_status'];
 
   String get clickPlusToAddItem =>
-      _localizedValues[locale.languageCode]['click_plus_to_add_item'];
+      _localizedValues[locale.toString()]['click_plus_to_add_item'];
 
   String get countSelected =>
-      _localizedValues[locale.languageCode]['count_selected'];
+      _localizedValues[locale.toString()]['count_selected'];
 
-  String get total => _localizedValues[locale.languageCode]['total'];
+  String get total => _localizedValues[locale.toString()]['total'];
 
-  String get percent => _localizedValues[locale.languageCode]['percent'];
+  String get percent => _localizedValues[locale.toString()]['percent'];
 
-  String get edit => _localizedValues[locale.languageCode]['edit'];
+  String get edit => _localizedValues[locale.toString()]['edit'];
 
-  String get dismiss => _localizedValues[locale.languageCode]['dismiss'];
+  String get dismiss => _localizedValues[locale.toString()]['dismiss'];
 
   String get pleaseSelectADate =>
-      _localizedValues[locale.languageCode]['please_select_a_date'];
+      _localizedValues[locale.toString()]['please_select_a_date'];
 
   String get pleaseSelectAClient =>
-      _localizedValues[locale.languageCode]['please_select_a_client'];
+      _localizedValues[locale.toString()]['please_select_a_client'];
 
   String get pleaseSelectAnInvoice =>
-      _localizedValues[locale.languageCode]['please_select_an_invoice'];
+      _localizedValues[locale.toString()]['please_select_an_invoice'];
 
-  String get taskRate => _localizedValues[locale.languageCode]['task_rate'];
+  String get taskRate => _localizedValues[locale.toString()]['task_rate'];
 
-  String get settings => _localizedValues[locale.languageCode]['settings'];
+  String get settings => _localizedValues[locale.toString()]['settings'];
 
-  String get language => _localizedValues[locale.languageCode]['language'];
+  String get language => _localizedValues[locale.toString()]['language'];
 
-  String get currency => _localizedValues[locale.languageCode]['currency'];
+  String get currency => _localizedValues[locale.toString()]['currency'];
 
-  String get createdAt => _localizedValues[locale.languageCode]['created_at'];
+  String get createdAt => _localizedValues[locale.toString()]['created_at'];
 
-  String get updatedAt => _localizedValues[locale.languageCode]['updated_at'];
+  String get updatedAt => _localizedValues[locale.toString()]['updated_at'];
 
-  String get tax => _localizedValues[locale.languageCode]['tax'];
+  String get tax => _localizedValues[locale.toString()]['tax'];
 
   String get pleaseEnterAnInvoiceNumber =>
-      _localizedValues[locale.languageCode]['please_enter_an_invoice_number'];
+      _localizedValues[locale.toString()]['please_enter_an_invoice_number'];
 
   String get pleaseEnterAQuoteNumber =>
-      _localizedValues[locale.languageCode]['please_enter_a_quote_number'];
+      _localizedValues[locale.toString()]['please_enter_a_quote_number'];
 
-  String get filteredBy => _localizedValues[locale.languageCode]['filtered_by'];
+  String get filteredBy => _localizedValues[locale.toString()]['filtered_by'];
 
-  String get pastDue => _localizedValues[locale.languageCode]['past_due'];
+  String get pastDue => _localizedValues[locale.toString()]['past_due'];
 
-  String get draft => _localizedValues[locale.languageCode]['draft'];
+  String get draft => _localizedValues[locale.toString()]['draft'];
 
-  String get sent => _localizedValues[locale.languageCode]['sent'];
+  String get sent => _localizedValues[locale.toString()]['sent'];
 
-  String get viewed => _localizedValues[locale.languageCode]['viewed'];
+  String get viewed => _localizedValues[locale.toString()]['viewed'];
 
-  String get approved => _localizedValues[locale.languageCode]['approved'];
+  String get approved => _localizedValues[locale.toString()]['approved'];
 
-  String get partial => _localizedValues[locale.languageCode]['partial'];
+  String get partial => _localizedValues[locale.toString()]['partial'];
 
-  String get paid => _localizedValues[locale.languageCode]['paid'];
+  String get paid => _localizedValues[locale.toString()]['paid'];
 
   String get invoiceStatus1 =>
-      _localizedValues[locale.languageCode]['invoice_status_1'];
+      _localizedValues[locale.toString()]['invoice_status_1'];
 
   String get invoiceStatus2 =>
-      _localizedValues[locale.languageCode]['invoice_status_2'];
+      _localizedValues[locale.toString()]['invoice_status_2'];
 
   String get invoiceStatus3 =>
-      _localizedValues[locale.languageCode]['invoice_status_3'];
+      _localizedValues[locale.toString()]['invoice_status_3'];
 
   String get invoiceStatus4 =>
-      _localizedValues[locale.languageCode]['invoice_status_4'];
+      _localizedValues[locale.toString()]['invoice_status_4'];
 
   String get invoiceStatus5 =>
-      _localizedValues[locale.languageCode]['invoice_status_5'];
+      _localizedValues[locale.toString()]['invoice_status_5'];
 
   String get invoiceStatus6 =>
-      _localizedValues[locale.languageCode]['invoice_status_6'];
+      _localizedValues[locale.toString()]['invoice_status_6'];
 
-  String get markSent => _localizedValues[locale.languageCode]['mark_sent'];
+  String get markSent => _localizedValues[locale.toString()]['mark_sent'];
 
   String get markedInvoiceAsSent =>
-      _localizedValues[locale.languageCode]['marked_invoice_as_sent'];
+      _localizedValues[locale.toString()]['marked_invoice_as_sent'];
 
-  String get done => _localizedValues[locale.languageCode]['done'];
+  String get done => _localizedValues[locale.toString()]['done'];
 
   String get pleaseEnterAClientOrContactName =>
-      _localizedValues[locale.languageCode]
+      _localizedValues[locale.toString()]
           ['please_enter_a_client_or_contact_name'];
 
-  String get darkMode => _localizedValues[locale.languageCode]['dark_mode'];
+  String get darkMode => _localizedValues[locale.toString()]['dark_mode'];
 
   String get restartAppToApplyChange =>
-      _localizedValues[locale.languageCode]['restart_app_to_apply_change'];
+      _localizedValues[locale.toString()]['restart_app_to_apply_change'];
 
-  String get refreshData =>
-      _localizedValues[locale.languageCode]['refresh_data'];
+  String get refreshData => _localizedValues[locale.toString()]['refresh_data'];
 
   String get blankContact =>
-      _localizedValues[locale.languageCode]['blank_contact'];
+      _localizedValues[locale.toString()]['blank_contact'];
 
-  String get activity => _localizedValues[locale.languageCode]['activity'];
+  String get activity => _localizedValues[locale.toString()]['activity'];
 
   String get noRecordsFound =>
-      _localizedValues[locale.languageCode]['no_records_found'];
+      _localizedValues[locale.toString()]['no_records_found'];
 
-  String get clone => _localizedValues[locale.languageCode]['clone'];
+  String get clone => _localizedValues[locale.toString()]['clone'];
 
-  String get loading => _localizedValues[locale.languageCode]['loading'];
+  String get loading => _localizedValues[locale.toString()]['loading'];
 
-  String get industry => _localizedValues[locale.languageCode]['industry'];
+  String get industry => _localizedValues[locale.toString()]['industry'];
 
-  String get size => _localizedValues[locale.languageCode]['size'];
+  String get size => _localizedValues[locale.toString()]['size'];
 
   String get paymentTerms =>
-      _localizedValues[locale.languageCode]['payment_terms'];
+      _localizedValues[locale.toString()]['payment_terms'];
 
-  String get paymentDate =>
-      _localizedValues[locale.languageCode]['payment_date'];
+  String get paymentDate => _localizedValues[locale.toString()]['payment_date'];
 
   String get paymentStatus =>
-      _localizedValues[locale.languageCode]['payment_status'];
+      _localizedValues[locale.toString()]['payment_status'];
 
-  String get net => _localizedValues[locale.languageCode]['net'];
+  String get net => _localizedValues[locale.toString()]['net'];
 
   String get clientPortal =>
-      _localizedValues[locale.languageCode]['client_portal'];
+      _localizedValues[locale.toString()]['client_portal'];
 
-  String get showTasks => _localizedValues[locale.languageCode]['show_tasks'];
+  String get showTasks => _localizedValues[locale.toString()]['show_tasks'];
 
   String get emailReminders =>
-      _localizedValues[locale.languageCode]['email_reminders'];
+      _localizedValues[locale.toString()]['email_reminders'];
 
-  String get enabled => _localizedValues[locale.languageCode]['enabled'];
+  String get enabled => _localizedValues[locale.toString()]['enabled'];
 
-  String get recipients => _localizedValues[locale.languageCode]['recipients'];
+  String get recipients => _localizedValues[locale.toString()]['recipients'];
 
   String get initialEmail =>
-      _localizedValues[locale.languageCode]['initial_email'];
+      _localizedValues[locale.toString()]['initial_email'];
 
   String get firstReminder =>
-      _localizedValues[locale.languageCode]['first_reminder'];
+      _localizedValues[locale.toString()]['first_reminder'];
 
   String get secondReminder =>
-      _localizedValues[locale.languageCode]['second_reminder'];
+      _localizedValues[locale.toString()]['second_reminder'];
 
   String get thirdReminder =>
-      _localizedValues[locale.languageCode]['third_reminder'];
+      _localizedValues[locale.toString()]['third_reminder'];
 
-  String get template => _localizedValues[locale.languageCode]['template'];
+  String get template => _localizedValues[locale.toString()]['template'];
 
-  String get send => _localizedValues[locale.languageCode]['send'];
+  String get send => _localizedValues[locale.toString()]['send'];
 
-  String get subject => _localizedValues[locale.languageCode]['subject'];
+  String get subject => _localizedValues[locale.toString()]['subject'];
 
-  String get body => _localizedValues[locale.languageCode]['body'];
+  String get body => _localizedValues[locale.toString()]['body'];
 
-  String get sendEmail => _localizedValues[locale.languageCode]['send_email'];
+  String get sendEmail => _localizedValues[locale.toString()]['send_email'];
 
   String get emailReceipt =>
-      _localizedValues[locale.languageCode]['email_receipt'];
+      _localizedValues[locale.toString()]['email_receipt'];
 
-  String get documents => _localizedValues[locale.languageCode]['documents'];
+  String get documents => _localizedValues[locale.toString()]['documents'];
 
-  String get autoBilling =>
-      _localizedValues[locale.languageCode]['auto_billing'];
+  String get autoBilling => _localizedValues[locale.toString()]['auto_billing'];
 
-  String get button => _localizedValues[locale.languageCode]['button'];
+  String get button => _localizedValues[locale.toString()]['button'];
 
-  String get preview => _localizedValues[locale.languageCode]['preview'];
+  String get preview => _localizedValues[locale.toString()]['preview'];
 
-  String get customize => _localizedValues[locale.languageCode]['customize'];
+  String get customize => _localizedValues[locale.toString()]['customize'];
 
-  String get history => _localizedValues[locale.languageCode]['history'];
+  String get history => _localizedValues[locale.toString()]['history'];
 
-  String get payment => _localizedValues[locale.languageCode]['payment'];
+  String get payment => _localizedValues[locale.toString()]['payment'];
 
-  String get payments => _localizedValues[locale.languageCode]['payments'];
+  String get payments => _localizedValues[locale.toString()]['payments'];
 
-  String get refunded => _localizedValues[locale.languageCode]['refunded'];
+  String get refunded => _localizedValues[locale.toString()]['refunded'];
 
-  String get paymentType =>
-      _localizedValues[locale.languageCode]['payment_type'];
+  String get paymentType => _localizedValues[locale.toString()]['payment_type'];
 
   String get transactionReference =>
-      _localizedValues[locale.languageCode]['transaction_reference'];
+      _localizedValues[locale.toString()]['transaction_reference'];
 
   String get enterPayment =>
-      _localizedValues[locale.languageCode]['enter_payment'];
+      _localizedValues[locale.toString()]['enter_payment'];
 
   String get createdPayment =>
-      _localizedValues[locale.languageCode]['created_payment'];
+      _localizedValues[locale.toString()]['created_payment'];
 
   String get updatedPayment =>
-      _localizedValues[locale.languageCode]['updated_payment'];
+      _localizedValues[locale.toString()]['updated_payment'];
 
   String get archivedPayment =>
-      _localizedValues[locale.languageCode]['archived_payment'];
+      _localizedValues[locale.toString()]['archived_payment'];
 
   String get deletedPayment =>
-      _localizedValues[locale.languageCode]['deleted_payment'];
+      _localizedValues[locale.toString()]['deleted_payment'];
 
   String get restoredPayment =>
-      _localizedValues[locale.languageCode]['restored_payment'];
+      _localizedValues[locale.toString()]['restored_payment'];
 
-  String get quote => _localizedValues[locale.languageCode]['quote'];
+  String get quote => _localizedValues[locale.toString()]['quote'];
 
-  String get quotes => _localizedValues[locale.languageCode]['quotes'];
+  String get quotes => _localizedValues[locale.toString()]['quotes'];
 
-  String get newQuote => _localizedValues[locale.languageCode]['new_quote'];
+  String get newQuote => _localizedValues[locale.toString()]['new_quote'];
 
   String get createdQuote =>
-      _localizedValues[locale.languageCode]['created_quote'];
+      _localizedValues[locale.toString()]['created_quote'];
 
   String get updatedQuote =>
-      _localizedValues[locale.languageCode]['updated_quote'];
+      _localizedValues[locale.toString()]['updated_quote'];
 
   String get archivedQuote =>
-      _localizedValues[locale.languageCode]['archived_quote'];
+      _localizedValues[locale.toString()]['archived_quote'];
 
   String get deletedQuote =>
-      _localizedValues[locale.languageCode]['deleted_quote'];
+      _localizedValues[locale.toString()]['deleted_quote'];
 
   String get restoredQuote =>
-      _localizedValues[locale.languageCode]['restored_quote'];
+      _localizedValues[locale.toString()]['restored_quote'];
 
-  String get expense => _localizedValues[locale.languageCode]['expense'];
+  String get expense => _localizedValues[locale.toString()]['expense'];
 
-  String get expenses => _localizedValues[locale.languageCode]['expenses'];
+  String get expenses => _localizedValues[locale.toString()]['expenses'];
 
-  String get vendor => _localizedValues[locale.languageCode]['vendor'];
+  String get vendor => _localizedValues[locale.toString()]['vendor'];
 
-  String get vendors => _localizedValues[locale.languageCode]['vendors'];
+  String get vendors => _localizedValues[locale.toString()]['vendors'];
 
-  String get task => _localizedValues[locale.languageCode]['task'];
+  String get task => _localizedValues[locale.toString()]['task'];
 
-  String get tasks => _localizedValues[locale.languageCode]['tasks'];
+  String get tasks => _localizedValues[locale.toString()]['tasks'];
 
-  String get project => _localizedValues[locale.languageCode]['project'];
+  String get project => _localizedValues[locale.toString()]['project'];
 
-  String get projects => _localizedValues[locale.languageCode]['projects'];
+  String get projects => _localizedValues[locale.toString()]['projects'];
 
-  String get activity_1 => _localizedValues[locale.languageCode]['activity_1'];
+  String get activity_1 => _localizedValues[locale.toString()]['activity_1'];
 
-  String get activity_2 => _localizedValues[locale.languageCode]['activity_2'];
+  String get activity_2 => _localizedValues[locale.toString()]['activity_2'];
 
-  String get activity_3 => _localizedValues[locale.languageCode]['activity_3'];
+  String get activity_3 => _localizedValues[locale.toString()]['activity_3'];
 
-  String get activity_4 => _localizedValues[locale.languageCode]['activity_4'];
+  String get activity_4 => _localizedValues[locale.toString()]['activity_4'];
 
-  String get activity_5 => _localizedValues[locale.languageCode]['activity_5'];
+  String get activity_5 => _localizedValues[locale.toString()]['activity_5'];
 
-  String get activity_6 => _localizedValues[locale.languageCode]['activity_6'];
+  String get activity_6 => _localizedValues[locale.toString()]['activity_6'];
 
-  String get activity_7 => _localizedValues[locale.languageCode]['activity_7'];
+  String get activity_7 => _localizedValues[locale.toString()]['activity_7'];
 
-  String get activity_8 => _localizedValues[locale.languageCode]['activity_8'];
+  String get activity_8 => _localizedValues[locale.toString()]['activity_8'];
 
-  String get activity_9 => _localizedValues[locale.languageCode]['activity_9'];
+  String get activity_9 => _localizedValues[locale.toString()]['activity_9'];
 
-  String get activity_10 =>
-      _localizedValues[locale.languageCode]['activity_10'];
+  String get activity_10 => _localizedValues[locale.toString()]['activity_10'];
 
-  String get activity_11 =>
-      _localizedValues[locale.languageCode]['activity_11'];
+  String get activity_11 => _localizedValues[locale.toString()]['activity_11'];
 
-  String get activity_12 =>
-      _localizedValues[locale.languageCode]['activity_12'];
+  String get activity_12 => _localizedValues[locale.toString()]['activity_12'];
 
-  String get activity_13 =>
-      _localizedValues[locale.languageCode]['activity_13'];
+  String get activity_13 => _localizedValues[locale.toString()]['activity_13'];
 
-  String get activity_14 =>
-      _localizedValues[locale.languageCode]['activity_14'];
+  String get activity_14 => _localizedValues[locale.toString()]['activity_14'];
 
-  String get activity_15 =>
-      _localizedValues[locale.languageCode]['activity_15'];
+  String get activity_15 => _localizedValues[locale.toString()]['activity_15'];
 
-  String get activity_16 =>
-      _localizedValues[locale.languageCode]['activity_16'];
+  String get activity_16 => _localizedValues[locale.toString()]['activity_16'];
 
-  String get activity_17 =>
-      _localizedValues[locale.languageCode]['activity_17'];
+  String get activity_17 => _localizedValues[locale.toString()]['activity_17'];
 
-  String get activity_18 =>
-      _localizedValues[locale.languageCode]['activity_18'];
+  String get activity_18 => _localizedValues[locale.toString()]['activity_18'];
 
-  String get activity_19 =>
-      _localizedValues[locale.languageCode]['activity_19'];
+  String get activity_19 => _localizedValues[locale.toString()]['activity_19'];
 
-  String get activity_20 =>
-      _localizedValues[locale.languageCode]['activity_20'];
+  String get activity_20 => _localizedValues[locale.toString()]['activity_20'];
 
-  String get activity_21 =>
-      _localizedValues[locale.languageCode]['activity_21'];
+  String get activity_21 => _localizedValues[locale.toString()]['activity_21'];
 
-  String get activity_22 =>
-      _localizedValues[locale.languageCode]['activity_22'];
+  String get activity_22 => _localizedValues[locale.toString()]['activity_22'];
 
-  String get activity_23 =>
-      _localizedValues[locale.languageCode]['activity_23'];
+  String get activity_23 => _localizedValues[locale.toString()]['activity_23'];
 
-  String get activity_24 =>
-      _localizedValues[locale.languageCode]['activity_24'];
+  String get activity_24 => _localizedValues[locale.toString()]['activity_24'];
 
-  String get activity_25 =>
-      _localizedValues[locale.languageCode]['activity_25'];
+  String get activity_25 => _localizedValues[locale.toString()]['activity_25'];
 
-  String get activity_26 =>
-      _localizedValues[locale.languageCode]['activity_26'];
+  String get activity_26 => _localizedValues[locale.toString()]['activity_26'];
 
-  String get activity_27 =>
-      _localizedValues[locale.languageCode]['activity_27'];
+  String get activity_27 => _localizedValues[locale.toString()]['activity_27'];
 
-  String get activity_28 =>
-      _localizedValues[locale.languageCode]['activity_28'];
+  String get activity_28 => _localizedValues[locale.toString()]['activity_28'];
 
-  String get activity_29 =>
-      _localizedValues[locale.languageCode]['activity_29'];
+  String get activity_29 => _localizedValues[locale.toString()]['activity_29'];
 
-  String get activity_30 =>
-      _localizedValues[locale.languageCode]['activity_30'];
+  String get activity_30 => _localizedValues[locale.toString()]['activity_30'];
 
-  String get activity_31 =>
-      _localizedValues[locale.languageCode]['activity_31'];
+  String get activity_31 => _localizedValues[locale.toString()]['activity_31'];
 
-  String get activity_32 =>
-      _localizedValues[locale.languageCode]['activity_32'];
+  String get activity_32 => _localizedValues[locale.toString()]['activity_32'];
 
-  String get activity_33 =>
-      _localizedValues[locale.languageCode]['activity_33'];
+  String get activity_33 => _localizedValues[locale.toString()]['activity_33'];
 
-  String get activity_34 =>
-      _localizedValues[locale.languageCode]['activity_34'];
+  String get activity_34 => _localizedValues[locale.toString()]['activity_34'];
 
-  String get activity_35 =>
-      _localizedValues[locale.languageCode]['activity_35'];
+  String get activity_35 => _localizedValues[locale.toString()]['activity_35'];
 
-  String get activity_36 =>
-      _localizedValues[locale.languageCode]['activity_36'];
+  String get activity_36 => _localizedValues[locale.toString()]['activity_36'];
 
-  String get activity_37 =>
-      _localizedValues[locale.languageCode]['activity_37'];
+  String get activity_37 => _localizedValues[locale.toString()]['activity_37'];
 
-  String get activity_38 =>
-      _localizedValues[locale.languageCode]['activity_38'];
+  String get activity_38 => _localizedValues[locale.toString()]['activity_38'];
 
-  String get activity_39 =>
-      _localizedValues[locale.languageCode]['activity_39'];
+  String get activity_39 => _localizedValues[locale.toString()]['activity_39'];
 
-  String get activity_40 =>
-      _localizedValues[locale.languageCode]['activity_40'];
+  String get activity_40 => _localizedValues[locale.toString()]['activity_40'];
 
-  String get activity_41 =>
-      _localizedValues[locale.languageCode]['activity_41'];
+  String get activity_41 => _localizedValues[locale.toString()]['activity_41'];
 
-  String get activity_42 =>
-      _localizedValues[locale.languageCode]['activity_42'];
+  String get activity_42 => _localizedValues[locale.toString()]['activity_42'];
 
-  String get activity_43 =>
-      _localizedValues[locale.languageCode]['activity_43'];
+  String get activity_43 => _localizedValues[locale.toString()]['activity_43'];
 
-  String get activity_44 =>
-      _localizedValues[locale.languageCode]['activity_44'];
+  String get activity_44 => _localizedValues[locale.toString()]['activity_44'];
 
-  String get activity_45 =>
-      _localizedValues[locale.languageCode]['activity_45'];
+  String get activity_45 => _localizedValues[locale.toString()]['activity_45'];
 
-  String get activity_46 =>
-      _localizedValues[locale.languageCode]['activity_46'];
+  String get activity_46 => _localizedValues[locale.toString()]['activity_46'];
 
-  String get activity_47 =>
-      _localizedValues[locale.languageCode]['activity_47'];
+  String get activity_47 => _localizedValues[locale.toString()]['activity_47'];
 
   String get oneTimePassword =>
-      _localizedValues[locale.languageCode]['one_time_password'];
+      _localizedValues[locale.toString()]['one_time_password'];
 
   String get emailedQuote =>
-      _localizedValues[locale.languageCode]['emailed_quote'];
+      _localizedValues[locale.toString()]['emailed_quote'];
 
   String get markedQuoteAsSent =>
-      _localizedValues[locale.languageCode]['marked_quote_as_sent'];
+      _localizedValues[locale.toString()]['marked_quote_as_sent'];
 
-  String get expired => _localizedValues[locale.languageCode]['expired'];
+  String get expired => _localizedValues[locale.toString()]['expired'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
-    return _localizedValues[locale.languageCode][lookupKey] ??
-        _localizedValues[locale.languageCode]
+    return _localizedValues[locale.toString()][lookupKey] ??
+        _localizedValues[locale.toString()]
             [lookupKey.replaceFirst('_id', '')] ??
         key;
   }
@@ -9109,7 +9055,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
   const AppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => kLanguages.contains(locale.languageCode);
+  bool isSupported(Locale locale) => kLanguages.contains(locale.toString());
 
   @override
   Future<AppLocalization> load(Locale locale) {
