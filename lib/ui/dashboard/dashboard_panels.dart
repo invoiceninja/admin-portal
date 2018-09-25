@@ -102,7 +102,7 @@ class DashboardPanels extends StatelessWidget {
 
   Widget _invoiceChart(BuildContext context) {
     if (!viewModel.state.invoiceState.isLoaded) {
-      return LoadingIndicator();
+      return LoadingIndicator(useCard: true);
     }
 
     final localization = AppLocalization.of(context);
@@ -172,7 +172,7 @@ class DashboardPanels extends StatelessWidget {
 
   Widget _paymentChart(BuildContext context) {
     if (!viewModel.state.paymentState.isLoaded) {
-      return LoadingIndicator();
+      return LoadingIndicator(useCard: true);
     }
 
     final localization = AppLocalization.of(context);
