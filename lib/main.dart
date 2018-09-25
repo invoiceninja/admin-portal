@@ -90,14 +90,17 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     /*
     const QuickActions quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
-      if (shortcutType == 'action_main') {
-        print('The user tapped on the "Main view" action.');
+      if (shortcutType == 'action_new_client') {
+        widget.store
+            .dispatch(EditClient(context: context, client: ClientEntity()));
       }
     });
 
     quickActions.setShortcutItems(<ShortcutItem>[
       const ShortcutItem(
-          type: 'action_main', localizedTitle: 'Main view 123', icon: 'AppIcon'),
+          type: 'action_new_client',
+          localizedTitle: 'New Client',
+          icon: 'AppIcon'),
     ]);
     */
   }
