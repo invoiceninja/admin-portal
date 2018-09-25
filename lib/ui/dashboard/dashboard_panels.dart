@@ -50,8 +50,8 @@ class DashboardPanels extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: Text(
-                          formatDateRange(
-                              uiState.startDate(company), uiState.endDate(company), context),
+                          formatDateRange(uiState.startDate(company),
+                              uiState.endDate(company), context),
                           style: Theme.of(context).textTheme.title),
                     ),
                     SizedBox(width: 6.0),
@@ -70,8 +70,9 @@ class DashboardPanels extends StatelessWidget {
           SizedBox(width: 8.0),
           IconButton(
             icon: Icon(Icons.navigate_next),
-            onPressed: () =>
-                viewModel.isNextEnabled ? viewModel.onOffsetChanged(-1) : null,
+            onPressed: viewModel.isNextEnabled
+                ? () => viewModel.onOffsetChanged(-1)
+                : null,
           ),
           SizedBox(width: 8.0),
           memoizedHasMultipleCurrencies(company, clientMap)
