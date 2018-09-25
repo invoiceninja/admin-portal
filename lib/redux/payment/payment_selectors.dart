@@ -17,13 +17,16 @@ List<PaymentEntity> paymentsByInvoiceSelector(int invoiceId,
 }
 
 InvoiceEntity paymentInvoiceSelector(int paymentId, AppState state) {
-  final payment = state.paymentState.map[paymentId] ?? PaymentEntity();
-  return state.invoiceState.map[payment.invoiceId] ?? InvoiceEntity();
+  final payment =
+      state.paymentState.map[paymentId] ?? PaymentEntity(id: paymentId);
+  return state.invoiceState.map[payment.invoiceId] ??
+      InvoiceEntity(id: payment.invoiceId);
 }
 
 ClientEntity paymentClientSelector(int paymentId, AppState state) {
   final invoice = paymentInvoiceSelector(paymentId, state);
-  return state.clientState.map[invoice.clientId] ?? ClientEntity();
+  return state.clientState.map[invoice.clientId] ??
+      ClientEntity(id: invoice.clientId);
 }
 
 var memoizedDropdownPaymentList = memo2(

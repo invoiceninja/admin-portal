@@ -88,9 +88,9 @@ abstract class InvoiceEntity extends Object
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   static int counter = 0;
 
-  factory InvoiceEntity({bool isQuote = false}) {
+  factory InvoiceEntity({int id, bool isQuote = false}) {
     return _$InvoiceEntity._(
-      id: --InvoiceEntity.counter,
+      id: id ?? --InvoiceEntity.counter,
       amount: 0.0,
       balance: 0.0,
       clientId: 0,
@@ -448,7 +448,7 @@ abstract class InvoiceEntity extends Object
 
   bool isBetween(String startDate, String endDate) {
     return startDate.compareTo(invoiceDate) <= 0 &&
-        endDate.compareTo(invoiceDate) >= 0;
+        endDate.compareTo(invoiceDate) == 1;
   }
 
   double get requestedAmount => partial > 0 ? partial : amount;
@@ -474,7 +474,7 @@ abstract class InvoiceEntity extends Object
   String get invitationDownloadLink => invitations.first?.downloadLink;
 
   PaymentEntity createPayment(CompanyEntity company) {
-    return PaymentEntity(company).rebuild((b) => b
+    return PaymentEntity(company: company).rebuild((b) => b
       ..invoiceId = id
       ..clientId = clientId
       ..amount = balance);

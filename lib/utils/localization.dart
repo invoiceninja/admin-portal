@@ -20,6 +20,9 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\n\nWe hope to have them completed in the next few months.\n\nUntil then we\'ll continue to support the',
+      'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom',
       'date_range': 'Date Range',
@@ -8343,6 +8346,12 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get thanksForPatience =>
+      _localizedValues[locale.toString()]['thanks_for_patience'];
+
+  String get legacyMobileApp =>
+      _localizedValues[locale.toString()]['legacy_mobile_app'];
 
   String get today => _localizedValues[locale.toString()]['today'];
 

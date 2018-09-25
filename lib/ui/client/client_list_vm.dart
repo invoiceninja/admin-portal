@@ -89,7 +89,7 @@ class ClientListVM {
             break;
           case EntityAction.payment:
             store.dispatch(EditPayment(
-                payment: PaymentEntity(state.selectedCompany)
+                payment: PaymentEntity(company: state.selectedCompany)
                     .rebuild((b) => b.clientId = client.id),
                 context: context));
             break;

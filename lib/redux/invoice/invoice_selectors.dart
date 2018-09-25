@@ -29,7 +29,7 @@ List<int> dropdownInvoiceSelector(BuiltMap<int, InvoiceEntity> invoiceMap,
 
 ClientEntity invoiceClientSelector(
     InvoiceEntity invoice, BuiltMap<int, ClientEntity> clientMap) {
-  return clientMap[invoice.clientId] ?? ClientEntity();
+  return clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 }
 
 var memoizedFilteredInvoiceList = memo4(
@@ -47,7 +47,7 @@ List<int> filteredInvoicesSelector(
     ListUIState invoiceListState) {
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
-    final client = clientMap[invoice.clientId] ?? ClientEntity();
+    final client = clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     if (client == null || !client.isActive) {
       return false;
     }

@@ -15,7 +15,8 @@ String processTemplate(
   final state = StoreProvider.of<AppState>(context).state;
   final localization = AppLocalization.of(context);
   final company = state.selectedCompany;
-  final client = state.clientState.map[invoice.clientId] ?? ClientEntity();
+  final client = state.clientState.map[invoice.clientId] ??
+      ClientEntity(id: invoice.clientId);
   final contact = client.contacts.first;
 
   final String sampleButton = '[${localization.button}]';

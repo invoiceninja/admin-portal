@@ -21,8 +21,8 @@ class InvoiceEmailScreen extends StatelessWidget {
         final state = store.state;
         final invoiceId = state.uiState.invoiceUIState.selectedId;
         final invoice = state.invoiceState.map[invoiceId];
-        final client =
-            state.clientState.map[invoice.clientId] ?? ClientEntity();
+        final client = state.clientState.map[invoice.clientId] ??
+            ClientEntity(id: invoice.clientId);
         if (client.areActivitiesStale) {
           store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
         }
@@ -86,7 +86,8 @@ class EmailInvoiceVM extends EmailEntityVM {
         isSaving: state.isSaving,
         company: state.selectedCompany,
         invoice: invoice,
-        client: state.clientState.map[invoice.clientId] ?? ClientEntity(),
+        client: state.clientState.map[invoice.clientId] ??
+            ClientEntity(id: invoice.clientId),
         onSendPressed: (context, template, subject, body) =>
             store.dispatch(EmailInvoiceRequest(
               completer: popCompleter(context, true),

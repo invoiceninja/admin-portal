@@ -68,7 +68,8 @@ class PaymentScreen extends StatelessWidget {
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(EditPayment(
-                      payment: PaymentEntity(company), context: context));
+                      payment: PaymentEntity(company: company),
+                      context: context));
                 },
                 child: Icon(
                   Icons.add,

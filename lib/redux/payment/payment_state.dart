@@ -44,7 +44,7 @@ abstract class PaymentUIState extends Object with EntityUIState implements Built
   factory PaymentUIState(CompanyEntity company) {
     return _$PaymentUIState._(
       listUIState: ListUIState(PaymentFields.paymentDate),
-      editing: PaymentEntity(company),
+      editing: PaymentEntity(company: company),
       selectedId: 0,
     );
   }

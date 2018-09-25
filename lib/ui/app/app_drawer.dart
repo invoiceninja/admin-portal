@@ -12,13 +12,14 @@ import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
@@ -83,8 +84,8 @@ class AppDrawer extends StatelessWidget {
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
-    //final TextStyle linkStyle =
-    //themeData.textTheme.body2.copyWith(color: themeData.accentColor);
+    final TextStyle linkStyle =
+        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
 
     return Drawer(
       child: ListView(
@@ -192,7 +193,7 @@ class AppDrawer extends StatelessWidget {
             onCreateTap: () {
               navigator.pop();
               store.dispatch(EditPayment(
-                  payment: PaymentEntity(company), context: context));
+                  payment: PaymentEntity(company: company), context: context));
             },
           ),
           DrawerTile(
@@ -217,10 +218,26 @@ class AppDrawer extends StatelessWidget {
                 builder: (BuildContext context) => AlertDialog(
                       semanticLabel: 'Task & Expenses',
                       title: Text('Task & Expenses'),
-                      content: Text(
-                          'Thank for your patience while we work to implement these features.\n\n' +
-                              'We hope to have them completed in the next few months.\n\n'
-                              'Until then we\'ll continue to support the legacy mobile apps.'),
+                      content: RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              style: aboutTextStyle,
+                              text:
+                                  localization.thanksForPatience + ' ',
+                            ),
+                            _LinkTextSpan(
+                              style: linkStyle,
+                              url: getLegacyAppURL(context),
+                              text: localization.legacyMobileApp,
+                            ),
+                            TextSpan(
+                              style: aboutTextStyle,
+                              text: '.',
+                            ),
+                          ],
+                        ),
+                      ),
                       actions: <Widget>[
                         FlatButton(
                           child: Text(localization.ok.toUpperCase()),
