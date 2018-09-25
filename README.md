@@ -41,6 +41,13 @@ The architecture is based off these two projects:
 - [Redux Sample](https://github.com/brianegan/flutter_architecture_samples/tree/master/example/redux) - [Brian Egan](https://twitter.com/brianegan)
 - [inKino](https://github.com/roughike/inKino) - [Iiro Krankka](https://twitter.com/koorankka)
 
+### Blog Posts
+- [Intro to Google Flutter](https://hillelcoren.com/2018/05/18/flutter-is-darts-killer-app/)
+- [Using Redux to manage state](https://hillelcoren.com/2018/06/01/building-a-large-flutter-app-with-redux/)
+- [Handling complex forms](https://hillelcoren.com/2018/06/18/flutter-using-redux-to-manage-complex-forms-with-multiple-tabs-and-relationships/)
+- [Architectural review](https://hillelcoren.com/2018/08/10/an-architectural-review-of-the-invoice-ninja-flutter-app/)
+- [Additional thoughts](https://hillelcoren.com/2018/08/24/ongoing-adventures-with-flutter-and-redux/)
+
 ## Developer Notes
 - Run `cp lib/.env.dart.example lib/.env.dart` to create the config file
 - Run `cp android/key.properties.example android/key.properties` to create the keys file
