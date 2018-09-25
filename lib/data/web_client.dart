@@ -21,11 +21,11 @@ class WebClient {
     return url;
   }
 
-  String _parseError(String response) {
+  String _parseError(int code, String response) {
     dynamic message = response;
 
     if (response.contains('DOCTYPE html')) {
-      return 'An error occurred';
+      return '$code: An error occurred';
     }
     
     try {
@@ -36,7 +36,7 @@ class WebClient {
       // do nothing
     }
 
-    return message.toString();
+    return '$code: $message';
   }
 
   Future<dynamic> get(String url, String token) async {
@@ -61,7 +61,7 @@ class WebClient {
       print('==== FAILED ====');
       print('body: ${response.body}');
 
-      throw _parseError(response.body);
+      throw _parseError(response.statusCode, response.body);
     }
 
     final dynamic jsonResponse = json.decode(response.body);
@@ -84,8 +84,8 @@ class WebClient {
       },
     ).timeout(const Duration(seconds: 30));
 
-    if (response.statusCode >= 400) {
-      throw _parseError(response.body);
+    if (response.statusCode >= 300) {
+      throw _parseError(response.statusCode, response.body);
     }
 
     try {
@@ -110,8 +110,8 @@ class WebClient {
       },
     );
 
-    if (response.statusCode >= 400) {
-      throw _parseError(response.body);
+    if (response.statusCode >= 300) {
+      throw _parseError(response.statusCode, response.body);
     }
 
     try {
