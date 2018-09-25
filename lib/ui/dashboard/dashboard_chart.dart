@@ -19,6 +19,9 @@ class DashboardChart extends StatefulWidget {
   final String title;
   final int currencyId;
 
+  static const PERIOD_CURRENT = 'current';
+  static const PERIOD_PREVIOUS = 'previous';
+
   @override
   _DashboardChartState createState() => _DashboardChartState();
 }
@@ -36,7 +39,10 @@ class _DashboardChartState extends State<DashboardChart> {
 
     if (selectedDatum.isNotEmpty) {
       date = selectedDatum.first.datum.date;
-      selectedDatum.forEach((charts.SeriesDatum datumPair) {
+      selectedDatum
+          .where((charts.SeriesDatum datumPair) =>
+              datumPair.series.id == DashboardChart.PERIOD_CURRENT)
+          .forEach((charts.SeriesDatum datumPair) {
         total += datumPair.datum.amount;
         measures[datumPair.series.displayName] = datumPair.datum.amount;
       });

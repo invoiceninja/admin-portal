@@ -118,7 +118,7 @@ class DashboardPanels extends StatelessWidget {
         measureFn: (ChartMoneyData chartData, _) => chartData.amount,
         colorFn: (ChartMoneyData chartData, _) =>
             charts.MaterialPalette.blue.shadeDefault,
-        id: 'invoices',
+        id: DashboardChart.PERIOD_CURRENT,
         displayName: settings.enableComparison
             ? localization.currentPeriod
             : localization.invoices,
@@ -150,7 +150,7 @@ class DashboardPanels extends StatelessWidget {
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
               charts.MaterialPalette.gray.shadeDefault,
-          id: 'previousInvoices',
+          id: DashboardChart.PERIOD_PREVIOUS,
           displayName: localization.previousPeriod,
           data: previousData,
         ),
@@ -192,7 +192,7 @@ class DashboardPanels extends StatelessWidget {
         measureFn: (ChartMoneyData chartData, _) => chartData.amount,
         colorFn: (ChartMoneyData chartData, _) =>
             charts.MaterialPalette.blue.shadeDefault,
-        id: 'payments',
+        id: DashboardChart.PERIOD_CURRENT,
         displayName: settings.enableComparison
             ? localization.currentPeriod
             : localization.payments,
@@ -225,7 +225,7 @@ class DashboardPanels extends StatelessWidget {
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
               charts.MaterialPalette.gray.shadeDefault,
-          id: 'previousPayments',
+          id: DashboardChart.PERIOD_PREVIOUS,
           displayName: localization.previousPeriod,
           data: previousData,
         ),
