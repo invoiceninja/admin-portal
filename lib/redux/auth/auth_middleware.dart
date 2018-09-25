@@ -130,7 +130,8 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     _loadAuthLocal(store, action);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String url = prefs.getString(kSharedPrefUrl);
+    final String url = await FlutterKeychain.get(key: kKeychainUrl) ??
+        formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
     final String token = await FlutterKeychain.get(key: getKeychainTokenKey());
 
     repository
