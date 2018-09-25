@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/file_storage.dart';
@@ -9,10 +11,12 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -181,8 +185,24 @@ Middleware<AppState> _createLoadState(
       }
     } catch (error) {
       print(error);
-      store.dispatch(UserLogout());
-      store.dispatch(LoadUserLogin(action.context));
+      final String token =
+          await FlutterKeychain.get(key: getKeychainTokenKey()) ?? '';
+      if (token.isNotEmpty) {
+        final Completer<Null> completer = Completer<Null>();
+        completer.future.then((_) {
+          store.dispatch(ViewDashboard(action.context));
+        }).catchError((Object error) {
+          store.dispatch(UserLogout());
+          store.dispatch(LoadUserLogin(action.context));
+        });
+        store.dispatch(RefreshData(
+          platform: getPlatform(action.context),
+          completer: completer,
+        ));
+      } else {
+        store.dispatch(UserLogout());
+        store.dispatch(LoadUserLogin(action.context));
+      }
     }
 
     next(action);
@@ -318,7 +338,7 @@ Middleware<AppState> _createDeleteState(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();
@@ -327,6 +347,10 @@ Middleware<AppState> _createDeleteState(
     company3Repository.delete();
     company4Repository.delete();
     company5Repository.delete();
+
+    for (int i=0; i<5; i++) {
+      await FlutterKeychain.put(key: getKeychainTokenKey(i), value: '');
+    }
 
     next(action);
   };

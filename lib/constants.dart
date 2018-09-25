@@ -12,7 +12,7 @@ const String kSharedPrefAppVersion = 'app_version';
 
 const String kKeychainToken = 'api_token';
 
-String getKeychainTokenKey(int companyIndex) => '${kKeychainToken}_$companyIndex';
+String getKeychainTokenKey([int companyIndex = 0]) => '${kKeychainToken}_$companyIndex';
 
 const int kMinMajorAppVersion = 4;
 const int kMinMinorAppVersion = 5;
