@@ -245,6 +245,80 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
+  Widget _quoteChart(BuildContext context) {
+    if (!viewModel.state.quoteState.isLoaded) {
+      return LoadingIndicator(useCard: true);
+    }
+
+    if (viewModel.state.quoteState.list.isEmpty) {
+      return Container();
+    }
+
+    final localization = AppLocalization.of(context);
+    final settings = viewModel.dashboardUIState;
+    final state = viewModel.state;
+
+    final data = memoizedChartOutstandingQuotes(state.selectedCompany,
+        settings, state.quoteState.map, state.clientState.map);
+
+    final series = [
+      charts.Series<ChartMoneyData, DateTime>(
+        domainFn: (ChartMoneyData chartData, _) => chartData.date,
+        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+        colorFn: (ChartMoneyData chartData, _) =>
+        charts.MaterialPalette.blue.shadeDefault,
+        id: DashboardChart.PERIOD_CURRENT,
+        displayName: settings.enableComparison
+            ? localization.currentPeriod
+            : localization.quotes,
+        data: data,
+      ),
+    ];
+
+    double total = 0.0;
+    double previousTotal = 0.0;
+    data.forEach((dynamic item) {
+      total += item.amount;
+    });
+
+    if (settings.enableComparison) {
+      final offsetData = memoizedChartOutstandingQuotes(
+          state.selectedCompany,
+          settings.rebuild((b) => b..offset += 1),
+          state.quoteState.map,
+          state.clientState.map);
+
+      final List<ChartMoneyData> previousData = [];
+      for (int i = 0; i < min(data.length, offsetData.length); i++) {
+        previousData.add(ChartMoneyData(data[i].date, offsetData[i].amount));
+      }
+
+      series.add(
+        charts.Series<ChartMoneyData, DateTime>(
+          domainFn: (ChartMoneyData chartData, _) => chartData.date,
+          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+          colorFn: (ChartMoneyData chartData, _) =>
+          charts.MaterialPalette.gray.shadeDefault,
+          id: DashboardChart.PERIOD_PREVIOUS,
+          displayName: localization.previousPeriod,
+          data: previousData,
+        ),
+      );
+
+      previousData.forEach((dynamic item) {
+        previousTotal += item.amount;
+      });
+    }
+
+    return DashboardChart(
+      series: series,
+      amount: total,
+      previousAmount: previousTotal,
+      title: localization.quotes,
+      currencyId: settings.currencyId,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -256,6 +330,7 @@ class DashboardPanels extends StatelessWidget {
             ),
             _invoiceChart(context),
             _paymentChart(context),
+            _quoteChart(context),
           ],
         ),
         ConstrainedBox(
