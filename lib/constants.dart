@@ -11,6 +11,9 @@ const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAppVersion = 'app_version';
 
 const String kKeychainToken = 'api_token';
+const String kKeychainEmail = 'email';
+const String kKeychainUrl = 'url';
+const String kKeychainSecret = 'secret';
 
 String getKeychainTokenKey([int companyIndex = 0]) => '${kKeychainToken}_$companyIndex';
 

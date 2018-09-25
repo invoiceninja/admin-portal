@@ -28,20 +28,22 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 }
 
 void _saveAuthLocal(dynamic action) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kSharedPrefEmail, action.email);
-  prefs.setString(kSharedPrefUrl, formatApiUrlMachine(action.url));
-  prefs.setString(kSharedPrefSecret, action.secret);
+  await FlutterKeychain.put(key: kKeychainEmail, value: action.email);
+  await FlutterKeychain.put(
+      key: kKeychainUrl, value: formatApiUrlMachine(action.url));
+  await FlutterKeychain.put(key: kKeychainSecret, value: action.secret);
 }
 
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  final String email = prefs.getString(kSharedPrefEmail) ?? Config.LOGIN_EMAIL;
-  final String url =
+  final String email = await FlutterKeychain.get(key: kKeychainEmail) ??
+      prefs.getString(kSharedPrefEmail) ??
+      Config.LOGIN_EMAIL;
+  final String url = await FlutterKeychain.get(key: kKeychainUrl) ??
       formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
-  final String secret =
-      prefs.getString(kSharedPrefSecret) ?? Config.LOGIN_SECRET;
+  final String secret = await FlutterKeychain.get(key: kKeychainSecret) ??
+      prefs.getString(kSharedPrefSecret) ??
+      Config.LOGIN_SECRET;
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
@@ -84,8 +86,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print(error);
       if (error.toString().contains('No host specified in URI')) {
-        store.dispatch(UserLoginFailure(
-            'Please check the URL is correct'));
+        store.dispatch(UserLoginFailure('Please check the URL is correct'));
       } else {
         store.dispatch(UserLoginFailure(error.toString()));
       }
