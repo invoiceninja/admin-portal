@@ -548,7 +548,7 @@ abstract class InvoiceItemEntity extends Object
 
   double get discount;
 
-  double get total => qty * cost;
+  double get total => round(qty * cost, 2);
 
   @override
   bool matchesFilter(String filter) {
