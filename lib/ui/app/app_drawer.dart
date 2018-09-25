@@ -78,7 +78,9 @@ class AppDrawer extends StatelessWidget {
 
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
-    final user = store.state.user;
+    final state = store.state;
+    final user = state.user;
+    final enableDarkMode = state.uiState.enableDarkMode;
     final company = viewModel.selectedCompany;
     final localization = AppLocalization.of(context);
 
@@ -91,6 +93,7 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Container(
+            color: enableDarkMode ? Colors.white10 : Colors.grey[200],
             child: DrawerHeader(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +138,6 @@ class AppDrawer extends StatelessWidget {
                 ),
               ],
             )),
-            color: Colors.white10,
           ),
           user.isAdmin
               ? DrawerTile(
