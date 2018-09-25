@@ -107,31 +107,28 @@ class _DashboardChartState extends State<DashboardChart> {
           child: Column(
             children: <Widget>[
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Expanded(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(widget.title,
                             style: Theme.of(context).textTheme.subhead),
-                        Row(
-                          children: <Widget>[
-                            Text(
-                                formatNumber(widget.amount, context,
-                                    currencyId: widget.currencyId),
-                                style: Theme.of(context).textTheme.headline),
-                            SizedBox(width: 12.0),
-                            Text(
-                              changeString,
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: isIncrease ? Colors.green : Colors.red,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        Text(
+                            formatNumber(widget.amount, context,
+                                currencyId: widget.currencyId),
+                            style: Theme.of(context).textTheme.headline),
+                        SizedBox(width: 12.0),
+                        Text(
+                          changeString,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: isIncrease ? Colors.green : Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
-                      crossAxisAlignment: CrossAxisAlignment.start,
                     ),
                   ),
                   _title != null
