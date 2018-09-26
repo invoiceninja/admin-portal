@@ -86,13 +86,6 @@ class _LoginState extends State<LoginView> {
       return Container();
     }
 
-    final List<Color> kitGradients = [
-      //Colors.red,
-      //Colors.green,
-      Colors.grey[600],
-      Colors.grey[900],
-    ];
-
     return Stack(
       children: <Widget>[
         SizedBox(
@@ -102,7 +95,10 @@ class _LoginState extends State<LoginView> {
             child: Container(
               decoration: BoxDecoration(
                   gradient: LinearGradient(
-                colors: kitGradients,
+                colors: [
+                  Colors.grey.shade800,
+                  Colors.black87,
+                ],
               )),
             ),
           ),
@@ -195,30 +191,25 @@ class _LoginState extends State<LoginView> {
                             ),
                           ),
                         ),
-                ],
-              ),
-            ),
-            ProgressButton(
-              label: localization.login.toUpperCase(),
-              isLoading: viewModel.isLoading,
-              onPressed: () => _submitForm(),
-            ),
-            isOneTimePassword && !viewModel.isLoading
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: ElevatedButton(
-                      label: localization.cancel.toUpperCase(),
-                      color: Colors.grey,
-                      onPressed: () {
-                        setState(() {
-                          _oneTimePasswordController.text = '';
-                        });
-                        viewModel.onCancel2FAPressed();
-                      },
-                    ),
-                  )
-                : Container(),
-            /*
+                  SizedBox(height: 20.0),
+                  ProgressButton(
+                    label: localization.login.toUpperCase(),
+                    isLoading: viewModel.isLoading,
+                    onPressed: () => _submitForm(),
+                  ),
+                  isOneTimePassword && !viewModel.isLoading
+                      ? ElevatedButton(
+                          label: localization.cancel.toUpperCase(),
+                          color: Colors.grey,
+                          onPressed: () {
+                            setState(() {
+                              _oneTimePasswordController.text = '';
+                            });
+                            viewModel.onCancel2FAPressed();
+                          },
+                        )
+                      : Container(),
+                  /*
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ElevatedButton(
@@ -228,6 +219,9 @@ class _LoginState extends State<LoginView> {
               ),
             ),
             */
+                ],
+              ),
+            ),
           ],
         ),
       ],
