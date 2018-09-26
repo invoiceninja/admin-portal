@@ -15,12 +15,11 @@ class LoadingIndicator extends StatelessWidget {
         padding: EdgeInsets.all(14.0),
         child: SizedBox(
           height: 200.0,
-          child: FormCard(
-            children: <Widget>[
-              Center(
-                child: CircularProgressIndicator(),
-              )
-            ],
+          child: Card(
+            elevation: 4.0,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
         ),
       );
