@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({Key key, this.useCard = false, this.height = 200.0})
@@ -14,10 +15,12 @@ class LoadingIndicator extends StatelessWidget {
         padding: EdgeInsets.all(14.0),
         child: SizedBox(
           height: 200.0,
-          child: Card(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          child: FormCard(
+            children: <Widget>[
+              Center(
+                child: CircularProgressIndicator(),
+              )
+            ],
           ),
         ),
       );
