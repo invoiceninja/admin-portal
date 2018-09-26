@@ -40,6 +40,8 @@ class _LoginState extends State<LoginView> {
 
   FocusNode focusNode1 = new FocusNode();
 
+  bool isSelfHosted = false;
+
   @override
   void didChangeDependencies() {
     final state = widget.viewModel.authState;
@@ -155,26 +157,30 @@ class _LoginState extends State<LoginView> {
                               focusNode: focusNode1,
                               onFieldSubmitted: (value) => _submitForm(),
                             ),
-                            TextFormField(
-                              controller: _urlController,
-                              key: _urlKey,
-                              autocorrect: false,
-                              decoration:
-                                  InputDecoration(labelText: localization.url),
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourUrl
-                                      : null,
-                              keyboardType: TextInputType.url,
-                            ),
-                            TextFormField(
-                              controller: _secretController,
-                              key: _secretKey,
-                              autocorrect: false,
-                              decoration: InputDecoration(
-                                  labelText: localization.secret),
-                              obscureText: true,
-                            ),
+                            isSelfHosted
+                                ? TextFormField(
+                                    controller: _urlController,
+                                    key: _urlKey,
+                                    autocorrect: false,
+                                    decoration: InputDecoration(
+                                        labelText: localization.url),
+                                    validator: (val) =>
+                                        val.isEmpty || val.trim().isEmpty
+                                            ? localization.pleaseEnterYourUrl
+                                            : null,
+                                    keyboardType: TextInputType.url,
+                                  )
+                                : Container(),
+                            isSelfHosted
+                                ? TextFormField(
+                                    controller: _secretController,
+                                    key: _secretKey,
+                                    autocorrect: false,
+                                    decoration: InputDecoration(
+                                        labelText: localization.secret),
+                                    obscureText: true,
+                                  )
+                                : Container(),
                           ],
                         ),
                   viewModel.authState.error == null || error == OTP_ERROR
@@ -191,11 +197,24 @@ class _LoginState extends State<LoginView> {
                             ),
                           ),
                         ),
-                  SizedBox(height: 20.0),
-                  ProgressButton(
-                    label: localization.login.toUpperCase(),
-                    isLoading: viewModel.isLoading,
-                    onPressed: () => _submitForm(),
+                  SizedBox(height: 24.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      isSelfHosted
+                          ? ProgressButton(
+                              label: localization.login.toUpperCase(),
+                              onPressed: () => _submitForm(),
+                              isLoading: viewModel.isLoading,
+                            )
+                          : FlatButton(
+                              onPressed: () =>
+                                  setState(() => isSelfHosted = true),
+                              child: Text(localization.selfhostLogin)),
+                      FlatButton(
+                          onPressed: () => setState(() => isSelfHosted = true),
+                          child: Text(localization.googleLogin)),
+                    ],
                   ),
                   isOneTimePassword && !viewModel.isLoading
                       ? ElevatedButton(
