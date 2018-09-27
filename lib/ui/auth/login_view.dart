@@ -213,7 +213,7 @@ class _LoginState extends State<LoginView> {
                         ),
                   SizedBox(height: 24.0),
                   ProgressButton(
-                    padding: EdgeInsets.only(top: 4.0, bottom: 8.0),
+                    padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
                     isLoading: viewModel.isLoading,
                     label: localization.login.toUpperCase(),
                     onPressed: () => _submitForm(),
