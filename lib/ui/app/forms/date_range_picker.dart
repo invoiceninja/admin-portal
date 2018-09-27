@@ -73,15 +73,20 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             ),
                           ),
                           Expanded(child: Container()),
-                          Flexible(child: Text(localization.compare)),
-                          Switch(
-                            value: _settings.enableComparison,
-                            activeColor: Theme.of(context).accentColor,
-                            onChanged: (value) {
-                              setState(
-                                  () => _settings.enableComparison = value);
-                            },
-                          ),
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: <Widget>[
+                              Text(localization.compare),
+                              Switch(
+                                value: _settings.enableComparison,
+                                activeColor: Theme.of(context).accentColor,
+                                onChanged: (value) {
+                                  setState(
+                                      () => _settings.enableComparison = value);
+                                },
+                              ),
+                            ],
+                          )
                         ],
                       ),
                       _settings.dateRange != DateRange.custom
