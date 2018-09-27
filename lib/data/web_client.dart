@@ -11,7 +11,7 @@ class WebClient {
   String _checkUrl(String url) {
 
     if (! url.startsWith('http')) {
-      url = 'https://' + url;
+      url = kAppUrl + url;
     }
 
     if (! url.contains('?')) {

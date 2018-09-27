@@ -38,9 +38,10 @@ class _LoginState extends State<LoginView> {
   static final ValueKey _oneTimePasswordKey =
       Key(LoginKeys.oneTimePasswordKeyString);
 
-  FocusNode focusNode1 = new FocusNode();
+  final FocusNode _focusNode1 = new FocusNode();
 
-  bool isSelfHosted = false;
+  bool _isSelfHosted = false;
+  bool _autoValidate = false;
 
   @override
   void didChangeDependencies() {
@@ -64,10 +65,16 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitForm() {
-    if (!_formKey.currentState.validate()) {
+    final bool isValid = _formKey.currentState.validate();
+
+    setState(() {
+      _autoValidate = !isValid;
+    });
+
+    if (!isValid) {
       return;
     }
-
+    
     widget.viewModel.onLoginPressed(context,
         email: _emailController.text,
         password: _passwordController.text,
@@ -137,18 +144,20 @@ class _LoginState extends State<LoginView> {
                               decoration: InputDecoration(
                                   labelText: localization.email),
                               keyboardType: TextInputType.emailAddress,
+                              autovalidate: _autoValidate,
                               validator: (val) =>
                                   val.isEmpty || val.trim().isEmpty
                                       ? localization.pleaseEnterYourEmail
                                       : null,
                               onFieldSubmitted: (String value) =>
                                   FocusScope.of(context)
-                                      .requestFocus(focusNode1),
+                                      .requestFocus(_focusNode1),
                             ),
                             TextFormField(
                               controller: _passwordController,
                               key: _passwordKey,
                               autocorrect: false,
+                              autovalidate: _autoValidate,
                               decoration: InputDecoration(
                                   labelText: localization.password),
                               validator: (val) =>
@@ -156,14 +165,15 @@ class _LoginState extends State<LoginView> {
                                       ? localization.pleaseEnterYourPassword
                                       : null,
                               obscureText: true,
-                              focusNode: focusNode1,
+                              focusNode: _focusNode1,
                               onFieldSubmitted: (value) => _submitForm(),
                             ),
-                            isSelfHosted
+                            _isSelfHosted
                                 ? TextFormField(
                                     controller: _urlController,
                                     key: _urlKey,
                                     autocorrect: false,
+                                    autovalidate: _autoValidate,
                                     decoration: InputDecoration(
                                         labelText: localization.url),
                                     validator: (val) =>
@@ -173,7 +183,7 @@ class _LoginState extends State<LoginView> {
                                     keyboardType: TextInputType.url,
                                   )
                                 : Container(),
-                            isSelfHosted
+                            _isSelfHosted
                                 ? TextFormField(
                                     controller: _secretController,
                                     key: _secretKey,
@@ -188,7 +198,7 @@ class _LoginState extends State<LoginView> {
                   viewModel.authState.error == null || error == OTP_ERROR
                       ? Container()
                       : Container(
-                          padding: EdgeInsets.only(top: 26.0, bottom: 4.0),
+                          padding: EdgeInsets.only(top: 26.0),
                           child: Center(
                             child: Text(
                               viewModel.authState.error,
@@ -209,17 +219,17 @@ class _LoginState extends State<LoginView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      isSelfHosted
+                      _isSelfHosted
                           ? FlatButton(
                               onPressed: () =>
-                                  setState(() => isSelfHosted = false),
+                                  setState(() => _isSelfHosted = false),
                               child: Text(localization.hostedLogin))
                           : FlatButton(
                               onPressed: () =>
-                                  setState(() => isSelfHosted = true),
+                                  setState(() => _isSelfHosted = true),
                               child: Text(localization.selfhostLogin)),
                       FlatButton(
-                          onPressed: () => setState(() => isSelfHosted = true),
+                          onPressed: () => setState(() => _isSelfHosted = true),
                           child: Text(localization.googleLogin)),
                     ],
                   ),
