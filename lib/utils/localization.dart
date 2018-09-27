@@ -8508,7 +8508,7 @@ class AppLocalization {
       _localizedValues[locale.toString()]['please_enter_your_password'];
 
   String get pleaseEnterYourUrl =>
-      _localizedValues[locale.toString()]['please_enter_your_urll'];
+      _localizedValues[locale.toString()]['please_enter_your_url'];
 
   String get pleaseEnterAProductKey =>
       _localizedValues[locale.toString()]['please_enter_a_product_key'];
