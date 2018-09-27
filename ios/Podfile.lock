@@ -1,8 +1,62 @@
 PODS:
-  - Flutter (1.0.0)
-  - path_provider (0.0.1):
+  - Firebase/Auth (5.0.1):
+    - Firebase/CoreOnly
+    - FirebaseAuth (= 5.0.0)
+  - Firebase/Core (5.0.1):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 5.0.0)
+  - Firebase/CoreOnly (5.0.1):
+    - FirebaseCore (= 5.0.1)
+  - firebase_auth (0.0.1):
+    - Firebase/Auth
+    - Firebase/Core
     - Flutter
-  - quick_actions (0.0.1):
+  - FirebaseAnalytics (5.0.0):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - nanopb (~> 0.3)
+  - FirebaseAuth (5.0.0):
+    - FirebaseCore (~> 5.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseCore (5.0.1):
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseInstanceID (3.0.0):
+    - FirebaseCore (~> 5.0)
+  - Flutter (1.0.0)
+  - flutter_keychain (0.0.1):
+    - Flutter
+  - google_sign_in (0.0.1):
+    - Flutter
+    - GoogleSignIn (~> 4.0)
+  - GoogleSignIn (4.1.2):
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
+    - GTMOAuth2 (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
+    - GoogleToolboxForMac/DebugUtils (= 2.1.4)
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
+  - GTMOAuth2 (1.1.6):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.15):
+    - GTMSessionFetcher/Full (= 1.1.15)
+  - GTMSessionFetcher/Core (1.1.15)
+  - GTMSessionFetcher/Full (1.1.15):
+    - GTMSessionFetcher/Core (= 1.1.15)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
+  - path_provider (0.0.1):
     - Flutter
   - share (0.5.2):
     - Flutter
@@ -12,20 +66,39 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_keychain (from `.symlinks/plugins/flutter_keychain/ios`)
+  - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
-  - quick_actions (from `.symlinks/plugins/quick_actions/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseAuth
+    - FirebaseCore
+    - FirebaseInstanceID
+    - GoogleSignIn
+    - GoogleToolboxForMac
+    - GTMOAuth2
+    - GTMSessionFetcher
+    - nanopb
+
 EXTERNAL SOURCES:
+  firebase_auth:
+    :path: ".symlinks/plugins/firebase_auth/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
+  flutter_keychain:
+    :path: ".symlinks/plugins/flutter_keychain/ios"
+  google_sign_in:
+    :path: ".symlinks/plugins/google_sign_in/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
-  quick_actions:
-    :path: ".symlinks/plugins/quick_actions/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   shared_preferences:
@@ -34,9 +107,21 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
+  Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
+  firebase_auth: 27a5a77a032d557c18f8e223aaf8ec1368f6cdbc
+  FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
+  FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
+  FirebaseCore: cafc814b2d84fc8733f09e653041cc2165332ad7
+  FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  flutter_keychain: 530f94c0ad5765e61f8aa4c33b2efa5ef0bcc713
+  google_sign_in: cbeb57b96679823d14df6b2240b629b983a42d79
+  GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
+  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
-  quick_actions: 4e3b24b7ebc5895b015bf8fc104f436047f7ca8a
   share: 222b5dcc8031238af9d7de91149df65bad1aef75
   shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
   url_launcher: 92b89c1029a0373879933c21642958c874539095
