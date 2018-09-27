@@ -229,7 +229,8 @@ class _LoginState extends State<LoginView> {
                                   setState(() => _isSelfHosted = true),
                               child: Text(localization.selfhostLogin)),
                       FlatButton(
-                          onPressed: () => setState(() => _isSelfHosted = true),
+                          onPressed: () => viewModel.onGoogleLoginPressed(
+                              context, _urlController.text, _secretController.text),
                           child: Text(localization.googleLogin)),
                     ],
                   ),
@@ -245,16 +246,6 @@ class _LoginState extends State<LoginView> {
                           },
                         )
                       : Container(),
-                  /*
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ElevatedButton(
-                label: 'Google ${localization.login}'.toUpperCase(),
-                onPressed: () => viewModel.onGoogleLoginPressed(
-                    context, _urlController.text, _secretController.text),
-              ),
-            ),
-            */
                 ],
               ),
             ),

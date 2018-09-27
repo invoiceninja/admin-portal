@@ -42,7 +42,6 @@ class AuthRepository {
       'token': token,
       'provider': 'google',
     };
-
     url = formatApiUrlMachine(url) + '/oauth_login';
 
     return sendRequest(url: url, data: credentials);
