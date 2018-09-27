@@ -41,7 +41,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     return Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(14.0),
         child: Column(children: <Widget>[
           Material(
             child: Column(
@@ -73,7 +73,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             ),
                           ),
                           Expanded(child: Container()),
-                          Text(localization.compare),
+                          Flexible(child: Text(localization.compare)),
                           Switch(
                             value: _settings.enableComparison,
                             activeColor: Theme.of(context).accentColor,
