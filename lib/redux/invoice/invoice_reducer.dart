@@ -38,9 +38,9 @@ Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewInvoice>(
       (int selectedId, dynamic action) => action.invoiceId),
   TypedReducer<int, AddInvoiceSuccess>(
-      (int selectedId, dynamic action) => action.newInvoice.id),
+      (int selectedId, dynamic action) => action.invoice.id),
   TypedReducer<int, ShowEmailInvoice>(
-      (int selectedId, dynamic action) => action.newInvoice.id),
+      (int selectedId, dynamic action) => action.invoice.id),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -63,7 +63,7 @@ InvoiceEntity _clearEditing(InvoiceEntity client, dynamic action) {
 }
 
 InvoiceEntity _updateEditing(InvoiceEntity invoice, dynamic action) {
-  return action.newInvoice;
+  return action.invoice;
 }
 
 InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
@@ -254,7 +254,7 @@ InvoiceState _convertQuoteSuccess(
 
 InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
   return invoiceState
-      .rebuild((b) => b..map[action.newInvoice.id] = action.newInvoice);
+      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
 }
 
 InvoiceState _setLoadedInvoices(

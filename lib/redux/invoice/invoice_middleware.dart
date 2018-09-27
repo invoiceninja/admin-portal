@@ -213,9 +213,9 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .saveData(
-            store.state.selectedCompany, store.state.authState, action.newInvoice)
+            store.state.selectedCompany, store.state.authState, action.invoice)
         .then((InvoiceEntity invoice) {
-      if (action.newInvoice.isNew) {
+      if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));
       } else {
         store.dispatch(SaveInvoiceSuccess(invoice));
