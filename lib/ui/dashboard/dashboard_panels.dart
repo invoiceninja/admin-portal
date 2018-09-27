@@ -120,7 +120,7 @@ class DashboardPanels extends StatelessWidget {
             charts.MaterialPalette.blue.shadeDefault,
         id: DashboardChart.PERIOD_CURRENT,
         displayName: settings.enableComparison
-            ? localization.currentPeriod
+            ? localization.current
             : localization.invoices,
         data: data,
       ),
@@ -151,7 +151,7 @@ class DashboardPanels extends StatelessWidget {
           colorFn: (ChartMoneyData chartData, _) =>
               charts.MaterialPalette.gray.shadeDefault,
           id: DashboardChart.PERIOD_PREVIOUS,
-          displayName: localization.previousPeriod,
+          displayName: localization.previous,
           data: previousData,
         ),
       );
@@ -194,7 +194,7 @@ class DashboardPanels extends StatelessWidget {
             charts.MaterialPalette.blue.shadeDefault,
         id: DashboardChart.PERIOD_CURRENT,
         displayName: settings.enableComparison
-            ? localization.currentPeriod
+            ? localization.current
             : localization.payments,
         data: data,
       ),
@@ -226,7 +226,7 @@ class DashboardPanels extends StatelessWidget {
           colorFn: (ChartMoneyData chartData, _) =>
               charts.MaterialPalette.gray.shadeDefault,
           id: DashboardChart.PERIOD_PREVIOUS,
-          displayName: localization.previousPeriod,
+          displayName: localization.previous,
           data: previousData,
         ),
       );
@@ -269,7 +269,7 @@ class DashboardPanels extends StatelessWidget {
         charts.MaterialPalette.blue.shadeDefault,
         id: DashboardChart.PERIOD_CURRENT,
         displayName: settings.enableComparison
-            ? localization.currentPeriod
+            ? localization.current
             : localization.quotes,
         data: data,
       ),
@@ -300,7 +300,7 @@ class DashboardPanels extends StatelessWidget {
           colorFn: (ChartMoneyData chartData, _) =>
           charts.MaterialPalette.gray.shadeDefault,
           id: DashboardChart.PERIOD_PREVIOUS,
-          displayName: localization.previousPeriod,
+          displayName: localization.previous,
           data: previousData,
         ),
       );

@@ -29,6 +29,8 @@ class AppLocalization {
       'today': 'Today',
       'custom_range': 'Custom',
       'date_range': 'Date Range',
+      'current': 'Current',
+      'previous': 'Previous',
       'current_period': 'Current Period',
       'comparison_period': 'Comparison Period',
       'previous_period': 'Previous Period',
@@ -8370,6 +8372,12 @@ class AppLocalization {
   String get customRange => _localizedValues[locale.toString()]['custom_range'];
 
   String get dateRange => _localizedValues[locale.toString()]['date_range'];
+
+  String get current =>
+      _localizedValues[locale.toString()]['current'];
+
+  String get previous =>
+      _localizedValues[locale.toString()]['previous'];
 
   String get currentPeriod =>
       _localizedValues[locale.toString()]['current_period'];
