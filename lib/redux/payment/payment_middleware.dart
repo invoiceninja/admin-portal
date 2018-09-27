@@ -148,13 +148,13 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
 
 Middleware<AppState> _savePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    final PaymentEntity payment = action.payment;
+    final PaymentEntity payment = action.enterPayment;
     final bool sendEmail = payment.isNew ? store.state.uiState.emailPayment : false;
     repository
         .saveData(
-            store.state.selectedCompany, store.state.authState, action.payment, sendEmail: sendEmail)
+            store.state.selectedCompany, store.state.authState, action.enterPayment, sendEmail: sendEmail)
         .then((PaymentEntity payment) {
-      if (action.payment.isNew) {
+      if (action.enterPayment.isNew) {
         store.dispatch(AddPaymentSuccess(payment));
       } else {
         store.dispatch(SavePaymentSuccess(payment));
@@ -175,7 +175,7 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .saveData(
-        store.state.selectedCompany, store.state.authState, action.payment, sendEmail: true)
+        store.state.selectedCompany, store.state.authState, action.enterPayment, sendEmail: true)
         .then((PaymentEntity payment) {
       store.dispatch(SavePaymentSuccess(payment));
       action.completer.complete(null);

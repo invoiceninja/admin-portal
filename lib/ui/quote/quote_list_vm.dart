@@ -119,7 +119,7 @@ class QuoteListVM extends EntityListVM {
                 snackBarCompleter(context, localization.markedQuoteAsSent),
                 quote.id));
             break;
-          case EntityAction.email:
+          case EntityAction.sendEmail:
             store.dispatch(ShowEmailQuote(
                 completer: snackBarCompleter(context, localization.emailedQuote),
                 quote: quote,

@@ -179,7 +179,7 @@ abstract class PaymentEntity extends Object
     final actions = <EntityAction>[];
 
     if (user.canEditEntity(this) && client.hasEmailAddress) {
-      actions.add(EntityAction.email);
+      actions.add(EntityAction.sendEmail);
     }
 
     if (actions.isNotEmpty) {

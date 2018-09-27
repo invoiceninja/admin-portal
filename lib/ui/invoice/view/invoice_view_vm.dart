@@ -71,7 +71,7 @@ class EntityViewVM {
   bool operator ==(dynamic other) =>
       client == other.client &&
       company == other.company &&
-      invoice == other.invoice &&
+      invoice == other.newInvoice &&
       isSaving == other.isSaving &&
       isDirty == other.isDirty;
 
@@ -170,7 +170,7 @@ class InvoiceViewVM extends EntityViewVM {
                   snackBarCompleter(context, localization.markedInvoiceAsSent),
                   invoice.id));
               break;
-            case EntityAction.email:
+            case EntityAction.sendEmail:
               store.dispatch(ShowEmailInvoice(
                   completer:
                       snackBarCompleter(context, localization.emailedInvoice),
@@ -202,7 +202,7 @@ class InvoiceViewVM extends EntityViewVM {
               store.dispatch(
                   EditQuote(context: context, quote: invoice.cloneToQuote));
               break;
-            case EntityAction.payment:
+            case EntityAction.enterPayment:
               store.dispatch(EditPayment(
                   context: context,
                   payment: invoice.createPayment(state.selectedCompany)));

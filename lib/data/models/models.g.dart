@@ -27,11 +27,11 @@ const EntityAction _$cloneToInvoice = const EntityAction._('cloneToInvoice');
 const EntityAction _$cloneToQuote = const EntityAction._('cloneToQuote');
 const EntityAction _$convert = const EntityAction._('convert');
 const EntityAction _$download = const EntityAction._('download');
-const EntityAction _$email = const EntityAction._('email');
+const EntityAction _$sendEmail = const EntityAction._('sendEmail');
 const EntityAction _$markSent = const EntityAction._('markSent');
-const EntityAction _$invoice = const EntityAction._('invoice');
+const EntityAction _$newInvoice = const EntityAction._('newInvoice');
 const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
-const EntityAction _$payment = const EntityAction._('payment');
+const EntityAction _$enterPayment = const EntityAction._('enterPayment');
 const EntityAction _$pdf = const EntityAction._('pdf');
 const EntityAction _$more = const EntityAction._('more');
 
@@ -53,16 +53,16 @@ EntityAction _$valueOf(String name) {
       return _$convert;
     case 'download':
       return _$download;
-    case 'email':
-      return _$email;
+    case 'sendEmail':
+      return _$sendEmail;
     case 'markSent':
       return _$markSent;
-    case 'invoice':
-      return _$invoice;
+    case 'newInvoice':
+      return _$newInvoice;
     case 'viewInvoice':
       return _$viewInvoice;
-    case 'payment':
-      return _$payment;
+    case 'enterPayment':
+      return _$enterPayment;
     case 'pdf':
       return _$pdf;
     case 'more':
@@ -82,11 +82,11 @@ final BuiltSet<EntityAction> _$values =
   _$cloneToQuote,
   _$convert,
   _$download,
-  _$email,
+  _$sendEmail,
   _$markSent,
-  _$invoice,
+  _$newInvoice,
   _$viewInvoice,
-  _$payment,
+  _$enterPayment,
   _$pdf,
   _$more,
 ]);

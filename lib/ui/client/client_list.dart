@@ -50,7 +50,7 @@ class ClientList extends StatelessWidget {
           if (user.canCreate(EntityType.invoice)) {
             actions.add(EntityActionListTile(
               client: client,
-              entityAction: EntityAction.invoice,
+              entityAction: EntityAction.newInvoice,
               mainContext: context,
               viewModel: viewModel,
             ));
@@ -58,7 +58,7 @@ class ClientList extends StatelessWidget {
           if (user.canCreate(EntityType.payment)) {
             actions.add(EntityActionListTile(
               client: client,
-              entityAction: EntityAction.payment,
+              entityAction: EntityAction.enterPayment,
               mainContext: context,
               viewModel: viewModel,
             ));

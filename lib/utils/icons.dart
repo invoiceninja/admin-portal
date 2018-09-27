@@ -12,7 +12,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
       return Icons.publish;
-    case EntityAction.email:
+    case EntityAction.sendEmail:
       return Icons.send;
     case EntityAction.archive:
       return Icons.archive;
@@ -24,8 +24,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.check_box;
     case EntityAction.viewInvoice:
       return Icons.insert_drive_file;
-    case EntityAction.invoice:
-    case EntityAction.payment:
+    case EntityAction.newInvoice:
+    case EntityAction.enterPayment:
       return Icons.add_circle_outline;
     default:
       return null;

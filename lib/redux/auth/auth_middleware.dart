@@ -28,7 +28,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 }
 
 void _saveAuthLocal(dynamic action) async {
-  await FlutterKeychain.put(key: kKeychainEmail, value: action.email);
+  await FlutterKeychain.put(key: kKeychainEmail, value: action.sendEmail);
 
   if (formatApiUrlReadable(action.url) != kAppUrl) {
     await FlutterKeychain.put(
@@ -70,7 +70,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .login(
-            email: action.email,
+            email: action.sendEmail,
             password: action.password,
             url: action.url,
             secret: action.secret,

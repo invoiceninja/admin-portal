@@ -390,14 +390,14 @@ abstract class InvoiceEntity extends Object
     }
 
     if (user.canEditEntity(this) && client.hasEmailAddress) {
-      actions.add(EntityAction.email);
+      actions.add(EntityAction.sendEmail);
     }
 
     if (user.canEditEntity(this) &&
         user.canCreate(EntityType.payment) &&
         isUnpaid &&
         !isQuote) {
-      actions.add(EntityAction.payment);
+      actions.add(EntityAction.enterPayment);
     }
 
     if (isQuote && quoteInvoiceId > 0) {

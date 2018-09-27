@@ -359,7 +359,7 @@ abstract class ClientEntity extends Object
     final actions = <EntityAction>[];
 
     if (includeCreate && user.canCreate(EntityType.client) && isActive) {
-      actions.add(EntityAction.invoice);
+      actions.add(EntityAction.newInvoice);
     }
 
     if (actions.isNotEmpty) {
