@@ -56,9 +56,9 @@ abstract class ClientEntity extends Object
     implements Built<ClientEntity, ClientEntityBuilder> {
   static int counter = 0;
 
-  factory ClientEntity() {
+  factory ClientEntity({int id}) {
     return _$ClientEntity._(
-      id: --ClientEntity.counter,
+      id: id ?? --ClientEntity.counter,
       name: '',
       displayName: '',
       balance: 0.0,
@@ -359,7 +359,7 @@ abstract class ClientEntity extends Object
     final actions = <EntityAction>[];
 
     if (includeCreate && user.canCreate(EntityType.client) && isActive) {
-      actions.add(EntityAction.invoice);
+      actions.add(EntityAction.newInvoice);
     }
 
     if (actions.isNotEmpty) {

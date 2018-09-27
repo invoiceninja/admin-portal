@@ -21,7 +21,8 @@ class InvoiceEmailScreen extends StatelessWidget {
         final state = store.state;
         final invoiceId = state.uiState.invoiceUIState.selectedId;
         final invoice = state.invoiceState.map[invoiceId];
-        final client = state.clientState.map[invoice.clientId];
+        final client = state.clientState.map[invoice.clientId] ??
+            ClientEntity(id: invoice.clientId);
         if (client.areActivitiesStale) {
           store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
         }
@@ -60,7 +61,6 @@ abstract class EmailEntityVM {
 }
 
 class EmailInvoiceVM extends EmailEntityVM {
-
   EmailInvoiceVM({
     bool isLoading,
     bool isSaving,
@@ -68,14 +68,14 @@ class EmailInvoiceVM extends EmailEntityVM {
     InvoiceEntity invoice,
     ClientEntity client,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
-  }): super(
-    isLoading: isLoading,
-    isSaving: isSaving,
-    company: company,
-    invoice: invoice,
-    client: client,
-    onSendPressed: onSendPressed,
-  );
+  }) : super(
+          isLoading: isLoading,
+          isSaving: isSaving,
+          company: company,
+          invoice: invoice,
+          client: client,
+          onSendPressed: onSendPressed,
+        );
 
   factory EmailInvoiceVM.fromStore(
       Store<AppState> store, InvoiceEntity invoice) {
@@ -86,7 +86,8 @@ class EmailInvoiceVM extends EmailEntityVM {
         isSaving: state.isSaving,
         company: state.selectedCompany,
         invoice: invoice,
-        client: state.clientState.map[invoice.clientId],
+        client: state.clientState.map[invoice.clientId] ??
+            ClientEntity(id: invoice.clientId),
         onSendPressed: (context, template, subject, body) =>
             store.dispatch(EmailInvoiceRequest(
               completer: popCompleter(context, true),

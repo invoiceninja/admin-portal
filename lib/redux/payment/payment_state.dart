@@ -9,8 +9,8 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 part 'payment_state.g.dart';
 
-abstract class PaymentState implements Built<PaymentState, PaymentStateBuilder> {
-
+abstract class PaymentState
+    implements Built<PaymentState, PaymentStateBuilder> {
   factory PaymentState() {
     return _$PaymentState._(
       lastUpdated: 0,
@@ -18,20 +18,23 @@ abstract class PaymentState implements Built<PaymentState, PaymentStateBuilder> 
       list: BuiltList<int>(),
     );
   }
+
   PaymentState._();
 
   @nullable
   int get lastUpdated;
 
   BuiltMap<int, PaymentEntity> get map;
+
   BuiltList<int> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -39,15 +42,17 @@ abstract class PaymentState implements Built<PaymentState, PaymentStateBuilder> 
   static Serializer<PaymentState> get serializer => _$paymentStateSerializer;
 }
 
-abstract class PaymentUIState extends Object with EntityUIState implements Built<PaymentUIState, PaymentUIStateBuilder> {
-
+abstract class PaymentUIState extends Object
+    with EntityUIState
+    implements Built<PaymentUIState, PaymentUIStateBuilder> {
   factory PaymentUIState(CompanyEntity company) {
     return _$PaymentUIState._(
-      listUIState: ListUIState(PaymentFields.paymentDate),
-      editing: PaymentEntity(company),
+      listUIState: ListUIState(PaymentFields.paymentDate, sortAscending: false),
+      editing: PaymentEntity(company: company),
       selectedId: 0,
     );
   }
+
   PaymentUIState._();
 
   @nullable
@@ -56,5 +61,6 @@ abstract class PaymentUIState extends Object with EntityUIState implements Built
   @override
   bool get isCreatingNew => editing.isNew;
 
-  static Serializer<PaymentUIState> get serializer => _$paymentUIStateSerializer;
+  static Serializer<PaymentUIState> get serializer =>
+      _$paymentUIStateSerializer;
 }

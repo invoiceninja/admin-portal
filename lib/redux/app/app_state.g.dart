@@ -15,6 +15,9 @@ part of 'app_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<AppState> _$appStateSerializer = new _$AppStateSerializer();
 
@@ -158,26 +161,36 @@ class _$AppState extends AppState {
       this.companyState4,
       this.companyState5})
       : super._() {
-    if (isLoading == null)
+    if (isLoading == null) {
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
-    if (isSaving == null)
+    }
+    if (isSaving == null) {
       throw new BuiltValueNullFieldError('AppState', 'isSaving');
-    if (authState == null)
+    }
+    if (authState == null) {
       throw new BuiltValueNullFieldError('AppState', 'authState');
-    if (staticState == null)
+    }
+    if (staticState == null) {
       throw new BuiltValueNullFieldError('AppState', 'staticState');
-    if (uiState == null)
+    }
+    if (uiState == null) {
       throw new BuiltValueNullFieldError('AppState', 'uiState');
-    if (companyState1 == null)
+    }
+    if (companyState1 == null) {
       throw new BuiltValueNullFieldError('AppState', 'companyState1');
-    if (companyState2 == null)
+    }
+    if (companyState2 == null) {
       throw new BuiltValueNullFieldError('AppState', 'companyState2');
-    if (companyState3 == null)
+    }
+    if (companyState3 == null) {
       throw new BuiltValueNullFieldError('AppState', 'companyState3');
-    if (companyState4 == null)
+    }
+    if (companyState4 == null) {
       throw new BuiltValueNullFieldError('AppState', 'companyState4');
-    if (companyState5 == null)
+    }
+    if (companyState5 == null) {
       throw new BuiltValueNullFieldError('AppState', 'companyState5');
+    }
   }
 
   @override
@@ -188,10 +201,10 @@ class _$AppState extends AppState {
   AppStateBuilder toBuilder() => new AppStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! AppState) return false;
-    return isLoading == other.isLoading &&
+    return other is AppState &&
+        isLoading == other.isLoading &&
         isSaving == other.isSaving &&
         authState == other.authState &&
         staticState == other.staticState &&
@@ -303,7 +316,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
   @override
   void replace(AppState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$AppState;
   }
 

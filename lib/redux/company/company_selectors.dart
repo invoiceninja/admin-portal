@@ -1,7 +1,39 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:memoize/memoize.dart';
+
+var memoizedHasMultipleCurrencies = memo2(
+    (CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
+        hasMultipleCurrencies(company, clientMap));
+
+bool hasMultipleCurrencies(
+        CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
+    memoizedGetCurrencyIds(company, clientMap).length > 1;
+
+var memoizedGetCurrencyIds = memo2(
+    (CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
+        getCurrencyIds(company, clientMap));
+
+List<int> getCurrencyIds(
+    CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) {
+  final currencyIds = <int>[];
+  if (company.currencyId > 0) {
+    currencyIds.add(company.currencyId);
+  } else {
+    currencyIds.add(kDefaultCurrencyId);
+  }
+  clientMap.forEach((clientId, client) {
+    if (client.currencyId > 0 &&
+        !client.isDeleted &&
+        !currencyIds.contains(client.currencyId)) {
+      currencyIds.add(client.currencyId);
+    }
+  });
+  return currencyIds;
+}
 
 var memoizedFilteredSelector = memo2(
     (String filter, CompanyState state) => filteredSelector(filter, state));

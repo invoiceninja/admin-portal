@@ -15,6 +15,9 @@ part of 'auth_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<AuthState> _$authStateSerializer = new _$AuthStateSerializer();
 
@@ -130,16 +133,24 @@ class _$AuthState extends AuthState {
       this.isAuthenticated,
       this.error})
       : super._() {
-    if (email == null) throw new BuiltValueNullFieldError('AuthState', 'email');
-    if (password == null)
+    if (email == null) {
+      throw new BuiltValueNullFieldError('AuthState', 'email');
+    }
+    if (password == null) {
       throw new BuiltValueNullFieldError('AuthState', 'password');
-    if (url == null) throw new BuiltValueNullFieldError('AuthState', 'url');
-    if (secret == null)
+    }
+    if (url == null) {
+      throw new BuiltValueNullFieldError('AuthState', 'url');
+    }
+    if (secret == null) {
       throw new BuiltValueNullFieldError('AuthState', 'secret');
-    if (isInitialized == null)
+    }
+    if (isInitialized == null) {
       throw new BuiltValueNullFieldError('AuthState', 'isInitialized');
-    if (isAuthenticated == null)
+    }
+    if (isAuthenticated == null) {
       throw new BuiltValueNullFieldError('AuthState', 'isAuthenticated');
+    }
   }
 
   @override
@@ -150,10 +161,10 @@ class _$AuthState extends AuthState {
   AuthStateBuilder toBuilder() => new AuthStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! AuthState) return false;
-    return email == other.email &&
+    return other is AuthState &&
+        email == other.email &&
         password == other.password &&
         url == other.url &&
         secret == other.secret &&
@@ -241,7 +252,9 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
 
   @override
   void replace(AuthState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$AuthState;
   }
 

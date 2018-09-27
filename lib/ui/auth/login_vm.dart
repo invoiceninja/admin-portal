@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_view.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -54,13 +54,14 @@ class LoginVM {
   });
 
   static LoginVM fromStore(Store<AppState> store) {
-    /*
-    final GoogleSignIn _googleSignIn = new GoogleSignIn(
+    final GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
         'email',
+        'openid',
+        'profile',
       ],
     );
-    */
+
     void _handleLogin(BuildContext context) {
       AppBuilder.of(context).rebuild();
       store.dispatch(ViewDashboard(context));
@@ -72,7 +73,6 @@ class LoginVM {
         onCancel2FAPressed: () => store.dispatch(ClearAuthError()),
         onGoogleLoginPressed:
             (BuildContext context, String url, String secret) async {
-          /*
           try {
             final account = await _googleSignIn.signIn();
 
@@ -92,7 +92,6 @@ class LoginVM {
           } catch (error) {
             print(error);
           }
-          */
         },
         onLoginPressed: (BuildContext context,
             {String email,

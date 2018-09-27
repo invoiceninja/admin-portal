@@ -35,10 +35,10 @@ class ClientRepository {
 
   Future<BuiltList<ClientEntity>> loadList(CompanyEntity company, AuthState auth, int updatedAt) async {
 
-    String url = auth.url + '/clients';
-
+    String url = auth.url + '/clients?';
+    
     if (updatedAt > 0) {
-      url += '?updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
+      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
     final dynamic response = await webClient.get(url, company.token);

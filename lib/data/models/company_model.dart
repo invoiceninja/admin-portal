@@ -15,7 +15,7 @@ abstract class CompanyEntity
       plan: '',
       logoUrl: '',
       convertProductExchangeRate: false,
-      currencyId: 1,
+      companyCurrencyId: 1,
       dateFormatId: 1,
       datetimeFormatId: 1,
       defaultInvoiceDesignId: 1,
@@ -81,7 +81,7 @@ abstract class CompanyEntity
   String get logoUrl;
 
   @BuiltValueField(wireName: 'currency_id')
-  int get currencyId;
+  int get companyCurrencyId;
 
   @BuiltValueField(wireName: 'timezone_id')
   int get timezoneId;
@@ -290,6 +290,8 @@ abstract class CompanyEntity
 
     return true;
   }
+
+  int get currencyId => companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

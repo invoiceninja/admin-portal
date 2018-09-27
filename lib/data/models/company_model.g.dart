@@ -15,6 +15,9 @@ part of 'company_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
@@ -45,7 +48,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.logoUrl,
           specifiedType: const FullType(String)),
       'currency_id',
-      serializers.serialize(object.currencyId,
+      serializers.serialize(object.companyCurrencyId,
           specifiedType: const FullType(int)),
       'timezone_id',
       serializers.serialize(object.timezoneId,
@@ -227,7 +230,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'currency_id':
-          result.currencyId = serializers.deserialize(value,
+          result.companyCurrencyId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'timezone_id':
@@ -659,7 +662,7 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String logoUrl;
   @override
-  final int currencyId;
+  final int companyCurrencyId;
   @override
   final int timezoneId;
   @override
@@ -765,7 +768,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.token,
       this.plan,
       this.logoUrl,
-      this.currencyId,
+      this.companyCurrencyId,
       this.timezoneId,
       this.countryId,
       this.dateFormatId,
@@ -815,130 +818,183 @@ class _$CompanyEntity extends CompanyEntity {
       this.emailBodyReminder2,
       this.emailBodyReminder3})
       : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
-    if (token == null)
+    }
+    if (token == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'token');
-    if (plan == null)
+    }
+    if (plan == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'plan');
-    if (logoUrl == null)
+    }
+    if (logoUrl == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'logoUrl');
-    if (currencyId == null)
-      throw new BuiltValueNullFieldError('CompanyEntity', 'currencyId');
-    if (timezoneId == null)
+    }
+    if (companyCurrencyId == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'companyCurrencyId');
+    }
+    if (timezoneId == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'timezoneId');
-    if (countryId == null)
+    }
+    if (countryId == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'countryId');
-    if (dateFormatId == null)
+    }
+    if (dateFormatId == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'dateFormatId');
-    if (datetimeFormatId == null)
+    }
+    if (datetimeFormatId == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'datetimeFormatId');
-    if (defaultInvoiceTerms == null)
+    }
+    if (defaultInvoiceTerms == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'defaultInvoiceTerms');
-    if (enableInvoiceTaxes == null)
+    }
+    if (enableInvoiceTaxes == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'enableInvoiceTaxes');
-    if (enableInvoiceItemTaxes == null)
+    }
+    if (enableInvoiceItemTaxes == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableInvoiceItemTaxes');
-    if (defaultInvoiceDesignId == null)
+    }
+    if (defaultInvoiceDesignId == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'defaultInvoiceDesignId');
-    if (defaultQuoteDesignId == null)
+    }
+    if (defaultQuoteDesignId == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'defaultQuoteDesignId');
-    if (languageId == null)
+    }
+    if (languageId == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'languageId');
-    if (defaultInvoiceFooter == null)
+    }
+    if (defaultInvoiceFooter == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'defaultInvoiceFooter');
-    if (showInvoiceItemTaxes == null)
+    }
+    if (showInvoiceItemTaxes == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'showInvoiceItemTaxes');
-    if (enableMilitaryTime == null)
+    }
+    if (enableMilitaryTime == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'enableMilitaryTime');
-    if (defaultTaxName1 == null)
+    }
+    if (defaultTaxName1 == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaxName1');
-    if (defaultTaxRate1 == null)
+    }
+    if (defaultTaxRate1 == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaxRate1');
-    if (defaultTaxName2 == null)
+    }
+    if (defaultTaxName2 == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaxName2');
-    if (defaultTaxRate2 == null)
+    }
+    if (defaultTaxRate2 == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaxRate2');
-    if (defaultQuoteTerms == null)
+    }
+    if (defaultQuoteTerms == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultQuoteTerms');
-    if (showCurrencyCode == null)
+    }
+    if (showCurrencyCode == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'showCurrencyCode');
-    if (enableSecondTaxRate == null)
+    }
+    if (enableSecondTaxRate == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableSecondTaxRate');
-    if (startOfWeek == null)
+    }
+    if (startOfWeek == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'startOfWeek');
-    if (financialYearStart == null)
+    }
+    if (financialYearStart == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'financialYearStart');
-    if (enabledModules == null)
+    }
+    if (enabledModules == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'enabledModules');
-    if (defaultPaymentTerms == null)
+    }
+    if (defaultPaymentTerms == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'defaultPaymentTerms');
-    if (defaultPaymentTypeId == null)
+    }
+    if (defaultPaymentTypeId == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'defaultPaymentTypeId');
-    if (defaultTaskRate == null)
+    }
+    if (defaultTaskRate == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaskRate');
-    if (enableInclusiveTaxes == null)
+    }
+    if (enableInclusiveTaxes == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableInclusiveTaxes');
-    if (convertProductExchangeRate == null)
+    }
+    if (convertProductExchangeRate == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'convertProductExchangeRate');
-    if (enableCustomInvoiceTaxes1 == null)
+    }
+    if (enableCustomInvoiceTaxes1 == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableCustomInvoiceTaxes1');
-    if (enableCustomInvoiceTaxes2 == null)
+    }
+    if (enableCustomInvoiceTaxes2 == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableCustomInvoiceTaxes2');
-    if (taxRates == null)
+    }
+    if (taxRates == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taxRates');
-    if (user == null)
+    }
+    if (user == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'user');
-    if (customFields == null)
+    }
+    if (customFields == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
-    if (customPaymentTerms == null)
+    }
+    if (customPaymentTerms == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customPaymentTerms');
-    if (invoiceFields == null)
+    }
+    if (invoiceFields == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceFields');
-    if (emailFooter == null)
+    }
+    if (emailFooter == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'emailFooter');
-    if (emailSubjectInvoice == null)
+    }
+    if (emailSubjectInvoice == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'emailSubjectInvoice');
-    if (emailSubjectQuote == null)
+    }
+    if (emailSubjectQuote == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'emailSubjectQuote');
-    if (emailSubjectPayment == null)
+    }
+    if (emailSubjectPayment == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'emailSubjectPayment');
-    if (emailBodyInvoice == null)
+    }
+    if (emailBodyInvoice == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyInvoice');
-    if (emailBodyQuote == null)
+    }
+    if (emailBodyQuote == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyQuote');
-    if (emailBodyPayment == null)
+    }
+    if (emailBodyPayment == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyPayment');
-    if (emailSubjectReminder1 == null)
+    }
+    if (emailSubjectReminder1 == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'emailSubjectReminder1');
-    if (emailSubjectReminder2 == null)
+    }
+    if (emailSubjectReminder2 == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'emailSubjectReminder2');
-    if (emailSubjectReminder3 == null)
+    }
+    if (emailSubjectReminder3 == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'emailSubjectReminder3');
-    if (emailBodyReminder1 == null)
+    }
+    if (emailBodyReminder1 == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder1');
-    if (emailBodyReminder2 == null)
+    }
+    if (emailBodyReminder2 == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder2');
-    if (emailBodyReminder3 == null)
+    }
+    if (emailBodyReminder3 == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder3');
+    }
   }
 
   @override
@@ -949,14 +1005,14 @@ class _$CompanyEntity extends CompanyEntity {
   CompanyEntityBuilder toBuilder() => new CompanyEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CompanyEntity) return false;
-    return name == other.name &&
+    return other is CompanyEntity &&
+        name == other.name &&
         token == other.token &&
         plan == other.plan &&
         logoUrl == other.logoUrl &&
-        currencyId == other.currencyId &&
+        companyCurrencyId == other.companyCurrencyId &&
         timezoneId == other.timezoneId &&
         countryId == other.countryId &&
         dateFormatId == other.dateFormatId &&
@@ -1027,7 +1083,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), currencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode),
                                                                                 enableCustomInvoiceTaxes2.hashCode),
                                                                             taxRates.hashCode),
                                                                         user.hashCode),
@@ -1056,7 +1112,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('token', token)
           ..add('plan', plan)
           ..add('logoUrl', logoUrl)
-          ..add('currencyId', currencyId)
+          ..add('companyCurrencyId', companyCurrencyId)
           ..add('timezoneId', timezoneId)
           ..add('countryId', countryId)
           ..add('dateFormatId', dateFormatId)
@@ -1129,9 +1185,10 @@ class CompanyEntityBuilder
   String get logoUrl => _$this._logoUrl;
   set logoUrl(String logoUrl) => _$this._logoUrl = logoUrl;
 
-  int _currencyId;
-  int get currencyId => _$this._currencyId;
-  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+  int _companyCurrencyId;
+  int get companyCurrencyId => _$this._companyCurrencyId;
+  set companyCurrencyId(int companyCurrencyId) =>
+      _$this._companyCurrencyId = companyCurrencyId;
 
   int _timezoneId;
   int get timezoneId => _$this._timezoneId;
@@ -1377,7 +1434,7 @@ class CompanyEntityBuilder
       _token = _$v.token;
       _plan = _$v.plan;
       _logoUrl = _$v.logoUrl;
-      _currencyId = _$v.currencyId;
+      _companyCurrencyId = _$v.companyCurrencyId;
       _timezoneId = _$v.timezoneId;
       _countryId = _$v.countryId;
       _dateFormatId = _$v.dateFormatId;
@@ -1433,7 +1490,9 @@ class CompanyEntityBuilder
 
   @override
   void replace(CompanyEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CompanyEntity;
   }
 
@@ -1452,7 +1511,7 @@ class CompanyEntityBuilder
               token: token,
               plan: plan,
               logoUrl: logoUrl,
-              currencyId: currencyId,
+              companyCurrencyId: companyCurrencyId,
               timezoneId: timezoneId,
               countryId: countryId,
               dateFormatId: dateFormatId,
@@ -1545,10 +1604,10 @@ class _$PaymentTermEntity extends PaymentTermEntity {
       new PaymentTermEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! PaymentTermEntity) return false;
-    return numDays == other.numDays &&
+    return other is PaymentTermEntity &&
+        numDays == other.numDays &&
         archivedAt == other.archivedAt &&
         id == other.id;
   }
@@ -1599,7 +1658,9 @@ class PaymentTermEntityBuilder
 
   @override
   void replace(PaymentTermEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$PaymentTermEntity;
   }
 
@@ -1636,12 +1697,15 @@ class _$TaxRateEntity extends TaxRateEntity {
   _$TaxRateEntity._(
       {this.name, this.rate, this.isInclusive, this.archivedAt, this.id})
       : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('TaxRateEntity', 'name');
-    if (rate == null)
+    }
+    if (rate == null) {
       throw new BuiltValueNullFieldError('TaxRateEntity', 'rate');
-    if (isInclusive == null)
+    }
+    if (isInclusive == null) {
       throw new BuiltValueNullFieldError('TaxRateEntity', 'isInclusive');
+    }
   }
 
   @override
@@ -1652,10 +1716,10 @@ class _$TaxRateEntity extends TaxRateEntity {
   TaxRateEntityBuilder toBuilder() => new TaxRateEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TaxRateEntity) return false;
-    return name == other.name &&
+    return other is TaxRateEntity &&
+        name == other.name &&
         rate == other.rate &&
         isInclusive == other.isInclusive &&
         archivedAt == other.archivedAt &&
@@ -1724,7 +1788,9 @@ class TaxRateEntityBuilder
 
   @override
   void replace(TaxRateEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$TaxRateEntity;
   }
 
@@ -1772,17 +1838,24 @@ class _$UserEntity extends UserEntity {
       this.isAdmin,
       this.permissionsMap})
       : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('UserEntity', 'id');
-    if (firstName == null)
+    if (id == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'id');
+    }
+    if (firstName == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'firstName');
-    if (lastName == null)
+    }
+    if (lastName == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'lastName');
-    if (email == null)
+    }
+    if (email == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'email');
-    if (isAdmin == null)
+    }
+    if (isAdmin == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'isAdmin');
-    if (permissionsMap == null)
+    }
+    if (permissionsMap == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'permissionsMap');
+    }
   }
 
   @override
@@ -1793,10 +1866,10 @@ class _$UserEntity extends UserEntity {
   UserEntityBuilder toBuilder() => new UserEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! UserEntity) return false;
-    return id == other.id &&
+    return other is UserEntity &&
+        id == other.id &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         email == other.email &&
@@ -1875,7 +1948,9 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   @override
   void replace(UserEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$UserEntity;
   }
 

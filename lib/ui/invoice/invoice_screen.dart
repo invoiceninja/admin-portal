@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -21,7 +22,10 @@ class InvoiceScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        store.dispatch(ViewDashboard(context));
+        return false;
+      },
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(

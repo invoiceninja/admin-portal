@@ -15,6 +15,9 @@ part of 'datetime_format_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<DatetimeFormatListResponse> _$datetimeFormatListResponseSerializer =
     new _$DatetimeFormatListResponseSerializer();
@@ -176,8 +179,9 @@ class _$DatetimeFormatListResponse extends DatetimeFormatListResponse {
       (new DatetimeFormatListResponseBuilder()..update(updates)).build();
 
   _$DatetimeFormatListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('DatetimeFormatListResponse', 'data');
+    }
   }
 
   @override
@@ -190,10 +194,9 @@ class _$DatetimeFormatListResponse extends DatetimeFormatListResponse {
       new DatetimeFormatListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DatetimeFormatListResponse) return false;
-    return data == other.data;
+    return other is DatetimeFormatListResponse && data == other.data;
   }
 
   @override
@@ -231,7 +234,9 @@ class DatetimeFormatListResponseBuilder
 
   @override
   void replace(DatetimeFormatListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DatetimeFormatListResponse;
   }
 
@@ -270,8 +275,9 @@ class _$DatetimeFormatItemResponse extends DatetimeFormatItemResponse {
       (new DatetimeFormatItemResponseBuilder()..update(updates)).build();
 
   _$DatetimeFormatItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('DatetimeFormatItemResponse', 'data');
+    }
   }
 
   @override
@@ -284,10 +290,9 @@ class _$DatetimeFormatItemResponse extends DatetimeFormatItemResponse {
       new DatetimeFormatItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DatetimeFormatItemResponse) return false;
-    return data == other.data;
+    return other is DatetimeFormatItemResponse && data == other.data;
   }
 
   @override
@@ -325,7 +330,9 @@ class DatetimeFormatItemResponseBuilder
 
   @override
   void replace(DatetimeFormatItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DatetimeFormatItemResponse;
   }
 
@@ -366,10 +373,12 @@ class _$DatetimeFormatEntity extends DatetimeFormatEntity {
       (new DatetimeFormatEntityBuilder()..update(updates)).build();
 
   _$DatetimeFormatEntity._({this.id, this.format}) : super._() {
-    if (id == null)
+    if (id == null) {
       throw new BuiltValueNullFieldError('DatetimeFormatEntity', 'id');
-    if (format == null)
+    }
+    if (format == null) {
       throw new BuiltValueNullFieldError('DatetimeFormatEntity', 'format');
+    }
   }
 
   @override
@@ -381,10 +390,11 @@ class _$DatetimeFormatEntity extends DatetimeFormatEntity {
       new DatetimeFormatEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! DatetimeFormatEntity) return false;
-    return id == other.id && format == other.format;
+    return other is DatetimeFormatEntity &&
+        id == other.id &&
+        format == other.format;
   }
 
   @override
@@ -426,7 +436,9 @@ class DatetimeFormatEntityBuilder
 
   @override
   void replace(DatetimeFormatEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$DatetimeFormatEntity;
   }
 

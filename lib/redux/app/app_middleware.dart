@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/file_storage.dart';
@@ -9,13 +11,16 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_keychain/flutter_keychain.dart';
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository authRepository = const PersistenceRepository(
@@ -146,11 +151,11 @@ Middleware<AppState> _createLoadState(
       authState = await authRepository.loadAuthState();
       uiState = await uiRepository.loadUIState();
       staticState = await staticRepository.loadStaticState();
-      company1State = await company1Repository.loadCompanyState();
-      company2State = await company2Repository.loadCompanyState();
-      company3State = await company3Repository.loadCompanyState();
-      company4State = await company4Repository.loadCompanyState();
-      company5State = await company5Repository.loadCompanyState();
+      company1State = await company1Repository.loadCompanyState(1);
+      company2State = await company2Repository.loadCompanyState(2);
+      company3State = await company3Repository.loadCompanyState(3);
+      company4State = await company4Repository.loadCompanyState(4);
+      company5State = await company5Repository.loadCompanyState(5);
 
       final AppState appState = AppState().rebuild((b) => b
         ..authState.replace(authState)
@@ -180,8 +185,24 @@ Middleware<AppState> _createLoadState(
       }
     } catch (error) {
       print(error);
-      store.dispatch(UserLogout());
-      store.dispatch(LoadUserLogin(action.context));
+      final String token =
+          await FlutterKeychain.get(key: getKeychainTokenKey()) ?? '';
+      if (token.isNotEmpty) {
+        final Completer<Null> completer = Completer<Null>();
+        completer.future.then((_) {
+          store.dispatch(ViewDashboard(action.context));
+        }).catchError((Object error) {
+          store.dispatch(UserLogout());
+          store.dispatch(LoadUserLogin(action.context));
+        });
+        store.dispatch(RefreshData(
+          platform: getPlatform(action.context),
+          completer: completer,
+        ));
+      } else {
+        store.dispatch(UserLogout());
+        store.dispatch(LoadUserLogin(action.context));
+      }
     }
 
     next(action);
@@ -254,13 +275,17 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 }
 
 Middleware<AppState> _createDataLoaded() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     final dynamic data = action.loginResponse;
     store.dispatch(LoadStaticSuccess(data.static));
 
     for (int i = 0; i < data.accounts.length; i++) {
+      final CompanyEntity company = data.accounts[i];
+      await FlutterKeychain.put(
+          key: getKeychainTokenKey(i), value: company.token);
+
       store.dispatch(SelectCompany(i + 1));
-      store.dispatch(LoadCompanySuccess(data.accounts[i]));
+      store.dispatch(LoadCompanySuccess(company));
     }
 
     store.dispatch(SelectCompany(1));
@@ -313,7 +338,7 @@ Middleware<AppState> _createDeleteState(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();
@@ -322,6 +347,10 @@ Middleware<AppState> _createDeleteState(
     company3Repository.delete();
     company4Repository.delete();
     company5Repository.delete();
+
+    for (int i=0; i<5; i++) {
+      await FlutterKeychain.put(key: getKeychainTokenKey(i), value: '');
+    }
 
     next(action);
   };

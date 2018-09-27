@@ -15,6 +15,9 @@ part of 'list_ui_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<ListUIState> _$listUIStateSerializer = new _$ListUIStateSerializer();
 
@@ -169,18 +172,24 @@ class _$ListUIState extends ListUIState {
       this.custom1Filters,
       this.custom2Filters})
       : super._() {
-    if (sortField == null)
+    if (sortField == null) {
       throw new BuiltValueNullFieldError('ListUIState', 'sortField');
-    if (sortAscending == null)
+    }
+    if (sortAscending == null) {
       throw new BuiltValueNullFieldError('ListUIState', 'sortAscending');
-    if (stateFilters == null)
+    }
+    if (stateFilters == null) {
       throw new BuiltValueNullFieldError('ListUIState', 'stateFilters');
-    if (statusFilters == null)
+    }
+    if (statusFilters == null) {
       throw new BuiltValueNullFieldError('ListUIState', 'statusFilters');
-    if (custom1Filters == null)
+    }
+    if (custom1Filters == null) {
       throw new BuiltValueNullFieldError('ListUIState', 'custom1Filters');
-    if (custom2Filters == null)
+    }
+    if (custom2Filters == null) {
       throw new BuiltValueNullFieldError('ListUIState', 'custom2Filters');
+    }
   }
 
   @override
@@ -191,10 +200,10 @@ class _$ListUIState extends ListUIState {
   ListUIStateBuilder toBuilder() => new ListUIStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ListUIState) return false;
-    return filter == other.filter &&
+    return other is ListUIState &&
+        filter == other.filter &&
         filterEntityId == other.filterEntityId &&
         filterEntityType == other.filterEntityType &&
         sortField == other.sortField &&
@@ -311,7 +320,9 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
 
   @override
   void replace(ListUIState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ListUIState;
   }
 

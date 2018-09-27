@@ -7,7 +7,7 @@ part 'list_ui_state.g.dart';
 
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
-  factory ListUIState(String sortField, [bool sortAscending = true]) {
+  factory ListUIState(String sortField, {bool sortAscending = true}) {
     return _$ListUIState._(
       sortField: sortField,
       sortAscending: sortAscending,

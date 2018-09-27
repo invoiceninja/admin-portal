@@ -15,6 +15,9 @@ part of 'serializers.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ActivityEntity.serializer)
@@ -40,9 +43,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(DashboardEntity.serializer)
       ..add(DashboardResponse.serializer)
       ..add(DashboardState.serializer)
+      ..add(DashboardUIState.serializer)
       ..add(DateFormatEntity.serializer)
       ..add(DateFormatItemResponse.serializer)
       ..add(DateFormatListResponse.serializer)
+      ..add(DateRange.serializer)
+      ..add(DateRangeComparison.serializer)
       ..add(DatetimeFormatEntity.serializer)
       ..add(DatetimeFormatItemResponse.serializer)
       ..add(DatetimeFormatListResponse.serializer)

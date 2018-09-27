@@ -18,7 +18,7 @@ class PaymentRepository {
 
   Future<BuiltList<PaymentEntity>> loadList(
       CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/payments';
+    String url = auth.url + '/payments?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
@@ -34,7 +34,7 @@ class PaymentRepository {
 
   Future<PaymentEntity> saveData(
       CompanyEntity company, AuthState auth, PaymentEntity payment,
-      {EntityAction action, bool sendEmail}) async {
+      {EntityAction action, bool sendEmail = false}) async {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 

@@ -19,6 +19,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
   final viewQuote = _viewQuote();
   final editQuote = _editQuote();
   final showEmailQuote = _showEmailQuote();
+  final convertQuote = _convertQuote(repository);
   final loadQuotes = _loadQuotes(repository);
   final loadQuote = _loadQuote(repository);
   final saveQuote = _saveQuote(repository);
@@ -32,6 +33,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, ViewQuoteList>(viewQuoteList),
     TypedMiddleware<AppState, ViewQuote>(viewQuote),
     TypedMiddleware<AppState, EditQuote>(editQuote),
+    TypedMiddleware<AppState, ConvertQuote>(convertQuote),
     TypedMiddleware<AppState, ShowEmailQuote>(showEmailQuote),
     TypedMiddleware<AppState, LoadQuotes>(loadQuotes),
     TypedMiddleware<AppState, LoadQuote>(loadQuote),
@@ -142,7 +144,7 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.restore)
+        EntityAction.restore)
         .then((InvoiceEntity quote) {
       store.dispatch(RestoreQuoteSuccess(quote));
       store.dispatch(LoadClient(clientId: quote.clientId));
@@ -155,6 +157,25 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.completeError(error);
       }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _convertQuote(QuoteRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    final quote = store.state.quoteState.map[action.quoteId];
+    repository
+        .saveData(store.state.selectedCompany, store.state.authState, quote,
+        EntityAction.convert)
+        .then((InvoiceEntity invoice) {
+      store.dispatch(ConvertQuoteSuccess(quote: quote, invoice: invoice));
+      action.completer.complete(invoice);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConvertQuoteFailure(error));
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -275,8 +296,7 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       return;
     }
 
-    final int updatedAt =
-        action.force ? 0 : (state.quoteState.lastUpdated / 1000).round();
+    final int updatedAt = (state.quoteState.lastUpdated / 1000).round();
 
     store.dispatch(LoadQuotesRequest());
     repository

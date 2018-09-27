@@ -99,7 +99,6 @@ final stubsReducer = combineReducers<StubState>([
   TypedReducer<StubState, SaveStubSuccess>(_updateStub),
   TypedReducer<StubState, AddStubSuccess>(_addStub),
   TypedReducer<StubState, LoadStubsSuccess>(_setLoadedStubs),
-  TypedReducer<StubState, LoadStubsFailure>(_setNoStubs),
   TypedReducer<StubState, LoadStubSuccess>(_setLoadedStub),
   TypedReducer<StubState, ArchiveStubRequest>(_archiveStubRequest),
   TypedReducer<StubState, ArchiveStubSuccess>(_archiveStubSuccess),
@@ -182,10 +181,6 @@ StubState _setLoadedStub(
     StubState stubState, LoadStubSuccess action) {
   return stubState.rebuild((b) => b
     ..map[action.stub.id] = action.stub);
-}
-
-StubState _setNoStubs(StubState stubState, LoadStubsFailure action) {
-  return stubState;
 }
 
 StubState _setLoadedStubs(

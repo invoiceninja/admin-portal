@@ -15,6 +15,9 @@ part of 'static_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<StaticState> _$staticStateSerializer = new _$StaticStateSerializer();
 
@@ -216,28 +219,39 @@ class _$StaticState extends StaticState {
       this.invoiceStatusMap,
       this.frequencyMap})
       : super._() {
-    if (currencyMap == null)
+    if (currencyMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'currencyMap');
-    if (sizeMap == null)
+    }
+    if (sizeMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'sizeMap');
-    if (industryMap == null)
+    }
+    if (industryMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'industryMap');
-    if (timezoneMap == null)
+    }
+    if (timezoneMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'timezoneMap');
-    if (dateFormatMap == null)
+    }
+    if (dateFormatMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'dateFormatMap');
-    if (datetimeFormatMap == null)
+    }
+    if (datetimeFormatMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'datetimeFormatMap');
-    if (languageMap == null)
+    }
+    if (languageMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'languageMap');
-    if (paymentTypeMap == null)
+    }
+    if (paymentTypeMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'paymentTypeMap');
-    if (countryMap == null)
+    }
+    if (countryMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'countryMap');
-    if (invoiceStatusMap == null)
+    }
+    if (invoiceStatusMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'invoiceStatusMap');
-    if (frequencyMap == null)
+    }
+    if (frequencyMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'frequencyMap');
+    }
   }
 
   @override
@@ -248,10 +262,10 @@ class _$StaticState extends StaticState {
   StaticStateBuilder toBuilder() => new StaticStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! StaticState) return false;
-    return currencyMap == other.currencyMap &&
+    return other is StaticState &&
+        currencyMap == other.currencyMap &&
         sizeMap == other.sizeMap &&
         industryMap == other.industryMap &&
         timezoneMap == other.timezoneMap &&
@@ -397,7 +411,9 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
 
   @override
   void replace(StaticState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$StaticState;
   }
 

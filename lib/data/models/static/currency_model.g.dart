@@ -15,6 +15,9 @@ part of 'currency_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<CurrencyListResponse> _$currencyListResponseSerializer =
     new _$CurrencyListResponseSerializer();
@@ -224,8 +227,9 @@ class _$CurrencyListResponse extends CurrencyListResponse {
       (new CurrencyListResponseBuilder()..update(updates)).build();
 
   _$CurrencyListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('CurrencyListResponse', 'data');
+    }
   }
 
   @override
@@ -237,10 +241,9 @@ class _$CurrencyListResponse extends CurrencyListResponse {
       new CurrencyListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CurrencyListResponse) return false;
-    return data == other.data;
+    return other is CurrencyListResponse && data == other.data;
   }
 
   @override
@@ -277,7 +280,9 @@ class CurrencyListResponseBuilder
 
   @override
   void replace(CurrencyListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CurrencyListResponse;
   }
 
@@ -316,8 +321,9 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
       (new CurrencyItemResponseBuilder()..update(updates)).build();
 
   _$CurrencyItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('CurrencyItemResponse', 'data');
+    }
   }
 
   @override
@@ -329,10 +335,9 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
       new CurrencyItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CurrencyItemResponse) return false;
-    return data == other.data;
+    return other is CurrencyItemResponse && data == other.data;
   }
 
   @override
@@ -369,7 +374,9 @@ class CurrencyItemResponseBuilder
 
   @override
   void replace(CurrencyItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CurrencyItemResponse;
   }
 
@@ -433,21 +440,28 @@ class _$CurrencyEntity extends CurrencyEntity {
       this.exchangeRate,
       this.id})
       : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('CurrencyEntity', 'name');
-    if (symbol == null)
+    }
+    if (symbol == null) {
       throw new BuiltValueNullFieldError('CurrencyEntity', 'symbol');
-    if (precision == null)
+    }
+    if (precision == null) {
       throw new BuiltValueNullFieldError('CurrencyEntity', 'precision');
-    if (thousandSeparator == null)
+    }
+    if (thousandSeparator == null) {
       throw new BuiltValueNullFieldError('CurrencyEntity', 'thousandSeparator');
-    if (decimalSeparator == null)
+    }
+    if (decimalSeparator == null) {
       throw new BuiltValueNullFieldError('CurrencyEntity', 'decimalSeparator');
-    if (code == null)
+    }
+    if (code == null) {
       throw new BuiltValueNullFieldError('CurrencyEntity', 'code');
-    if (swapCurrencySymbol == null)
+    }
+    if (swapCurrencySymbol == null) {
       throw new BuiltValueNullFieldError(
           'CurrencyEntity', 'swapCurrencySymbol');
+    }
   }
 
   @override
@@ -459,10 +473,10 @@ class _$CurrencyEntity extends CurrencyEntity {
       new CurrencyEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CurrencyEntity) return false;
-    return name == other.name &&
+    return other is CurrencyEntity &&
+        name == other.name &&
         symbol == other.symbol &&
         precision == other.precision &&
         thousandSeparator == other.thousandSeparator &&
@@ -570,7 +584,9 @@ class CurrencyEntityBuilder
 
   @override
   void replace(CurrencyEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CurrencyEntity;
   }
 

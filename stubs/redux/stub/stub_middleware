@@ -204,8 +204,7 @@ Middleware<AppState> _loadStubs(StubRepository repository) {
       return;
     }
 
-    final int updatedAt =
-        action.force ? 0 : (state.stubState.lastUpdated / 1000).round();
+    final int updatedAt = (state.stubState.lastUpdated / 1000).round();
 
     store.dispatch(LoadStubsRequest());
     repository

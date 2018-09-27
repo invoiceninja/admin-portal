@@ -15,6 +15,9 @@ part of 'country_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<CountryListResponse> _$countryListResponseSerializer =
     new _$CountryListResponseSerializer();
@@ -217,8 +220,9 @@ class _$CountryListResponse extends CountryListResponse {
       (new CountryListResponseBuilder()..update(updates)).build();
 
   _$CountryListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('CountryListResponse', 'data');
+    }
   }
 
   @override
@@ -230,10 +234,9 @@ class _$CountryListResponse extends CountryListResponse {
       new CountryListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CountryListResponse) return false;
-    return data == other.data;
+    return other is CountryListResponse && data == other.data;
   }
 
   @override
@@ -270,7 +273,9 @@ class CountryListResponseBuilder
 
   @override
   void replace(CountryListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CountryListResponse;
   }
 
@@ -308,8 +313,9 @@ class _$CountryItemResponse extends CountryItemResponse {
       (new CountryItemResponseBuilder()..update(updates)).build();
 
   _$CountryItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('CountryItemResponse', 'data');
+    }
   }
 
   @override
@@ -321,10 +327,9 @@ class _$CountryItemResponse extends CountryItemResponse {
       new CountryItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CountryItemResponse) return false;
-    return data == other.data;
+    return other is CountryItemResponse && data == other.data;
   }
 
   @override
@@ -360,7 +365,9 @@ class CountryItemResponseBuilder
 
   @override
   void replace(CountryItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CountryItemResponse;
   }
 
@@ -421,16 +428,21 @@ class _$CountryEntity extends CountryEntity {
       this.iso3,
       this.id})
       : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'name');
-    if (swapPostalCode == null)
+    }
+    if (swapPostalCode == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'swapPostalCode');
-    if (swapCurrencySymbol == null)
+    }
+    if (swapCurrencySymbol == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'swapCurrencySymbol');
-    if (iso2 == null)
+    }
+    if (iso2 == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'iso2');
-    if (iso3 == null)
+    }
+    if (iso3 == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'iso3');
+    }
   }
 
   @override
@@ -441,10 +453,10 @@ class _$CountryEntity extends CountryEntity {
   CountryEntityBuilder toBuilder() => new CountryEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CountryEntity) return false;
-    return name == other.name &&
+    return other is CountryEntity &&
+        name == other.name &&
         swapPostalCode == other.swapPostalCode &&
         swapCurrencySymbol == other.swapCurrencySymbol &&
         thousandSeparator == other.thousandSeparator &&
@@ -544,7 +556,9 @@ class CountryEntityBuilder
 
   @override
   void replace(CountryEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CountryEntity;
   }
 

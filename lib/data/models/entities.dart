@@ -297,30 +297,6 @@ abstract class DashboardEntity
 
   DashboardEntity._();
 
-  @nullable
-  double get paidToDate;
-
-  @nullable
-  int get paidToDateCurrency;
-
-  @nullable
-  double get balances;
-
-  @nullable
-  int get balancesCurrency;
-
-  @nullable
-  double get averageInvoice;
-
-  @nullable
-  int get averageInvoiceCurrency;
-
-  @nullable
-  int get invoicesSent;
-
-  @nullable
-  int get activeClients;
-
   BuiltList<ActivityEntity> get activities;
 
   static Serializer<DashboardEntity> get serializer =>

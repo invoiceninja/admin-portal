@@ -15,6 +15,9 @@ part of 'static_data_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<StaticDataListResponse> _$staticDataListResponseSerializer =
     new _$StaticDataListResponseSerializer();
@@ -279,8 +282,9 @@ class _$StaticDataListResponse extends StaticDataListResponse {
       (new StaticDataListResponseBuilder()..update(updates)).build();
 
   _$StaticDataListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('StaticDataListResponse', 'data');
+    }
   }
 
   @override
@@ -293,10 +297,9 @@ class _$StaticDataListResponse extends StaticDataListResponse {
       new StaticDataListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! StaticDataListResponse) return false;
-    return data == other.data;
+    return other is StaticDataListResponse && data == other.data;
   }
 
   @override
@@ -333,7 +336,9 @@ class StaticDataListResponseBuilder
 
   @override
   void replace(StaticDataListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$StaticDataListResponse;
   }
 
@@ -372,8 +377,9 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
       (new StaticDataItemResponseBuilder()..update(updates)).build();
 
   _$StaticDataItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('StaticDataItemResponse', 'data');
+    }
   }
 
   @override
@@ -386,10 +392,9 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
       new StaticDataItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! StaticDataItemResponse) return false;
-    return data == other.data;
+    return other is StaticDataItemResponse && data == other.data;
   }
 
   @override
@@ -426,7 +431,9 @@ class StaticDataItemResponseBuilder
 
   @override
   void replace(StaticDataItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$StaticDataItemResponse;
   }
 
@@ -499,30 +506,42 @@ class _$StaticDataEntity extends StaticDataEntity {
       this.invoiceStatus,
       this.frequencies})
       : super._() {
-    if (currencies == null)
+    if (currencies == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'currencies');
-    if (sizes == null)
+    }
+    if (sizes == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'sizes');
-    if (industries == null)
+    }
+    if (industries == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'industries');
-    if (timezones == null)
+    }
+    if (timezones == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'timezones');
-    if (dateFormats == null)
+    }
+    if (dateFormats == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'dateFormats');
-    if (datetimeFormats == null)
+    }
+    if (datetimeFormats == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'datetimeFormats');
-    if (languages == null)
+    }
+    if (languages == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'languages');
-    if (paymentTypes == null)
+    }
+    if (paymentTypes == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'paymentTypes');
-    if (countries == null)
+    }
+    if (countries == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'countries');
-    if (invoiceDesigns == null)
+    }
+    if (invoiceDesigns == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'invoiceDesigns');
-    if (invoiceStatus == null)
+    }
+    if (invoiceStatus == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'invoiceStatus');
-    if (frequencies == null)
+    }
+    if (frequencies == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'frequencies');
+    }
   }
 
   @override
@@ -534,10 +553,10 @@ class _$StaticDataEntity extends StaticDataEntity {
       new StaticDataEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! StaticDataEntity) return false;
-    return currencies == other.currencies &&
+    return other is StaticDataEntity &&
+        currencies == other.currencies &&
         sizes == other.sizes &&
         industries == other.industries &&
         timezones == other.timezones &&
@@ -694,7 +713,9 @@ class StaticDataEntityBuilder
 
   @override
   void replace(StaticDataEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$StaticDataEntity;
   }
 

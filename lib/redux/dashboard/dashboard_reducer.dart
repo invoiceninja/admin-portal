@@ -4,18 +4,34 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
 final dashboardReducer = combineReducers<DashboardState>([
   TypedReducer<DashboardState, LoadDashboardSuccess>(_setLoadedDashboards),
-  TypedReducer<DashboardState, LoadDashboardFailure>(_setNoDashboards),
 ]);
 
-DashboardState _setLoadedDashboards(DashboardState dashboardState, LoadDashboardSuccess action) {
+DashboardState _setLoadedDashboards(
+    DashboardState dashboardState, LoadDashboardSuccess action) {
   return dashboardState.rebuild((b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-      ..data.replace(action.data)
-  );
+    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+    ..data.replace(action.data));
 }
 
-DashboardState _setNoDashboards(DashboardState dashboardState, LoadDashboardFailure action) {
-  return dashboardState.rebuild((b) => b
-      ..data = null
-  );
+DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
+  if (action is UpdateDashboardSettings) {
+    final settings = action.settings;
+    if (settings != null) {
+      return state.rebuild((b) => b
+        ..dateRange = settings.dateRange
+        ..customStartDate = settings.startDate
+        ..customEndDate = settings.endDate
+        ..enableComparison = settings.enableComparison
+        ..compareDateRange = settings.compareDateRange
+        ..compareCustomStartDate = settings.compareStartDate
+        ..compareCustomStartDate = settings.compareEndDate
+        ..offset = 0);
+    } else if (action.offset != null) {
+      return state.rebuild((b) => b..offset += action.offset);
+    } else if (action.currencyId != null) {
+      return state.rebuild((b) => b..currencyId = action.currencyId);
+    }
+  }
+
+  return state;
 }

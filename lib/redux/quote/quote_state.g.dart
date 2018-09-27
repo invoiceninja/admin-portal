@@ -15,6 +15,9 @@ part of 'quote_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<QuoteState> _$quoteStateSerializer = new _$QuoteStateSerializer();
 Serializer<QuoteUIState> _$quoteUIStateSerializer =
@@ -164,8 +167,12 @@ class _$QuoteState extends QuoteState {
       (new QuoteStateBuilder()..update(updates)).build();
 
   _$QuoteState._({this.lastUpdated, this.map, this.list}) : super._() {
-    if (map == null) throw new BuiltValueNullFieldError('QuoteState', 'map');
-    if (list == null) throw new BuiltValueNullFieldError('QuoteState', 'list');
+    if (map == null) {
+      throw new BuiltValueNullFieldError('QuoteState', 'map');
+    }
+    if (list == null) {
+      throw new BuiltValueNullFieldError('QuoteState', 'list');
+    }
   }
 
   @override
@@ -176,10 +183,10 @@ class _$QuoteState extends QuoteState {
   QuoteStateBuilder toBuilder() => new QuoteStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! QuoteState) return false;
-    return lastUpdated == other.lastUpdated &&
+    return other is QuoteState &&
+        lastUpdated == other.lastUpdated &&
         map == other.map &&
         list == other.list;
   }
@@ -230,7 +237,9 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
 
   @override
   void replace(QuoteState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$QuoteState;
   }
 
@@ -280,10 +289,12 @@ class _$QuoteUIState extends QuoteUIState {
   _$QuoteUIState._(
       {this.editing, this.editingItem, this.selectedId, this.listUIState})
       : super._() {
-    if (selectedId == null)
+    if (selectedId == null) {
       throw new BuiltValueNullFieldError('QuoteUIState', 'selectedId');
-    if (listUIState == null)
+    }
+    if (listUIState == null) {
       throw new BuiltValueNullFieldError('QuoteUIState', 'listUIState');
+    }
   }
 
   @override
@@ -294,10 +305,10 @@ class _$QuoteUIState extends QuoteUIState {
   QuoteUIStateBuilder toBuilder() => new QuoteUIStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! QuoteUIState) return false;
-    return editing == other.editing &&
+    return other is QuoteUIState &&
+        editing == other.editing &&
         editingItem == other.editingItem &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
@@ -362,7 +373,9 @@ class QuoteUIStateBuilder
 
   @override
   void replace(QuoteUIState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$QuoteUIState;
   }
 

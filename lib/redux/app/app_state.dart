@@ -87,6 +87,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   DashboardState get dashboardState => selectedCompanyState.dashboardState;
 
+  DashboardUIState get dashboardUIState => uiState.dashboardUIState;
+
   UserEntity get user => selectedCompany.user;
 
   EntityUIState getUIState(EntityType type) {
@@ -98,8 +100,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
-case EntityType.payment:
-return paymentUIState;
+      case EntityType.payment:
+        return paymentUIState;
 
       case EntityType.quote:
         return quoteUIState;
@@ -132,10 +134,11 @@ return paymentUIState;
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
-PaymentState get paymentState => selectedCompanyState.paymentState;
-ListUIState get paymentListState => uiState.paymentUIState.listUIState;
-PaymentUIState get paymentUIState => uiState.paymentUIState;
+  PaymentState get paymentState => selectedCompanyState.paymentState;
 
+  ListUIState get paymentListState => uiState.paymentUIState.listUIState;
+
+  PaymentUIState get paymentUIState => uiState.paymentUIState;
 
   QuoteState get quoteState => selectedCompanyState.quoteState;
 
@@ -147,6 +150,6 @@ PaymentUIState get paymentUIState => uiState.paymentUIState;
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Date Formats: ${staticState.dateFormatMap}';
-    return 'Route: ${uiState.currentRoute}';
+    return 'Route: ${uiState.currentRoute}, CurrencyId: ${dashboardUIState.currencyId}';
   }
 }

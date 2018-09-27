@@ -15,16 +15,23 @@ part of 'models.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 const EntityAction _$archive = const EntityAction._('archive');
 const EntityAction _$delete = const EntityAction._('delete');
 const EntityAction _$restore = const EntityAction._('restore');
 const EntityAction _$clone = const EntityAction._('clone');
+const EntityAction _$cloneToInvoice = const EntityAction._('cloneToInvoice');
+const EntityAction _$cloneToQuote = const EntityAction._('cloneToQuote');
+const EntityAction _$convert = const EntityAction._('convert');
 const EntityAction _$download = const EntityAction._('download');
-const EntityAction _$email = const EntityAction._('email');
+const EntityAction _$sendEmail = const EntityAction._('sendEmail');
 const EntityAction _$markSent = const EntityAction._('markSent');
-const EntityAction _$invoice = const EntityAction._('invoice');
-const EntityAction _$payment = const EntityAction._('payment');
+const EntityAction _$newInvoice = const EntityAction._('newInvoice');
+const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
+const EntityAction _$enterPayment = const EntityAction._('enterPayment');
 const EntityAction _$pdf = const EntityAction._('pdf');
 const EntityAction _$more = const EntityAction._('more');
 
@@ -38,16 +45,24 @@ EntityAction _$valueOf(String name) {
       return _$restore;
     case 'clone':
       return _$clone;
+    case 'cloneToInvoice':
+      return _$cloneToInvoice;
+    case 'cloneToQuote':
+      return _$cloneToQuote;
+    case 'convert':
+      return _$convert;
     case 'download':
       return _$download;
-    case 'email':
-      return _$email;
+    case 'sendEmail':
+      return _$sendEmail;
     case 'markSent':
       return _$markSent;
-    case 'invoice':
-      return _$invoice;
-    case 'payment':
-      return _$payment;
+    case 'newInvoice':
+      return _$newInvoice;
+    case 'viewInvoice':
+      return _$viewInvoice;
+    case 'enterPayment':
+      return _$enterPayment;
     case 'pdf':
       return _$pdf;
     case 'more':
@@ -63,11 +78,15 @@ final BuiltSet<EntityAction> _$values =
   _$delete,
   _$restore,
   _$clone,
+  _$cloneToInvoice,
+  _$cloneToQuote,
+  _$convert,
   _$download,
-  _$email,
+  _$sendEmail,
   _$markSent,
-  _$invoice,
-  _$payment,
+  _$newInvoice,
+  _$viewInvoice,
+  _$enterPayment,
   _$pdf,
   _$more,
 ]);

@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
@@ -23,6 +24,7 @@ UIState uiReducer(UIState state, dynamic action) {
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
+    ..dashboardUIState.replace(dashboardUIReducer(state.dashboardUIState, action))
     // STARTER: reducer - do not remove comment
     ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
     ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action)));

@@ -15,6 +15,9 @@ part of 'timezone_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<TimezoneListResponse> _$timezoneListResponseSerializer =
     new _$TimezoneListResponseSerializer();
@@ -176,8 +179,9 @@ class _$TimezoneListResponse extends TimezoneListResponse {
       (new TimezoneListResponseBuilder()..update(updates)).build();
 
   _$TimezoneListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('TimezoneListResponse', 'data');
+    }
   }
 
   @override
@@ -189,10 +193,9 @@ class _$TimezoneListResponse extends TimezoneListResponse {
       new TimezoneListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TimezoneListResponse) return false;
-    return data == other.data;
+    return other is TimezoneListResponse && data == other.data;
   }
 
   @override
@@ -229,7 +232,9 @@ class TimezoneListResponseBuilder
 
   @override
   void replace(TimezoneListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$TimezoneListResponse;
   }
 
@@ -268,8 +273,9 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
       (new TimezoneItemResponseBuilder()..update(updates)).build();
 
   _$TimezoneItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('TimezoneItemResponse', 'data');
+    }
   }
 
   @override
@@ -281,10 +287,9 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
       new TimezoneItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TimezoneItemResponse) return false;
-    return data == other.data;
+    return other is TimezoneItemResponse && data == other.data;
   }
 
   @override
@@ -321,7 +326,9 @@ class TimezoneItemResponseBuilder
 
   @override
   void replace(TimezoneItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$TimezoneItemResponse;
   }
 
@@ -363,11 +370,15 @@ class _$TimezoneEntity extends TimezoneEntity {
       (new TimezoneEntityBuilder()..update(updates)).build();
 
   _$TimezoneEntity._({this.id, this.name, this.location}) : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('TimezoneEntity', 'id');
-    if (name == null)
+    if (id == null) {
+      throw new BuiltValueNullFieldError('TimezoneEntity', 'id');
+    }
+    if (name == null) {
       throw new BuiltValueNullFieldError('TimezoneEntity', 'name');
-    if (location == null)
+    }
+    if (location == null) {
       throw new BuiltValueNullFieldError('TimezoneEntity', 'location');
+    }
   }
 
   @override
@@ -379,10 +390,12 @@ class _$TimezoneEntity extends TimezoneEntity {
       new TimezoneEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TimezoneEntity) return false;
-    return id == other.id && name == other.name && location == other.location;
+    return other is TimezoneEntity &&
+        id == other.id &&
+        name == other.name &&
+        location == other.location;
   }
 
   @override
@@ -430,7 +443,9 @@ class TimezoneEntityBuilder
 
   @override
   void replace(TimezoneEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$TimezoneEntity;
   }
 

@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
@@ -39,6 +38,7 @@ String formatNumber(
   double value,
   BuildContext context, {
   int clientId,
+  int currencyId,
   FormatNumberType formatNumberType = FormatNumberType.money,
   bool zeroIsNull = false,
 }) {
@@ -52,7 +52,6 @@ String formatNumber(
   final ClientEntity client =
       state.selectedCompanyState.clientState.map[clientId];
 
-  int currencyId;
   int countryId;
 
   if (client != null && client.countryId > 0) {
@@ -63,7 +62,9 @@ String formatNumber(
     countryId = kCountryUnitedStates;
   }
 
-  if (client != null && client.currencyId > 0) {
+  if (currencyId != null) {
+    // do nothing
+  } else if (client != null && client.currencyId > 0) {
     currencyId = client.currencyId;
   } else if (company.currencyId > 0) {
     currencyId = company.currencyId;
@@ -73,6 +74,10 @@ String formatNumber(
 
   final CurrencyEntity currency = state.staticState.currencyMap[currencyId];
   final CountryEntity country = state.staticState.countryMap[countryId];
+
+  if (currency == null) {
+    return '';
+  }
 
   String thousandSeparator = currency.thousandSeparator;
   String decimalSeparator = currency.decimalSeparator;
@@ -173,8 +178,25 @@ String convertDateTimeToSqlDate([DateTime date]) {
 }
 
 String convertTimestampToSqlDate(int timestamp) {
-  final DateTime date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  final DateTime date =
+      new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   return date.toIso8601String();
+}
+
+String formatDateRange(String startDate, String endDate, BuildContext context) {
+  final today = DateTime.now();
+
+  final startDateTime = DateTime.tryParse(startDate).toLocal();
+  final startFormatter =
+      DateFormat(today.year == startDateTime.year ? 'MMM d' : 'MMM d, yyy');
+  final startDateTimeString = startFormatter.format(startDateTime);
+
+  final endDateTime = DateTime.tryParse(endDate).toLocal();
+  final endFormatter =
+      DateFormat(today.year == endDateTime.year ? 'MMM d' : 'MMM d, yyy');
+  final endDateTimeString = endFormatter.format(endDateTime);
+
+  return '$startDateTimeString - $endDateTimeString';
 }
 
 String formatDate(String value, BuildContext context, {bool showTime = false}) {
@@ -186,11 +208,15 @@ String formatDate(String value, BuildContext context, {bool showTime = false}) {
   final CompanyEntity company = state.selectedCompany;
 
   if (showTime) {
-    final dateTimeFormats = state.staticState.datetimeFormatMap;
-    final dateTimeFormatId = company.datetimeFormatId > 0
+    final dateFormats = state.staticState.datetimeFormatMap;
+    final dateFormatId = company.datetimeFormatId > 0
         ? company.datetimeFormatId
         : kDefaultDateTimeFormat;
-    final formatter = DateFormat(dateTimeFormats[dateTimeFormatId].format);
+    String format = dateFormats[dateFormatId].format;
+    if (company.enableMilitaryTime) {
+      format = format.replaceFirst('h:mm a', 'H:mm');
+    }
+    final formatter = DateFormat(format);
     return formatter.format(DateTime.tryParse(value).toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;

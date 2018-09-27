@@ -113,7 +113,7 @@ class _PaymentViewState extends State<PaymentView> {
               color: Theme.of(context).canvasColor,
               child: ListTile(
                 title: Text('${localization.invoice} ${invoice.invoiceNumber}'),
-                leading: Icon(FontAwesomeIcons.filePdfO, size: 18.0),
+                leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
                 trailing: Icon(Icons.navigate_next),
                 onTap: () => viewModel.onTapInvoice(context),
               ),

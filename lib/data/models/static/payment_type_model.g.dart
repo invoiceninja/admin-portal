@@ -15,6 +15,9 @@ part of 'payment_type_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<PaymentTypeListResponse> _$paymentTypeListResponseSerializer =
     new _$PaymentTypeListResponseSerializer();
@@ -176,8 +179,9 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
       (new PaymentTypeListResponseBuilder()..update(updates)).build();
 
   _$PaymentTypeListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('PaymentTypeListResponse', 'data');
+    }
   }
 
   @override
@@ -190,10 +194,9 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
       new PaymentTypeListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! PaymentTypeListResponse) return false;
-    return data == other.data;
+    return other is PaymentTypeListResponse && data == other.data;
   }
 
   @override
@@ -231,7 +234,9 @@ class PaymentTypeListResponseBuilder
 
   @override
   void replace(PaymentTypeListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$PaymentTypeListResponse;
   }
 
@@ -270,8 +275,9 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
       (new PaymentTypeItemResponseBuilder()..update(updates)).build();
 
   _$PaymentTypeItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('PaymentTypeItemResponse', 'data');
+    }
   }
 
   @override
@@ -284,10 +290,9 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
       new PaymentTypeItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! PaymentTypeItemResponse) return false;
-    return data == other.data;
+    return other is PaymentTypeItemResponse && data == other.data;
   }
 
   @override
@@ -325,7 +330,9 @@ class PaymentTypeItemResponseBuilder
 
   @override
   void replace(PaymentTypeItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$PaymentTypeItemResponse;
   }
 
@@ -365,8 +372,9 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
       (new PaymentTypeEntityBuilder()..update(updates)).build();
 
   _$PaymentTypeEntity._({this.name, this.id}) : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('PaymentTypeEntity', 'name');
+    }
   }
 
   @override
@@ -378,10 +386,9 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
       new PaymentTypeEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! PaymentTypeEntity) return false;
-    return name == other.name && id == other.id;
+    return other is PaymentTypeEntity && name == other.name && id == other.id;
   }
 
   @override
@@ -423,7 +430,9 @@ class PaymentTypeEntityBuilder
 
   @override
   void replace(PaymentTypeEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$PaymentTypeEntity;
   }
 

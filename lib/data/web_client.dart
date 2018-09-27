@@ -8,11 +8,24 @@ class WebClient {
 
   const WebClient();
 
-  String _parseError(String response) {
+  String _checkUrl(String url) {
+
+    if (! url.startsWith('http')) {
+      url = kAppUrl + url;
+    }
+
+    if (! url.contains('?')) {
+      url += '?';
+    }
+
+    return url;
+  }
+
+  String _parseError(int code, String response) {
     dynamic message = response;
 
     if (response.contains('DOCTYPE html')) {
-      return 'An error occurred';
+      return '$code: An error occurred';
     }
     
     try {
@@ -23,13 +36,13 @@ class WebClient {
       // do nothing
     }
 
-    return message.toString();
+    return '$code: $message';
   }
 
   Future<dynamic> get(String url, String token) async {
 
-    if (! url.contains('?')) 
-      url += '?';
+    url = _checkUrl(url);
+    print('GET: $url');
 
     if (url.contains('invoiceninja.com')) {
       url += '&per_page=$kMaxRecordsPerApiPage';
@@ -45,7 +58,10 @@ class WebClient {
     );
 
     if (response.statusCode >= 400) {
-      throw _parseError(response.body);
+      print('==== FAILED ====');
+      print('body: ${response.body}');
+
+      throw _parseError(response.statusCode, response.body);
     }
 
     final dynamic jsonResponse = json.decode(response.body);
@@ -56,6 +72,9 @@ class WebClient {
   }
 
   Future<dynamic> post(String url, String token, [dynamic data]) async {
+    url = _checkUrl(url);
+    print('POST: $url');
+
     final http.Response response = await http.Client().post(
       url,
       body: data,
@@ -65,8 +84,8 @@ class WebClient {
       },
     ).timeout(const Duration(seconds: 30));
 
-    if (response.statusCode >= 400) {
-      throw _parseError(response.body);
+    if (response.statusCode >= 300) {
+      throw _parseError(response.statusCode, response.body);
     }
 
     try {
@@ -79,6 +98,9 @@ class WebClient {
   }
 
   Future<dynamic> put(String url, String token, dynamic data) async {
+    url = _checkUrl(url);
+    print('PUT: $url');
+
     final http.Response response = await http.Client().put(
       url,
       body: data,
@@ -88,8 +110,8 @@ class WebClient {
       },
     );
 
-    if (response.statusCode >= 400) {
-      throw _parseError(response.body);
+    if (response.statusCode >= 300) {
+      throw _parseError(response.statusCode, response.body);
     }
 
     try {

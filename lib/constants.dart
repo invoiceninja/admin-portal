@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '0.1.14';
+const String kAppVersion = '0.1.15';
+const String kAppUrl = 'https://app.invoiceninja.com';
 
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
@@ -9,6 +10,13 @@ const String kSharedPrefSecret = 'secret';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
 const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAppVersion = 'app_version';
+
+const String kKeychainToken = 'api_token';
+const String kKeychainEmail = 'email';
+const String kKeychainUrl = 'url';
+const String kKeychainSecret = 'secret';
+
+String getKeychainTokenKey([int companyIndex = 0]) => '${kKeychainToken}_$companyIndex';
 
 const int kMinMajorAppVersion = 4;
 const int kMinMinorAppVersion = 5;
@@ -40,6 +48,7 @@ const int kPaymentStatusCompleted = 4;
 const int kPaymentStatusPartiallyRefunded = 5;
 const int kPaymentStatusRefunded = 6;
 
+const int kDefaultCurrencyId = 1;
 const int kDefaultDateFormat = 5;
 const int kDefaultDateTimeFormat = 5;
 
@@ -86,4 +95,34 @@ const List<int> kPaymentTerms = [
   30,
   60,
   90
+];
+
+const List<String> kLanguages = [
+  'ca',
+  'cs',
+  'da',
+  'de',
+  'el',
+  'en',
+  'en_GB',
+  'es',
+  'es_ES',
+  'fi',
+  'fr',
+  'fr_CA',
+  'hr',
+  'it',
+  'ja',
+  'lt',
+  'nb_NO',
+  'nl',
+  'pl',
+  'pt_BR',
+  'pt_PT',
+  'ro',
+  'sl',
+  'sq',
+  'sv',
+  'th',
+  'tr_TR',
 ];

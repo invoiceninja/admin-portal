@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keychain/flutter_keychain.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -26,31 +28,39 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 }
 
 void _saveAuthLocal(dynamic action) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kSharedPrefEmail, action.email);
-  prefs.setString(kSharedPrefUrl, action.url);
-  prefs.setString(kSharedPrefSecret, action.secret);
+  await FlutterKeychain.put(key: kKeychainEmail, value: action.email);
+
+  if (formatApiUrlReadable(action.url) != kAppUrl) {
+    await FlutterKeychain.put(
+        key: kKeychainUrl, value: formatApiUrlMachine(action.url));
+    await FlutterKeychain.put(key: kKeychainSecret, value: action.secret);
+  }
 }
 
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  final String email = prefs.getString(kSharedPrefEmail) ?? Config.LOGIN_EMAIL;
-  final String url = prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL;
-  final String secret =
-      prefs.getString(kSharedPrefSecret) ?? Config.LOGIN_SECRET;
+  final String email = await FlutterKeychain.get(key: kKeychainEmail) ??
+      prefs.getString(kSharedPrefEmail) ??
+      Config.LOGIN_EMAIL;
+  final String url = await FlutterKeychain.get(key: kKeychainUrl) ??
+      formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
+  final String secret = await FlutterKeychain.get(key: kKeychainSecret) ??
+      prefs.getString(kSharedPrefSecret) ??
+      Config.LOGIN_SECRET;
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
   final bool emailPayment = prefs.getBool(kSharedPrefEmailPayment) ?? false;
-  store.dispatch(UserSettingsChanged(enableDarkMode: enableDarkMode, emailPayment: emailPayment));
 
-  Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
+  store.dispatch(UserSettingsChanged(
+      enableDarkMode: enableDarkMode, emailPayment: emailPayment));
 }
 
 Middleware<AppState> _createLoginInit() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     _loadAuthLocal(store, action);
+
+    Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
 
     next(action);
   };
@@ -78,7 +88,11 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(UserLoginFailure(error.toString()));
+      if (error.toString().contains('No host specified in URI')) {
+        store.dispatch(UserLoginFailure('Please check the URL is correct'));
+      } else {
+        store.dispatch(UserLoginFailure(error.toString()));
+      }
     });
 
     next(action);
@@ -113,22 +127,28 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
 }
 
 Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    final state = store.state;
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    next(action);
+
+    _loadAuthLocal(store, action);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String url = await FlutterKeychain.get(key: kKeychainUrl) ??
+        formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
+    final String token = await FlutterKeychain.get(key: getKeychainTokenKey());
+
     repository
-        .refresh(
-            url: state.authState.url,
-            token: state.selectedCompany.token,
-            platform: action.platform)
+        .refresh(url: url, token: token, platform: action.platform)
         .then((data) {
       store.dispatch(
           LoadDataSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print(error);
       store.dispatch(UserLoginFailure(error.toString()));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
-
-    next(action);
   };
 }
 

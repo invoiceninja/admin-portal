@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -21,7 +22,10 @@ class PaymentScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        store.dispatch(ViewDashboard(context));
+        return false;
+      },
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
@@ -64,7 +68,8 @@ class PaymentScreen extends StatelessWidget {
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(EditPayment(
-                      payment: PaymentEntity(company), context: context));
+                      payment: PaymentEntity(company: company),
+                      context: context));
                 },
                 child: Icon(
                   Icons.add,

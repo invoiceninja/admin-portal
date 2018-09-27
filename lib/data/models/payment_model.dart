@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -55,9 +56,9 @@ abstract class PaymentEntity extends Object
     implements Built<PaymentEntity, PaymentEntityBuilder> {
   static int counter = 0;
 
-  factory PaymentEntity([CompanyEntity company]) {
+  factory PaymentEntity({int id, CompanyEntity company}) {
     return _$PaymentEntity._(
-      id: --PaymentEntity.counter,
+      id: id ?? --PaymentEntity.counter,
       amount: 0.0,
       transactionReference: '',
       paymentDate: convertDateTimeToSqlDate(),
@@ -178,7 +179,7 @@ abstract class PaymentEntity extends Object
     final actions = <EntityAction>[];
 
     if (user.canEditEntity(this) && client.hasEmailAddress) {
-      actions.add(EntityAction.email);
+      actions.add(EntityAction.sendEmail);
     }
 
     if (actions.isNotEmpty) {
@@ -196,8 +197,22 @@ abstract class PaymentEntity extends Object
   @override
   double get listDisplayAmount => amount;
 
+  bool isBetween(String startDate, String endDate) {
+    return startDate.compareTo(paymentDate) <= 0 &&
+        endDate.compareTo(paymentDate) >= 0;
+  }
+
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  double get completedAmount {
+    if ([kPaymentStatusVoided, kPaymentStatusFailed]
+        .contains(paymentStatusId)) {
+      return 0.0;
+    }
+
+    return amount - refunded;
+  }
 
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
 }

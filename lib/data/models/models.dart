@@ -39,11 +39,15 @@ class EntityAction extends EnumClass {
   static const EntityAction delete = _$delete;
   static const EntityAction restore = _$restore;
   static const EntityAction clone = _$clone;
+  static const EntityAction cloneToInvoice = _$cloneToInvoice;
+  static const EntityAction cloneToQuote = _$cloneToQuote;
+  static const EntityAction convert = _$convert;
   static const EntityAction download = _$download;
-  static const EntityAction email = _$email;
+  static const EntityAction sendEmail = _$sendEmail;
   static const EntityAction markSent = _$markSent;
-  static const EntityAction invoice = _$invoice;
-  static const EntityAction payment = _$payment;
+  static const EntityAction newInvoice = _$newInvoice;
+  static const EntityAction viewInvoice = _$viewInvoice;
+  static const EntityAction enterPayment = _$enterPayment;
   static const EntityAction pdf = _$pdf;
   static const EntityAction more = _$more;
 

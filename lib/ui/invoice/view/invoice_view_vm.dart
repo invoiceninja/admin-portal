@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ class EntityViewVM {
   bool operator ==(dynamic other) =>
       client == other.client &&
       company == other.company &&
-      invoice == other.invoice &&
+      invoice == other.newInvoice &&
       isSaving == other.isSaving &&
       isDirty == other.isDirty;
 
@@ -115,7 +116,8 @@ class InvoiceViewVM extends EntityViewVM {
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final invoice = state.invoiceState.map[state.invoiceUIState.selectedId];
-    final client = store.state.clientState.map[invoice.clientId];
+    final client = store.state.clientState.map[invoice.clientId] ??
+        ClientEntity(id: invoice.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -168,7 +170,7 @@ class InvoiceViewVM extends EntityViewVM {
                   snackBarCompleter(context, localization.markedInvoiceAsSent),
                   invoice.id));
               break;
-            case EntityAction.email:
+            case EntityAction.sendEmail:
               store.dispatch(ShowEmailInvoice(
                   completer:
                       snackBarCompleter(context, localization.emailedInvoice),
@@ -190,17 +192,21 @@ class InvoiceViewVM extends EntityViewVM {
                   snackBarCompleter(context, localization.restoredInvoice),
                   invoice.id));
               break;
-            case EntityAction.clone:
+            case EntityAction.cloneToInvoice:
+              Navigator.of(context).pop();
+              store.dispatch(EditInvoice(
+                  context: context, invoice: invoice.cloneToInvoice));
+              break;
+            case EntityAction.cloneToQuote:
               Navigator.of(context).pop();
               store.dispatch(
-                  EditInvoice(context: context, invoice: invoice.clone));
+                  EditQuote(context: context, quote: invoice.cloneToQuote));
               break;
-            case EntityAction.payment:
+            case EntityAction.enterPayment:
               store.dispatch(EditPayment(
                   context: context,
                   payment: invoice.createPayment(state.selectedCompany)));
               break;
-
           }
         });
   }

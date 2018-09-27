@@ -15,6 +15,9 @@ part of 'credit_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<CreditListResponse> _$creditListResponseSerializer =
     new _$CreditListResponseSerializer();
@@ -258,8 +261,9 @@ class _$CreditListResponse extends CreditListResponse {
       (new CreditListResponseBuilder()..update(updates)).build();
 
   _$CreditListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('CreditListResponse', 'data');
+    }
   }
 
   @override
@@ -271,10 +275,9 @@ class _$CreditListResponse extends CreditListResponse {
       new CreditListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CreditListResponse) return false;
-    return data == other.data;
+    return other is CreditListResponse && data == other.data;
   }
 
   @override
@@ -311,7 +314,9 @@ class CreditListResponseBuilder
 
   @override
   void replace(CreditListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CreditListResponse;
   }
 
@@ -349,8 +354,9 @@ class _$CreditItemResponse extends CreditItemResponse {
       (new CreditItemResponseBuilder()..update(updates)).build();
 
   _$CreditItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('CreditItemResponse', 'data');
+    }
   }
 
   @override
@@ -362,10 +368,9 @@ class _$CreditItemResponse extends CreditItemResponse {
       new CreditItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CreditItemResponse) return false;
-    return data == other.data;
+    return other is CreditItemResponse && data == other.data;
   }
 
   @override
@@ -401,7 +406,9 @@ class CreditItemResponseBuilder
 
   @override
   void replace(CreditItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CreditItemResponse;
   }
 
@@ -477,20 +484,27 @@ class _$CreditEntity extends CreditEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (amount == null)
+    if (amount == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'amount');
-    if (balance == null)
+    }
+    if (balance == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'balance');
-    if (creditDate == null)
+    }
+    if (creditDate == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'creditDate');
-    if (creditNumber == null)
+    }
+    if (creditNumber == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'creditNumber');
-    if (privateNotes == null)
+    }
+    if (privateNotes == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'privateNotes');
-    if (publicNotes == null)
+    }
+    if (publicNotes == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'publicNotes');
-    if (clientId == null)
+    }
+    if (clientId == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'clientId');
+    }
   }
 
   @override
@@ -501,10 +515,10 @@ class _$CreditEntity extends CreditEntity {
   CreditEntityBuilder toBuilder() => new CreditEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! CreditEntity) return false;
-    return amount == other.amount &&
+    return other is CreditEntity &&
+        amount == other.amount &&
         balance == other.balance &&
         creditDate == other.creditDate &&
         creditNumber == other.creditNumber &&
@@ -647,7 +661,9 @@ class CreditEntityBuilder
 
   @override
   void replace(CreditEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$CreditEntity;
   }
 

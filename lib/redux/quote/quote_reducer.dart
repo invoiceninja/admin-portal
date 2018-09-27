@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
@@ -151,7 +152,6 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, SaveQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, AddQuoteSuccess>(_addQuote),
   TypedReducer<QuoteState, LoadQuotesSuccess>(_setLoadedQuotes),
-  TypedReducer<QuoteState, LoadQuotesFailure>(_setNoQuotes),
   TypedReducer<QuoteState, LoadQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, MarkSentQuoteSuccess>(_markSentQuoteSuccess),
   TypedReducer<QuoteState, ArchiveQuoteRequest>(_archiveQuoteRequest),
@@ -163,6 +163,7 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, RestoreQuoteRequest>(_restoreQuoteRequest),
   TypedReducer<QuoteState, RestoreQuoteSuccess>(_restoreQuoteSuccess),
   TypedReducer<QuoteState, RestoreQuoteFailure>(_restoreQuoteFailure),
+  TypedReducer<QuoteState, ConvertQuoteSuccess>(_convertQuoteSuccess),
 ]);
 
 QuoteState _markSentQuoteSuccess(
@@ -225,6 +226,15 @@ QuoteState _restoreQuoteFailure(
   return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
+QuoteState _convertQuoteSuccess(
+    QuoteState quoteState, ConvertQuoteSuccess action) {
+  final quote = action.quote.rebuild((b) => b
+      ..quoteInvoiceId = action.invoice.id
+      ..invoiceStatusId = kInvoiceStatusApproved
+  );
+  return quoteState.rebuild((b) => b..map[action.quote.id] = quote);
+}
+
 QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
   return quoteState.rebuild((b) => b
     ..map[action.quote.id] = action.quote
@@ -233,10 +243,6 @@ QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
 
 QuoteState _updateQuote(QuoteState quoteState, dynamic action) {
   return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
-}
-
-QuoteState _setNoQuotes(QuoteState quoteState, LoadQuotesFailure action) {
-  return quoteState;
 }
 
 QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) {

@@ -59,6 +59,9 @@ Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
       store.dispatch(LoadDashboardFailure(error));
     });
 

@@ -15,6 +15,9 @@ part of 'vendor_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<VendorListResponse> _$vendorListResponseSerializer =
     new _$VendorListResponseSerializer();
@@ -477,8 +480,9 @@ class _$VendorListResponse extends VendorListResponse {
       (new VendorListResponseBuilder()..update(updates)).build();
 
   _$VendorListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('VendorListResponse', 'data');
+    }
   }
 
   @override
@@ -490,10 +494,9 @@ class _$VendorListResponse extends VendorListResponse {
       new VendorListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! VendorListResponse) return false;
-    return data == other.data;
+    return other is VendorListResponse && data == other.data;
   }
 
   @override
@@ -530,7 +533,9 @@ class VendorListResponseBuilder
 
   @override
   void replace(VendorListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$VendorListResponse;
   }
 
@@ -568,8 +573,9 @@ class _$VendorItemResponse extends VendorItemResponse {
       (new VendorItemResponseBuilder()..update(updates)).build();
 
   _$VendorItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('VendorItemResponse', 'data');
+    }
   }
 
   @override
@@ -581,10 +587,9 @@ class _$VendorItemResponse extends VendorItemResponse {
       new VendorItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! VendorItemResponse) return false;
-    return data == other.data;
+    return other is VendorItemResponse && data == other.data;
   }
 
   @override
@@ -620,7 +625,9 @@ class VendorItemResponseBuilder
 
   @override
   void replace(VendorItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$VendorItemResponse;
   }
 
@@ -732,44 +739,63 @@ class _$VendorEntity extends VendorEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (name == null)
+    if (name == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'name');
-    if (balance == null)
+    }
+    if (balance == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'balance');
-    if (paidToDate == null)
+    }
+    if (paidToDate == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'paidToDate');
-    if (address1 == null)
+    }
+    if (address1 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'address1');
-    if (address2 == null)
+    }
+    if (address2 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'address2');
-    if (city == null)
+    }
+    if (city == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'city');
-    if (state == null)
+    }
+    if (state == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'state');
-    if (postalCode == null)
+    }
+    if (postalCode == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'postalCode');
-    if (countryId == null)
+    }
+    if (countryId == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'countryId');
-    if (workPhone == null)
+    }
+    if (workPhone == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'workPhone');
-    if (privateNotes == null)
+    }
+    if (privateNotes == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'privateNotes');
-    if (lastLogin == null)
+    }
+    if (lastLogin == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'lastLogin');
-    if (website == null)
+    }
+    if (website == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'website');
-    if (vatNumber == null)
+    }
+    if (vatNumber == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'vatNumber');
-    if (idNumber == null)
+    }
+    if (idNumber == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'idNumber');
-    if (currencyId == null)
+    }
+    if (currencyId == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'currencyId');
-    if (customValue1 == null)
+    }
+    if (customValue1 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue1');
-    if (customValue2 == null)
+    }
+    if (customValue2 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue2');
-    if (vendorContacts == null)
+    }
+    if (vendorContacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'vendorContacts');
+    }
   }
 
   @override
@@ -780,10 +806,10 @@ class _$VendorEntity extends VendorEntity {
   VendorEntityBuilder toBuilder() => new VendorEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! VendorEntity) return false;
-    return name == other.name &&
+    return other is VendorEntity &&
+        name == other.name &&
         balance == other.balance &&
         paidToDate == other.paidToDate &&
         address1 == other.address1 &&
@@ -1026,7 +1052,9 @@ class VendorEntityBuilder
 
   @override
   void replace(VendorEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$VendorEntity;
   }
 
@@ -1122,16 +1150,21 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (firstName == null)
+    if (firstName == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'firstName');
-    if (lastName == null)
+    }
+    if (lastName == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'lastName');
-    if (email == null)
+    }
+    if (email == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'email');
-    if (isPrimary == null)
+    }
+    if (isPrimary == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'isPrimary');
-    if (phone == null)
+    }
+    if (phone == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'phone');
+    }
   }
 
   @override
@@ -1143,10 +1176,10 @@ class _$VendorContactEntity extends VendorContactEntity {
       new VendorContactEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! VendorContactEntity) return false;
-    return firstName == other.firstName &&
+    return other is VendorContactEntity &&
+        firstName == other.firstName &&
         lastName == other.lastName &&
         email == other.email &&
         isPrimary == other.isPrimary &&
@@ -1271,7 +1304,9 @@ class VendorContactEntityBuilder
 
   @override
   void replace(VendorContactEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$VendorContactEntity;
   }
 

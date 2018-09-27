@@ -67,7 +67,7 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         EntityListTile(
-          icon: FontAwesomeIcons.filePdfO,
+          icon: FontAwesomeIcons.filePdf,
           title: localization.invoices,
           onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
           subtitle: memoizedInvoiceStatsForClient(
@@ -88,7 +88,7 @@ class ClientOverview extends StatelessWidget {
               localization.archived),
         ),
         company.isModuleEnabled(EntityType.quote) ? EntityListTile(
-          icon: FontAwesomeIcons.fileAltO,
+          icon: FontAwesomeIcons.fileAlt,
           title: localization.quotes,
           onTap: () => viewModel.onEntityPressed(context, EntityType.quote),
           subtitle: memoizedQuoteStatsForClient(

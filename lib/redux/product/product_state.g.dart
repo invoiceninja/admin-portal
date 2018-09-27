@@ -15,6 +15,9 @@ part of 'product_state.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<ProductState> _$productStateSerializer =
     new _$ProductStateSerializer();
@@ -155,9 +158,12 @@ class _$ProductState extends ProductState {
       (new ProductStateBuilder()..update(updates)).build();
 
   _$ProductState._({this.lastUpdated, this.map, this.list}) : super._() {
-    if (map == null) throw new BuiltValueNullFieldError('ProductState', 'map');
-    if (list == null)
+    if (map == null) {
+      throw new BuiltValueNullFieldError('ProductState', 'map');
+    }
+    if (list == null) {
       throw new BuiltValueNullFieldError('ProductState', 'list');
+    }
   }
 
   @override
@@ -168,10 +174,10 @@ class _$ProductState extends ProductState {
   ProductStateBuilder toBuilder() => new ProductStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ProductState) return false;
-    return lastUpdated == other.lastUpdated &&
+    return other is ProductState &&
+        lastUpdated == other.lastUpdated &&
         map == other.map &&
         list == other.list;
   }
@@ -223,7 +229,9 @@ class ProductStateBuilder
 
   @override
   void replace(ProductState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ProductState;
   }
 
@@ -270,10 +278,12 @@ class _$ProductUIState extends ProductUIState {
 
   _$ProductUIState._({this.editing, this.selectedId, this.listUIState})
       : super._() {
-    if (selectedId == null)
+    if (selectedId == null) {
       throw new BuiltValueNullFieldError('ProductUIState', 'selectedId');
-    if (listUIState == null)
+    }
+    if (listUIState == null) {
       throw new BuiltValueNullFieldError('ProductUIState', 'listUIState');
+    }
   }
 
   @override
@@ -285,10 +295,10 @@ class _$ProductUIState extends ProductUIState {
       new ProductUIStateBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ProductUIState) return false;
-    return editing == other.editing &&
+    return other is ProductUIState &&
+        editing == other.editing &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
   }
@@ -342,7 +352,9 @@ class ProductUIStateBuilder
 
   @override
   void replace(ProductUIState other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ProductUIState;
   }
 

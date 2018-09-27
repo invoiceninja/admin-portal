@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -145,18 +146,22 @@ class InvoiceListVM extends EntityListVM {
                 snackBarCompleter(context, localization.markedInvoiceAsSent),
                 invoice.id));
             break;
-          case EntityAction.email:
+          case EntityAction.sendEmail:
             store.dispatch(ShowEmailInvoice(
                 completer:
                     snackBarCompleter(context, localization.emailedInvoice),
                 invoice: invoice,
                 context: context));
             break;
-          case EntityAction.clone:
+          case EntityAction.cloneToInvoice:
             store.dispatch(
-                EditInvoice(context: context, invoice: invoice.clone));
+                EditInvoice(context: context, invoice: invoice.cloneToInvoice));
             break;
-          case EntityAction.payment:
+          case EntityAction.cloneToQuote:
+            store.dispatch(
+                EditQuote(context: context, quote: invoice.cloneToQuote));
+            break;
+          case EntityAction.enterPayment:
             store.dispatch(EditPayment(
                 context: context,
                 payment: invoice.createPayment(state.selectedCompany)));

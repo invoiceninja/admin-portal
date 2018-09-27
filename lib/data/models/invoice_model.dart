@@ -88,9 +88,9 @@ abstract class InvoiceEntity extends Object
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   static int counter = 0;
 
-  factory InvoiceEntity({bool isQuote = false}) {
+  factory InvoiceEntity({int id, bool isQuote = false}) {
     return _$InvoiceEntity._(
-      id: --InvoiceEntity.counter,
+      id: id ?? --InvoiceEntity.counter,
       amount: 0.0,
       balance: 0.0,
       clientId: 0,
@@ -143,8 +143,20 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
+    ..invoiceStatusId = kInvoiceStatusDraft
+    ..quoteInvoiceId = 0
     ..invoiceNumber = ''
+    ..invoiceDate = convertDateTimeToSqlDate()
+    ..dueDate = ''
     ..isPublic = false);
+
+  InvoiceEntity get cloneToInvoice => clone.rebuild((b) => b
+    ..isQuote = false
+    ..invoiceTypeId = kInvoiceTypeStandard);
+
+  InvoiceEntity get cloneToQuote => clone.rebuild((b) => b
+    ..isQuote = true
+    ..invoiceTypeId = kInvoiceTypeQuote);
 
   @override
   EntityType get entityType {
@@ -368,7 +380,9 @@ abstract class InvoiceEntity extends Object
     final actions = <EntityAction>[];
 
     if (user.canCreate(EntityType.invoice)) {
-      actions.add(EntityAction.clone);
+      if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {
+        actions.add(EntityAction.convert);
+      }
     }
 
     if (user.canEditEntity(this) && !isPublic) {
@@ -376,18 +390,29 @@ abstract class InvoiceEntity extends Object
     }
 
     if (user.canEditEntity(this) && client.hasEmailAddress) {
-      actions.add(EntityAction.email);
+      actions.add(EntityAction.sendEmail);
     }
 
     if (user.canEditEntity(this) &&
         user.canCreate(EntityType.payment) &&
-        isUnpaid) {
-      actions.add(EntityAction.payment);
+        isUnpaid &&
+        !isQuote) {
+      actions.add(EntityAction.enterPayment);
+    }
+
+    if (isQuote && quoteInvoiceId > 0) {
+      actions.add(EntityAction.viewInvoice);
     }
 
     actions.add(EntityAction.pdf);
 
     if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.cloneToInvoice);
+      actions.add(EntityAction.cloneToQuote);
       actions.add(null);
     }
 
@@ -421,6 +446,11 @@ abstract class InvoiceEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  bool isBetween(String startDate, String endDate) {
+    return startDate.compareTo(invoiceDate) <= 0 &&
+        endDate.compareTo(invoiceDate) == 1;
+  }
+
   double get requestedAmount => partial > 0 ? partial : amount;
 
   bool get isUnpaid => invoiceStatusId != kInvoiceStatusPaid;
@@ -444,7 +474,7 @@ abstract class InvoiceEntity extends Object
   String get invitationDownloadLink => invitations.first?.downloadLink;
 
   PaymentEntity createPayment(CompanyEntity company) {
-    return PaymentEntity(company).rebuild((b) => b
+    return PaymentEntity(company: company).rebuild((b) => b
       ..invoiceId = id
       ..clientId = clientId
       ..amount = balance);
@@ -518,7 +548,7 @@ abstract class InvoiceItemEntity extends Object
 
   double get discount;
 
-  double get total => qty * cost;
+  double get total => round(qty * cost, 2);
 
   @override
   bool matchesFilter(String filter) {

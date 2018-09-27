@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -14,7 +15,8 @@ String processTemplate(
   final state = StoreProvider.of<AppState>(context).state;
   final localization = AppLocalization.of(context);
   final company = state.selectedCompany;
-  final client = state.clientState.map[invoice.clientId];
+  final client = state.clientState.map[invoice.clientId] ??
+      ClientEntity(id: invoice.clientId);
   final contact = client.contacts.first;
 
   final String sampleButton = '[${localization.button}]';

@@ -302,3 +302,24 @@ class FilterQuotesByCustom2 implements PersistUI {
 
   FilterQuotesByCustom2(this.value);
 }
+
+
+class ConvertQuote implements PersistData {
+  final int quoteId;
+  final Completer completer;
+
+  ConvertQuote(this.completer, this.quoteId);
+}
+
+class ConvertQuoteSuccess implements StopSaving, PersistData {
+  final InvoiceEntity quote;
+  final InvoiceEntity invoice;
+
+  ConvertQuoteSuccess({this.quote, this.invoice});
+}
+
+class ConvertQuoteFailure implements StopSaving {
+  final dynamic error;
+
+  ConvertQuoteFailure(this.error);
+}

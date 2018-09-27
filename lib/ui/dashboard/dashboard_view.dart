@@ -51,7 +51,7 @@ class _DashboardViewState extends State<DashboardView>
     final store = StoreProvider.of<AppState>(context);
 
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => true,
       child: Scaffold(
         drawer: AppDrawerBuilder(),
         appBar: AppBar(
@@ -140,16 +140,24 @@ class CustomTabBarView extends StatelessWidget {
           });
     }
 
-    return RefreshIndicator(
-        onRefresh: () => viewModel.onRefreshed(context),
-        child: TabBarView(
-          controller: controller,
-          children: <Widget>[
-            DashboardPanels(
-              viewModel: viewModel,
-            ),
-            DashboardActivity(viewModel: viewModel),
-          ],
-        ));
+    return TabBarView(
+      controller: controller,
+      children: <Widget>[
+        /*
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: DashboardPanels(
+            viewModel: viewModel,
+          ),
+        ),
+        */
+        DashboardPanels(
+          viewModel: viewModel,
+        ),
+        RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context),
+            child: DashboardActivity(viewModel: viewModel)),
+      ],
+    );
   }
 }

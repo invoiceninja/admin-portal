@@ -15,6 +15,9 @@ part of 'product_model.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<ProductListResponse> _$productListResponseSerializer =
     new _$ProductListResponseSerializer();
@@ -277,8 +280,9 @@ class _$ProductListResponse extends ProductListResponse {
       (new ProductListResponseBuilder()..update(updates)).build();
 
   _$ProductListResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('ProductListResponse', 'data');
+    }
   }
 
   @override
@@ -290,10 +294,9 @@ class _$ProductListResponse extends ProductListResponse {
       new ProductListResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ProductListResponse) return false;
-    return data == other.data;
+    return other is ProductListResponse && data == other.data;
   }
 
   @override
@@ -330,7 +333,9 @@ class ProductListResponseBuilder
 
   @override
   void replace(ProductListResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ProductListResponse;
   }
 
@@ -368,8 +373,9 @@ class _$ProductItemResponse extends ProductItemResponse {
       (new ProductItemResponseBuilder()..update(updates)).build();
 
   _$ProductItemResponse._({this.data}) : super._() {
-    if (data == null)
+    if (data == null) {
       throw new BuiltValueNullFieldError('ProductItemResponse', 'data');
+    }
   }
 
   @override
@@ -381,10 +387,9 @@ class _$ProductItemResponse extends ProductItemResponse {
       new ProductItemResponseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ProductItemResponse) return false;
-    return data == other.data;
+    return other is ProductItemResponse && data == other.data;
   }
 
   @override
@@ -420,7 +425,9 @@ class ProductItemResponseBuilder
 
   @override
   void replace(ProductItemResponse other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ProductItemResponse;
   }
 
@@ -502,24 +509,33 @@ class _$ProductEntity extends ProductEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (productKey == null)
+    if (productKey == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'productKey');
-    if (notes == null)
+    }
+    if (notes == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'notes');
-    if (cost == null)
+    }
+    if (cost == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'cost');
-    if (taxName1 == null)
+    }
+    if (taxName1 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'taxName1');
-    if (taxRate1 == null)
+    }
+    if (taxRate1 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'taxRate1');
-    if (taxName2 == null)
+    }
+    if (taxName2 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'taxName2');
-    if (taxRate2 == null)
+    }
+    if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'taxRate2');
-    if (customValue1 == null)
+    }
+    if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'customValue1');
-    if (customValue2 == null)
+    }
+    if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'customValue2');
+    }
   }
 
   @override
@@ -530,10 +546,10 @@ class _$ProductEntity extends ProductEntity {
   ProductEntityBuilder toBuilder() => new ProductEntityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ProductEntity) return false;
-    return productKey == other.productKey &&
+    return other is ProductEntity &&
+        productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
         taxName1 == other.taxName1 &&
@@ -698,7 +714,9 @@ class ProductEntityBuilder
 
   @override
   void replace(ProductEntity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ProductEntity;
   }
 

@@ -5,8 +5,6 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 
 class InitScreen extends StatelessWidget {
-  static const String route = '/';
-
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(
@@ -16,9 +14,10 @@ class InitScreen extends StatelessWidget {
           return Container(
             color: Colors.white,
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Expanded(
-                  child: Container(),
+                  child: Center(child: Image.asset('assets/images/logo.png')),
                 ),
                 SizedBox(
                   height: 4.0,

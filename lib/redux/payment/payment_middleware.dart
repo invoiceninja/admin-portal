@@ -236,8 +236,7 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
       return;
     }
 
-    final int updatedAt =
-        action.force ? 0 : (state.paymentState.lastUpdated / 1000).round();
+    final int updatedAt = (state.paymentState.lastUpdated / 1000).round();
 
     store.dispatch(LoadPaymentsRequest());
     repository

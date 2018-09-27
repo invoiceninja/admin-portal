@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -115,8 +116,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 ? EntityDropdown(
                     entityType: EntityType.client,
                     labelText: localization.client,
-                    initialValue:
-                        viewModel.clientMap[invoice.clientId]?.displayName,
+                    initialValue: (viewModel.clientMap[invoice.clientId] ??
+                            ClientEntity())
+                        .displayName,
                     entityMap: viewModel.clientMap,
                     entityList: memoizedDropdownClientList(
                         viewModel.clientMap, viewModel.clientList),

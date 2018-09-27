@@ -12,13 +12,14 @@ import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatelessWidget {
   final AppDrawerVM viewModel;
@@ -77,8 +78,11 @@ class AppDrawer extends StatelessWidget {
 
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
-    final user = store.state.user;
+    final state = store.state;
+    final user = state.user;
+    final enableDarkMode = state.uiState.enableDarkMode;
     final company = viewModel.selectedCompany;
+    final localization = AppLocalization.of(context);
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
@@ -89,18 +93,20 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Container(
+            color: enableDarkMode ? Colors.white10 : Colors.grey[200],
             child: DrawerHeader(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   child: Center(
+                      /*
                       child: viewModel.selectedCompany.logoUrl != null &&
                               viewModel.selectedCompany.logoUrl.isNotEmpty
                           ? Image.network(viewModel.selectedCompany.logoUrl)
                           : Image.asset('assets/images/logo.png',
                               width: 100.0, height: 100.0)),
-                  /*
+                              */
                       child: viewModel.selectedCompany.logoUrl != null &&
                               viewModel.selectedCompany.logoUrl.isNotEmpty
                           ? CachedNetworkImage(
@@ -110,7 +116,6 @@ class AppDrawer extends StatelessWidget {
                             )
                           : Image.asset('assets/images/logo.png',
                               width: 100.0, height: 100.0)),
-                              */
                 ),
                 SizedBox(
                   height: 18.0,
@@ -133,13 +138,12 @@ class AppDrawer extends StatelessWidget {
                 ),
               ],
             )),
-            color: Colors.white10,
           ),
           user.isAdmin
               ? DrawerTile(
                   company: company,
                   icon: FontAwesomeIcons.tachometerAlt,
-                  title: AppLocalization.of(context).dashboard,
+                  title: localization.dashboard,
                   onTap: () => store.dispatch(ViewDashboard(context)),
                 )
               : Container(),
@@ -147,7 +151,7 @@ class AppDrawer extends StatelessWidget {
             company: company,
             entityType: EntityType.client,
             icon: FontAwesomeIcons.users,
-            title: AppLocalization.of(context).clients,
+            title: localization.clients,
             onTap: () => store.dispatch(ViewClientList(context)),
             onCreateTap: () {
               navigator.pop();
@@ -159,7 +163,7 @@ class AppDrawer extends StatelessWidget {
             company: company,
             entityType: EntityType.product,
             icon: FontAwesomeIcons.cube,
-            title: AppLocalization.of(context).products,
+            title: localization.products,
             onTap: () {
               store.dispatch(ViewProductList(context));
             },
@@ -172,8 +176,8 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.invoice,
-            icon: FontAwesomeIcons.filePdfO,
-            title: AppLocalization.of(context).invoices,
+            icon: FontAwesomeIcons.filePdf,
+            title: localization.invoices,
             onTap: () => store.dispatch(ViewInvoiceList(context)),
             onCreateTap: () {
               navigator.pop();
@@ -186,19 +190,19 @@ class AppDrawer extends StatelessWidget {
             company: company,
             entityType: EntityType.payment,
             icon: FontAwesomeIcons.creditCard,
-            title: AppLocalization.of(context).payments,
+            title: localization.payments,
             onTap: () => store.dispatch(ViewPaymentList(context)),
             onCreateTap: () {
               navigator.pop();
               store.dispatch(EditPayment(
-                  payment: PaymentEntity(company), context: context));
+                  payment: PaymentEntity(company: company), context: context));
             },
           ),
           DrawerTile(
             company: company,
             entityType: EntityType.quote,
-            icon: FontAwesomeIcons.fileAltO,
-            title: AppLocalization.of(context).quotes,
+            icon: FontAwesomeIcons.fileAlt,
+            title: localization.quotes,
             onTap: () => store.dispatch(ViewQuoteList(context)),
             onCreateTap: () {
               navigator.pop();
@@ -206,10 +210,50 @@ class AppDrawer extends StatelessWidget {
                   quote: InvoiceEntity(isQuote: true), context: context));
             },
           ),
+          ListTile(
+            dense: true,
+            leading: Icon(FontAwesomeIcons.clock, size: 22.0),
+            title: Text('Task & Expenses'),
+            onTap: () {
+              showDialog<AlertDialog>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      semanticLabel: 'Task & Expenses',
+                      title: Text('Task & Expenses'),
+                      content: RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              style: aboutTextStyle,
+                              text:
+                                  localization.thanksForPatience + ' ',
+                            ),
+                            _LinkTextSpan(
+                              style: linkStyle,
+                              url: getLegacyAppURL(context),
+                              text: localization.legacyMobileApp,
+                            ),
+                            TextSpan(
+                              style: aboutTextStyle,
+                              text: '.',
+                            ),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(localization.ok.toUpperCase()),
+                          onPressed: () => Navigator.pop(context),
+                        )
+                      ],
+                    ),
+              );
+            },
+          ),
           DrawerTile(
             company: company,
             icon: FontAwesomeIcons.cog,
-            title: AppLocalization.of(context).settings,
+            title: localization.settings,
             onTap: () {
               navigator.pop();
               navigator.pushNamed(SettingsScreen.route);
@@ -233,6 +277,11 @@ class AppDrawer extends StatelessWidget {
                     children: <TextSpan>[
                       TextSpan(
                         style: aboutTextStyle,
+                        text: 'Thank you for using our app!',
+                      ),
+                      /*
+                      TextSpan(
+                        style: aboutTextStyle,
                         text:
                             'Thanks for trying out the beta!\n\nPlease join us on the #mobile channel on ',
                       ),
@@ -245,6 +294,7 @@ class AppDrawer extends StatelessWidget {
                         style: aboutTextStyle,
                         text: ' to help make the app better.',
                       ),
+                      */
                     ],
                   ),
                 ),

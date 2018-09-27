@@ -35,6 +35,7 @@ import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+//import 'package:quick_actions/quick_actions.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
@@ -51,7 +52,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 
 void main() async {
   final prefs = await SharedPreferences.getInstance();
-  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode);
+  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(enableDarkMode: enableDarkMode),
@@ -83,6 +84,28 @@ class InvoiceNinjaApp extends StatefulWidget {
 
 class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   @override
+  void initState() {
+    super.initState();
+
+    /*
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((String shortcutType) {
+      if (shortcutType == 'action_new_client') {
+        widget.store
+            .dispatch(EditClient(context: context, client: ClientEntity()));
+      }
+    });
+
+    quickActions.setShortcutItems(<ShortcutItem>[
+      const ShortcutItem(
+          type: 'action_new_client',
+          localizedTitle: 'New Client',
+          icon: 'AppIcon'),
+    ]);
+    */
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: widget.store,
@@ -91,12 +114,16 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         Intl.defaultLocale = localeSelector(state);
 
         return MaterialApp(
-          debugShowCheckedModeBanner: false,
+          supportedLocales: kLanguages
+              .map((String locale) => AppLocalization.createLocale(locale))
+              .toList(),
+          //debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
           ],
-          locale: Locale(localeSelector(state)),
+          home: InitScreen(),
+          locale: AppLocalization.createLocale(localeSelector(state)),
           theme: state.uiState.enableDarkMode
               ? ThemeData(
                   brightness: Brightness.dark,
@@ -113,7 +140,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 ),
           title: 'Invoice Ninja',
           routes: {
-            InitScreen.route: (context) => InitScreen(),
             LoginScreen.route: (context) {
               return LoginScreen();
             },

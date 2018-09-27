@@ -18,10 +18,10 @@ class ProductRepository {
 
   Future<BuiltList<ProductEntity>> loadList(CompanyEntity company, AuthState auth, int updatedAt) async {
 
-    String url = auth.url + '/products';
+    String url = auth.url + '/products?';
 
     if (updatedAt > 0) {
-      url += '?updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
+      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
     final dynamic response = await webClient.get(url, company.token);
