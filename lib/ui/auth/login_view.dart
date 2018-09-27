@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class LoginView extends StatefulWidget {

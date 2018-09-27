@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -22,7 +23,7 @@ class AuthRepository {
       String oneTimePassword}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
-      'api_secret': secret,
+      'api_secret': url.isEmpty ? Config.API_SECRET : secret,
       'email': email,
       'password': password,
       'one_time_password': oneTimePassword,
@@ -37,7 +38,7 @@ class AuthRepository {
       {String token, String url, String secret, String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
-      'api_secret': secret,
+      'api_secret': url.isEmpty ? Config.API_SECRET : secret,
       'token': token,
       'provider': 'google',
     };
