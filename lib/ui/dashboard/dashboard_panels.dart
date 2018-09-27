@@ -166,7 +166,9 @@ class DashboardPanels extends StatelessWidget {
       amount: total,
       previousAmount: previousTotal,
       title: localization.invoices,
-      currencyId: settings.currencyId,
+      currencyId: settings.currencyId > 0
+          ? settings.currencyId
+          : state.selectedCompany.currencyId,
     );
   }
 
@@ -241,7 +243,9 @@ class DashboardPanels extends StatelessWidget {
       amount: total,
       previousAmount: previousTotal,
       title: localization.payments,
-      currencyId: settings.currencyId,
+      currencyId: settings.currencyId > 0
+          ? settings.currencyId
+          : state.selectedCompany.currencyId,
     );
   }
 
@@ -258,15 +262,15 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
 
-    final data = memoizedChartOutstandingQuotes(state.selectedCompany,
-        settings, state.quoteState.map, state.clientState.map);
+    final data = memoizedChartOutstandingQuotes(state.selectedCompany, settings,
+        state.quoteState.map, state.clientState.map);
 
     final series = [
       charts.Series<ChartMoneyData, DateTime>(
         domainFn: (ChartMoneyData chartData, _) => chartData.date,
         measureFn: (ChartMoneyData chartData, _) => chartData.amount,
         colorFn: (ChartMoneyData chartData, _) =>
-        charts.MaterialPalette.blue.shadeDefault,
+            charts.MaterialPalette.blue.shadeDefault,
         id: DashboardChart.PERIOD_CURRENT,
         displayName: settings.enableComparison
             ? localization.current
@@ -298,7 +302,7 @@ class DashboardPanels extends StatelessWidget {
           domainFn: (ChartMoneyData chartData, _) => chartData.date,
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
-          charts.MaterialPalette.gray.shadeDefault,
+              charts.MaterialPalette.gray.shadeDefault,
           id: DashboardChart.PERIOD_PREVIOUS,
           displayName: localization.previous,
           data: previousData,
@@ -315,7 +319,9 @@ class DashboardPanels extends StatelessWidget {
       amount: total,
       previousAmount: previousTotal,
       title: localization.quotes,
-      currencyId: settings.currencyId,
+      currencyId: settings.currencyId > 0
+          ? settings.currencyId
+          : state.selectedCompany.currencyId,
     );
   }
 

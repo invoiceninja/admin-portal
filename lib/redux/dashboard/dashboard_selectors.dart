@@ -22,9 +22,9 @@ var memoizedChartOutstandingInvoices = memo4((CompanyEntity company,
         clientMap: clientMap));
 
 var memoizedChartOutstandingQuotes = memo4((CompanyEntity company,
-    DashboardUIState settings,
-    BuiltMap<int, InvoiceEntity> quoteMap,
-    BuiltMap<int, ClientEntity> clientMap) =>
+        DashboardUIState settings,
+        BuiltMap<int, InvoiceEntity> quoteMap,
+        BuiltMap<int, ClientEntity> clientMap) =>
     chartOutstandingInvoices(
         company: company,
         settings: settings,
@@ -49,9 +49,10 @@ List<ChartMoneyData> chartOutstandingInvoices({
 
     if (!invoice.isPublic ||
         invoice.isDeleted ||
+        client.isDeleted ||
         invoice.isRecurring) {
       // skip it
-    } else if ((isQuote && ! invoice.isQuote) || (!isQuote && invoice.isQuote)) {
+    } else if ((isQuote && !invoice.isQuote) || (!isQuote && invoice.isQuote)) {
       // skip it
     } else if (!invoice.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -106,7 +107,7 @@ List<ChartMoneyData> chartPayments(
     final currencyId =
         client.currencyId > 0 ? client.currencyId : company.currencyId;
 
-    if (payment.isDeleted) {
+    if (payment.isDeleted || invoice.isDeleted || client.isDeleted) {
       // skip it
     } else if (!payment.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -137,4 +138,3 @@ List<ChartMoneyData> chartPayments(
 
   return data;
 }
-
