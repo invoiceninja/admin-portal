@@ -98,8 +98,10 @@ class _LoginState extends State<LoginView> {
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                 colors: [
-                  Colors.grey.shade800,
-                  Colors.black87,
+                  //Colors.grey.shade800,
+                  //Colors.black87,
+                  Theme.of(context).buttonColor,
+                  Theme.of(context).buttonColor.withOpacity(.7),
                 ],
               )),
             ),
@@ -198,15 +200,20 @@ class _LoginState extends State<LoginView> {
                           ),
                         ),
                   SizedBox(height: 24.0),
+                  ProgressButton(
+                    padding: EdgeInsets.only(top: 4.0, bottom: 8.0),
+                    isLoading: viewModel.isLoading,
+                    label: localization.login.toUpperCase(),
+                    onPressed: () => _submitForm(),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       isSelfHosted
-                          ? ProgressButton(
-                              label: localization.login.toUpperCase(),
-                              onPressed: () => _submitForm(),
-                              isLoading: viewModel.isLoading,
-                            )
+                          ? FlatButton(
+                              onPressed: () =>
+                                  setState(() => isSelfHosted = false),
+                              child: Text(localization.hostedLogin))
                           : FlatButton(
                               onPressed: () =>
                                   setState(() => isSelfHosted = true),

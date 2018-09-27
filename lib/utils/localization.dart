@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
@@ -8348,6 +8349,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get hostedLogin =>
+      _localizedValues[locale.toString()]['hosted_login'];
 
   String get selfhostLogin =>
       _localizedValues[locale.toString()]['selfhost_login'];

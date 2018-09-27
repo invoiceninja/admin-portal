@@ -12,17 +12,20 @@ class ElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      color: color ?? Theme.of(context).buttonColor,
-      child: icon != null
-          ? IconText(
-              icon: icon,
-              text: label,
-            )
-          : Text(label),
-      textColor: Colors.white,
-      elevation: 4.0,
-      onPressed: () => this.onPressed(),
+    return SizedBox(
+      width: double.infinity,
+      child: RaisedButton(
+        color: color ?? Theme.of(context).buttonColor,
+        child: icon != null
+            ? IconText(
+                icon: icon,
+                text: label,
+              )
+            : Text(label),
+        textColor: Colors.white,
+        elevation: 4.0,
+        onPressed: () => this.onPressed(),
+      ),
     );
   }
 }
