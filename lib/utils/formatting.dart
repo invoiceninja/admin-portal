@@ -212,7 +212,11 @@ String formatDate(String value, BuildContext context, {bool showTime = false}) {
     final dateFormatId = company.datetimeFormatId > 0
         ? company.datetimeFormatId
         : kDefaultDateTimeFormat;
-    final formatter = DateFormat(dateFormats[dateFormatId].format);
+    String format = dateFormats[dateFormatId].format;
+    if (company.enableMilitaryTime) {
+      format = format.replaceFirst('h:mm a', 'H:mm');
+    }
+    final formatter = DateFormat(format);
     return formatter.format(DateTime.tryParse(value).toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;
