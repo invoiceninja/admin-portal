@@ -29,9 +29,12 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 
 void _saveAuthLocal(dynamic action) async {
   await FlutterKeychain.put(key: kKeychainEmail, value: action.email);
-  await FlutterKeychain.put(
-      key: kKeychainUrl, value: formatApiUrlMachine(action.url));
-  await FlutterKeychain.put(key: kKeychainSecret, value: action.secret);
+
+  if (formatApiUrlReadable(action.url) != kAppUrl) {
+    await FlutterKeychain.put(
+        key: kKeychainUrl, value: formatApiUrlMachine(action.url));
+    await FlutterKeychain.put(key: kKeychainSecret, value: action.secret);
+  }
 }
 
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
