@@ -73,7 +73,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             ),
                           ),
                           Expanded(child: Container()),
-                          Text(localization.compareTo),
+                          Text(localization.compare),
                           Switch(
                             value: _settings.enableComparison,
                             activeColor: Theme.of(context).accentColor,
