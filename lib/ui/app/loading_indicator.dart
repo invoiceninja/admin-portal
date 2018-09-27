@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({Key key, this.useCard = false, this.height = 200.0})
