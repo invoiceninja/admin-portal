@@ -64,9 +64,8 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitForm() {
-    
     final bool isValid = _formKey.currentState.validate();
-    
+
     setState(() {
       _autoValidate = !isValid;
     });
@@ -74,7 +73,7 @@ class _LoginState extends State<LoginView> {
     if (!isValid) {
       return;
     }
-    
+
     widget.viewModel.onLoginPressed(context,
         email: _emailController.text,
         password: _passwordController.text,
@@ -87,9 +86,9 @@ class _LoginState extends State<LoginView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final error = viewModel.authState.error;
+    final error = viewModel.authState.error ?? '';
     final isOneTimePassword =
-        error == OTP_ERROR || _oneTimePasswordController.text.isNotEmpty;
+        error.contains(OTP_ERROR) || _oneTimePasswordController.text.isNotEmpty;
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -195,7 +194,7 @@ class _LoginState extends State<LoginView> {
                                 : Container(),
                           ],
                         ),
-                  viewModel.authState.error == null || error == OTP_ERROR
+                  viewModel.authState.error == null || error.contains(OTP_ERROR)
                       ? Container()
                       : Container(
                           padding: EdgeInsets.only(top: 26.0),
@@ -216,34 +215,41 @@ class _LoginState extends State<LoginView> {
                     label: localization.login.toUpperCase(),
                     onPressed: () => _submitForm(),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      _isSelfHosted
-                          ? FlatButton(
-                              onPressed: () =>
-                                  setState(() => _isSelfHosted = false),
-                              child: Text(localization.hostedLogin))
-                          : FlatButton(
-                              onPressed: () =>
-                                  setState(() => _isSelfHosted = true),
-                              child: Text(localization.selfhostLogin)),
-                      FlatButton(
-                          onPressed: () => viewModel.onGoogleLoginPressed(
-                              context, _urlController.text, _secretController.text),
-                          child: Text(localization.googleLogin)),
-                    ],
-                  ),
+                  viewModel.authState.error == null || error.contains(OTP_ERROR)
+                      ? Container()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            _isSelfHosted
+                                ? FlatButton(
+                                    onPressed: () =>
+                                        setState(() => _isSelfHosted = false),
+                                    child: Text(localization.hostedLogin))
+                                : FlatButton(
+                                    onPressed: () =>
+                                        setState(() => _isSelfHosted = true),
+                                    child: Text(localization.selfhostLogin)),
+                            FlatButton(
+                                onPressed: () => viewModel.onGoogleLoginPressed(
+                                    context,
+                                    _urlController.text,
+                                    _secretController.text),
+                                child: Text(localization.googleLogin)),
+                          ],
+                        ),
                   isOneTimePassword && !viewModel.isLoading
-                      ? ElevatedButton(
-                          label: localization.cancel.toUpperCase(),
-                          color: Colors.grey,
-                          onPressed: () {
-                            setState(() {
-                              _oneTimePasswordController.text = '';
-                            });
-                            viewModel.onCancel2FAPressed();
-                          },
+                      ? Padding(
+                          padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                          child: ElevatedButton(
+                            label: localization.cancel.toUpperCase(),
+                            color: Colors.grey,
+                            onPressed: () {
+                              setState(() {
+                                _oneTimePasswordController.text = '';
+                              });
+                              viewModel.onCancel2FAPressed();
+                            },
+                          ),
                         )
                       : Container(),
                 ],
