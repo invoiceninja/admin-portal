@@ -2,11 +2,10 @@
 
 Companion app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja) web app.
 
-## Open Beta
-- Android: https://play.google.com/apps/testing/com.invoiceninja.flutter
-- iOS: Email contact@invoiceninja.com for a Test Flight code
+- [Google Play Store](https://play.google.com/store/apps/details?id=com.invoiceninja.flutter)
+- [Apple App Store](https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8)
 
-Note: the beta is currently available to self host users and requires the latest version of the web app (v4.5.4).
+Note: the mobile app requires the latest version of the web app.
 
 <p align="center">
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_01.png" alt="View Invoice" width="200"/>
