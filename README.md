@@ -22,12 +22,12 @@ Note: the mobile app requires the latest version of the web app.
 - [x] Invoices
 - [x] Quotes
 - [x] Payments
-- [ ] Credits
-- [ ] Recurring
-- [ ] Vendors
-- [ ] Expenses
 - [ ] Projects
 - [ ] Tasks
+- [ ] Vendors
+- [ ] Expenses
+- [ ] Credits
+- [ ] Recurring
 - [ ] Tablet support
 - [ ] Desktop support
 
