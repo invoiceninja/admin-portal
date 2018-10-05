@@ -215,7 +215,7 @@ class _LoginState extends State<LoginView> {
                     label: localization.login.toUpperCase(),
                     onPressed: () => _submitForm(),
                   ),
-                  viewModel.authState.error == null || error.contains(OTP_ERROR)
+                  isOneTimePassword
                       ? Container()
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
