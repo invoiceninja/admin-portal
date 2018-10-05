@@ -20,7 +20,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_keychain/flutter_keychain.dart';
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository authRepository = const PersistenceRepository(
@@ -185,8 +184,10 @@ Middleware<AppState> _createLoadState(
       }
     } catch (error) {
       print(error);
-      final String token =
-          await FlutterKeychain.get(key: getKeychainTokenKey()) ?? '';
+
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(getKeychainTokenKey()) ?? '';
+
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
@@ -281,8 +282,9 @@ Middleware<AppState> _createDataLoaded() {
 
     for (int i = 0; i < data.accounts.length; i++) {
       final CompanyEntity company = data.accounts[i];
-      await FlutterKeychain.put(
-          key: getKeychainTokenKey(i), value: company.token);
+
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString(getKeychainTokenKey(i), company.token);
 
       store.dispatch(SelectCompany(i + 1));
       store.dispatch(LoadCompanySuccess(company));
@@ -348,8 +350,10 @@ Middleware<AppState> _createDeleteState(
     company4Repository.delete();
     company5Repository.delete();
 
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     for (int i=0; i<5; i++) {
-      await FlutterKeychain.put(key: getKeychainTokenKey(i), value: '');
+      prefs.setString(getKeychainTokenKey(i), '');
     }
 
     next(action);

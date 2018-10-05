@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_keychain/flutter_keychain.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -28,25 +27,22 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 }
 
 void _saveAuthLocal(dynamic action) async {
-  await FlutterKeychain.put(key: kKeychainEmail, value: action.email);
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString(kKeychainEmail, action.email);
 
   if (formatApiUrlReadable(action.url) != kAppUrl) {
-    await FlutterKeychain.put(
-        key: kKeychainUrl, value: formatApiUrlMachine(action.url));
-    await FlutterKeychain.put(key: kKeychainSecret, value: action.secret);
+    prefs.setString(kKeychainUrl, formatApiUrlMachine(action.url));
+    prefs.setString(kKeychainSecret, action.secret);
   }
 }
 
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String email = await FlutterKeychain.get(key: kKeychainEmail) ??
-      prefs.getString(kSharedPrefEmail) ??
-      Config.LOGIN_EMAIL;
-  final String url = await FlutterKeychain.get(key: kKeychainUrl) ??
+  final String email = prefs.getString(kSharedPrefEmail) ?? Config.LOGIN_EMAIL;
+  final String url =
       formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
-  final String secret = await FlutterKeychain.get(key: kKeychainSecret) ??
-      prefs.getString(kSharedPrefSecret) ??
-      Config.LOGIN_SECRET;
+  final String secret =
+      prefs.getString(kSharedPrefSecret) ?? Config.LOGIN_SECRET;
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
@@ -133,9 +129,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     _loadAuthLocal(store, action);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String url = await FlutterKeychain.get(key: kKeychainUrl) ??
-        formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
-    final String token = await FlutterKeychain.get(key: getKeychainTokenKey());
+    final String url = formatApiUrlMachine(
+            prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
+    final String token = prefs.getString(getKeychainTokenKey());
 
     repository
         .refresh(url: url, token: token, platform: action.platform)
