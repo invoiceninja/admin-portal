@@ -83,8 +83,8 @@ class InvoiceFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class InvoiceEntity extends BaseEntity
-    with CalculateInvoiceTotal
+abstract class InvoiceEntity extends Object
+    with BaseEntity, SelectableEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   factory InvoiceEntity({int id, bool isQuote = false}) {
     return _$InvoiceEntity._(
@@ -483,7 +483,8 @@ abstract class InvoiceEntity extends BaseEntity
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
 
-abstract class InvoiceItemEntity extends BaseEntity
+abstract class InvoiceItemEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
@@ -595,7 +596,8 @@ abstract class InvoiceItemEntity extends BaseEntity
       _$invoiceItemEntitySerializer;
 }
 
-abstract class InvitationEntity extends BaseEntity
+abstract class InvitationEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
   factory InvitationEntity() {
     return _$InvitationEntity._(

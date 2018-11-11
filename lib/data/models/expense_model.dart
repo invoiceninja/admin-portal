@@ -60,7 +60,8 @@ class ExpenseFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class ExpenseEntity extends BaseEntity
+abstract class ExpenseEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity() {
     return _$ExpenseEntity._(
@@ -207,7 +208,8 @@ abstract class ExpenseEntity extends BaseEntity
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 
-abstract class ExpenseCategoryEntity extends BaseEntity
+abstract class ExpenseCategoryEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
   factory ExpenseCategoryEntity(
       [void updates(ExpenseCategoryEntityBuilder b)]) = _$ExpenseCategoryEntity;

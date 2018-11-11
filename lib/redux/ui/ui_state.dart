@@ -16,11 +16,12 @@ part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState(CompanyEntity company,
-      {bool enableDarkMode}) {
+      {bool enableDarkMode, bool requireAuthentication}) {
     return _$UIState._(
       selectedCompanyIndex: 0,
       currentRoute: LoginScreen.route,
       enableDarkMode: enableDarkMode ?? false,
+      requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
       dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
@@ -39,6 +40,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   String get currentRoute;
 
   bool get enableDarkMode;
+
+  bool get requireAuthentication;
 
   bool get emailPayment;
 

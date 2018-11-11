@@ -48,7 +48,8 @@ class TaskFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class TaskEntity extends BaseEntity
+abstract class TaskEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<TaskEntity, TaskEntityBuilder> {
   factory TaskEntity() {
     return _$TaskEntity._(

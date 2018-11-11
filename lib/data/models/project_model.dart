@@ -47,7 +47,8 @@ class ProjectFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class ProjectEntity extends BaseEntity
+abstract class ProjectEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<ProjectEntity, ProjectEntityBuilder> {
   factory ProjectEntity() {
     return _$ProjectEntity._(

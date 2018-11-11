@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list.dart';
@@ -36,6 +37,8 @@ class SettingsListVM {
     @required this.onRefreshTap,
     @required this.onDarkModeChanged,
     @required this.enableDarkMode,
+    @required this.onRequireAuthenticationChanged,
+    @required this.requireAuthentication,
   });
 
   static SettingsListVM fromStore(Store<AppState> store) {
@@ -91,7 +94,26 @@ class SettingsListVM {
         store.dispatch(UserSettingsChanged(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
       },
+      onRequireAuthenticationChanged: (BuildContext context, bool value) async {
+        bool authenticated = false;
+        try {
+          authenticated = await LocalAuthentication()
+              .authenticateWithBiometrics(
+                  localizedReason:
+                      AppLocalization.of(context).authenticateToChangeSetting,
+                  useErrorDialogs: true,
+                  stickyAuth: false);
+        } catch (e) {
+          print(e);
+        }
+        if (authenticated) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool(kSharedPrefRequireAuthentication, value);
+          store.dispatch(UserSettingsChanged(requireAuthentication: value));
+        } else {}
+      },
       enableDarkMode: store.state.uiState.enableDarkMode,
+      requireAuthentication: store.state.uiState.requireAuthentication,
     );
   }
 
@@ -99,4 +121,7 @@ class SettingsListVM {
   final Function(BuildContext context) onRefreshTap;
   final Function(BuildContext context, bool value) onDarkModeChanged;
   final bool enableDarkMode;
+  final Function(BuildContext context, bool value)
+      onRequireAuthenticationChanged;
+  final bool requireAuthentication;
 }

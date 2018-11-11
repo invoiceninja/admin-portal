@@ -27,6 +27,7 @@ dependencies:
   charts_flutter: ^0.4.0
   google_sign_in: ^3.2.4
   firebase_auth: ^0.6.2+1
+  local_auth: ^0.3.0
   #quick_actions: ^0.2.1
   #flutter_html_view: ^0.5.8
   #flutter_html: ^0.5.3

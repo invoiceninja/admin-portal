@@ -10,6 +10,7 @@ const String kSharedPrefSecret = 'secret';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
 const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAppVersion = 'app_version';
+const String kSharedPrefRequireAuthentication = 'require_authentication';
 
 const String kKeychainToken = 'api_token';
 const String kKeychainEmail = 'email';

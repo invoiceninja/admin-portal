@@ -20,6 +20,12 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
+      'locked': 'Locked',
+      'authenticate': 'Authenticate',
+      'please_authenticate': 'Please authenticate',
+      'biometric_authentication': 'Biometric Authentication',
       'footer': 'Footer',
       'compare': 'Compare',
       'hosted_login': 'Hosted Login',
@@ -9137,6 +9143,20 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get authenticateToChangeSetting =>
+      _localizedValues[locale.languageCode]['authenticate_to_change_setting'];
+
+  String get locked => _localizedValues[locale.languageCode]['locked'];
+
+  String get authenticate =>
+      _localizedValues[locale.languageCode]['authenticate'];
+
+  String get pleaseAuthenticate =>
+      _localizedValues[locale.languageCode]['please_authenticate'];
+
+  String get biometricAuthentication =>
+      _localizedValues[locale.languageCode]['biometric_authentication'];
 
   String get footer => _localizedValues[locale.toString()]['footer'];
 

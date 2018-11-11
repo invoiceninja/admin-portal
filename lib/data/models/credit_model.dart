@@ -46,7 +46,8 @@ class CreditFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class CreditEntity extends BaseEntity
+abstract class CreditEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<CreditEntity, CreditEntityBuilder> {
   factory CreditEntity() {
     return _$CreditEntity._(

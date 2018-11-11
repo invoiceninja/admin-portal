@@ -47,9 +47,13 @@ void _loadAuthLocal(Store<AppState> store, dynamic action) async {
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
   final bool emailPayment = prefs.getBool(kSharedPrefEmailPayment) ?? false;
+  final bool requireAuthentication =
+      prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
 
   store.dispatch(UserSettingsChanged(
-      enableDarkMode: enableDarkMode, emailPayment: emailPayment));
+      enableDarkMode: enableDarkMode,
+      emailPayment: emailPayment,
+      requireAuthentication: requireAuthentication));
 }
 
 Middleware<AppState> _createLoginInit() {
@@ -130,7 +134,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String url = formatApiUrlMachine(
-            prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
+        prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
     final String token = prefs.getString(getKeychainTokenKey());
 
     repository

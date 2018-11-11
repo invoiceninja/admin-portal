@@ -105,7 +105,7 @@ abstract class SelectableEntity {
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 }
 
-abstract class BaseEntity extends Object with SelectableEntity {
+abstract class BaseEntity implements SelectableEntity {
   @nullable
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;

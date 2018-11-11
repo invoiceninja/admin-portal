@@ -51,7 +51,8 @@ class ClientFields {
   static const String currency = 'currency';
 }
 
-abstract class ClientEntity extends BaseEntity
+abstract class ClientEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
   factory ClientEntity({int id}) {
     return _$ClientEntity._(
@@ -399,7 +400,8 @@ class ContactFields {
   static const String phone = 'phone';
 }
 
-abstract class ContactEntity extends BaseEntity
+abstract class ContactEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<ContactEntity, ContactEntityBuilder> {
   factory ContactEntity() {
     return _$ContactEntity._(

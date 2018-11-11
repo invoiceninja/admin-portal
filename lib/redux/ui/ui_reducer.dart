@@ -20,6 +20,8 @@ UIState uiReducer(UIState state, dynamic action) {
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..requireAuthentication = requireAuthenticationReducer(
+        state.requireAuthentication, action)
     ..emailPayment = emailPaymentReducer(state.emailPayment, action)
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
@@ -52,6 +54,15 @@ Reducer<bool> darkModeReducer = combineReducers([
 
 bool updateDarkModeReducer(bool enableDarkMode, UserSettingsChanged action) {
   return action.enableDarkMode ?? enableDarkMode;
+}
+
+Reducer<bool> requireAuthenticationReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>(updateRequireAuthenticationReducer),
+]);
+
+bool updateRequireAuthenticationReducer(
+    bool requireAuthentication, UserSettingsChanged action) {
+  return action.requireAuthentication ?? requireAuthentication;
 }
 
 Reducer<String> currentRouteReducer = combineReducers([

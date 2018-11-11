@@ -51,7 +51,8 @@ class PaymentFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class PaymentEntity extends BaseEntity
+abstract class PaymentEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<PaymentEntity, PaymentEntityBuilder> {
   factory PaymentEntity({int id, CompanyEntity company}) {
     return _$PaymentEntity._(

@@ -57,7 +57,8 @@ class VendorFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class VendorEntity extends BaseEntity
+abstract class VendorEntity extends Object
+    with BaseEntity, SelectableEntity
     implements Built<VendorEntity, VendorEntityBuilder> {
   factory VendorEntity() {
     return _$VendorEntity._(
@@ -193,7 +194,8 @@ abstract class VendorEntity extends BaseEntity
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }
 
-abstract class VendorContactEntity extends BaseEntity
+abstract class VendorContactEntity extends Object
+    with BaseEntity
     implements Built<VendorContactEntity, VendorContactEntityBuilder> {
   factory VendorContactEntity() {
     return _$VendorContactEntity._(
