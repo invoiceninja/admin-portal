@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'footer': 'Footer',
       'compare': 'Compare',
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
@@ -9136,6 +9137,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get footer => _localizedValues[locale.toString()]['footer'];
 
   String get compare => _localizedValues[locale.toString()]['compare'];
 

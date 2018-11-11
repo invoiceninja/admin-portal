@@ -17,6 +17,9 @@ class InvoiceEditNotes extends StatefulWidget {
 
 class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   final _publicNotesController = TextEditingController();
+  final _privateNotesController = TextEditingController();
+  final _termsController = TextEditingController();
+  final _footerController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -24,6 +27,9 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   void didChangeDependencies() {
     _controllers = [
       _publicNotesController,
+      _privateNotesController,
+      _termsController,
+      _footerController,
     ];
 
     _controllers
@@ -31,6 +37,9 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
 
     final invoice = widget.viewModel.invoice;
     _publicNotesController.text = invoice.publicNotes;
+    _privateNotesController.text = invoice.privateNotes;
+    _termsController.text = invoice.terms;
+    _footerController.text = invoice.invoiceFooter;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -49,8 +58,11 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   }
 
   void _onChanged() {
-    final invoice = widget.viewModel.invoice
-        .rebuild((b) => b..publicNotes = _publicNotesController.text.trim());
+    final invoice = widget.viewModel.invoice.rebuild((b) => b
+      ..publicNotes = _publicNotesController.text.trim()
+      ..privateNotes = _privateNotesController.text.trim()
+      ..terms = _termsController.text.trim()
+      ..invoiceFooter = _footerController.text.trim());
     if (invoice != widget.viewModel.invoice) {
       widget.viewModel.onChanged(invoice);
     }
@@ -71,6 +83,30 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 labelText: localization.publicNotes,
+              ),
+            ),
+            TextFormField(
+              maxLines: 4,
+              controller: _privateNotesController,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                labelText: localization.privateNotes,
+              ),
+            ),
+            TextFormField(
+              maxLines: 4,
+              controller: _termsController,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                labelText: localization.terms,
+              ),
+            ),
+            TextFormField(
+              maxLines: 4,
+              controller: _footerController,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                labelText: localization.footer,
               ),
             ),
           ],
