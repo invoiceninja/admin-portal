@@ -16,12 +16,12 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentView extends StatefulWidget {
-  final PaymentViewVM viewModel;
-
   const PaymentView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final PaymentViewVM viewModel;
 
   @override
   _PaymentViewState createState() => new _PaymentViewState();
@@ -124,14 +124,14 @@ class _PaymentViewState extends State<PaymentView> {
             ),
             payment.privateNotes != null && payment.privateNotes.isNotEmpty
                 ? Column(
-                  children: <Widget>[
-                    IconMessage(payment.privateNotes),
-                    Container(
-                      color: Theme.of(context).backgroundColor,
-                      height: 12.0,
-                    ),
-                  ],
-                )
+                    children: <Widget>[
+                      IconMessage(payment.privateNotes),
+                      Container(
+                        color: Theme.of(context).backgroundColor,
+                        height: 12.0,
+                      ),
+                    ],
+                  )
                 : Container(),
             FieldGrid(fields),
           ],

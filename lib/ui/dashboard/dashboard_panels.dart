@@ -13,12 +13,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 class DashboardPanels extends StatelessWidget {
-  final DashboardVM viewModel;
-
   const DashboardPanels({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final DashboardVM viewModel;
 
   void _showDateOptions(BuildContext context) {
     showDialog<DateRangePicker>(

@@ -13,12 +13,12 @@ import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class ProductEdit extends StatefulWidget {
-  final ProductEditVM viewModel;
-
   const ProductEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final ProductEditVM viewModel;
 
   @override
   _ProductEditState createState() => _ProductEditState();

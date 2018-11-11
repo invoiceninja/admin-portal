@@ -8,16 +8,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
-  final EntityType entityType;
-  final List<String> sortFields;
-  final List<EntityStatus> statuses;
-  final Function(String) onSelectedSortField;
-  final Function(EntityState, bool) onSelectedState;
-  final Function(EntityStatus, bool) onSelectedStatus;
-  final Function(String) onSelectedCustom1;
-  final Function(String) onSelectedCustom2;
-  final List<String> customValues1;
-  final List<String> customValues2;
 
   const AppBottomBar({
     this.sortFields,
@@ -31,6 +21,17 @@ class AppBottomBar extends StatefulWidget {
     this.customValues1 = const [],
     this.customValues2 = const [],
   });
+
+  final EntityType entityType;
+  final List<String> sortFields;
+  final List<EntityStatus> statuses;
+  final Function(String) onSelectedSortField;
+  final Function(EntityState, bool) onSelectedState;
+  final Function(EntityStatus, bool) onSelectedStatus;
+  final Function(String) onSelectedCustom1;
+  final Function(String) onSelectedCustom2;
+  final List<String> customValues1;
+  final List<String> customValues2;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();

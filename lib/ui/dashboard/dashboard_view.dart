@@ -18,12 +18,12 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardView extends StatefulWidget {
-  final DashboardVM viewModel;
-
   const DashboardView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final DashboardVM viewModel;
 
   @override
   _DashboardViewState createState() => new _DashboardViewState();

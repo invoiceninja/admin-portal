@@ -9,12 +9,12 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientList extends StatelessWidget {
-  final ClientListVM viewModel;
-
   const ClientList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final ClientListVM viewModel;
 
   @override
   Widget build(BuildContext context) {

@@ -10,9 +10,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class InvoiceEmailScreen extends StatelessWidget {
-  static const String route = '/invoice/email';
-
   const InvoiceEmailScreen({Key key}) : super(key: key);
+
+  static const String route = '/invoice/email';
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +43,6 @@ class InvoiceEmailScreen extends StatelessWidget {
 }
 
 abstract class EmailEntityVM {
-  final bool isLoading;
-  final bool isSaving;
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
-  final ClientEntity client;
-  final Function(BuildContext, EmailTemplate, String, String) onSendPressed;
-
   EmailEntityVM({
     @required this.isLoading,
     @required this.isSaving,
@@ -58,6 +51,13 @@ abstract class EmailEntityVM {
     @required this.client,
     @required this.onSendPressed,
   });
+
+  final bool isLoading;
+  final bool isSaving;
+  final CompanyEntity company;
+  final InvoiceEntity invoice;
+  final ClientEntity client;
+  final Function(BuildContext, EmailTemplate, String, String) onSendPressed;
 }
 
 class EmailInvoiceVM extends EmailEntityVM {

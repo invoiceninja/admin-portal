@@ -6,15 +6,15 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ListFilter extends StatefulWidget {
-  final EntityType entityType;
-  final String title;
-  final Function(String) onFilterChanged;
-
   const ListFilter({
     this.entityType,
     this.title,
     this.onFilterChanged,
   });
+
+  final EntityType entityType;
+  final String title;
+  final Function(String) onFilterChanged;
 
   @override
   _ListFilterState createState() => new _ListFilterState();

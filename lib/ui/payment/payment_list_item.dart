@@ -11,15 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentListItem extends StatelessWidget {
-  final UserEntity user;
-  final Function(EntityAction) onEntityAction;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final PaymentEntity payment;
-  final String filter;
-
-  static final paymentItemKey = (int id) => Key('__payment_${id}__');
-
   const PaymentListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -28,6 +19,15 @@ class PaymentListItem extends StatelessWidget {
     @required this.payment,
     @required this.filter,
   });
+
+  final UserEntity user;
+  final Function(EntityAction) onEntityAction;
+  final GestureTapCallback onTap;
+  final GestureTapCallback onLongPress;
+  final PaymentEntity payment;
+  final String filter;
+
+  static final paymentItemKey = (int id) => Key('__payment_${id}__');
 
   @override
   Widget build(BuildContext context) {

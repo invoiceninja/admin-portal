@@ -10,11 +10,11 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class PaymentRepository {
-  final WebClient webClient;
-
   const PaymentRepository({
     this.webClient = const WebClient(),
   });
+
+  final WebClient webClient;
 
   Future<BuiltList<PaymentEntity>> loadList(
       CompanyEntity company, AuthState auth, int updatedAt) async {

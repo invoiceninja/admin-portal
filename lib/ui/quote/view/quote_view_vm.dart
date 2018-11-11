@@ -18,9 +18,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class QuoteViewScreen extends StatelessWidget {
-  static const String route = '/quote/view';
-
   const QuoteViewScreen({Key key}) : super(key: key);
+
+  static const String route = '/quote/view';
 
   @override
   Widget build(BuildContext context) {

@@ -11,9 +11,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class QuoteEmailScreen extends StatelessWidget {
-  static const String route = '/quote/email';
-
   const QuoteEmailScreen({Key key}) : super(key: key);
+
+  static const String route = '/quote/email';
 
   @override
   Widget build(BuildContext context) {

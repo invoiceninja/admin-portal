@@ -11,12 +11,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 
 class InvoiceEdit extends StatefulWidget {
-  final EntityEditVM viewModel;
-
   const InvoiceEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final EntityEditVM viewModel;
 
   @override
   _InvoiceEditState createState() => _InvoiceEditState();

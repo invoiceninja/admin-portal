@@ -14,12 +14,11 @@ import 'package:invoiceninja_flutter/utils/templates.dart';
 import 'package:html/parser.dart';
 
 class InvoiceEmailView extends StatefulWidget {
-  final EmailEntityVM viewModel;
-
   const InvoiceEmailView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+  final EmailEntityVM viewModel;
 
   @override
   _InvoiceEmailViewState createState() => new _InvoiceEmailViewState();

@@ -17,9 +17,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
-  static const String route = '/client/edit';
-
   const ClientEditScreen({Key key}) : super(key: key);
+
+  static const String route = '/client/edit';
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +37,6 @@ class ClientEditScreen extends StatelessWidget {
 }
 
 class ClientEditVM {
-  final CompanyEntity company;
-  final bool isSaving;
-  final ClientEntity client;
-  final ClientEntity origClient;
-  final Function(ClientEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final Function onBackPressed;
-  final StaticState staticState;
-
   ClientEditVM({
     @required this.company,
     @required this.isSaving,
@@ -105,4 +96,13 @@ class ClientEditVM {
           });
         });
   }
+
+  final CompanyEntity company;
+  final bool isSaving;
+  final ClientEntity client;
+  final ClientEntity origClient;
+  final Function(ClientEntity) onChanged;
+  final Function(BuildContext) onSavePressed;
+  final Function onBackPressed;
+  final StaticState staticState;
 }

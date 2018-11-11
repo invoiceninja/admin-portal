@@ -5,10 +5,10 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
 class ChartMoneyData {
+  ChartMoneyData(this.date, this.amount);
+
   final DateTime date;
   final double amount;
-
-  ChartMoneyData(this.date, this.amount);
 }
 
 var memoizedChartOutstandingInvoices = memo4((CompanyEntity company,

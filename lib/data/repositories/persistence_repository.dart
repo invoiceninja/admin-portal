@@ -14,11 +14,11 @@ import 'package:invoiceninja_flutter/data/file_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PersistenceRepository {
-  final FileStorage fileStorage;
-
   const PersistenceRepository({
     @required this.fileStorage,
   });
+
+  final FileStorage fileStorage;
 
   Future<File> saveCompanyState(CompanyState state) async {
     final stateWithoutToken = state.rebuild(

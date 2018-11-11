@@ -18,9 +18,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
-  static const String route = '/invoice/view';
-
   const InvoiceViewScreen({Key key}) : super(key: key);
+
+  static const String route = '/invoice/view';
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +39,6 @@ class InvoiceViewScreen extends StatelessWidget {
 }
 
 class EntityViewVM {
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
-  final ClientEntity client;
-  final bool isSaving;
-  final bool isDirty;
-  final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
-  final Function(BuildContext) onClientPressed;
-  final Function(BuildContext) onPaymentsPressed;
-  final Function(BuildContext, PaymentEntity) onPaymentPressed;
-  final Function(BuildContext) onRefreshed;
-  final Function onBackPressed;
-
   EntityViewVM({
     @required this.company,
     @required this.invoice,
@@ -66,6 +53,19 @@ class EntityViewVM {
     @required this.onPaymentPressed,
     @required this.onRefreshed,
   });
+
+  final CompanyEntity company;
+  final InvoiceEntity invoice;
+  final ClientEntity client;
+  final bool isSaving;
+  final bool isDirty;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
+  final Function(BuildContext) onClientPressed;
+  final Function(BuildContext) onPaymentsPressed;
+  final Function(BuildContext, PaymentEntity) onPaymentPressed;
+  final Function(BuildContext) onRefreshed;
+  final Function onBackPressed;
 
   @override
   bool operator ==(dynamic other) =>

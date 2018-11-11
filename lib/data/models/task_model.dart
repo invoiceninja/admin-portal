@@ -50,8 +50,6 @@ class TaskFields {
 
 abstract class TaskEntity extends BaseEntity
     implements Built<TaskEntity, TaskEntityBuilder> {
-  static int counter = 0;
-
   factory TaskEntity() {
     return _$TaskEntity._(
       id: --TaskEntity.counter,
@@ -71,6 +69,8 @@ abstract class TaskEntity extends BaseEntity
   }
 
   TaskEntity._();
+
+  static int counter = 0;
 
   TaskEntity get clone => rebuild((b) => b..id = --TaskEntity.counter);
 

@@ -31,11 +31,6 @@ class SettingsListBuilder extends StatelessWidget {
 }
 
 class SettingsListVM {
-  final Function(BuildContext context) onLogoutTap;
-  final Function(BuildContext context) onRefreshTap;
-  final Function(BuildContext context, bool value) onDarkModeChanged;
-  final bool enableDarkMode;
-
   SettingsListVM({
     @required this.onLogoutTap,
     @required this.onRefreshTap,
@@ -99,4 +94,9 @@ class SettingsListVM {
       enableDarkMode: store.state.uiState.enableDarkMode,
     );
   }
+
+  final Function(BuildContext context) onLogoutTap;
+  final Function(BuildContext context) onRefreshTap;
+  final Function(BuildContext context, bool value) onDarkModeChanged;
+  final bool enableDarkMode;
 }

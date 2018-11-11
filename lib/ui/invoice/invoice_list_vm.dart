@@ -19,9 +19,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
-  static const String route = '/invoices/edit';
-
   const InvoiceListBuilder({Key key}) : super(key: key);
+
+  static const String route = '/invoices/edit';
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +37,6 @@ class InvoiceListBuilder extends StatelessWidget {
 }
 
 class EntityListVM {
-  final UserEntity user;
-  final ListUIState listState;
-  final List<int> invoiceList;
-  final BuiltMap<int, InvoiceEntity> invoiceMap;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, InvoiceEntity) onInvoiceTap;
-  final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
-  final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
-
   EntityListVM({
     @required this.user,
     @required this.listState,
@@ -66,6 +52,20 @@ class EntityListVM {
     @required this.onViewEntityFilterPressed,
     @required this.onEntityAction,
   });
+
+  final UserEntity user;
+  final ListUIState listState;
+  final List<int> invoiceList;
+  final BuiltMap<int, InvoiceEntity> invoiceMap;
+  final BuiltMap<int, ClientEntity> clientMap;
+  final String filter;
+  final bool isLoading;
+  final bool isLoaded;
+  final Function(BuildContext, InvoiceEntity) onInvoiceTap;
+  final Function(BuildContext) onRefreshed;
+  final Function onClearEntityFilterPressed;
+  final Function(BuildContext) onViewEntityFilterPressed;
+  final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
 }
 
 class InvoiceListVM extends EntityListVM {

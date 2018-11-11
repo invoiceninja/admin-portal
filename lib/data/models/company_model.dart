@@ -291,7 +291,8 @@ abstract class CompanyEntity
     return true;
   }
 
-  int get currencyId => companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
+  int get currencyId =>
+      companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
@@ -299,8 +300,6 @@ abstract class CompanyEntity
 abstract class PaymentTermEntity extends Object
     with SelectableEntity
     implements Built<PaymentTermEntity, PaymentTermEntityBuilder> {
-  static int counter = 0;
-
   factory PaymentTermEntity() {
     return _$PaymentTermEntity._(
       id: --PaymentTermEntity.counter,
@@ -309,6 +308,8 @@ abstract class PaymentTermEntity extends Object
   }
 
   PaymentTermEntity._();
+
+  static int counter = 0;
 
   static Serializer<PaymentTermEntity> get serializer =>
       _$paymentTermEntitySerializer;
@@ -335,8 +336,6 @@ abstract class PaymentTermEntity extends Object
 abstract class TaxRateEntity extends Object
     with SelectableEntity
     implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-  static int counter = 0;
-
   factory TaxRateEntity() {
     return _$TaxRateEntity._(
       id: --TaxRateEntity.counter,
@@ -347,6 +346,8 @@ abstract class TaxRateEntity extends Object
   }
 
   TaxRateEntity._();
+
+  static int counter = 0;
 
   static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
 

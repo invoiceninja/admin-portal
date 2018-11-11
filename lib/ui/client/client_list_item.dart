@@ -6,16 +6,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class ClientListItem extends StatelessWidget {
-  final UserEntity user;
-  final Function(EntityAction) onEntityAction;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  //final ValueChanged<bool> onCheckboxChanged;
-  final ClientEntity client;
-  final String filter;
-
-  static final clientItemKey = (int id) => Key('__client_item_${id}__');
-
   const ClientListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -25,6 +15,17 @@ class ClientListItem extends StatelessWidget {
     @required this.client,
     @required this.filter,
   });
+
+  final UserEntity user;
+  final Function(EntityAction) onEntityAction;
+  final GestureTapCallback onTap;
+  final GestureTapCallback onLongPress;
+
+  //final ValueChanged<bool> onCheckboxChanged;
+  final ClientEntity client;
+  final String filter;
+
+  static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
   @override
   Widget build(BuildContext context) {

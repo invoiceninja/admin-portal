@@ -34,6 +34,14 @@ class LoginScreen extends StatelessWidget {
 }
 
 class LoginVM {
+  LoginVM({
+    @required this.isLoading,
+    @required this.authState,
+    @required this.onLoginPressed,
+    @required this.onCancel2FAPressed,
+    @required this.onGoogleLoginPressed,
+  });
+
   bool isLoading;
   AuthState authState;
   final Function() onCancel2FAPressed;
@@ -44,14 +52,6 @@ class LoginVM {
       String secret,
       String oneTimePassword}) onLoginPressed;
   final Function(BuildContext, String, String) onGoogleLoginPressed;
-
-  LoginVM({
-    @required this.isLoading,
-    @required this.authState,
-    @required this.onLoginPressed,
-    @required this.onCancel2FAPressed,
-    @required this.onGoogleLoginPressed,
-  });
 
   static LoginVM fromStore(Store<AppState> store) {
     final GoogleSignIn _googleSignIn = GoogleSignIn(

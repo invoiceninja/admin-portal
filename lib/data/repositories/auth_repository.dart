@@ -8,11 +8,11 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class AuthRepository {
-  final WebClient webClient;
-
   const AuthRepository({
     this.webClient = const WebClient(),
   });
+
+  final WebClient webClient;
 
   Future<LoginResponseData> login(
       {String email,

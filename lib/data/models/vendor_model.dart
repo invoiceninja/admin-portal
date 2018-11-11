@@ -59,8 +59,6 @@ class VendorFields {
 
 abstract class VendorEntity extends BaseEntity
     implements Built<VendorEntity, VendorEntityBuilder> {
-  static int counter = 0;
-
   factory VendorEntity() {
     return _$VendorEntity._(
       id: --VendorEntity.counter,
@@ -90,6 +88,8 @@ abstract class VendorEntity extends BaseEntity
   }
 
   VendorEntity._();
+
+  static int counter = 0;
 
   VendorEntity get clone => rebuild((b) => b..id = --VendorEntity.counter);
 
@@ -195,8 +195,6 @@ abstract class VendorEntity extends BaseEntity
 
 abstract class VendorContactEntity extends BaseEntity
     implements Built<VendorContactEntity, VendorContactEntityBuilder> {
-  static int counter = 0;
-
   factory VendorContactEntity() {
     return _$VendorContactEntity._(
       id: --VendorContactEntity.counter,
@@ -212,6 +210,8 @@ abstract class VendorContactEntity extends BaseEntity
   }
 
   VendorContactEntity._();
+
+  static int counter = 0;
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;

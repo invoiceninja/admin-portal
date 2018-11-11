@@ -5,62 +5,62 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewPaymentList implements PersistUI {
-  final BuildContext context;
-
   ViewPaymentList(this.context);
+
+  final BuildContext context;
 }
 
 class ViewPayment implements PersistUI {
+  ViewPayment({this.paymentId, this.context});
+
   final int paymentId;
   final BuildContext context;
-
-  ViewPayment({this.paymentId, this.context});
 }
 
 class EditPayment implements PersistUI {
+  EditPayment(
+      {this.payment, this.context, this.completer, this.trackRoute = true});
+
   final PaymentEntity payment;
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
-
-  EditPayment(
-      {this.payment, this.context, this.completer, this.trackRoute = true});
 }
 
 class UpdatePayment implements PersistUI {
-  final PaymentEntity payment;
-
   UpdatePayment(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class LoadPayment {
+  LoadPayment({this.completer, this.paymentId, this.loadActivities = false});
+
   final Completer completer;
   final int paymentId;
   final bool loadActivities;
-
-  LoadPayment({this.completer, this.paymentId, this.loadActivities = false});
 }
 
 class LoadPaymentActivity {
+  LoadPaymentActivity({this.completer, this.paymentId});
+
   final Completer completer;
   final int paymentId;
-
-  LoadPaymentActivity({this.completer, this.paymentId});
 }
 
 class LoadPayments {
+  LoadPayments({this.completer, this.force = false});
+
   final Completer completer;
   final bool force;
-
-  LoadPayments({this.completer, this.force = false});
 }
 
 class LoadPaymentRequest implements StartLoading {}
 
 class LoadPaymentFailure implements StopLoading {
-  final dynamic error;
-
   LoadPaymentFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -69,9 +69,9 @@ class LoadPaymentFailure implements StopLoading {
 }
 
 class LoadPaymentSuccess implements StopLoading, PersistData {
-  final PaymentEntity payment;
-
   LoadPaymentSuccess(this.payment);
+
+  final PaymentEntity payment;
 
   @override
   String toString() {
@@ -82,9 +82,9 @@ class LoadPaymentSuccess implements StopLoading, PersistData {
 class LoadPaymentsRequest implements StartLoading {}
 
 class LoadPaymentsFailure implements StopLoading {
-  final dynamic error;
-
   LoadPaymentsFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -93,9 +93,9 @@ class LoadPaymentsFailure implements StopLoading {
 }
 
 class LoadPaymentsSuccess implements StopLoading, PersistData {
-  final BuiltList<PaymentEntity> payments;
-
   LoadPaymentsSuccess(this.payments);
+
+  final BuiltList<PaymentEntity> payments;
 
   @override
   String toString() {
@@ -104,135 +104,135 @@ class LoadPaymentsSuccess implements StopLoading, PersistData {
 }
 
 class SavePaymentRequest implements StartSaving {
+  SavePaymentRequest({this.completer, this.payment});
+
   final Completer completer;
   final PaymentEntity payment;
-
-  SavePaymentRequest({this.completer, this.payment});
 }
 
 class SavePaymentSuccess implements StopSaving, PersistData, PersistUI {
-  final PaymentEntity payment;
-
   SavePaymentSuccess(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class AddPaymentSuccess implements StopSaving, PersistData, PersistUI {
-  final PaymentEntity payment;
-
   AddPaymentSuccess(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class SavePaymentFailure implements StopSaving {
-  final Object error;
-
   SavePaymentFailure(this.error);
+
+  final Object error;
 }
 
 class ArchivePaymentRequest implements StartSaving {
+  ArchivePaymentRequest(this.completer, this.paymentId);
+
   final Completer completer;
   final int paymentId;
-
-  ArchivePaymentRequest(this.completer, this.paymentId);
 }
 
 class ArchivePaymentSuccess implements StopSaving, PersistData {
-  final PaymentEntity payment;
-
   ArchivePaymentSuccess(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class ArchivePaymentFailure implements StopSaving {
-  final PaymentEntity payment;
-
   ArchivePaymentFailure(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class DeletePaymentRequest implements StartSaving {
+  DeletePaymentRequest(this.completer, this.paymentId);
+
   final Completer completer;
   final int paymentId;
-
-  DeletePaymentRequest(this.completer, this.paymentId);
 }
 
 class DeletePaymentSuccess implements StopSaving, PersistData {
-  final PaymentEntity payment;
-
   DeletePaymentSuccess(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class DeletePaymentFailure implements StopSaving {
-  final PaymentEntity payment;
-
   DeletePaymentFailure(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class RestorePaymentRequest implements StartSaving {
+  RestorePaymentRequest(this.completer, this.paymentId);
+
   final Completer completer;
   final int paymentId;
-
-  RestorePaymentRequest(this.completer, this.paymentId);
 }
 
 class RestorePaymentSuccess implements StopSaving, PersistData {
-  final PaymentEntity payment;
-
   RestorePaymentSuccess(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class RestorePaymentFailure implements StopSaving {
-  final PaymentEntity payment;
-
   RestorePaymentFailure(this.payment);
+
+  final PaymentEntity payment;
 }
 
 class EmailPaymentRequest implements StartSaving {
+  EmailPaymentRequest(this.completer, this.payment);
+
   final Completer completer;
   final PaymentEntity payment;
-
-  EmailPaymentRequest(this.completer, this.payment);
 }
 
 class EmailPaymentSuccess implements StopSaving, PersistData {}
 
 class EmailPaymentFailure implements StopSaving {
-  final dynamic error;
-
   EmailPaymentFailure(this.error);
+
+  final dynamic error;
 }
 
 class FilterPayments {
-  final String filter;
-
   FilterPayments(this.filter);
+
+  final String filter;
 }
 
 class SortPayments implements PersistUI {
-  final String field;
-
   SortPayments(this.field);
+
+  final String field;
 }
 
 class FilterPaymentsByState implements PersistUI {
-  final EntityState state;
-
   FilterPaymentsByState(this.state);
+
+  final EntityState state;
 }
 
 class FilterPaymentsByCustom1 implements PersistUI {
-  final String value;
-
   FilterPaymentsByCustom1(this.value);
+
+  final String value;
 }
 
 class FilterPaymentsByCustom2 implements PersistUI {
-  final String value;
-
   FilterPaymentsByCustom2(this.value);
+
+  final String value;
 }
 
 class FilterPaymentsByEntity implements PersistUI {
+  FilterPaymentsByEntity({this.entityId, this.entityType});
+
   final int entityId;
   final EntityType entityType;
-
-  FilterPaymentsByEntity({this.entityId, this.entityType});
 }

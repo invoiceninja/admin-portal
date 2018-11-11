@@ -5,34 +5,37 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewProductList implements PersistUI {
-  final BuildContext context;
   ViewProductList(this.context);
+
+  final BuildContext context;
 }
 
 class EditProduct implements PersistUI {
+  EditProduct({this.product, this.context});
+
   final ProductEntity product;
   final BuildContext context;
-  EditProduct({this.product, this.context});
 }
 
 class UpdateProduct implements PersistUI {
-  final ProductEntity product;
   UpdateProduct(this.product);
+
+  final ProductEntity product;
 }
 
-
 class LoadProducts {
+  LoadProducts({this.completer, this.force = false});
+
   final Completer completer;
   final bool force;
-
-  LoadProducts({this.completer, this.force = false});
 }
 
 class LoadProductsRequest implements StartLoading {}
 
 class LoadProductsFailure implements StopLoading {
-  final dynamic error;
   LoadProductsFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -41,8 +44,9 @@ class LoadProductsFailure implements StopLoading {
 }
 
 class LoadProductsSuccess implements PersistData, StopLoading {
-  final BuiltList<ProductEntity> products;
   LoadProductsSuccess(this.products);
+
+  final BuiltList<ProductEntity> products;
 
   @override
   String toString() {
@@ -51,107 +55,119 @@ class LoadProductsSuccess implements PersistData, StopLoading {
 }
 
 class SaveProductRequest implements StartSaving {
+  SaveProductRequest({this.product, this.completer});
+
   final Completer completer;
   final ProductEntity product;
-  SaveProductRequest({this.product, this.completer});
 }
 
 class SaveProductSuccess implements StopSaving, PersistData, PersistUI {
-  final ProductEntity product;
-
   SaveProductSuccess(this.product);
+
+  final ProductEntity product;
 }
 
 class AddProductSuccess implements StopSaving, PersistData, PersistUI {
-  final ProductEntity product;
   AddProductSuccess(this.product);
+
+  final ProductEntity product;
 }
 
 class SaveProductFailure implements StopSaving {
+  SaveProductFailure(this.error);
+
   final Object error;
-  SaveProductFailure (this.error);
 }
 
 class ArchiveProductRequest implements StartSaving {
+  ArchiveProductRequest(this.completer, this.productId);
+
   final Completer completer;
   final int productId;
-
-  ArchiveProductRequest(this.completer, this.productId);
 }
 
 class ArchiveProductSuccess implements StopSaving, PersistData {
-  final ProductEntity product;
   ArchiveProductSuccess(this.product);
+
+  final ProductEntity product;
 }
 
 class ArchiveProductFailure implements StopSaving {
-  final ProductEntity product;
   ArchiveProductFailure(this.product);
+
+  final ProductEntity product;
 }
 
 class DeleteProductRequest implements StartSaving {
+  DeleteProductRequest(this.completer, this.productId);
+
   final Completer completer;
   final int productId;
-
-  DeleteProductRequest(this.completer, this.productId);
 }
 
 class DeleteProductSuccess implements StopSaving, PersistData {
-  final ProductEntity product;
   DeleteProductSuccess(this.product);
+
+  final ProductEntity product;
 }
 
 class DeleteProductFailure implements StopSaving {
-  final ProductEntity product;
   DeleteProductFailure(this.product);
+
+  final ProductEntity product;
 }
 
 class RestoreProductRequest implements StartSaving {
+  RestoreProductRequest(this.completer, this.productId);
+
   final Completer completer;
   final int productId;
-  RestoreProductRequest(this.completer, this.productId);
 }
 
 class RestoreProductSuccess implements StopSaving, PersistData {
-  final ProductEntity product;
   RestoreProductSuccess(this.product);
+
+  final ProductEntity product;
 }
 
 class RestoreProductFailure implements StopSaving {
-  final ProductEntity product;
   RestoreProductFailure(this.product);
+
+  final ProductEntity product;
 }
 
-
 class FilterProducts {
-  final String filter;
   FilterProducts(this.filter);
+
+  final String filter;
 }
 
 class SortProducts implements PersistUI {
-  final String field;
   SortProducts(this.field);
+
+  final String field;
 }
 
 class FilterProductsByState implements PersistUI {
-  final EntityState state;
-
   FilterProductsByState(this.state);
+
+  final EntityState state;
 }
 
 class FilterProductsByCustom1 implements PersistUI {
-  final String value;
-
   FilterProductsByCustom1(this.value);
+
+  final String value;
 }
 
 class FilterProductsByCustom2 implements PersistUI {
-  final String value;
-
   FilterProductsByCustom2(this.value);
+
+  final String value;
 }
 
 class FilterProductDropdown {
-  final String filter;
   FilterProductDropdown(this.filter);
+
+  final String filter;
 }

@@ -53,8 +53,6 @@ class ClientFields {
 
 abstract class ClientEntity extends BaseEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  static int counter = 0;
-
   factory ClientEntity({int id}) {
     return _$ClientEntity._(
       id: id ?? --ClientEntity.counter,
@@ -105,6 +103,8 @@ abstract class ClientEntity extends BaseEntity
   }
 
   ClientEntity._();
+
+  static int counter = 0;
 
   ClientEntity get clone => rebuild((b) => b..id = --ClientEntity.counter);
 
@@ -354,7 +354,8 @@ abstract class ClientEntity extends BaseEntity
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user, bool includeCreate = false}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, bool includeCreate = false}) {
     final actions = <EntityAction>[];
 
     if (includeCreate && user.canCreate(EntityType.client) && isActive) {
@@ -367,7 +368,6 @@ abstract class ClientEntity extends BaseEntity
 
     return actions..addAll(getEntityBaseActions(user: user));
   }
-
 
   @override
   double get listDisplayAmount => null;
@@ -401,8 +401,6 @@ class ContactFields {
 
 abstract class ContactEntity extends BaseEntity
     implements Built<ContactEntity, ContactEntityBuilder> {
-  static int counter = 0;
-
   factory ContactEntity() {
     return _$ContactEntity._(
       id: --ContactEntity.counter,
@@ -422,6 +420,8 @@ abstract class ContactEntity extends BaseEntity
   }
 
   ContactEntity._();
+
+  static int counter = 0;
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;

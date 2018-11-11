@@ -28,9 +28,9 @@ void main() {
 }
 
 class InvoiceNinjaApp extends StatefulWidget {
-  final Store<AppState> store;
-
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
+
+  final Store<AppState> store;
 
   @override
   _InvoiceNinjaAppState createState() => new _InvoiceNinjaAppState();
@@ -59,8 +59,7 @@ class _InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         ),
         */
         title: 'Invoice Ninja',
-        routes: {
-        },
+        routes: {},
       ),
     );
   }

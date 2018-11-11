@@ -5,12 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SettingsList extends StatelessWidget {
-  final SettingsListVM viewModel;
-
   const SettingsList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final SettingsListVM viewModel;
 
   @override
   Widget build(BuildContext context) {

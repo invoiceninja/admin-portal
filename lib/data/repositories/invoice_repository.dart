@@ -10,11 +10,11 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class InvoiceRepository {
-  final WebClient webClient;
-
   const InvoiceRepository({
     this.webClient = const WebClient(),
   });
+
+  final WebClient webClient;
 
   Future<InvoiceEntity> loadItem(
       CompanyEntity company, AuthState auth, int entityId) async {
@@ -29,7 +29,8 @@ class InvoiceRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/invoices?include=invitations&invoice_type_id=1&is_recurring=0'; // invoice_type_id=1
+    String url = auth.url +
+        '/invoices?include=invitations&invoice_type_id=1&is_recurring=0'; // invoice_type_id=1
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
@@ -75,7 +76,6 @@ class InvoiceRepository {
       EmailTemplate template,
       String subject,
       String body) async {
-
     final data = {
       'reminder': template == EmailTemplate.initial ? '' : template.toString(),
       'template': {
@@ -84,10 +84,8 @@ class InvoiceRepository {
       }
     };
 
-    await webClient.post(
-        auth.url + '/email_invoice?invoice_id=${invoice.id}',
-        company.token,
-        json.encode(data));
+    await webClient.post(auth.url + '/email_invoice?invoice_id=${invoice.id}',
+        company.token, json.encode(data));
 
     /*
     final Future<dynamic> response = await webClient.post(

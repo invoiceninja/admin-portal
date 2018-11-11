@@ -22,12 +22,12 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatelessWidget {
-  final AppDrawerVM viewModel;
-
   const AppDrawer({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final AppDrawerVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -225,8 +225,7 @@ class AppDrawer extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(
                               style: aboutTextStyle,
-                              text:
-                                  localization.thanksForPatience + ' ',
+                              text: localization.thanksForPatience + ' ',
                             ),
                             _LinkTextSpan(
                               style: linkStyle,

@@ -86,8 +86,6 @@ class InvoiceFields {
 abstract class InvoiceEntity extends BaseEntity
     with CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-  static int counter = 0;
-
   factory InvoiceEntity({int id, bool isQuote = false}) {
     return _$InvoiceEntity._(
       id: id ?? --InvoiceEntity.counter,
@@ -140,6 +138,8 @@ abstract class InvoiceEntity extends BaseEntity
   }
 
   InvoiceEntity._();
+
+  static int counter = 0;
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
@@ -485,8 +485,6 @@ abstract class InvoiceEntity extends BaseEntity
 
 abstract class InvoiceItemEntity extends BaseEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-  static int counter = 0;
-
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
       id: --InvoiceItemEntity.counter,
@@ -509,6 +507,8 @@ abstract class InvoiceItemEntity extends BaseEntity
   }
 
   InvoiceItemEntity._();
+
+  static int counter = 0;
 
   @override
   EntityType get entityType {
@@ -597,8 +597,6 @@ abstract class InvoiceItemEntity extends BaseEntity
 
 abstract class InvitationEntity extends BaseEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
-  static int counter = 0;
-
   factory InvitationEntity() {
     return _$InvitationEntity._(
       id: --InvitationEntity.counter,
@@ -613,6 +611,8 @@ abstract class InvitationEntity extends BaseEntity
   }
 
   InvitationEntity._();
+
+  static int counter = 0;
 
   String get key;
 

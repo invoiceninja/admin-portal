@@ -12,6 +12,7 @@ abstract class ProductListResponse
     implements Built<ProductListResponse, ProductListResponseBuilder> {
   factory ProductListResponse([void updates(ProductListResponseBuilder b)]) =
       _$ProductListResponse;
+
   ProductListResponse._();
 
   BuiltList<ProductEntity> get data;
@@ -24,6 +25,7 @@ abstract class ProductItemResponse
     implements Built<ProductItemResponse, ProductItemResponseBuilder> {
   factory ProductItemResponse([void updates(ProductItemResponseBuilder b)]) =
       _$ProductItemResponse;
+
   ProductItemResponse._();
 
   ProductEntity get data;
@@ -46,7 +48,6 @@ class ProductFields {
 abstract class ProductEntity extends BaseEntity
     with ConvertToInvoiceItem
     implements Built<ProductEntity, ProductEntityBuilder> {
-  static int counter = 0;
   factory ProductEntity() {
     return _$ProductEntity._(
       id: --ProductEntity.counter,
@@ -64,11 +65,12 @@ abstract class ProductEntity extends BaseEntity
       isDeleted: false,
     );
   }
+
   ProductEntity._();
 
-  ProductEntity get clone => rebuild((b) => b
-    ..id = --ProductEntity.counter
-  );
+  static int counter = 0;
+
+  ProductEntity get clone => rebuild((b) => b..id = --ProductEntity.counter);
 
   @override
   EntityType get entityType {

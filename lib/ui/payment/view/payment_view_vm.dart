@@ -14,9 +14,9 @@ import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class PaymentViewScreen extends StatelessWidget {
-  static const String route = '/payment/view';
-
   const PaymentViewScreen({Key key}) : super(key: key);
+
+  static const String route = '/payment/view';
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +34,6 @@ class PaymentViewScreen extends StatelessWidget {
 }
 
 class PaymentViewVM {
-  final PaymentEntity payment;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext) onEditPressed;
-  final Function(BuildContext) onTapInvoice;
-  final Function(BuildContext) onTapClient;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
-
   PaymentViewVM({
     @required this.payment,
     @required this.company,
@@ -79,9 +69,7 @@ class PaymentViewVM {
           switch (action) {
             case EntityAction.sendEmail:
               store.dispatch(EmailPaymentRequest(
-                  popCompleter(
-                      context, localization.emailedPayment),
-                  payment));
+                  popCompleter(context, localization.emailedPayment), payment));
               break;
             case EntityAction.archive:
               store.dispatch(ArchivePaymentRequest(
@@ -101,4 +89,14 @@ class PaymentViewVM {
           }
         });
   }
+
+  final PaymentEntity payment;
+  final CompanyEntity company;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext) onEditPressed;
+  final Function(BuildContext) onTapInvoice;
+  final Function(BuildContext) onTapClient;
+  final bool isSaving;
+  final bool isLoading;
+  final bool isDirty;
 }

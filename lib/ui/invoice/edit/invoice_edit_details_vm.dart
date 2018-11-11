@@ -32,14 +32,6 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
 }
 
 class EntityEditDetailsVM {
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
-  final Function(InvoiceEntity) onChanged;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final BuiltList<int> clientList;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddClientPressed;
-
   EntityEditDetailsVM({
     @required this.company,
     @required this.invoice,
@@ -48,6 +40,14 @@ class EntityEditDetailsVM {
     @required this.clientList,
     @required this.onAddClientPressed,
   });
+
+  final CompanyEntity company;
+  final InvoiceEntity invoice;
+  final Function(InvoiceEntity) onChanged;
+  final BuiltMap<int, ClientEntity> clientMap;
+  final BuiltList<int> clientList;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddClientPressed;
 }
 
 class InvoiceEditDetailsVM extends EntityEditDetailsVM {
@@ -60,13 +60,13 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
   }) : super(
-    company: company,
-    invoice: invoice,
-    onChanged: onChanged,
-    clientMap: clientMap,
-    clientList: clientList,
-    onAddClientPressed: onAddClientPressed,
-  );
+          company: company,
+          invoice: invoice,
+          onChanged: onChanged,
+          clientMap: clientMap,
+          clientList: clientList,
+          onAddClientPressed: onAddClientPressed,
+        );
 
   factory InvoiceEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

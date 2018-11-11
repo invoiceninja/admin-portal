@@ -5,9 +5,9 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class AppLoading extends StatelessWidget {
-  final Function(BuildContext context, bool isLoading) builder;
-
   const AppLoading({Key key, @required this.builder}) : super(key: key);
+
+  final Function(BuildContext context, bool isLoading) builder;
 
   @override
   Widget build(BuildContext context) {

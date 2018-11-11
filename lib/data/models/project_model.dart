@@ -49,8 +49,6 @@ class ProjectFields {
 
 abstract class ProjectEntity extends BaseEntity
     implements Built<ProjectEntity, ProjectEntityBuilder> {
-  static int counter = 0;
-
   factory ProjectEntity() {
     return _$ProjectEntity._(
       id: --ProjectEntity.counter,
@@ -69,6 +67,8 @@ abstract class ProjectEntity extends BaseEntity
   }
 
   ProjectEntity._();
+
+  static int counter = 0;
 
   ProjectEntity get clone => rebuild((b) => b..id = --ProjectEntity.counter);
 

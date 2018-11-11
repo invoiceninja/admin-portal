@@ -53,8 +53,6 @@ class PaymentFields {
 
 abstract class PaymentEntity extends BaseEntity
     implements Built<PaymentEntity, PaymentEntityBuilder> {
-  static int counter = 0;
-
   factory PaymentEntity({int id, CompanyEntity company}) {
     return _$PaymentEntity._(
       id: id ?? --PaymentEntity.counter,
@@ -79,6 +77,8 @@ abstract class PaymentEntity extends BaseEntity
   }
 
   PaymentEntity._();
+
+  static int counter = 0;
 
   @override
   EntityType get entityType {
