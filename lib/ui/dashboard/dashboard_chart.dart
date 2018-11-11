@@ -97,7 +97,11 @@ class _DashboardChartState extends State<DashboardChart> {
     final changePercent = (isIncrease ? '+' : '-') +
         formatNumber(
             widget.amount != 0 && widget.previousAmount != 0
-                ? round(widget.previousAmount / widget.amount * 100, 2)
+                ? round(
+                    (widget.amount - widget.previousAmount) /
+                        widget.previousAmount *
+                        100,
+                    2)
                 : 0.0,
             context,
             formatNumberType: FormatNumberType.percent,
