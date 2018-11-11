@@ -39,6 +39,7 @@ class SettingsListVM {
     @required this.enableDarkMode,
     @required this.onRequireAuthenticationChanged,
     @required this.requireAuthentication,
+    @required this.authenticationSupported,
   });
 
   static SettingsListVM fromStore(Store<AppState> store) {
@@ -114,6 +115,7 @@ class SettingsListVM {
       },
       enableDarkMode: store.state.uiState.enableDarkMode,
       requireAuthentication: store.state.uiState.requireAuthentication,
+      authenticationSupported: LocalAuthentication().canCheckBiometrics,
     );
   }
 
@@ -124,4 +126,5 @@ class SettingsListVM {
   final Function(BuildContext context, bool value)
       onRequireAuthenticationChanged;
   final bool requireAuthentication;
+  final Future<bool> authenticationSupported;
 }

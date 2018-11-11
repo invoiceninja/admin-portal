@@ -17,32 +17,53 @@ class SettingsList extends StatelessWidget {
     return ListView(
       children: <Widget>[
         SwitchListTile(
-          title: Text(AppLocalization.of(context).darkMode),
+          title: Text(AppLocalization
+              .of(context)
+              .darkMode),
           value: viewModel.enableDarkMode,
           onChanged: (value) => viewModel.onDarkModeChanged(context, value),
           secondary: Icon(FontAwesomeIcons.moon),
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme
+              .of(context)
+              .accentColor,
         ),
-        SwitchListTile(
-          title: Text(AppLocalization.of(context).biometricAuthentication),
-          value: viewModel.requireAuthentication,
-          onChanged: (value) =>
-              viewModel.onRequireAuthenticationChanged(context, value),
-          secondary: Icon(viewModel.requireAuthentication
-              ? FontAwesomeIcons.lock
-              : FontAwesomeIcons.unlockAlt),
-          activeColor: Theme.of(context).accentColor,
+        FutureBuilder(
+          future: viewModel.authenticationSupported,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData && snapshot.data == true) {
+              return SwitchListTile(
+                title: Text(AppLocalization
+                    .of(context)
+                    .biometricAuthentication),
+                value: viewModel.requireAuthentication,
+                onChanged: (value) =>
+                    viewModel.onRequireAuthenticationChanged(context, value),
+                secondary: Icon(viewModel.requireAuthentication
+                    ? FontAwesomeIcons.lock
+                    : FontAwesomeIcons.unlockAlt),
+                activeColor: Theme
+                    .of(context)
+                    .accentColor,
+              );
+            } else {
+              return SizedBox();
+            }
+          },
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.syncAlt),
-          title: Text(AppLocalization.of(context).refreshData),
+          title: Text(AppLocalization
+              .of(context)
+              .refreshData),
           onTap: () {
             viewModel.onRefreshTap(context);
           },
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.powerOff),
-          title: Text(AppLocalization.of(context).logout),
+          title: Text(AppLocalization
+              .of(context)
+              .logout),
           onTap: () {
             viewModel.onLogoutTap(context);
           },
