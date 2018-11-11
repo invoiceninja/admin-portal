@@ -71,7 +71,7 @@ class EntityViewVM {
   bool operator ==(dynamic other) =>
       client == other.client &&
       company == other.company &&
-      invoice == other.newInvoice &&
+      invoice == other.invoice &&
       isSaving == other.isSaving &&
       isDirty == other.isDirty;
 
