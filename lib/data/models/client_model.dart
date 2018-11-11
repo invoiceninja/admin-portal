@@ -51,8 +51,7 @@ class ClientFields {
   static const String currency = 'currency';
 }
 
-abstract class ClientEntity extends Object
-    with BaseEntity
+abstract class ClientEntity extends BaseEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
   static int counter = 0;
 
@@ -400,8 +399,7 @@ class ContactFields {
   static const String phone = 'phone';
 }
 
-abstract class ContactEntity extends Object
-    with BaseEntity
+abstract class ContactEntity extends BaseEntity
     implements Built<ContactEntity, ContactEntityBuilder> {
   static int counter = 0;
 

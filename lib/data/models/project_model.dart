@@ -6,24 +6,30 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'project_model.g.dart';
 
-abstract class ProjectListResponse implements Built<ProjectListResponse, ProjectListResponseBuilder> {
+abstract class ProjectListResponse
+    implements Built<ProjectListResponse, ProjectListResponseBuilder> {
+  factory ProjectListResponse([void updates(ProjectListResponseBuilder b)]) =
+      _$ProjectListResponse;
 
-  factory ProjectListResponse([void updates(ProjectListResponseBuilder b)]) = _$ProjectListResponse;
   ProjectListResponse._();
 
   BuiltList<ProjectEntity> get data;
 
-  static Serializer<ProjectListResponse> get serializer => _$projectListResponseSerializer;
+  static Serializer<ProjectListResponse> get serializer =>
+      _$projectListResponseSerializer;
 }
 
-abstract class ProjectItemResponse implements Built<ProjectItemResponse, ProjectItemResponseBuilder> {
+abstract class ProjectItemResponse
+    implements Built<ProjectItemResponse, ProjectItemResponseBuilder> {
+  factory ProjectItemResponse([void updates(ProjectItemResponseBuilder b)]) =
+      _$ProjectItemResponse;
 
-  factory ProjectItemResponse([void updates(ProjectItemResponseBuilder b)]) = _$ProjectItemResponse;
   ProjectItemResponse._();
 
   ProjectEntity get data;
 
-  static Serializer<ProjectItemResponse> get serializer => _$projectItemResponseSerializer;
+  static Serializer<ProjectItemResponse> get serializer =>
+      _$projectItemResponseSerializer;
 }
 
 class ProjectFields {
@@ -35,36 +41,36 @@ class ProjectFields {
   static const String budgetedHours = 'budgetedHours';
   static const String customValue1 = 'customValue1';
   static const String customValue2 = 'customValue2';
-  
+
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class ProjectEntity extends Object with BaseEntity implements Built<ProjectEntity, ProjectEntityBuilder> {
-
+abstract class ProjectEntity extends BaseEntity
+    implements Built<ProjectEntity, ProjectEntityBuilder> {
   static int counter = 0;
+
   factory ProjectEntity() {
     return _$ProjectEntity._(
-        id: --ProjectEntity.counter,
-        name: '',
-        clientId: 0,
-        taskRate: 0.0,
-        dueDate: '',
-        privateNotes: '',
-        budgetedHours: 0.0,
-        customValue1: '',
-        customValue2: '',
-        
-        updatedAt: 0,
-        archivedAt: 0,
-        isDeleted: false,
+      id: --ProjectEntity.counter,
+      name: '',
+      clientId: 0,
+      taskRate: 0.0,
+      dueDate: '',
+      privateNotes: '',
+      budgetedHours: 0.0,
+      customValue1: '',
+      customValue2: '',
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
+
   ProjectEntity._();
-  ProjectEntity get clone => rebuild((b) => b
-    ..id = --ProjectEntity.counter
-  );
+
+  ProjectEntity get clone => rebuild((b) => b..id = --ProjectEntity.counter);
 
   @override
   EntityType get entityType {
@@ -75,7 +81,7 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
 
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
-  
+
   @BuiltValueField(wireName: 'task_rate')
   double get taskRate;
 
@@ -97,7 +103,7 @@ abstract class ProjectEntity extends Object with BaseEntity implements Built<Pro
   int compareTo(ProjectEntity project, String sortField, bool sortAscending) {
     int response = 0;
     final ProjectEntity projectA = sortAscending ? this : project;
-    final ProjectEntity projectB = sortAscending ? project: this;
+    final ProjectEntity projectB = sortAscending ? project : this;
 
     switch (sortField) {
       case ProjectFields.taskRate:

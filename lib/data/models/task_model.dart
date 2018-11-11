@@ -6,24 +6,30 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'task_model.g.dart';
 
-abstract class TaskListResponse implements Built<TaskListResponse, TaskListResponseBuilder> {
+abstract class TaskListResponse
+    implements Built<TaskListResponse, TaskListResponseBuilder> {
+  factory TaskListResponse([void updates(TaskListResponseBuilder b)]) =
+      _$TaskListResponse;
 
-  factory TaskListResponse([void updates(TaskListResponseBuilder b)]) = _$TaskListResponse;
   TaskListResponse._();
 
   BuiltList<TaskEntity> get data;
 
-  static Serializer<TaskListResponse> get serializer => _$taskListResponseSerializer;
+  static Serializer<TaskListResponse> get serializer =>
+      _$taskListResponseSerializer;
 }
 
-abstract class TaskItemResponse implements Built<TaskItemResponse, TaskItemResponseBuilder> {
+abstract class TaskItemResponse
+    implements Built<TaskItemResponse, TaskItemResponseBuilder> {
+  factory TaskItemResponse([void updates(TaskItemResponseBuilder b)]) =
+      _$TaskItemResponse;
 
-  factory TaskItemResponse([void updates(TaskItemResponseBuilder b)]) = _$TaskItemResponse;
   TaskItemResponse._();
 
   TaskEntity get data;
 
-  static Serializer<TaskItemResponse> get serializer => _$taskItemResponseSerializer;
+  static Serializer<TaskItemResponse> get serializer =>
+      _$taskItemResponseSerializer;
 }
 
 class TaskFields {
@@ -36,38 +42,37 @@ class TaskFields {
   static const String isRunning = 'isRunning';
   static const String customValue1 = 'customValue1';
   static const String customValue2 = 'customValue2';
-  
+
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEntity, TaskEntityBuilder> {
-
-
+abstract class TaskEntity extends BaseEntity
+    implements Built<TaskEntity, TaskEntityBuilder> {
   static int counter = 0;
+
   factory TaskEntity() {
     return _$TaskEntity._(
-        id: --TaskEntity.counter,
-        description: '',
-        duration: 0,
-        invoiceId: 0,
-        clientId: 0,
-        projectId: 0,
-        timeLog: '',
-        isRunning: false,
-        customValue1: '',
-        customValue2: '',
-        
-        updatedAt: 0,
-        archivedAt: 0,
-        isDeleted: false,
+      id: --TaskEntity.counter,
+      description: '',
+      duration: 0,
+      invoiceId: 0,
+      clientId: 0,
+      projectId: 0,
+      timeLog: '',
+      isRunning: false,
+      customValue1: '',
+      customValue2: '',
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
+
   TaskEntity._();
-  TaskEntity get clone => rebuild((b) => b
-    ..id = --TaskEntity.counter
-  );
+
+  TaskEntity get clone => rebuild((b) => b..id = --TaskEntity.counter);
 
   @override
   EntityType get entityType {
@@ -80,7 +85,7 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
 
   @BuiltValueField(wireName: 'invoice_id')
   int get invoiceId;
-  
+
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 
@@ -102,7 +107,7 @@ abstract class TaskEntity extends Object with BaseEntity implements Built<TaskEn
   int compareTo(TaskEntity task, String sortField, bool sortAscending) {
     int response = 0;
     final TaskEntity taskA = sortAscending ? this : task;
-    final TaskEntity taskB = sortAscending ? task: this;
+    final TaskEntity taskB = sortAscending ? task : this;
 
     switch (sortField) {
       case TaskFields.duration:

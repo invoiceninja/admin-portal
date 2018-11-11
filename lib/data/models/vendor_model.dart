@@ -6,26 +6,31 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'vendor_model.g.dart';
 
-abstract class VendorListResponse implements Built<VendorListResponse, VendorListResponseBuilder> {
+abstract class VendorListResponse
+    implements Built<VendorListResponse, VendorListResponseBuilder> {
+  factory VendorListResponse([void updates(VendorListResponseBuilder b)]) =
+      _$VendorListResponse;
 
-  factory VendorListResponse([void updates(VendorListResponseBuilder b)]) = _$VendorListResponse;
   VendorListResponse._();
 
   BuiltList<VendorEntity> get data;
 
-  static Serializer<VendorListResponse> get serializer => _$vendorListResponseSerializer;
+  static Serializer<VendorListResponse> get serializer =>
+      _$vendorListResponseSerializer;
 }
 
-abstract class VendorItemResponse implements Built<VendorItemResponse, VendorItemResponseBuilder> {
+abstract class VendorItemResponse
+    implements Built<VendorItemResponse, VendorItemResponseBuilder> {
+  factory VendorItemResponse([void updates(VendorItemResponseBuilder b)]) =
+      _$VendorItemResponse;
 
-  factory VendorItemResponse([void updates(VendorItemResponseBuilder b)]) = _$VendorItemResponse;
   VendorItemResponse._();
 
   VendorEntity get data;
 
-  static Serializer<VendorItemResponse> get serializer => _$vendorItemResponseSerializer;
+  static Serializer<VendorItemResponse> get serializer =>
+      _$vendorItemResponseSerializer;
 }
-
 
 class VendorFields {
   static const String name = 'name';
@@ -46,47 +51,47 @@ class VendorFields {
   static const String currencyId = 'currencyId';
   static const String customValue1 = 'customValue1';
   static const String customValue2 = 'customValue2';
-  
+
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class VendorEntity extends Object with BaseEntity implements Built<VendorEntity, VendorEntityBuilder> {
-
+abstract class VendorEntity extends BaseEntity
+    implements Built<VendorEntity, VendorEntityBuilder> {
   static int counter = 0;
+
   factory VendorEntity() {
     return _$VendorEntity._(
-        id: --VendorEntity.counter,
-        name: '',
-        balance: 0.0,
-        paidToDate: 0.0,
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        postalCode: '',
-        countryId: 0,
-        workPhone: '',
-        privateNotes: '',
-        lastLogin: '',
-        website: '',
-        vatNumber: '',
-        idNumber: '',
-        currencyId: 0,
-        customValue1: '',
-        customValue2: '',
-        vendorContacts: BuiltList<VendorContactEntity>(),
-
-        updatedAt: 0,
-        archivedAt: 0,
-        isDeleted: false,
+      id: --VendorEntity.counter,
+      name: '',
+      balance: 0.0,
+      paidToDate: 0.0,
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      countryId: 0,
+      workPhone: '',
+      privateNotes: '',
+      lastLogin: '',
+      website: '',
+      vatNumber: '',
+      idNumber: '',
+      currencyId: 0,
+      customValue1: '',
+      customValue2: '',
+      vendorContacts: BuiltList<VendorContactEntity>(),
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
+
   VendorEntity._();
-  VendorEntity get clone => rebuild((b) => b
-    ..id = --VendorEntity.counter
-  );
+
+  VendorEntity get clone => rebuild((b) => b..id = --VendorEntity.counter);
 
   @override
   EntityType get entityType {
@@ -143,17 +148,16 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
   @BuiltValueField(wireName: 'vendor_contacts')
   BuiltList<VendorContactEntity> get vendorContacts;
 
-
   int compareTo(VendorEntity vendor, String sortField, bool sortAscending) {
     int response = 0;
     final VendorEntity vendorA = sortAscending ? this : vendor;
-    final VendorEntity vendorB = sortAscending ? vendor: this;
+    final VendorEntity vendorB = sortAscending ? vendor : this;
 
     switch (sortField) {
       case VendorFields.name:
         response = vendorA.name.compareTo(vendorB.name);
     }
-    
+
     return response;
   }
 
@@ -189,23 +193,24 @@ abstract class VendorEntity extends Object with BaseEntity implements Built<Vend
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }
 
-abstract class VendorContactEntity extends Object with BaseEntity implements Built<VendorContactEntity, VendorContactEntityBuilder> {
-
+abstract class VendorContactEntity extends BaseEntity
+    implements Built<VendorContactEntity, VendorContactEntityBuilder> {
   static int counter = 0;
+
   factory VendorContactEntity() {
     return _$VendorContactEntity._(
-        id: --VendorContactEntity.counter,
-        firstName: '',
-        lastName: '',
-        email: '',
-        isPrimary: false,
-        phone: '',
-        
-        updatedAt: 0,
-        archivedAt: 0,
-        isDeleted: false,
+      id: --VendorContactEntity.counter,
+      firstName: '',
+      lastName: '',
+      email: '',
+      isPrimary: false,
+      phone: '',
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
+
   VendorContactEntity._();
 
   @BuiltValueField(wireName: 'first_name')
@@ -250,5 +255,6 @@ abstract class VendorContactEntity extends Object with BaseEntity implements Bui
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  static Serializer<VendorContactEntity> get serializer => _$vendorContactEntitySerializer;
+  static Serializer<VendorContactEntity> get serializer =>
+      _$vendorContactEntitySerializer;
 }

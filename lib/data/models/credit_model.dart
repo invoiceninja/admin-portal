@@ -41,7 +41,7 @@ class CreditFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class CreditEntity extends Object with BaseEntity implements Built<CreditEntity, CreditEntityBuilder> {
+abstract class CreditEntity extends BaseEntity implements Built<CreditEntity, CreditEntityBuilder> {
 
   static int counter = 0;
   factory CreditEntity() {

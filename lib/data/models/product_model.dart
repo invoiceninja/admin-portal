@@ -43,8 +43,8 @@ class ProductFields {
   static const String customValue2 = 'customValue2';
 }
 
-abstract class ProductEntity extends Object
-    with BaseEntity, ConvertToInvoiceItem
+abstract class ProductEntity extends BaseEntity
+    with ConvertToInvoiceItem
     implements Built<ProductEntity, ProductEntityBuilder> {
   static int counter = 0;
   factory ProductEntity() {

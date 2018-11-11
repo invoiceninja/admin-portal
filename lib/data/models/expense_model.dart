@@ -62,8 +62,7 @@ class ExpenseFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class ExpenseEntity extends Object
-    with BaseEntity
+abstract class ExpenseEntity extends BaseEntity
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
 
   static int counter = 0;
@@ -210,8 +209,7 @@ abstract class ExpenseEntity extends Object
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 
-abstract class ExpenseCategoryEntity extends Object
-    with BaseEntity
+abstract class ExpenseCategoryEntity extends BaseEntity
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
 
   factory ExpenseCategoryEntity([void updates(ExpenseCategoryEntityBuilder b)]) =

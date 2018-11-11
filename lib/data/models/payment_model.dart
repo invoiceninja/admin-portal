@@ -51,8 +51,7 @@ class PaymentFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class PaymentEntity extends Object
-    with BaseEntity
+abstract class PaymentEntity extends BaseEntity
     implements Built<PaymentEntity, PaymentEntityBuilder> {
   static int counter = 0;
 
