@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:charts_common/common.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -112,33 +113,39 @@ class DashboardPanels extends StatelessWidget {
     final data = memoizedChartOutstandingInvoices(state.selectedCompany,
         settings, state.invoiceState.map, state.clientState.map);
 
+    if (settings.enableComparison) {
+      final offsetData = memoizedChartOutstandingInvoices(
+          state.selectedCompany,
+          settings.rebuild((b) => b..offset += 1),
+          state.invoiceState.map,
+          state.clientState.map);
+    }
+
     data.forEach((dataGroup) {
-      dataGroup.chartSeries = charts.Series<ChartMoneyData, DateTime>(
-        domainFn: (ChartMoneyData chartData, _) => chartData.date,
-        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-        colorFn: (ChartMoneyData chartData, _) =>
-            charts.MaterialPalette.blue.shadeDefault,
-        id: DashboardChart.PERIOD_CURRENT,
-        displayName: settings.enableComparison
-            ? localization.current
-            : localization.invoices,
-        data: dataGroup.rawSeries,
-      );
+      dataGroup.chartSeries = <Series<dynamic, DateTime>>[
+        charts.Series<ChartMoneyData, DateTime>(
+          domainFn: (ChartMoneyData chartData, _) => chartData.date,
+          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+          colorFn: (ChartMoneyData chartData, _) =>
+              charts.MaterialPalette.blue.shadeDefault,
+          id: DashboardChart.PERIOD_CURRENT,
+          displayName: settings.enableComparison
+              ? localization.current
+              : localization.invoices,
+          data: dataGroup.rawSeries,
+        )
+      ];
 
       if (settings.enableComparison) {
-        final offsetData = memoizedChartOutstandingInvoices(
-            state.selectedCompany,
-            settings.rebuild((b) => b..offset += 1),
-            state.invoiceState.map,
-            state.clientState.map);
-
+        /*
         final List<ChartMoneyData> previousData = [];
         for (int i = 0;
-            i < min(dataGroup.rawSeries.length, offsetData.length);
+            i < min(dataGroup.rawSeries.length, offsetData[index].length);
             i++) {
           previousData.add(ChartMoneyData(dataGroup.rawSeries[i].date,
               offsetData[data.indexOf(dataGroup)].rawSeries[i].amount));
         }
+        */
 
         /*
         dataGroup.chartSeries.add(

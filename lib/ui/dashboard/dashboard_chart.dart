@@ -56,6 +56,7 @@ class _DashboardChartState extends State<DashboardChart> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final color = state.uiState.enableDarkMode
@@ -65,7 +66,7 @@ class _DashboardChartState extends State<DashboardChart> {
     final series = widget.data[_selectedIndex];
 
     final chart = charts.TimeSeriesChart(
-      [series.chartSeries],
+      series.chartSeries,
       animate: true,
       selectionModels: [
         charts.SelectionModelConfig(
@@ -94,7 +95,7 @@ class _DashboardChartState extends State<DashboardChart> {
           padding: EdgeInsets.all(14.0),
           child: Text(
             widget.title,
-            style: Theme.of(context).textTheme.title,
+            style: theme.textTheme.title,
           ),
         ),
         Divider(height: 1.0),
@@ -130,20 +131,20 @@ class _DashboardChartState extends State<DashboardChart> {
                 });
               },
               child: Container(
-                color: isSelected ? Colors.blue : Theme.of(context).cardColor,
+                color: isSelected ? theme.accentColor : theme.cardColor,
                 padding: EdgeInsets.all(14.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(localization.lookup(dataGroup.name),
-                        style: Theme.of(context).textTheme.subhead.copyWith(
+                        style: theme.textTheme.subhead.copyWith(
                             color: isSelected ? Colors.white : null,
                             fontWeight: FontWeight.w400)),
                     SizedBox(height: 2.0),
                     Text(
                         formatNumber(dataGroup.total, context,
                             currencyId: widget.currencyId),
-                        style: Theme.of(context)
+                        style: theme
                             .textTheme
                             .headline
                             .copyWith(color: isSelected ? Colors.white : null)),
@@ -174,8 +175,8 @@ class _DashboardChartState extends State<DashboardChart> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Text(_subtitle,
-                          style: Theme.of(context).textTheme.subhead),
-                      Text(_title, style: Theme.of(context).textTheme.headline),
+                          style: theme.textTheme.subhead),
+                      Text(_title, style: theme.textTheme.headline),
                     ],
                   )
                 : Container(),
@@ -184,7 +185,7 @@ class _DashboardChartState extends State<DashboardChart> {
         SizedBox(
           height: 200.0,
           child: Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.all(14.0),
             child: chart,
           ),
         ),

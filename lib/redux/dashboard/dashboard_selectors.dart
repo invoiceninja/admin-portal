@@ -1,3 +1,4 @@
+import 'package:charts_common/common.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -9,7 +10,7 @@ class ChartDataGroup {
 
   final String name;
   final List<ChartMoneyData> rawSeries = [];
-  dynamic chartSeries;
+  List<Series<dynamic, DateTime>> chartSeries;
   double total = 0.0;
   double previousTotal = 0.0;
 }
