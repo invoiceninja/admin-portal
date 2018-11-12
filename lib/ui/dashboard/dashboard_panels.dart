@@ -112,8 +112,8 @@ class DashboardPanels extends StatelessWidget {
     final data = memoizedChartOutstandingInvoices(state.selectedCompany,
         settings, state.invoiceState.map, state.clientState.map);
 
-    final series = [
-      charts.Series<ChartMoneyData, DateTime>(
+    data.forEach((dataGroup) {
+      dataGroup.chartSeries = charts.Series<ChartMoneyData, DateTime>(
         domainFn: (ChartMoneyData chartData, _) => chartData.date,
         measureFn: (ChartMoneyData chartData, _) => chartData.amount,
         colorFn: (ChartMoneyData chartData, _) =>
@@ -122,49 +122,40 @@ class DashboardPanels extends StatelessWidget {
         displayName: settings.enableComparison
             ? localization.current
             : localization.invoices,
-        data: data,
-      ),
-    ];
-
-    double total = 0.0;
-    double previousTotal = 0.0;
-    data.forEach((dynamic item) {
-      total += item.amount;
-    });
-
-    if (settings.enableComparison) {
-      final offsetData = memoizedChartOutstandingInvoices(
-          state.selectedCompany,
-          settings.rebuild((b) => b..offset += 1),
-          state.invoiceState.map,
-          state.clientState.map);
-
-      final List<ChartMoneyData> previousData = [];
-      for (int i = 0; i < min(data.length, offsetData.length); i++) {
-        previousData.add(ChartMoneyData(data[i].date, offsetData[i].amount));
-      }
-
-      series.add(
-        charts.Series<ChartMoneyData, DateTime>(
-          domainFn: (ChartMoneyData chartData, _) => chartData.date,
-          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-          colorFn: (ChartMoneyData chartData, _) =>
-              charts.MaterialPalette.gray.shadeDefault,
-          id: DashboardChart.PERIOD_PREVIOUS,
-          displayName: localization.previous,
-          data: previousData,
-        ),
+        data: dataGroup.rawSeries,
       );
 
-      previousData.forEach((dynamic item) {
-        previousTotal += item.amount;
-      });
-    }
+      if (settings.enableComparison) {
+        final offsetData = memoizedChartOutstandingInvoices(
+            state.selectedCompany,
+            settings.rebuild((b) => b..offset += 1),
+            state.invoiceState.map,
+            state.clientState.map);
+
+        final List<ChartMoneyData> previousData = [];
+        for (int i = 0;
+            i < min(dataGroup.rawSeries.length, offsetData.length);
+            i++) {
+          previousData.add(ChartMoneyData(dataGroup.rawSeries[i].date,
+              offsetData[data.indexOf(dataGroup)].rawSeries[i].amount));
+        }
+
+        dataGroup.chartSeries.add(
+          charts.Series<ChartMoneyData, DateTime>(
+            domainFn: (ChartMoneyData chartData, _) => chartData.date,
+            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+            colorFn: (ChartMoneyData chartData, _) =>
+                charts.MaterialPalette.gray.shadeDefault,
+            id: DashboardChart.PERIOD_PREVIOUS,
+            displayName: localization.previous,
+            data: previousData,
+          ),
+        );
+      }
+    });
 
     return DashboardChart(
-      series: series,
-      amount: total,
-      previousAmount: previousTotal,
+      data: data,
       title: localization.invoices,
       currencyId: settings.currencyId > 0
           ? settings.currencyId
@@ -172,6 +163,7 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
+  /*
   Widget _paymentChart(BuildContext context) {
     if (!viewModel.state.paymentState.isLoaded) {
       return LoadingIndicator(useCard: true);
@@ -324,6 +316,7 @@ class DashboardPanels extends StatelessWidget {
           : state.selectedCompany.currencyId,
     );
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -335,8 +328,8 @@ class DashboardPanels extends StatelessWidget {
               height: 74.0,
             ),
             _invoiceChart(context),
-            _paymentChart(context),
-            _quoteChart(context),
+            //_paymentChart(context),
+            //_quoteChart(context),
           ],
         ),
         ConstrainedBox(

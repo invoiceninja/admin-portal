@@ -4,6 +4,15 @@ import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
+class ChartDataGroup {
+  ChartDataGroup(this.name);
+
+  final String name;
+  final List<ChartMoneyData> rawSeries = [];
+  dynamic chartSeries;
+  double total = 0.0;
+}
+
 class ChartMoneyData {
   ChartMoneyData(this.date, this.amount);
 
@@ -32,14 +41,17 @@ var memoizedChartOutstandingQuotes = memo4((CompanyEntity company,
         clientMap: clientMap,
         isQuote: true));
 
-List<ChartMoneyData> chartOutstandingInvoices({
+List<ChartDataGroup> chartOutstandingInvoices({
   CompanyEntity company,
   DashboardUIState settings,
   BuiltMap<int, InvoiceEntity> invoiceMap,
   BuiltMap<int, ClientEntity> clientMap,
   bool isQuote = false,
 }) {
-  final Map<String, double> totals = {};
+  final Map<String, Map<String, double>> totals = {};
+
+  const STATUS_ACTIVE = 'active';
+  const STATUS_OUTSTANDING = 'outstanding';
 
   invoiceMap.forEach((int, invoice) {
     final client =
@@ -61,25 +73,40 @@ List<ChartMoneyData> chartOutstandingInvoices({
       // skip it
     } else {
       if (totals[invoice.invoiceDate] == null) {
-        totals[invoice.invoiceDate] = 0.0;
+        totals[STATUS_ACTIVE][invoice.invoiceDate] = 0.0;
+        totals[STATUS_OUTSTANDING][invoice.invoiceDate] = 0.0;
       }
-      totals[invoice.invoiceDate] += invoice.amount;
+
+      totals[STATUS_ACTIVE][invoice.invoiceDate] += invoice.amount;
+      totals[STATUS_OUTSTANDING][invoice.invoiceDate] += invoice.balance;
     }
   });
 
-  final List<ChartMoneyData> data = [];
+  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
+  final ChartDataGroup outstandingData = ChartDataGroup(STATUS_OUTSTANDING);
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
+
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
-    if (totals.containsKey(key)) {
-      data.add(ChartMoneyData(date, totals[key]));
+    if (totals[STATUS_ACTIVE].containsKey(key)) {
+      activeData.rawSeries.add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
+      activeData.total += totals[STATUS_ACTIVE][key];
+      outstandingData.rawSeries
+          .add(ChartMoneyData(date, totals[STATUS_OUTSTANDING][key]));
+      outstandingData.total += totals[STATUS_OUTSTANDING][key];
     } else {
-      data.add(ChartMoneyData(date, 0.0));
+      activeData.rawSeries.add(ChartMoneyData(date, 0.0));
+      outstandingData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
     date = date.add(Duration(days: 1));
   }
+
+  final List<ChartDataGroup> data = [
+    activeData,
+    outstandingData,
+  ];
 
   return data;
 }

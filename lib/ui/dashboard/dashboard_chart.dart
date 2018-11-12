@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class DashboardChart extends StatefulWidget {
   const DashboardChart(
-      {this.series,
-      this.amount,
-      this.previousAmount,
+      {this.data,
       this.title,
       this.currencyId});
 
-  final List<charts.Series> series;
-  final double previousAmount;
-  final double amount;
+  final List<ChartDataGroup> data;
   final String title;
   final int currencyId;
 
@@ -66,6 +63,7 @@ class _DashboardChartState extends State<DashboardChart> {
         ? charts.MaterialPalette.white
         : charts.MaterialPalette.gray.shade700;
 
+    /*
     final chart = charts.TimeSeriesChart(
       widget.series,
       animate: true,
@@ -109,6 +107,7 @@ class _DashboardChartState extends State<DashboardChart> {
     final String changeString = widget.amount == 0 || widget.previousAmount == 0
         ? ''
         : '$changeAmount ($changePercent)';
+    */
 
     return FormCard(
       children: <Widget>[
@@ -116,6 +115,7 @@ class _DashboardChartState extends State<DashboardChart> {
           padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 4.0),
           child: Column(
             children: <Widget>[
+              Text(widget.title,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -125,6 +125,7 @@ class _DashboardChartState extends State<DashboardChart> {
                       children: <Widget>[
                         Text(widget.title,
                             style: Theme.of(context).textTheme.subhead),
+                        /*
                         Text(
                             formatNumber(widget.amount, context,
                                 currencyId: widget.currencyId),
@@ -138,6 +139,7 @@ class _DashboardChartState extends State<DashboardChart> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        */
                       ],
                     ),
                   ),
@@ -158,7 +160,7 @@ class _DashboardChartState extends State<DashboardChart> {
                 height: 200.0,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10.0),
-                  child: chart,
+                  //child: chart,
                 ),
               ),
             ],
