@@ -194,13 +194,24 @@ class _DashboardChartState extends State<DashboardChart> {
             child: chart,
           ),
         ),
-        (series.average ?? 0) > 0
-            ? Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Text(formatNumber(series.average, context,
-                    currencyId: widget.currencyId)),
-              )
-            : SizedBox(),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: (series.average ?? 0) > 0
+                  ? Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: Text(
+                          localization.average +
+                              ' ' +
+                              formatNumber(series.average, context,
+                                  currencyId: widget.currencyId),
+                          style: theme.textTheme.subhead),
+                    )
+                  : SizedBox(),
+            )
+          ],
+        ),
       ],
     );
   }

@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
           'Please authenticate to change this setting',
@@ -9144,6 +9145,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get average => _localizedValues[locale.languageCode]['average'];
 
   String get unapproved => _localizedValues[locale.languageCode]['unapproved'];
 
