@@ -23,6 +23,7 @@ class DashboardChart extends StatefulWidget {
 class _DashboardChartState extends State<DashboardChart> {
   String _title;
   String _subtitle;
+  int _selectedIndex = 0;
 
   void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
@@ -99,11 +100,11 @@ class _DashboardChartState extends State<DashboardChart> {
         ),
         Row(
           children: widget.data.map((dataGroup) {
-            final bool isIncrease =
-                dataGroup.total >= dataGroup.previousTotal;
+            final bool isSelected =
+                widget.data.indexOf(dataGroup) == _selectedIndex;
+            final bool isIncrease = dataGroup.total >= dataGroup.previousTotal;
             final String changeAmount = (isIncrease ? '+' : '') +
-                formatNumber(
-                    dataGroup.total - dataGroup.previousTotal, context,
+                formatNumber(dataGroup.total - dataGroup.previousTotal, context,
                     currencyId: widget.currencyId);
             final changePercent = (isIncrease ? '+' : '-') +
                 formatNumber(
@@ -123,25 +124,35 @@ class _DashboardChartState extends State<DashboardChart> {
                     : '$changeAmount ($changePercent)';
 
             return Container(
-              color: Colors.blue,
+              color: isSelected ? Colors.blue : Colors.white,
               padding: EdgeInsets.all(14.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(localization.lookup(dataGroup.name),
-                      style: Theme.of(context).textTheme.subhead),
+                      style: Theme.of(context).textTheme.subhead.copyWith(
+                          color: isSelected ? Colors.white : null,
+                          fontWeight: FontWeight.w400)),
+                  SizedBox(height: 2.0),
                   Text(
                       formatNumber(dataGroup.total, context,
                           currencyId: widget.currencyId),
-                      style: Theme.of(context).textTheme.headline),
-                  changeString.isNotEmpty ? Text(
-                    changeString,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: isIncrease ? Colors.green : Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ) : SizedBox(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline
+                          .copyWith(color: isSelected ? Colors.white : null)),
+                  changeString.isNotEmpty
+                      ? Text(
+                          changeString,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: isSelected
+                                ? Colors.white
+                                : (isIncrease ? Colors.green : Colors.red),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             );
@@ -180,8 +191,7 @@ class _DashboardChartState extends State<DashboardChart> {
                     children: <Widget>[
                       Text(_subtitle,
                           style: Theme.of(context).textTheme.subhead),
-                      Text(_title,
-                          style: Theme.of(context).textTheme.headline),
+                      Text(_title, style: Theme.of(context).textTheme.headline),
                     ],
                   )
                 : Container(),
