@@ -128,6 +128,7 @@ List<ChartDataGroup> chartQuotes({
   const STATUS_APPROVED = 'approved';
   const STATUS_UNAPPROVED = 'unapproved';
 
+  int count = 0;
   final Map<String, Map<String, double>> totals = {
     STATUS_ACTIVE: {},
     STATUS_APPROVED: {},
@@ -162,6 +163,7 @@ List<ChartDataGroup> chartQuotes({
       } else {
         totals[STATUS_UNAPPROVED][quote.invoiceDate] += quote.amount;
       }
+      count++;
     }
   });
 
@@ -192,6 +194,10 @@ List<ChartDataGroup> chartQuotes({
     date = date.add(Duration(days: 1));
   }
 
+  activeData.average = activeData.total / count;
+  approvedData.average = approvedData.total / count;
+  unapprovedData.average = unapprovedData.total / count;
+
   final List<ChartDataGroup> data = [
     activeData,
     approvedData,
@@ -218,6 +224,7 @@ List<ChartDataGroup> chartPayments(
   const STATUS_ACTIVE = 'active';
   const STATUS_REFUNDED = 'refunded';
 
+  int count = 0;
   final Map<String, Map<String, double>> totals = {
     STATUS_ACTIVE: {},
     STATUS_REFUNDED: {},
@@ -245,6 +252,7 @@ List<ChartDataGroup> chartPayments(
       }
       totals[STATUS_ACTIVE][payment.paymentDate] += payment.completedAmount;
       totals[STATUS_REFUNDED][payment.paymentDate] += payment.refunded;
+      count++;
     }
   });
 
@@ -269,6 +277,9 @@ List<ChartDataGroup> chartPayments(
     }
     date = date.add(Duration(days: 1));
   }
+
+  activeData.average = activeData.total / count;
+  refundedData.average = refundedData.total / count;
 
   final List<ChartDataGroup> data = [
     activeData,
