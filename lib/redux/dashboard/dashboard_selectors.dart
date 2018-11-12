@@ -97,8 +97,8 @@ List<ChartDataGroup> chartInvoices({
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average = activeData.total ?? 0 / count;
-  outstandingData.average = outstandingData.total ?? 0 / count;
+  activeData.average = (activeData.total ?? 0) / count;
+  outstandingData.average = (outstandingData.total ?? 0) / count;
 
   final List<ChartDataGroup> data = [
     activeData,
@@ -194,9 +194,9 @@ List<ChartDataGroup> chartQuotes({
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average = activeData.total ?? 0 / count;
-  approvedData.average = approvedData.total ?? 0 / count;
-  unapprovedData.average = unapprovedData.total ?? 0 / count;
+  activeData.average = (activeData.total ?? 0) / count;
+  approvedData.average = (approvedData.total ?? 0) / count;
+  unapprovedData.average = (unapprovedData.total ?? 0) / count;
 
   final List<ChartDataGroup> data = [
     activeData,
@@ -278,8 +278,8 @@ List<ChartDataGroup> chartPayments(
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average = activeData.total ?? 0 / count;
-  refundedData.average = refundedData.total ?? 0 / count;
+  activeData.average = (activeData.total ?? 0) / count;
+  refundedData.average = (refundedData.total ?? 0) / count;
 
   final List<ChartDataGroup> data = [
     activeData,
