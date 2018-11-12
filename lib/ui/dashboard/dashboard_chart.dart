@@ -180,25 +180,26 @@ class _DashboardChartState extends State<DashboardChart> {
             child: chart,
           ),
         ),
-        Padding(
+        Container(
+          color: theme.backgroundColor,
           padding: const EdgeInsets.all(14.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Expanded(
-                child: (series.average ?? 0) > 0
-                    ? Text(
+                child: Text(
                         localization.average +
-                            ' ' +
+                            ': ' +
                             formatNumber(series.average, context,
                                 currencyId: widget.currencyId),
-                        style: theme.textTheme.subhead)
-                    : SizedBox(),
+                        style:
+                            theme.textTheme.subtitle.copyWith(fontSize: 16.0),
+                      ),
               ),
               _selected != null
                   ? Text(
                       _selected,
-                      style: theme.textTheme.subhead,
+                      style: theme.textTheme.subtitle.copyWith(fontSize: 16.0),
                     )
                   : SizedBox(),
             ],
