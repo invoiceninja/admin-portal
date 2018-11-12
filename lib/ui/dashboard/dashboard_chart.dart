@@ -110,7 +110,8 @@ class _DashboardChartState extends State<DashboardChart> {
               final bool isSelected = index == _selectedIndex;
               final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
               final String changeAmount = (isIncrease ? '+' : '') +
-                  formatNumber(dataGroup.total - dataGroup.previousTotal, context,
+                  formatNumber(
+                      dataGroup.total - dataGroup.previousTotal, context,
                       currencyId: widget.currencyId);
               final changePercent = (isIncrease ? '+' : '-') +
                   formatNumber(
@@ -150,8 +151,8 @@ class _DashboardChartState extends State<DashboardChart> {
                       Text(
                           formatNumber(dataGroup.total, context,
                               currencyId: widget.currencyId),
-                          style: theme.textTheme.headline
-                              .copyWith(color: isSelected ? Colors.white : null)),
+                          style: theme.textTheme.headline.copyWith(
+                              color: isSelected ? Colors.white : null)),
                       changeString.isNotEmpty
                           ? Text(
                               changeString,
@@ -192,6 +193,11 @@ class _DashboardChartState extends State<DashboardChart> {
             padding: const EdgeInsets.all(14.0),
             child: chart,
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Text(formatNumber(series.average, context,
+              currencyId: widget.currencyId)),
         ),
       ],
     );

@@ -1,5 +1,4 @@
 import 'package:charts_common/common.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -13,6 +12,7 @@ class ChartDataGroup {
   final List<ChartMoneyData> rawSeries = [];
   List<Series<dynamic, DateTime>> chartSeries;
   double total = 0.0;
+  double average = 0.0;
   double previousTotal = 0.0;
 }
 
@@ -42,6 +42,7 @@ List<ChartDataGroup> chartInvoices({
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
 
+  int count = 0;
   final Map<String, Map<String, double>> totals = {
     STATUS_ACTIVE: {},
     STATUS_OUTSTANDING: {},
@@ -70,6 +71,7 @@ List<ChartDataGroup> chartInvoices({
       }
       totals[STATUS_ACTIVE][invoice.invoiceDate] += invoice.amount;
       totals[STATUS_OUTSTANDING][invoice.invoiceDate] += invoice.balance;
+      count++;
     }
   });
 
@@ -94,6 +96,9 @@ List<ChartDataGroup> chartInvoices({
     }
     date = date.add(Duration(days: 1));
   }
+
+  activeData.average = activeData.total / count;
+  outstandingData.average = outstandingData.total / count;
 
   final List<ChartDataGroup> data = [
     activeData,
