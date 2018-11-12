@@ -100,7 +100,7 @@ class _DashboardChartState extends State<DashboardChart> {
         Divider(height: 1.0),
         Container(
           width: double.infinity,
-          height: state.dashboardUIState.enableComparison ? 100 : 78,
+          height: state.dashboardUIState.enableComparison ? 106 : 86,
           child: ListView(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -139,7 +139,7 @@ class _DashboardChartState extends State<DashboardChart> {
                 },
                 child: Container(
                   color: isSelected ? Colors.blue : theme.cardColor,
-                  padding: EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -147,12 +147,13 @@ class _DashboardChartState extends State<DashboardChart> {
                           style: theme.textTheme.subhead.copyWith(
                               color: isSelected ? Colors.white : null,
                               fontWeight: FontWeight.w400)),
-                      SizedBox(height: 2.0),
+                      SizedBox(height: 4.0),
                       Text(
                           formatNumber(dataGroup.total, context,
                               currencyId: widget.currencyId),
                           style: theme.textTheme.headline.copyWith(
                               color: isSelected ? Colors.white : null)),
+                      SizedBox(height: 2.0),
                       changeString.isNotEmpty
                           ? Text(
                               changeString,
@@ -176,13 +177,13 @@ class _DashboardChartState extends State<DashboardChart> {
         SizedBox(
           height: 250.0,
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: const EdgeInsets.all(16.0),
             child: chart,
           ),
         ),
         Container(
           color: theme.backgroundColor,
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.all(16.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
