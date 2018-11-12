@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -92,109 +91,133 @@ class _DashboardChartState extends State<DashboardChart> {
     return FormCard(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 4.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                widget.title,
-                style: Theme.of(context).textTheme.title,
-              ),
-              Row(
-                children: widget.data.map((dataGroup) {
-                  final bool isIncrease = dataGroup.total >= dataGroup.previousTotal;
-                  final String changeAmount = (isIncrease ? '+' : '') +
-                      formatNumber(dataGroup.total - dataGroup.previousTotal, context,
-                          currencyId: widget.currencyId);
-                  final changePercent = (isIncrease ? '+' : '-') +
-                      formatNumber(
-                          dataGroup.total != 0 && dataGroup.previousTotal != 0
-                              ? round(
-                              (dataGroup.total - dataGroup.previousTotal) /
-                                  dataGroup.previousTotal *
-                                  100,
-                              2)
-                              : 0.0,
-                          context,
-                          formatNumberType: FormatNumberType.percent,
-                          currencyId: widget.currencyId);
-                  final String changeString = dataGroup.total == 0 || dataGroup.previousTotal == 0
-                      ? ''
-                      : '$changeAmount ($changePercent)';
+          padding: EdgeInsets.all(14.0),
+          child: Text(
+            widget.title,
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
+        Row(
+          children: widget.data.map((dataGroup) {
+            final bool isIncrease =
+                dataGroup.total >= dataGroup.previousTotal;
+            final String changeAmount = (isIncrease ? '+' : '') +
+                formatNumber(
+                    dataGroup.total - dataGroup.previousTotal, context,
+                    currencyId: widget.currencyId);
+            final changePercent = (isIncrease ? '+' : '-') +
+                formatNumber(
+                    dataGroup.total != 0 && dataGroup.previousTotal != 0
+                        ? round(
+                            (dataGroup.total - dataGroup.previousTotal) /
+                                dataGroup.previousTotal *
+                                100,
+                            2)
+                        : 0.0,
+                    context,
+                    formatNumberType: FormatNumberType.percent,
+                    currencyId: widget.currencyId);
+            final String changeString =
+                dataGroup.total == 0 || dataGroup.previousTotal == 0
+                    ? ''
+                    : '$changeAmount ($changePercent)';
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(localization .lookup(dataGroup.name),
-                          style: Theme.of(context).textTheme.subhead),
-                      Text(
-                          formatNumber(dataGroup.total, context,
-                              currencyId: widget.currencyId),
-                          style: Theme.of(context).textTheme.headline),
-                      SizedBox(width: 12.0),
-                      Text(
-                        changeString,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: isIncrease ? Colors.green : Colors.red,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  );
-                }).toList(),
-              ),
-              Row(
+            return Container(
+              color: Colors.blue,
+              padding: EdgeInsets.all(14.0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  /*
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(widget.title,
-                            style: Theme.of(context).textTheme.subhead),
-                        Text(
-                            formatNumber(widget.amount, context,
-                                currencyId: widget.currencyId),
-                            style: Theme.of(context).textTheme.headline),
-                        SizedBox(width: 12.0),
-                        Text(
-                          changeString,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: isIncrease ? Colors.green : Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                  Text(localization.lookup(dataGroup.name),
+                      style: Theme.of(context).textTheme.subhead),
+                  Text(
+                      formatNumber(dataGroup.total, context,
+                          currencyId: widget.currencyId),
+                      style: Theme.of(context).textTheme.headline),
+                  changeString.isNotEmpty ? Text(
+                    changeString,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: isIncrease ? Colors.green : Colors.red,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  */
-                  _title != null
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(_subtitle,
-                                style: Theme.of(context).textTheme.subhead),
-                            Text(_title,
-                                style: Theme.of(context).textTheme.headline),
-                          ],
-                        )
-                      : Container(),
+                  ) : SizedBox(),
                 ],
               ),
-              SizedBox(
-                height: 200.0,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  //child: chart,
-                ),
+            );
+          }).toList(),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            /*
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(widget.title,
+                      style: Theme.of(context).textTheme.subhead),
+                  Text(
+                      formatNumber(widget.amount, context,
+                          currencyId: widget.currencyId),
+                      style: Theme.of(context).textTheme.headline),
+                  SizedBox(width: 12.0),
+                  Text(
+                    changeString,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: isIncrease ? Colors.green : Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
+            */
+            _title != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text(_subtitle,
+                          style: Theme.of(context).textTheme.subhead),
+                      Text(_title,
+                          style: Theme.of(context).textTheme.headline),
+                    ],
+                  )
+                : Container(),
+          ],
+        ),
+        SizedBox(
+          height: 200.0,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            //child: chart,
           ),
-        )
+        ),
       ],
+    );
+  }
+}
+
+class FormCard extends StatelessWidget {
+  const FormCard({
+    Key key,
+    @required this.children,
+  }) : super(key: key);
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Card(
+        elevation: 4.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children,
+        ),
+      ),
     );
   }
 }
