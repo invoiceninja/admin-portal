@@ -99,71 +99,77 @@ class _DashboardChartState extends State<DashboardChart> {
           ),
         ),
         Divider(height: 1.0),
-        Row(
-          children: widget.data.map((dataGroup) {
-            final int index = widget.data.indexOf(dataGroup);
-            final bool isSelected = index == _selectedIndex;
-            final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
-            final String changeAmount = (isIncrease ? '+' : '') +
-                formatNumber(dataGroup.total - dataGroup.previousTotal, context,
-                    currencyId: widget.currencyId);
-            final changePercent = (isIncrease ? '+' : '-') +
-                formatNumber(
-                    dataGroup.total != 0 && dataGroup.previousTotal != 0
-                        ? round(
-                            (dataGroup.total - dataGroup.previousTotal) /
-                                dataGroup.previousTotal *
-                                100,
-                            2)
-                        : 0.0,
-                    context,
-                    formatNumberType: FormatNumberType.percent,
-                    currencyId: widget.currencyId);
-            final String changeString = dataGroup.total == 0 ||
-                    dataGroup.previousTotal == 0 ||
-                    dataGroup.total == dataGroup.previousTotal
-                ? (state.dashboardUIState.enableComparison ? ' ' : '')
-                : '$changeAmount ($changePercent)';
+        Container(
+          width: double.infinity,
+          height: 100,
+          child: ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            children: widget.data.map((dataGroup) {
+              final int index = widget.data.indexOf(dataGroup);
+              final bool isSelected = index == _selectedIndex;
+              final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
+              final String changeAmount = (isIncrease ? '+' : '') +
+                  formatNumber(dataGroup.total - dataGroup.previousTotal, context,
+                      currencyId: widget.currencyId);
+              final changePercent = (isIncrease ? '+' : '-') +
+                  formatNumber(
+                      dataGroup.total != 0 && dataGroup.previousTotal != 0
+                          ? round(
+                              (dataGroup.total - dataGroup.previousTotal) /
+                                  dataGroup.previousTotal *
+                                  100,
+                              2)
+                          : 0.0,
+                      context,
+                      formatNumberType: FormatNumberType.percent,
+                      currencyId: widget.currencyId);
+              final String changeString = dataGroup.total == 0 ||
+                      dataGroup.previousTotal == 0 ||
+                      dataGroup.total == dataGroup.previousTotal
+                  ? (state.dashboardUIState.enableComparison ? ' ' : '')
+                  : '$changeAmount ($changePercent)';
 
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              child: Container(
-                color: isSelected ? theme.accentColor : theme.cardColor,
-                padding: EdgeInsets.all(14.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(localization.lookup(dataGroup.name),
-                        style: theme.textTheme.subhead.copyWith(
-                            color: isSelected ? Colors.white : null,
-                            fontWeight: FontWeight.w400)),
-                    SizedBox(height: 2.0),
-                    Text(
-                        formatNumber(dataGroup.total, context,
-                            currencyId: widget.currencyId),
-                        style: theme.textTheme.headline
-                            .copyWith(color: isSelected ? Colors.white : null)),
-                    changeString.isNotEmpty
-                        ? Text(
-                            changeString,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: isSelected
-                                  ? Colors.white
-                                  : (isIncrease ? Colors.green : Colors.red),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        : SizedBox(),
-                  ],
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+                child: Container(
+                  color: isSelected ? theme.accentColor : theme.cardColor,
+                  padding: EdgeInsets.all(14.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(localization.lookup(dataGroup.name),
+                          style: theme.textTheme.subhead.copyWith(
+                              color: isSelected ? Colors.white : null,
+                              fontWeight: FontWeight.w400)),
+                      SizedBox(height: 2.0),
+                      Text(
+                          formatNumber(dataGroup.total, context,
+                              currencyId: widget.currencyId),
+                          style: theme.textTheme.headline
+                              .copyWith(color: isSelected ? Colors.white : null)),
+                      changeString.isNotEmpty
+                          ? Text(
+                              changeString,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: isSelected
+                                    ? Colors.white
+                                    : (isIncrease ? Colors.green : Colors.red),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
         Divider(height: 1.0),
         Row(

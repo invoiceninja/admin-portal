@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
           'Please authenticate to change this setting',
       'locked': 'Locked',
@@ -9143,6 +9144,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get unapproved => _localizedValues[locale.languageCode]['unapproved'];
 
   String get authenticateToChangeSetting =>
       _localizedValues[locale.languageCode]['authenticate_to_change_setting'];
