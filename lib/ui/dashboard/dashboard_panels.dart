@@ -101,8 +101,13 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
-  Widget _invoiceChart(BuildContext context) {
-    if (!viewModel.state.invoiceState.isLoaded) {
+  Widget _buildChart(
+      {BuildContext context,
+      String title,
+      List<ChartDataGroup> currentData,
+      List<ChartDataGroup> previousData,
+      bool isLoaded}) {
+    if (!isLoaded) {
       return LoadingIndicator(useCard: true);
     }
 
@@ -110,20 +115,8 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
 
-    final data = memoizedChartInvoices(state.selectedCompany,
-        settings, state.invoiceState.map, state.clientState.map);
-
-    List<ChartDataGroup> offsetData;
-    if (settings.enableComparison) {
-      offsetData = memoizedChartInvoices(
-          state.selectedCompany,
-          settings.rebuild((b) => b..offset += 1),
-          state.invoiceState.map,
-          state.clientState.map);
-    }
-
-    data.forEach((dataGroup) {
-      final index = data.indexOf(dataGroup);
+    currentData.forEach((dataGroup) {
+      final index = currentData.indexOf(dataGroup);
       dataGroup.chartSeries = <Series<dynamic, DateTime>>[
         charts.Series<ChartMoneyData, DateTime>(
           domainFn: (ChartMoneyData chartData, _) => chartData.date,
@@ -131,25 +124,23 @@ class DashboardPanels extends StatelessWidget {
           colorFn: (ChartMoneyData chartData, _) =>
               charts.MaterialPalette.blue.shadeDefault,
           id: DashboardChart.PERIOD_CURRENT,
-          displayName: settings.enableComparison
-              ? localization.current
-              : localization.invoices,
+          displayName: settings.enableComparison ? localization.current : title,
           data: dataGroup.rawSeries,
         )
       ];
 
       if (settings.enableComparison) {
-        final List<ChartMoneyData> previousData = [];
+        final List<ChartMoneyData> previous = [];
         final currentSeries = dataGroup.rawSeries;
-        final offsetSeries = offsetData[index].rawSeries;
+        final previousSeries = previousData[index].rawSeries;
 
-        dataGroup.previousTotal = offsetData[index].total;
+        dataGroup.previousTotal = previousData[index].total;
 
         for (int i = 0;
-            i < min(currentSeries.length, offsetSeries.length);
+            i < min(currentSeries.length, previousSeries.length);
             i++) {
-          previousData.add(ChartMoneyData(currentSeries[i].date,
-              offsetSeries[i].amount));
+          previous.add(
+              ChartMoneyData(currentSeries[i].date, previousSeries[i].amount));
         }
 
         dataGroup.chartSeries.add(
@@ -160,40 +151,59 @@ class DashboardPanels extends StatelessWidget {
                 charts.MaterialPalette.gray.shadeDefault,
             id: DashboardChart.PERIOD_PREVIOUS,
             displayName: localization.previous,
-            data: previousData,
+            data: previous,
           ),
         );
       }
     });
 
     return DashboardChart(
-      data: data,
-      title: localization.invoices,
+      data: currentData,
+      title: title,
       currencyId: settings.currencyId > 0
           ? settings.currencyId
           : state.selectedCompany.currencyId,
     );
   }
 
-  Widget _paymentChart(BuildContext context) {
-    if (!viewModel.state.paymentState.isLoaded) {
-      return LoadingIndicator(useCard: true);
-    }
-
-    final localization = AppLocalization.of(context);
+  Widget _invoiceChart(BuildContext context) {
+    final isLoaded = viewModel.state.invoiceState.isLoaded;
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
+    final currentData = memoizedChartInvoices(state.selectedCompany, settings,
+        state.invoiceState.map, state.clientState.map);
 
-    final data = memoizedChartPayments(
+    List<ChartDataGroup> previousData;
+    if (settings.enableComparison) {
+      previousData = memoizedChartInvoices(
+          state.selectedCompany,
+          settings.rebuild((b) => b..offset += 1),
+          state.invoiceState.map,
+          state.clientState.map);
+    }
+
+    return _buildChart(
+        context: context,
+        currentData: currentData,
+        previousData: previousData,
+        isLoaded: isLoaded,
+        title: AppLocalization.of(context).invoices);
+  }
+
+  Widget _paymentChart(BuildContext context) {
+    final isLoaded = viewModel.state.paymentState.isLoaded;
+    final settings = viewModel.dashboardUIState;
+    final state = viewModel.state;
+    final currentData = memoizedChartPayments(
         state.selectedCompany,
         settings,
         state.invoiceState.map,
         state.clientState.map,
         viewModel.state.paymentState.map);
 
-    List<ChartDataGroup> offsetData;
+    List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
-      offsetData = memoizedChartPayments(
+      previousData = memoizedChartPayments(
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
@@ -201,135 +211,36 @@ class DashboardPanels extends StatelessWidget {
           viewModel.state.paymentState.map);
     }
 
-    data.forEach((dataGroup) {
-      final index = data.indexOf(dataGroup);
-      dataGroup.chartSeries = <Series<dynamic, DateTime>>[
-        charts.Series<ChartMoneyData, DateTime>(
-          domainFn: (ChartMoneyData chartData, _) => chartData.date,
-          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-          colorFn: (ChartMoneyData chartData, _) =>
-          charts.MaterialPalette.blue.shadeDefault,
-          id: DashboardChart.PERIOD_CURRENT,
-          displayName: settings.enableComparison
-              ? localization.current
-              : localization.payments,
-          data: dataGroup.rawSeries,
-        )
-      ];
-
-      if (settings.enableComparison) {
-        final List<ChartMoneyData> previousData = [];
-        final currentSeries = dataGroup.rawSeries;
-        final offsetSeries = offsetData[index].rawSeries;
-
-        dataGroup.previousTotal = offsetData[index].total;
-
-        for (int i = 0;
-        i < min(currentSeries.length, offsetSeries.length);
-        i++) {
-          previousData.add(ChartMoneyData(currentSeries[i].date,
-              offsetSeries[i].amount));
-        }
-
-        dataGroup.chartSeries.add(
-          charts.Series<ChartMoneyData, DateTime>(
-            domainFn: (ChartMoneyData chartData, _) => chartData.date,
-            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-            colorFn: (ChartMoneyData chartData, _) =>
-            charts.MaterialPalette.gray.shadeDefault,
-            id: DashboardChart.PERIOD_PREVIOUS,
-            displayName: localization.previous,
-            data: previousData,
-          ),
-        );
-      }
-    });
-
-    return DashboardChart(
-      data: data,
-      title: localization.payments,
-      currencyId: settings.currencyId > 0
-          ? settings.currencyId
-          : state.selectedCompany.currencyId,
-    );
+    return _buildChart(
+        context: context,
+        currentData: currentData,
+        previousData: previousData,
+        isLoaded: isLoaded,
+        title: AppLocalization.of(context).payments);
   }
 
   Widget _quoteChart(BuildContext context) {
-    if (!viewModel.state.quoteState.isLoaded) {
-      return LoadingIndicator(useCard: true);
-    }
-
-    if (viewModel.state.quoteState.list.isEmpty) {
-      return Container();
-    }
-
-    final localization = AppLocalization.of(context);
+    final isLoaded = viewModel.state.quoteState.isLoaded;
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
+    final currentData = memoizedChartQuotes(state.selectedCompany, settings,
+        state.quoteState.map, state.clientState.map);
 
-    final data = memoizedChartQuotes(state.selectedCompany,
-        settings, state.quoteState.map, state.clientState.map);
-
-    List<ChartDataGroup> offsetData;
+    List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
-      offsetData = memoizedChartQuotes(
+      previousData = memoizedChartQuotes(
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.quoteState.map,
           state.clientState.map);
     }
 
-    data.forEach((dataGroup) {
-      final index = data.indexOf(dataGroup);
-      dataGroup.chartSeries = <Series<dynamic, DateTime>>[
-        charts.Series<ChartMoneyData, DateTime>(
-          domainFn: (ChartMoneyData chartData, _) => chartData.date,
-          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-          colorFn: (ChartMoneyData chartData, _) =>
-          charts.MaterialPalette.blue.shadeDefault,
-          id: DashboardChart.PERIOD_CURRENT,
-          displayName: settings.enableComparison
-              ? localization.current
-              : localization.quotes,
-          data: dataGroup.rawSeries,
-        )
-      ];
-
-      if (settings.enableComparison) {
-        final List<ChartMoneyData> previousData = [];
-        final currentSeries = dataGroup.rawSeries;
-        final offsetSeries = offsetData[index].rawSeries;
-
-        dataGroup.previousTotal = offsetData[index].total;
-
-        for (int i = 0;
-        i < min(currentSeries.length, offsetSeries.length);
-        i++) {
-          previousData.add(ChartMoneyData(currentSeries[i].date,
-              offsetSeries[i].amount));
-        }
-
-        dataGroup.chartSeries.add(
-          charts.Series<ChartMoneyData, DateTime>(
-            domainFn: (ChartMoneyData chartData, _) => chartData.date,
-            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-            colorFn: (ChartMoneyData chartData, _) =>
-            charts.MaterialPalette.gray.shadeDefault,
-            id: DashboardChart.PERIOD_PREVIOUS,
-            displayName: localization.previous,
-            data: previousData,
-          ),
-        );
-      }
-    });
-
-    return DashboardChart(
-      data: data,
-      title: localization.quotes,
-      currencyId: settings.currencyId > 0
-          ? settings.currencyId
-          : state.selectedCompany.currencyId,
-    );
+    return _buildChart(
+        context: context,
+        currentData: currentData,
+        previousData: previousData,
+        isLoaded: isLoaded,
+        title: AppLocalization.of(context).quotes);
   }
 
   @override
