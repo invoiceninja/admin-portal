@@ -138,7 +138,7 @@ class _DashboardChartState extends State<DashboardChart> {
                   });
                 },
                 child: Container(
-                  color: isSelected ? theme.accentColor : theme.cardColor,
+                  color: isSelected ? Colors.blue : theme.cardColor,
                   padding: EdgeInsets.all(14.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
