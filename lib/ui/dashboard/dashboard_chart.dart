@@ -103,7 +103,7 @@ class _DashboardChartState extends State<DashboardChart> {
           children: widget.data.map((dataGroup) {
             final int index = widget.data.indexOf(dataGroup);
             final bool isSelected = index == _selectedIndex;
-            final bool isIncrease = dataGroup.total >= dataGroup.previousTotal;
+            final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
             final String changeAmount = (isIncrease ? '+' : '') +
                 formatNumber(dataGroup.total - dataGroup.previousTotal, context,
                     currencyId: widget.currencyId);
@@ -119,10 +119,11 @@ class _DashboardChartState extends State<DashboardChart> {
                     context,
                     formatNumberType: FormatNumberType.percent,
                     currencyId: widget.currencyId);
-            final String changeString =
-                dataGroup.total == 0 || dataGroup.previousTotal == 0
-                    ? ''
-                    : '$changeAmount ($changePercent)';
+            final String changeString = dataGroup.total == 0 ||
+                    dataGroup.previousTotal == 0 ||
+                    dataGroup.total == dataGroup.previousTotal
+                ? (state.dashboardUIState.enableComparison ? ' ' : '')
+                : '$changeAmount ($changePercent)';
 
             return GestureDetector(
               onTap: () {
@@ -144,9 +145,7 @@ class _DashboardChartState extends State<DashboardChart> {
                     Text(
                         formatNumber(dataGroup.total, context,
                             currencyId: widget.currencyId),
-                        style: theme
-                            .textTheme
-                            .headline
+                        style: theme.textTheme.headline
                             .copyWith(color: isSelected ? Colors.white : null)),
                     changeString.isNotEmpty
                         ? Text(
@@ -174,8 +173,7 @@ class _DashboardChartState extends State<DashboardChart> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Text(_subtitle,
-                          style: theme.textTheme.subhead),
+                      Text(_subtitle, style: theme.textTheme.subhead),
                       Text(_title, style: theme.textTheme.headline),
                     ],
                   )
@@ -183,7 +181,7 @@ class _DashboardChartState extends State<DashboardChart> {
           ],
         ),
         SizedBox(
-          height: 200.0,
+          height: 250.0,
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: chart,

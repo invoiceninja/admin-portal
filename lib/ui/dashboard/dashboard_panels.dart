@@ -142,6 +142,9 @@ class DashboardPanels extends StatelessWidget {
         final List<ChartMoneyData> previousData = [];
         final currentSeries = dataGroup.rawSeries;
         final offsetSeries = offsetData[index].rawSeries;
+
+        dataGroup.previousTotal = offsetData[index].total;
+
         for (int i = 0;
             i < min(currentSeries.length, offsetSeries.length);
             i++) {
