@@ -293,6 +293,9 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<InvitationEntity> get invitations;
 
+  bool get isApproved =>
+      invoiceStatusId == kInvoiceStatusApproved || quoteInvoiceId > 0;
+
   //String get last_login;
   //String get custom_messages;
 

@@ -175,7 +175,6 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
-  /*
   Widget _paymentChart(BuildContext context) {
     if (!viewModel.state.paymentState.isLoaded) {
       return LoadingIndicator(useCard: true);
@@ -192,67 +191,67 @@ class DashboardPanels extends StatelessWidget {
         state.clientState.map,
         viewModel.state.paymentState.map);
 
-    final series = [
-      charts.Series<ChartMoneyData, DateTime>(
-        domainFn: (ChartMoneyData chartData, _) => chartData.date,
-        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-        colorFn: (ChartMoneyData chartData, _) =>
-            charts.MaterialPalette.blue.shadeDefault,
-        id: DashboardChart.PERIOD_CURRENT,
-        displayName: settings.enableComparison
-            ? localization.current
-            : localization.payments,
-        data: data,
-      ),
-    ];
-
-    double total = 0.0;
-    double previousTotal = 0.0;
-    data.forEach((dynamic item) {
-      total += item.amount;
-    });
-
+    List<ChartDataGroup> offsetData;
     if (settings.enableComparison) {
-      final offsetData = memoizedChartPayments(
+      offsetData = memoizedChartInvoices(
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
-          state.clientState.map,
-          state.paymentState.map);
+          state.clientState.map);
+    }
 
-      final List<ChartMoneyData> previousData = [];
-      for (int i = 0; i < min(data.length, offsetData.length); i++) {
-        previousData.add(ChartMoneyData(data[i].date, offsetData[i].amount));
-      }
-
-      series.add(
+    data.forEach((dataGroup) {
+      final index = data.indexOf(dataGroup);
+      dataGroup.chartSeries = <Series<dynamic, DateTime>>[
         charts.Series<ChartMoneyData, DateTime>(
           domainFn: (ChartMoneyData chartData, _) => chartData.date,
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
-              charts.MaterialPalette.gray.shadeDefault,
-          id: DashboardChart.PERIOD_PREVIOUS,
-          displayName: localization.previous,
-          data: previousData,
-        ),
-      );
+          charts.MaterialPalette.blue.shadeDefault,
+          id: DashboardChart.PERIOD_CURRENT,
+          displayName: settings.enableComparison
+              ? localization.current
+              : localization.payments,
+          data: dataGroup.rawSeries,
+        )
+      ];
 
-      previousData.forEach((dynamic item) {
-        previousTotal += item.amount;
-      });
-    }
+      if (settings.enableComparison) {
+        final List<ChartMoneyData> previousData = [];
+        final currentSeries = dataGroup.rawSeries;
+        final offsetSeries = offsetData[index].rawSeries;
+
+        dataGroup.previousTotal = offsetData[index].total;
+
+        for (int i = 0;
+        i < min(currentSeries.length, offsetSeries.length);
+        i++) {
+          previousData.add(ChartMoneyData(currentSeries[i].date,
+              offsetSeries[i].amount));
+        }
+
+        dataGroup.chartSeries.add(
+          charts.Series<ChartMoneyData, DateTime>(
+            domainFn: (ChartMoneyData chartData, _) => chartData.date,
+            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+            colorFn: (ChartMoneyData chartData, _) =>
+            charts.MaterialPalette.gray.shadeDefault,
+            id: DashboardChart.PERIOD_PREVIOUS,
+            displayName: localization.previous,
+            data: previousData,
+          ),
+        );
+      }
+    });
 
     return DashboardChart(
-      series: series,
-      amount: total,
-      previousAmount: previousTotal,
+      data: data,
       title: localization.payments,
       currencyId: settings.currencyId > 0
           ? settings.currencyId
           : state.selectedCompany.currencyId,
     );
   }
-  */
 
   Widget _quoteChart(BuildContext context) {
     if (!viewModel.state.quoteState.isLoaded) {
@@ -342,7 +341,7 @@ class DashboardPanels extends StatelessWidget {
               height: 74.0,
             ),
             _invoiceChart(context),
-            //_paymentChart(context),
+            _paymentChart(context),
             _quoteChart(context),
           ],
         ),

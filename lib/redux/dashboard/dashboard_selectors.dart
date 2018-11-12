@@ -152,7 +152,7 @@ List<ChartDataGroup> chartQuotes({
         totals[STATUS_UNAPPROVED][quote.invoiceDate] = 0.0;
       }
       totals[STATUS_ACTIVE][quote.invoiceDate] += quote.amount;
-      if (quote.invoiceStatusId == kInvoiceStatusApproved) {
+      if (quote.isApproved) {
         totals[STATUS_APPROVED][quote.invoiceDate] += quote.amount;
       } else {
         totals[STATUS_UNAPPROVED][quote.invoiceDate] += quote.amount;
@@ -244,7 +244,7 @@ List<ChartDataGroup> chartPayments(
   });
 
   final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
-  final ChartDataGroup outstandingData = ChartDataGroup(STATUS_REFUNDED);
+  final ChartDataGroup refundedData = ChartDataGroup(STATUS_REFUNDED);
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
@@ -255,19 +255,19 @@ List<ChartDataGroup> chartPayments(
       activeData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
       activeData.total += totals[STATUS_ACTIVE][key];
-      outstandingData.rawSeries
+      refundedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_REFUNDED][key]));
-      outstandingData.total += totals[STATUS_REFUNDED][key];
+      refundedData.total += totals[STATUS_REFUNDED][key];
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
-      outstandingData.rawSeries.add(ChartMoneyData(date, 0.0));
+      refundedData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
     date = date.add(Duration(days: 1));
   }
 
   final List<ChartDataGroup> data = [
     activeData,
-    outstandingData,
+    refundedData,
   ];
 
   return data;
