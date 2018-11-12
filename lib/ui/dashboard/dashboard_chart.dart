@@ -98,6 +98,7 @@ class _DashboardChartState extends State<DashboardChart> {
             style: Theme.of(context).textTheme.title,
           ),
         ),
+        Divider(height: 1.0),
         Row(
           children: widget.data.map((dataGroup) {
             final int index = widget.data.indexOf(dataGroup);
@@ -165,6 +166,7 @@ class _DashboardChartState extends State<DashboardChart> {
             );
           }).toList(),
         ),
+        Divider(height: 1.0),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

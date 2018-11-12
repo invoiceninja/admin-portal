@@ -49,10 +49,13 @@ List<ChartDataGroup> chartOutstandingInvoices({
   BuiltMap<int, ClientEntity> clientMap,
   bool isQuote = false,
 }) {
-  final Map<String, Map<String, double>> totals = {};
-
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
+
+  final Map<String, Map<String, double>> totals = {
+    STATUS_ACTIVE: {},
+    STATUS_OUTSTANDING: {},
+  };
 
   invoiceMap.forEach((int, invoice) {
     final client =
@@ -73,10 +76,6 @@ List<ChartDataGroup> chartOutstandingInvoices({
     } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE] == null) {
-        totals[STATUS_ACTIVE] = {};
-        totals[STATUS_OUTSTANDING] = {};
-      }
       if (totals[STATUS_ACTIVE][invoice.invoiceDate] == null) {
         totals[STATUS_ACTIVE][invoice.invoiceDate] = 0.0;
         totals[STATUS_OUTSTANDING][invoice.invoiceDate] = 0.0;
@@ -95,7 +94,8 @@ List<ChartDataGroup> chartOutstandingInvoices({
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals[STATUS_ACTIVE].containsKey(key)) {
-      activeData.rawSeries.add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
+      activeData.rawSeries
+          .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
       activeData.total += totals[STATUS_ACTIVE][key];
       outstandingData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_OUTSTANDING][key]));
