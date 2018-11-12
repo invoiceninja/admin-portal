@@ -193,11 +193,12 @@ class DashboardPanels extends StatelessWidget {
 
     List<ChartDataGroup> offsetData;
     if (settings.enableComparison) {
-      offsetData = memoizedChartInvoices(
+      offsetData = memoizedChartPayments(
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
-          state.clientState.map);
+          state.clientState.map,
+          viewModel.state.paymentState.map);
     }
 
     data.forEach((dataGroup) {
