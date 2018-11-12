@@ -11,6 +11,7 @@ class ChartDataGroup {
   final List<ChartMoneyData> rawSeries = [];
   dynamic chartSeries;
   double total = 0.0;
+  double previousTotal = 0.0;
 }
 
 class ChartMoneyData {
@@ -72,11 +73,14 @@ List<ChartDataGroup> chartOutstandingInvoices({
     } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
       // skip it
     } else {
-      if (totals[invoice.invoiceDate] == null) {
+      if (totals[STATUS_ACTIVE] == null) {
+        totals[STATUS_ACTIVE] = {};
+        totals[STATUS_OUTSTANDING] = {};
+      }
+      if (totals[STATUS_ACTIVE][invoice.invoiceDate] == null) {
         totals[STATUS_ACTIVE][invoice.invoiceDate] = 0.0;
         totals[STATUS_OUTSTANDING][invoice.invoiceDate] = 0.0;
       }
-
       totals[STATUS_ACTIVE][invoice.invoiceDate] += invoice.amount;
       totals[STATUS_OUTSTANDING][invoice.invoiceDate] += invoice.balance;
     }

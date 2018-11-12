@@ -5,12 +5,10 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardChart extends StatefulWidget {
-  const DashboardChart(
-      {this.data,
-      this.title,
-      this.currencyId});
+  const DashboardChart({this.data, this.title, this.currencyId});
 
   final List<ChartDataGroup> data;
   final String title;
@@ -58,6 +56,7 @@ class _DashboardChartState extends State<DashboardChart> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final color = state.uiState.enableDarkMode
         ? charts.MaterialPalette.white
@@ -88,25 +87,6 @@ class _DashboardChartState extends State<DashboardChart> {
               lineStyle: charts.LineStyleSpec(color: color))),
     );
 
-    final bool isIncrease = widget.amount >= widget.previousAmount;
-    final String changeAmount = (isIncrease ? '+' : '') +
-        formatNumber(widget.amount - widget.previousAmount, context,
-            currencyId: widget.currencyId);
-    final changePercent = (isIncrease ? '+' : '-') +
-        formatNumber(
-            widget.amount != 0 && widget.previousAmount != 0
-                ? round(
-                    (widget.amount - widget.previousAmount) /
-                        widget.previousAmount *
-                        100,
-                    2)
-                : 0.0,
-            context,
-            formatNumberType: FormatNumberType.percent,
-            currencyId: widget.currencyId);
-    final String changeString = widget.amount == 0 || widget.previousAmount == 0
-        ? ''
-        : '$changeAmount ($changePercent)';
     */
 
     return FormCard(
@@ -114,18 +94,66 @@ class _DashboardChartState extends State<DashboardChart> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 4.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(widget.title,),
+              Text(
+                widget.title,
+                style: Theme.of(context).textTheme.title,
+              ),
+              Row(
+                children: widget.data.map((dataGroup) {
+                  final bool isIncrease = dataGroup.total >= dataGroup.previousTotal;
+                  final String changeAmount = (isIncrease ? '+' : '') +
+                      formatNumber(dataGroup.total - dataGroup.previousTotal, context,
+                          currencyId: widget.currencyId);
+                  final changePercent = (isIncrease ? '+' : '-') +
+                      formatNumber(
+                          dataGroup.total != 0 && dataGroup.previousTotal != 0
+                              ? round(
+                              (dataGroup.total - dataGroup.previousTotal) /
+                                  dataGroup.previousTotal *
+                                  100,
+                              2)
+                              : 0.0,
+                          context,
+                          formatNumberType: FormatNumberType.percent,
+                          currencyId: widget.currencyId);
+                  final String changeString = dataGroup.total == 0 || dataGroup.previousTotal == 0
+                      ? ''
+                      : '$changeAmount ($changePercent)';
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(localization .lookup(dataGroup.name),
+                          style: Theme.of(context).textTheme.subhead),
+                      Text(
+                          formatNumber(dataGroup.total, context,
+                              currencyId: widget.currencyId),
+                          style: Theme.of(context).textTheme.headline),
+                      SizedBox(width: 12.0),
+                      Text(
+                        changeString,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: isIncrease ? Colors.green : Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  /*
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(widget.title,
                             style: Theme.of(context).textTheme.subhead),
-                        /*
                         Text(
                             formatNumber(widget.amount, context,
                                 currencyId: widget.currencyId),
@@ -139,10 +167,10 @@ class _DashboardChartState extends State<DashboardChart> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        */
                       ],
                     ),
                   ),
+                  */
                   _title != null
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.end,

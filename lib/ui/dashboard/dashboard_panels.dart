@@ -140,6 +140,7 @@ class DashboardPanels extends StatelessWidget {
               offsetData[data.indexOf(dataGroup)].rawSeries[i].amount));
         }
 
+        /*
         dataGroup.chartSeries.add(
           charts.Series<ChartMoneyData, DateTime>(
             domainFn: (ChartMoneyData chartData, _) => chartData.date,
@@ -151,6 +152,7 @@ class DashboardPanels extends StatelessWidget {
             data: previousData,
           ),
         );
+        */
       }
     });
 
