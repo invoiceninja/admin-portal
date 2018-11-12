@@ -94,7 +94,7 @@ class _DashboardChartState extends State<DashboardChart> {
           padding: EdgeInsets.all(14.0),
           child: Text(
             widget.title,
-            style: theme.textTheme.title,
+            style: theme.textTheme.headline,
           ),
         ),
         Divider(height: 1.0),
@@ -193,13 +193,13 @@ class _DashboardChartState extends State<DashboardChart> {
                             formatNumber(series.average, context,
                                 currencyId: widget.currencyId),
                         style:
-                            theme.textTheme.subtitle.copyWith(fontSize: 15.0),
+                            theme.textTheme.subtitle.copyWith(fontSize: 16.0),
                       ),
               ),
               _selected != null
                   ? Text(
                       _selected,
-                      style: theme.textTheme.subtitle.copyWith(fontSize: 15.0),
+                      style: theme.textTheme.subtitle.copyWith(fontSize: 16.0),
                     )
                   : SizedBox(),
             ],
