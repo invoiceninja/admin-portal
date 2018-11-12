@@ -193,13 +193,13 @@ class _DashboardChartState extends State<DashboardChart> {
                             formatNumber(series.average, context,
                                 currencyId: widget.currencyId),
                         style:
-                            theme.textTheme.subtitle.copyWith(fontSize: 16.0),
+                            theme.textTheme.subtitle.copyWith(fontSize: 15.0),
                       ),
               ),
               _selected != null
                   ? Text(
                       _selected,
-                      style: theme.textTheme.subtitle.copyWith(fontSize: 16.0),
+                      style: theme.textTheme.subtitle.copyWith(fontSize: 15.0),
                     )
                   : SizedBox(),
             ],
