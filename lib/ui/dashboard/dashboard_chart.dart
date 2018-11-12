@@ -65,7 +65,7 @@ class _DashboardChartState extends State<DashboardChart> {
     final series = widget.data[_selectedIndex];
 
     final chart = charts.TimeSeriesChart(
-      series.chartSeries,
+      [series.chartSeries],
       animate: true,
       selectionModels: [
         charts.SelectionModelConfig(
