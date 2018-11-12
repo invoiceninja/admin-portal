@@ -175,7 +175,7 @@ class _DashboardChartState extends State<DashboardChart> {
         ),
         Divider(height: 1.0),
         SizedBox(
-          height: 250.0,
+          height: 240.0,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: chart,
