@@ -113,8 +113,9 @@ class DashboardPanels extends StatelessWidget {
     final data = memoizedChartOutstandingInvoices(state.selectedCompany,
         settings, state.invoiceState.map, state.clientState.map);
 
+    List<ChartDataGroup> offsetData;
     if (settings.enableComparison) {
-      final offsetData = memoizedChartOutstandingInvoices(
+      offsetData = memoizedChartOutstandingInvoices(
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
@@ -122,6 +123,7 @@ class DashboardPanels extends StatelessWidget {
     }
 
     data.forEach((dataGroup) {
+      final index = data.indexOf(dataGroup);
       dataGroup.chartSeries = <Series<dynamic, DateTime>>[
         charts.Series<ChartMoneyData, DateTime>(
           domainFn: (ChartMoneyData chartData, _) => chartData.date,
@@ -137,17 +139,16 @@ class DashboardPanels extends StatelessWidget {
       ];
 
       if (settings.enableComparison) {
-        /*
         final List<ChartMoneyData> previousData = [];
+        final currentSeries = dataGroup.rawSeries;
+        final offsetSeries = offsetData[index].rawSeries;
         for (int i = 0;
-            i < min(dataGroup.rawSeries.length, offsetData[index].length);
+            i < min(currentSeries.length, offsetSeries.length);
             i++) {
-          previousData.add(ChartMoneyData(dataGroup.rawSeries[i].date,
-              offsetData[data.indexOf(dataGroup)].rawSeries[i].amount));
+          previousData.add(ChartMoneyData(currentSeries[i].date,
+              offsetSeries[i].amount));
         }
-        */
 
-        /*
         dataGroup.chartSeries.add(
           charts.Series<ChartMoneyData, DateTime>(
             domainFn: (ChartMoneyData chartData, _) => chartData.date,
@@ -159,7 +160,6 @@ class DashboardPanels extends StatelessWidget {
             data: previousData,
           ),
         );
-        */
       }
     });
 
