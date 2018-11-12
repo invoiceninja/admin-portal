@@ -21,8 +21,7 @@ class DashboardChart extends StatefulWidget {
 }
 
 class _DashboardChartState extends State<DashboardChart> {
-  String _title;
-  String _subtitle;
+  String _selected;
   int _selectedIndex = 0;
 
   void _onSelectionChanged(charts.SelectionModel model) {
@@ -45,11 +44,11 @@ class _DashboardChartState extends State<DashboardChart> {
 
     setState(() {
       if (date != null) {
-        _title = formatNumber(total, context, currencyId: widget.currencyId);
-        _subtitle = formatDate(date.toIso8601String(), context);
+        _selected = formatDate(date.toIso8601String(), context) +
+            ' • ' +
+            formatNumber(total, context, currencyId: widget.currencyId);
       } else {
-        _title = null;
-        _subtitle = null;
+        _selected = null;
       }
     });
   }
@@ -135,6 +134,7 @@ class _DashboardChartState extends State<DashboardChart> {
                 onTap: () {
                   setState(() {
                     _selectedIndex = index;
+                    _selected = null;
                   });
                 },
                 child: Container(
@@ -173,20 +173,6 @@ class _DashboardChartState extends State<DashboardChart> {
           ),
         ),
         Divider(height: 1.0),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _title != null
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Text(_subtitle, style: theme.textTheme.subhead),
-                      Text(_title, style: theme.textTheme.headline),
-                    ],
-                  )
-                : Container(),
-          ],
-        ),
         SizedBox(
           height: 250.0,
           child: Padding(
@@ -194,23 +180,29 @@ class _DashboardChartState extends State<DashboardChart> {
             child: chart,
           ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: (series.average ?? 0) > 0
-                  ? Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: Text(
-                          localization.average +
-                              ' ' +
-                              formatNumber(series.average, context,
-                                  currencyId: widget.currencyId),
-                          style: theme.textTheme.subhead),
+        Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: (series.average ?? 0) > 0
+                    ? Text(
+                        localization.average +
+                            ' ' +
+                            formatNumber(series.average, context,
+                                currencyId: widget.currencyId),
+                        style: theme.textTheme.subhead)
+                    : SizedBox(),
+              ),
+              _selected != null
+                  ? Text(
+                      _selected,
+                      style: theme.textTheme.subhead,
                     )
                   : SizedBox(),
-            )
-          ],
+            ],
+          ),
         ),
       ],
     );
