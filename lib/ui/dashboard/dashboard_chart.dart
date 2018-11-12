@@ -112,7 +112,7 @@ class _DashboardChartState extends State<DashboardChart> {
                   formatNumber(
                       dataGroup.total - dataGroup.previousTotal, context,
                       currencyId: widget.currencyId);
-              final changePercent = (isIncrease ? '+' : '-') +
+              final changePercent = (isIncrease ? '+' : '') +
                   formatNumber(
                       dataGroup.total != 0 && dataGroup.previousTotal != 0
                           ? round(
