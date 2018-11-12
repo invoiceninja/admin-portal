@@ -182,6 +182,7 @@ List<ChartDataGroup> chartQuotes({
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       approvedData.rawSeries.add(ChartMoneyData(date, 0.0));
+      unapprovedData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
     date = date.add(Duration(days: 1));
   }
@@ -189,6 +190,7 @@ List<ChartDataGroup> chartQuotes({
   final List<ChartDataGroup> data = [
     activeData,
     approvedData,
+    unapprovedData,
   ];
 
   return data;
