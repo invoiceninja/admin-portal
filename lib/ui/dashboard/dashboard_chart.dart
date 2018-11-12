@@ -100,7 +100,7 @@ class _DashboardChartState extends State<DashboardChart> {
         Divider(height: 1.0),
         Container(
           width: double.infinity,
-          height: 100,
+          height: state.dashboardUIState.enableComparison ? 100 : 78,
           child: ListView(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
