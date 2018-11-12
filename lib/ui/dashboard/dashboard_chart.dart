@@ -100,8 +100,8 @@ class _DashboardChartState extends State<DashboardChart> {
         ),
         Row(
           children: widget.data.map((dataGroup) {
-            final bool isSelected =
-                widget.data.indexOf(dataGroup) == _selectedIndex;
+            final int index = widget.data.indexOf(dataGroup);
+            final bool isSelected = index == _selectedIndex;
             final bool isIncrease = dataGroup.total >= dataGroup.previousTotal;
             final String changeAmount = (isIncrease ? '+' : '') +
                 formatNumber(dataGroup.total - dataGroup.previousTotal, context,
@@ -123,37 +123,44 @@ class _DashboardChartState extends State<DashboardChart> {
                     ? ''
                     : '$changeAmount ($changePercent)';
 
-            return Container(
-              color: isSelected ? Colors.blue : Colors.white,
-              padding: EdgeInsets.all(14.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(localization.lookup(dataGroup.name),
-                      style: Theme.of(context).textTheme.subhead.copyWith(
-                          color: isSelected ? Colors.white : null,
-                          fontWeight: FontWeight.w400)),
-                  SizedBox(height: 2.0),
-                  Text(
-                      formatNumber(dataGroup.total, context,
-                          currencyId: widget.currencyId),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline
-                          .copyWith(color: isSelected ? Colors.white : null)),
-                  changeString.isNotEmpty
-                      ? Text(
-                          changeString,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: isSelected
-                                ? Colors.white
-                                : (isIncrease ? Colors.green : Colors.red),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      : SizedBox(),
-                ],
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              child: Container(
+                color: isSelected ? Colors.blue : Theme.of(context).cardColor,
+                padding: EdgeInsets.all(14.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(localization.lookup(dataGroup.name),
+                        style: Theme.of(context).textTheme.subhead.copyWith(
+                            color: isSelected ? Colors.white : null,
+                            fontWeight: FontWeight.w400)),
+                    SizedBox(height: 2.0),
+                    Text(
+                        formatNumber(dataGroup.total, context,
+                            currencyId: widget.currencyId),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline
+                            .copyWith(color: isSelected ? Colors.white : null)),
+                    changeString.isNotEmpty
+                        ? Text(
+                            changeString,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: isSelected
+                                  ? Colors.white
+                                  : (isIncrease ? Colors.green : Colors.red),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
               ),
             );
           }).toList(),
