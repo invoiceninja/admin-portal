@@ -62,9 +62,10 @@ class _DashboardChartState extends State<DashboardChart> {
         ? charts.MaterialPalette.white
         : charts.MaterialPalette.gray.shade700;
 
-    /*
+    final series = widget.data[_selectedIndex];
+
     final chart = charts.TimeSeriesChart(
-      widget.series,
+      series.chartSeries,
       animate: true,
       selectionModels: [
         charts.SelectionModelConfig(
@@ -86,8 +87,6 @@ class _DashboardChartState extends State<DashboardChart> {
               labelStyle: charts.TextStyleSpec(color: color),
               lineStyle: charts.LineStyleSpec(color: color))),
     );
-
-    */
 
     return FormCard(
       children: <Widget>[
@@ -170,30 +169,6 @@ class _DashboardChartState extends State<DashboardChart> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            /*
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(widget.title,
-                      style: Theme.of(context).textTheme.subhead),
-                  Text(
-                      formatNumber(widget.amount, context,
-                          currencyId: widget.currencyId),
-                      style: Theme.of(context).textTheme.headline),
-                  SizedBox(width: 12.0),
-                  Text(
-                    changeString,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: isIncrease ? Colors.green : Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            */
             _title != null
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -210,7 +185,7 @@ class _DashboardChartState extends State<DashboardChart> {
           height: 200.0,
           child: Padding(
             padding: const EdgeInsets.only(top: 10.0),
-            //child: chart,
+            child: chart,
           ),
         ),
       ],
