@@ -105,8 +105,10 @@ List<ChartDataGroup> chartInvoices({
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average = (activeData.total ?? 0) / counts[STATUS_ACTIVE];
-  outstandingData.average = (outstandingData.total ?? 0) / counts[STATUS_OUTSTANDING];
+  activeData.average =
+      round(activeData.total ?? 0 / counts[STATUS_ACTIVE] ?? 0, 2);
+  outstandingData.average =
+      round(outstandingData.total ?? 0 / counts[STATUS_OUTSTANDING] ?? 0, 2);
 
   final List<ChartDataGroup> data = [
     activeData,
@@ -117,9 +119,9 @@ List<ChartDataGroup> chartInvoices({
 }
 
 var memoizedChartQuotes = memo4((CompanyEntity company,
-    DashboardUIState settings,
-    BuiltMap<int, InvoiceEntity> quoteMap,
-    BuiltMap<int, ClientEntity> clientMap) =>
+        DashboardUIState settings,
+        BuiltMap<int, InvoiceEntity> quoteMap,
+        BuiltMap<int, ClientEntity> clientMap) =>
     chartQuotes(
         company: company,
         settings: settings,
@@ -152,7 +154,7 @@ List<ChartDataGroup> chartQuotes({
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
     final currencyId =
-    client.currencyId > 0 ? client.currencyId : company.currencyId;
+        client.currencyId > 0 ? client.currencyId : company.currencyId;
 
     if (!quote.isPublic ||
         quote.isDeleted ||
@@ -210,9 +212,12 @@ List<ChartDataGroup> chartQuotes({
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average = (activeData.total ?? 0) / counts[STATUS_ACTIVE];
-  approvedData.average = (approvedData.total ?? 0) / counts[STATUS_APPROVED];
-  unapprovedData.average = (unapprovedData.total ?? 0) / counts[STATUS_UNAPPROVED];
+  activeData.average =
+      round(activeData.total ?? 0 / counts[STATUS_ACTIVE] ?? 0, 2);
+  approvedData.average =
+      round(approvedData.total ?? 0 / counts[STATUS_APPROVED] ?? 0, 2);
+  unapprovedData.average =
+      round(unapprovedData.total ?? 0 / counts[STATUS_UNAPPROVED] ?? 0, 2);
 
   final List<ChartDataGroup> data = [
     activeData,
@@ -236,7 +241,6 @@ List<ChartDataGroup> chartPayments(
     BuiltMap<int, InvoiceEntity> invoiceMap,
     BuiltMap<int, ClientEntity> clientMap,
     BuiltMap<int, PaymentEntity> paymentMap) {
-
   const STATUS_ACTIVE = 'active';
   const STATUS_REFUNDED = 'refunded';
 
@@ -302,8 +306,10 @@ List<ChartDataGroup> chartPayments(
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average = (activeData.total ?? 0) / counts[STATUS_ACTIVE];
-  refundedData.average = (refundedData.total ?? 0) / counts[STATUS_REFUNDED];
+  activeData.average =
+      round(activeData.total ?? 0 / counts[STATUS_ACTIVE] ?? 0, 2);
+  refundedData.average =
+      round(refundedData.total ?? 0 / counts[STATUS_REFUNDED] ?? 0, 2);
 
   final List<ChartDataGroup> data = [
     activeData,
