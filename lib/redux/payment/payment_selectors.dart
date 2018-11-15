@@ -47,24 +47,35 @@ List<int> dropdownPaymentsSelector(
   return list;
 }
 
-var memoizedFilteredPaymentList = memo4(
+var memoizedFilteredPaymentList = memo5(
     (BuiltMap<int, PaymentEntity> paymentMap,
             BuiltList<int> paymentList,
             BuiltMap<int, InvoiceEntity> invoiceMap,
+            BuiltMap<int, ClientEntity> clientMap,
             ListUIState paymentListState) =>
         filteredPaymentsSelector(
-            paymentMap, paymentList, invoiceMap, paymentListState));
+            paymentMap, paymentList, invoiceMap, clientMap, paymentListState));
 
 List<int> filteredPaymentsSelector(
     BuiltMap<int, PaymentEntity> paymentMap,
     BuiltList<int> paymentList,
     BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltMap<int, ClientEntity> clientMap,
     ListUIState paymentListState) {
   final list = paymentList.where((paymentId) {
     final payment = paymentMap[paymentId];
     if (!payment.matchesStates(paymentListState.stateFilters)) {
       return false;
     }
+
+    final invoice =
+        invoiceMap[payment.invoiceId] ?? InvoiceEntity(id: payment.invoiceId);
+    final client =
+        clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+    if (invoice.isDeleted || ! client.isActive) {
+      return false;
+    }
+
     if (paymentListState.filterEntityId != null) {
       if (paymentListState.filterEntityType == EntityType.client &&
           invoiceMap[payment.invoiceId].clientId !=
