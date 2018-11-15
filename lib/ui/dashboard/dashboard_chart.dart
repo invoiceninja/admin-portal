@@ -139,7 +139,7 @@ class _DashboardChartState extends State<DashboardChart> {
                 },
                 child: Container(
                   color: isSelected ? Colors.blue : theme.cardColor,
-                  padding: EdgeInsets.all(16.0),
+                  padding: EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -181,8 +181,8 @@ class _DashboardChartState extends State<DashboardChart> {
             child: chart,
           ),
         ),
+        Divider(height: 1.0),
         Container(
-          color: theme.backgroundColor,
           padding: const EdgeInsets.all(16.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -194,13 +194,13 @@ class _DashboardChartState extends State<DashboardChart> {
                             formatNumber(series.average, context,
                                 currencyId: widget.currencyId),
                         style:
-                            theme.textTheme.subtitle.copyWith(fontSize: 16.0),
+                            theme.textTheme.subhead,
                       ),
               ),
               _selected != null
                   ? Text(
                       _selected,
-                      style: theme.textTheme.subtitle.copyWith(fontSize: 16.0),
+                      style: theme.textTheme.subhead,
                     )
                   : SizedBox(),
             ],
