@@ -66,6 +66,7 @@ abstract class CompanyEntity
       emailBodyReminder1: '',
       emailBodyReminder2: '',
       emailBodyReminder3: '',
+      fillProducts: true,
     );
   }
 
@@ -231,6 +232,10 @@ abstract class CompanyEntity
 
   @BuiltValueField(wireName: 'email_template_reminder3')
   String get emailBodyReminder3;
+
+  @nullable
+  @BuiltValueField(wireName: 'fill_products')
+  bool get fillProducts;
 
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')

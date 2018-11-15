@@ -23,6 +23,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
   final List<int> _selectedIds = [];
 
   final _textController = TextEditingController();
+
   //EntityType _selectedEntityType = EntityType.product;
 
   @override
@@ -42,7 +43,13 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
 
     _selectedIds.forEach((entityId) {
       final product = state.productState.map[entityId];
-      items.add(product.asInvoiceItem);
+      if (state.selectedCompany.fillProducts == false) {
+        items.add(InvoiceItemEntity().rebuild((b) => b
+          ..productKey = product.productKey
+          ..qty = 1));
+      } else {
+        items.add(product.asInvoiceItem);
+      }
     });
 
     widget.onItemsSelected(items);
@@ -137,7 +144,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
 
     Widget _entityList() {
       final state = StoreProvider.of<AppState>(context).state;
-      final matches = memoizedProductList(state.productState.map).where((entityId) {
+      final matches =
+          memoizedProductList(state.productState.map).where((entityId) {
         final entity = state.productState.map[entityId];
         return entity.isActive && entity.matchesFilter(_filter);
       }).toList();
