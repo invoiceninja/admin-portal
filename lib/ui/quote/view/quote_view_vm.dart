@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QuoteViewScreen extends StatelessWidget {
   const QuoteViewScreen({Key key}) : super(key: key);
@@ -106,11 +107,17 @@ class QuoteViewVM extends EntityViewVM {
         onClientPressed: (BuildContext context) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },
-        onActionSelected: (BuildContext context, EntityAction action) {
+        onActionSelected: (BuildContext context, EntityAction action) async {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
               viewPdf(quote, context);
+              break;
+            case EntityAction.clientPortal:
+              if (await canLaunch(quote.invitationSilentLink)) {
+                await launch(quote.invitationSilentLink,
+                    forceSafariVC: false, forceWebView: false);
+              }
               break;
             case EntityAction.viewInvoice:
               store.dispatch(ViewInvoice(

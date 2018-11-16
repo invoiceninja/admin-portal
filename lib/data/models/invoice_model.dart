@@ -408,6 +408,7 @@ abstract class InvoiceEntity extends Object
     }
 
     actions.add(EntityAction.pdf);
+    actions.add(EntityAction.clientPortal);
 
     if (actions.isNotEmpty) {
       actions.add(null);
@@ -471,6 +472,8 @@ abstract class InvoiceEntity extends Object
   }
 
   String get invitationLink => invitations.first?.link;
+
+  String get invitationBorderlessLink => invitations.first?.borderlessLink;
 
   String get invitationSilentLink => invitations.first?.silentLink;
 
@@ -632,7 +635,9 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
 
-  String get silentLink => link + '?silent=true&borderless=true';
+  String get silentLink => link + '?silent=true';
+
+  String get borderlessLink => silentLink + '&borderless=true';
 
   String get downloadLink => link.replaceFirst('/view/', '/download/');
 

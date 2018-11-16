@@ -12,8 +12,8 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
   final localization = AppLocalization.of(context);
   //final navigator = Navigator.of(context);
   if (Theme.of(context).platform == TargetPlatform.iOS) {
-    if (await canLaunch(invoice.invitationSilentLink)) {
-      await launch(invoice.invitationSilentLink,
+    if (await canLaunch(invoice.invitationBorderlessLink)) {
+      await launch(invoice.invitationBorderlessLink,
           forceSafariVC: true, forceWebView: true);
     } else {
       throw localization.anErrorOccurred;

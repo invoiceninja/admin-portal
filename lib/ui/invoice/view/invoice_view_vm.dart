@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
   const InvoiceViewScreen({Key key}) : super(key: key);
@@ -159,11 +160,17 @@ class InvoiceViewVM extends EntityViewVM {
               entityId: invoice.id, entityType: EntityType.invoice));
           store.dispatch(ViewPaymentList(context));
         },
-        onActionSelected: (BuildContext context, EntityAction action) {
+        onActionSelected: (BuildContext context, EntityAction action) async {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
               viewPdf(invoice, context);
+              break;
+            case EntityAction.clientPortal:
+              if (await canLaunch(invoice.invitationSilentLink)) {
+                await launch(invoice.invitationSilentLink,
+                    forceSafariVC: false, forceWebView: false);
+              }
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(

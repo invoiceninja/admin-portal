@@ -6,6 +6,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
   switch (entityAction) {
     case EntityAction.pdf:
       return Icons.picture_as_pdf;
+    case EntityAction.clientPortal:
+      return Icons.cloud_circle;
     case EntityAction.clone:
     case EntityAction.cloneToInvoice:
     case EntityAction.cloneToQuote:

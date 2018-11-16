@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QuoteListBuilder extends StatelessWidget {
   const QuoteListBuilder({Key key}) : super(key: key);
@@ -98,20 +99,29 @@ class QuoteListVM extends EntityListVM {
       onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
           ViewClient(
               clientId: state.quoteListState.filterEntityId, context: context)),
-      onEntityAction: (context, quote, action) {
+      onEntityAction: (context, quote, action) async {
         final localization = AppLocalization.of(context);
         switch (action) {
           case EntityAction.pdf:
             viewPdf(quote, context);
             break;
+          case EntityAction.clientPortal:
+            if (await canLaunch(quote.invitationSilentLink)) {
+              await launch(quote.invitationSilentLink,
+                  forceSafariVC: false, forceWebView: false);
+            }
+            break;
           case EntityAction.viewInvoice:
-            store.dispatch(ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
+            store.dispatch(
+                ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
             break;
           case EntityAction.convert:
-            final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+            final Completer<InvoiceEntity> completer =
+                Completer<InvoiceEntity>();
             store.dispatch(ConvertQuote(completer, quote.id));
             completer.future.then((InvoiceEntity invoice) {
-              store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+              store.dispatch(
+                  ViewInvoice(invoiceId: invoice.id, context: context));
             });
             break;
           case EntityAction.markSent:
@@ -121,7 +131,8 @@ class QuoteListVM extends EntityListVM {
             break;
           case EntityAction.sendEmail:
             store.dispatch(ShowEmailQuote(
-                completer: snackBarCompleter(context, localization.emailedQuote),
+                completer:
+                    snackBarCompleter(context, localization.emailedQuote),
                 quote: quote,
                 context: context));
             break;
