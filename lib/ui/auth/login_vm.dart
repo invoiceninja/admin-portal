@@ -103,6 +103,10 @@ class LoginVM {
             return;
           }
 
+          if (! url.startsWith('http')) {
+            url = 'https://' + url;
+          }
+
           final Completer<Null> completer = Completer<Null>();
           store.dispatch(UserLoginRequest(
             completer: completer,
