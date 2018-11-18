@@ -106,6 +106,7 @@ const List<String> kLanguages = [
   'el',
   'en',
   'en_GB',
+  'en_AU',
   'es',
   'es_ES',
   'fi',
