@@ -20,6 +20,10 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'thank_you_for_using_our_app': 'Thank you for using our app!',
+      'if_you_like_it': 'If you like it please',
+      'click_here': 'click here',
+      'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
@@ -9145,6 +9149,16 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get thankYouForUsingOurApp =>
+      _localizedValues[locale.languageCode]['thank_you_for_using_our_app'];
+
+  String get ifYouLikeIt =>
+      _localizedValues[locale.languageCode]['if_you_like_it'];
+
+  String get clickHere => _localizedValues[locale.languageCode]['click_here'];
+
+  String get toRateIt => _localizedValues[locale.languageCode]['to_rate_it'];
 
   String get average => _localizedValues[locale.languageCode]['average'];
 

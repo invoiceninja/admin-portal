@@ -276,24 +276,19 @@ class AppDrawer extends StatelessWidget {
                     children: <TextSpan>[
                       TextSpan(
                         style: aboutTextStyle,
-                        text: 'Thank you for using our app!',
-                      ),
-                      /*
-                      TextSpan(
-                        style: aboutTextStyle,
-                        text:
-                            'Thanks for trying out the beta!\n\nPlease join us on the #mobile channel on ',
+                        text: localization.thankYouForUsingOurApp +
+                            '\n\n' +
+                            localization.ifYouLikeIt,
                       ),
                       _LinkTextSpan(
                         style: linkStyle,
-                        url: 'http://slack.invoiceninja.com',
-                        text: 'Slack',
+                        url: getAppURL(context),
+                        text: ' ' + localization.clickHere + ' ',
                       ),
                       TextSpan(
                         style: aboutTextStyle,
-                        text: ' to help make the app better.',
+                        text: localization.toRateIt,
                       ),
-                      */
                     ],
                   ),
                 ),

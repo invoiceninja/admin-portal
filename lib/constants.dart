@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 const String kAppVersion = '0.1.18';
 const String kAppUrl = 'https://app.invoiceninja.com';
 
+const String kAppleStoreUrl =
+    'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
+const String kGoogleStoreUrl =
+    'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
+
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefSecret = 'secret';
@@ -17,7 +22,8 @@ const String kKeychainEmail = 'email';
 const String kKeychainUrl = 'url';
 const String kKeychainSecret = 'secret';
 
-String getKeychainTokenKey([int companyIndex = 0]) => '${kKeychainToken}_$companyIndex';
+String getKeychainTokenKey([int companyIndex = 0]) =>
+    '${kKeychainToken}_$companyIndex';
 
 const int kMinMajorAppVersion = 4;
 const int kMinMinorAppVersion = 5;
@@ -86,17 +92,7 @@ class PaymentStatusColors {
   };
 }
 
-const List<int> kPaymentTerms = [
-  0,
-  -1,
-  7,
-  10,
-  14,
-  15,
-  30,
-  60,
-  90
-];
+const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
 const List<String> kLanguages = [
   'ca',
