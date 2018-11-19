@@ -299,6 +299,9 @@ abstract class CompanyEntity
   int get currencyId =>
       companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
 
+  // Handle bug in earlier version of API
+  int get firstMonthOfYear => financialYearStart == 2000 ? 1 : financialYearStart;
+
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
 
