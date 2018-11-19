@@ -53,7 +53,9 @@ class DashboardPanels extends StatelessWidget {
                       child: Text(
                           formatDateRange(uiState.startDate(company),
                               uiState.endDate(company), context),
-                          style: Theme.of(context).textTheme.title),
+                          style: Theme.of(context).textTheme.title
+                              .copyWith(fontSize: 18),
+                      ),
                     ),
                     SizedBox(width: 6.0),
                     Icon(Icons.arrow_drop_down),
