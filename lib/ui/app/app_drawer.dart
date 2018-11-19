@@ -266,7 +266,7 @@ class AppDrawer extends StatelessWidget {
               width: 40.0,
               height: 40.0,
             ),
-            applicationVersion: 'Version ' + kAppVersion + ' - BETA',
+            applicationVersion: 'Version ' + kAppVersion,
             applicationLegalese: '© 2018 Invoice Ninja',
             aboutBoxChildren: <Widget>[
               Padding(
