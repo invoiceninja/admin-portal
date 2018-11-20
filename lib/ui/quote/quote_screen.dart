@@ -59,6 +59,7 @@ class QuoteScreen extends StatelessWidget {
           sortFields: [
             QuoteFields.quoteNumber,
             QuoteFields.quoteDate,
+            QuoteFields.validUntil,
             InvoiceFields.updatedAt,
           ],
           onSelectedState: (EntityState state, value) {

@@ -26,6 +26,7 @@ class QuoteEditDetailsScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceEditDetails(
           viewModel: viewModel,
+          isQuote: true,
         );
       },
     );

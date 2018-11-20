@@ -73,7 +73,11 @@ class InvoiceListItem extends StatelessWidget {
                   child: filterMatch == null
                       ? Text(invoice.invoiceNumber +
                           ' • ' +
-                          formatDate(invoice.invoiceDate, context))
+                          formatDate(
+                              invoice.dueDate.isNotEmpty
+                                  ? invoice.dueDate
+                                  : invoice.invoiceDate,
+                              context))
                       : Text(
                           filterMatch,
                           maxLines: 3,
