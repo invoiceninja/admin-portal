@@ -198,6 +198,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.emailBodyReminder3,
           specifiedType: const FullType(String)),
     ];
+    if (object.fillProducts != null) {
+      result
+        ..add('fill_products')
+        ..add(serializers.serialize(object.fillProducts,
+            specifiedType: const FullType(bool)));
+    }
 
     return result;
   }
@@ -431,6 +437,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'email_template_reminder3':
           result.emailBodyReminder3 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'fill_products':
+          result.fillProducts = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -759,6 +769,8 @@ class _$CompanyEntity extends CompanyEntity {
   final String emailBodyReminder2;
   @override
   final String emailBodyReminder3;
+  @override
+  final bool fillProducts;
 
   factory _$CompanyEntity([void updates(CompanyEntityBuilder b)]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
@@ -816,7 +828,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.emailSubjectReminder3,
       this.emailBodyReminder1,
       this.emailBodyReminder2,
-      this.emailBodyReminder3})
+      this.emailBodyReminder3,
+      this.fillProducts})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
@@ -1060,7 +1073,8 @@ class _$CompanyEntity extends CompanyEntity {
         emailSubjectReminder3 == other.emailSubjectReminder3 &&
         emailBodyReminder1 == other.emailBodyReminder1 &&
         emailBodyReminder2 == other.emailBodyReminder2 &&
-        emailBodyReminder3 == other.emailBodyReminder3;
+        emailBodyReminder3 == other.emailBodyReminder3 &&
+        fillProducts == other.fillProducts;
   }
 
   @override
@@ -1083,26 +1097,26 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode),
-                                                                                enableCustomInvoiceTaxes2.hashCode),
-                                                                            taxRates.hashCode),
-                                                                        user.hashCode),
-                                                                    customFields.hashCode),
-                                                                customPaymentTerms.hashCode),
-                                                            invoiceFields.hashCode),
-                                                        emailFooter.hashCode),
-                                                    emailSubjectInvoice.hashCode),
-                                                emailSubjectQuote.hashCode),
-                                            emailSubjectPayment.hashCode),
-                                        emailBodyInvoice.hashCode),
-                                    emailBodyQuote.hashCode),
-                                emailBodyPayment.hashCode),
-                            emailSubjectReminder1.hashCode),
-                        emailSubjectReminder2.hashCode),
-                    emailSubjectReminder3.hashCode),
-                emailBodyReminder1.hashCode),
-            emailBodyReminder2.hashCode),
-        emailBodyReminder3.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode),
+                                                                                taxRates.hashCode),
+                                                                            user.hashCode),
+                                                                        customFields.hashCode),
+                                                                    customPaymentTerms.hashCode),
+                                                                invoiceFields.hashCode),
+                                                            emailFooter.hashCode),
+                                                        emailSubjectInvoice.hashCode),
+                                                    emailSubjectQuote.hashCode),
+                                                emailSubjectPayment.hashCode),
+                                            emailBodyInvoice.hashCode),
+                                        emailBodyQuote.hashCode),
+                                    emailBodyPayment.hashCode),
+                                emailSubjectReminder1.hashCode),
+                            emailSubjectReminder2.hashCode),
+                        emailSubjectReminder3.hashCode),
+                    emailBodyReminder1.hashCode),
+                emailBodyReminder2.hashCode),
+            emailBodyReminder3.hashCode),
+        fillProducts.hashCode));
   }
 
   @override
@@ -1160,7 +1174,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('emailSubjectReminder3', emailSubjectReminder3)
           ..add('emailBodyReminder1', emailBodyReminder1)
           ..add('emailBodyReminder2', emailBodyReminder2)
-          ..add('emailBodyReminder3', emailBodyReminder3))
+          ..add('emailBodyReminder3', emailBodyReminder3)
+          ..add('fillProducts', fillProducts))
         .toString();
   }
 }
@@ -1426,6 +1441,10 @@ class CompanyEntityBuilder
   set emailBodyReminder3(String emailBodyReminder3) =>
       _$this._emailBodyReminder3 = emailBodyReminder3;
 
+  bool _fillProducts;
+  bool get fillProducts => _$this._fillProducts;
+  set fillProducts(bool fillProducts) => _$this._fillProducts = fillProducts;
+
   CompanyEntityBuilder();
 
   CompanyEntityBuilder get _$this {
@@ -1483,6 +1502,7 @@ class CompanyEntityBuilder
       _emailBodyReminder1 = _$v.emailBodyReminder1;
       _emailBodyReminder2 = _$v.emailBodyReminder2;
       _emailBodyReminder3 = _$v.emailBodyReminder3;
+      _fillProducts = _$v.fillProducts;
       _$v = null;
     }
     return this;
@@ -1559,7 +1579,8 @@ class CompanyEntityBuilder
               emailSubjectReminder3: emailSubjectReminder3,
               emailBodyReminder1: emailBodyReminder1,
               emailBodyReminder2: emailBodyReminder2,
-              emailBodyReminder3: emailBodyReminder3);
+              emailBodyReminder3: emailBodyReminder3,
+              fillProducts: fillProducts);
     } catch (_) {
       String _$failedField;
       try {

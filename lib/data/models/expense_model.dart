@@ -8,7 +8,6 @@ part 'expense_model.g.dart';
 
 abstract class ExpenseListResponse
     implements Built<ExpenseListResponse, ExpenseListResponseBuilder> {
-
   factory ExpenseListResponse([void updates(ExpenseListResponseBuilder b)]) =
       _$ExpenseListResponse;
 
@@ -22,7 +21,6 @@ abstract class ExpenseListResponse
 
 abstract class ExpenseItemResponse
     implements Built<ExpenseItemResponse, ExpenseItemResponseBuilder> {
-
   factory ExpenseItemResponse([void updates(ExpenseItemResponseBuilder b)]) =
       _$ExpenseItemResponse;
 
@@ -63,10 +61,8 @@ class ExpenseFields {
 }
 
 abstract class ExpenseEntity extends Object
-    with BaseEntity
+    with BaseEntity, SelectableEntity
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
-
-  static int counter = 0;
   factory ExpenseEntity() {
     return _$ExpenseEntity._(
       id: --ExpenseEntity.counter,
@@ -93,10 +89,12 @@ abstract class ExpenseEntity extends Object
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
     );
   }
+
   ExpenseEntity._();
-  ExpenseEntity get clone => rebuild((b) => b
-    ..id = --ExpenseEntity.counter
-  );
+
+  static int counter = 0;
+
+  ExpenseEntity get clone => rebuild((b) => b..id = --ExpenseEntity.counter);
 
   @override
   EntityType get entityType {
@@ -211,11 +209,11 @@ abstract class ExpenseEntity extends Object
 }
 
 abstract class ExpenseCategoryEntity extends Object
-    with BaseEntity
+    with BaseEntity, SelectableEntity
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
+  factory ExpenseCategoryEntity(
+      [void updates(ExpenseCategoryEntityBuilder b)]) = _$ExpenseCategoryEntity;
 
-  factory ExpenseCategoryEntity([void updates(ExpenseCategoryEntityBuilder b)]) =
-      _$ExpenseCategoryEntity;
   ExpenseCategoryEntity._();
 
   @override

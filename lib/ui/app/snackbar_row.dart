@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SnackBarRow extends StatelessWidget {
-  final String message;
-  final IconData icon;
-
   const SnackBarRow({
     this.message,
     this.icon = Icons.check_circle,
   });
+
+  final String message;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {

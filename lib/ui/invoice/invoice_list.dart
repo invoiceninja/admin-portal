@@ -10,12 +10,12 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceList extends StatelessWidget {
-  final EntityListVM viewModel;
-
   const InvoiceList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final EntityListVM viewModel;
 
   void _showMenu(
       BuildContext context, InvoiceEntity invoice, ClientEntity client) async {

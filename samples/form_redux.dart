@@ -8,6 +8,7 @@ import 'package:redux_logging/redux_logging.dart';
 // Sample entity classes
 class ClientEntity {
   ClientEntity({this.name, this.contacts});
+
   String name;
   List<ContactEntity> contacts;
 
@@ -19,6 +20,7 @@ class ClientEntity {
 
 class ContactEntity {
   ContactEntity({this.email});
+
   String email;
 
   @override
@@ -29,13 +31,14 @@ class ContactEntity {
 
 // Redux classes
 class AppState {
-  ClientEntity client;
   AppState(this.client);
 
   AppState.init()
       : client = ClientEntity(
             name: 'Acme Client',
             contacts: [ContactEntity(email: 'test@example.com')]);
+
+  ClientEntity client;
 
   @override
   String toString() {
@@ -44,21 +47,24 @@ class AppState {
 }
 
 class UpdateClient {
-  final String name;
   UpdateClient(this.name);
+
+  final String name;
 }
 
 class AddContact {}
 
 class UpdateContact {
+  UpdateContact({this.index, this.email});
+
   final int index;
   final String email;
-  UpdateContact({this.index, this.email});
 }
 
 class DeleteContact {
-  final int index;
   DeleteContact(this.index);
+
+  final int index;
 }
 
 AppState reducer(AppState state, dynamic action) {
@@ -103,9 +109,9 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  final Store<AppState> store;
-
   const MyApp({Key key, this.store}) : super(key: key);
+
+  final Store<AppState> store;
 
   @override
   _MyAppState createState() => _MyAppState();

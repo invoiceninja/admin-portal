@@ -33,20 +33,6 @@ class PaymentListBuilder extends StatelessWidget {
 }
 
 class PaymentListVM {
-  final UserEntity user;
-  final ListUIState listState;
-  final List<int> paymentList;
-  final BuiltMap<int, PaymentEntity> paymentMap;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, PaymentEntity) onPaymentTap;
-  final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewClientFilterPressed;
-  final Function(BuildContext, PaymentEntity, EntityAction) onEntityAction;
-
   PaymentListVM({
     @required this.user,
     @required this.paymentList,
@@ -82,6 +68,7 @@ class PaymentListVM {
           state.paymentState.map,
           state.paymentState.list,
           state.invoiceState.map,
+          state.clientState.map,
           state.paymentListState),
       paymentMap: state.paymentState.map,
       clientMap: state.clientState.map,
@@ -136,4 +123,18 @@ class PaymentListVM {
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
+
+  final UserEntity user;
+  final ListUIState listState;
+  final List<int> paymentList;
+  final BuiltMap<int, PaymentEntity> paymentMap;
+  final BuiltMap<int, ClientEntity> clientMap;
+  final String filter;
+  final bool isLoading;
+  final bool isLoaded;
+  final Function(BuildContext, PaymentEntity) onPaymentTap;
+  final Function(BuildContext) onRefreshed;
+  final Function onClearEntityFilterPressed;
+  final Function(BuildContext) onViewClientFilterPressed;
+  final Function(BuildContext, PaymentEntity, EntityAction) onEntityAction;
 }

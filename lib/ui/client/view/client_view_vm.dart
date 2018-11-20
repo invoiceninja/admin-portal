@@ -17,9 +17,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class ClientViewScreen extends StatelessWidget {
-  static const String route = '/client/view';
-
   const ClientViewScreen({Key key}) : super(key: key);
+
+  static const String route = '/client/view';
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +38,6 @@ class ClientViewScreen extends StatelessWidget {
 }
 
 class ClientViewVM {
-  final ClientEntity client;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext) onEditPressed;
-  final Function onBackPressed;
-  final Function(BuildContext, EntityType) onEntityPressed;
-  final Function(BuildContext, bool) onRefreshed;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
-
   ClientViewVM({
     @required this.client,
     @required this.company,
@@ -137,6 +126,17 @@ class ClientViewVM {
           }
         });
   }
+
+  final ClientEntity client;
+  final CompanyEntity company;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext) onEditPressed;
+  final Function onBackPressed;
+  final Function(BuildContext, EntityType) onEntityPressed;
+  final Function(BuildContext, bool) onRefreshed;
+  final bool isSaving;
+  final bool isLoading;
+  final bool isDirty;
 
   @override
   bool operator ==(dynamic other) =>

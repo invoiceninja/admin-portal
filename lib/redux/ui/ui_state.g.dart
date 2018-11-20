@@ -40,6 +40,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'enableDarkMode',
       serializers.serialize(object.enableDarkMode,
           specifiedType: const FullType(bool)),
+      'requireAuthentication',
+      serializers.serialize(object.requireAuthentication,
+          specifiedType: const FullType(bool)),
       'emailPayment',
       serializers.serialize(object.emailPayment,
           specifiedType: const FullType(bool)),
@@ -95,6 +98,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.enableDarkMode = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'requireAuthentication':
+          result.requireAuthentication = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'emailPayment':
           result.emailPayment = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -143,6 +150,8 @@ class _$UIState extends UIState {
   @override
   final bool enableDarkMode;
   @override
+  final bool requireAuthentication;
+  @override
   final bool emailPayment;
   @override
   final DashboardUIState dashboardUIState;
@@ -166,6 +175,7 @@ class _$UIState extends UIState {
       {this.selectedCompanyIndex,
       this.currentRoute,
       this.enableDarkMode,
+      this.requireAuthentication,
       this.emailPayment,
       this.dashboardUIState,
       this.productUIState,
@@ -183,6 +193,9 @@ class _$UIState extends UIState {
     }
     if (enableDarkMode == null) {
       throw new BuiltValueNullFieldError('UIState', 'enableDarkMode');
+    }
+    if (requireAuthentication == null) {
+      throw new BuiltValueNullFieldError('UIState', 'requireAuthentication');
     }
     if (emailPayment == null) {
       throw new BuiltValueNullFieldError('UIState', 'emailPayment');
@@ -221,6 +234,7 @@ class _$UIState extends UIState {
         selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         enableDarkMode == other.enableDarkMode &&
+        requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
@@ -243,10 +257,14 @@ class _$UIState extends UIState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc(0,
-                                                selectedCompanyIndex.hashCode),
-                                            currentRoute.hashCode),
-                                        enableDarkMode.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    0,
+                                                    selectedCompanyIndex
+                                                        .hashCode),
+                                                currentRoute.hashCode),
+                                            enableDarkMode.hashCode),
+                                        requireAuthentication.hashCode),
                                     emailPayment.hashCode),
                                 dashboardUIState.hashCode),
                             productUIState.hashCode),
@@ -263,6 +281,7 @@ class _$UIState extends UIState {
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('enableDarkMode', enableDarkMode)
+          ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
@@ -291,6 +310,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool get enableDarkMode => _$this._enableDarkMode;
   set enableDarkMode(bool enableDarkMode) =>
       _$this._enableDarkMode = enableDarkMode;
+
+  bool _requireAuthentication;
+  bool get requireAuthentication => _$this._requireAuthentication;
+  set requireAuthentication(bool requireAuthentication) =>
+      _$this._requireAuthentication = requireAuthentication;
 
   bool _emailPayment;
   bool get emailPayment => _$this._emailPayment;
@@ -343,6 +367,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
       _enableDarkMode = _$v.enableDarkMode;
+      _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
@@ -378,6 +403,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
               enableDarkMode: enableDarkMode,
+              requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),

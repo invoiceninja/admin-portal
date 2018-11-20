@@ -6,32 +6,32 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewDashboard implements PersistUI {
-  final BuildContext context;
-
   ViewDashboard([this.context]);
+
+  final BuildContext context;
 }
 
 class UpdateDashboardSettings implements PersistUI {
+  UpdateDashboardSettings({this.settings, this.offset, this.currencyId});
+
   DashboardSettings settings;
   int offset;
   int currencyId;
-
-  UpdateDashboardSettings({this.settings, this.offset, this.currencyId});
 }
 
 class LoadDashboard {
+  LoadDashboard([this.completer, this.force = false]);
+
   final Completer completer;
   final bool force;
-
-  LoadDashboard([this.completer, this.force = false]);
 }
 
 class LoadDashboardRequest implements StartLoading {}
 
 class LoadDashboardFailure implements StopLoading {
-  final dynamic error;
-
   LoadDashboardFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -40,9 +40,9 @@ class LoadDashboardFailure implements StopLoading {
 }
 
 class LoadDashboardSuccess implements StopLoading, PersistData {
-  final DashboardEntity data;
-
   LoadDashboardSuccess(this.data);
+
+  final DashboardEntity data;
 
   @override
   String toString() {

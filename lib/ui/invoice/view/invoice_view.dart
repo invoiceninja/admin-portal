@@ -18,12 +18,12 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceView extends StatefulWidget {
-  final EntityViewVM viewModel;
-
   const InvoiceView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final EntityViewVM viewModel;
 
   @override
   _InvoiceViewState createState() => new _InvoiceViewState();

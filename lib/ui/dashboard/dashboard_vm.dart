@@ -31,18 +31,6 @@ class DashboardBuilder extends StatelessWidget {
 }
 
 class DashboardVM {
-  final AppState state;
-  final DashboardState dashboardState;
-  final DashboardUIState dashboardUIState;
-  final String filter;
-  final List<BaseEntity> filteredList;
-  final bool isLoading;
-  final bool isNextEnabled;
-  final Function(BuildContext) onRefreshed;
-  final Function(DashboardSettings) onSettingsChanged;
-  final Function(int) onOffsetChanged;
-  final Function(int) onCurrencyChanged;
-
   DashboardVM({
     @required this.state,
     @required this.dashboardUIState,
@@ -91,6 +79,18 @@ class DashboardVM {
           memoizedFilteredSelector(filter, state.selectedCompanyState),
     );
   }
+
+  final AppState state;
+  final DashboardState dashboardState;
+  final DashboardUIState dashboardUIState;
+  final String filter;
+  final List<BaseEntity> filteredList;
+  final bool isLoading;
+  final bool isNextEnabled;
+  final Function(BuildContext) onRefreshed;
+  final Function(DashboardSettings) onSettingsChanged;
+  final Function(int) onOffsetChanged;
+  final Function(int) onCurrencyChanged;
 
   @override
   bool operator ==(dynamic other) =>

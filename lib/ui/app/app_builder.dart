@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppBuilder extends StatefulWidget {
-  final Function(BuildContext) builder;
-
   const AppBuilder({Key key, this.builder}) : super(key: key);
+  final Function(BuildContext) builder;
 
   @override
   AppBuilderState createState() => new AppBuilderState();

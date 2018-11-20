@@ -9,12 +9,12 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductList extends StatelessWidget {
-  final ProductListVM viewModel;
-
   const ProductList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final ProductListVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +25,7 @@ class ProductList extends StatelessWidget {
         opacity: 0.5,
         child: Center(
           child: Text(
-            AppLocalization
-                .of(context)
-                .noRecordsFound,
+            AppLocalization.of(context).noRecordsFound,
             style: TextStyle(
               fontSize: 18.0,
             ),
@@ -46,31 +44,29 @@ class ProductList extends StatelessWidget {
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext dialogContext) =>
-            SimpleDialog(
+        builder: (BuildContext dialogContext) => SimpleDialog(
                 children:
-                product.getEntityActions(user: user).map((entityAction) {
-                  if (entityAction == null) {
-                    return Divider();
-                  } else {
-                    return ListTile(
-                      leading: Icon(getEntityActionIcon(entityAction)),
-                      title: Text(AppLocalization.of(context)
-                          .lookup(entityAction.toString())),
-                      onTap: () {
-                        Navigator.of(dialogContext).pop();
-                        viewModel.onEntityAction(
-                            context, product, entityAction);
-                      },
-                    );
-                  }
-                }).toList()));
+                    product.getEntityActions(user: user).map((entityAction) {
+              if (entityAction == null) {
+                return Divider();
+              } else {
+                return ListTile(
+                  leading: Icon(getEntityActionIcon(entityAction)),
+                  title: Text(AppLocalization.of(context)
+                      .lookup(entityAction.toString())),
+                  onTap: () {
+                    Navigator.of(dialogContext).pop();
+                    viewModel.onEntityAction(context, product, entityAction);
+                  },
+                );
+              }
+            }).toList()));
 
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(
-            message: message,
-          )));
+        message: message,
+      )));
     }
   }
 

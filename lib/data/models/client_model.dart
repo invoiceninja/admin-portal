@@ -52,10 +52,8 @@ class ClientFields {
 }
 
 abstract class ClientEntity extends Object
-    with BaseEntity
+    with BaseEntity, SelectableEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  static int counter = 0;
-
   factory ClientEntity({int id}) {
     return _$ClientEntity._(
       id: id ?? --ClientEntity.counter,
@@ -106,6 +104,8 @@ abstract class ClientEntity extends Object
   }
 
   ClientEntity._();
+
+  static int counter = 0;
 
   ClientEntity get clone => rebuild((b) => b..id = --ClientEntity.counter);
 
@@ -355,7 +355,8 @@ abstract class ClientEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user, bool includeCreate = false}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, bool includeCreate = false}) {
     final actions = <EntityAction>[];
 
     if (includeCreate && user.canCreate(EntityType.client) && isActive) {
@@ -368,7 +369,6 @@ abstract class ClientEntity extends Object
 
     return actions..addAll(getEntityBaseActions(user: user));
   }
-
 
   @override
   double get listDisplayAmount => null;
@@ -401,10 +401,8 @@ class ContactFields {
 }
 
 abstract class ContactEntity extends Object
-    with BaseEntity
+    with BaseEntity, SelectableEntity
     implements Built<ContactEntity, ContactEntityBuilder> {
-  static int counter = 0;
-
   factory ContactEntity() {
     return _$ContactEntity._(
       id: --ContactEntity.counter,
@@ -424,6 +422,8 @@ abstract class ContactEntity extends Object
   }
 
   ContactEntity._();
+
+  static int counter = 0;
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;

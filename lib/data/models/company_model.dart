@@ -66,6 +66,7 @@ abstract class CompanyEntity
       emailBodyReminder1: '',
       emailBodyReminder2: '',
       emailBodyReminder3: '',
+      fillProducts: true,
     );
   }
 
@@ -232,6 +233,10 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'email_template_reminder3')
   String get emailBodyReminder3;
 
+  @nullable
+  @BuiltValueField(wireName: 'fill_products')
+  bool get fillProducts;
+
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')
 
@@ -291,7 +296,11 @@ abstract class CompanyEntity
     return true;
   }
 
-  int get currencyId => companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
+  int get currencyId =>
+      companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
+
+  // Handle bug in earlier version of API
+  int get firstMonthOfYear => financialYearStart == 2000 ? 1 : financialYearStart;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
@@ -299,8 +308,6 @@ abstract class CompanyEntity
 abstract class PaymentTermEntity extends Object
     with SelectableEntity
     implements Built<PaymentTermEntity, PaymentTermEntityBuilder> {
-  static int counter = 0;
-
   factory PaymentTermEntity() {
     return _$PaymentTermEntity._(
       id: --PaymentTermEntity.counter,
@@ -309,6 +316,8 @@ abstract class PaymentTermEntity extends Object
   }
 
   PaymentTermEntity._();
+
+  static int counter = 0;
 
   static Serializer<PaymentTermEntity> get serializer =>
       _$paymentTermEntitySerializer;
@@ -335,8 +344,6 @@ abstract class PaymentTermEntity extends Object
 abstract class TaxRateEntity extends Object
     with SelectableEntity
     implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-  static int counter = 0;
-
   factory TaxRateEntity() {
     return _$TaxRateEntity._(
       id: --TaxRateEntity.counter,
@@ -347,6 +354,8 @@ abstract class TaxRateEntity extends Object
   }
 
   TaxRateEntity._();
+
+  static int counter = 0;
 
   static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
 

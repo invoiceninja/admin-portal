@@ -5,62 +5,73 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewClientList implements PersistUI {
-  final BuildContext context;
   ViewClientList(this.context);
+
+  final BuildContext context;
 }
 
 class ViewClient implements PersistUI {
+  ViewClient({this.clientId, this.context});
+
   final int clientId;
   final BuildContext context;
-  ViewClient({this.clientId, this.context});
 }
 
 class EditClient implements PersistUI {
+  EditClient(
+      {this.client,
+      this.contact,
+      this.context,
+      this.completer,
+      this.trackRoute = true});
+
   final ClientEntity client;
   final ContactEntity contact;
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
-  EditClient({this.client, this.contact, this.context, this.completer, this.trackRoute = true});
 }
 
 class EditContact implements PersistUI {
-  final ContactEntity contact;
   EditContact([this.contact]);
+
+  final ContactEntity contact;
 }
 
 class UpdateClient implements PersistUI {
-  final ClientEntity client;
   UpdateClient(this.client);
+
+  final ClientEntity client;
 }
 
 class LoadClient {
+  LoadClient({this.completer, this.clientId, this.loadActivities = false});
+
   final Completer completer;
   final int clientId;
   final bool loadActivities;
-
-  LoadClient({this.completer, this.clientId, this.loadActivities = false});
 }
 
 class LoadClientActivity {
+  LoadClientActivity({this.completer, this.clientId});
+
   final Completer completer;
   final int clientId;
-
-  LoadClientActivity({this.completer, this.clientId});
 }
 
 class LoadClients {
+  LoadClients({this.completer, this.force = false});
+
   final Completer completer;
   final bool force;
-
-  LoadClients({this.completer, this.force = false});
 }
 
 class LoadClientRequest implements StartLoading {}
 
 class LoadClientFailure implements StopLoading {
-  final dynamic error;
   LoadClientFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -69,8 +80,9 @@ class LoadClientFailure implements StopLoading {
 }
 
 class LoadClientSuccess implements StopLoading, PersistData {
-  final ClientEntity client;
   LoadClientSuccess(this.client);
+
+  final ClientEntity client;
 
   @override
   String toString() {
@@ -81,8 +93,9 @@ class LoadClientSuccess implements StopLoading, PersistData {
 class LoadClientsRequest implements StartLoading {}
 
 class LoadClientsFailure implements StopLoading {
-  final dynamic error;
   LoadClientsFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -91,8 +104,9 @@ class LoadClientsFailure implements StopLoading {
 }
 
 class LoadClientsSuccess implements StopLoading, PersistData {
-  final BuiltList<ClientEntity> clients;
   LoadClientsSuccess(this.clients);
+
+  final BuiltList<ClientEntity> clients;
 
   @override
   String toString() {
@@ -100,122 +114,133 @@ class LoadClientsSuccess implements StopLoading, PersistData {
   }
 }
 
-
 class AddContact implements PersistUI {
-  final ContactEntity contact;
   AddContact([this.contact]);
+
+  final ContactEntity contact;
 }
 
 class UpdateContact implements PersistUI {
+  UpdateContact({this.index, this.contact});
+
   final int index;
   final ContactEntity contact;
-  UpdateContact({this.index, this.contact});
 }
 
 class DeleteContact implements PersistUI {
-  final int index;
   DeleteContact(this.index);
+
+  final int index;
 }
 
 class SaveClientRequest implements StartSaving {
+  SaveClientRequest({this.completer, this.client});
+
   final Completer completer;
   final ClientEntity client;
-  SaveClientRequest({this.completer, this.client});
 }
 
 class SaveClientSuccess implements StopSaving, PersistData, PersistUI {
-  final ClientEntity client;
-
   SaveClientSuccess(this.client);
+
+  final ClientEntity client;
 }
 
 class AddClientSuccess implements StopSaving, PersistData, PersistUI {
-  final ClientEntity client;
   AddClientSuccess(this.client);
+
+  final ClientEntity client;
 }
 
 class SaveClientFailure implements StopSaving {
+  SaveClientFailure(this.error);
+
   final Object error;
-  SaveClientFailure (this.error);
 }
 
 class ArchiveClientRequest implements StartSaving {
+  ArchiveClientRequest(this.completer, this.clientId);
+
   final Completer completer;
   final int clientId;
-
-  ArchiveClientRequest(this.completer, this.clientId);
 }
 
 class ArchiveClientSuccess implements StopSaving, PersistData {
-  final ClientEntity client;
   ArchiveClientSuccess(this.client);
+
+  final ClientEntity client;
 }
 
 class ArchiveClientFailure implements StopSaving {
-  final ClientEntity client;
   ArchiveClientFailure(this.client);
+
+  final ClientEntity client;
 }
 
 class DeleteClientRequest implements StartSaving {
+  DeleteClientRequest(this.completer, this.clientId);
+
   final Completer completer;
   final int clientId;
-
-  DeleteClientRequest(this.completer, this.clientId);
 }
 
 class DeleteClientSuccess implements StopSaving, PersistData {
-  final ClientEntity client;
   DeleteClientSuccess(this.client);
+
+  final ClientEntity client;
 }
 
 class DeleteClientFailure implements StopSaving {
-  final ClientEntity client;
   DeleteClientFailure(this.client);
+
+  final ClientEntity client;
 }
 
 class RestoreClientRequest implements StartSaving {
+  RestoreClientRequest(this.completer, this.clientId);
+
   final Completer completer;
   final int clientId;
-  RestoreClientRequest(this.completer, this.clientId);
 }
 
 class RestoreClientSuccess implements StopSaving, PersistData {
-  final ClientEntity client;
   RestoreClientSuccess(this.client);
+
+  final ClientEntity client;
 }
 
 class RestoreClientFailure implements StopSaving {
-  final ClientEntity client;
   RestoreClientFailure(this.client);
+
+  final ClientEntity client;
 }
 
-
-
-
 class FilterClients {
-  final String filter;
   FilterClients(this.filter);
+
+  final String filter;
 }
 
 class SortClients implements PersistUI {
-  final String field;
   SortClients(this.field);
+
+  final String field;
 }
 
 class FilterClientsByState implements PersistUI {
-  final EntityState state;
-
   FilterClientsByState(this.state);
+
+  final EntityState state;
 }
 
 class FilterClientsByCustom1 implements PersistUI {
-  final String value;
-
   FilterClientsByCustom1(this.value);
+
+  final String value;
 }
 
 class FilterClientsByCustom2 implements PersistUI {
-  final String value;
-
   FilterClientsByCustom2(this.value);
+
+  final String value;
 }

@@ -22,9 +22,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentEditScreen extends StatelessWidget {
-  static const String route = '/payment/edit';
-
   const PaymentEditScreen({Key key}) : super(key: key);
+
+  static const String route = '/payment/edit';
 
   @override
   Widget build(BuildContext context) {
@@ -42,21 +42,6 @@ class PaymentEditScreen extends StatelessWidget {
 }
 
 class PaymentEditVM {
-  final PaymentEntity payment;
-  final PaymentEntity origPayment;
-  final Function(PaymentEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final Function(bool) onEmailChanged;
-  final BuiltMap<int, InvoiceEntity> invoiceMap;
-  final UIState uiState;
-  final BuiltList<int> invoiceList;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final BuiltList<int> clientList;
-  final Function onBackPressed;
-  final StaticState staticState;
-  final bool isSaving;
-  final bool isDirty;
-
   PaymentEditVM({
     @required this.payment,
     @required this.origPayment,
@@ -115,4 +100,19 @@ class PaymentEditVM {
       },
     );
   }
+
+  final PaymentEntity payment;
+  final PaymentEntity origPayment;
+  final Function(PaymentEntity) onChanged;
+  final Function(BuildContext) onSavePressed;
+  final Function(bool) onEmailChanged;
+  final BuiltMap<int, InvoiceEntity> invoiceMap;
+  final UIState uiState;
+  final BuiltList<int> invoiceList;
+  final BuiltMap<int, ClientEntity> clientMap;
+  final BuiltList<int> clientList;
+  final Function onBackPressed;
+  final StaticState staticState;
+  final bool isSaving;
+  final bool isDirty;
 }

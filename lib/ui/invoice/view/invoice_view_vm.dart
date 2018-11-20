@@ -16,11 +16,12 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
-  static const String route = '/invoice/view';
-
   const InvoiceViewScreen({Key key}) : super(key: key);
+
+  static const String route = '/invoice/view';
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +40,6 @@ class InvoiceViewScreen extends StatelessWidget {
 }
 
 class EntityViewVM {
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
-  final ClientEntity client;
-  final bool isSaving;
-  final bool isDirty;
-  final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
-  final Function(BuildContext) onClientPressed;
-  final Function(BuildContext) onPaymentsPressed;
-  final Function(BuildContext, PaymentEntity) onPaymentPressed;
-  final Function(BuildContext) onRefreshed;
-  final Function onBackPressed;
-
   EntityViewVM({
     @required this.company,
     @required this.invoice,
@@ -67,11 +55,24 @@ class EntityViewVM {
     @required this.onRefreshed,
   });
 
+  final CompanyEntity company;
+  final InvoiceEntity invoice;
+  final ClientEntity client;
+  final bool isSaving;
+  final bool isDirty;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
+  final Function(BuildContext) onClientPressed;
+  final Function(BuildContext) onPaymentsPressed;
+  final Function(BuildContext, PaymentEntity) onPaymentPressed;
+  final Function(BuildContext) onRefreshed;
+  final Function onBackPressed;
+
   @override
   bool operator ==(dynamic other) =>
       client == other.client &&
       company == other.company &&
-      invoice == other.newInvoice &&
+      invoice == other.invoice &&
       isSaving == other.isSaving &&
       isDirty == other.isDirty;
 
@@ -159,11 +160,17 @@ class InvoiceViewVM extends EntityViewVM {
               entityId: invoice.id, entityType: EntityType.invoice));
           store.dispatch(ViewPaymentList(context));
         },
-        onActionSelected: (BuildContext context, EntityAction action) {
+        onActionSelected: (BuildContext context, EntityAction action) async {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.pdf:
               viewPdf(invoice, context);
+              break;
+            case EntityAction.clientPortal:
+              if (await canLaunch(invoice.invitationSilentLink)) {
+                await launch(invoice.invitationSilentLink,
+                    forceSafariVC: false, forceWebView: false);
+              }
               break;
             case EntityAction.markSent:
               store.dispatch(MarkSentInvoiceRequest(

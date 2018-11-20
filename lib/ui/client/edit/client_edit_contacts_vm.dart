@@ -26,14 +26,6 @@ class ClientEditContactsScreen extends StatelessWidget {
 }
 
 class ClientEditContactsVM {
-  final CompanyEntity company;
-  final ClientEntity client;
-  final ContactEntity contact;
-  final Function() onAddContactPressed;
-  final Function(int) onRemoveContactPressed;
-  final Function onDoneContactPressed;
-  final Function(ContactEntity, int) onChangedContact;
-
   ClientEditContactsVM({
     @required this.company,
     @required this.client,
@@ -60,8 +52,15 @@ class ClientEditContactsVM {
         onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
         onDoneContactPressed: () => store.dispatch(EditContact()),
         onChangedContact: (contact, index) {
-          store.dispatch(
-              UpdateContact(contact: contact, index: index));
+          store.dispatch(UpdateContact(contact: contact, index: index));
         });
   }
+
+  final CompanyEntity company;
+  final ClientEntity client;
+  final ContactEntity contact;
+  final Function() onAddContactPressed;
+  final Function(int) onRemoveContactPressed;
+  final Function onDoneContactPressed;
+  final Function(ContactEntity, int) onChangedContact;
 }

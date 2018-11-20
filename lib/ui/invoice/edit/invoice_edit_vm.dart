@@ -13,9 +13,9 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class InvoiceEditScreen extends StatelessWidget {
-  static const String route = '/invoice/edit';
-
   const InvoiceEditScreen({Key key}) : super(key: key);
+
+  static const String route = '/invoice/edit';
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +33,6 @@ class InvoiceEditScreen extends StatelessWidget {
 }
 
 class EntityEditVM {
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
-  final InvoiceItemEntity invoiceItem;
-  final InvoiceEntity origInvoice;
-  final Function(BuildContext) onSavePressed;
-  final Function(List<InvoiceItemEntity>) onItemsAdded;
-  final Function onBackPressed;
-  final bool isSaving;
-
   EntityEditVM({
     @required this.company,
     @required this.invoice,
@@ -52,10 +43,18 @@ class EntityEditVM {
     @required this.onBackPressed,
     @required this.isSaving,
   });
+
+  final CompanyEntity company;
+  final InvoiceEntity invoice;
+  final InvoiceItemEntity invoiceItem;
+  final InvoiceEntity origInvoice;
+  final Function(BuildContext) onSavePressed;
+  final Function(List<InvoiceItemEntity>) onItemsAdded;
+  final Function onBackPressed;
+  final bool isSaving;
 }
 
 class InvoiceEditVM extends EntityEditVM {
-
   InvoiceEditVM({
     CompanyEntity company,
     InvoiceEntity invoice,

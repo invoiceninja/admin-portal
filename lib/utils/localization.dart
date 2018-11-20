@@ -20,6 +20,19 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'thank_you_for_using_our_app': 'Thank you for using our app!',
+      'if_you_like_it': 'If you like it please',
+      'click_here': 'click here',
+      'to_rate_it': 'to rate it.',
+      'average': 'Average',
+      'unapproved': 'Unapproved',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
+      'locked': 'Locked',
+      'authenticate': 'Authenticate',
+      'please_authenticate': 'Please authenticate',
+      'biometric_authentication': 'Biometric Authentication',
+      'footer': 'Footer',
       'compare': 'Compare',
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
@@ -9136,6 +9149,36 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get thankYouForUsingOurApp =>
+      _localizedValues[locale.languageCode]['thank_you_for_using_our_app'];
+
+  String get ifYouLikeIt =>
+      _localizedValues[locale.languageCode]['if_you_like_it'];
+
+  String get clickHere => _localizedValues[locale.languageCode]['click_here'];
+
+  String get toRateIt => _localizedValues[locale.languageCode]['to_rate_it'];
+
+  String get average => _localizedValues[locale.languageCode]['average'];
+
+  String get unapproved => _localizedValues[locale.languageCode]['unapproved'];
+
+  String get authenticateToChangeSetting =>
+      _localizedValues[locale.languageCode]['authenticate_to_change_setting'];
+
+  String get locked => _localizedValues[locale.languageCode]['locked'];
+
+  String get authenticate =>
+      _localizedValues[locale.languageCode]['authenticate'];
+
+  String get pleaseAuthenticate =>
+      _localizedValues[locale.languageCode]['please_authenticate'];
+
+  String get biometricAuthentication =>
+      _localizedValues[locale.languageCode]['biometric_authentication'];
+
+  String get footer => _localizedValues[locale.toString()]['footer'];
 
   String get compare => _localizedValues[locale.toString()]['compare'];
 

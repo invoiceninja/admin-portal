@@ -6,26 +6,31 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'credit_model.g.dart';
 
-abstract class CreditListResponse implements Built<CreditListResponse, CreditListResponseBuilder> {
+abstract class CreditListResponse
+    implements Built<CreditListResponse, CreditListResponseBuilder> {
+  factory CreditListResponse([void updates(CreditListResponseBuilder b)]) =
+      _$CreditListResponse;
 
-  factory CreditListResponse([void updates(CreditListResponseBuilder b)]) = _$CreditListResponse;
   CreditListResponse._();
 
   BuiltList<CreditEntity> get data;
 
-  static Serializer<CreditListResponse> get serializer => _$creditListResponseSerializer;
+  static Serializer<CreditListResponse> get serializer =>
+      _$creditListResponseSerializer;
 }
 
-abstract class CreditItemResponse implements Built<CreditItemResponse, CreditItemResponseBuilder> {
+abstract class CreditItemResponse
+    implements Built<CreditItemResponse, CreditItemResponseBuilder> {
+  factory CreditItemResponse([void updates(CreditItemResponseBuilder b)]) =
+      _$CreditItemResponse;
 
-  factory CreditItemResponse([void updates(CreditItemResponseBuilder b)]) = _$CreditItemResponse;
   CreditItemResponse._();
 
   CreditEntity get data;
 
-  static Serializer<CreditItemResponse> get serializer => _$creditItemResponseSerializer;
+  static Serializer<CreditItemResponse> get serializer =>
+      _$creditItemResponseSerializer;
 }
-
 
 class CreditFields {
   static const String amount = 'amount';
@@ -41,9 +46,9 @@ class CreditFields {
   static const String isDeleted = 'isDeleted';
 }
 
-abstract class CreditEntity extends Object with BaseEntity implements Built<CreditEntity, CreditEntityBuilder> {
-
-  static int counter = 0;
+abstract class CreditEntity extends Object
+    with BaseEntity, SelectableEntity
+    implements Built<CreditEntity, CreditEntityBuilder> {
   factory CreditEntity() {
     return _$CreditEntity._(
       id: --CreditEntity.counter,
@@ -59,10 +64,12 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
       isDeleted: false,
     );
   }
+
   CreditEntity._();
-  CreditEntity get clone => rebuild((b) => b
-    ..id = --CreditEntity.counter
-  );
+
+  static int counter = 0;
+
+  CreditEntity get clone => rebuild((b) => b..id = --CreditEntity.counter);
 
   @override
   EntityType get entityType {
@@ -70,35 +77,34 @@ abstract class CreditEntity extends Object with BaseEntity implements Built<Cred
   }
 
   double get amount;
-  
+
   double get balance;
-  
+
   @BuiltValueField(wireName: 'credit_date')
   String get creditDate;
-  
+
   @BuiltValueField(wireName: 'credit_number')
   String get creditNumber;
-  
+
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
-  
+
   @BuiltValueField(wireName: 'public_notes')
   String get publicNotes;
-  
+
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 
-  
   int compareTo(CreditEntity credit, String sortField, bool sortAscending) {
     int response = 0;
     final CreditEntity creditA = sortAscending ? this : credit;
-    final CreditEntity creditB = sortAscending ? credit: this;
+    final CreditEntity creditB = sortAscending ? credit : this;
 
     switch (sortField) {
       case CreditFields.amount:
         response = creditA.amount.compareTo(creditB.amount);
     }
-    
+
     return response;
   }
 

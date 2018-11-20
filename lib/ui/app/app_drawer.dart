@@ -22,12 +22,12 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatelessWidget {
-  final AppDrawerVM viewModel;
-
   const AppDrawer({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final AppDrawerVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -225,8 +225,7 @@ class AppDrawer extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(
                               style: aboutTextStyle,
-                              text:
-                                  localization.thanksForPatience + ' ',
+                              text: localization.thanksForPatience + ' ',
                             ),
                             _LinkTextSpan(
                               style: linkStyle,
@@ -267,7 +266,7 @@ class AppDrawer extends StatelessWidget {
               width: 40.0,
               height: 40.0,
             ),
-            applicationVersion: 'Version ' + kAppVersion + ' - BETA',
+            applicationVersion: 'Version ' + kAppVersion,
             applicationLegalese: '© 2018 Invoice Ninja',
             aboutBoxChildren: <Widget>[
               Padding(
@@ -277,24 +276,19 @@ class AppDrawer extends StatelessWidget {
                     children: <TextSpan>[
                       TextSpan(
                         style: aboutTextStyle,
-                        text: 'Thank you for using our app!',
-                      ),
-                      /*
-                      TextSpan(
-                        style: aboutTextStyle,
-                        text:
-                            'Thanks for trying out the beta!\n\nPlease join us on the #mobile channel on ',
+                        text: localization.thankYouForUsingOurApp +
+                            '\n\n' +
+                            localization.ifYouLikeIt,
                       ),
                       _LinkTextSpan(
                         style: linkStyle,
-                        url: 'http://slack.invoiceninja.com',
-                        text: 'Slack',
+                        url: getAppURL(context),
+                        text: ' ' + localization.clickHere + ' ',
                       ),
                       TextSpan(
                         style: aboutTextStyle,
-                        text: ' to help make the app better.',
+                        text: localization.toRateIt,
                       ),
-                      */
                     ],
                   ),
                 ),

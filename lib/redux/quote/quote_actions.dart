@@ -6,67 +6,67 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewQuoteList implements PersistUI {
-  final BuildContext context;
-
   ViewQuoteList(this.context);
+
+  final BuildContext context;
 }
 
 class ViewQuote implements PersistUI {
+  ViewQuote({this.quoteId, this.context});
+
   final int quoteId;
   final BuildContext context;
-
-  ViewQuote({this.quoteId, this.context});
 }
 
 class EditQuote implements PersistUI {
+  EditQuote({this.quote, this.context, this.completer, this.quoteItem});
+
   final InvoiceEntity quote;
   final InvoiceItemEntity quoteItem;
   final BuildContext context;
   final Completer completer;
-
-  EditQuote({this.quote, this.context, this.completer, this.quoteItem});
 }
 
 class ShowEmailQuote {
+  ShowEmailQuote({this.quote, this.context, this.completer});
+
   final InvoiceEntity quote;
   final BuildContext context;
   final Completer completer;
-
-  ShowEmailQuote({this.quote, this.context, this.completer});
 }
 
 class EditQuoteItem implements PersistUI {
-  final InvoiceItemEntity quoteItem;
-
   EditQuoteItem([this.quoteItem]);
+
+  final InvoiceItemEntity quoteItem;
 }
 
 class UpdateQuote implements PersistUI {
-  final InvoiceEntity quote;
-
   UpdateQuote(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class LoadQuote {
+  LoadQuote({this.completer, this.quoteId});
+
   final Completer completer;
   final int quoteId;
-
-  LoadQuote({this.completer, this.quoteId});
 }
 
 class LoadQuotes {
+  LoadQuotes({this.completer, this.force = false});
+
   final Completer completer;
   final bool force;
-
-  LoadQuotes({this.completer, this.force = false});
 }
 
 class LoadQuoteRequest implements StartLoading {}
 
 class LoadQuoteFailure implements StopLoading {
-  final dynamic error;
-
   LoadQuoteFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -75,9 +75,9 @@ class LoadQuoteFailure implements StopLoading {
 }
 
 class LoadQuoteSuccess implements StopLoading, PersistData {
-  final InvoiceEntity quote;
-
   LoadQuoteSuccess(this.quote);
+
+  final InvoiceEntity quote;
 
   @override
   String toString() {
@@ -88,9 +88,9 @@ class LoadQuoteSuccess implements StopLoading, PersistData {
 class LoadQuotesRequest implements StartLoading {}
 
 class LoadQuotesFailure implements StopLoading {
-  final dynamic error;
-
   LoadQuotesFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -99,9 +99,9 @@ class LoadQuotesFailure implements StopLoading {
 }
 
 class LoadQuotesSuccess implements StopLoading, PersistData {
-  final BuiltList<InvoiceEntity> quotes;
-
   LoadQuotesSuccess(this.quotes);
+
+  final BuiltList<InvoiceEntity> quotes;
 
   @override
   String toString() {
@@ -110,216 +110,215 @@ class LoadQuotesSuccess implements StopLoading, PersistData {
 }
 
 class AddQuoteItem implements PersistUI {
-  final InvoiceItemEntity quoteItem;
-
   AddQuoteItem({this.quoteItem});
+
+  final InvoiceItemEntity quoteItem;
 }
 
 class AddQuoteItems implements PersistUI {
-  final List<InvoiceItemEntity> quoteItems;
-
   AddQuoteItems(this.quoteItems);
+
+  final List<InvoiceItemEntity> quoteItems;
 }
 
 class UpdateQuoteItem implements PersistUI {
+  UpdateQuoteItem({this.index, this.quoteItem});
+
   final int index;
   final InvoiceItemEntity quoteItem;
-
-  UpdateQuoteItem({this.index, this.quoteItem});
 }
 
 class DeleteQuoteItem implements PersistUI {
-  final int index;
-
   DeleteQuoteItem(this.index);
+
+  final int index;
 }
 
 class SaveQuoteRequest implements StartSaving {
+  SaveQuoteRequest({this.completer, this.quote});
+
   final Completer completer;
   final InvoiceEntity quote;
-
-  SaveQuoteRequest({this.completer, this.quote});
 }
 
 class SaveQuoteSuccess implements StopSaving, PersistData, PersistUI {
-  final InvoiceEntity quote;
-
   SaveQuoteSuccess(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class AddQuoteSuccess implements StopSaving, PersistData, PersistUI {
-  final InvoiceEntity quote;
-
   AddQuoteSuccess(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class SaveQuoteFailure implements StopSaving {
-  final Object error;
-
   SaveQuoteFailure(this.error);
+
+  final Object error;
 }
 
 class EmailQuoteRequest implements StartSaving {
+  EmailQuoteRequest(
+      {this.completer, this.quoteId, this.template, this.subject, this.body});
+
   final Completer completer;
   final int quoteId;
   final EmailTemplate template;
   final String subject;
   final String body;
-
-  EmailQuoteRequest(
-      {this.completer, this.quoteId, this.template, this.subject, this.body});
 }
 
 class EmailQuoteSuccess implements StopSaving, PersistData {}
 
 class EmailQuoteFailure implements StopSaving {
-  final dynamic error;
-
   EmailQuoteFailure(this.error);
+
+  final dynamic error;
 }
 
 class MarkSentQuoteRequest implements StartSaving {
+  MarkSentQuoteRequest(this.completer, this.quoteId);
+
   final Completer completer;
   final int quoteId;
-
-  MarkSentQuoteRequest(this.completer, this.quoteId);
 }
 
 class MarkSentQuoteSuccess implements StopSaving, PersistData {
-  final InvoiceEntity quote;
-
   MarkSentQuoteSuccess(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class MarkSentQuoteFailure implements StopSaving {
-  final InvoiceEntity quote;
-
   MarkSentQuoteFailure(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class ArchiveQuoteRequest implements StartSaving {
+  ArchiveQuoteRequest(this.completer, this.quoteId);
+
   final Completer completer;
   final int quoteId;
-
-  ArchiveQuoteRequest(this.completer, this.quoteId);
 }
 
 class ArchiveQuoteSuccess implements StopSaving, PersistData {
-  final InvoiceEntity quote;
-
   ArchiveQuoteSuccess(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class ArchiveQuoteFailure implements StopSaving {
-  final InvoiceEntity quote;
-
   ArchiveQuoteFailure(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class DeleteQuoteRequest implements StartSaving {
+  DeleteQuoteRequest(this.completer, this.quoteId);
+
   final Completer completer;
   final int quoteId;
-
-  DeleteQuoteRequest(this.completer, this.quoteId);
 }
 
 class DeleteQuoteSuccess implements StopSaving, PersistData {
-  final InvoiceEntity quote;
-
   DeleteQuoteSuccess(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class DeleteQuoteFailure implements StopSaving {
-  final InvoiceEntity quote;
-
   DeleteQuoteFailure(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class RestoreQuoteRequest implements StartSaving {
+  RestoreQuoteRequest(this.completer, this.quoteId);
+
   final Completer completer;
   final int quoteId;
-
-  RestoreQuoteRequest(this.completer, this.quoteId);
 }
 
 class RestoreQuoteSuccess implements StopSaving, PersistData {
-  final InvoiceEntity quote;
-
   RestoreQuoteSuccess(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class RestoreQuoteFailure implements StopSaving {
-  final InvoiceEntity quote;
-
   RestoreQuoteFailure(this.quote);
+
+  final InvoiceEntity quote;
 }
 
 class FilterQuotes {
-  final String filter;
-
   FilterQuotes(this.filter);
+
+  final String filter;
 }
 
 class SortQuotes implements PersistUI {
-  final String field;
-
   SortQuotes(this.field);
+
+  final String field;
 }
 
 class FilterQuotesByState implements PersistUI {
-  final EntityState state;
-
   FilterQuotesByState(this.state);
+
+  final EntityState state;
 }
 
 class FilterQuotesByStatus implements PersistUI {
-  final EntityStatus status;
-
   FilterQuotesByStatus(this.status);
+
+  final EntityStatus status;
 }
 
 class FilterQuotesByEntity implements PersistUI {
+  FilterQuotesByEntity({this.entityId, this.entityType});
+
   final int entityId;
   final EntityType entityType;
-
-  FilterQuotesByEntity({this.entityId, this.entityType});
 }
 
 class FilterQuoteDropdown {
-  final String filter;
-
   FilterQuoteDropdown(this.filter);
+
+  final String filter;
 }
 
 class FilterQuotesByCustom1 implements PersistUI {
-  final String value;
-
   FilterQuotesByCustom1(this.value);
+
+  final String value;
 }
 
 class FilterQuotesByCustom2 implements PersistUI {
-  final String value;
-
   FilterQuotesByCustom2(this.value);
+
+  final String value;
 }
 
-
 class ConvertQuote implements PersistData {
+  ConvertQuote(this.completer, this.quoteId);
+
   final int quoteId;
   final Completer completer;
-
-  ConvertQuote(this.completer, this.quoteId);
 }
 
 class ConvertQuoteSuccess implements StopSaving, PersistData {
+  ConvertQuoteSuccess({this.quote, this.invoice});
+
   final InvoiceEntity quote;
   final InvoiceEntity invoice;
-
-  ConvertQuoteSuccess({this.quote, this.invoice});
 }
 
 class ConvertQuoteFailure implements StopSaving {
-  final dynamic error;
-
   ConvertQuoteFailure(this.error);
+
+  final dynamic error;
 }

@@ -7,19 +7,19 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 
 class StaticRepository {
-  final WebClient webClient;
-
   const StaticRepository({
     this.webClient = const WebClient(),
   });
 
-  Future<StaticDataEntity> loadList(CompanyEntity company, AuthState auth) async {
+  final WebClient webClient;
 
-    final dynamic response = await webClient.get(
-        auth.url + '/static', company.token);
+  Future<StaticDataEntity> loadList(
+      CompanyEntity company, AuthState auth) async {
+    final dynamic response =
+        await webClient.get(auth.url + '/static', company.token);
 
-    final StaticDataItemResponse staticDataResponse = serializers.deserializeWith(
-        StaticDataItemResponse.serializer, response);
+    final StaticDataItemResponse staticDataResponse = serializers
+        .deserializeWith(StaticDataItemResponse.serializer, response);
 
     return staticDataResponse.data;
   }

@@ -14,12 +14,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 
 class PaymentEdit extends StatefulWidget {
-  final PaymentEditVM viewModel;
-
   const PaymentEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final PaymentEditVM viewModel;
 
   @override
   _PaymentEditState createState() => _PaymentEditState();

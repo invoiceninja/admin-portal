@@ -8,12 +8,13 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class LoginView extends StatefulWidget {
-  final LoginVM viewModel;
-
   const LoginView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final LoginVM viewModel;
+
 
   @override
   _LoginState createState() => _LoginState();

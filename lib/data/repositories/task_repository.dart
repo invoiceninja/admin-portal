@@ -9,11 +9,11 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class TasksRepository {
-  final WebClient webClient;
-
   const TasksRepository({
     this.webClient = const WebClient(),
   });
+
+  final WebClient webClient;
 
   Future<BuiltList<TaskEntity>> loadList(
       CompanyEntity company, AuthState auth) async {

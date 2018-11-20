@@ -24,13 +24,6 @@ class AppDrawerBuilder extends StatelessWidget {
 }
 
 class AppDrawerVM {
-  final List<CompanyEntity> companies;
-  final CompanyEntity selectedCompany;
-  final UserEntity user;
-  final String selectedCompanyIndex;
-  final Function(BuildContext context, String) onCompanyChanged;
-  final bool isLoading;
-
   AppDrawerVM({
     @required this.companies,
     @required this.selectedCompany,
@@ -38,7 +31,14 @@ class AppDrawerVM {
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
     @required this.isLoading,
-});
+  });
+
+  final List<CompanyEntity> companies;
+  final CompanyEntity selectedCompany;
+  final UserEntity user;
+  final String selectedCompanyIndex;
+  final Function(BuildContext context, String) onCompanyChanged;
+  final bool isLoading;
 
   static AppDrawerVM fromStore(Store<AppState> store) {
     final AppState state = store.state;

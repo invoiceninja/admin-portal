@@ -33,16 +33,6 @@ class ClientListBuilder extends StatelessWidget {
 }
 
 class ClientListVM {
-  final UserEntity user;
-  final List<int> clientList;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, ClientEntity) onClientTap;
-  final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
-
   ClientListVM({
     @required this.user,
     @required this.clientList,
@@ -54,6 +44,16 @@ class ClientListVM {
     @required this.onRefreshed,
     @required this.onEntityAction,
   });
+
+  final UserEntity user;
+  final List<int> clientList;
+  final BuiltMap<int, ClientEntity> clientMap;
+  final String filter;
+  final bool isLoading;
+  final bool isLoaded;
+  final Function(BuildContext, ClientEntity) onClientTap;
+  final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
 
   static ClientListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {

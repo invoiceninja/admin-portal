@@ -15,12 +15,12 @@ import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientView extends StatefulWidget {
-  final ClientViewVM viewModel;
-
   const ClientView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final ClientViewVM viewModel;
 
   @override
   _ClientViewState createState() => _ClientViewState();

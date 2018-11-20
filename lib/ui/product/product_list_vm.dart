@@ -30,16 +30,6 @@ class ProductListBuilder extends StatelessWidget {
 }
 
 class ProductListVM {
-  final UserEntity user;
-  final List<int> productList;
-  final BuiltMap<int, ProductEntity> productMap;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, ProductEntity) onProductTap;
-  final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, ProductEntity, EntityAction) onEntityAction;
-
   ProductListVM({
     @required this.user,
     @required this.productList,
@@ -103,4 +93,14 @@ class ProductListVM {
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
+
+  final UserEntity user;
+  final List<int> productList;
+  final BuiltMap<int, ProductEntity> productMap;
+  final String filter;
+  final bool isLoading;
+  final bool isLoaded;
+  final Function(BuildContext, ProductEntity) onProductTap;
+  final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, ProductEntity, EntityAction) onEntityAction;
 }

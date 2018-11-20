@@ -15,9 +15,11 @@ class InvoiceEditDetails extends StatefulWidget {
   const InvoiceEditDetails({
     Key key,
     @required this.viewModel,
+    this.isQuote = false,
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
+  final bool isQuote;
 
   @override
   InvoiceEditDetailsState createState() => InvoiceEditDetailsState();
@@ -137,7 +139,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     autocorrect: false,
                     controller: _invoiceNumberController,
                     decoration: InputDecoration(
-                      labelText: localization.invoiceNumber,
+                      labelText: widget.isQuote
+                          ? localization.quoteNumber
+                          : localization.invoiceNumber,
                     ),
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
@@ -147,7 +151,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               validator: (String val) => val.trim().isEmpty
                   ? AppLocalization.of(context).pleaseSelectADate
                   : null,
-              labelText: localization.invoiceDate,
+              labelText: widget.isQuote
+                  ? localization.quoteDate
+                  : localization.invoiceDate,
               selectedDate: invoice.invoiceDate,
               onSelected: (date) {
                 viewModel
@@ -155,7 +161,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               },
             ),
             DatePicker(
-              labelText: localization.dueDate,
+              labelText: widget.isQuote
+                  ? localization.validUntil
+                  : localization.dueDate,
               selectedDate: invoice.dueDate,
               onSelected: (date) {
                 viewModel.onChanged(invoice.rebuild((b) => b..dueDate = date));

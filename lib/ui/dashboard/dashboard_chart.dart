@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardChart extends StatefulWidget {
-  const DashboardChart(
-      {this.series,
-      this.amount,
-      this.previousAmount,
-      this.title,
-      this.currencyId});
+  const DashboardChart({this.data, this.title, this.currencyId});
 
-  final List<charts.Series> series;
-  final double previousAmount;
-  final double amount;
+  final List<ChartDataGroup> data;
   final String title;
   final int currencyId;
 
@@ -27,8 +21,8 @@ class DashboardChart extends StatefulWidget {
 }
 
 class _DashboardChartState extends State<DashboardChart> {
-  String _title;
-  String _subtitle;
+  String _selected;
+  int _selectedIndex = 0;
 
   void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
@@ -50,24 +44,28 @@ class _DashboardChartState extends State<DashboardChart> {
 
     setState(() {
       if (date != null) {
-        _title = formatNumber(total, context, currencyId: widget.currencyId);
-        _subtitle = formatDate(date.toIso8601String(), context);
+        _selected = formatDate(date.toIso8601String(), context) +
+            ' • ' +
+            formatNumber(total, context, currencyId: widget.currencyId);
       } else {
-        _title = null;
-        _subtitle = null;
+        _selected = null;
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final color = state.uiState.enableDarkMode
         ? charts.MaterialPalette.white
         : charts.MaterialPalette.gray.shade700;
 
+    final series = widget.data[_selectedIndex];
+
     final chart = charts.TimeSeriesChart(
-      widget.series,
+      series.chartSeries,
       animate: true,
       selectionModels: [
         charts.SelectionModelConfig(
@@ -90,77 +88,148 @@ class _DashboardChartState extends State<DashboardChart> {
               lineStyle: charts.LineStyleSpec(color: color))),
     );
 
-    final bool isIncrease = widget.amount >= widget.previousAmount;
-    final String changeAmount = (isIncrease ? '+' : '') +
-        formatNumber(widget.amount - widget.previousAmount, context,
-            currencyId: widget.currencyId);
-    final changePercent = (isIncrease ? '+' : '-') +
-        formatNumber(
-            widget.amount != 0 && widget.previousAmount != 0
-                ? round(widget.previousAmount / widget.amount * 100, 2)
-                : 0.0,
-            context,
-            formatNumberType: FormatNumberType.percent,
-            currencyId: widget.currencyId);
-    final String changeString = widget.amount == 0 || widget.previousAmount == 0
-        ? ''
-        : '$changeAmount ($changePercent)';
-
     return FormCard(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 4.0),
-          child: Column(
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(widget.title,
-                            style: Theme.of(context).textTheme.subhead),
-                        Text(
-                            formatNumber(widget.amount, context,
-                                currencyId: widget.currencyId),
-                            style: Theme.of(context).textTheme.headline),
-                        SizedBox(width: 12.0),
-                        Text(
-                          changeString,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: isIncrease ? Colors.green : Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+          padding: EdgeInsets.all(14.0),
+          child: Text(
+            widget.title,
+            style: theme.textTheme.headline,
+          ),
+        ),
+        Divider(height: 1.0),
+        Container(
+          width: double.infinity,
+          height: state.dashboardUIState.enableComparison ? 106 : 86,
+          child: ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            children: widget.data.map((dataGroup) {
+              final int index = widget.data.indexOf(dataGroup);
+              final bool isSelected = index == _selectedIndex;
+              final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
+              final String changeAmount = (isIncrease ? '+' : '') +
+                  formatNumber(
+                      dataGroup.total - dataGroup.previousTotal, context,
+                      currencyId: widget.currencyId);
+              final changePercent = (isIncrease ? '+' : '') +
+                  formatNumber(
+                      dataGroup.total != 0 && dataGroup.previousTotal != 0
+                          ? round(
+                              (dataGroup.total - dataGroup.previousTotal) /
+                                  dataGroup.previousTotal *
+                                  100,
+                              2)
+                          : 0.0,
+                      context,
+                      formatNumberType: FormatNumberType.percent,
+                      currencyId: widget.currencyId);
+              final String changeString = dataGroup.total == 0 ||
+                      dataGroup.previousTotal == 0 ||
+                      dataGroup.total == dataGroup.previousTotal
+                  ? (state.dashboardUIState.enableComparison ? ' ' : '')
+                  : '$changeAmount ($changePercent)';
+
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedIndex = index;
+                    _selected = null;
+                  });
+                },
+                child: Container(
+                  color: isSelected ? Colors.blue : theme.cardColor,
+                  padding: EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(localization.lookup(dataGroup.name),
+                          style: theme.textTheme.subhead.copyWith(
+                              color: isSelected ? Colors.white : null,
+                              fontWeight: FontWeight.w400)),
+                      SizedBox(height: 4.0),
+                      Text(
+                          formatNumber(dataGroup.total, context,
+                              currencyId: widget.currencyId),
+                          style: theme.textTheme.headline.copyWith(
+                              color: isSelected ? Colors.white : null)),
+                      SizedBox(height: 2.0),
+                      changeString.isNotEmpty
+                          ? Text(
+                              changeString,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: isSelected
+                                    ? Colors.white
+                                    : (isIncrease ? Colors.green : Colors.red),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : SizedBox(),
+                    ],
                   ),
-                  _title != null
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(_subtitle,
-                                style: Theme.of(context).textTheme.subhead),
-                            Text(_title,
-                                style: Theme.of(context).textTheme.headline),
-                          ],
-                        )
-                      : Container(),
-                ],
-              ),
-              SizedBox(
-                height: 200.0,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: chart,
                 ),
+              );
+            }).toList(),
+          ),
+        ),
+        Divider(height: 1.0),
+        SizedBox(
+          height: 240.0,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: chart,
+          ),
+        ),
+        Divider(height: 1.0),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                        localization.average +
+                            ': ' +
+                            formatNumber(series.average, context,
+                                currencyId: widget.currencyId),
+                        style:
+                            theme.textTheme.subhead,
+                      ),
               ),
+              _selected != null
+                  ? Text(
+                      _selected,
+                      style: theme.textTheme.subhead,
+                    )
+                  : SizedBox(),
             ],
           ),
-        )
+        ),
       ],
+    );
+  }
+}
+
+class FormCard extends StatelessWidget {
+  const FormCard({
+    Key key,
+    @required this.children,
+  }) : super(key: key);
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Card(
+        elevation: 4.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children,
+        ),
+      ),
     );
   }
 }

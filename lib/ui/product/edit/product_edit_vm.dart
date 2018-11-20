@@ -12,9 +12,9 @@ import 'package:invoiceninja_flutter/ui/product/edit/product_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ProductEditScreen extends StatelessWidget {
-  static const String route = '/product/edit';
-
   const ProductEditScreen({Key key}) : super(key: key);
+
+  static const String route = '/product/edit';
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +32,6 @@ class ProductEditScreen extends StatelessWidget {
 }
 
 class ProductEditVM {
-  final CompanyEntity company;
-  final ProductEntity product;
-  final ProductEntity origProduct;
-  final Function(ProductEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext, EntityAction) onActionSelected;
-  final Function onBackPressed;
-  final bool isSaving;
-  final bool isDirty;
-
   ProductEditVM({
     @required this.company,
     @required this.product,
@@ -84,20 +74,17 @@ class ProductEditVM {
           switch (action) {
             case EntityAction.archive:
               store.dispatch(ArchiveProductRequest(
-                  popCompleter(
-                      context, localization.archivedProduct),
+                  popCompleter(context, localization.archivedProduct),
                   product.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteProductRequest(
-                  popCompleter(
-                      context, localization.deletedProduct),
+                  popCompleter(context, localization.deletedProduct),
                   product.id));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreProductRequest(
-                  snackBarCompleter(
-                      context, localization.restoredProduct),
+                  snackBarCompleter(context, localization.restoredProduct),
                   product.id));
               break;
             case EntityAction.clone:
@@ -106,4 +93,14 @@ class ProductEditVM {
           }
         });
   }
+
+  final CompanyEntity company;
+  final ProductEntity product;
+  final ProductEntity origProduct;
+  final Function(ProductEntity) onChanged;
+  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function onBackPressed;
+  final bool isSaving;
+  final bool isDirty;
 }

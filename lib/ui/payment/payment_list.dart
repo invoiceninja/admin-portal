@@ -13,16 +13,15 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentList extends StatelessWidget {
-  final PaymentListVM viewModel;
-
   const PaymentList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
+  final PaymentListVM viewModel;
+
   void _showMenu(
       BuildContext context, PaymentEntity payment, ClientEntity client) async {
-
     if (payment == null || client == null) {
       return;
     }
@@ -134,7 +133,8 @@ class PaymentList extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             final paymentId = viewModel.paymentList[index];
                             final payment = state.paymentState.map[paymentId];
-                            final client = paymentClientSelector(paymentId, state);
+                            final client =
+                                paymentClientSelector(paymentId, state);
                             return Column(
                               children: <Widget>[
                                 PaymentListItem(
@@ -147,7 +147,8 @@ class PaymentList extends StatelessWidget {
                                     if (action == EntityAction.more) {
                                       _showMenu(context, payment, client);
                                     } else {
-                                      viewModel.onEntityAction(context, payment, action);
+                                      viewModel.onEntityAction(
+                                          context, payment, action);
                                     }
                                   },
                                   onLongPress: () =>

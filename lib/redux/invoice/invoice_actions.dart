@@ -6,67 +6,67 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewInvoiceList implements PersistUI {
-  final BuildContext context;
-
   ViewInvoiceList(this.context);
+
+  final BuildContext context;
 }
 
 class ViewInvoice implements PersistUI {
+  ViewInvoice({this.invoiceId, this.context});
+
   final int invoiceId;
   final BuildContext context;
-
-  ViewInvoice({this.invoiceId, this.context});
 }
 
 class EditInvoice implements PersistUI {
+  EditInvoice({this.invoice, this.context, this.completer, this.invoiceItem});
+
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
   final BuildContext context;
   final Completer completer;
-
-  EditInvoice({this.invoice, this.context, this.completer, this.invoiceItem});
 }
 
 class ShowEmailInvoice {
+  ShowEmailInvoice({this.invoice, this.context, this.completer});
+
   final InvoiceEntity invoice;
   final BuildContext context;
   final Completer completer;
-
-  ShowEmailInvoice({this.invoice, this.context, this.completer});
 }
 
 class EditInvoiceItem implements PersistUI {
-  final InvoiceItemEntity invoiceItem;
-
   EditInvoiceItem([this.invoiceItem]);
+
+  final InvoiceItemEntity invoiceItem;
 }
 
 class UpdateInvoice implements PersistUI {
-  final InvoiceEntity invoice;
-
   UpdateInvoice(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class LoadInvoice {
+  LoadInvoice({this.completer, this.invoiceId});
+
   final Completer completer;
   final int invoiceId;
-
-  LoadInvoice({this.completer, this.invoiceId});
 }
 
 class LoadInvoices {
+  LoadInvoices({this.completer, this.force = false});
+
   final Completer completer;
   final bool force;
-
-  LoadInvoices({this.completer, this.force = false});
 }
 
 class LoadInvoiceRequest implements StartLoading {}
 
 class LoadInvoiceFailure implements StopLoading {
-  final dynamic error;
-
   LoadInvoiceFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -75,9 +75,9 @@ class LoadInvoiceFailure implements StopLoading {
 }
 
 class LoadInvoiceSuccess implements StopLoading, PersistData {
-  final InvoiceEntity invoice;
-
   LoadInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
 
   @override
   String toString() {
@@ -88,9 +88,9 @@ class LoadInvoiceSuccess implements StopLoading, PersistData {
 class LoadInvoicesRequest implements StartLoading {}
 
 class LoadInvoicesFailure implements StopLoading {
-  final dynamic error;
-
   LoadInvoicesFailure(this.error);
+
+  final dynamic error;
 
   @override
   String toString() {
@@ -99,9 +99,9 @@ class LoadInvoicesFailure implements StopLoading {
 }
 
 class LoadInvoicesSuccess implements StopLoading, PersistData {
-  final BuiltList<InvoiceEntity> invoices;
-
   LoadInvoicesSuccess(this.invoices);
+
+  final BuiltList<InvoiceEntity> invoices;
 
   @override
   String toString() {
@@ -110,195 +110,195 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
 }
 
 class AddInvoiceItem implements PersistUI {
-  final InvoiceItemEntity invoiceItem;
-
   AddInvoiceItem({this.invoiceItem});
+
+  final InvoiceItemEntity invoiceItem;
 }
 
 class AddInvoiceItems implements PersistUI {
-  final List<InvoiceItemEntity> invoiceItems;
-
   AddInvoiceItems(this.invoiceItems);
+
+  final List<InvoiceItemEntity> invoiceItems;
 }
 
 class UpdateInvoiceItem implements PersistUI {
+  UpdateInvoiceItem({this.index, this.invoiceItem});
+
   final int index;
   final InvoiceItemEntity invoiceItem;
-
-  UpdateInvoiceItem({this.index, this.invoiceItem});
 }
 
 class DeleteInvoiceItem implements PersistUI {
-  final int index;
-
   DeleteInvoiceItem(this.index);
+
+  final int index;
 }
 
 class SaveInvoiceRequest implements StartSaving {
+  SaveInvoiceRequest({this.completer, this.invoice});
+
   final Completer completer;
   final InvoiceEntity invoice;
-
-  SaveInvoiceRequest({this.completer, this.invoice});
 }
 
 class SaveInvoiceSuccess implements StopSaving, PersistData, PersistUI {
-  final InvoiceEntity invoice;
-
   SaveInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class AddInvoiceSuccess implements StopSaving, PersistData, PersistUI {
-  final InvoiceEntity invoice;
-
   AddInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class SaveInvoiceFailure implements StopSaving {
-  final Object error;
-
   SaveInvoiceFailure(this.error);
+
+  final Object error;
 }
 
 class EmailInvoiceRequest implements StartSaving {
+  EmailInvoiceRequest(
+      {this.completer, this.invoiceId, this.template, this.subject, this.body});
+
   final Completer completer;
   final int invoiceId;
   final EmailTemplate template;
   final String subject;
   final String body;
-
-  EmailInvoiceRequest(
-      {this.completer, this.invoiceId, this.template, this.subject, this.body});
 }
 
 class EmailInvoiceSuccess implements StopSaving, PersistData {}
 
 class EmailInvoiceFailure implements StopSaving {
-  final dynamic error;
-
   EmailInvoiceFailure(this.error);
+
+  final dynamic error;
 }
 
 class MarkSentInvoiceRequest implements StartSaving {
+  MarkSentInvoiceRequest(this.completer, this.invoiceId);
+
   final Completer completer;
   final int invoiceId;
-
-  MarkSentInvoiceRequest(this.completer, this.invoiceId);
 }
 
 class MarkSentInvoiceSuccess implements StopSaving, PersistData {
-  final InvoiceEntity invoice;
-
   MarkSentInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class MarkSentInvoiceFailure implements StopSaving {
-  final InvoiceEntity invoice;
-
   MarkSentInvoiceFailure(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class ArchiveInvoiceRequest implements StartSaving {
+  ArchiveInvoiceRequest(this.completer, this.invoiceId);
+
   final Completer completer;
   final int invoiceId;
-
-  ArchiveInvoiceRequest(this.completer, this.invoiceId);
 }
 
 class ArchiveInvoiceSuccess implements StopSaving, PersistData {
-  final InvoiceEntity invoice;
-
   ArchiveInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class ArchiveInvoiceFailure implements StopSaving {
-  final InvoiceEntity invoice;
-
   ArchiveInvoiceFailure(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class DeleteInvoiceRequest implements StartSaving {
+  DeleteInvoiceRequest(this.completer, this.invoiceId);
+
   final Completer completer;
   final int invoiceId;
-
-  DeleteInvoiceRequest(this.completer, this.invoiceId);
 }
 
 class DeleteInvoiceSuccess implements StopSaving, PersistData {
-  final InvoiceEntity invoice;
-
   DeleteInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class DeleteInvoiceFailure implements StopSaving {
-  final InvoiceEntity invoice;
-
   DeleteInvoiceFailure(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class RestoreInvoiceRequest implements StartSaving {
+  RestoreInvoiceRequest(this.completer, this.invoiceId);
+
   final Completer completer;
   final int invoiceId;
-
-  RestoreInvoiceRequest(this.completer, this.invoiceId);
 }
 
 class RestoreInvoiceSuccess implements StopSaving, PersistData {
-  final InvoiceEntity invoice;
-
   RestoreInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class RestoreInvoiceFailure implements StopSaving {
-  final InvoiceEntity invoice;
-
   RestoreInvoiceFailure(this.invoice);
+
+  final InvoiceEntity invoice;
 }
 
 class FilterInvoices {
-  final String filter;
-
   FilterInvoices(this.filter);
+
+  final String filter;
 }
 
 class SortInvoices implements PersistUI {
-  final String field;
-
   SortInvoices(this.field);
+
+  final String field;
 }
 
 class FilterInvoicesByState implements PersistUI {
-  final EntityState state;
-
   FilterInvoicesByState(this.state);
+
+  final EntityState state;
 }
 
 class FilterInvoicesByStatus implements PersistUI {
-  final EntityStatus status;
-
   FilterInvoicesByStatus(this.status);
+
+  final EntityStatus status;
 }
 
 class FilterInvoicesByEntity implements PersistUI {
+  FilterInvoicesByEntity({this.entityId, this.entityType});
+
   final int entityId;
   final EntityType entityType;
-
-  FilterInvoicesByEntity({this.entityId, this.entityType});
 }
 
 class FilterInvoiceDropdown {
-  final String filter;
-
   FilterInvoiceDropdown(this.filter);
+
+  final String filter;
 }
 
 class FilterInvoicesByCustom1 implements PersistUI {
-  final String value;
-
   FilterInvoicesByCustom1(this.value);
+
+  final String value;
 }
 
 class FilterInvoicesByCustom2 implements PersistUI {
-  final String value;
-
   FilterInvoicesByCustom2(this.value);
+
+  final String value;
 }

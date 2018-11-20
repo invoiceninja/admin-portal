@@ -10,14 +10,14 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class ProductRepository {
-  final WebClient webClient;
-
   const ProductRepository({
     this.webClient = const WebClient(),
   });
 
-  Future<BuiltList<ProductEntity>> loadList(CompanyEntity company, AuthState auth, int updatedAt) async {
+  final WebClient webClient;
 
+  Future<BuiltList<ProductEntity>> loadList(
+      CompanyEntity company, AuthState auth, int updatedAt) async {
     String url = auth.url + '/products?';
 
     if (updatedAt > 0) {
@@ -26,14 +26,15 @@ class ProductRepository {
 
     final dynamic response = await webClient.get(url, company.token);
 
-    final ProductListResponse productResponse = serializers.deserializeWith(
-        ProductListResponse.serializer, response);
+    final ProductListResponse productResponse =
+        serializers.deserializeWith(ProductListResponse.serializer, response);
 
     return productResponse.data;
   }
 
-  Future<ProductEntity> saveData(CompanyEntity company, AuthState auth, ProductEntity product, [EntityAction action]) async {
-
+  Future<ProductEntity> saveData(
+      CompanyEntity company, AuthState auth, ProductEntity product,
+      [EntityAction action]) async {
     final data = serializers.serializeWith(ProductEntity.serializer, product);
     dynamic response;
 
@@ -48,8 +49,8 @@ class ProductRepository {
       response = await webClient.put(url, company.token, json.encode(data));
     }
 
-    final ProductItemResponse productResponse = serializers.deserializeWith(
-        ProductItemResponse.serializer, response);
+    final ProductItemResponse productResponse =
+        serializers.deserializeWith(ProductItemResponse.serializer, response);
 
     return productResponse.data;
   }

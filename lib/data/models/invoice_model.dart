@@ -84,10 +84,8 @@ class InvoiceFields {
 }
 
 abstract class InvoiceEntity extends Object
-    with BaseEntity, CalculateInvoiceTotal
+    with BaseEntity, SelectableEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-  static int counter = 0;
-
   factory InvoiceEntity({int id, bool isQuote = false}) {
     return _$InvoiceEntity._(
       id: id ?? --InvoiceEntity.counter,
@@ -140,6 +138,8 @@ abstract class InvoiceEntity extends Object
   }
 
   InvoiceEntity._();
+
+  static int counter = 0;
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
@@ -293,6 +293,9 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<InvitationEntity> get invitations;
 
+  bool get isApproved =>
+      invoiceStatusId == kInvoiceStatusApproved || quoteInvoiceId > 0;
+
   //String get last_login;
   //String get custom_messages;
 
@@ -405,6 +408,7 @@ abstract class InvoiceEntity extends Object
     }
 
     actions.add(EntityAction.pdf);
+    actions.add(EntityAction.clientPortal);
 
     if (actions.isNotEmpty) {
       actions.add(null);
@@ -469,6 +473,8 @@ abstract class InvoiceEntity extends Object
 
   String get invitationLink => invitations.first?.link;
 
+  String get invitationBorderlessLink => invitations.first?.borderlessLink;
+
   String get invitationSilentLink => invitations.first?.silentLink;
 
   String get invitationDownloadLink => invitations.first?.downloadLink;
@@ -484,10 +490,8 @@ abstract class InvoiceEntity extends Object
 }
 
 abstract class InvoiceItemEntity extends Object
-    with BaseEntity
+    with BaseEntity, SelectableEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-  static int counter = 0;
-
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
       id: --InvoiceItemEntity.counter,
@@ -510,6 +514,8 @@ abstract class InvoiceItemEntity extends Object
   }
 
   InvoiceItemEntity._();
+
+  static int counter = 0;
 
   @override
   EntityType get entityType {
@@ -597,10 +603,8 @@ abstract class InvoiceItemEntity extends Object
 }
 
 abstract class InvitationEntity extends Object
-    with BaseEntity
+    with BaseEntity, SelectableEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
-  static int counter = 0;
-
   factory InvitationEntity() {
     return _$InvitationEntity._(
       id: --InvitationEntity.counter,
@@ -616,6 +620,8 @@ abstract class InvitationEntity extends Object
 
   InvitationEntity._();
 
+  static int counter = 0;
+
   String get key;
 
   String get link;
@@ -629,7 +635,9 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
 
-  String get silentLink => link + '?silent=true&borderless=true';
+  String get silentLink => link + '?silent=true';
+
+  String get borderlessLink => silentLink + '&borderless=true';
 
   String get downloadLink => link.replaceFirst('/view/', '/download/');
 

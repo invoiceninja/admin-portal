@@ -26,13 +26,6 @@ class InvoiceEditItemsScreen extends StatelessWidget {
 }
 
 class EntityEditItemsVM {
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
-  final InvoiceItemEntity invoiceItem;
-  final Function(int) onRemoveInvoiceItemPressed;
-  final Function onDoneInvoiceItemPressed;
-  final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
-
   EntityEditItemsVM({
     @required this.company,
     @required this.invoice,
@@ -41,6 +34,13 @@ class EntityEditItemsVM {
     @required this.onDoneInvoiceItemPressed,
     @required this.onChangedInvoiceItem,
   });
+
+  final CompanyEntity company;
+  final InvoiceEntity invoice;
+  final InvoiceItemEntity invoiceItem;
+  final Function(int) onRemoveInvoiceItemPressed;
+  final Function onDoneInvoiceItemPressed;
+  final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
 }
 
 class InvoiceEditItemsVM extends EntityEditItemsVM {
@@ -52,13 +52,13 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
   }) : super(
-    company: company,
-    invoice: invoice,
-    invoiceItem: invoiceItem,
-    onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
-    onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
-    onChangedInvoiceItem: onChangedInvoiceItem,
-  );
+          company: company,
+          invoice: invoice,
+          invoiceItem: invoiceItem,
+          onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+          onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
+          onChangedInvoiceItem: onChangedInvoiceItem,
+        );
 
   factory InvoiceEditItemsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

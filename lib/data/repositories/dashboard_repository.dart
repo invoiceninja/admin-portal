@@ -7,19 +7,19 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class DashboardRepository {
-  final WebClient webClient;
-
   const DashboardRepository({
     this.webClient = const WebClient(),
   });
 
-  Future<DashboardEntity> loadItem(CompanyEntity company, AuthState auth) async {
+  final WebClient webClient;
 
+  Future<DashboardEntity> loadItem(
+      CompanyEntity company, AuthState auth) async {
     final dynamic response = await webClient.get(
         auth.url + '/dashboard?only_activity=true', company.token);
 
-    final DashboardResponse dashboardResponse = serializers.deserializeWith(
-        DashboardResponse.serializer, response);
+    final DashboardResponse dashboardResponse =
+        serializers.deserializeWith(DashboardResponse.serializer, response);
 
     return dashboardResponse.data;
   }

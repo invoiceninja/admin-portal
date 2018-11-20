@@ -17,11 +17,12 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
-  static const String route = '/invoices/edit';
-
   const InvoiceListBuilder({Key key}) : super(key: key);
+
+  static const String route = '/invoices/edit';
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +38,6 @@ class InvoiceListBuilder extends StatelessWidget {
 }
 
 class EntityListVM {
-  final UserEntity user;
-  final ListUIState listState;
-  final List<int> invoiceList;
-  final BuiltMap<int, InvoiceEntity> invoiceMap;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, InvoiceEntity) onInvoiceTap;
-  final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
-  final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
-
   EntityListVM({
     @required this.user,
     @required this.listState,
@@ -66,6 +53,20 @@ class EntityListVM {
     @required this.onViewEntityFilterPressed,
     @required this.onEntityAction,
   });
+
+  final UserEntity user;
+  final ListUIState listState;
+  final List<int> invoiceList;
+  final BuiltMap<int, InvoiceEntity> invoiceMap;
+  final BuiltMap<int, ClientEntity> clientMap;
+  final String filter;
+  final bool isLoading;
+  final bool isLoaded;
+  final Function(BuildContext, InvoiceEntity) onInvoiceTap;
+  final Function(BuildContext) onRefreshed;
+  final Function onClearEntityFilterPressed;
+  final Function(BuildContext) onViewEntityFilterPressed;
+  final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
 }
 
 class InvoiceListVM extends EntityListVM {
@@ -135,11 +136,17 @@ class InvoiceListVM extends EntityListVM {
           ViewClient(
               clientId: state.invoiceListState.filterEntityId,
               context: context)),
-      onEntityAction: (context, invoice, action) {
+      onEntityAction: (context, invoice, action) async {
         final localization = AppLocalization.of(context);
         switch (action) {
           case EntityAction.pdf:
             viewPdf(invoice, context);
+            break;
+          case EntityAction.clientPortal:
+            if (await canLaunch(invoice.invitationSilentLink)) {
+              await launch(invoice.invitationSilentLink,
+                  forceSafariVC: false, forceWebView: false);
+            }
             break;
           case EntityAction.markSent:
             store.dispatch(MarkSentInvoiceRequest(

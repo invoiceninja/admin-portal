@@ -11,12 +11,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 
 class ClientEdit extends StatefulWidget {
-  final ClientEditVM viewModel;
-
   const ClientEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final ClientEditVM viewModel;
 
   @override
   _ClientEditState createState() => _ClientEditState();
