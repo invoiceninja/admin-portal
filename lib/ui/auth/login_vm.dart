@@ -103,7 +103,7 @@ class LoginVM {
             return;
           }
 
-          if (! url.startsWith('http')) {
+          if (url.isNotEmpty && ! url.startsWith('http')) {
             url = 'https://' + url;
           }
 
