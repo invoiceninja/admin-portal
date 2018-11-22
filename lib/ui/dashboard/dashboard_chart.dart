@@ -139,7 +139,7 @@ class _DashboardChartState extends State<DashboardChart> {
                 },
                 child: Container(
                   color: isSelected ? Colors.blue : theme.cardColor,
-                  padding: EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 16),
+                  padding: EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
