@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
-import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -75,20 +75,23 @@ class ProjectEditVM {
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-                message: AppLocalization.of(context).createdClient,
-              )));
+            message: AppLocalization.of(context).createdClient,
+          )));
         });
       },
       onSavePressed: (BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
+        final localization = AppLocalization.of(context);
+        final Completer<ProjectEntity> completer =
+            new Completer<ProjectEntity>();
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((savedProject) {
-          if (project.isNew) {
-            Navigator.of(context).pushReplacementNamed(ProjectViewScreen.route);
-          } else {
-            Navigator.of(context).pop(savedProject);
-          }
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: project.isNew
+                ? localization.createdProject
+                : localization.updatedProject,
+          )));
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

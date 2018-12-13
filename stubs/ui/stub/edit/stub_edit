@@ -77,19 +77,21 @@ class _StubEditState extends State<StubEdit> {
               ? localization.newStub
               : localization.editStub),
           actions: <Widget>[
-            RefreshIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: !stub.isDeleted,
-              isDirty: stub.isNew || stub != viewModel.origStub,
-              isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (! _formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            )
+            Builder(builder: (BuildContext context) {
+                RefreshIconButton(
+                  icon: Icons.cloud_upload,
+                  tooltip: localization.save,
+                  isVisible: !stub.isDeleted,
+                  isDirty: stub.isNew || stub != viewModel.origStub,
+                  isSaving: viewModel.isSaving,
+                  onPressed: () {
+                    if (! _formKey.currentState.validate()) {
+                      return;
+                    }
+                    viewModel.onSavePressed(context);
+                  },
+                );
+            }),
           ],
         ),
         body: Form(

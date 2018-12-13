@@ -58,7 +58,7 @@ class StubEditVM {
         store.dispatch(UpdateCurrentRoute(StubScreen.route));
       },
       onSavePressed: (BuildContext context) {
-        final Completer<Null> completer = new Completer<Null>();
+        final Completer<StubEntity> completer = new Completer<StubEntity>();
         store.dispatch(SaveStubRequest(completer: completer, stub: stub));
         return completer.future.then((_) {
             return completer.future.then((savedStub) {
