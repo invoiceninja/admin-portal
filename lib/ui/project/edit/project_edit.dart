@@ -132,7 +132,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                     entityList: memoizedDropdownClientList(
                         state.clientState.map, state.clientState.list),
                     validator: (String val) => val.trim().isEmpty
-                        ? AppLocalization.of(context).pleaseSelectAClient
+                        ? localization.pleaseSelectAClient
                         : null,
                     onSelected: (clientId) {
                       viewModel.onChanged(
@@ -146,7 +146,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                     autocorrect: false,
                     controller: _nameController,
                     validator: (String val) => val.trim().isEmpty
-                        ? AppLocalization.of(context).pleaseEnterAName
+                        ? localization.pleaseEnterAName
                         : null,
                     decoration: InputDecoration(
                       labelText: localization.name,

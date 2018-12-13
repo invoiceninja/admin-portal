@@ -38,7 +38,6 @@ class StubListVM {
     @required this.isLoading,
     @required this.isLoaded,
     @required this.onStubTap,
-    @required this.onDismissed,
     @required this.onRefreshed,
     @required this.onEntityAction,
   });
@@ -95,31 +94,7 @@ class StubListVM {
           }
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onDismissed: (BuildContext context, StubEntity stub,
-            DismissDirection direction) {
-          final localization = AppLocalization.of(context);
-          if (direction == DismissDirection.endToStart) {
-            if (stub.isDeleted || stub.isArchived) {
-              store.dispatch(RestoreStubRequest(
-                  snackBarCompleter(context, localization.restoredStub),
-                  stub.id));
-            } else {
-              store.dispatch(ArchiveStubRequest(
-                  snackBarCompleter(context, localization.archivedStub),
-                  stub.id));
-            }
-          } else if (direction == DismissDirection.startToEnd) {
-            if (stub.isDeleted) {
-              store.dispatch(RestoreStubRequest(
-                  snackBarCompleter(context, localization.restoredStub),
-                  stub.id));
-            } else {
-              store.dispatch(DeleteStubRequest(
-                  snackBarCompleter(context, localization.deletedStub),
-                  stub.id));
-            }
-          }
-        });
+    );
   }
 
   final UserEntity user;
@@ -129,7 +104,6 @@ class StubListVM {
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, StubEntity) onStubTap;
-  final Function(BuildContext, StubEntity, DismissDirection) onDismissed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, StubEntity, EntityAction) onEntityAction;
 }

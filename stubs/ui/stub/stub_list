@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_item.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class StubList extends StatelessWidget {
@@ -34,48 +35,34 @@ class StubList extends StatelessWidget {
     return _buildListView(context);
   }
 
-  void _showMenu(BuildContext context, StubEntity stub) async {
-  if (stub == null) {
-    return;
-  }
+  void _showMenu(
+      BuildContext context, StubEntity stub) async {
+    if (stub == null) {
+      return;
+    }
+
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              user.canCreate(EntityType.stub)
-                  ? ListTile(
-                      leading: Icon(Icons.control_point_duplicate),
-                      title: Text(AppLocalization.of(context).clone),
-                      onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.clone),
-                    )
-                  : Container(),
-              Divider(),
-              user.canEditEntity(stub) && !stub.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.restore),
-                      title: Text(AppLocalization.of(context).restore),
-                      onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.restore),
-                    )
-                  : Container(),
-              user.canEditEntity(stub) && stub.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.archive),
-                      title: Text(AppLocalization.of(context).archive),
-                      onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.archive),
-                    )
-                  : Container(),
-              user.canEditEntity(stub) && !stub.isDeleted
-                  ? ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text(AppLocalization.of(context).delete),
-                      onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.delete),
-                    )
-                  : Container(),
-            ]));
+        builder: (BuildContext dialogContext) => SimpleDialog(
+                children: stub
+                    .getEntityActions(user: user)
+                    .map((entityAction) {
+              if (entityAction == null) {
+                return Divider();
+              } else {
+                return ListTile(
+                  leading: Icon(getEntityActionIcon(entityAction)),
+                  title: Text(AppLocalization.of(context)
+                      .lookup(entityAction.toString())),
+                  onTap: () {
+                    Navigator.of(dialogContext).pop();
+                    viewModel.onEntityAction(context, stub, entityAction);
+                  },
+                );
+              }
+            }).toList()));
+
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(

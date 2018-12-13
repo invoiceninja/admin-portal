@@ -205,7 +205,7 @@ abstract class ProductEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(getEntityBaseActions(user: user));
+    return actions..addAll(getBaseActions(user: user));
   }
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
