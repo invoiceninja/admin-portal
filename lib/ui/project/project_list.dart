@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_list_item.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/project/project_list_item.dart';
+import 'package:invoiceninja_flutter/ui/project/project_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class StubList extends StatelessWidget {
-  final StubListVM viewModel;
+class ProjectList extends StatelessWidget {
+  final ProjectListVM viewModel;
 
-  const StubList({
+  const ProjectList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -19,7 +19,7 @@ class StubList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!viewModel.isLoaded) {
       return LoadingIndicator();
-    } else if (viewModel.stubList.isEmpty) {
+    } else if (viewModel.projectList.isEmpty) {
       return Opacity(
         opacity: 0.5,
         child: Center(
@@ -36,45 +36,45 @@ class StubList extends StatelessWidget {
     return _buildListView(context);
   }
 
-  void _showMenu(BuildContext context, StubEntity stub) async {
-  if (stub == null) {
+  void _showMenu(BuildContext context, ProjectEntity project) async {
+  if (project == null) {
     return;
   }
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              user.canCreate(EntityType.stub)
+              user.canCreate(EntityType.project)
                   ? ListTile(
                       leading: Icon(Icons.control_point_duplicate),
                       title: Text(AppLocalization.of(context).clone),
                       onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.clone),
+                          context, project, EntityAction.clone),
                     )
                   : Container(),
               Divider(),
-              user.canEditEntity(stub) && !stub.isActive
+              user.canEditEntity(project) && !project.isActive
                   ? ListTile(
                       leading: Icon(Icons.restore),
                       title: Text(AppLocalization.of(context).restore),
                       onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.restore),
+                          context, project, EntityAction.restore),
                     )
                   : Container(),
-              user.canEditEntity(stub) && stub.isActive
+              user.canEditEntity(project) && project.isActive
                   ? ListTile(
                       leading: Icon(Icons.archive),
                       title: Text(AppLocalization.of(context).archive),
                       onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.archive),
+                          context, project, EntityAction.archive),
                     )
                   : Container(),
-              user.canEditEntity(stub) && !stub.isDeleted
+              user.canEditEntity(project) && !project.isDeleted
                   ? ListTile(
                       leading: Icon(Icons.delete),
                       title: Text(AppLocalization.of(context).delete),
                       onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.delete),
+                          context, project, EntityAction.delete),
                     )
                   : Container(),
             ]));
@@ -90,24 +90,24 @@ class StubList extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.builder(
-          itemCount: viewModel.stubList.length,
+          itemCount: viewModel.projectList.length,
           itemBuilder: (BuildContext context, index) {
-            final stubId = viewModel.stubList[index];
-            final stub = viewModel.stubMap[stubId];
+            final projectId = viewModel.projectList[index];
+            final project = viewModel.projectMap[projectId];
             return Column(children: <Widget>[
-              StubListItem(
+              ProjectListItem(
                 user: viewModel.user,
                 filter: viewModel.filter,
-                stub: stub,
+                project: project,
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
-                    _showMenu(context, stub);
+                    _showMenu(context, project);
                   } else {
-                    viewModel.onEntityAction(context, stub, action);
+                    viewModel.onEntityAction(context, project, action);
                   }
                 },
-                onTap: () => viewModel.onStubTap(context, stub),
-                onLongPress: () => _showMenu(context, stub),
+                onTap: () => viewModel.onProjectTap(context, project),
+                onLongPress: () => _showMenu(context, project),
               ),
               Divider(
                 height: 1.0,

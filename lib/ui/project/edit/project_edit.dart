@@ -1,23 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/stub/edit/stub_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class StubEdit extends StatefulWidget {
-  final StubEditVM viewModel;
+class ProjectEdit extends StatefulWidget {
+  final ProjectEditVM viewModel;
 
-  const StubEdit({
+  const ProjectEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
   @override
-  _StubEditState createState() => _StubEditState();
+  _ProjectEditState createState() => _ProjectEditState();
 }
 
-class _StubEditState extends State<StubEdit> {
+class _ProjectEditState extends State<ProjectEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // STARTER: controllers - do not remove comment
@@ -33,7 +33,7 @@ class _StubEditState extends State<StubEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final stub = widget.viewModel.stub;
+    final project = widget.viewModel.project;
     // STARTER: read value - do not remove comment
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -52,11 +52,11 @@ class _StubEditState extends State<StubEdit> {
   }
 
   void _onChanged() {
-    final stub = widget.viewModel.stub.rebuild((b) => b
+    final project = widget.viewModel.project.rebuild((b) => b
       // STARTER: set value - do not remove comment
     );
-    if (stub != widget.viewModel.stub) {
-      widget.viewModel.onChanged(stub);
+    if (project != widget.viewModel.project) {
+      widget.viewModel.onChanged(project);
     }
   }
 
@@ -64,7 +64,7 @@ class _StubEditState extends State<StubEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    final stub = viewModel.stub;
+    final project = viewModel.project;
 
     return WillPopScope(
       onWillPop: () async {
@@ -73,23 +73,25 @@ class _StubEditState extends State<StubEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(viewModel.stub.isNew
-              ? localization.newStub
-              : localization.editStub),
+          title: Text(viewModel.project.isNew
+              ? localization.newProject
+              : localization.editProject),
           actions: <Widget>[
-            RefreshIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: !stub.isDeleted,
-              isDirty: stub.isNew || stub != viewModel.origStub,
-              isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (! _formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            )
+            Builder(builder: (BuildContext context) {
+              RefreshIconButton(
+                icon: Icons.cloud_upload,
+                tooltip: localization.save,
+                isVisible: project.isDeleted,
+                isDirty: project.isNew || project != viewModel.origProject,
+                isSaving: viewModel.isSaving,
+                onPressed: () {
+                  if (! _formKey.currentState.validate()) {
+                    return;
+                  }
+                  viewModel.onSavePressed(context);
+                },
+              );
+            }),
           ],
         ),
         body: Form(

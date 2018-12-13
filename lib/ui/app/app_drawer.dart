@@ -17,6 +17,8 @@ import 'package:redux/redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -186,6 +188,12 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
+ListTile(
+leading: Icon(Icons.widgets),
+title: Text('Projects'),
+onTap: () => store.dispatch(ViewProjectList(context)),
+),
+
           DrawerTile(
             company: company,
             entityType: EntityType.payment,

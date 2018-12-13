@@ -40,6 +40,8 @@ class StubEditVM {
   StubEditVM({
     @required this.stub,
     @required this.onChanged,
+    @required this.isSaving,
+    @required this.origStub,
     @required this.onSavePressed,
     @required this.onBackPressed,
     @required this.isLoading,
@@ -47,9 +49,12 @@ class StubEditVM {
 
   factory StubEditVM.fromStore(Store<AppState> store) {
     final stub = store.state.stubUIState.editing;
+    final state = store.state;
 
     return StubEditVM(
-      isLoading: store.state.isLoading,
+      isLoading: state.isLoading,
+      isSaving: state.isSaving,
+      origStub: state.stubState.map[stub.id],
       stub: stub,
       onChanged: (StubEntity stub) {
         store.dispatch(UpdateStub(stub));

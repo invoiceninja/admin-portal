@@ -5,44 +5,44 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
-class StubListItem extends StatelessWidget {
+class ProjectListItem extends StatelessWidget {
   final UserEntity user;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   //final ValueChanged<bool> onCheckboxChanged;
-  final StubEntity stub;
+  final ProjectEntity project;
   final String filter;
   
-  static final stubItemKey = (int id) => Key('__stub_item_${id}__');
+  static final projectItemKey = (int id) => Key('__project_item_${id}__');
 
-  const StubListItem({
+  const ProjectListItem({
     @required this.user,
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
     //@required this.onCheckboxChanged,
-    @required this.stub,
+    @required this.project,
     @required this.filter,
   });
 
   @override
   Widget build(BuildContext context) {
     final filterMatch = filter != null && filter.isNotEmpty
-        ? stub.matchesFilterValue(filter)
+        ? project.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ?? stub.notes;
+    final subtitle = filterMatch ?? project.privateNotes;
 
     return DismissibleEntity(
       user: user,
-      entity: stub,
-      onDismissed: onDismissed,
+      entity: project,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
         /*
         leading: Checkbox(
-          //key: NinjaKeys.stubItemCheckbox(stub.id),
+          //key: NinjaKeys.projectItemCheckbox(project.id),
           value: true,
           //onChanged: onCheckboxChanged,
           onChanged: (value) {
@@ -56,12 +56,12 @@ class StubListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  stub.name,
+                  project.name,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(stub.listDisplayAmount, context),
+              Text(formatNumber(project.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -75,7 +75,7 @@ class StubListItem extends StatelessWidget {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ) : Container(),
-            EntityStateLabel(stub),
+            EntityStateLabel(project),
           ],
         ),
       ),

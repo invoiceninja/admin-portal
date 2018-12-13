@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'new_project': 'New Project',
       'thank_you_for_using_our_app': 'Thank you for using our app!',
       'if_you_like_it': 'If you like it please',
       'click_here': 'click here',
@@ -9849,6 +9850,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get newProject => _localizedValues[locale.languageCode]['new_project'];
 
   String get thankYouForUsingOurApp =>
       _localizedValues[locale.languageCode]['thank_you_for_using_our_app'];
