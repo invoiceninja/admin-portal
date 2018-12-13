@@ -30,17 +30,6 @@ class ProjectListBuilder extends StatelessWidget {
 }
 
 class ProjectListVM {
-  final UserEntity user;
-  final List<int> projectList;
-  final BuiltMap<int, ProjectEntity> projectMap;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, ProjectEntity) onProjectTap;
-  final Function(BuildContext, ProjectEntity, DismissDirection) onDismissed;
-  final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, ProjectEntity, EntityAction) onEntityAction;
-
   ProjectListVM({
     @required this.user,
     @required this.projectList,
@@ -132,4 +121,15 @@ class ProjectListVM {
           }
         });
   }
+
+  final UserEntity user;
+  final List<int> projectList;
+  final BuiltMap<int, ProjectEntity> projectMap;
+  final String filter;
+  final bool isLoading;
+  final bool isLoaded;
+  final Function(BuildContext, ProjectEntity) onProjectTap;
+  final Function(BuildContext, ProjectEntity, DismissDirection) onDismissed;
+  final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, ProjectEntity, EntityAction) onEntityAction;
 }

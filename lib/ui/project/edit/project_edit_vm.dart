@@ -9,11 +9,11 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 
 class ProjectEditScreen extends StatelessWidget {
+  const ProjectEditScreen({Key key}) : super(key: key);
+
   static const String route = '/project/edit';
-  ProjectEditScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,6 @@ class ProjectEditScreen extends StatelessWidget {
 }
 
 class ProjectEditVM {
-  final ProjectEntity project;
-  final Function(ProjectEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final bool isSaving;
-  final ProjectEntity origProject;
-  final Function onBackPressed;
-  final bool isLoading;
-
   ProjectEditVM({
     @required this.project,
     @required this.onChanged,
@@ -81,4 +73,12 @@ class ProjectEditVM {
       },
     );
   }
+
+  final ProjectEntity project;
+  final Function(ProjectEntity) onChanged;
+  final Function(BuildContext) onSavePressed;
+  final bool isSaving;
+  final ProjectEntity origProject;
+  final Function onBackPressed;
+  final bool isLoading;
 }

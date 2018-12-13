@@ -6,15 +6,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class ProjectListItem extends StatelessWidget {
-  final UserEntity user;
-  final Function(EntityAction) onEntityAction;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  //final ValueChanged<bool> onCheckboxChanged;
-  final ProjectEntity project;
-  final String filter;
-  
-  static final projectItemKey = (int id) => Key('__project_item_${id}__');
 
   const ProjectListItem({
     @required this.user,
@@ -25,6 +16,16 @@ class ProjectListItem extends StatelessWidget {
     @required this.project,
     @required this.filter,
   });
+
+  final UserEntity user;
+  final Function(EntityAction) onEntityAction;
+  final GestureTapCallback onTap;
+  final GestureTapCallback onLongPress;
+  //final ValueChanged<bool> onCheckboxChanged;
+  final ProjectEntity project;
+  final String filter;
+
+  static final projectItemKey = (int id) => Key('__project_item_${id}__');
 
   @override
   Widget build(BuildContext context) {

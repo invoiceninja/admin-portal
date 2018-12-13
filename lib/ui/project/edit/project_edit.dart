@@ -6,12 +6,12 @@ import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectEdit extends StatefulWidget {
-  final ProjectEditVM viewModel;
-
   const ProjectEdit({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final ProjectEditVM viewModel;
 
   @override
   _ProjectEditState createState() => _ProjectEditState();
@@ -33,7 +33,7 @@ class _ProjectEditState extends State<ProjectEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final project = widget.viewModel.project;
+    //final project = widget.viewModel.project;
     // STARTER: read value - do not remove comment
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));

@@ -6,15 +6,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class StubListItem extends StatelessWidget {
-  final UserEntity user;
-  final Function(EntityAction) onEntityAction;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  //final ValueChanged<bool> onCheckboxChanged;
-  final StubEntity stub;
-  final String filter;
-  
-  static final stubItemKey = (int id) => Key('__stub_item_${id}__');
 
   const StubListItem({
     @required this.user,
@@ -25,6 +16,16 @@ class StubListItem extends StatelessWidget {
     @required this.stub,
     @required this.filter,
   });
+
+  final UserEntity user;
+  final Function(EntityAction) onEntityAction;
+  final GestureTapCallback onTap;
+  final GestureTapCallback onLongPress;
+  //final ValueChanged<bool> onCheckboxChanged;
+  final StubEntity stub;
+  final String filter;
+
+  static final stubItemKey = (int id) => Key('__stub_item_${id}__');
 
   @override
   Widget build(BuildContext context) {

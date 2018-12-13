@@ -8,8 +8,6 @@ import 'package:invoiceninja_flutter/ui/project/project_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectList extends StatelessWidget {
-  final ProjectListVM viewModel;
-
   const ProjectList({
     Key key,
     @required this.viewModel,
@@ -116,4 +114,6 @@ class ProjectList extends StatelessWidget {
           }),
     );
   }
+
+  final ProjectListVM viewModel;
 }

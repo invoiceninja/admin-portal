@@ -8,8 +8,6 @@ import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class StubList extends StatelessWidget {
-  final StubListVM viewModel;
-
   const StubList({
     Key key,
     @required this.viewModel,
@@ -116,4 +114,6 @@ class StubList extends StatelessWidget {
           }),
     );
   }
+
+  final StubListVM viewModel;
 }

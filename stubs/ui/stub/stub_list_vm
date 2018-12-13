@@ -30,17 +30,6 @@ class StubListBuilder extends StatelessWidget {
 }
 
 class StubListVM {
-  final UserEntity user;
-  final List<int> stubList;
-  final BuiltMap<int, StubEntity> stubMap;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, StubEntity) onStubTap;
-  final Function(BuildContext, StubEntity, DismissDirection) onDismissed;
-  final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, StubEntity, EntityAction) onEntityAction;
-
   StubListVM({
     @required this.user,
     @required this.stubList,
@@ -132,4 +121,15 @@ class StubListVM {
           }
         });
   }
+
+  final UserEntity user;
+  final List<int> stubList;
+  final BuiltMap<int, StubEntity> stubMap;
+  final String filter;
+  final bool isLoading;
+  final bool isLoaded;
+  final Function(BuildContext, StubEntity) onStubTap;
+  final Function(BuildContext, StubEntity, DismissDirection) onDismissed;
+  final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, StubEntity, EntityAction) onEntityAction;
 }
