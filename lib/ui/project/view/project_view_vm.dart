@@ -53,7 +53,10 @@ class ProjectViewVM {
     final project = state.projectState.map[state.projectUIState.selectedId];
 
     return ProjectViewVM(
-        isLoading: store.state.isLoading,
+        company: state.selectedCompany,
+        isSaving: state.isSaving,
+        isLoading: state.isLoading,
+        isDirty: project.isNew,
         project: project,
         onEditPressed: (BuildContext context) {
           store.dispatch(EditProject(project: project, context: context));

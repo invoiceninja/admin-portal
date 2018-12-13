@@ -53,7 +53,10 @@ class StubViewVM {
     final stub = state.stubState.map[state.stubUIState.selectedId];
 
     return StubViewVM(
-        isLoading: store.state.isLoading,
+        company: state.selectedCompany,
+        isSaving: state.isSaving,
+        isLoading: state.isLoading,
+        isDirty: stub.isNew,
         stub: stub,
         onEditPressed: (BuildContext context) {
           store.dispatch(EditStub(stub: stub, context: context));
