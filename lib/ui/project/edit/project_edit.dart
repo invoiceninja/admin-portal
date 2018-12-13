@@ -20,21 +20,18 @@ class ProjectEdit extends StatefulWidget {
 class _ProjectEditState extends State<ProjectEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // STARTER: controllers - do not remove comment
-
   List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
 
     _controllers = [
-      // STARTER: array - do not remove comment
+
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     //final project = widget.viewModel.project;
-    // STARTER: read value - do not remove comment
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -53,7 +50,7 @@ class _ProjectEditState extends State<ProjectEdit> {
 
   void _onChanged() {
     final project = widget.viewModel.project.rebuild((b) => b
-      // STARTER: set value - do not remove comment
+
     );
     if (project != widget.viewModel.project) {
       widget.viewModel.onChanged(project);

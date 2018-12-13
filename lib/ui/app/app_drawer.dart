@@ -188,12 +188,18 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
-ListTile(
-leading: Icon(Icons.widgets),
-title: Text('Projects'),
-onTap: () => store.dispatch(ViewProjectList(context)),
-),
-
+          DrawerTile(
+            company: company,
+            entityType: EntityType.project,
+            icon: FontAwesomeIcons.briefcase,
+            title: localization.projects,
+            onTap: () => store.dispatch(ViewProjectList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditProject(
+                  project: ProjectEntity(), context: context));
+            },
+          ),
           DrawerTile(
             company: company,
             entityType: EntityType.payment,
@@ -358,7 +364,6 @@ class DrawerTile extends StatelessWidget {
 'tasks' => 'clock-o',
 'expenses' => 'file-image-o',
 'vendors' => 'building',
-'projects' => 'briefcase',
 */
 
 class _LinkTextSpan extends TextSpan {
