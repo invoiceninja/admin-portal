@@ -5,8 +5,10 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectEdit extends StatefulWidget {
@@ -24,18 +26,34 @@ class ProjectEdit extends StatefulWidget {
 class _ProjectEditState extends State<ProjectEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final _nameController = TextEditingController();
+  final _dueDateController = TextEditingController();
+  final _hoursController = TextEditingController();
+  final _taskRateController = TextEditingController();
+  final _privateNotesController = TextEditingController();
+
   List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
-
+      _nameController,
+      _dueDateController,
+      _hoursController,
+      _taskRateController,
+      _privateNotesController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    //final project = widget.viewModel.project;
+    final project = widget.viewModel.project;
+    _nameController.text = project.name;
+    _dueDateController.text = project.dueDate;
+    _hoursController.text = formatNumber(project.budgetedHours, context,
+        formatNumberType: FormatNumberType.input);
+    _taskRateController.text = formatNumber(project.taskRate, context,
+        formatNumberType: FormatNumberType.input);
+    _privateNotesController.text = project.privateNotes;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -53,8 +71,8 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onChanged() {
-    final project = widget.viewModel.project.rebuild((b) => b
-
+    final project = widget.viewModel.project.rebuild(
+      (b) => b..name = _nameController.text.trim(),
     );
     if (project != widget.viewModel.project) {
       widget.viewModel.onChanged(project);
@@ -86,7 +104,7 @@ class _ProjectEditState extends State<ProjectEdit> {
               isDirty: project.isNew || project != viewModel.origProject,
               isSaving: viewModel.isSaving,
               onPressed: () {
-                if (! _formKey.currentState.validate()) {
+                if (!_formKey.currentState.validate()) {
                   return;
                 }
                 viewModel.onSavePressed(context);
@@ -104,7 +122,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                     entityType: EntityType.client,
                     labelText: localization.client,
                     initialValue: (state.clientState.map[project.clientId] ??
-                        ClientEntity())
+                            ClientEntity())
                         .displayName,
                     entityMap: state.clientState.map,
                     entityList: memoizedDropdownClientList(
@@ -119,6 +137,43 @@ class _ProjectEditState extends State<ProjectEdit> {
                     onAddPressed: (completer) {
                       viewModel.onAddClientPressed(context, completer);
                     },
+                  ),
+                  TextFormField(
+                    autocorrect: false,
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: localization.name,
+                    ),
+                  ),
+                  DatePicker(
+                    labelText: localization.dueDate,
+                    selectedDate: project.dueDate,
+                    onSelected: (date) {
+                      viewModel
+                          .onChanged(project.rebuild((b) => b..dueDate = date));
+                    },
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _hoursController,
+                    decoration: InputDecoration(
+                      //labelText: localization.budgetedHours,
+                    ),
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _taskRateController,
+                    decoration: InputDecoration(
+                      labelText: localization.taskRate,
+                    ),
+                  ),
+                  TextFormField(
+                    maxLines: 4,
+                    controller: _privateNotesController,
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                      labelText: localization.privateNotes,
+                    ),
                   ),
                 ],
               ),
