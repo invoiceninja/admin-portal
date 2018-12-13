@@ -75,8 +75,7 @@ void main() async {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         // STARTER: middleware - do not remove comment
-..addAll(createStoreProjectsMiddleware())
-
+        ..addAll(createStoreProjectsMiddleware())
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
         ..addAll([
@@ -95,8 +94,8 @@ class InvoiceNinjaApp extends StatefulWidget {
 }
 
 class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
-
   bool _authenticated = false;
+
   Future<Null> _authenticate() async {
     bool authenticated = false;
     try {
@@ -248,12 +247,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
-ProjectScreen.route: (context) {
-widget.store.dispatch(LoadProjects());
-return ProjectScreen();
-},
-ProjectViewScreen.route: (context) => ProjectViewScreen(),
-ProjectEditScreen.route: (context) => ProjectEditScreen(),
+            ProjectScreen.route: (context) {
+              widget.store.dispatch(LoadProjects());
+              return ProjectScreen();
+            },
+            ProjectViewScreen.route: (context) => ProjectViewScreen(),
+            ProjectEditScreen.route: (context) => ProjectEditScreen(),
 
             PaymentScreen.route: (context) {
               if (widget.store.state.paymentState.isStale) {

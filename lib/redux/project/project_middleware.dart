@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
@@ -177,6 +178,9 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
 
       if (action.completer != null) {
         action.completer.complete(null);
+      }
+      if (state.dashboardState.isStale) {
+        store.dispatch(LoadDashboard());
       }
     }).catchError((Object error) {
       print(error);

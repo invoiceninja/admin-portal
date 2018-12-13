@@ -45,6 +45,8 @@ String formatNumber(
   if ((zeroIsNull || formatNumberType == FormatNumberType.input) &&
       value == 0) {
     return null;
+  } else if (value == null) {
+    return '';
   }
 
   final state = StoreProvider.of<AppState>(context).state;

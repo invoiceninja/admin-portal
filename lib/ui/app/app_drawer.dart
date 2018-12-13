@@ -187,19 +187,6 @@ class AppDrawer extends StatelessWidget {
                   EditInvoice(invoice: InvoiceEntity(), context: context));
             },
           ),
-          // STARTER: menu - do not remove comment
-          DrawerTile(
-            company: company,
-            entityType: EntityType.project,
-            icon: FontAwesomeIcons.briefcase,
-            title: localization.projects,
-            onTap: () => store.dispatch(ViewProjectList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(EditProject(
-                  project: ProjectEntity(), context: context));
-            },
-          ),
           DrawerTile(
             company: company,
             entityType: EntityType.payment,
@@ -222,6 +209,19 @@ class AppDrawer extends StatelessWidget {
               navigator.pop();
               store.dispatch(EditQuote(
                   quote: InvoiceEntity(isQuote: true), context: context));
+            },
+          ),
+          // STARTER: menu - do not remove comment
+          DrawerTile(
+            company: company,
+            entityType: EntityType.project,
+            icon: FontAwesomeIcons.briefcase,
+            title: localization.projects,
+            onTap: () => store.dispatch(ViewProjectList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditProject(
+                  project: ProjectEntity(), context: context));
             },
           ),
           ListTile(
