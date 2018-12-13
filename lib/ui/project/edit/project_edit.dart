@@ -74,21 +74,19 @@ class _ProjectEditState extends State<ProjectEdit> {
               ? localization.newProject
               : localization.editProject),
           actions: <Widget>[
-            Builder(builder: (BuildContext context) {
-              RefreshIconButton(
-                icon: Icons.cloud_upload,
-                tooltip: localization.save,
-                isVisible: project.isDeleted,
-                isDirty: project.isNew || project != viewModel.origProject,
-                isSaving: viewModel.isSaving,
-                onPressed: () {
-                  if (! _formKey.currentState.validate()) {
-                    return;
-                  }
-                  viewModel.onSavePressed(context);
-                },
-              );
-            }),
+            RefreshIconButton(
+              icon: Icons.cloud_upload,
+              tooltip: localization.save,
+              isVisible: !project.isDeleted,
+              isDirty: project.isNew || project != viewModel.origProject,
+              isSaving: viewModel.isSaving,
+              onPressed: () {
+                if (! _formKey.currentState.validate()) {
+                  return;
+                }
+                viewModel.onSavePressed(context);
+              },
+            ),
           ],
         ),
         body: Form(
