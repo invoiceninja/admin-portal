@@ -75,19 +75,19 @@ class StubListVM {
               break;
             case EntityAction.restore:
               store.dispatch(RestoreStubRequest(
-                  popCompleter(
+                  snackBarCompleter(
                       context, AppLocalization.of(context).restoredStub),
                   stub.id));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveStubRequest(
-                  popCompleter(
+                  snackBarCompleter(
                       context, AppLocalization.of(context).archivedStub),
                   stub.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteStubRequest(
-                  popCompleter(
+                  snackBarCompleter(
                       context, AppLocalization.of(context).deletedStub),
                   stub.id));
               break;
