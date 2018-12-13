@@ -11,8 +11,8 @@ import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ProjectViewScreen extends StatelessWidget {
-  static const String route = '/project/view';
   const ProjectViewScreen({Key key}) : super(key: key);
+  static const String route = '/project/view';
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +30,6 @@ class ProjectViewScreen extends StatelessWidget {
 }
 
 class ProjectViewVM {
-  final ProjectEntity project;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext) onEditPressed;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
 
   ProjectViewVM({
     @required this.project,
@@ -82,4 +75,13 @@ class ProjectViewVM {
           }
         });
   }
+
+  final ProjectEntity project;
+  final CompanyEntity company;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext) onEditPressed;
+  final bool isSaving;
+  final bool isLoading;
+  final bool isDirty;
+
 }

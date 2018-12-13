@@ -5,12 +5,12 @@ import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class ProjectView extends StatefulWidget {
-  final ProjectViewVM viewModel;
-
   const ProjectView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
+  final ProjectViewVM viewModel;
 
   @override
   _ProjectViewState createState() => new _ProjectViewState();

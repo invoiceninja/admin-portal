@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/project/project_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class ProjectScreen extends StatelessWidget {
   static const String route = '/project';
