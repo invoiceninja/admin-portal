@@ -69,7 +69,7 @@ class StubScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: user.canCreate(EntityType.stub)
             ? FloatingActionButton(
-                key: Key(StubKeys.stubScreenFABKeyString),
+                //key: Key(StubKeys.stubScreenFABKeyString),
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(

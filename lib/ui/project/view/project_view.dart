@@ -24,7 +24,7 @@ class _ProjectViewState extends State<ProjectView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(project.displayName),
+        title: Text(project.name),
         actions: project.isNew
             ? []
             : [

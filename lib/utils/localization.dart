@@ -20,6 +20,11 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'created_project': 'Successfully created project',
+      'updated_project': 'Successfully updated project',
+      'archived_project': 'Successfully archived project',
+      'deleted_project': 'Successfully deleted project',
+      'restored_project': 'Successfully restored project',
       'new_project': 'New Project',
       'thank_you_for_using_our_app': 'Thank you for using our app!',
       'if_you_like_it': 'If you like it please',
@@ -9850,6 +9855,21 @@ class AppLocalization {
       'expired': 'Expired',
     },
   };
+
+  String get createdProject =>
+      _localizedValues[locale.toString()]['created_project'];
+
+  String get updatedProject =>
+      _localizedValues[locale.toString()]['updated_project'];
+
+  String get archivedProject =>
+      _localizedValues[locale.toString()]['archived_project'];
+
+  String get deletedProject =>
+      _localizedValues[locale.toString()]['deleted_project'];
+
+  String get restoredProject =>
+      _localizedValues[locale.toString()]['restored_project'];
 
   String get newProject => _localizedValues[locale.languageCode]['new_project'];
 

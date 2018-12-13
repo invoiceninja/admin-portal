@@ -1,6 +1,7 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
@@ -8,7 +9,6 @@ import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/stub/view/stub_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 
 class StubViewScreen extends StatelessWidget {
   static const String route = '/stub/view';
@@ -50,7 +50,7 @@ class StubViewVM {
 
   factory StubViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final payment = state.stubState.map[state.stubUIState.selectedId];
+    final stub = state.stubState.map[state.stubUIState.selectedId];
 
     return StubViewVM(
         isLoading: store.state.isLoading,

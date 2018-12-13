@@ -1,6 +1,7 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -8,7 +9,6 @@ import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 
 class ProjectViewScreen extends StatelessWidget {
   static const String route = '/project/view';
@@ -50,7 +50,7 @@ class ProjectViewVM {
 
   factory ProjectViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final payment = state.projectState.map[state.projectUIState.selectedId];
+    final project = state.projectState.map[state.projectUIState.selectedId];
 
     return ProjectViewVM(
         isLoading: store.state.isLoading,

@@ -58,8 +58,7 @@ class ProjectScreen extends StatelessWidget {
           onSelectedCustom2: (value) =>
               store.dispatch(FilterProjectsByCustom2(value)),
           sortFields: [
-            ProjectFields.projectKey,
-            ProjectFields.cost,
+            ProjectFields.name,
             ProjectFields.updatedAt,
           ],
           onSelectedState: (EntityState state, value) {
@@ -69,7 +68,7 @@ class ProjectScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: user.canCreate(EntityType.project)
             ? FloatingActionButton(
-                key: Key(ProjectKeys.projectScreenFABKeyString),
+                //key: Key(ProjectKeys.projectScreenFABKeyString),
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(
