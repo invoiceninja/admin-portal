@@ -1,5 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
@@ -61,6 +65,7 @@ class _ProjectEditState extends State<ProjectEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
+    final state = viewModel.state;
     final project = viewModel.project;
 
     return WillPopScope(
@@ -95,7 +100,26 @@ class _ProjectEditState extends State<ProjectEdit> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
-                  // STARTER: widgets - do not remove comment
+                  EntityDropdown(
+                    entityType: EntityType.client,
+                    labelText: localization.client,
+                    initialValue: (state.clientState.map[project.clientId] ??
+                        ClientEntity())
+                        .displayName,
+                    entityMap: state.clientState.map,
+                    entityList: memoizedDropdownClientList(
+                        state.clientState.map, state.clientState.list),
+                    validator: (String val) => val.trim().isEmpty
+                        ? AppLocalization.of(context).pleaseSelectAClient
+                        : null,
+                    onSelected: (clientId) {
+                      viewModel.onChanged(
+                          project.rebuild((b) => b..clientId = clientId));
+                    },
+                    onAddPressed: (completer) {
+                      viewModel.onAddClientPressed(context, completer);
+                    },
+                  ),
                 ],
               ),
             ],

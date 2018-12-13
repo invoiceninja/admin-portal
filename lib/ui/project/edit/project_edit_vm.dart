@@ -2,8 +2,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
@@ -32,8 +37,10 @@ class ProjectEditScreen extends StatelessWidget {
 
 class ProjectEditVM {
   ProjectEditVM({
+    @required this.state,
     @required this.project,
     @required this.onChanged,
+    @required this.onAddClientPressed,
     @required this.isSaving,
     @required this.origProject,
     @required this.onSavePressed,
@@ -49,6 +56,7 @@ class ProjectEditVM {
       isLoading: state.isLoading,
       isSaving: state.isSaving,
       project: project,
+      state: state,
       origProject: state.projectState.map[project.id],
       onChanged: (ProjectEntity project) {
         store.dispatch(UpdateProject(project));
@@ -56,9 +64,23 @@ class ProjectEditVM {
       onBackPressed: () {
         store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
       },
+      onAddClientPressed: (context, completer) {
+        store.dispatch(EditClient(
+            client: ClientEntity(),
+            context: context,
+            completer: completer,
+            trackRoute: false));
+        completer.future.then((SelectableEntity client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+                message: AppLocalization.of(context).createdClient,
+              )));
+        });
+      },
       onSavePressed: (BuildContext context) {
         final Completer<Null> completer = new Completer<Null>();
-        store.dispatch(SaveProjectRequest(completer: completer, project: project));
+        store.dispatch(
+            SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((_) {
           /*
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -81,4 +103,7 @@ class ProjectEditVM {
   final ProjectEntity origProject;
   final Function onBackPressed;
   final bool isLoading;
+  final AppState state;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddClientPressed;
 }
