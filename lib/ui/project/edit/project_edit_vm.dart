@@ -6,8 +6,10 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
+import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -81,16 +83,18 @@ class ProjectEditVM {
         final Completer<Null> completer = new Completer<Null>();
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
-        return completer.future.then((_) {
-          /*
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: IconMessage(
-                message: project.isNew
-                    ? 'Successfully Created Project'
-                    : 'Successfully Updated Project',
-              ),
-              duration: Duration(seconds: 3)));
-              */
+        return completer.future.then((savedProject) {
+          if (project.isNew) {
+            Navigator.of(context).pushReplacementNamed(ProjectViewScreen.route);
+          } else {
+            Navigator.of(context).pop(savedProject);
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
     );
