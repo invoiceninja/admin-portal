@@ -145,6 +145,9 @@ class _ProjectEditState extends State<ProjectEdit> {
                   TextFormField(
                     autocorrect: false,
                     controller: _nameController,
+                    validator: (String val) => val.trim().isEmpty
+                        ? AppLocalization.of(context).pleaseEnterAName
+                        : null,
                     decoration: InputDecoration(
                       labelText: localization.name,
                     ),
@@ -161,8 +164,8 @@ class _ProjectEditState extends State<ProjectEdit> {
                     keyboardType: TextInputType.number,
                     controller: _hoursController,
                     decoration: InputDecoration(
-                        //labelText: localization.budgetedHours,
-                        ),
+                      labelText: localization.budgetedHours,
+                    ),
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,

@@ -20,6 +20,8 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'please_enter_a_name': 'Please enter a name',
+      'budgeted_hours': 'Budgeted Hours',
       'created_project': 'Successfully created project',
       'updated_project': 'Successfully updated project',
       'archived_project': 'Successfully archived project',
@@ -10619,6 +10621,11 @@ class AppLocalization {
       _localizedValues[locale.toString()]['marked_quote_as_sent'];
 
   String get expired => _localizedValues[locale.toString()]['expired'];
+
+  String get budgetedHours => _localizedValues[locale.toString()]['budgeted_hours'];
+
+  String get pleaseEnterAName => _localizedValues[locale.toString()]['please_enter_a_name'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
