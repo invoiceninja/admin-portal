@@ -71,9 +71,11 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onChanged() {
-    final project = widget.viewModel.project.rebuild(
-      (b) => b..name = _nameController.text.trim(),
-    );
+    final project = widget.viewModel.project.rebuild((b) => b
+      ..name = _nameController.text.trim()
+      ..budgetedHours = parseDouble(_hoursController.text)
+      ..taskRate = parseDouble(_taskRateController.text)
+      ..privateNotes = _privateNotesController.text.trim());
     if (project != widget.viewModel.project) {
       widget.viewModel.onChanged(project);
     }
@@ -157,8 +159,8 @@ class _ProjectEditState extends State<ProjectEdit> {
                     keyboardType: TextInputType.number,
                     controller: _hoursController,
                     decoration: InputDecoration(
-                      //labelText: localization.budgetedHours,
-                    ),
+                        //labelText: localization.budgetedHours,
+                        ),
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
