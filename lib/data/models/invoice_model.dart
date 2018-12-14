@@ -574,10 +574,18 @@ abstract class InvoiceItemEntity extends Object
     return null;
   }
 
-  InvoiceItemEntity applyTax(TaxRateEntity taxRate) {
-    InvoiceItemEntity item = rebuild((b) => b
-      ..taxRate1 = taxRate.rate
-      ..taxName1 = taxRate.name);
+  InvoiceItemEntity applyTax(TaxRateEntity taxRate, {bool isSecond = false}) {
+    InvoiceItemEntity item;
+
+    if (isSecond) {
+      item = rebuild((b) => b
+        ..taxRate2 = taxRate.rate
+        ..taxName2 = taxRate.name);
+    } else {
+      item = rebuild((b) => b
+        ..taxRate1 = taxRate.rate
+        ..taxName1 = taxRate.name);
+    }
 
     if (taxRate.isInclusive) {
       item = item.rebuild(
