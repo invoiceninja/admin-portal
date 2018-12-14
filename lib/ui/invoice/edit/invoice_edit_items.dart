@@ -300,7 +300,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        invoiceItem.applyTax(taxRate), widget.index),
+                        invoiceItem.applyTax(taxRate, isSecond: true), widget.index),
                     labelText: localization.tax,
                     initialTaxName: invoiceItem.taxName2,
                     initialTaxRate: invoiceItem.taxRate2,
