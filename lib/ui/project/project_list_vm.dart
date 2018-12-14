@@ -58,7 +58,7 @@ class ProjectListVM {
     return ProjectListVM(
       user: state.user,
       projectList: memoizedFilteredProjectList(state.projectState.map,
-          state.projectState.list, state.projectListState),
+          state.projectState.list, state.projectListState, state.clientState.map),
       projectMap: state.projectState.map,
       isLoading: state.isLoading,
       isLoaded: state.projectState.isLoaded,

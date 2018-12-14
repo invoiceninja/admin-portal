@@ -21,14 +21,26 @@ List<int> dropdownProjectsSelector(
   return list;
 }
 
-var memoizedFilteredProjectList = memo3((BuiltMap<int, ProjectEntity> projectMap,
-        BuiltList<int> projectList, ListUIState projectListState) =>
-    filteredProjectsSelector(projectMap, projectList, projectListState));
+var memoizedFilteredProjectList = memo4(
+    (BuiltMap<int, ProjectEntity> projectMap,
+            BuiltList<int> projectList,
+            ListUIState projectListState,
+            BuiltMap<int, ClientEntity> clientMap) =>
+        filteredProjectsSelector(
+            projectMap, projectList, projectListState, clientMap));
 
-List<int> filteredProjectsSelector(BuiltMap<int, ProjectEntity> projectMap,
-    BuiltList<int> projectList, ListUIState projectListState) {
+List<int> filteredProjectsSelector(
+    BuiltMap<int, ProjectEntity> projectMap,
+    BuiltList<int> projectList,
+    ListUIState projectListState,
+    BuiltMap<int, ClientEntity> clientMap) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
+
+    if (project.clientId > 0 && clientMap[project.clientId].isArchived) {
+      return false;
+    }
+
     if (!project.matchesStates(projectListState.stateFilters)) {
       return false;
     }
