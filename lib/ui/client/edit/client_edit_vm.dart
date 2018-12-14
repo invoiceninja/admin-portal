@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -77,8 +78,11 @@ class ClientEditVM {
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
             if (client.isNew) {
-              if ([InvoiceEditScreen.route, QuoteEditScreen.route]
-                  .contains(store.state.uiState.currentRoute)) {
+              if ([
+                InvoiceEditScreen.route,
+                QuoteEditScreen.route,
+                ProjectEditScreen.route,
+              ].contains(store.state.uiState.currentRoute)) {
                 Navigator.of(context).pop(savedClient);
               } else {
                 Navigator.of(context)

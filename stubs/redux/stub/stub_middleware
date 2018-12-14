@@ -41,6 +41,7 @@ Middleware<AppState> _editStub() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
+    store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
     final stub =
         await Navigator.of(action.context).pushNamed(StubEditScreen.route);
 
