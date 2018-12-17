@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
+import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -85,12 +86,12 @@ class ProjectEditVM {
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((savedProject) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: project.isNew
-                ? localization.createdProject
-                : localization.updatedProject,
-          )));
+          if (project.isNew) {
+            Navigator.of(context)
+                .pushReplacementNamed(ProjectViewScreen.route);
+          } else {
+            Navigator.of(context).pop(savedProject);
+          }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
