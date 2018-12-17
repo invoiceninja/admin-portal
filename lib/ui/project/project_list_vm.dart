@@ -34,6 +34,7 @@ class ProjectListVM {
     @required this.user,
     @required this.projectList,
     @required this.projectMap,
+    @required this.clientMap,
     @required this.filter,
     @required this.isLoading,
     @required this.isLoaded,
@@ -60,6 +61,7 @@ class ProjectListVM {
       projectList: memoizedFilteredProjectList(state.projectState.map,
           state.projectState.list, state.projectListState, state.clientState.map),
       projectMap: state.projectState.map,
+      clientMap: state.clientState.map,
       isLoading: state.isLoading,
       isLoaded: state.projectState.isLoaded,
       filter: state.projectUIState.listUIState.filter,
@@ -100,6 +102,7 @@ class ProjectListVM {
   final UserEntity user;
   final List<int> projectList;
   final BuiltMap<int, ProjectEntity> projectMap;
+  final BuiltMap<int, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
   final bool isLoaded;

@@ -15,6 +15,7 @@ class ProjectListItem extends StatelessWidget {
     //@required this.onCheckboxChanged,
     @required this.project,
     @required this.filter,
+    @required this.client,
   });
 
   final UserEntity user;
@@ -23,6 +24,7 @@ class ProjectListItem extends StatelessWidget {
   final GestureTapCallback onLongPress;
   //final ValueChanged<bool> onCheckboxChanged;
   final ProjectEntity project;
+  final ClientEntity client;
   final String filter;
 
   static final projectItemKey = (int id) => Key('__project_item_${id}__');
@@ -32,7 +34,7 @@ class ProjectListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? project.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ?? project.privateNotes;
+    final subtitle = filterMatch ?? client.displayName;
 
     return DismissibleEntity(
       user: user,

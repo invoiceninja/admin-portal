@@ -84,6 +84,7 @@ class ProjectList extends StatelessWidget {
                 user: viewModel.user,
                 filter: viewModel.filter,
                 project: project,
+                client: viewModel.clientMap[project.clientId],
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     _showMenu(context, project);
