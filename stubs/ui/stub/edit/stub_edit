@@ -95,16 +95,18 @@ class _StubEditState extends State<StubEdit> {
           ],
         ),
         body: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              FormCard(
+            key: _formKey,
+            child: Builder(builder: (BuildContext context) {
+              return ListView(
                 children: <Widget>[
-                  // STARTER: widgets - do not remove comment
+                  FormCard(
+                    children: <Widget>[
+                      // STARTER: widgets - do not remove comment
+                    ],
+                  ),
                 ],
-              ),
-            ],
-          ),
+              );
+            })
         ),
       ),
     );

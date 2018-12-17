@@ -71,7 +71,8 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onChanged() {
-    final project = widget.viewModel.project.rebuild((b) => b
+    final project = widget.viewModel.project.rebuild((b) =>
+    b
       ..name = _nameController.text.trim()
       ..budgetedHours = parseDouble(_hoursController.text)
       ..taskRate = parseDouble(_taskRateController.text)
@@ -118,74 +119,82 @@ class _ProjectEditState extends State<ProjectEdit> {
         ),
         body: Form(
           key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              FormCard(
-                children: <Widget>[
-                  EntityDropdown(
-                    entityType: EntityType.client,
-                    labelText: localization.client,
-                    initialValue: (state.clientState.map[project.clientId] ??
-                            ClientEntity())
-                        .displayName,
-                    entityMap: state.clientState.map,
-                    entityList: memoizedDropdownClientList(
-                        state.clientState.map, state.clientState.list),
-                    validator: (String val) => val.trim().isEmpty
-                        ? localization.pleaseSelectAClient
-                        : null,
-                    onSelected: (clientId) {
-                      viewModel.onChanged(
-                          project.rebuild((b) => b..clientId = clientId));
-                    },
-                    onAddPressed: (completer) {
-                      viewModel.onAddClientPressed(context, completer);
-                    },
-                  ),
-                  TextFormField(
-                    autocorrect: false,
-                    controller: _nameController,
-                    validator: (String val) => val.trim().isEmpty
-                        ? localization.pleaseEnterAName
-                        : null,
-                    decoration: InputDecoration(
-                      labelText: localization.name,
+          child: Builder(builder: (BuildContext context) {
+            return ListView(
+              children: <Widget>[
+                FormCard(
+                  children: <Widget>[
+                    EntityDropdown(
+                      entityType: EntityType.client,
+                      labelText: localization.client,
+                      initialValue: (state.clientState.map[project.clientId] ??
+                          ClientEntity())
+                          .displayName,
+                      entityMap: state.clientState.map,
+                      entityList: memoizedDropdownClientList(
+                          state.clientState.map, state.clientState.list),
+                      validator: (String val) =>
+                      val
+                          .trim()
+                          .isEmpty
+                          ? localization.pleaseSelectAClient
+                          : null,
+                      onSelected: (clientId) {
+                        viewModel.onChanged(
+                            project.rebuild((b) => b..clientId = clientId));
+                      },
+                      onAddPressed: (completer) {
+                        viewModel.onAddClientPressed(context, completer);
+                      },
                     ),
-                  ),
-                  DatePicker(
-                    labelText: localization.dueDate,
-                    selectedDate: project.dueDate,
-                    onSelected: (date) {
-                      viewModel
-                          .onChanged(project.rebuild((b) => b..dueDate = date));
-                    },
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: _hoursController,
-                    decoration: InputDecoration(
-                      labelText: localization.budgetedHours,
+                    TextFormField(
+                      autocorrect: false,
+                      controller: _nameController,
+                      validator: (String val) =>
+                      val
+                          .trim()
+                          .isEmpty
+                          ? localization.pleaseEnterAName
+                          : null,
+                      decoration: InputDecoration(
+                        labelText: localization.name,
+                      ),
                     ),
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: _taskRateController,
-                    decoration: InputDecoration(
-                      labelText: localization.taskRate,
+                    DatePicker(
+                      labelText: localization.dueDate,
+                      selectedDate: project.dueDate,
+                      onSelected: (date) {
+                        viewModel.onChanged(
+                            project.rebuild((b) => b..dueDate = date));
+                      },
                     ),
-                  ),
-                  TextFormField(
-                    maxLines: 4,
-                    controller: _privateNotesController,
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      labelText: localization.privateNotes,
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: _hoursController,
+                      decoration: InputDecoration(
+                        labelText: localization.budgetedHours,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: _taskRateController,
+                      decoration: InputDecoration(
+                        labelText: localization.taskRate,
+                      ),
+                    ),
+                    TextFormField(
+                      maxLines: 4,
+                      controller: _privateNotesController,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        labelText: localization.privateNotes,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
