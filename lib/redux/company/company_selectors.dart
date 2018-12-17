@@ -60,6 +60,11 @@ List<BaseEntity> filteredSelector(String filter, CompanyState state) {
         .where((payment) {
       return payment.matchesFilter(filter);
     }).toList())
+    ..addAll(state.projectState.list
+        .map((projectId) => state.projectState.map[projectId])
+        .where((project) {
+      return project.matchesFilter(filter);
+    }).toList())
     ..addAll(state.invoiceState.list
         .map((invoiceId) => state.invoiceState.map[invoiceId])
         .where((invoice) {

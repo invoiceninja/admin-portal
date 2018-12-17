@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -118,6 +119,9 @@ class CustomTabBarView extends StatelessWidget {
                 switch (entity.entityType) {
                   case EntityType.product:
                     action = EditProduct(product: entity, context: context);
+                    break;
+                  case EntityType.project:
+                    action = EditProject(project: entity, context: context);
                     break;
                   case EntityType.payment:
                     action =
