@@ -32,6 +32,10 @@ List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
     if (!stub.matchesStates(stubListState.stateFilters)) {
       return false;
     }
+    if (stubListState.filterEntityId != null &&
+        stub.clientId != stubListState.filterEntityId) {
+      return false;
+    }
     if (stubListState.custom1Filters.isNotEmpty &&
         !stubListState.custom1Filters.contains(stub.customValue1)) {
       return false;

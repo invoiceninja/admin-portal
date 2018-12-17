@@ -36,12 +36,16 @@ List<int> filteredProjectsSelector(
     BuiltMap<int, ClientEntity> clientMap) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
-
-    if (project.clientId > 0 && clientMap[project.clientId].isArchived) {
+    final client = clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
+    if (client == null || !client.isActive) {
       return false;
     }
 
     if (!project.matchesStates(projectListState.stateFilters)) {
+      return false;
+    }
+    if (projectListState.filterEntityId != null &&
+        project.clientId != projectListState.filterEntityId) {
       return false;
     }
     if (projectListState.custom1Filters.isNotEmpty &&
