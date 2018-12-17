@@ -80,7 +80,6 @@ class ProjectEditVM {
         });
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
         final Completer<ProjectEntity> completer =
             new Completer<ProjectEntity>();
         store.dispatch(
