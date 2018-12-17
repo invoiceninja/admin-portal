@@ -38,6 +38,8 @@ IconData getEntityIcon(EntityType entityType) {
   switch (entityType) {
     case EntityType.product:
       return FontAwesomeIcons.cube;
+    case EntityType.project:
+      return FontAwesomeIcons.cube;
     case EntityType.client:
       return FontAwesomeIcons.users;
     case EntityType.invoice:

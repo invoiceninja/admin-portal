@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -152,7 +153,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.client,
-            icon: FontAwesomeIcons.users,
+            icon: getEntityIcon(EntityType.client),
             title: localization.clients,
             onTap: () => store.dispatch(ViewClientList(context)),
             onCreateTap: () {
@@ -164,7 +165,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.product,
-            icon: FontAwesomeIcons.cube,
+            icon: getEntityIcon(EntityType.product),
             title: localization.products,
             onTap: () {
               store.dispatch(ViewProductList(context));
@@ -178,7 +179,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.invoice,
-            icon: FontAwesomeIcons.filePdf,
+            icon: getEntityIcon(EntityType.invoice),
             title: localization.invoices,
             onTap: () => store.dispatch(ViewInvoiceList(context)),
             onCreateTap: () {
@@ -190,7 +191,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.payment,
-            icon: FontAwesomeIcons.creditCard,
+            icon: getEntityIcon(EntityType.payment),
             title: localization.payments,
             onTap: () => store.dispatch(ViewPaymentList(context)),
             onCreateTap: () {
@@ -202,7 +203,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.quote,
-            icon: FontAwesomeIcons.fileAlt,
+            icon: getEntityIcon(EntityType.quote),
             title: localization.quotes,
             onTap: () => store.dispatch(ViewQuoteList(context)),
             onCreateTap: () {
@@ -215,7 +216,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.project,
-            icon: FontAwesomeIcons.briefcase,
+            icon: getEntityIcon(EntityType.project),
             title: localization.projects,
             onTap: () => store.dispatch(ViewProjectList(context)),
             onCreateTap: () {

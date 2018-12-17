@@ -70,3 +70,40 @@ List<int> filteredProjectsSelector(
 
   return list;
 }
+
+var memoizedProjectStatsForClient = memo4((int clientId,
+    BuiltMap<int, ProjectEntity> projectMap,
+    String activeLabel,
+    String archivedLabel) =>
+    projectStatsForClient(clientId, projectMap, activeLabel, archivedLabel));
+
+String projectStatsForClient(
+    int clientId,
+    BuiltMap<int, ProjectEntity> projectMap,
+    String activeLabel,
+    String archivedLabel) {
+  int countActive = 0;
+  int countArchived = 0;
+  projectMap.forEach((projectId, project) {
+    if (project.clientId == clientId) {
+      if (project.isActive) {
+        countActive++;
+      } else if (project.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  String str = '';
+  if (countActive > 0) {
+    str = '$countActive $activeLabel';
+    if (countArchived > 0) {
+      str += ' • ';
+    }
+  }
+  if (countArchived > 0) {
+    str += '$countArchived $archivedLabel';
+  }
+
+  return str;
+}
