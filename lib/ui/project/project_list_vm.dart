@@ -75,7 +75,7 @@ class ProjectListVM {
           store.dispatch(FilterProjectsByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
           ViewClient(
-              clientId: state.invoiceListState.filterEntityId,
+              clientId: state.projectListState.filterEntityId,
               context: context)),
       onProjectTap: (context, project) {
         store.dispatch(ViewProject(projectId: project.id, context: context));
