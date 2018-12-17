@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
@@ -31,6 +32,8 @@ class _ProjectEditState extends State<ProjectEdit> {
   final _hoursController = TextEditingController();
   final _taskRateController = TextEditingController();
   final _privateNotesController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -42,6 +45,8 @@ class _ProjectEditState extends State<ProjectEdit> {
       _hoursController,
       _taskRateController,
       _privateNotesController,
+      _custom1Controller,
+      _custom2Controller,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -54,6 +59,8 @@ class _ProjectEditState extends State<ProjectEdit> {
     _taskRateController.text = formatNumber(project.taskRate, context,
         formatNumberType: FormatNumberType.input);
     _privateNotesController.text = project.privateNotes;
+    _custom1Controller.text = project.customValue1;
+    _custom2Controller.text = project.customValue2;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -71,12 +78,13 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onChanged() {
-    final project = widget.viewModel.project.rebuild((b) =>
-    b
+    final project = widget.viewModel.project.rebuild((b) => b
       ..name = _nameController.text.trim()
       ..budgetedHours = parseDouble(_hoursController.text)
       ..taskRate = parseDouble(_taskRateController.text)
-      ..privateNotes = _privateNotesController.text.trim());
+      ..privateNotes = _privateNotesController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim());
     if (project != widget.viewModel.project) {
       widget.viewModel.onChanged(project);
     }
@@ -88,6 +96,7 @@ class _ProjectEditState extends State<ProjectEdit> {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
     final project = viewModel.project;
+    final company = viewModel.company;
 
     return WillPopScope(
       onWillPop: () async {
@@ -128,15 +137,12 @@ class _ProjectEditState extends State<ProjectEdit> {
                       entityType: EntityType.client,
                       labelText: localization.client,
                       initialValue: (state.clientState.map[project.clientId] ??
-                          ClientEntity())
+                              ClientEntity())
                           .displayName,
                       entityMap: state.clientState.map,
                       entityList: memoizedDropdownClientList(
                           state.clientState.map, state.clientState.list),
-                      validator: (String val) =>
-                      val
-                          .trim()
-                          .isEmpty
+                      validator: (String val) => val.trim().isEmpty
                           ? localization.pleaseSelectAClient
                           : null,
                       onSelected: (clientId) {
@@ -150,10 +156,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                     TextFormField(
                       autocorrect: false,
                       controller: _nameController,
-                      validator: (String val) =>
-                      val
-                          .trim()
-                          .isEmpty
+                      validator: (String val) => val.trim().isEmpty
                           ? localization.pleaseEnterAName
                           : null,
                       decoration: InputDecoration(
@@ -189,6 +192,20 @@ class _ProjectEditState extends State<ProjectEdit> {
                       decoration: InputDecoration(
                         labelText: localization.privateNotes,
                       ),
+                    ),
+                    CustomField(
+                      controller: _custom1Controller,
+                      labelText:
+                          company.getCustomFieldLabel(CustomFieldType.project1),
+                      options: company
+                          .getCustomFieldValues(CustomFieldType.project1),
+                    ),
+                    CustomField(
+                      controller: _custom2Controller,
+                      labelText:
+                          company.getCustomFieldLabel(CustomFieldType.project2),
+                      options: company
+                          .getCustomFieldValues(CustomFieldType.project2),
                     ),
                   ],
                 ),

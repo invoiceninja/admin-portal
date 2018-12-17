@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -40,6 +41,7 @@ class ProjectEditScreen extends StatelessWidget {
 class ProjectEditVM {
   ProjectEditVM({
     @required this.state,
+    @required this.company,
     @required this.project,
     @required this.onChanged,
     @required this.onAddClientPressed,
@@ -57,6 +59,7 @@ class ProjectEditVM {
     return ProjectEditVM(
       isLoading: state.isLoading,
       isSaving: state.isSaving,
+      company: state.selectedCompany,
       project: project,
       state: state,
       origProject: state.projectState.map[project.id],
@@ -103,6 +106,7 @@ class ProjectEditVM {
   }
 
   final ProjectEntity project;
+  final CompanyEntity company;
   final Function(ProjectEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final bool isSaving;
