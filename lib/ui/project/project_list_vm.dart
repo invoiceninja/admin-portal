@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -35,12 +37,15 @@ class ProjectListVM {
     @required this.projectList,
     @required this.projectMap,
     @required this.clientMap,
+    @required this.listState,
     @required this.filter,
     @required this.isLoading,
     @required this.isLoaded,
     @required this.onProjectTap,
     @required this.onRefreshed,
     @required this.onEntityAction,
+    @required this.onClearEntityFilterPressed,
+    @required this.onViewEntityFilterPressed,
   });
 
   static ProjectListVM fromStore(Store<AppState> store) {
@@ -58,6 +63,7 @@ class ProjectListVM {
 
     return ProjectListVM(
       user: state.user,
+      listState: state.projectListState,
       projectList: memoizedFilteredProjectList(state.projectState.map,
           state.projectState.list, state.projectListState, state.clientState.map),
       projectMap: state.projectState.map,
@@ -65,6 +71,12 @@ class ProjectListVM {
       isLoading: state.isLoading,
       isLoaded: state.projectState.isLoaded,
       filter: state.projectUIState.listUIState.filter,
+      onClearEntityFilterPressed: () =>
+          store.dispatch(FilterProjectsByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewClient(
+              clientId: state.invoiceListState.filterEntityId,
+              context: context)),
       onProjectTap: (context, project) {
         store.dispatch(ViewProject(projectId: project.id, context: context));
       },
@@ -103,10 +115,14 @@ class ProjectListVM {
   final List<int> projectList;
   final BuiltMap<int, ProjectEntity> projectMap;
   final BuiltMap<int, ClientEntity> clientMap;
+  final ListUIState listState;
   final String filter;
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, ProjectEntity) onProjectTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, ProjectEntity, EntityAction) onEntityAction;
+  final Function onClearEntityFilterPressed;
+  final Function(BuildContext) onViewEntityFilterPressed;
+
 }
