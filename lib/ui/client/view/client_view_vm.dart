@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
@@ -98,6 +99,11 @@ class ClientViewVM {
               store.dispatch(FilterPaymentsByEntity(
                   entityId: client.id, entityType: EntityType.client));
               store.dispatch(ViewPaymentList(context));
+              break;
+            case EntityType.project:
+              store.dispatch(FilterProjectsByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewProjectList(context));
               break;
           }
         },
