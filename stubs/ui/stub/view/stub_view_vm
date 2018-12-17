@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
@@ -36,6 +38,8 @@ class StubViewVM {
     @required this.company,
     @required this.onActionSelected,
     @required this.onEditPressed,
+    @required this.onBackPressed,
+    @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -44,6 +48,13 @@ class StubViewVM {
   factory StubViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final stub = state.stubState.map[state.stubUIState.selectedId];
+
+    Future<Null> _handleRefresh(BuildContext context) {
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
+      store.dispatch(LoadStub(completer: completer, stubId: stub.id));
+      return completer.future;
+    }
 
     return StubViewVM(
         company: state.selectedCompany,
@@ -54,6 +65,9 @@ class StubViewVM {
         onEditPressed: (BuildContext context) {
           store.dispatch(EditStub(stub: stub, context: context));
         },
+        onRefreshed: (context) => _handleRefresh(context),
+        onBackPressed: () =>
+          store.dispatch(UpdateCurrentRoute(StubScreen.route)),
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
@@ -80,6 +94,8 @@ class StubViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
+  final Function onBackPressed;
+  final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

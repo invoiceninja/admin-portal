@@ -64,7 +64,7 @@ class ProjectListVM {
       isLoaded: state.projectState.isLoaded,
       filter: state.projectUIState.listUIState.filter,
       onProjectTap: (context, project) {
-        store.dispatch(EditProject(project: project, context: context));
+        store.dispatch(ViewProject(projectId: project.id, context: context));
       },
       onEntityAction: (context, project, action) {
         switch (action) {
