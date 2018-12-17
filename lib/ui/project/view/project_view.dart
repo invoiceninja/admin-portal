@@ -1,8 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/project_model.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectView extends StatefulWidget {
@@ -22,6 +30,64 @@ class _ProjectViewState extends State<ProjectView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final project = viewModel.project;
+    final client = viewModel.client;
+    final company = viewModel.company;
+    final localization = AppLocalization.of(context);
+
+    final Map<String, String> fields = {
+      ProjectFields.dueDate: formatDate(project.dueDate, context),
+      ProjectFields.budgetedHours: formatNumber(project.budgetedHours, context,
+          formatNumberType: FormatNumberType.double),
+      ProjectFields.taskRate: formatNumber(project.taskRate, context,
+          formatNumberType: FormatNumberType.money),
+    };
+
+    if (project.customValue1.isNotEmpty) {
+      final label1 = company.getCustomFieldLabel(CustomFieldType.project1);
+      fields[label1] = project.customValue1;
+    }
+    if (project.customValue2.isNotEmpty) {
+      final label2 = company.getCustomFieldLabel(CustomFieldType.project2);
+      fields[label2] = project.customValue2;
+    }
+
+    List<Widget> _buildView() {
+      final widgets = <Widget>[
+        OneValueHeader(
+          label: localization.totalAmount,
+          value: '',
+        ),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(client.displayName),
+            leading: Icon(FontAwesomeIcons.users, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () => viewModel.onClientPressed(context),
+          ),
+        ),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
+        ),
+      ];
+
+      if (project.privateNotes != null && project.privateNotes.isNotEmpty) {
+        widgets.addAll([
+          IconMessage(project.privateNotes),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+        ]);
+      }
+
+      widgets.addAll([
+        FieldGrid(fields),
+      ]);
+
+      return widgets;
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -39,7 +105,7 @@ class _ProjectViewState extends State<ProjectView> {
               child: Container(
                 color: Theme.of(context).backgroundColor,
                 child: ListView(
-                  //children: _buildView(),
+                  children: _buildView(),
                 ),
               ),
             );
@@ -72,21 +138,21 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: project.isNew
           ? []
           : [
-        user.canEditEntity(project)
-            ? EditIconButton(
-          isVisible: !project.isDeleted,
-          onPressed: () => viewModel.onEditPressed(context),
-        )
-            : Container(),
-        ActionMenuButton(
-          user: user,
-          entityActions:
-          project.getEntityActions(client: viewModel.client, user: user),
-          isSaving: viewModel.isSaving,
-          entity: project,
-          onSelected: viewModel.onActionSelected,
-        )
-      ],
+              user.canEditEntity(project)
+                  ? EditIconButton(
+                      isVisible: !project.isDeleted,
+                      onPressed: () => viewModel.onEditPressed(context),
+                    )
+                  : Container(),
+              ActionMenuButton(
+                user: user,
+                entityActions: project.getEntityActions(
+                    client: viewModel.client, user: user),
+                isSaving: viewModel.isSaving,
+                entity: project,
+                onSelected: viewModel.onActionSelected,
+              )
+            ],
     );
   }
 }

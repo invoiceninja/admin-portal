@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -32,7 +33,6 @@ class ProjectViewScreen extends StatelessWidget {
 }
 
 class ProjectViewVM {
-
   ProjectViewVM({
     @required this.project,
     @required this.client,
@@ -40,6 +40,7 @@ class ProjectViewVM {
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.onBackPressed,
+    @required this.onClientPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -68,6 +69,8 @@ class ProjectViewVM {
           store.dispatch(EditProject(project: project, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
+        onClientPressed: (BuildContext context) => store
+            .dispatch(ViewClient(clientId: project.clientId, context: context)),
         onBackPressed: () =>
             store.dispatch(UpdateCurrentRoute(ProjectScreen.route)),
         onActionSelected: (BuildContext context, EntityAction action) {
@@ -97,6 +100,7 @@ class ProjectViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
+  final Function(BuildContext) onClientPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
