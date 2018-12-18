@@ -172,6 +172,6 @@ TaskUIState get taskUIState => uiState.taskUIState;
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Date Formats: ${staticState.dateFormatMap}';
-    return 'Route: ${uiState.currentRoute}, CurrencyId: ${dashboardUIState.currencyId}';
+    return 'Route: ${uiState.currentRoute}';
   }
 }

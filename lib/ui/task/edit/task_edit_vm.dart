@@ -52,6 +52,7 @@ class TaskEditVM {
   });
 
   factory TaskEditVM.fromStore(Store<AppState> store) {
+    print('Building VM, length: ${store.state.projectState.map.length}');
     final task = store.state.taskUIState.editing;
     final state = store.state;
 

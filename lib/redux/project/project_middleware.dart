@@ -42,7 +42,10 @@ Middleware<AppState> _editProject() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+    if (action.trackRoute) {
+      store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+    }
+
     final project =
         await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
 
