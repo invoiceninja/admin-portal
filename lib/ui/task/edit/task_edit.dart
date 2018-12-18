@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 
 class TaskEdit extends StatefulWidget {
   const TaskEdit({
@@ -117,7 +118,7 @@ class _TaskEditState extends State<TaskEdit> {
                         entityType: EntityType.client,
                         labelText: localization.client,
                         initialValue: (state.clientState.map[task.clientId] ??
-                            ClientEntity())
+                                ClientEntity())
                             .displayName,
                         entityMap: state.clientState.map,
                         entityList: memoizedDropdownClientList(
@@ -133,6 +134,25 @@ class _TaskEditState extends State<TaskEdit> {
                           viewModel.onAddClientPressed(context, completer);
                         },
                       ),
+                      EntityDropdown(
+                        entityType: EntityType.project,
+                        labelText: localization.project,
+                        initialValue: (state.projectState.map[task.projectId] ??
+                                ProjectEntity())
+                            .name,
+                        entityMap: state.projectState.map,
+                        entityList: memoizedDropdownProjectList(
+                            state.projectState.map,
+                            state.projectState.list,
+                            task.clientId),
+                        onSelected: (projectId) {
+                          viewModel.onChanged(
+                              task.rebuild((b) => b..projectId = projectId));
+                        },
+                        onAddPressed: (completer) {
+                          //viewModel.onAddProjectPressed(context, completer);
+                        },
+                      ),
                       TextFormField(
                         maxLines: 4,
                         controller: _descriptionController,
@@ -144,16 +164,16 @@ class _TaskEditState extends State<TaskEdit> {
                       CustomField(
                         controller: _custom1Controller,
                         labelText:
-                        company.getCustomFieldLabel(CustomFieldType.task1),
-                        options: company
-                            .getCustomFieldValues(CustomFieldType.task1),
+                            company.getCustomFieldLabel(CustomFieldType.task1),
+                        options:
+                            company.getCustomFieldValues(CustomFieldType.task1),
                       ),
                       CustomField(
                         controller: _custom2Controller,
                         labelText:
-                        company.getCustomFieldLabel(CustomFieldType.task2),
-                        options: company
-                            .getCustomFieldValues(CustomFieldType.task2),
+                            company.getCustomFieldLabel(CustomFieldType.task2),
+                        options:
+                            company.getCustomFieldValues(CustomFieldType.task2),
                       ),
                     ],
                   ),

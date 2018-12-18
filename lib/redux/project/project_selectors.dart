@@ -3,14 +3,20 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownProjectList = memo2(
-    (BuiltMap<int, ProjectEntity> projectMap, BuiltList<int> projectList) =>
-        dropdownProjectsSelector(projectMap, projectList));
+var memoizedDropdownProjectList = memo3(
+    (BuiltMap<int, ProjectEntity> projectMap, BuiltList<int> projectList,
+            int clientId) =>
+        dropdownProjectsSelector(projectMap, projectList, clientId));
 
-List<int> dropdownProjectsSelector(
-    BuiltMap<int, ProjectEntity> projectMap, BuiltList<int> projectList) {
-  final list =
-      projectList.where((projectId) => projectMap[projectId].isActive).toList();
+List<int> dropdownProjectsSelector(BuiltMap<int, ProjectEntity> projectMap,
+    BuiltList<int> projectList, int clientId) {
+  final list = projectList.where((projectId) {
+    final project = projectMap[projectId];
+    if (clientId != null && clientId > 0 && project.clientId != clientId) {
+      return false;
+    }
+    return project.isActive;
+  }).toList();
 
   list.sort((projectAId, projectBId) {
     final projectA = projectMap[projectAId];
@@ -36,7 +42,8 @@ List<int> filteredProjectsSelector(
     BuiltMap<int, ClientEntity> clientMap) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
-    final client = clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
+    final client =
+        clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
     if (client == null || !client.isActive) {
       return false;
     }
@@ -76,9 +83,9 @@ List<int> filteredProjectsSelector(
 }
 
 var memoizedProjectStatsForClient = memo4((int clientId,
-    BuiltMap<int, ProjectEntity> projectMap,
-    String activeLabel,
-    String archivedLabel) =>
+        BuiltMap<int, ProjectEntity> projectMap,
+        String activeLabel,
+        String archivedLabel) =>
     projectStatsForClient(clientId, projectMap, activeLabel, archivedLabel));
 
 String projectStatsForClient(
