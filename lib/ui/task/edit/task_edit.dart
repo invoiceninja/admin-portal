@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -20,21 +22,26 @@ class TaskEdit extends StatefulWidget {
 class _TaskEditState extends State<TaskEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // STARTER: controllers - do not remove comment
+  final _descriptionController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
-      // STARTER: array - do not remove comment
+      _descriptionController,
+      _custom1Controller,
+      _custom2Controller,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final task = widget.viewModel.task;
-    // STARTER: read value - do not remove comment
+    _descriptionController.text = task.description;
+    _custom1Controller.text = task.customValue1;
+    _custom2Controller.text = task.customValue2;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -53,8 +60,9 @@ class _TaskEditState extends State<TaskEdit> {
 
   void _onChanged() {
     final task = widget.viewModel.task.rebuild((b) => b
-      // STARTER: set value - do not remove comment
-    );
+      ..description = _descriptionController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim());
     if (task != widget.viewModel.task) {
       widget.viewModel.onChanged(task);
     }
@@ -65,6 +73,7 @@ class _TaskEditState extends State<TaskEdit> {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
     final task = viewModel.task;
+    final company = viewModel.company;
 
     return WillPopScope(
       onWillPop: () async {
@@ -78,19 +87,19 @@ class _TaskEditState extends State<TaskEdit> {
               : localization.editTask),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
-                RefreshIconButton(
-                  icon: Icons.cloud_upload,
-                  tooltip: localization.save,
-                  isVisible: !task.isDeleted,
-                  isDirty: task.isNew || task != viewModel.origTask,
-                  isSaving: viewModel.isSaving,
-                  onPressed: () {
-                    if (! _formKey.currentState.validate()) {
-                      return;
-                    }
-                    viewModel.onSavePressed(context);
-                  },
-                );
+              return RefreshIconButton(
+                icon: Icons.cloud_upload,
+                tooltip: localization.save,
+                isVisible: !task.isDeleted,
+                isDirty: task.isNew || task != viewModel.origTask,
+                isSaving: viewModel.isSaving,
+                onPressed: () {
+                  if (!_formKey.currentState.validate()) {
+                    return;
+                  }
+                  viewModel.onSavePressed(context);
+                },
+              );
             }),
           ],
         ),
@@ -101,13 +110,33 @@ class _TaskEditState extends State<TaskEdit> {
                 children: <Widget>[
                   FormCard(
                     children: <Widget>[
-                      // STARTER: widgets - do not remove comment
+                      TextFormField(
+                        maxLines: 4,
+                        controller: _descriptionController,
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                          labelText: localization.description,
+                        ),
+                      ),
+                      CustomField(
+                        controller: _custom1Controller,
+                        labelText:
+                        company.getCustomFieldLabel(CustomFieldType.task1),
+                        options: company
+                            .getCustomFieldValues(CustomFieldType.task1),
+                      ),
+                      CustomField(
+                        controller: _custom2Controller,
+                        labelText:
+                        company.getCustomFieldLabel(CustomFieldType.task2),
+                        options: company
+                            .getCustomFieldValues(CustomFieldType.task2),
+                      ),
                     ],
                   ),
                 ],
               );
-            })
-        ),
+            })),
       ),
     );
   }

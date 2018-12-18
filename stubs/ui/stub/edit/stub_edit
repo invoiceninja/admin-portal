@@ -77,7 +77,7 @@ class _StubEditState extends State<StubEdit> {
               ? localization.newStub
               : localization.editStub),
           actions: <Widget>[
-            Builder(builder: (BuildContext context) {
+            return Builder(builder: (BuildContext context) {
                 RefreshIconButton(
                   icon: Icons.cloud_upload,
                   tooltip: localization.save,

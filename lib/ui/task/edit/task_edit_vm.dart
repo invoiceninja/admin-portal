@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:redux/redux.dart';
@@ -34,6 +35,7 @@ class TaskEditScreen extends StatelessWidget {
 class TaskEditVM {
   TaskEditVM({
     @required this.task,
+    @required this.company,
     @required this.onChanged,
     @required this.isSaving,
     @required this.origTask,
@@ -51,6 +53,7 @@ class TaskEditVM {
       isSaving: state.isSaving,
       origTask: state.taskState.map[task.id],
       task: task,
+      company: state.selectedCompany,
       onChanged: (TaskEntity task) {
         store.dispatch(UpdateTask(task));
       },
@@ -80,6 +83,7 @@ class TaskEditVM {
   }
 
   final TaskEntity task;
+  final CompanyEntity company;
   final Function(TaskEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
