@@ -62,7 +62,8 @@ class ClientEditVM {
         isSaving: state.isSaving,
         onBackPressed: () {
           if (state.uiState.currentRoute.contains(ClientScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(ClientScreen.route));
+            store.dispatch(UpdateCurrentRoute(
+                client.isNew ? ClientScreen.route : ClientViewScreen.route));
           }
         },
         onChanged: (ClientEntity client) =>
@@ -82,8 +83,7 @@ class ClientEditVM {
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
             if (state.uiState.currentRoute.contains(ClientScreen.route)) {
-              store.dispatch(UpdateCurrentRoute(
-                  client.isNew ? ClientScreen.route : ClientViewScreen.route));
+              store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
             }
             if (client.isNew) {
               if ([

@@ -69,6 +69,7 @@ class StubEditVM {
         store.dispatch(SaveStubRequest(completer: completer, stub: stub));
         return completer.future.then((_) {
             return completer.future.then((savedStub) {
+              store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
               if (stub.isNew) {
                 Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
               } else {
