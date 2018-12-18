@@ -127,7 +127,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   children: <Widget>[
                     payment.isNew
                         ? EntityDropdown(
-                            key: Key('__${payment.clientId}__'),
+                            key: Key('__client_${payment.clientId}__'),
                             entityType: EntityType.client,
                             labelText: AppLocalization.of(context).client,
                             entityMap: viewModel.clientMap,
@@ -136,8 +136,9 @@ class _PaymentEditState extends State<PaymentEdit> {
                                         ClientEntity())
                                     .listDisplayName,
                             onSelected: (client) {
-                              viewModel.onChanged(payment
-                                  .rebuild((b) => b..clientId = client.id));
+                              viewModel.onChanged(payment.rebuild((b) => b
+                                ..clientId = client.id
+                                ..invoiceId = 0));
                             },
                             entityList: memoizedDropdownClientList(
                                 viewModel.clientMap, viewModel.clientList),
@@ -145,6 +146,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         : Container(),
                     payment.isNew
                         ? EntityDropdown(
+                            key: Key('__invoice_${payment.clientId}__'),
                             entityType: EntityType.invoice,
                             labelText: AppLocalization.of(context).invoice,
                             entityMap: viewModel.invoiceMap,
@@ -189,9 +191,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                       labelText: localization.paymentType,
                       initialValue: viewModel.staticState
                           .paymentTypeMap[payment.paymentTypeId]?.name,
-                      onSelected: (paymentType) => viewModel.onChanged(
-                          payment.rebuild(
-                              (b) => b..paymentTypeId = paymentType.id)),
+                      onSelected: (paymentType) => viewModel.onChanged(payment
+                          .rebuild((b) => b..paymentTypeId = paymentType.id)),
                     ),
                     DatePicker(
                       validator: (String val) => val.trim().isEmpty

@@ -115,7 +115,7 @@ class _TaskEditState extends State<TaskEdit> {
                   FormCard(
                     children: <Widget>[
                       EntityDropdown(
-                        key: Key('__${task.clientId}__'),
+                        key: Key('__client_${task.clientId}__'),
                         entityType: EntityType.client,
                         labelText: localization.client,
                         initialValue: (state.clientState.map[task.clientId] ??
@@ -128,14 +128,16 @@ class _TaskEditState extends State<TaskEdit> {
                             ? localization.pleaseSelectAClient
                             : null,
                         onSelected: (client) {
-                          viewModel.onChanged(
-                              task.rebuild((b) => b..clientId = client.id));
+                          viewModel.onChanged(task.rebuild((b) => b
+                            ..clientId = client.id
+                            ..projectId = 0));
                         },
                         onAddPressed: (completer) {
                           viewModel.onAddClientPressed(context, completer);
                         },
                       ),
                       EntityDropdown(
+                        key: Key('__project_${task.clientId}__'),
                         entityType: EntityType.project,
                         labelText: localization.project,
                         initialValue: (state.projectState.map[task.projectId] ??
