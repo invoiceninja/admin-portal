@@ -150,7 +150,7 @@ class _TaskEditState extends State<TaskEdit> {
                               task.rebuild((b) => b..projectId = projectId));
                         },
                         onAddPressed: (completer) {
-                          //viewModel.onAddProjectPressed(context, completer);
+                          viewModel.onAddProjectPressed(context, completer);
                         },
                       ),
                       TextFormField(

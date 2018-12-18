@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
@@ -42,6 +43,7 @@ class TaskEditVM {
     @required this.company,
     @required this.onChanged,
     @required this.onAddClientPressed,
+    @required this.onAddProjectPressed,
     @required this.isSaving,
     @required this.origTask,
     @required this.onSavePressed,
@@ -75,8 +77,22 @@ class TaskEditVM {
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-                message: AppLocalization.of(context).createdClient,
-              )));
+            message: AppLocalization.of(context).createdClient,
+          )));
+        });
+      },
+      onAddProjectPressed: (context, completer) {
+        store.dispatch(EditProject(
+            project:
+                ProjectEntity().rebuild((b) => b..clientId = task.clientId),
+            context: context,
+            completer: completer,
+            trackRoute: false));
+        completer.future.then((SelectableEntity client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).createdProject,
+          )));
         });
       },
       onSavePressed: (BuildContext context) {
@@ -112,4 +128,6 @@ class TaskEditVM {
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddClientPressed;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddProjectPressed;
 }
