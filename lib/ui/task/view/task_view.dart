@@ -9,10 +9,10 @@ import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskView extends StatefulWidget {
-
   const TaskView({
     Key key,
     @required this.viewModel,
@@ -29,6 +29,7 @@ class _TaskViewState extends State<TaskView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final task = viewModel.task;
+    final project = viewModel.project;
     final client = viewModel.client;
     final company = viewModel.company;
     final localization = AppLocalization.of(context);
@@ -50,20 +51,45 @@ class _TaskViewState extends State<TaskView> {
           label: localization.duration,
           value: '',
         ),
-        Material(
-          color: Theme.of(context).canvasColor,
-          child: ListTile(
-            title: Text(client.displayName),
-            leading: Icon(FontAwesomeIcons.users, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            //onTap: () => viewModel.onClientPressed(context),
-          ),
-        ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
       ];
+
+      if (client != null) {
+        widgets.addAll([
+          Material(
+            color: Theme.of(context).canvasColor,
+            child: ListTile(
+              title: Text(client.displayName),
+              leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
+              trailing: Icon(Icons.navigate_next),
+              onTap: () => viewModel.onClientPressed(context),
+              onLongPress: () => viewModel.onClientPressed(context, true),
+            ),
+          ),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+        ]);
+      }
+
+      if (project != null) {
+        widgets.addAll([
+          Material(
+            color: Theme.of(context).canvasColor,
+            child: ListTile(
+              title: Text(project.name),
+              leading: Icon(getEntityIcon(EntityType.project), size: 18.0),
+              trailing: Icon(Icons.navigate_next),
+              onTap: () => viewModel.onProjectPressed(context),
+              onLongPress: () => viewModel.onProjectPressed(context, true),
+            ),
+          ),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+        ]);
+      }
 
       if (task.description.isNotEmpty) {
         widgets.addAll([
@@ -134,25 +160,25 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text(task.description),
+      title: Text(AppLocalization.of(context).task),
       actions: task.isNew
           ? []
           : [
-        user.canEditEntity(task)
-            ? EditIconButton(
-          isVisible: !task.isDeleted,
-          onPressed: () => viewModel.onEditPressed(context),
-        )
-            : Container(),
-        ActionMenuButton(
-          user: user,
-          entityActions: task.getEntityActions(
-              client: viewModel.client, user: user),
-          isSaving: viewModel.isSaving,
-          entity: task,
-          onSelected: viewModel.onActionSelected,
-        )
-      ],
+              user.canEditEntity(task)
+                  ? EditIconButton(
+                      isVisible: !task.isDeleted,
+                      onPressed: () => viewModel.onEditPressed(context),
+                    )
+                  : Container(),
+              ActionMenuButton(
+                user: user,
+                entityActions:
+                    task.getEntityActions(client: viewModel.client, user: user),
+                isSaving: viewModel.isSaving,
+                entity: task,
+                onSelected: viewModel.onActionSelected,
+              )
+            ],
     );
   }
 }

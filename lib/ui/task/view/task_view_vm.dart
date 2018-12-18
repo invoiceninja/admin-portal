@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -32,15 +34,17 @@ class TaskViewScreen extends StatelessWidget {
 }
 
 class TaskViewVM {
-
   TaskViewVM({
     @required this.task,
     @required this.client,
+    @required this.project,
     @required this.company,
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
+    @required this.onClientPressed,
+    @required this.onProjectPressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -49,6 +53,8 @@ class TaskViewVM {
   factory TaskViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final task = state.taskState.map[state.taskUIState.selectedId];
+    final client = state.clientState.map[task.clientId];
+    final project = state.projectState.map[task.projectId];
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -63,7 +69,22 @@ class TaskViewVM {
         isLoading: state.isLoading,
         isDirty: task.isNew,
         task: task,
-        client: state.clientState.map[task.clientId],
+        client: client,
+        project: project,
+        onClientPressed: (context, [longPress = false]) {
+          if (longPress) {
+            store.dispatch(EditClient(client: client, context: context));
+          } else {
+            store.dispatch(ViewClient(clientId: client.id, context: context));
+          }
+        },
+        onProjectPressed: (context, [longPress = false]) {
+          if (longPress) {
+            store.dispatch(EditProject(project: project, context: context));
+          } else {
+            store.dispatch(ViewProject(projectId: project.id, context: context));
+          }
+        },
         onEditPressed: (BuildContext context) {
           store.dispatch(EditTask(task: task, context: context));
         },
@@ -78,13 +99,11 @@ class TaskViewVM {
           switch (action) {
             case EntityAction.archive:
               store.dispatch(ArchiveTaskRequest(
-                  popCompleter(context, localization.archivedTask),
-                  task.id));
+                  popCompleter(context, localization.archivedTask), task.id));
               break;
             case EntityAction.delete:
               store.dispatch(DeleteTaskRequest(
-                  popCompleter(context, localization.deletedTask),
-                  task.id));
+                  popCompleter(context, localization.deletedTask), task.id));
               break;
             case EntityAction.restore:
               store.dispatch(RestoreTaskRequest(
@@ -97,11 +116,14 @@ class TaskViewVM {
 
   final TaskEntity task;
   final ClientEntity client;
+  final ProjectEntity project;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, [bool]) onClientPressed;
+  final Function(BuildContext, [bool]) onProjectPressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
