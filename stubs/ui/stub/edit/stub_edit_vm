@@ -34,6 +34,7 @@ class StubEditScreen extends StatelessWidget {
 
 class StubEditVM {
   StubEditVM({
+    @required this.state,
     @required this.stub,
     @required this.company,
     @required this.onChanged,
@@ -49,6 +50,7 @@ class StubEditVM {
     final state = store.state;
 
     return StubEditVM(
+      state: state,
       isLoading: state.isLoading,
       isSaving: state.isSaving,
       origStub: state.stubState.map[stub.id],
@@ -90,5 +92,5 @@ class StubEditVM {
   final bool isLoading;
   final bool isSaving;
   final TaskEntity origStub;
-
+  final AppState state;
 }

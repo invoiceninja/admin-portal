@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -82,6 +83,7 @@ class ClientEditVM {
                 InvoiceEditScreen.route,
                 QuoteEditScreen.route,
                 ProjectEditScreen.route,
+                TaskEditScreen.route,
               ].contains(store.state.uiState.currentRoute)) {
                 Navigator.of(context).pop(savedClient);
               } else {
