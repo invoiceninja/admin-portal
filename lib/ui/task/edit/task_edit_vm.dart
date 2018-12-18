@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit.dart';

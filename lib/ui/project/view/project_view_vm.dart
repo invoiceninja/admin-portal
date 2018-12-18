@@ -73,7 +73,8 @@ class ProjectViewVM {
         onRefreshed: (context) => _handleRefresh(context),
         onClientPressed: (BuildContext context) => store
             .dispatch(ViewClient(clientId: project.clientId, context: context)),
-        onAddTaskPressed: () => store.dispatch(EditTask(
+        onAddTaskPressed: (context) => store.dispatch(EditTask(
+          context: context,
             task: TaskEntity().rebuild((b) => b
               ..projectId = project.id
               ..clientId = project.clientId))),
@@ -111,7 +112,7 @@ class ProjectViewVM {
   final Function(BuildContext) onEditPressed;
   final Function(BuildContext) onClientPressed;
   final Function onBackPressed;
-  final Function onAddTaskPressed;
+  final Function(BuildContext) onAddTaskPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

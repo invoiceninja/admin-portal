@@ -112,7 +112,7 @@ class _ProjectViewState extends State<ProjectView> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: viewModel.onAddTaskPressed,
+          onPressed: () => viewModel.onAddTaskPressed(context),
           child: Icon(
             Icons.add,
             color: Colors.white,

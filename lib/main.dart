@@ -81,8 +81,7 @@ void main() async {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         // STARTER: middleware - do not remove comment
-..addAll(createStoreTasksMiddleware())
-
+        ..addAll(createStoreTasksMiddleware())
         ..addAll(createStoreProjectsMiddleware())
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
@@ -255,13 +254,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
-TaskScreen.route: (context) {
-widget.store.dispatch(LoadTasks());
-return TaskScreen();
-},
-TaskViewScreen.route: (context) => TaskViewScreen(),
-TaskEditScreen.route: (context) => TaskEditScreen(),
-
+            TaskScreen.route: (context) {
+              widget.store.dispatch(LoadTasks());
+              return TaskScreen();
+            },
+            TaskViewScreen.route: (context) => TaskViewScreen(),
+            TaskEditScreen.route: (context) => TaskEditScreen(),
             ProjectScreen.route: (context) {
               widget.store.dispatch(LoadProjects());
               return ProjectScreen();
