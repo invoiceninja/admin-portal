@@ -66,7 +66,8 @@ class QuoteEditVM extends EntityEditVM {
       origInvoice: store.state.quoteState.map[quote.id],
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(
+              quote.isNew ? QuoteScreen.route : QuoteViewScreen.route));
         }
       },
       onSavePressed: (BuildContext context) {

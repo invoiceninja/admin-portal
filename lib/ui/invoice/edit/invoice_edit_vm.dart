@@ -87,7 +87,8 @@ class InvoiceEditVM extends EntityEditVM {
       origInvoice: store.state.invoiceState.map[invoice.id],
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(
+              invoice.isNew ? InvoiceScreen.route : InvoiceViewScreen.route));
         }
       },
       onSavePressed: (BuildContext context) {
@@ -95,6 +96,7 @@ class InvoiceEditVM extends EntityEditVM {
         store.dispatch(
             SaveInvoiceRequest(completer: completer, invoice: invoice));
         return completer.future.then((savedInvoice) {
+          store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
           if (invoice.isNew) {
             Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
           } else {

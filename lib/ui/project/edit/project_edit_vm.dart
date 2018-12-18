@@ -69,7 +69,8 @@ class ProjectEditVM {
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(
+              project.isNew ? ProjectScreen.route : ProjectViewScreen.route));
         }
       },
       onAddClientPressed: (context, completer) {
@@ -91,6 +92,9 @@ class ProjectEditVM {
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((savedProject) {
+          if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
+          }
           if (project.isNew) {
             if ([
               TaskEditScreen.route,

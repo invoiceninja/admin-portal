@@ -61,7 +61,7 @@ class StubEditVM {
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(StubScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(stub.isNew ? StubScreen.route : StubViewScreen.route));
         }
       },
       onSavePressed: (BuildContext context) {
