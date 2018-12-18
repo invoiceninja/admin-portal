@@ -35,6 +35,7 @@ class TaskViewVM {
 
   TaskViewVM({
     @required this.task,
+    @required this.client,
     @required this.company,
     @required this.onActionSelected,
     @required this.onEditPressed,
@@ -62,6 +63,7 @@ class TaskViewVM {
         isLoading: state.isLoading,
         isDirty: task.isNew,
         task: task,
+        client: state.clientState.map[task.clientId],
         onEditPressed: (BuildContext context) {
           store.dispatch(EditTask(task: task, context: context));
         },
@@ -94,6 +96,7 @@ class TaskViewVM {
   }
 
   final TaskEntity task;
+  final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;

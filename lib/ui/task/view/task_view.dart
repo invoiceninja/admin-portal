@@ -1,8 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskView extends StatefulWidget {
 
@@ -22,32 +29,130 @@ class _TaskViewState extends State<TaskView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final task = viewModel.task;
+    final client = viewModel.client;
+    final company = viewModel.company;
+    final localization = AppLocalization.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(task.description),
-        actions: task.isNew
-            ? []
-            : [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    viewModel.onEditPressed(context);
-                  },
+    final Map<String, String> fields = {};
+
+    if (task.customValue1.isNotEmpty) {
+      final label1 = company.getCustomFieldLabel(CustomFieldType.task1);
+      fields[label1] = task.customValue1;
+    }
+    if (task.customValue2.isNotEmpty) {
+      final label2 = company.getCustomFieldLabel(CustomFieldType.task2);
+      fields[label2] = task.customValue2;
+    }
+
+    List<Widget> _buildView() {
+      final widgets = <Widget>[
+        OneValueHeader(
+          label: localization.duration,
+          value: '',
+        ),
+        Material(
+          color: Theme.of(context).canvasColor,
+          child: ListTile(
+            title: Text(client.displayName),
+            leading: Icon(FontAwesomeIcons.users, size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            //onTap: () => viewModel.onClientPressed(context),
+          ),
+        ),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
+        ),
+      ];
+
+      if (task.description.isNotEmpty) {
+        widgets.addAll([
+          IconMessage(task.description),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+        ]);
+      }
+
+      widgets.addAll([
+        FieldGrid(fields),
+      ]);
+
+      return widgets;
+    }
+
+    return WillPopScope(
+      onWillPop: () async {
+        viewModel.onBackPressed();
+        return true;
+      },
+      child: Scaffold(
+        appBar: _CustomAppBar(
+          viewModel: viewModel,
+        ),
+        body: Builder(
+          builder: (BuildContext context) {
+            return RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: Container(
+                color: Theme.of(context).backgroundColor,
+                child: ListView(
+                  children: _buildView(),
                 ),
-                ActionMenuButton(
-                  user: viewModel.company.user,
-                  isSaving: viewModel.isSaving,
-                  entity: task,
-                  onSelected: viewModel.onActionSelected,
-                ),
-              ],
+              ),
+            );
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColorDark,
+          //onPressed: () => viewModel.onAddTaskPressed(context),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          tooltip: localization.newTask,
+        ),
       ),
-      body: FormCard(
-        children: [
-          // STARTER: widgets - do not remove comment
-        ]
-      ),
+    );
+  }
+}
+
+class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _CustomAppBar({
+    @required this.viewModel,
+  });
+
+  final TaskViewVM viewModel;
+
+  @override
+  final Size preferredSize = const Size(double.infinity, kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    final task = viewModel.task;
+    final user = viewModel.company.user;
+
+    return AppBar(
+      title: Text(task.description),
+      actions: task.isNew
+          ? []
+          : [
+        user.canEditEntity(task)
+            ? EditIconButton(
+          isVisible: !task.isDeleted,
+          onPressed: () => viewModel.onEditPressed(context),
+        )
+            : Container(),
+        ActionMenuButton(
+          user: user,
+          entityActions: task.getEntityActions(
+              client: viewModel.client, user: user),
+          isSaving: viewModel.isSaving,
+          entity: task,
+          onSelected: viewModel.onActionSelected,
+        )
+      ],
     );
   }
 }
