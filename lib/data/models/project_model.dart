@@ -131,7 +131,7 @@ abstract class ProjectEntity extends Object
       return true;
     }
 
-    return name.contains(filter);
+    return name.toLowerCase().contains(filter);
   }
 
   @override

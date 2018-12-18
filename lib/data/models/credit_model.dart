@@ -114,7 +114,7 @@ abstract class CreditEntity extends Object
       return true;
     }
 
-    return publicNotes.contains(filter);
+    return publicNotes.toLowerCase().contains(filter);
   }
 
   @override

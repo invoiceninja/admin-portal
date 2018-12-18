@@ -128,7 +128,7 @@ abstract class TaskEntity extends Object
       return true;
     }
 
-    return description.contains(filter);
+    return description.toLowerCase().contains(filter);
   }
 
   @override
