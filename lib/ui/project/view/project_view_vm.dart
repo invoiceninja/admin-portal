@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -40,6 +41,7 @@ class ProjectViewVM {
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.onBackPressed,
+    @required this.onAddTaskPressed,
     @required this.onClientPressed,
     @required this.onRefreshed,
     @required this.isSaving,
@@ -71,6 +73,10 @@ class ProjectViewVM {
         onRefreshed: (context) => _handleRefresh(context),
         onClientPressed: (BuildContext context) => store
             .dispatch(ViewClient(clientId: project.clientId, context: context)),
+        onAddTaskPressed: () => store.dispatch(EditTask(
+            task: TaskEntity().rebuild((b) => b
+              ..projectId = project.id
+              ..clientId = project.clientId))),
         onBackPressed: () {
           if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
             store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
@@ -105,6 +111,7 @@ class ProjectViewVM {
   final Function(BuildContext) onEditPressed;
   final Function(BuildContext) onClientPressed;
   final Function onBackPressed;
+  final Function onAddTaskPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;
