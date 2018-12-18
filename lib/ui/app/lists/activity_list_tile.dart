@@ -6,7 +6,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -44,6 +46,16 @@ class ActivityListTile extends StatelessWidget {
           ? null
           : () {
               switch (activity.entityType) {
+                /*
+                case EntityType.project:
+                  store.dispatch(ViewProject(
+                      projectId: activity.projectId, context: context));
+                  break;
+                  */
+                case EntityType.task:
+                  store.dispatch(ViewTask(
+                      taskId: activity.taskId, context: context));
+                  break;
                 case EntityType.client:
                   store.dispatch(ViewClient(
                       clientId: activity.clientId, context: context));
