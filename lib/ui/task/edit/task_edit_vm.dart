@@ -100,20 +100,20 @@ class TaskEditVM {
       onSavePressed: (BuildContext context) {
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(SaveTaskRequest(completer: completer, task: task));
-        return completer.future.then((_) {
-          return completer.future.then((savedTask) {
-            if (task.isNew) {
-              Navigator.of(context).pushReplacementNamed(TaskViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedTask);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+        return completer.future.then((savedTask) {
+          final localization = AppLocalization.of(context);
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: task.isNew
+                ? localization.createdTask
+                : localization.updatedTask,
+          )));
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
     );
