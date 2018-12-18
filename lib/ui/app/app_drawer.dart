@@ -215,12 +215,6 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
-ListTile(
-leading: Icon(Icons.widgets),
-title: Text('Tasks'),
-onTap: () => store.dispatch(ViewTaskList(context)),
-),
-
           DrawerTile(
             company: company,
             entityType: EntityType.project,
@@ -229,20 +223,31 @@ onTap: () => store.dispatch(ViewTaskList(context)),
             onTap: () => store.dispatch(ViewProjectList(context)),
             onCreateTap: () {
               navigator.pop();
-              store.dispatch(EditProject(
-                  project: ProjectEntity(), context: context));
+              store.dispatch(
+                  EditProject(project: ProjectEntity(), context: context));
+            },
+          ),
+          DrawerTile(
+            company: company,
+            entityType: EntityType.task,
+            icon: getEntityIcon(EntityType.task),
+            title: localization.tasks,
+            onTap: () => store.dispatch(ViewTaskList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditTask(task: TaskEntity(), context: context));
             },
           ),
           ListTile(
             dense: true,
-            leading: Icon(FontAwesomeIcons.clock, size: 22.0),
-            title: Text('Task & Expenses'),
+            leading: Icon(FontAwesomeIcons.building, size: 22.0),
+            title: Text('Vendors & Expenses'),
             onTap: () {
               showDialog<AlertDialog>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                      semanticLabel: 'Task & Expenses',
-                      title: Text('Task & Expenses'),
+                      semanticLabel: 'Vendors & Expenses',
+                      title: Text('Vendors & Expenses'),
                       content: RichText(
                         text: TextSpan(
                           children: <TextSpan>[
