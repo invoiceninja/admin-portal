@@ -124,9 +124,6 @@ class _TaskEditState extends State<TaskEdit> {
                         entityMap: state.clientState.map,
                         entityList: memoizedDropdownClientList(
                             state.clientState.map, state.clientState.list),
-                        validator: (String val) => val.trim().isEmpty
-                            ? localization.pleaseSelectAClient
-                            : null,
                         onSelected: (client) {
                           viewModel.onChanged(task.rebuild((b) => b
                             ..clientId = client.id

@@ -125,15 +125,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'duration',
       serializers.serialize(object.duration,
           specifiedType: const FullType(int)),
-      'invoice_id',
-      serializers.serialize(object.invoiceId,
-          specifiedType: const FullType(int)),
-      'client_id',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(int)),
-      'project_id',
-      serializers.serialize(object.projectId,
-          specifiedType: const FullType(int)),
       'time_log',
       serializers.serialize(object.timeLog,
           specifiedType: const FullType(String)),
@@ -147,6 +138,24 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
     ];
+    if (object.invoiceId != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
+            specifiedType: const FullType(int)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -505,15 +514,6 @@ class _$TaskEntity extends TaskEntity {
     }
     if (duration == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'duration');
-    }
-    if (invoiceId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'invoiceId');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'clientId');
-    }
-    if (projectId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'projectId');
     }
     if (timeLog == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'timeLog');

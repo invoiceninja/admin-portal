@@ -59,9 +59,9 @@ abstract class TaskEntity extends Object
       id: --TaskEntity.counter,
       description: '',
       duration: 0,
-      invoiceId: 0,
-      clientId: 0,
-      projectId: 0,
+      invoiceId: null,
+      clientId: null,
+      projectId: null,
       timeLog: '',
       isRunning: false,
       customValue1: '',
@@ -87,12 +87,15 @@ abstract class TaskEntity extends Object
 
   int get duration;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   int get invoiceId;
 
+  @nullable
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 
+  @nullable
   @BuiltValueField(wireName: 'project_id')
   int get projectId;
 
