@@ -1,7 +1,10 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'task_model.g.dart';
@@ -104,6 +107,12 @@ abstract class TaskEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
+
+  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+    final actions = <EntityAction>[];
+
+    return actions..addAll(getBaseActions(user: user));
+  }
 
   int compareTo(TaskEntity task, String sortField, bool sortAscending) {
     int response = 0;

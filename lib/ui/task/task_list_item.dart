@@ -5,45 +5,47 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
-class StubListItem extends StatelessWidget {
+class TaskListItem extends StatelessWidget {
 
-  const StubListItem({
+  const TaskListItem({
     @required this.user,
+    @required this.client,
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
     //@required this.onCheckboxChanged,
-    @required this.stub,
+    @required this.task,
     @required this.filter,
   });
 
   final UserEntity user;
+  final ClientEntity client;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   //final ValueChanged<bool> onCheckboxChanged;
-  final StubEntity stub;
+  final TaskEntity task;
   final String filter;
 
-  static final stubItemKey = (int id) => Key('__stub_item_${id}__');
+  static final taskItemKey = (int id) => Key('__task_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
     final filterMatch = filter != null && filter.isNotEmpty
-        ? stub.matchesFilterValue(filter)
+        ? task.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ?? stub.notes;
+    final subtitle = filterMatch ?? client?.displayName ?? task.description;
 
     return DismissibleEntity(
       user: user,
-      entity: stub,
+      entity: task,
       onEntityAction: onEntityAction,
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
         /*
         leading: Checkbox(
-          //key: NinjaKeys.stubItemCheckbox(stub.id),
+          //key: NinjaKeys.taskItemCheckbox(task.id),
           value: true,
           //onChanged: onCheckboxChanged,
           onChanged: (value) {
@@ -57,12 +59,12 @@ class StubListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  stub.name,
+                  task.description,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(stub.listDisplayAmount, context),
+              Text(formatNumber(task.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -76,7 +78,7 @@ class StubListItem extends StatelessWidget {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ) : Container(),
-            EntityStateLabel(stub),
+            EntityStateLabel(task),
           ],
         ),
       ),

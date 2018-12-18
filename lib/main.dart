@@ -40,6 +40,12 @@ import 'package:local_auth/local_auth.dart';
 //import 'package:quick_actions/quick_actions.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
+
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
@@ -75,6 +81,8 @@ void main() async {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         // STARTER: middleware - do not remove comment
+..addAll(createStoreTasksMiddleware())
+
         ..addAll(createStoreProjectsMiddleware())
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
@@ -247,6 +255,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
+TaskScreen.route: (context) {
+widget.store.dispatch(LoadTasks());
+return TaskScreen();
+},
+TaskViewScreen.route: (context) => TaskViewScreen(),
+TaskEditScreen.route: (context) => TaskEditScreen(),
+
             ProjectScreen.route: (context) {
               widget.store.dispatch(LoadProjects());
               return ProjectScreen();

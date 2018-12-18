@@ -20,6 +20,12 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'new_task': 'New Task',
+      'created_task': 'Successfully created task',
+      'updated_task': 'Successfully updated task',
+      'archived_task': 'Successfully archived task',
+      'deleted_task': 'Successfully deleted task',
+      'restored_task': 'Successfully restored task',
       'please_enter_a_name': 'Please enter a name',
       'budgeted_hours': 'Budgeted Hours',
       'created_project': 'Successfully created project',
@@ -10622,10 +10628,26 @@ class AppLocalization {
 
   String get expired => _localizedValues[locale.toString()]['expired'];
 
-  String get budgetedHours => _localizedValues[locale.toString()]['budgeted_hours'];
+  String get budgetedHours =>
+      _localizedValues[locale.toString()]['budgeted_hours'];
 
-  String get pleaseEnterAName => _localizedValues[locale.toString()]['please_enter_a_name'];
+  String get pleaseEnterAName =>
+      _localizedValues[locale.toString()]['please_enter_a_name'];
 
+  String get createdTask => _localizedValues[locale.toString()]['created_task'];
+
+  String get updatedTask => _localizedValues[locale.toString()]['updated_task'];
+
+  String get archivedTask =>
+      _localizedValues[locale.toString()]['archived_task'];
+
+  String get deletedTask => _localizedValues[locale.toString()]['deleted_task'];
+
+  String get restoredTask =>
+      _localizedValues[locale.toString()]['restored_task'];
+
+  String get newTask =>
+      _localizedValues[locale.toString()]['new_task'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -6,13 +6,13 @@ import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
-import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
+import 'package:invoiceninja_flutter/ui/task/task_list_vm.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
-class StubScreen extends StatelessWidget {
-  static const String route = '/stub';
+class TaskScreen extends StatelessWidget {
+  static const String route = '/task';
 
   @override
   Widget build(BuildContext context) {
@@ -29,56 +29,56 @@ class StubScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
-            entityType: EntityType.stub,
+            entityType: EntityType.task,
             onFilterChanged: (value) {
-              store.dispatch(FilterStubs(value));
+              store.dispatch(FilterTasks(value));
             },
           ),
           actions: [
             ListFilterButton(
-              entityType: EntityType.stub,
+              entityType: EntityType.task,
               onFilterPressed: (String value) {
-                store.dispatch(FilterStubs(value));
+                store.dispatch(FilterTasks(value));
               },
             ),
           ],
         ),
         drawer: AppDrawerBuilder(),
-        body: StubListBuilder(),
+        body: TaskListBuilder(),
         bottomNavigationBar: AppBottomBar(
-          entityType: EntityType.stub,
-          onSelectedSortField: (value) => store.dispatch(SortStubs(value)),
-          customValues1: company.getCustomFieldValues(CustomFieldType.stub1,
+          entityType: EntityType.task,
+          onSelectedSortField: (value) => store.dispatch(SortTasks(value)),
+          customValues1: company.getCustomFieldValues(CustomFieldType.task1,
               excludeBlank: true),
-          customValues2: company.getCustomFieldValues(CustomFieldType.stub2,
+          customValues2: company.getCustomFieldValues(CustomFieldType.task2,
               excludeBlank: true),
           onSelectedCustom1: (value) =>
-              store.dispatch(FilterStubsByCustom1(value)),
+              store.dispatch(FilterTasksByCustom1(value)),
           onSelectedCustom2: (value) =>
-              store.dispatch(FilterStubsByCustom2(value)),
+              store.dispatch(FilterTasksByCustom2(value)),
           sortFields: [
-            StubFields.stubKey,
-            StubFields.cost,
-            StubFields.updatedAt,
+            TaskFields.description,
+            TaskFields.duration,
+            TaskFields.updatedAt,
           ],
           onSelectedState: (EntityState state, value) {
-            store.dispatch(FilterStubsByState(state));
+            store.dispatch(FilterTasksByState(state));
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: user.canCreate(EntityType.stub)
+        floatingActionButton: user.canCreate(EntityType.task)
             ? FloatingActionButton(
-                //key: Key(StubKeys.stubScreenFABKeyString),
+                //key: Key(TaskKeys.taskScreenFABKeyString),
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(
-                      EditStub(stub: StubEntity(), context: context));
+                      EditTask(task: TaskEntity(), context: context));
                 },
                 child: Icon(
                   Icons.add,
                   color: Colors.white,
                 ),
-                tooltip: localization.newStub,
+                tooltip: localization.newTask,
               )
             : null,
       ),

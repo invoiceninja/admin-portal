@@ -18,6 +18,8 @@ import 'package:redux/redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -213,6 +215,12 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
+ListTile(
+leading: Icon(Icons.widgets),
+title: Text('Tasks'),
+onTap: () => store.dispatch(ViewTaskList(context)),
+),
+
           DrawerTile(
             company: company,
             entityType: EntityType.project,

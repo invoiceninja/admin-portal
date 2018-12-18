@@ -2,28 +2,28 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
-import 'package:invoiceninja_flutter/data/models/stub_model.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/stub/view/stub_view.dart';
+import 'package:invoiceninja_flutter/ui/task/view/task_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class StubViewScreen extends StatelessWidget {
-  const StubViewScreen({Key key}) : super(key: key);
-  static const String route = '/stub/view';
+class TaskViewScreen extends StatelessWidget {
+  const TaskViewScreen({Key key}) : super(key: key);
+  static const String route = '/task/view';
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, StubViewVM>(
+    return StoreConnector<AppState, TaskViewVM>(
       converter: (Store<AppState> store) {
-        return StubViewVM.fromStore(store);
+        return TaskViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return StubView(
+        return TaskView(
           viewModel: vm,
         );
       },
@@ -31,10 +31,10 @@ class StubViewScreen extends StatelessWidget {
   }
 }
 
-class StubViewVM {
+class TaskViewVM {
 
-  StubViewVM({
-    @required this.stub,
+  TaskViewVM({
+    @required this.task,
     @required this.company,
     @required this.onActionSelected,
     @required this.onEditPressed,
@@ -45,52 +45,52 @@ class StubViewVM {
     @required this.isDirty,
   });
 
-  factory StubViewVM.fromStore(Store<AppState> store) {
+  factory TaskViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final stub = state.stubState.map[state.stubUIState.selectedId];
+    final task = state.taskState.map[state.taskUIState.selectedId];
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadStub(completer: completer, stubId: stub.id));
+      store.dispatch(LoadTask(completer: completer, taskId: task.id));
       return completer.future;
     }
 
-    return StubViewVM(
+    return TaskViewVM(
         company: state.selectedCompany,
         isSaving: state.isSaving,
         isLoading: state.isLoading,
-        isDirty: stub.isNew,
-        stub: stub,
+        isDirty: task.isNew,
+        task: task,
         onEditPressed: (BuildContext context) {
-          store.dispatch(EditStub(stub: stub, context: context));
+          store.dispatch(EditTask(task: task, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () =>
-          store.dispatch(UpdateCurrentRoute(StubScreen.route)),
+          store.dispatch(UpdateCurrentRoute(TaskScreen.route)),
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.archive:
-              store.dispatch(ArchiveStubRequest(
-                  popCompleter(context, localization.archivedStub),
-                  stub.id));
+              store.dispatch(ArchiveTaskRequest(
+                  popCompleter(context, localization.archivedTask),
+                  task.id));
               break;
             case EntityAction.delete:
-              store.dispatch(DeleteStubRequest(
-                  popCompleter(context, localization.deletedStub),
-                  stub.id));
+              store.dispatch(DeleteTaskRequest(
+                  popCompleter(context, localization.deletedTask),
+                  task.id));
               break;
             case EntityAction.restore:
-              store.dispatch(RestoreStubRequest(
-                  snackBarCompleter(context, localization.restoredStub),
-                  stub.id));
+              store.dispatch(RestoreTaskRequest(
+                  snackBarCompleter(context, localization.restoredTask),
+                  task.id));
               break;
           }
         });
   }
 
-  final StubEntity stub;
+  final TaskEntity task;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
