@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -49,7 +50,7 @@ class _TaskViewState extends State<TaskView> {
       final widgets = <Widget>[
         OneValueHeader(
           label: localization.duration,
-          value: '',
+          value: task.calculateDuration.toString(),
         ),
       ];
 

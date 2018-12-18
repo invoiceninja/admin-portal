@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'dart:convert';
 
 part 'task_model.g.dart';
 
@@ -86,6 +87,30 @@ abstract class TaskEntity extends Object
   String get description;
 
   int get duration;
+
+  List<List <int>> get timeDetails {
+    final List<List <int>> details = [];
+
+    final List<dynamic> log = jsonDecode(timeLog);
+    log.forEach((dynamic detail) {
+      details.add([
+        (detail as List)[0],
+        (detail as List)[1],
+      ]);
+    });
+
+    return details;
+  }
+
+  int get calculateDuration {
+    int duration = 0;
+
+    timeDetails.forEach((detail) {
+      duration += detail[1] - detail[0];
+    });
+
+    return duration;
+  }
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
