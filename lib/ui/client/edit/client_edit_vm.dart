@@ -60,8 +60,11 @@ class ClientEditVM {
         origClient: state.clientState.map[client.id],
         staticState: state.staticState,
         isSaving: state.isSaving,
-        onBackPressed: () =>
-            store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(ClientScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
+          }
+        },
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
         onSavePressed: (BuildContext context) {

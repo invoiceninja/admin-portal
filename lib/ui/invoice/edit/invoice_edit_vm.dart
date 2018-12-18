@@ -85,8 +85,11 @@ class InvoiceEditVM extends EntityEditVM {
       invoice: invoice,
       invoiceItem: state.invoiceUIState.editingItem,
       origInvoice: store.state.invoiceState.map[invoice.id],
-      onBackPressed: () =>
-          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+        }
+      },
       onSavePressed: (BuildContext context) {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(

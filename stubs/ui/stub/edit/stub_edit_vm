@@ -60,7 +60,9 @@ class StubEditVM {
         store.dispatch(UpdateStub(stub));
       },
       onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(StubScreen.route));
+        if (state.uiState.currentRoute.contains(StubScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
+        }
       },
       onSavePressed: (BuildContext context) {
         final Completer<StubEntity> completer = new Completer<StubEntity>();

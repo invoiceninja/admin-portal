@@ -74,4 +74,6 @@ ProjectUIState get projectUIState;
   QuoteUIState get quoteUIState;
 
   static Serializer<UIState> get serializer => _$uIStateSerializer;
+
+  bool containsRoute(String route) => currentRoute.contains(route);
 }

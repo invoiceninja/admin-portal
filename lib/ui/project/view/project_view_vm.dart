@@ -71,8 +71,11 @@ class ProjectViewVM {
         onRefreshed: (context) => _handleRefresh(context),
         onClientPressed: (BuildContext context) => store
             .dispatch(ViewClient(clientId: project.clientId, context: context)),
-        onBackPressed: () =>
-            store.dispatch(UpdateCurrentRoute(ProjectScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
+          }
+        },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {

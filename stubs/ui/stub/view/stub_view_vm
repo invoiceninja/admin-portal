@@ -66,8 +66,11 @@ class StubViewVM {
           store.dispatch(EditStub(stub: stub, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () =>
-          store.dispatch(UpdateCurrentRoute(StubScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(StubScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(StubScreen.route));
+          }
+        },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {

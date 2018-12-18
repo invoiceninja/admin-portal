@@ -68,7 +68,9 @@ class ProjectEditVM {
         store.dispatch(UpdateProject(project));
       },
       onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
+        if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
+        }
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(

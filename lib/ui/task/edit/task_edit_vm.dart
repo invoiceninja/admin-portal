@@ -66,7 +66,9 @@ class TaskEditVM {
         store.dispatch(UpdateTask(task));
       },
       onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(TaskScreen.route));
+        if (state.uiState.currentRoute.contains(TaskScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(TaskScreen.route));
+        }
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(

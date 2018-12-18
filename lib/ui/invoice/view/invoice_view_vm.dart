@@ -149,8 +149,11 @@ class InvoiceViewVM extends EntityViewVM {
           });
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () =>
-            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
+          }
+        },
         onClientPressed: (BuildContext context) =>
             store.dispatch(ViewClient(clientId: client.id, context: context)),
         onPaymentPressed: (BuildContext context, PaymentEntity payment) => store

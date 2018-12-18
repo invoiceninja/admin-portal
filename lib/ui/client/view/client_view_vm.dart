@@ -109,8 +109,11 @@ class ClientViewVM {
         },
         onRefreshed: (context, loadActivities) =>
             _handleRefresh(context, loadActivities),
-        onBackPressed: () =>
-            store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(ClientScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(ClientScreen.route));
+          }
+        },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {

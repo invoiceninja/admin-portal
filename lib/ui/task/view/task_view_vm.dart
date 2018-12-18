@@ -66,8 +66,11 @@ class TaskViewVM {
           store.dispatch(EditTask(task: task, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () =>
-          store.dispatch(UpdateCurrentRoute(TaskScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(TaskScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(TaskScreen.route));
+          }
+        },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
