@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -134,9 +135,9 @@ class _PaymentEditState extends State<PaymentEdit> {
                                 (viewModel.clientMap[payment.clientId] ??
                                         ClientEntity())
                                     .listDisplayName,
-                            onSelected: (clientId) {
+                            onSelected: (client) {
                               viewModel.onChanged(payment
-                                  .rebuild((b) => b..clientId = clientId));
+                                  .rebuild((b) => b..clientId = client.id));
                             },
                             entityList: memoizedDropdownClientList(
                                 viewModel.clientMap, viewModel.clientList),
@@ -158,15 +159,14 @@ class _PaymentEditState extends State<PaymentEdit> {
                                 viewModel.invoiceMap,
                                 viewModel.invoiceList,
                                 payment.clientId),
-                            onSelected: (invoiceId) {
-                              final invoice = viewModel.invoiceMap[invoiceId];
+                            onSelected: (invoice) {
                               _amountController.text = formatNumber(
-                                  invoice.balance, context,
+                                  (invoice as InvoiceEntity).balance, context,
                                   formatNumberType: FormatNumberType.input);
                               viewModel.onChanged(payment.rebuild((b) => b
-                                ..invoiceId = invoiceId
-                                ..clientId = invoice.clientId
-                                ..amount = invoice.balance));
+                                ..invoiceId = invoice.id
+                                ..clientId = (invoice as InvoiceEntity).clientId
+                                ..amount = (invoice as InvoiceEntity).balance));
                             },
                           )
                         : Container(),
@@ -188,9 +188,9 @@ class _PaymentEditState extends State<PaymentEdit> {
                       labelText: localization.paymentType,
                       initialValue: viewModel.staticState
                           .paymentTypeMap[payment.paymentTypeId]?.name,
-                      onSelected: (int paymentTypeId) => viewModel.onChanged(
+                      onSelected: (paymentType) => viewModel.onChanged(
                           payment.rebuild(
-                              (b) => b..paymentTypeId = paymentTypeId)),
+                              (b) => b..paymentTypeId = paymentType.id)),
                     ),
                     DatePicker(
                       validator: (String val) => val.trim().isEmpty

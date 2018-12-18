@@ -127,9 +127,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseSelectAClient
                         : null,
-                    onSelected: (clientId) {
+                    onSelected: (client) {
                       viewModel.onChanged(
-                          invoice.rebuild((b) => b..clientId = clientId));
+                          invoice.rebuild((b) => b..clientId = client.id));
                     },
                     onAddPressed: (completer) {
                       viewModel.onAddClientPressed(context, completer);

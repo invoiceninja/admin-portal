@@ -145,9 +145,9 @@ class _ProjectEditState extends State<ProjectEdit> {
                       validator: (String val) => val.trim().isEmpty
                           ? localization.pleaseSelectAClient
                           : null,
-                      onSelected: (clientId) {
+                      onSelected: (client) {
                         viewModel.onChanged(
-                            project.rebuild((b) => b..clientId = clientId));
+                            project.rebuild((b) => b..clientId = client.id));
                       },
                       onAddPressed: (completer) {
                         viewModel.onAddClientPressed(context, completer);

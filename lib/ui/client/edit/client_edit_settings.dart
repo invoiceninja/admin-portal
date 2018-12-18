@@ -88,8 +88,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               labelText: localization.currency,
               initialValue:
                   viewModel.staticState.currencyMap[client.currencyId]?.name,
-              onSelected: (int currencyId) => viewModel
-                  .onChanged(client.rebuild((b) => b..currencyId = currencyId)),
+              onSelected: (SelectableEntity currency) => viewModel.onChanged(
+                  client.rebuild((b) => b..currencyId = currency.id)),
             ),
             EntityDropdown(
               entityType: EntityType.language,
@@ -99,8 +99,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               labelText: localization.language,
               initialValue:
                   viewModel.staticState.languageMap[client.languageId]?.name,
-              onSelected: (int languageId) => viewModel
-                  .onChanged(client.rebuild((b) => b..languageId = languageId)),
+              onSelected: (SelectableEntity language) => viewModel.onChanged(
+                  client.rebuild((b) => b..languageId = language.id)),
             ),
             PopupMenuButton<PaymentTermEntity>(
               padding: EdgeInsets.zero,

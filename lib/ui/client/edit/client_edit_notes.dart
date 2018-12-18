@@ -20,7 +20,6 @@ class ClientEditNotes extends StatefulWidget {
 }
 
 class ClientEditNotesState extends State<ClientEditNotes> {
-
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
@@ -33,13 +32,15 @@ class ClientEditNotesState extends State<ClientEditNotes> {
       _privateNotesController,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final client = widget.viewModel.client;
     _publicNotesController.text = client.publicNotes;
     _privateNotesController.text = client.privateNotes;
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -58,8 +59,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
     final viewModel = widget.viewModel;
     final client = viewModel.client.rebuild((b) => b
       ..publicNotes = _publicNotesController.text
-      ..privateNotes = _privateNotesController.text
-    );
+      ..privateNotes = _privateNotesController.text);
     if (client != viewModel.client) {
       viewModel.onChanged(client);
     }
@@ -98,17 +98,19 @@ class ClientEditNotesState extends State<ClientEditNotes> {
               entityList: memoizedSizeList(viewModel.staticState.sizeMap),
               labelText: localization.size,
               initialValue: viewModel.staticState.sizeMap[client.sizeId]?.name,
-              onSelected: (int sizeId) => viewModel
-                  .onChanged(client.rebuild((b) => b..sizeId = sizeId)),
+              onSelected: (SelectableEntity size) => viewModel
+                  .onChanged(client.rebuild((b) => b..sizeId = size.id)),
             ),
             EntityDropdown(
               entityType: EntityType.industry,
               entityMap: viewModel.staticState.industryMap,
-              entityList: memoizedIndustryList(viewModel.staticState.industryMap),
+              entityList:
+                  memoizedIndustryList(viewModel.staticState.industryMap),
               labelText: localization.industry,
-              initialValue: viewModel.staticState.industryMap[client.industryId]?.name,
-              onSelected: (int industryId) => viewModel
-                  .onChanged(client.rebuild((b) => b..industryId = industryId)),
+              initialValue:
+                  viewModel.staticState.industryMap[client.industryId]?.name,
+              onSelected: (SelectableEntity industry) => viewModel.onChanged(
+                  client.rebuild((b) => b..industryId = industry.id)),
             ),
           ],
         ),

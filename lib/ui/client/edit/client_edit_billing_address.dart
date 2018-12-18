@@ -129,8 +129,8 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
             entityList: memoizedCountryList(viewModel.staticState.countryMap),
             labelText: localization.country,
             initialValue: viewModel.staticState.countryMap[client.countryId]?.name,
-            onSelected: (int countryId) => viewModel
-                .onChanged(client.rebuild((b) => b..countryId = countryId)),
+            onSelected: (SelectableEntity country) => viewModel
+                .onChanged(client.rebuild((b) => b..countryId = country.id)),
           ),
         ],
       )
