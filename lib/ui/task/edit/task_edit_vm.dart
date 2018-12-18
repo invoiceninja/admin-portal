@@ -85,8 +85,8 @@ class TaskEditVM {
       },
       onAddProjectPressed: (context, completer) {
         store.dispatch(EditProject(
-            project:
-                ProjectEntity().rebuild((b) => b..clientId = task.clientId),
+            project: ProjectEntity()
+                .rebuild((b) => b..clientId = task.clientId ?? 0),
             context: context,
             completer: completer,
             trackRoute: false));
