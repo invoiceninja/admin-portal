@@ -132,9 +132,9 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isNew => id == null || id < 0;
 
-  bool get isActive => archivedAt == null;
+  bool get isActive => archivedAt == null || archivedAt == 0;
 
-  bool get isArchived => archivedAt != null && !isDeleted;
+  bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
   List<EntityAction> getBaseActions({UserEntity user}) {
     final actions = <EntityAction>[];

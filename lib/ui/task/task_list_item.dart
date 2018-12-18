@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class TaskListItem extends StatelessWidget {
-
   const TaskListItem({
     @required this.user,
     @required this.client,
@@ -23,6 +22,7 @@ class TaskListItem extends StatelessWidget {
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
+
   //final ValueChanged<bool> onCheckboxChanged;
   final TaskEntity task;
   final String filter;
@@ -59,7 +59,10 @@ class TaskListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  task.description,
+                  task.description.isNotEmpty
+                      ? task.description
+                      : formatDate(
+                          convertTimestampToSqlDate(task.updatedAt), context),
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
@@ -72,12 +75,13 @@ class TaskListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty ?
-            Text(
-              subtitle,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ) : Container(),
+            subtitle != null && subtitle.isNotEmpty
+                ? Text(
+                    subtitle,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : Container(),
             EntityStateLabel(task),
           ],
         ),
