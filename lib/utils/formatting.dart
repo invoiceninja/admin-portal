@@ -32,6 +32,7 @@ enum FormatNumberType {
   int, // 1,000
   double, // 1,000.00
   input, // 1000.00
+  duration,
 }
 
 String formatNumber(
@@ -47,6 +48,10 @@ String formatNumber(
     return null;
   } else if (value == null) {
     return '';
+  }
+
+  if (formatNumberType == FormatNumberType.duration) {
+    return formatDuration(Duration(seconds: value.toInt()));
   }
 
   final state = StoreProvider.of<AppState>(context).state;
@@ -184,6 +189,8 @@ String convertTimestampToSqlDate(int timestamp) {
       new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   return date.toIso8601String();
 }
+
+String formatDuration(Duration duration) => duration.toString().split('.')[0];
 
 String formatDateRange(String startDate, String endDate, BuildContext context) {
   final today = DateTime.now();

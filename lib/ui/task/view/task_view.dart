@@ -50,7 +50,7 @@ class _TaskViewState extends State<TaskView> {
       final widgets = <Widget>[
         OneValueHeader(
           label: localization.duration,
-          value: task.calculateDuration.toString(),
+          value: formatDuration(task.calculateDuration),
         ),
       ];
 

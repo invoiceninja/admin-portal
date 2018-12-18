@@ -88,8 +88,8 @@ abstract class TaskEntity extends Object
 
   int get duration;
 
-  List<List <int>> get timeDetails {
-    final List<List <int>> details = [];
+  List<List<int>> get timeDetails {
+    final List<List<int>> details = [];
 
     final List<dynamic> log = jsonDecode(timeLog);
     log.forEach((dynamic detail) {
@@ -102,14 +102,19 @@ abstract class TaskEntity extends Object
     return details;
   }
 
-  int get calculateDuration {
-    int duration = 0;
+  Duration get calculateDuration {
+    int seconds = 0;
 
     timeDetails.forEach((detail) {
-      duration += detail[1] - detail[0];
+      if (detail.length > 1 && detail[1] > 0) {
+        seconds += detail[1] - detail[0];
+      } else {
+        seconds +=
+            (DateTime.now().millisecondsSinceEpoch / 1000).floor() - detail[0];
+      }
     });
 
-    return duration;
+    return Duration(seconds: seconds);
   }
 
   @nullable
@@ -183,10 +188,10 @@ abstract class TaskEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double get listDisplayAmount => calculateDuration.inSeconds.toDouble();
 
   @override
-  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+  FormatNumberType get listDisplayAmountType => FormatNumberType.duration;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }

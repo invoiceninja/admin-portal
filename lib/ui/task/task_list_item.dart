@@ -67,7 +67,9 @@ class TaskListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(task.listDisplayAmount, context),
+              Text(
+                  formatNumber(task.listDisplayAmount, context,
+                      formatNumberType: FormatNumberType.duration),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
