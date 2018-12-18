@@ -76,7 +76,7 @@ class TaskListVM {
           ViewClient(
               clientId: state.taskListState.filterEntityId, context: context)),
       onTaskTap: (context, task) {
-        store.dispatch(EditTask(task: task, context: context));
+        store.dispatch(ViewTask(taskId: task.id, context: context));
       },
       onEntityAction: (context, task, action) {
         switch (action) {

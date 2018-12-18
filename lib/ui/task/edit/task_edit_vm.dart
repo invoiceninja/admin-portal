@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
+import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -100,13 +101,12 @@ class TaskEditVM {
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(SaveTaskRequest(completer: completer, task: task));
         return completer.future.then((savedTask) {
-          final localization = AppLocalization.of(context);
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: task.isNew
-                ? localization.createdTask
-                : localization.updatedTask,
-          )));
+          store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
+          if (task.isNew) {
+            Navigator.of(context).pushReplacementNamed(TaskViewScreen.route);
+          } else {
+            Navigator.of(context).pop(savedTask);
+          }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
