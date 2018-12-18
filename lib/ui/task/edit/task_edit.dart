@@ -146,10 +146,11 @@ class _TaskEditState extends State<TaskEdit> {
                             state.projectState.map,
                             state.projectState.list,
                             task.clientId),
-                        onSelected: (project) {
+                        onSelected: (selected) {
+                          final project = selected as ProjectEntity;
                           viewModel.onChanged(task.rebuild((b) => b
                             ..projectId = project.id
-                            ..clientId = (project as ProjectEntity).clientId));
+                            ..clientId = project.clientId));
                         },
                         onAddPressed: (completer) {
                           viewModel.onAddProjectPressed(context, completer);

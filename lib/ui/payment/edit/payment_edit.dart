@@ -159,14 +159,15 @@ class _PaymentEditState extends State<PaymentEdit> {
                                 viewModel.invoiceMap,
                                 viewModel.invoiceList,
                                 payment.clientId),
-                            onSelected: (invoice) {
+                            onSelected: (selected) {
+                              final invoice = selected as InvoiceEntity;
                               _amountController.text = formatNumber(
-                                  (invoice as InvoiceEntity).balance, context,
+                                  invoice.balance, context,
                                   formatNumberType: FormatNumberType.input);
                               viewModel.onChanged(payment.rebuild((b) => b
                                 ..invoiceId = invoice.id
-                                ..clientId = (invoice as InvoiceEntity).clientId
-                                ..amount = (invoice as InvoiceEntity).balance));
+                                ..clientId = invoice.clientId
+                                ..amount = invoice.balance));
                             },
                           )
                         : Container(),
