@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'times': 'Times',
       'duration': 'Duration',
       'new_task': 'New Task',
       'created_task': 'Successfully created task',
@@ -10652,6 +10653,9 @@ class AppLocalization {
 
   String get duration =>
       _localizedValues[locale.toString()]['duration'];
+
+  String get times =>
+      _localizedValues[locale.toString()]['times'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

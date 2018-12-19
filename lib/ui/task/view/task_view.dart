@@ -152,7 +152,7 @@ class _TaskViewState extends State<TaskView> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
-          //onPressed: () => viewModel.onAddTaskPressed(context),
+          onPressed: () => null,
           child: Icon(
             Icons.add,
             color: Colors.white,

@@ -44,6 +44,7 @@ abstract class TaskUIState extends Object with EntityUIState implements Built<Ta
     return _$TaskUIState._(
       listUIState: ListUIState(TaskFields.updatedAt, sortAscending: false),
       editing: TaskEntity(),
+      //editingTIme: [],
       selectedId: 0,
     );
   }
@@ -51,6 +52,9 @@ abstract class TaskUIState extends Object with EntityUIState implements Built<Ta
 
   @nullable
   TaskEntity get editing;
+
+  @nullable
+  List<int> get editingTime;
 
   @override
   bool get isCreatingNew => editing.isNew;

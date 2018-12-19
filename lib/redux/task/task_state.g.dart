@@ -109,6 +109,12 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(TaskEntity)));
     }
+    if (object.editingTime != null) {
+      result
+        ..add('editingTime')
+        ..add(serializers.serialize(object.editingTime,
+            specifiedType: const FullType(List, const [const FullType(int)])));
+    }
 
     return result;
   }
@@ -127,6 +133,12 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaskEntity)) as TaskEntity);
+          break;
+        case 'editingTime':
+          result.editingTime = serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(List, const [const FullType(int)]))
+              as List<int>;
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
@@ -265,6 +277,8 @@ class _$TaskUIState extends TaskUIState {
   @override
   final TaskEntity editing;
   @override
+  final List<int> editingTime;
+  @override
   final int selectedId;
   @override
   final ListUIState listUIState;
@@ -272,7 +286,8 @@ class _$TaskUIState extends TaskUIState {
   factory _$TaskUIState([void updates(TaskUIStateBuilder b)]) =>
       (new TaskUIStateBuilder()..update(updates)).build();
 
-  _$TaskUIState._({this.editing, this.selectedId, this.listUIState})
+  _$TaskUIState._(
+      {this.editing, this.editingTime, this.selectedId, this.listUIState})
       : super._() {
     if (selectedId == null) {
       throw new BuiltValueNullFieldError('TaskUIState', 'selectedId');
@@ -294,13 +309,16 @@ class _$TaskUIState extends TaskUIState {
     if (identical(other, this)) return true;
     return other is TaskUIState &&
         editing == other.editing &&
+        editingTime == other.editingTime &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, editing.hashCode), editingTime.hashCode),
+            selectedId.hashCode),
         listUIState.hashCode));
   }
 
@@ -308,6 +326,7 @@ class _$TaskUIState extends TaskUIState {
   String toString() {
     return (newBuiltValueToStringHelper('TaskUIState')
           ..add('editing', editing)
+          ..add('editingTime', editingTime)
           ..add('selectedId', selectedId)
           ..add('listUIState', listUIState))
         .toString();
@@ -320,6 +339,10 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   TaskEntityBuilder _editing;
   TaskEntityBuilder get editing => _$this._editing ??= new TaskEntityBuilder();
   set editing(TaskEntityBuilder editing) => _$this._editing = editing;
+
+  List<int> _editingTime;
+  List<int> get editingTime => _$this._editingTime;
+  set editingTime(List<int> editingTime) => _$this._editingTime = editingTime;
 
   int _selectedId;
   int get selectedId => _$this._selectedId;
@@ -336,6 +359,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   TaskUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
+      _editingTime = _$v.editingTime;
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
@@ -363,6 +387,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
       _$result = _$v ??
           new _$TaskUIState._(
               editing: _editing?.build(),
+              editingTime: editingTime,
               selectedId: selectedId,
               listUIState: listUIState.build());
     } catch (_) {

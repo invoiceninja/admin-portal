@@ -1,14 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
-import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 
 class TaskEdit extends StatefulWidget {
   const TaskEdit({
@@ -22,62 +18,38 @@ class TaskEdit extends StatefulWidget {
   _TaskEditState createState() => _TaskEditState();
 }
 
-class _TaskEditState extends State<TaskEdit> {
+class _TaskEditState extends State<TaskEdit>
+    with SingleTickerProviderStateMixin {
+  TabController _controller;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final _descriptionController = TextEditingController();
-  final _custom1Controller = TextEditingController();
-  final _custom2Controller = TextEditingController();
-
-  List<TextEditingController> _controllers = [];
+  static const kDetailsScreen = 0;
+  static const kTimesScreen = 1;
 
   @override
-  void didChangeDependencies() {
-    _controllers = [
-      _descriptionController,
-      _custom1Controller,
-      _custom2Controller,
-    ];
-
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+  void initState() {
+    super.initState();
 
     final task = widget.viewModel.task;
-    _descriptionController.text = task.description;
-    _custom1Controller.text = task.customValue1;
-    _custom2Controller.text = task.customValue2;
+    final taskTime = widget.viewModel.taskTime;
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+    final index =
+        task.taskItems.contains(taskTime) ? kTimesScreen : kDetailsScreen;
 
-    super.didChangeDependencies();
+    _controller = TabController(vsync: this, length: 3, initialIndex: index);
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
-
+    _controller.dispose();
     super.dispose();
-  }
-
-  void _onChanged() {
-    final task = widget.viewModel.task.rebuild((b) => b
-      ..description = _descriptionController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (task != widget.viewModel.task) {
-      widget.viewModel.onChanged(task);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
     final task = viewModel.task;
-    final company = viewModel.company;
-    final state = viewModel.state;
 
     return WillPopScope(
       onWillPop: () async {
@@ -86,102 +58,70 @@ class _TaskEditState extends State<TaskEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(viewModel.task.isNew
-              ? localization.newTask
-              : localization.editTask),
+          title:
+              Text(task.isNew ? localization.newTask : localization.editTask),
           actions: <Widget>[
-            Builder(builder: (BuildContext context) {
-              return RefreshIconButton(
-                icon: Icons.cloud_upload,
-                tooltip: localization.save,
-                isVisible: !task.isDeleted,
-                isDirty: task.isNew || task != viewModel.origTask,
-                isSaving: viewModel.isSaving,
-                onPressed: () {
-                  if (!_formKey.currentState.validate()) {
-                    return;
-                  }
-                  viewModel.onSavePressed(context);
-                },
-              );
-            }),
+            RefreshIconButton(
+              icon: Icons.cloud_upload,
+              tooltip: localization.save,
+              isVisible: !task.isDeleted,
+              isSaving: widget.viewModel.isSaving,
+              isDirty: task.isNew || task != viewModel.origTask,
+              onPressed: () {
+                if (!_formKey.currentState.validate()) {
+                  return;
+                }
+
+                widget.viewModel.onSavePressed(context);
+              },
+            )
           ],
+          bottom: TabBar(
+            controller: _controller,
+            //isScrollable: true,
+            tabs: [
+              Tab(
+                text: localization.details,
+              ),
+              Tab(
+                text: localization.times,
+              ),
+            ],
+          ),
         ),
         body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      EntityDropdown(
-                        key: Key('__client_${task.clientId}__'),
-                        entityType: EntityType.client,
-                        labelText: localization.client,
-                        initialValue: (state.clientState.map[task.clientId] ??
-                                ClientEntity())
-                            .displayName,
-                        entityMap: state.clientState.map,
-                        entityList: memoizedDropdownClientList(
-                            state.clientState.map, state.clientState.list),
-                        onSelected: (client) {
-                          viewModel.onChanged(task.rebuild((b) => b
-                            ..clientId = client.id
-                            ..projectId = 0));
-                        },
-                        onAddPressed: (completer) {
-                          viewModel.onAddClientPressed(context, completer);
-                        },
-                      ),
-                      EntityDropdown(
-                        key: Key('__project_${task.clientId}__'),
-                        entityType: EntityType.project,
-                        labelText: localization.project,
-                        initialValue: (state.projectState.map[task.projectId] ??
-                                ProjectEntity())
-                            .name,
-                        entityMap: state.projectState.map,
-                        entityList: memoizedDropdownProjectList(
-                            state.projectState.map,
-                            state.projectState.list,
-                            task.clientId),
-                        onSelected: (selected) {
-                          final project = selected as ProjectEntity;
-                          viewModel.onChanged(task.rebuild((b) => b
-                            ..projectId = project.id
-                            ..clientId = project.clientId));
-                        },
-                        onAddPressed: (completer) {
-                          viewModel.onAddProjectPressed(context, completer);
-                        },
-                      ),
-                      TextFormField(
-                        maxLines: 4,
-                        controller: _descriptionController,
-                        keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
-                          labelText: localization.description,
-                        ),
-                      ),
-                      CustomField(
-                        controller: _custom1Controller,
-                        labelText:
-                            company.getCustomFieldLabel(CustomFieldType.task1),
-                        options:
-                            company.getCustomFieldValues(CustomFieldType.task1),
-                      ),
-                      CustomField(
-                        controller: _custom2Controller,
-                        labelText:
-                            company.getCustomFieldLabel(CustomFieldType.task2),
-                        options:
-                            company.getCustomFieldValues(CustomFieldType.task2),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            })),
+          key: _formKey,
+          child: TabBarView(
+            controller: _controller,
+            children: <Widget>[
+              TaskEditDetailsScreen(),
+              //TaskEditItemsScreen(),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Theme.of(context).primaryColor,
+          shape: CircularNotchedRectangle(),
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Text(
+              '${localization.duration}: ${formatDuration(Duration(seconds: task.duration))}',
+              style: TextStyle(
+                //color: Theme.of(context).selectedRowColor,
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColorDark,
+          onPressed: () {
+          },
+          child: const Icon(Icons.add, color: Colors.white),
+          tooltip: localization.addItem,
+        ),
       ),
     );
   }
