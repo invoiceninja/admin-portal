@@ -115,7 +115,6 @@ class _TaskViewState extends State<TaskView> {
       items.forEach((taskItem) {
         widgets.addAll([
           TaskItemListTile(
-            state: viewModel.state,
             task: task,
             taskItem: taskItem,
             onTap: () => company.user.canEditEntity(task)

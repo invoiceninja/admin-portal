@@ -1,3 +1,4 @@
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
@@ -7,13 +8,11 @@ import 'package:invoiceninja_flutter/data/models/task_model.dart';
 
 class TaskItemListTile extends StatelessWidget {
   const TaskItemListTile({
-    @required this.state,
     @required this.task,
     @required this.taskItem,
     @required this.onTap,
   });
 
-  final AppState state;
   final Function onTap;
   final TaskEntity task;
   final List<int> taskItem;
@@ -28,6 +27,7 @@ class TaskItemListTile extends StatelessWidget {
     final endDateString = formatDate(endDate.toIso8601String(), context,
         showTime: true, showDate: false);
 
+    final state = StoreProvider.of<AppState>(context).state;
     final title =
         DateFormat('EEE MMM d, yyy', localeSelector(state)).format(startDate);
     final subtitle = '$startDateString - $endDateString';
