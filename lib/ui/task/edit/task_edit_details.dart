@@ -4,25 +4,25 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
-import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 
-class TaskEditDetailsScreen extends StatefulWidget {
-  const TaskEditDetailsScreen({
+class TaskEditDetails extends StatefulWidget {
+  const TaskEditDetails({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final TaskEditVM viewModel;
+  final TaskEditDetailsVM viewModel;
 
   @override
-  _TaskEditDetailsScreenState createState() => _TaskEditDetailsScreenState();
+  _TaskEditDetailsState createState() => _TaskEditDetailsState();
 }
 
-class _TaskEditDetailsScreenState extends State<TaskEditDetailsScreen> {
+class _TaskEditDetailsState extends State<TaskEditDetails> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _descriptionController = TextEditingController();

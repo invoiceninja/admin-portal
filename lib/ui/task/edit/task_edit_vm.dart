@@ -3,13 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -42,7 +38,6 @@ class TaskEditVM {
     @required this.task,
     @required this.taskTime,
     @required this.company,
-    @required this.onChanged,
     @required this.onAddClientPressed,
     @required this.onAddProjectPressed,
     @required this.isSaving,
@@ -64,40 +59,10 @@ class TaskEditVM {
       taskTime: state.taskUIState.editingTime,
       state: state,
       company: state.selectedCompany,
-      onChanged: (TaskEntity task) {
-        store.dispatch(UpdateTask(task));
-      },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(TaskScreen.route)) {
           store.dispatch(UpdateCurrentRoute(TaskScreen.route));
         }
-      },
-      onAddClientPressed: (context, completer) {
-        store.dispatch(EditClient(
-            client: ClientEntity(),
-            context: context,
-            completer: completer,
-            trackRoute: false));
-        completer.future.then((SelectableEntity client) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
-        });
-      },
-      onAddProjectPressed: (context, completer) {
-        store.dispatch(EditProject(
-            project: ProjectEntity()
-                .rebuild((b) => b..clientId = task.clientId ?? 0),
-            context: context,
-            completer: completer,
-            trackRoute: false));
-        completer.future.then((SelectableEntity client) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdProject,
-          )));
-        });
       },
       onSavePressed: (BuildContext context) {
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
@@ -123,7 +88,6 @@ class TaskEditVM {
   final TaskEntity task;
   final List<int> taskTime;
   final CompanyEntity company;
-  final Function(TaskEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
   final bool isLoading;
