@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -43,9 +44,9 @@ class TaskEditTimesVM {
         company: state.selectedCompany,
         task: task,
         taskTime: state.taskUIState.editingTime,
-        //onRemoveTaskTimePressed: (index) =>
-            //store.dispatch(DeleteTaskTime(index)),
-        //onDoneTaskTimePressed: () => store.dispatch(EditTaskTime()),
+        onRemoveTaskTimePressed: (index) =>
+            store.dispatch(DeleteTaskTime(index)),
+        onDoneTaskTimePressed: () => store.dispatch(EditTaskTime()),
         onChangedTaskTime: (taskTime, index) {
           /*
           store.dispatch(
@@ -56,8 +57,8 @@ class TaskEditTimesVM {
 
   final CompanyEntity company;
   final TaskEntity task;
-  final List<int> taskTime;
+  final TaskTime taskTime;
   final Function(int) onRemoveTaskTimePressed;
   final Function onDoneTaskTimePressed;
-  final Function(List<int>, int) onChangedTaskTime;
+  final Function(TaskTime, int) onChangedTaskTime;
 }

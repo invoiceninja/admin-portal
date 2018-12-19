@@ -36,6 +36,7 @@ class TaskEditVM {
   TaskEditVM({
     @required this.state,
     @required this.task,
+    @required this.onAddTimePressed,
     @required this.taskTime,
     @required this.company,
     @required this.isSaving,
@@ -62,6 +63,7 @@ class TaskEditVM {
           store.dispatch(UpdateCurrentRoute(TaskScreen.route));
         }
       },
+      onAddTimePressed: () => store.dispatch(AddTaskTime()),
       onSavePressed: (BuildContext context) {
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(SaveTaskRequest(completer: completer, task: task));
@@ -84,9 +86,10 @@ class TaskEditVM {
   }
 
   final TaskEntity task;
-  final List<int> taskTime;
+  final TaskTime taskTime;
   final CompanyEntity company;
   final Function(BuildContext) onSavePressed;
+  final Function onAddTimePressed;
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;

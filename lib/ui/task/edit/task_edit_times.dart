@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_item_view.dart';
@@ -18,10 +19,10 @@ class TaskEditTimes extends StatefulWidget {
 }
 
 class _TaskEditTimesState extends State<TaskEditTimes> {
-  List<int> selectedTaskTime;
+  TaskTime selectedTaskTime;
 
   void _showTaskTimeEditor(
-      List<int> taskTime, BuildContext context) {
+      TaskTime taskTime, BuildContext context) {
     showDialog<TimeEditDetails>(
         context: context,
         builder: (BuildContext context) {
@@ -32,7 +33,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
             viewModel: viewModel,
             //key: Key(taskTime.entityKey),
             taskTime: taskTime,
-            index: task.taskItems.indexOf(viewModel.taskTime),
+            index: task.taskTimes.indexOf(viewModel.taskTime),
           );
         });
   }
@@ -42,7 +43,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final task = viewModel.task;
-    final taskTime = task.taskItems.contains(viewModel.taskTime)
+    final taskTime = task.taskTimes.contains(viewModel.taskTime)
         ? viewModel.taskTime
         : null;
 
@@ -53,7 +54,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
       });
     }
 
-    if (task.taskItems.isEmpty) {
+    if (task.taskTimes.isEmpty) {
       return Center(
         child: Text(
           localization.clickPlusToAddTime,
@@ -66,7 +67,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     }
 
     final taskTimes =
-    task.taskItems.toList().map<Widget>((taskTime) => TaskItemListTile(
+    task.taskTimes.toList().map<Widget>((taskTime) => TaskItemListTile(
 
       task: task,
       taskItem: taskTime,
@@ -88,7 +89,7 @@ class TimeEditDetails extends StatefulWidget {
   }) : super(key: key);
 
   final int index;
-  final List<int> taskTime;
+  final TaskTime taskTime;
   final TaskEditTimesVM viewModel;
 
   @override

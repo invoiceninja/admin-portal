@@ -111,7 +111,7 @@ class _TaskViewState extends State<TaskView> {
         ]);
       }
 
-      final items = task.taskItems;
+      final items = task.taskTimes;
       items.forEach((taskItem) {
         widgets.addAll([
           TaskItemListTile(

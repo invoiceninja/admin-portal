@@ -35,7 +35,7 @@ class _TaskEditState extends State<TaskEdit>
     final taskTime = widget.viewModel.taskTime;
 
     final index =
-        task.taskItems.contains(taskTime) ? kTimesScreen : kDetailsScreen;
+        task.taskTimes.contains(taskTime) ? kTimesScreen : kDetailsScreen;
 
     _controller = TabController(vsync: this, length: 3, initialIndex: index);
   }
@@ -119,6 +119,7 @@ class _TaskEditState extends State<TaskEdit>
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
+
           },
           child: const Icon(Icons.add, color: Colors.white),
           tooltip: localization.addItem,

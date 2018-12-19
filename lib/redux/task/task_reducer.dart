@@ -10,8 +10,22 @@ EntityUIState taskUIReducer(TaskUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(taskListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
+    //..editingTime = editingTimeReducer(state.editingTime, action)
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
+
+/*
+final editingTimeReducer = combineReducers<List<int>([
+  TypedReducer<List<int>, EditTask>(editTaskTime),
+  TypedReducer<List<int>, EditTaskTime>(editTaskTime),
+]);
+
+List<int> editTaskTime(
+    List<int> taskTime, dynamic action) {
+  return action.taskTime ?? [];
+}
+*/
+
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewTask>(
@@ -28,6 +42,9 @@ final editingReducer = combineReducers<TaskEntity>([
   TypedReducer<TaskEntity, DeleteTaskSuccess>(_updateEditing),
   TypedReducer<TaskEntity, EditTask>(_updateEditing),
   TypedReducer<TaskEntity, UpdateTask>(_updateEditing),
+  TypedReducer<TaskEntity, AddTaskTime>(_addTaskTime),
+  TypedReducer<TaskEntity, DeleteTaskTime>(_removeTaskTime),
+  TypedReducer<TaskEntity, UpdateTaskTime>(_updateTaskTime),
   TypedReducer<TaskEntity, SelectCompany>(_clearEditing),
 ]);
 
@@ -38,7 +55,6 @@ TaskEntity _clearEditing(TaskEntity task, dynamic action) {
 TaskEntity _updateEditing(TaskEntity task, dynamic action) {
   return action.task;
 }
-
 
 final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortTasks>(_sortTasks),
@@ -52,15 +68,14 @@ final taskListReducer = combineReducers<ListUIState>([
 ListUIState _filterTasksByClient(
     ListUIState taskListState, FilterTasksByEntity action) {
   return taskListState.rebuild((b) => b
-  ..filterEntityId = action.entityId
-  ..filterEntityType = action.entityType);
+    ..filterEntityId = action.entityId
+    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterTasksByCustom1(
     ListUIState taskListState, FilterTasksByCustom1 action) {
   if (taskListState.custom1Filters.contains(action.value)) {
-    return taskListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
+    return taskListState.rebuild((b) => b..custom1Filters.remove(action.value));
   } else {
     return taskListState.rebuild((b) => b..custom1Filters.add(action.value));
   }
@@ -69,8 +84,7 @@ ListUIState _filterTasksByCustom1(
 ListUIState _filterTasksByCustom2(
     ListUIState taskListState, FilterTasksByCustom2 action) {
   if (taskListState.custom2Filters.contains(action.value)) {
-    return taskListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
+    return taskListState.rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return taskListState.rebuild((b) => b..custom2Filters.add(action.value));
   }
@@ -95,6 +109,29 @@ ListUIState _sortTasks(ListUIState taskListState, SortTasks action) {
     ..sortField = action.field);
 }
 
+TaskEntity _addTaskTime(TaskEntity task, AddTaskTime action) {
+  return task;
+  /*
+  return task.rebuild(
+          (b) => b..invoiceItems.add(action.invoiceItem ?? InvoiceItemEntity()));
+         */
+}
+
+TaskEntity _removeTaskTime(TaskEntity task, DeleteTaskTime action) {
+  return task;
+  /*
+  return invoice.rebuild((b) => b..invoiceItems.removeAt(action.index));
+  */
+}
+
+TaskEntity _updateTaskTime(TaskEntity task, UpdateTaskTime action) {
+  return task;
+  /*
+  return invoice
+      .rebuild((b) => b..invoiceItems[action.index] = action.invoiceItem);
+      */
+}
+
 final tasksReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, SaveTaskSuccess>(_updateTask),
   TypedReducer<TaskState, AddTaskSuccess>(_addTask),
@@ -111,26 +148,22 @@ final tasksReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, RestoreTaskFailure>(_restoreTaskFailure),
 ]);
 
-TaskState _archiveTaskRequest(
-    TaskState taskState, ArchiveTaskRequest action) {
+TaskState _archiveTaskRequest(TaskState taskState, ArchiveTaskRequest action) {
   final task = taskState.map[action.taskId]
       .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
 
   return taskState.rebuild((b) => b..map[action.taskId] = task);
 }
 
-TaskState _archiveTaskSuccess(
-    TaskState taskState, ArchiveTaskSuccess action) {
+TaskState _archiveTaskSuccess(TaskState taskState, ArchiveTaskSuccess action) {
   return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _archiveTaskFailure(
-    TaskState taskState, ArchiveTaskFailure action) {
+TaskState _archiveTaskFailure(TaskState taskState, ArchiveTaskFailure action) {
   return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _deleteTaskRequest(
-    TaskState taskState, DeleteTaskRequest action) {
+TaskState _deleteTaskRequest(TaskState taskState, DeleteTaskRequest action) {
   final task = taskState.map[action.taskId].rebuild((b) => b
     ..archivedAt = DateTime.now().millisecondsSinceEpoch
     ..isDeleted = true);
@@ -138,31 +171,26 @@ TaskState _deleteTaskRequest(
   return taskState.rebuild((b) => b..map[action.taskId] = task);
 }
 
-TaskState _deleteTaskSuccess(
-    TaskState taskState, DeleteTaskSuccess action) {
+TaskState _deleteTaskSuccess(TaskState taskState, DeleteTaskSuccess action) {
   return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _deleteTaskFailure(
-    TaskState taskState, DeleteTaskFailure action) {
+TaskState _deleteTaskFailure(TaskState taskState, DeleteTaskFailure action) {
   return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _restoreTaskRequest(
-    TaskState taskState, RestoreTaskRequest action) {
+TaskState _restoreTaskRequest(TaskState taskState, RestoreTaskRequest action) {
   final task = taskState.map[action.taskId].rebuild((b) => b
     ..archivedAt = null
     ..isDeleted = false);
   return taskState.rebuild((b) => b..map[action.taskId] = task);
 }
 
-TaskState _restoreTaskSuccess(
-    TaskState taskState, RestoreTaskSuccess action) {
+TaskState _restoreTaskSuccess(TaskState taskState, RestoreTaskSuccess action) {
   return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _restoreTaskFailure(
-    TaskState taskState, RestoreTaskFailure action) {
+TaskState _restoreTaskFailure(TaskState taskState, RestoreTaskFailure action) {
   return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
@@ -173,18 +201,14 @@ TaskState _addTask(TaskState taskState, AddTaskSuccess action) {
 }
 
 TaskState _updateTask(TaskState taskState, SaveTaskSuccess action) {
-  return taskState.rebuild((b) => b
-    ..map[action.task.id] = action.task);
+  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _setLoadedTask(
-    TaskState taskState, LoadTaskSuccess action) {
-  return taskState.rebuild((b) => b
-    ..map[action.task.id] = action.task);
+TaskState _setLoadedTask(TaskState taskState, LoadTaskSuccess action) {
+  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _setLoadedTasks(
-    TaskState taskState, LoadTasksSuccess action) {
+TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) {
   final state = taskState.rebuild((b) => b
     ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(

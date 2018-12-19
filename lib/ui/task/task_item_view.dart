@@ -15,23 +15,23 @@ class TaskItemListTile extends StatelessWidget {
 
   final Function onTap;
   final TaskEntity task;
-  final List<int> taskItem;
+  final TaskTime taskItem;
 
   @override
   Widget build(BuildContext context) {
-    final startDate = convertTimestampToDate(taskItem[0]);
-    final endDate = convertTimestampToDate(taskItem[1]);
-
-    final startDateString = formatDate(startDate.toIso8601String(), context,
+    final startDateString = formatDate(
+        taskItem.startDate.toIso8601String(), context,
         showTime: true, showDate: false);
-    final endDateString = formatDate(endDate.toIso8601String(), context,
+    final endDateString = formatDate(
+        taskItem.endDate.toIso8601String(), context,
         showTime: true, showDate: false);
 
     final state = StoreProvider.of<AppState>(context).state;
-    final title =
-        DateFormat('EEE MMM d, yyy', localeSelector(state)).format(startDate);
+    final title = DateFormat('EEE MMM d, yyy', localeSelector(state))
+        .format(taskItem.startDate);
     final subtitle = '$startDateString - $endDateString';
-    final duration = formatDuration(endDate.difference(startDate));
+    final duration =
+        formatDuration(taskItem.endDate.difference(taskItem.startDate));
 
     return Material(
         color: Theme.of(context).canvasColor,

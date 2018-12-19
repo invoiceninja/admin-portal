@@ -84,6 +84,38 @@ class LoadTaskSuccess implements StopLoading, PersistData {
   }
 }
 
+class EditTaskTime implements PersistUI {
+  EditTaskTime([this.taskTime]);
+
+  final List<int> taskTime;
+}
+
+class AddTaskTime implements PersistUI {
+  AddTaskTime({this.taskTime});
+
+  final List<int> taskTime;
+}
+
+class AddTaskTimes implements PersistUI {
+  AddTaskTimes(this.taskTimes);
+
+  final List<List <int>> taskTimes;
+}
+
+class UpdateTaskTime implements PersistUI {
+  UpdateTaskTime({this.index, this.taskTime});
+
+  final int index;
+  final List<int> taskTime;
+}
+
+class DeleteTaskTime implements PersistUI {
+  DeleteTaskTime(this.index);
+
+  final int index;
+}
+
+
 class LoadTasksRequest implements StartLoading {}
 
 class LoadTasksFailure implements StopLoading {

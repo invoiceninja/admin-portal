@@ -13,7 +13,7 @@ part 'task_model.g.dart';
 abstract class TaskListResponse
     implements Built<TaskListResponse, TaskListResponseBuilder> {
   factory TaskListResponse([void updates(TaskListResponseBuilder b)]) =
-      _$TaskListResponse;
+  _$TaskListResponse;
 
   TaskListResponse._();
 
@@ -26,7 +26,7 @@ abstract class TaskListResponse
 abstract class TaskItemResponse
     implements Built<TaskItemResponse, TaskItemResponseBuilder> {
   factory TaskItemResponse([void updates(TaskItemResponseBuilder b)]) =
-      _$TaskItemResponse;
+  _$TaskItemResponse;
 
   TaskItemResponse._();
 
@@ -50,6 +50,15 @@ class TaskFields {
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
+}
+
+class TaskTime {
+  TaskTime({this.startDate, this.endDate});
+
+  final DateTime startDate;
+  final DateTime endDate;
+
+  int get duration => endDate.difference(startDate).inSeconds;
 }
 
 abstract class TaskEntity extends Object
@@ -88,8 +97,8 @@ abstract class TaskEntity extends Object
 
   int get duration;
 
-  List<List<int>> get taskItems {
-    final List<List<int>> details = [];
+  List<TaskTime> get taskTimes {
+    final List<TaskTime> details = [];
 
     if (timeLog.isEmpty) {
       return details;
@@ -97,12 +106,15 @@ abstract class TaskEntity extends Object
 
     final List<dynamic> log = jsonDecode(timeLog);
     log.forEach((dynamic detail) {
-      details.add([
-        (detail as List)[0],
-        (detail as List)[1] > 0
-            ? (detail as List)[1]
-            : (DateTime.now().millisecondsSinceEpoch / 1000).floor(),
-      ]);
+      final int startDate = (detail as List)[0];
+      final int endDate = (detail as List)[1];
+
+      final taskTime = TaskTime(startDate: convertTimestampToDate(startDate),
+          endDate: convertTimestampToDate(endDate > 0 ? endDate : (DateTime
+              .now()
+              .millisecondsSinceEpoch / 1000).floor()));
+
+      details.add(taskTime);
     });
 
     return details;
@@ -111,13 +123,8 @@ abstract class TaskEntity extends Object
   Duration get calculateDuration {
     int seconds = 0;
 
-    taskItems.forEach((detail) {
-      if (detail.length > 1 && detail[1] > 0) {
-        seconds += detail[1] - detail[0];
-      } else {
-        seconds +=
-            (DateTime.now().millisecondsSinceEpoch / 1000).floor() - detail[0];
-      }
+    taskTimes.forEach((taskTime) {
+      seconds += taskTime.duration;
     });
 
     return Duration(seconds: seconds);

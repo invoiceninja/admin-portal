@@ -113,7 +113,7 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
       result
         ..add('editingTime')
         ..add(serializers.serialize(object.editingTime,
-            specifiedType: const FullType(List, const [const FullType(int)])));
+            specifiedType: const FullType(TaskTime)));
     }
 
     return result;
@@ -136,9 +136,7 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
           break;
         case 'editingTime':
           result.editingTime = serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(List, const [const FullType(int)]))
-              as List<int>;
+              specifiedType: const FullType(TaskTime)) as TaskTime;
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
@@ -277,7 +275,7 @@ class _$TaskUIState extends TaskUIState {
   @override
   final TaskEntity editing;
   @override
-  final List<int> editingTime;
+  final TaskTime editingTime;
   @override
   final int selectedId;
   @override
@@ -340,9 +338,9 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   TaskEntityBuilder get editing => _$this._editing ??= new TaskEntityBuilder();
   set editing(TaskEntityBuilder editing) => _$this._editing = editing;
 
-  List<int> _editingTime;
-  List<int> get editingTime => _$this._editingTime;
-  set editingTime(List<int> editingTime) => _$this._editingTime = editingTime;
+  TaskTime _editingTime;
+  TaskTime get editingTime => _$this._editingTime;
+  set editingTime(TaskTime editingTime) => _$this._editingTime = editingTime;
 
   int _selectedId;
   int get selectedId => _$this._selectedId;

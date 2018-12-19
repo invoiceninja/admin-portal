@@ -92,7 +92,7 @@ class TaskEditDetailsVM {
   }
 
   final TaskEntity task;
-  final List<int> taskTime;
+  final TaskTime taskTime;
   final CompanyEntity company;
   final Function(TaskEntity) onChanged;
   final bool isLoading;

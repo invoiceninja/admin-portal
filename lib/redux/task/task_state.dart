@@ -54,7 +54,7 @@ abstract class TaskUIState extends Object with EntityUIState implements Built<Ta
   TaskEntity get editing;
 
   @nullable
-  List<int> get editingTime;
+  TaskTime get editingTime;
 
   @override
   bool get isCreatingNew => editing.isNew;
