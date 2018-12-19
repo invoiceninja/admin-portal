@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -95,7 +96,7 @@ class _TaskEditState extends State<TaskEdit>
             controller: _controller,
             children: <Widget>[
               TaskEditDetailsScreen(),
-              //TaskEditItemsScreen(),
+              TaskEditTimesScreen(),
             ],
           ),
         ),

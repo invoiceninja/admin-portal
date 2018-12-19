@@ -214,6 +214,7 @@ class AppLocalization {
       'invoice_status_id': 'Invoice Status',
       'quote_status': 'Quote Status',
       'click_plus_to_add_item': 'Click + to add an item',
+      'click_plus_to_add_time': 'Click + to add time',
       'count_selected': ':count selected',
       'total': 'Total',
       'percent': 'Percent',
@@ -10291,6 +10292,9 @@ class AppLocalization {
 
   String get clickPlusToAddItem =>
       _localizedValues[locale.toString()]['click_plus_to_add_item'];
+
+  String get clickPlusToAddTime =>
+      _localizedValues[locale.toString()]['click_plus_to_add_time'];
 
   String get countSelected =>
       _localizedValues[locale.toString()]['count_selected'];

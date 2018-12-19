@@ -94,7 +94,7 @@ abstract class TaskEntity extends Object
     if (timeLog.isEmpty) {
       return details;
     }
-    
+
     final List<dynamic> log = jsonDecode(timeLog);
     log.forEach((dynamic detail) {
       details.add([
