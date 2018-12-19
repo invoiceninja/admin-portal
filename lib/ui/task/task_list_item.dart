@@ -9,6 +9,7 @@ class TaskListItem extends StatelessWidget {
   const TaskListItem({
     @required this.user,
     @required this.client,
+    @required this.project,
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
@@ -19,6 +20,7 @@ class TaskListItem extends StatelessWidget {
 
   final UserEntity user;
   final ClientEntity client;
+  final ProjectEntity project;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
@@ -34,7 +36,17 @@ class TaskListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? task.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ?? client?.displayName ?? task.description;
+
+    //final subtitle = filterMatch ?? client?.displayName ?? task.description;
+    String subtitle;
+    if (filterMatch != null) {
+      subtitle = filterMatch;
+    } else if (client != null) {
+      subtitle = client.displayName;
+      if (project != null) {
+        subtitle += ' • ' + project.name;
+      }
+    }
 
     return DismissibleEntity(
       user: user,

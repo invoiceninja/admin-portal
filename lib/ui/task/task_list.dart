@@ -115,18 +115,18 @@ class TaskList extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             final taskId = viewModel.taskList[index];
                             final task = viewModel.taskMap[taskId];
-                            final client =
-                                viewModel.clientMap[task.clientId] ??
-                                    ClientEntity();
+                            final client = viewModel.clientMap[task.clientId] ??
+                                ClientEntity();
                             return Column(
                               children: <Widget>[
                                 TaskListItem(
                                   user: viewModel.user,
                                   filter: viewModel.filter,
                                   task: task,
-                                  client:
-                                      viewModel.clientMap[task.clientId] ??
-                                          ClientEntity(),
+                                  client: viewModel.clientMap[task.clientId] ??
+                                      ClientEntity(),
+                                  project: viewModel.state.projectState
+                                          .map[task.projectId],
                                   onTap: () =>
                                       viewModel.onTaskTap(context, task),
                                   onEntityAction: (EntityAction action) {

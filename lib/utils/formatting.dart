@@ -7,6 +7,7 @@ import 'package:intl/number_symbols.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 double round(double value, int precision) {
   final int fac = pow(10, precision);
@@ -219,7 +220,7 @@ String formatDate(String value, BuildContext context,
 
   if (showTime) {
     String format;
-    if (! showDate) {
+    if (!showDate) {
       format = company.enableMilitaryTime ? 'H:mm' : 'h:mm a';
     } else {
       final dateFormats = state.staticState.datetimeFormatMap;
@@ -231,13 +232,14 @@ String formatDate(String value, BuildContext context,
         format = format.replaceFirst('h:mm a', 'H:mm');
       }
     }
-    final formatter = DateFormat(format);
+    final formatter = DateFormat(format, localeSelector(state));
     return formatter.format(DateTime.tryParse(value).toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;
     final dateFormatId =
         company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
-    final formatter = DateFormat(dateFormats[dateFormatId].format);
+    final formatter =
+        DateFormat(dateFormats[dateFormatId].format, localeSelector(state));
     return formatter.format(DateTime.tryParse(value));
   }
 }

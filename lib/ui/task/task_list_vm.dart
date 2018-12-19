@@ -33,6 +33,7 @@ class TaskListBuilder extends StatelessWidget {
 
 class TaskListVM {
   TaskListVM({
+    @required this.state,
     @required this.user,
     @required this.taskList,
     @required this.taskMap,
@@ -62,6 +63,7 @@ class TaskListVM {
     final state = store.state;
 
     return TaskListVM(
+      state: state,
       user: state.user,
       listState: state.taskListState,
       taskList: memoizedFilteredTaskList(
@@ -108,6 +110,7 @@ class TaskListVM {
     );
   }
 
+  final AppState state;
   final UserEntity user;
   final List<int> taskList;
   final BuiltMap<int, TaskEntity> taskMap;
