@@ -184,11 +184,11 @@ String convertDateTimeToSqlDate([DateTime date]) {
   return date.toIso8601String().split('T').first;
 }
 
-String convertTimestampToSqlDate(int timestamp) {
-  final DateTime date =
-      new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-  return date.toIso8601String();
-}
+DateTime convertTimestampToDate(int timestamp) =>
+    DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+
+String convertTimestampToDateString(int timestamp) =>
+    convertTimestampToDate(timestamp).toIso8601String();
 
 String formatDuration(Duration duration) => duration.toString().split('.')[0];
 
@@ -208,7 +208,8 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
   return '$startDateTimeString - $endDateTimeString';
 }
 
-String formatDate(String value, BuildContext context, {bool showTime = false}) {
+String formatDate(String value, BuildContext context,
+    {bool showDate = true, bool showTime = false}) {
   if (value == null || value.isEmpty) {
     return '';
   }
@@ -217,13 +218,18 @@ String formatDate(String value, BuildContext context, {bool showTime = false}) {
   final CompanyEntity company = state.selectedCompany;
 
   if (showTime) {
-    final dateFormats = state.staticState.datetimeFormatMap;
-    final dateFormatId = company.datetimeFormatId > 0
-        ? company.datetimeFormatId
-        : kDefaultDateTimeFormat;
-    String format = dateFormats[dateFormatId].format;
-    if (company.enableMilitaryTime) {
-      format = format.replaceFirst('h:mm a', 'H:mm');
+    String format;
+    if (! showDate) {
+      format = company.enableMilitaryTime ? 'H:mm' : 'h:mm a';
+    } else {
+      final dateFormats = state.staticState.datetimeFormatMap;
+      final dateFormatId = company.datetimeFormatId > 0
+          ? company.datetimeFormatId
+          : kDefaultDateTimeFormat;
+      format = dateFormats[dateFormatId].format;
+      if (company.enableMilitaryTime) {
+        format = format.replaceFirst('h:mm a', 'H:mm');
+      }
     }
     final formatter = DateFormat(format);
     return formatter.format(DateTime.tryParse(value).toLocal());

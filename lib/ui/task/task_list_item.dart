@@ -62,7 +62,7 @@ class TaskListItem extends StatelessWidget {
                   task.description.isNotEmpty
                       ? task.description
                       : formatDate(
-                          convertTimestampToSqlDate(task.updatedAt), context),
+                          convertTimestampToDateString(task.updatedAt), context),
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),

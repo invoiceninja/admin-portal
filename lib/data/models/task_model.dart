@@ -88,14 +88,16 @@ abstract class TaskEntity extends Object
 
   int get duration;
 
-  List<List<int>> get timeDetails {
+  List<List<int>> get taskItems {
     final List<List<int>> details = [];
 
     final List<dynamic> log = jsonDecode(timeLog);
     log.forEach((dynamic detail) {
       details.add([
         (detail as List)[0],
-        (detail as List)[1],
+        (detail as List)[1] > 0
+            ? (detail as List)[1]
+            : (DateTime.now().millisecondsSinceEpoch / 1000).floor(),
       ]);
     });
 
@@ -105,7 +107,7 @@ abstract class TaskEntity extends Object
   Duration get calculateDuration {
     int seconds = 0;
 
-    timeDetails.forEach((detail) {
+    taskItems.forEach((detail) {
       if (detail.length > 1 && detail[1] > 0) {
         seconds += detail[1] - detail[0];
       } else {

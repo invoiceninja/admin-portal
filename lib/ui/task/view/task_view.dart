@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
+import 'package:invoiceninja_flutter/ui/task/task_item_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -102,9 +103,27 @@ class _TaskViewState extends State<TaskView> {
         ]);
       }
 
-      widgets.addAll([
-        FieldGrid(fields),
-      ]);
+      if (fields.isNotEmpty) {
+        widgets.addAll([
+          FieldGrid(fields),
+          Container(
+            color: Theme
+                .of(context)
+                .backgroundColor,
+            height: 12.0,
+          ),
+        ]);
+      }
+
+      task.taskItems.forEach((taskItem) {
+        widgets.addAll([
+          TaskItemListTile(
+            task: task,
+            taskItem: taskItem,
+            onTap: null,
+          )
+        ]);
+      });
 
       return widgets;
     }

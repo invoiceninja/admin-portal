@@ -78,7 +78,7 @@ class ActivityListTile extends StatelessWidget {
       subtitle: Row(
         children: <Widget>[
           Text(formatDate(
-              convertTimestampToSqlDate(activity.updatedAt), context,
+              convertTimestampToDateString(activity.updatedAt), context,
               showTime: true)),
           (activity.notes ?? '').isNotEmpty
               ? Text(' • ${localization.lookup(activity.notes)}')
