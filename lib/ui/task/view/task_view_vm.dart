@@ -39,6 +39,7 @@ class TaskViewVM {
     @required this.client,
     @required this.project,
     @required this.company,
+    @required this.state,
     @required this.onActionSelected,
     @required this.onEditPressed,
     @required this.onBackPressed,
@@ -64,6 +65,7 @@ class TaskViewVM {
     }
 
     return TaskViewVM(
+        state: state,
         company: state.selectedCompany,
         isSaving: state.isSaving,
         isLoading: state.isLoading,
@@ -116,6 +118,7 @@ class TaskViewVM {
         });
   }
 
+  final AppState state;
   final TaskEntity task;
   final ClientEntity client;
   final ProjectEntity project;
