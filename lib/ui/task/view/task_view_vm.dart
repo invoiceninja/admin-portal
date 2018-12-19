@@ -82,11 +82,13 @@ class TaskViewVM {
           if (longPress) {
             store.dispatch(EditProject(project: project, context: context));
           } else {
-            store.dispatch(ViewProject(projectId: project.id, context: context));
+            store
+                .dispatch(ViewProject(projectId: project.id, context: context));
           }
         },
-        onEditPressed: (BuildContext context) {
-          store.dispatch(EditTask(task: task, context: context));
+        onEditPressed: (BuildContext context, [int taskItemIndex]) {
+          store.dispatch(EditTask(
+              task: task, context: context, taskItemIndex: taskItemIndex));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {
@@ -119,7 +121,7 @@ class TaskViewVM {
   final ProjectEntity project;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext) onEditPressed;
+  final Function(BuildContext, [int]) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, [bool]) onClientPressed;

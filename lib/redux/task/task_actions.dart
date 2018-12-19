@@ -18,8 +18,14 @@ class ViewTask implements PersistUI {
 }
 
 class EditTask implements PersistUI {
-  EditTask({this.task, this.context, this.completer, this.trackRoute = true});
+  EditTask(
+      {this.task,
+      this.context,
+      this.completer,
+      this.trackRoute = true,
+      this.taskItemIndex});
 
+  final int taskItemIndex;
   final TaskEntity task;
   final BuildContext context;
   final Completer completer;
@@ -102,7 +108,6 @@ class LoadTasksSuccess implements StopLoading, PersistData {
   }
 }
 
-
 class SaveTaskRequest implements StartSaving {
   SaveTaskRequest({this.completer, this.task});
 
@@ -123,7 +128,7 @@ class AddTaskSuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class SaveTaskFailure implements StopSaving {
-  SaveTaskFailure (this.error);
+  SaveTaskFailure(this.error);
 
   final Object error;
 }
@@ -184,9 +189,6 @@ class RestoreTaskFailure implements StopSaving {
 
   final TaskEntity task;
 }
-
-
-
 
 class FilterTasks {
   FilterTasks(this.filter);

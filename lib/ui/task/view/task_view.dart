@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
@@ -9,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/task/task_item_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -107,20 +105,21 @@ class _TaskViewState extends State<TaskView> {
         widgets.addAll([
           FieldGrid(fields),
           Container(
-            color: Theme
-                .of(context)
-                .backgroundColor,
+            color: Theme.of(context).backgroundColor,
             height: 12.0,
           ),
         ]);
       }
 
-      task.taskItems.forEach((taskItem) {
+      final items = task.taskItems;
+      items.forEach((taskItem) {
         widgets.addAll([
           TaskItemListTile(
             task: task,
             taskItem: taskItem,
-            onTap: null,
+            onTap: () => company.user.canEditEntity(task)
+                ? viewModel.onEditPressed(context, items.indexOf(taskItem))
+                : null,
           )
         ]);
       });

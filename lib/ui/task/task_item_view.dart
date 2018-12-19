@@ -1,7 +1,6 @@
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskItemListTile extends StatelessWidget {
   const TaskItemListTile({
