@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
@@ -23,8 +22,6 @@ class TaskEditDetails extends StatefulWidget {
 }
 
 class _TaskEditDetailsState extends State<TaskEditDetails> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final _descriptionController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -79,110 +76,70 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     final company = viewModel.company;
     final state = viewModel.state;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(viewModel.task.isNew
-              ? localization.newTask
-              : localization.editTask),
-          actions: <Widget>[
-            Builder(builder: (BuildContext context) {
-              return RefreshIconButton(
-                icon: Icons.cloud_upload,
-                tooltip: localization.save,
-                isVisible: !task.isDeleted,
-                isDirty: task.isNew || task != viewModel.origTask,
-                isSaving: viewModel.isSaving,
-                onPressed: () {
-                  if (!_formKey.currentState.validate()) {
-                    return;
-                  }
-                  viewModel.onSavePressed(context);
-                },
-              );
-            }),
+    return ListView(
+      children: <Widget>[
+        FormCard(
+          children: <Widget>[
+            EntityDropdown(
+              key: Key('__client_${task.clientId}__'),
+              entityType: EntityType.client,
+              labelText: localization.client,
+              initialValue:
+                  (state.clientState.map[task.clientId] ?? ClientEntity())
+                      .displayName,
+              entityMap: state.clientState.map,
+              entityList: memoizedDropdownClientList(
+                  state.clientState.map, state.clientState.list),
+              onSelected: (client) {
+                viewModel.onChanged(task.rebuild((b) => b
+                  ..clientId = client.id
+                  ..projectId = 0));
+              },
+              onAddPressed: (completer) {
+                viewModel.onAddClientPressed(context, completer);
+              },
+            ),
+            EntityDropdown(
+              key: Key('__project_${task.clientId}__'),
+              entityType: EntityType.project,
+              labelText: localization.project,
+              initialValue:
+                  (state.projectState.map[task.projectId] ?? ProjectEntity())
+                      .name,
+              entityMap: state.projectState.map,
+              entityList: memoizedDropdownProjectList(state.projectState.map,
+                  state.projectState.list, task.clientId),
+              onSelected: (selected) {
+                final project = selected as ProjectEntity;
+                viewModel.onChanged(task.rebuild((b) => b
+                  ..projectId = project.id
+                  ..clientId = project.clientId));
+              },
+              onAddPressed: (completer) {
+                viewModel.onAddProjectPressed(context, completer);
+              },
+            ),
+            TextFormField(
+              maxLines: 4,
+              controller: _descriptionController,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                labelText: localization.description,
+              ),
+            ),
+            CustomField(
+              controller: _custom1Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.task1),
+              options: company.getCustomFieldValues(CustomFieldType.task1),
+            ),
+            CustomField(
+              controller: _custom2Controller,
+              labelText: company.getCustomFieldLabel(CustomFieldType.task2),
+              options: company.getCustomFieldValues(CustomFieldType.task2),
+            ),
           ],
         ),
-        body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      EntityDropdown(
-                        key: Key('__client_${task.clientId}__'),
-                        entityType: EntityType.client,
-                        labelText: localization.client,
-                        initialValue: (state.clientState.map[task.clientId] ??
-                                ClientEntity())
-                            .displayName,
-                        entityMap: state.clientState.map,
-                        entityList: memoizedDropdownClientList(
-                            state.clientState.map, state.clientState.list),
-                        onSelected: (client) {
-                          viewModel.onChanged(task.rebuild((b) => b
-                            ..clientId = client.id
-                            ..projectId = 0));
-                        },
-                        onAddPressed: (completer) {
-                          viewModel.onAddClientPressed(context, completer);
-                        },
-                      ),
-                      EntityDropdown(
-                        key: Key('__project_${task.clientId}__'),
-                        entityType: EntityType.project,
-                        labelText: localization.project,
-                        initialValue: (state.projectState.map[task.projectId] ??
-                                ProjectEntity())
-                            .name,
-                        entityMap: state.projectState.map,
-                        entityList: memoizedDropdownProjectList(
-                            state.projectState.map,
-                            state.projectState.list,
-                            task.clientId),
-                        onSelected: (selected) {
-                          final project = selected as ProjectEntity;
-                          viewModel.onChanged(task.rebuild((b) => b
-                            ..projectId = project.id
-                            ..clientId = project.clientId));
-                        },
-                        onAddPressed: (completer) {
-                          viewModel.onAddProjectPressed(context, completer);
-                        },
-                      ),
-                      TextFormField(
-                        maxLines: 4,
-                        controller: _descriptionController,
-                        keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
-                          labelText: localization.description,
-                        ),
-                      ),
-                      CustomField(
-                        controller: _custom1Controller,
-                        labelText:
-                            company.getCustomFieldLabel(CustomFieldType.task1),
-                        options:
-                            company.getCustomFieldValues(CustomFieldType.task1),
-                      ),
-                      CustomField(
-                        controller: _custom2Controller,
-                        labelText:
-                            company.getCustomFieldLabel(CustomFieldType.task2),
-                        options:
-                            company.getCustomFieldValues(CustomFieldType.task2),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            })),
-      ),
+      ],
     );
   }
 }

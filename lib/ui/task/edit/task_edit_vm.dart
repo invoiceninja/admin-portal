@@ -38,8 +38,6 @@ class TaskEditVM {
     @required this.task,
     @required this.taskTime,
     @required this.company,
-    @required this.onAddClientPressed,
-    @required this.onAddProjectPressed,
     @required this.isSaving,
     @required this.origTask,
     @required this.onSavePressed,
@@ -94,8 +92,4 @@ class TaskEditVM {
   final bool isSaving;
   final TaskEntity origTask;
   final AppState state;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddClientPressed;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddProjectPressed;
 }
