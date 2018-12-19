@@ -63,7 +63,7 @@ class TaskEditVM {
           store.dispatch(UpdateCurrentRoute(TaskScreen.route));
         }
       },
-      onAddTimePressed: () => store.dispatch(AddTaskTime()),
+      onAddTimePressed: () => store.dispatch(AddTaskTime(TaskTime())),
       onSavePressed: (BuildContext context) {
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(SaveTaskRequest(completer: completer, task: task));

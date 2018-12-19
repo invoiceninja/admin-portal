@@ -13,7 +13,7 @@ part 'task_model.g.dart';
 abstract class TaskListResponse
     implements Built<TaskListResponse, TaskListResponseBuilder> {
   factory TaskListResponse([void updates(TaskListResponseBuilder b)]) =
-  _$TaskListResponse;
+      _$TaskListResponse;
 
   TaskListResponse._();
 
@@ -26,7 +26,7 @@ abstract class TaskListResponse
 abstract class TaskItemResponse
     implements Built<TaskItemResponse, TaskItemResponseBuilder> {
   factory TaskItemResponse([void updates(TaskItemResponseBuilder b)]) =
-  _$TaskItemResponse;
+      _$TaskItemResponse;
 
   TaskItemResponse._();
 
@@ -53,12 +53,18 @@ class TaskFields {
 }
 
 class TaskTime {
-  TaskTime({this.startDate, this.endDate});
+  TaskTime({DateTime startDate, this.endDate}) : startDate = DateTime.now();
 
   final DateTime startDate;
   final DateTime endDate;
 
-  int get duration => endDate.difference(startDate).inSeconds;
+  int get duration =>
+      (endDate ?? DateTime.now()).difference(startDate).inSeconds;
+
+  List<dynamic> get asList => <dynamic>[
+        (startDate.millisecondsSinceEpoch / 1000).floor(),
+        endDate != null ? (endDate.millisecondsSinceEpoch / 1000).floor() : 0
+      ];
 }
 
 abstract class TaskEntity extends Object
@@ -109,15 +115,24 @@ abstract class TaskEntity extends Object
       final int startDate = (detail as List)[0];
       final int endDate = (detail as List)[1];
 
-      final taskTime = TaskTime(startDate: convertTimestampToDate(startDate),
-          endDate: convertTimestampToDate(endDate > 0 ? endDate : (DateTime
-              .now()
-              .millisecondsSinceEpoch / 1000).floor()));
+      final taskTime = TaskTime(
+          startDate: convertTimestampToDate(startDate),
+          endDate: convertTimestampToDate(endDate > 0
+              ? endDate
+              : (DateTime.now().millisecondsSinceEpoch / 1000).floor()));
 
       details.add(taskTime);
     });
 
     return details;
+  }
+
+  String addTaskTime(TaskTime time) {
+    final List<dynamic> taskTimes =
+        timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
+
+    taskTimes.add(time.asList);
+    return jsonEncode(taskTimes);
   }
 
   Duration get calculateDuration {

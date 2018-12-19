@@ -110,11 +110,8 @@ ListUIState _sortTasks(ListUIState taskListState, SortTasks action) {
 }
 
 TaskEntity _addTaskTime(TaskEntity task, AddTaskTime action) {
-  return task;
-  /*
   return task.rebuild(
-          (b) => b..invoiceItems.add(action.invoiceItem ?? InvoiceItemEntity()));
-         */
+          (b) => b..timeLog = task.addTaskTime(action.taskTime));
 }
 
 TaskEntity _removeTaskTime(TaskEntity task, DeleteTaskTime action) {
