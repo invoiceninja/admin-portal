@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -104,6 +105,11 @@ class ClientViewVM {
               store.dispatch(FilterProjectsByEntity(
                   entityId: client.id, entityType: EntityType.client));
               store.dispatch(ViewProjectList(context));
+              break;
+            case EntityType.task:
+              store.dispatch(FilterTasksByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewTaskList(context));
               break;
           }
         },
