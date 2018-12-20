@@ -25,7 +25,6 @@ class TaskEditTimesScreen extends StatelessWidget {
   }
 }
 
-
 class TaskEditTimesVM {
   TaskEditTimesVM({
     @required this.company,
@@ -33,7 +32,6 @@ class TaskEditTimesVM {
     @required this.taskTime,
     @required this.onRemoveTaskTimePressed,
     @required this.onDoneTaskTimePressed,
-    @required this.onChangedTaskTime,
   });
 
   factory TaskEditTimesVM.fromStore(Store<AppState> store) {
@@ -41,24 +39,20 @@ class TaskEditTimesVM {
     final task = state.taskUIState.editing;
 
     return TaskEditTimesVM(
-        company: state.selectedCompany,
-        task: task,
-        taskTime: state.taskUIState.editingTime,
-        onRemoveTaskTimePressed: (index) =>
-            store.dispatch(DeleteTaskTime(index)),
-        onDoneTaskTimePressed: () => store.dispatch(EditTaskTime()),
-        onChangedTaskTime: (taskTime, index) {
-          /*
-          store.dispatch(
-              UpdateTaskTime(taskTime: taskTime, index: index));
-              */
-        });
+      company: state.selectedCompany,
+      task: task,
+      taskTime: state.taskUIState.editingTime,
+      onRemoveTaskTimePressed: (index) => store.dispatch(DeleteTaskTime(index)),
+      onDoneTaskTimePressed: (taskTime) {
+        store.dispatch(UpdateTaskTime(taskTime: taskTime));
+        store.dispatch(EditTaskTime());
+      },
+    );
   }
 
   final CompanyEntity company;
   final TaskEntity task;
   final TaskTime taskTime;
   final Function(int) onRemoveTaskTimePressed;
-  final Function onDoneTaskTimePressed;
-  final Function(TaskTime, int) onChangedTaskTime;
+  final Function(TaskTime) onDoneTaskTimePressed;
 }

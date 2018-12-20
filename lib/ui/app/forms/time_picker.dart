@@ -5,14 +5,14 @@ class TimePicker extends StatefulWidget {
   const TimePicker({
     @required this.labelText,
     @required this.onSelected,
-    @required this.selectedDate,
+    @required this.timeOfDay,
     this.validator,
     this.autoValidate = false,
   });
 
   final String labelText;
-  final DateTime selectedDate;
-  final Function(int) onSelected;
+  final TimeOfDay timeOfDay;
+  final Function(TimeOfDay) onSelected;
   final Function validator;
   final bool autoValidate;
 
@@ -26,7 +26,7 @@ class _TimePickerState extends State<TimePicker> {
   @override
   void didChangeDependencies() {
     _textController.text = formatDate(
-        widget.selectedDate.toIso8601String(), context,
+        _convertToDate(widget.timeOfDay).toIso8601String(), context,
         showDate: false, showTime: true);
 
     super.didChangeDependencies();
@@ -47,19 +47,17 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   void _showDatePicker() async {
-    final selectedDate = widget.selectedDate;
+    final selectedDate = widget.timeOfDay;
     final hour = selectedDate.hour;
     final minute = selectedDate.minute;
 
     final TimeOfDay selectedTime = await showTimePicker(
         context: context, initialTime: TimeOfDay(hour: hour, minute: minute));
 
-    final date = DateTime(selectedDate.year, selectedDate.month,
-        selectedDate.day, selectedTime.hour, selectedTime.minute);
-    //final date = convertDateTimeToSqlDate(selectedDate);
-    _textController.text = formatDate(date.toIso8601String(), context,
+    _textController.text = formatDate(
+        _convertToDate(selectedTime).toIso8601String(), context,
         showTime: true, showDate: false);
-    widget.onSelected((date.millisecondsSinceEpoch / 1000).floor());
+    widget.onSelected(selectedTime);
   }
 
   @override

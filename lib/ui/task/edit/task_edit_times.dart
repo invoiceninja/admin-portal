@@ -97,52 +97,9 @@ class TimeEditDetails extends StatefulWidget {
 }
 
 class TimeEditDetailsState extends State<TimeEditDetails> {
-  List<TextEditingController> _controllers = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    if (_controllers.isNotEmpty) {
-      return;
-    }
-
-    _controllers = [];
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
-
-    super.dispose();
-  }
-
-  void _onChanged() {
-    /*
-    final taskTime = widget.taskTime.rebuild((b) => b
-      ..productKey = _productKeyController.text.trim()
-      ..notes = _notesController.text.trim()
-      ..cost = parseDouble(_costController.text)
-      ..qty = parseDouble(_qtyController.text)
-      ..discount = parseDouble(_discountController.text)
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (taskTime != widget.taskTime) {
-      widget.viewModel.onChangedTaskTime(taskTime, widget.index);
-    }
-    */
-  }
+  String _date;
+  TimeOfDay _startTime;
+  TimeOfDay _endTime;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +155,15 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   icon: Icons.check_circle,
                   label: localization.done,
                   onPressed: () {
-                    //viewModel.onDoneTaskTimePressed();
+                    final origTaskTime = widget.taskTime;
+                    final date = DateTime.parse(_date);
+                    final taskTime = TaskTime(
+                      startDate: DateTime(date.year, date.month, date.day,
+                          _startTime.hour, _startTime.minute),
+                      endDate: DateTime(date.year, date.month, date.day,
+                          _endTime.hour, _endTime.minute),
+                    );
+                    widget.viewModel.onDoneTaskTimePressed(taskTime);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -207,17 +172,21 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             DatePicker(
               labelText: localization.date,
               selectedDate: convertDateTimeToSqlDate(widget.taskTime.startDate),
-              onSelected: (date) {
-                //viewModel.onChanged(invoice.rebuild((b) => b..dueDate = date));
-              },
+              onSelected: (date) => _date = date,
             ),
             TimePicker(
               labelText: localization.startTime,
-              selectedDate: widget.taskTime.startDate,
+              timeOfDay: TimeOfDay(
+                  hour: widget.taskTime.startDate.hour,
+                  minute: widget.taskTime.startDate.minute),
+              onSelected: (timeOfDay) => _startTime = timeOfDay,
             ),
             TimePicker(
               labelText: localization.endTime,
-              selectedDate: widget.taskTime.endDate,
+              timeOfDay: TimeOfDay(
+                  hour: widget.taskTime.endDate.hour,
+                  minute: widget.taskTime.endDate.minute),
+              onSelected: (timeOfDay) => _endTime = timeOfDay,
             ),
           ],
         ),
