@@ -27,15 +27,14 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       enableDarkMode: enableDarkMode ?? false,
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
+      manualTimer: false,
       dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
-taskUIState: TaskUIState(),
-
-projectUIState: ProjectUIState(),
-
+      taskUIState: TaskUIState(),
+      projectUIState: ProjectUIState(),
       paymentUIState: PaymentUIState(company),
       quoteUIState: QuoteUIState(),
     );
@@ -53,6 +52,8 @@ projectUIState: ProjectUIState(),
 
   bool get emailPayment;
 
+  bool get manualTimer;
+
   DashboardUIState get dashboardUIState;
 
   ProductUIState get productUIState;
@@ -65,9 +66,9 @@ projectUIState: ProjectUIState(),
   String get filter;
 
   // STARTER: properties - do not remove comment
-TaskUIState get taskUIState;
+  TaskUIState get taskUIState;
 
-ProjectUIState get projectUIState;
+  ProjectUIState get projectUIState;
 
   PaymentUIState get paymentUIState;
 

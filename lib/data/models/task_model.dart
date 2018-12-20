@@ -69,7 +69,7 @@ class TaskTime {
 abstract class TaskEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<TaskEntity, TaskEntityBuilder> {
-  factory TaskEntity() {
+  factory TaskEntity({bool isRunning = false}) {
     return _$TaskEntity._(
       id: --TaskEntity.counter,
       description: '',
@@ -77,7 +77,9 @@ abstract class TaskEntity extends Object
       invoiceId: null,
       clientId: null,
       projectId: null,
-      timeLog: '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]',
+      timeLog: isRunning
+          ? '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]'
+          : '',
       isRunning: false,
       customValue1: '',
       customValue2: '',

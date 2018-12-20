@@ -235,7 +235,9 @@ class AppDrawer extends StatelessWidget {
             onTap: () => store.dispatch(ViewTaskList(context)),
             onCreateTap: () {
               navigator.pop();
-              store.dispatch(EditTask(task: TaskEntity(), context: context));
+              store.dispatch(EditTask(
+                  task: TaskEntity(isRunning: !state.uiState.manualTimer),
+                  context: context));
             },
           ),
           ListTile(

@@ -71,8 +71,10 @@ class TaskScreen extends StatelessWidget {
                 //key: Key(TaskKeys.taskScreenFABKeyString),
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
-                  store.dispatch(
-                      EditTask(task: TaskEntity(), context: context));
+                  store.dispatch(EditTask(
+                      task: TaskEntity(
+                          isRunning: !store.state.uiState.manualTimer),
+                      context: context));
                 },
                 child: Icon(
                   Icons.add,

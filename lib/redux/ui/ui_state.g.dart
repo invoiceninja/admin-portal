@@ -46,6 +46,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'emailPayment',
       serializers.serialize(object.emailPayment,
           specifiedType: const FullType(bool)),
+      'manualTimer',
+      serializers.serialize(object.manualTimer,
+          specifiedType: const FullType(bool)),
       'dashboardUIState',
       serializers.serialize(object.dashboardUIState,
           specifiedType: const FullType(DashboardUIState)),
@@ -112,6 +115,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.emailPayment = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'manualTimer':
+          result.manualTimer = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(serializers.deserialize(value,
                   specifiedType: const FullType(DashboardUIState))
@@ -168,6 +175,8 @@ class _$UIState extends UIState {
   @override
   final bool emailPayment;
   @override
+  final bool manualTimer;
+  @override
   final DashboardUIState dashboardUIState;
   @override
   final ProductUIState productUIState;
@@ -195,6 +204,7 @@ class _$UIState extends UIState {
       this.enableDarkMode,
       this.requireAuthentication,
       this.emailPayment,
+      this.manualTimer,
       this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
@@ -219,6 +229,9 @@ class _$UIState extends UIState {
     }
     if (emailPayment == null) {
       throw new BuiltValueNullFieldError('UIState', 'emailPayment');
+    }
+    if (manualTimer == null) {
+      throw new BuiltValueNullFieldError('UIState', 'manualTimer');
     }
     if (dashboardUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
@@ -262,6 +275,7 @@ class _$UIState extends UIState {
         enableDarkMode == other.enableDarkMode &&
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
+        manualTimer == other.manualTimer &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
@@ -289,13 +303,18 @@ class _$UIState extends UIState {
                                                 $jc(
                                                     $jc(
                                                         $jc(
-                                                            0,
-                                                            selectedCompanyIndex
+                                                            $jc(
+                                                                0,
+                                                                selectedCompanyIndex
+                                                                    .hashCode),
+                                                            currentRoute
                                                                 .hashCode),
-                                                        currentRoute.hashCode),
-                                                    enableDarkMode.hashCode),
-                                                requireAuthentication.hashCode),
-                                            emailPayment.hashCode),
+                                                        enableDarkMode
+                                                            .hashCode),
+                                                    requireAuthentication
+                                                        .hashCode),
+                                                emailPayment.hashCode),
+                                            manualTimer.hashCode),
                                         dashboardUIState.hashCode),
                                     productUIState.hashCode),
                                 clientUIState.hashCode),
@@ -315,6 +334,7 @@ class _$UIState extends UIState {
           ..add('enableDarkMode', enableDarkMode)
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
+          ..add('manualTimer', manualTimer)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
@@ -353,6 +373,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool _emailPayment;
   bool get emailPayment => _$this._emailPayment;
   set emailPayment(bool emailPayment) => _$this._emailPayment = emailPayment;
+
+  bool _manualTimer;
+  bool get manualTimer => _$this._manualTimer;
+  set manualTimer(bool manualTimer) => _$this._manualTimer = manualTimer;
 
   DashboardUIStateBuilder _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
@@ -415,6 +439,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _enableDarkMode = _$v.enableDarkMode;
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
+      _manualTimer = _$v.manualTimer;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
@@ -453,6 +478,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               enableDarkMode: enableDarkMode,
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
+              manualTimer: manualTimer,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),

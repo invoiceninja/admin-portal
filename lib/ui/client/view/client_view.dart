@@ -141,7 +141,9 @@ class _ClientViewState extends State<ClientView>
                             onTap: () {
                               Navigator.of(context).pop();
                               store.dispatch(EditTask(
-                                  task: TaskEntity()
+                                  task: TaskEntity(
+                                          isRunning:
+                                              !store.state.uiState.manualTimer)
                                       .rebuild((b) => b.clientId = client.id),
                                   context: context));
                             },

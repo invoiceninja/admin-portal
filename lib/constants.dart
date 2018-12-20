@@ -14,6 +14,7 @@ const String kSharedPrefUrl = 'url';
 const String kSharedPrefSecret = 'secret';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
 const String kSharedPrefEmailPayment = 'email_payment';
+const String kSharedPrefManualTimer = 'manual_timer';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefRequireAuthentication = 'require_authentication';
 
