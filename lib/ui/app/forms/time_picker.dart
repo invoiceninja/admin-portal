@@ -11,8 +11,8 @@ class TimePicker extends StatefulWidget {
   });
 
   final String labelText;
-  final String selectedDate;
-  final Function(String) onSelected;
+  final DateTime selectedDate;
+  final Function(int) onSelected;
   final Function validator;
   final bool autoValidate;
 
@@ -25,7 +25,9 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   void didChangeDependencies() {
-    _textController.text = formatDate(widget.selectedDate, context);
+    _textController.text = formatDate(
+        widget.selectedDate.toIso8601String(), context,
+        showDate: false, showTime: true);
 
     super.didChangeDependencies();
   }
@@ -36,13 +38,28 @@ class _TimePickerState extends State<TimePicker> {
     super.dispose();
   }
 
-  void _showDatePicker() async {
-    final TimeOfDay selectedTime = await showTimePicker(
-        context: context, initialTime: TimeOfDay(hour: 1, minute: 0));
+  DateTime _convertToDate(TimeOfDay timeOfDay) {
+    final now = new DateTime.now();
+    final date = DateTime(
+        now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
 
+    return date;
+  }
+
+  void _showDatePicker() async {
+    final selectedDate = widget.selectedDate;
+    final hour = selectedDate.hour;
+    final minute = selectedDate.minute;
+
+    final TimeOfDay selectedTime = await showTimePicker(
+        context: context, initialTime: TimeOfDay(hour: hour, minute: minute));
+
+    final date = DateTime(selectedDate.year, selectedDate.month,
+        selectedDate.day, selectedTime.hour, selectedTime.minute);
     //final date = convertDateTimeToSqlDate(selectedDate);
-    //_textController.text = formatDate(date, context);
-    //widget.onSelected(date);
+    _textController.text = formatDate(date.toIso8601String(), context,
+        showTime: true, showDate: false);
+    widget.onSelected((date.millisecondsSinceEpoch / 1000).floor());
   }
 
   @override

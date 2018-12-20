@@ -213,8 +213,12 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             ),
             TimePicker(
               labelText: localization.startTime,
-              selectedDate: convertDateTimeToSqlDate(widget.taskTime.startDate),
-            )
+              selectedDate: widget.taskTime.startDate,
+            ),
+            TimePicker(
+              labelText: localization.endTime,
+              selectedDate: widget.taskTime.endDate,
+            ),
           ],
         ),
       ),
