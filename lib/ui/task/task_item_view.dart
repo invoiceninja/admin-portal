@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskItemListTile extends StatelessWidget {
   const TaskItemListTile({
@@ -22,9 +23,9 @@ class TaskItemListTile extends StatelessWidget {
     final startDateString = formatDate(
         taskItem.startDate.toIso8601String(), context,
         showTime: true, showDate: false);
-    final endDateString = formatDate(
+    final endDateString = taskItem.endDate != null ? formatDate(
         taskItem.endDate.toIso8601String(), context,
-        showTime: true, showDate: false);
+        showTime: true, showDate: false) : AppLocalization.of(context).now;
 
     final state = StoreProvider.of<AppState>(context).state;
     final title = DateFormat('EEE MMM d, yyy', localeSelector(state))

@@ -108,9 +108,11 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
     _startTime = TimeOfDay(
         hour: widget.taskTime.startDate.hour,
         minute: widget.taskTime.startDate.minute);
-    _endTime = TimeOfDay(
-        hour: widget.taskTime.endDate.hour,
-        minute: widget.taskTime.endDate.minute);
+    if (widget.taskTime.endDate != null) {
+      _endTime = TimeOfDay(
+          hour: widget.taskTime.endDate.hour,
+          minute: widget.taskTime.endDate.minute);
+    }
 
     super.didChangeDependencies();
   }
@@ -196,9 +198,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             ),
             TimePicker(
               labelText: localization.endTime,
-              timeOfDay: TimeOfDay(
+              timeOfDay: widget.taskTime.endDate != null ? TimeOfDay(
                   hour: widget.taskTime.endDate.hour,
-                  minute: widget.taskTime.endDate.minute),
+                  minute: widget.taskTime.endDate.minute) : null,
               onSelected: (timeOfDay) => _endTime = timeOfDay,
             ),
           ],

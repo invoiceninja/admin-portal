@@ -40,16 +40,17 @@ class _TimePickerState extends State<TimePicker> {
 
   DateTime _convertToDate(TimeOfDay timeOfDay) {
     final now = new DateTime.now();
-    final date = DateTime(
-        now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
+    final date = DateTime(now.year, now.month, now.day, timeOfDay?.hour ?? 0,
+        timeOfDay?.minute ?? 0);
 
     return date;
   }
 
   void _showDatePicker() async {
     final selectedDate = widget.timeOfDay;
-    final hour = selectedDate.hour;
-    final minute = selectedDate.minute;
+
+    final hour = selectedDate?.hour ?? 0;
+    final minute = selectedDate?.minute ?? 0;
 
     final TimeOfDay selectedTime = await showTimePicker(
         context: context, initialTime: TimeOfDay(hour: hour, minute: minute));

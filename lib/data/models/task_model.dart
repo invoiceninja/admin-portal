@@ -132,8 +132,7 @@ abstract class TaskEntity extends Object
 
       final taskTime = TaskTime(
           startDate: convertTimestampToDate(startDate),
-          endDate:
-              endDate > 0 ? convertTimestampToDate(endDate) : DateTime.now());
+          endDate: endDate > 0 ? convertTimestampToDate(endDate) : null);
 
       details.add(taskTime);
     });

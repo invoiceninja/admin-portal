@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'now': 'Now',
       'auto_start_tasks': 'Auto Start Tasks',
       'timer': 'Timer',
       'manual': 'Manual',
@@ -10688,6 +10689,9 @@ class AppLocalization {
 
   String get autoStartTasks =>
       _localizedValues[locale.toString()]['auto_start_tasks'];
+
+  String get now =>
+      _localizedValues[locale.toString()]['now'];
 
 
 
