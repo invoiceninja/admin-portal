@@ -25,9 +25,11 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   void didChangeDependencies() {
-    _textController.text = formatDate(
-        _convertToDate(widget.timeOfDay).toIso8601String(), context,
-        showDate: false, showTime: true);
+    if (widget.timeOfDay != null) {
+      _textController.text = formatDate(
+          _convertToDate(widget.timeOfDay).toIso8601String(), context,
+          showDate: false, showTime: true);
+    }
 
     super.didChangeDependencies();
   }
