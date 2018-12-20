@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
@@ -30,6 +33,8 @@ class _TaskEditState extends State<TaskEdit>
   @override
   void initState() {
     super.initState();
+
+    Timer.periodic(Duration(seconds: 1), (Timer t) => setState(() => false));
 
     final task = widget.viewModel.task;
     final taskTime = widget.viewModel.taskTime;
@@ -106,7 +111,7 @@ class _TaskEditState extends State<TaskEdit>
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
-              '${localization.duration}: ${formatDuration(Duration(seconds: task.duration))}',
+              '${localization.duration}: ${formatDuration(task.calculateDuration)}',
               style: TextStyle(
                 //color: Theme.of(context).selectedRowColor,
                 color: Colors.white,
