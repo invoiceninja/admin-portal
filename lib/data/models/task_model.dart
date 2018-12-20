@@ -77,7 +77,7 @@ abstract class TaskEntity extends Object
       invoiceId: null,
       clientId: null,
       projectId: null,
-      timeLog: '',
+      timeLog: '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]',
       isRunning: false,
       customValue1: '',
       customValue2: '',
