@@ -65,12 +65,12 @@ class _ProjectViewState extends State<ProjectView> {
     List<Widget> _buildView() {
       final widgets = <Widget>[
         TwoValueHeader(
-          label1: localization.budgeted,
-          value1:
-              formatDuration(Duration(hours: project.budgetedHours.toInt())),
-          label2: localization.total,
-          value2: formatDuration(
+          label1: localization.total,
+          value1: formatDuration(
               taskDurationForProject(project, viewModel.state.taskState.map)),
+          label2: localization.budgeted,
+          value2:
+          formatDuration(Duration(hours: project.budgetedHours.toInt())),
         ),
         Material(
           color: Theme.of(context).canvasColor,
