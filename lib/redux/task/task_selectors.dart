@@ -72,3 +72,40 @@ double taskRateSelector({CompanyEntity company, ProjectEntity project}) {
 
   return 0;
 }
+
+var memoizedTaskStatsForProject = memo4((int projectId,
+    BuiltMap<int, TaskEntity> taskMap,
+    String activeLabel,
+    String archivedLabel) =>
+    taskStatsForProject(projectId, taskMap, activeLabel, archivedLabel));
+
+String taskStatsForProject(
+    int projectId,
+    BuiltMap<int, TaskEntity> taskMap,
+    String activeLabel,
+    String archivedLabel) {
+  int countActive = 0;
+  int countArchived = 0;
+  taskMap.forEach((taskId, task) {
+    if (task.clientId == taskId) {
+      if (task.isActive) {
+        countActive++;
+      } else if (task.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  String str = '';
+  if (countActive > 0) {
+    str = '$countActive $activeLabel';
+    if (countArchived > 0) {
+      str += ' • ';
+    }
+  }
+  if (countArchived > 0) {
+    str += '$countArchived $archivedLabel';
+  }
+
+  return str;
+}

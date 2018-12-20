@@ -34,6 +34,7 @@ class StubViewScreen extends StatelessWidget {
 class StubViewVM {
 
   StubViewVM({
+    @required this.state,
     @required this.stub,
     @required this.company,
     @required this.onActionSelected,
@@ -57,6 +58,7 @@ class StubViewVM {
     }
 
     return StubViewVM(
+        state: state,
         company: state.selectedCompany,
         isSaving: state.isSaving,
         isLoading: state.isLoading,
@@ -93,6 +95,7 @@ class StubViewVM {
         });
   }
 
+  final AppState state;
   final StubEntity stub;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;

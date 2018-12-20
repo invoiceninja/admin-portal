@@ -35,10 +35,12 @@ class ProjectViewScreen extends StatelessWidget {
 
 class ProjectViewVM {
   ProjectViewVM({
+    @required this.state,
     @required this.project,
     @required this.client,
     @required this.company,
     @required this.onActionSelected,
+    @required this.onTasksPressed,
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onAddTaskPressed,
@@ -61,6 +63,7 @@ class ProjectViewVM {
     }
 
     return ProjectViewVM(
+        state: state,
         company: state.selectedCompany,
         isSaving: state.isSaving,
         isLoading: state.isLoading,
@@ -73,8 +76,13 @@ class ProjectViewVM {
         onRefreshed: (context) => _handleRefresh(context),
         onClientPressed: (BuildContext context) => store
             .dispatch(ViewClient(clientId: project.clientId, context: context)),
+        onTasksPressed: (BuildContext context) {
+          store.dispatch(FilterTasksByEntity(
+              entityId: project.id, entityType: EntityType.project));
+          store.dispatch(ViewTaskList(context));
+        },
         onAddTaskPressed: (context) => store.dispatch(EditTask(
-          context: context,
+            context: context,
             task: TaskEntity().rebuild((b) => b
               ..projectId = project.id
               ..clientId = project.clientId))),
@@ -105,6 +113,7 @@ class ProjectViewVM {
         });
   }
 
+  final AppState state;
   final ProjectEntity project;
   final ClientEntity client;
   final CompanyEntity company;
@@ -113,6 +122,7 @@ class ProjectViewVM {
   final Function(BuildContext) onClientPressed;
   final Function onBackPressed;
   final Function(BuildContext) onAddTaskPressed;
+  final Function(BuildContext) onTasksPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

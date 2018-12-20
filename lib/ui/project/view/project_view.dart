@@ -4,12 +4,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectView extends StatefulWidget {
@@ -64,6 +67,20 @@ class _ProjectViewState extends State<ProjectView> {
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onClientPressed(context),
           ),
+        ),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
+        ),
+        EntityListTile(
+          icon: getEntityIcon(EntityType.task),
+          title: localization.tasks,
+          onTap: () => viewModel.onTasksPressed(context),
+          subtitle: memoizedTaskStatsForProject(
+              client.id,
+              viewModel.state.taskState.map,
+              localization.active,
+              localization.archived),
         ),
         Container(
           color: Theme.of(context).backgroundColor,
