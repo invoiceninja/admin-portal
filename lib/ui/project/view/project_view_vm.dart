@@ -83,7 +83,7 @@ class ProjectViewVM {
         },
         onAddTaskPressed: (context) => store.dispatch(EditTask(
             context: context,
-            task: TaskEntity(isRunning: !state.uiState.manualTimer)
+            task: TaskEntity(isRunning: state.uiState.autoStartTasks)
                 .rebuild((b) => b
                   ..projectId = project.id
                   ..clientId = project.clientId))),

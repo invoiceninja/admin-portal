@@ -143,7 +143,7 @@ class _ClientViewState extends State<ClientView>
                               store.dispatch(EditTask(
                                   task: TaskEntity(
                                           isRunning:
-                                              !store.state.uiState.manualTimer)
+                                              store.state.uiState.autoStartTasks)
                                       .rebuild((b) => b.clientId = client.id),
                                   context: context));
                             },

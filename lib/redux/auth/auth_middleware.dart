@@ -47,7 +47,7 @@ void _loadAuthLocal(Store<AppState> store, dynamic action) async {
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
   final bool emailPayment = prefs.getBool(kSharedPrefEmailPayment) ?? false;
-  final bool manualTimer = prefs.getBool(kSharedPrefManualTimer) ?? false;
+  final bool manualTimer = prefs.getBool(kSharedPrefAutoStartTasks) ?? false;
   final bool requireAuthentication =
       prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
 
@@ -55,7 +55,7 @@ void _loadAuthLocal(Store<AppState> store, dynamic action) async {
       enableDarkMode: enableDarkMode,
       emailPayment: emailPayment,
       requireAuthentication: requireAuthentication,
-      manualTimer: manualTimer));
+      autoStartTasks: manualTimer));
 }
 
 Middleware<AppState> _createLoginInit() {

@@ -46,8 +46,8 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'emailPayment',
       serializers.serialize(object.emailPayment,
           specifiedType: const FullType(bool)),
-      'manualTimer',
-      serializers.serialize(object.manualTimer,
+      'autoStartTasks',
+      serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
       'dashboardUIState',
       serializers.serialize(object.dashboardUIState,
@@ -115,8 +115,8 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.emailPayment = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'manualTimer':
-          result.manualTimer = serializers.deserialize(value,
+        case 'autoStartTasks':
+          result.autoStartTasks = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'dashboardUIState':
@@ -175,7 +175,7 @@ class _$UIState extends UIState {
   @override
   final bool emailPayment;
   @override
-  final bool manualTimer;
+  final bool autoStartTasks;
   @override
   final DashboardUIState dashboardUIState;
   @override
@@ -204,7 +204,7 @@ class _$UIState extends UIState {
       this.enableDarkMode,
       this.requireAuthentication,
       this.emailPayment,
-      this.manualTimer,
+      this.autoStartTasks,
       this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
@@ -230,8 +230,8 @@ class _$UIState extends UIState {
     if (emailPayment == null) {
       throw new BuiltValueNullFieldError('UIState', 'emailPayment');
     }
-    if (manualTimer == null) {
-      throw new BuiltValueNullFieldError('UIState', 'manualTimer');
+    if (autoStartTasks == null) {
+      throw new BuiltValueNullFieldError('UIState', 'autoStartTasks');
     }
     if (dashboardUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
@@ -275,7 +275,7 @@ class _$UIState extends UIState {
         enableDarkMode == other.enableDarkMode &&
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
-        manualTimer == other.manualTimer &&
+        autoStartTasks == other.autoStartTasks &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
@@ -314,7 +314,7 @@ class _$UIState extends UIState {
                                                     requireAuthentication
                                                         .hashCode),
                                                 emailPayment.hashCode),
-                                            manualTimer.hashCode),
+                                            autoStartTasks.hashCode),
                                         dashboardUIState.hashCode),
                                     productUIState.hashCode),
                                 clientUIState.hashCode),
@@ -334,7 +334,7 @@ class _$UIState extends UIState {
           ..add('enableDarkMode', enableDarkMode)
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
-          ..add('manualTimer', manualTimer)
+          ..add('autoStartTasks', autoStartTasks)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
@@ -374,9 +374,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool get emailPayment => _$this._emailPayment;
   set emailPayment(bool emailPayment) => _$this._emailPayment = emailPayment;
 
-  bool _manualTimer;
-  bool get manualTimer => _$this._manualTimer;
-  set manualTimer(bool manualTimer) => _$this._manualTimer = manualTimer;
+  bool _autoStartTasks;
+  bool get autoStartTasks => _$this._autoStartTasks;
+  set autoStartTasks(bool autoStartTasks) =>
+      _$this._autoStartTasks = autoStartTasks;
 
   DashboardUIStateBuilder _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
@@ -439,7 +440,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _enableDarkMode = _$v.enableDarkMode;
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
-      _manualTimer = _$v.manualTimer;
+      _autoStartTasks = _$v.autoStartTasks;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
@@ -478,7 +479,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               enableDarkMode: enableDarkMode,
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
-              manualTimer: manualTimer,
+              autoStartTasks: autoStartTasks,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),

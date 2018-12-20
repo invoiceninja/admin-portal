@@ -30,12 +30,12 @@ class UserSettingsChanged implements PersistUI {
       {this.enableDarkMode,
       this.emailPayment,
       this.requireAuthentication,
-      this.manualTimer});
+      this.autoStartTasks});
 
   final bool enableDarkMode;
   final bool emailPayment;
   final bool requireAuthentication;
-  final bool manualTimer;
+  final bool autoStartTasks;
 }
 
 class LoadDataSuccess {

@@ -27,7 +27,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       enableDarkMode: enableDarkMode ?? false,
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
-      manualTimer: false,
+      autoStartTasks: false,
       dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
@@ -52,7 +52,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   bool get emailPayment;
 
-  bool get manualTimer;
+  bool get autoStartTasks;
 
   DashboardUIState get dashboardUIState;
 

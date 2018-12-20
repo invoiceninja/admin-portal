@@ -236,7 +236,7 @@ class AppDrawer extends StatelessWidget {
             onCreateTap: () {
               navigator.pop();
               store.dispatch(EditTask(
-                  task: TaskEntity(isRunning: !state.uiState.manualTimer),
+                  task: TaskEntity(isRunning: state.uiState.autoStartTasks),
                   context: context));
             },
           ),

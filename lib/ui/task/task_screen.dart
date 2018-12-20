@@ -73,7 +73,7 @@ class TaskScreen extends StatelessWidget {
                 onPressed: () {
                   store.dispatch(EditTask(
                       task: TaskEntity(
-                          isRunning: !store.state.uiState.manualTimer),
+                          isRunning: store.state.uiState.autoStartTasks),
                       context: context));
                 },
                 child: Icon(

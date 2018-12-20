@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/task/task_item_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
