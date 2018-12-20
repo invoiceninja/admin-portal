@@ -56,13 +56,25 @@ class TaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
-    final filteredClientId = listState.filterEntityId;
-    final filteredClient =
-        filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
+
+    final widgets = <Widget>[];
+    BaseEntity filteredEntity;
+
+    if (listState.filterEntityType == EntityType.client) {
+      final filteredClientId = listState.filterEntityId;
+      filteredEntity = filteredClientId != null
+          ? viewModel.clientMap[filteredClientId]
+          : null;
+    } else if (listState.filterEntityType == EntityType.project){
+      final filteredProjectId = listState.filterEntityId;
+      filteredEntity = filteredProjectId != null
+          ? viewModel.state.projectState.map[filteredProjectId]
+          : null;
+    }
 
     return Column(
       children: <Widget>[
-        filteredClient != null
+        filteredEntity != null
             ? Material(
                 color: Colors.orangeAccent,
                 elevation: 6.0,
@@ -73,7 +85,7 @@ class TaskList extends StatelessWidget {
                       SizedBox(width: 18.0),
                       Expanded(
                         child: Text(
-                          '${localization.filteredBy} ${filteredClient.listDisplayName}',
+                          '${localization.filteredBy} ${filteredEntity.listDisplayName}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
@@ -125,8 +137,8 @@ class TaskList extends StatelessWidget {
                                   task: task,
                                   client: viewModel.clientMap[task.clientId] ??
                                       ClientEntity(),
-                                  project: viewModel.state.projectState
-                                          .map[task.projectId],
+                                  project: viewModel
+                                      .state.projectState.map[task.projectId],
                                   onTap: () =>
                                       viewModel.onTaskTap(context, task),
                                   onEntityAction: (EntityAction action) {

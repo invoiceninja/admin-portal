@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -74,9 +75,20 @@ class TaskListVM {
       isLoaded: state.taskState.isLoaded,
       filter: state.taskUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(FilterTasksByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.taskListState.filterEntityId, context: context)),
+      onViewEntityFilterPressed: (BuildContext context) {
+        switch (state.taskListState.filterEntityType) {
+          case EntityType.client:
+            store.dispatch(ViewClient(
+                clientId: state.taskListState.filterEntityId,
+                context: context));
+            break;
+          case EntityType.project:
+            store.dispatch(ViewProject(
+                projectId: state.taskListState.filterEntityId,
+                context: context));
+            break;
+        }
+      },
       onTaskTap: (context, task) {
         store.dispatch(ViewTask(taskId: task.id, context: context));
       },
