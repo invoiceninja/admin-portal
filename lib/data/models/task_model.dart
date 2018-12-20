@@ -13,7 +13,7 @@ part 'task_model.g.dart';
 abstract class TaskListResponse
     implements Built<TaskListResponse, TaskListResponseBuilder> {
   factory TaskListResponse([void updates(TaskListResponseBuilder b)]) =
-  _$TaskListResponse;
+      _$TaskListResponse;
 
   TaskListResponse._();
 
@@ -26,7 +26,7 @@ abstract class TaskListResponse
 abstract class TaskItemResponse
     implements Built<TaskItemResponse, TaskItemResponseBuilder> {
   factory TaskItemResponse([void updates(TaskItemResponseBuilder b)]) =
-  _$TaskItemResponse;
+      _$TaskItemResponse;
 
   TaskItemResponse._();
 
@@ -52,9 +52,7 @@ class TaskFields {
   static const String isDeleted = 'isDeleted';
 }
 
-
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
-
   factory TaskTime({DateTime startDate, DateTime endDate}) {
     return _$TaskTime._(
       startDate: startDate ?? DateTime.now().toUtc(),
@@ -71,11 +69,13 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   Duration get duration => (endDate ?? DateTime.now()).difference(startDate);
 
-  List<dynamic> get asList =>
-      <dynamic>[
+  List<dynamic> get asList => <dynamic>[
         (startDate.millisecondsSinceEpoch / 1000).floor(),
         endDate != null ? (endDate.millisecondsSinceEpoch / 1000).floor() : 0
       ];
+
+  bool equalTo(TaskTime taskTime) =>
+      startDate == taskTime.startDate && endDate == taskTime.endDate;
 
   static Serializer<TaskTime> get serializer => _$taskTimeSerializer;
 }
@@ -92,9 +92,7 @@ abstract class TaskEntity extends Object
       clientId: null,
       projectId: null,
       timeLog: isRunning
-          ? '[[${(DateTime
-          .now()
-          .millisecondsSinceEpoch / 1000).floor()},0]]'
+          ? '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]'
           : '',
       isRunning: false,
       customValue1: '',
@@ -135,7 +133,7 @@ abstract class TaskEntity extends Object
       final taskTime = TaskTime(
           startDate: convertTimestampToDate(startDate),
           endDate:
-          endDate > 0 ? convertTimestampToDate(endDate) : DateTime.now());
+              endDate > 0 ? convertTimestampToDate(endDate) : DateTime.now());
 
       details.add(taskTime);
     });
@@ -145,7 +143,7 @@ abstract class TaskEntity extends Object
 
   String addTaskTime(TaskTime time) {
     final List<dynamic> taskTimes =
-    timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
+        timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
 
     taskTimes.add(time.asList);
     return jsonEncode(taskTimes);

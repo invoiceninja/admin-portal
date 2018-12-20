@@ -30,12 +30,13 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
           final task = viewModel.task;
-
+          final taskTimes = task.taskTimes;
           return TimeEditDetails(
             viewModel: viewModel,
             //key: Key(taskTime.entityKey),
             taskTime: taskTime,
-            index: task.taskTimes.indexOf(viewModel.taskTime),
+            index: taskTimes.indexOf(
+                taskTimes.firstWhere((time) => time.equalTo(taskTime))),
           );
         });
   }
