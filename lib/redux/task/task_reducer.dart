@@ -19,11 +19,9 @@ final editingTimeReducer = combineReducers<TaskTime>([
   TypedReducer<TaskTime, EditTaskTime>(editTaskTime),
 ]);
 
-TaskTime editTaskTime(
-    TaskTime taskTime, dynamic action) {
+TaskTime editTaskTime(TaskTime taskTime, dynamic action) {
   return action.taskTime ?? TaskTime();
 }
-
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewTask>(
@@ -108,8 +106,7 @@ ListUIState _sortTasks(ListUIState taskListState, SortTasks action) {
 }
 
 TaskEntity _addTaskTime(TaskEntity task, AddTaskTime action) {
-  return task.rebuild(
-          (b) => b..timeLog = task.addTaskTime(action.taskTime));
+  return task.rebuild((b) => b..timeLog = task.addTaskTime(action.taskTime));
 }
 
 TaskEntity _removeTaskTime(TaskEntity task, DeleteTaskTime action) {
@@ -120,11 +117,8 @@ TaskEntity _removeTaskTime(TaskEntity task, DeleteTaskTime action) {
 }
 
 TaskEntity _updateTaskTime(TaskEntity task, UpdateTaskTime action) {
-  return task;
-  /*
-  return invoice
-      .rebuild((b) => b..invoiceItems[action.index] = action.invoiceItem);
-      */
+  return task.rebuild(
+      (b) => b..timeLog = task.updateTaskTime(action.taskTime, action.index));
 }
 
 final tasksReducer = combineReducers<TaskState>([

@@ -43,8 +43,8 @@ class TaskEditTimesVM {
       task: task,
       taskTime: state.taskUIState.editingTime,
       onRemoveTaskTimePressed: (index) => store.dispatch(DeleteTaskTime(index)),
-      onDoneTaskTimePressed: (taskTime) {
-        store.dispatch(UpdateTaskTime(taskTime: taskTime));
+      onDoneTaskTimePressed: (taskTime, index) {
+        store.dispatch(UpdateTaskTime(taskTime: taskTime, index: index));
         store.dispatch(EditTaskTime());
       },
     );
@@ -54,5 +54,5 @@ class TaskEditTimesVM {
   final TaskEntity task;
   final TaskTime taskTime;
   final Function(int) onRemoveTaskTimePressed;
-  final Function(TaskTime) onDoneTaskTimePressed;
+  final Function(TaskTime, int) onDoneTaskTimePressed;
 }

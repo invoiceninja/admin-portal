@@ -142,9 +142,19 @@ abstract class TaskEntity extends Object
 
   String addTaskTime(TaskTime time) {
     final List<dynamic> taskTimes =
-        timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
+    timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
 
     taskTimes.add(time.asList);
+
+    return jsonEncode(taskTimes);
+  }
+
+  String updateTaskTime(TaskTime time, int index) {
+    final List<dynamic> taskTimes =
+    timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
+
+    taskTimes[index] = time.asList;
+
     return jsonEncode(taskTimes);
   }
 
