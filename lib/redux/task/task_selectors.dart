@@ -9,8 +9,7 @@ var memoizedDropdownTaskList = memo2(
 
 List<int> dropdownTasksSelector(
     BuiltMap<int, TaskEntity> taskMap, BuiltList<int> taskList) {
-  final list =
-      taskList.where((taskId) => taskMap[taskId].isActive).toList();
+  final list = taskList.where((taskId) => taskMap[taskId].isActive).toList();
 
   list.sort((taskAId, taskBId) {
     final taskA = taskMap[taskAId];
@@ -32,9 +31,14 @@ List<int> filteredTasksSelector(BuiltMap<int, TaskEntity> taskMap,
     if (!task.matchesStates(taskListState.stateFilters)) {
       return false;
     }
-    if (taskListState.filterEntityId != null &&
-        task.clientId != taskListState.filterEntityId) {
-      return false;
+    if (taskListState.filterEntityId != null) {
+      if (taskListState.filterEntityType == EntityType.client &&
+          task.clientId != taskListState.filterEntityId) {
+        return false;
+      } else if (taskListState.filterEntityType == EntityType.project &&
+          task.projectId != taskListState.filterEntityId) {
+        return false;
+      }
     }
     if (taskListState.custom1Filters.isNotEmpty &&
         !taskListState.custom1Filters.contains(task.customValue1)) {
@@ -64,7 +68,7 @@ List<int> filteredTasksSelector(BuiltMap<int, TaskEntity> taskMap,
 }
 
 double taskRateSelector({CompanyEntity company, ProjectEntity project}) {
-  if (project != null && project.taskRate> 0) {
+  if (project != null && project.taskRate > 0) {
     return project.taskRate;
   } else if (company != null && company.defaultTaskRate > 0) {
     return company.defaultTaskRate;
@@ -74,16 +78,13 @@ double taskRateSelector({CompanyEntity company, ProjectEntity project}) {
 }
 
 var memoizedTaskStatsForProject = memo4((int projectId,
-    BuiltMap<int, TaskEntity> taskMap,
-    String activeLabel,
-    String archivedLabel) =>
+        BuiltMap<int, TaskEntity> taskMap,
+        String activeLabel,
+        String archivedLabel) =>
     taskStatsForProject(projectId, taskMap, activeLabel, archivedLabel));
 
-String taskStatsForProject(
-    int projectId,
-    BuiltMap<int, TaskEntity> taskMap,
-    String activeLabel,
-    String archivedLabel) {
+String taskStatsForProject(int projectId, BuiltMap<int, TaskEntity> taskMap,
+    String activeLabel, String archivedLabel) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
