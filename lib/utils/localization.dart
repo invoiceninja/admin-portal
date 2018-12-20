@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'budgeted': 'Budgeted',
       'start_time': 'Start Time',
       'end_time': 'End Time',
       'date': 'Date',
@@ -10672,6 +10673,10 @@ class AppLocalization {
 
   String get endTime =>
       _localizedValues[locale.toString()]['end_time'];
+
+  String get budgeted =>
+      _localizedValues[locale.toString()]['budgeted'];
+
 
 
   String lookup(String key) {

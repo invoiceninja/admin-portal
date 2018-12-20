@@ -43,7 +43,7 @@ class _ProjectViewState extends State<ProjectView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final project = viewModel.project;
-    final client = viewModel.client;  
+    final client = viewModel.client;
     final company = viewModel.company;
     final localization = AppLocalization.of(context);
 
@@ -65,7 +65,7 @@ class _ProjectViewState extends State<ProjectView> {
     List<Widget> _buildView() {
       final widgets = <Widget>[
         TwoValueHeader(
-          label1: localization.budgetedHours,
+          label1: localization.budgeted,
           value1:
               formatDuration(Duration(hours: project.budgetedHours.toInt())),
           label2: localization.total,
@@ -94,10 +94,6 @@ class _ProjectViewState extends State<ProjectView> {
               viewModel.state.taskState.map,
               localization.active,
               localization.archived),
-        ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
         ),
       ];
 
