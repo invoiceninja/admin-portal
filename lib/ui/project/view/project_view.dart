@@ -1,14 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -29,17 +33,22 @@ class ProjectView extends StatefulWidget {
 
 class _ProjectViewState extends State<ProjectView> {
   @override
+  void initState() {
+    super.initState();
+    Timer.periodic(Duration(seconds: 1),
+            (Timer timer) => mounted ? setState(() => false) : false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final project = viewModel.project;
-    final client = viewModel.client;
+    final client = viewModel.client;  
     final company = viewModel.company;
     final localization = AppLocalization.of(context);
 
     final Map<String, String> fields = {
       ProjectFields.dueDate: formatDate(project.dueDate, context),
-      ProjectFields.budgetedHours: formatNumber(project.budgetedHours, context,
-          formatNumberType: FormatNumberType.double),
       ProjectFields.taskRate: formatNumber(project.taskRate, context,
           formatNumberType: FormatNumberType.money),
     };
@@ -55,9 +64,13 @@ class _ProjectViewState extends State<ProjectView> {
 
     List<Widget> _buildView() {
       final widgets = <Widget>[
-        OneValueHeader(
-          label: localization.totalAmount,
-          value: '',
+        TwoValueHeader(
+          label1: localization.budgetedHours,
+          value1:
+              formatDuration(Duration(hours: project.budgetedHours.toInt())),
+          label2: localization.total,
+          value2: formatDuration(
+              taskDurationForProject(project, viewModel.state.taskState.map)),
         ),
         Material(
           color: Theme.of(context).canvasColor,

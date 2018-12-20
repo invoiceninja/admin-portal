@@ -82,6 +82,16 @@ List<int> filteredProjectsSelector(
   return list;
 }
 
+Duration taskDurationForProject(ProjectEntity project, BuiltMap<int, TaskEntity> taskMap,) {
+  int total = 0;
+  taskMap.forEach((index, task) {
+    if (task.projectId == project.id) {
+      total += task.calculateDuration.inSeconds;
+    }
+  });
+  return Duration(seconds: total);
+}
+
 var memoizedProjectStatsForClient = memo4((int clientId,
         BuiltMap<int, ProjectEntity> projectMap,
         String activeLabel,

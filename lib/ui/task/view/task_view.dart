@@ -33,7 +33,7 @@ class _TaskViewState extends State<TaskView> {
   void initState() {
     super.initState();
     Timer.periodic(Duration(seconds: 1),
-        (Timer t) => mounted ? setState(() => false) : false);
+        (Timer timer) => mounted ? setState(() => false) : false);
   }
 
   @override
