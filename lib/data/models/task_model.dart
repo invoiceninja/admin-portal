@@ -53,13 +53,13 @@ class TaskFields {
 }
 
 class TaskTime {
-  TaskTime({DateTime startDate, this.endDate}) : startDate = DateTime.now();
+  TaskTime({this.startDate, this.endDate});
 
   final DateTime startDate;
   final DateTime endDate;
 
-  int get duration =>
-      (endDate ?? DateTime.now()).difference(startDate).inSeconds;
+  Duration get duration =>
+      (endDate ?? DateTime.now()).difference(startDate);
 
   List<dynamic> get asList => <dynamic>[
         (startDate.millisecondsSinceEpoch / 1000).floor(),
@@ -117,9 +117,8 @@ abstract class TaskEntity extends Object
 
       final taskTime = TaskTime(
           startDate: convertTimestampToDate(startDate),
-          endDate: convertTimestampToDate(endDate > 0
-              ? endDate
-              : (DateTime.now().millisecondsSinceEpoch / 1000).floor()));
+          endDate: endDate > 0 ? convertTimestampToDate(endDate) : DateTime.now()
+      );
 
       details.add(taskTime);
     });
@@ -139,7 +138,7 @@ abstract class TaskEntity extends Object
     int seconds = 0;
 
     taskTimes.forEach((taskTime) {
-      seconds += taskTime.duration;
+      seconds += taskTime.duration.inSeconds;
     });
 
     return Duration(seconds: seconds);

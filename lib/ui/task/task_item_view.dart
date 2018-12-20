@@ -31,7 +31,7 @@ class TaskItemListTile extends StatelessWidget {
         .format(taskItem.startDate);
     final subtitle = '$startDateString - $endDateString';
     final duration =
-        formatDuration(taskItem.endDate.difference(taskItem.startDate));
+        formatDuration(taskItem.duration);
 
     return Material(
         color: Theme.of(context).canvasColor,
