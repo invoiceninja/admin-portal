@@ -102,6 +102,19 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   TimeOfDay _endTime;
 
   @override
+  void didChangeDependencies() {
+    _date = widget.taskTime.startDate.toIso8601String();
+    _startTime = TimeOfDay(
+        hour: widget.taskTime.startDate.hour,
+        minute: widget.taskTime.startDate.minute);
+    _endTime = TimeOfDay(
+        hour: widget.taskTime.endDate.hour,
+        minute: widget.taskTime.endDate.minute);
+
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
@@ -155,7 +168,6 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   icon: Icons.check_circle,
                   label: localization.done,
                   onPressed: () {
-                    final origTaskTime = widget.taskTime;
                     final date = DateTime.parse(_date);
                     final taskTime = TaskTime(
                       startDate: DateTime(date.year, date.month, date.day,

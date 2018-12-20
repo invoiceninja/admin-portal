@@ -10,7 +10,7 @@ EntityUIState taskUIReducer(TaskUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(taskListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..editingTime = editingTimeReducer(state.editingTime, action)
+    ..editingTime.replace(editingTimeReducer(state.editingTime, action))
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 

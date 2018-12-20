@@ -23,6 +23,7 @@ Serializer<TaskListResponse> _$taskListResponseSerializer =
     new _$TaskListResponseSerializer();
 Serializer<TaskItemResponse> _$taskItemResponseSerializer =
     new _$TaskItemResponseSerializer();
+Serializer<TaskTime> _$taskTimeSerializer = new _$TaskTimeSerializer();
 Serializer<TaskEntity> _$taskEntitySerializer = new _$TaskEntitySerializer();
 
 class _$TaskListResponseSerializer
@@ -101,6 +102,56 @@ class _$TaskItemResponseSerializer
         case 'data':
           result.data.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaskEntity)) as TaskEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
+  @override
+  final Iterable<Type> types = const [TaskTime, _$TaskTime];
+  @override
+  final String wireName = 'TaskTime';
+
+  @override
+  Iterable serialize(Serializers serializers, TaskTime object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'startDate',
+      serializers.serialize(object.startDate,
+          specifiedType: const FullType(DateTime)),
+    ];
+    if (object.endDate != null) {
+      result
+        ..add('endDate')
+        ..add(serializers.serialize(object.endDate,
+            specifiedType: const FullType(DateTime)));
+    }
+
+    return result;
+  }
+
+  @override
+  TaskTime deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new TaskTimeBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'startDate':
+          result.startDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+        case 'endDate':
+          result.endDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
           break;
       }
     }
@@ -452,6 +503,94 @@ class TaskItemResponseBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$TaskTime extends TaskTime {
+  @override
+  final DateTime startDate;
+  @override
+  final DateTime endDate;
+
+  factory _$TaskTime([void updates(TaskTimeBuilder b)]) =>
+      (new TaskTimeBuilder()..update(updates)).build();
+
+  _$TaskTime._({this.startDate, this.endDate}) : super._() {
+    if (startDate == null) {
+      throw new BuiltValueNullFieldError('TaskTime', 'startDate');
+    }
+  }
+
+  @override
+  TaskTime rebuild(void updates(TaskTimeBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TaskTimeBuilder toBuilder() => new TaskTimeBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TaskTime &&
+        startDate == other.startDate &&
+        endDate == other.endDate;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, startDate.hashCode), endDate.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TaskTime')
+          ..add('startDate', startDate)
+          ..add('endDate', endDate))
+        .toString();
+  }
+}
+
+class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
+  _$TaskTime _$v;
+
+  DateTime _startDate;
+  DateTime get startDate => _$this._startDate;
+  set startDate(DateTime startDate) => _$this._startDate = startDate;
+
+  DateTime _endDate;
+  DateTime get endDate => _$this._endDate;
+  set endDate(DateTime endDate) => _$this._endDate = endDate;
+
+  TaskTimeBuilder();
+
+  TaskTimeBuilder get _$this {
+    if (_$v != null) {
+      _startDate = _$v.startDate;
+      _endDate = _$v.endDate;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TaskTime other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$TaskTime;
+  }
+
+  @override
+  void update(void updates(TaskTimeBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TaskTime build() {
+    final _$result =
+        _$v ?? new _$TaskTime._(startDate: startDate, endDate: endDate);
     replace(_$result);
     return _$result;
   }

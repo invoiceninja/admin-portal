@@ -44,7 +44,7 @@ abstract class TaskUIState extends Object with EntityUIState implements Built<Ta
     return _$TaskUIState._(
       listUIState: ListUIState(TaskFields.updatedAt, sortAscending: false),
       editing: TaskEntity(),
-      //editingTIme: [],
+      editingTime: TaskTime(),
       selectedId: 0,
     );
   }

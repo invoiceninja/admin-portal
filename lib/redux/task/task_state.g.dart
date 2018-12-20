@@ -135,8 +135,8 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
               specifiedType: const FullType(TaskEntity)) as TaskEntity);
           break;
         case 'editingTime':
-          result.editingTime = serializers.deserialize(value,
-              specifiedType: const FullType(TaskTime)) as TaskTime;
+          result.editingTime.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TaskTime)) as TaskTime);
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
@@ -338,9 +338,11 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   TaskEntityBuilder get editing => _$this._editing ??= new TaskEntityBuilder();
   set editing(TaskEntityBuilder editing) => _$this._editing = editing;
 
-  TaskTime _editingTime;
-  TaskTime get editingTime => _$this._editingTime;
-  set editingTime(TaskTime editingTime) => _$this._editingTime = editingTime;
+  TaskTimeBuilder _editingTime;
+  TaskTimeBuilder get editingTime =>
+      _$this._editingTime ??= new TaskTimeBuilder();
+  set editingTime(TaskTimeBuilder editingTime) =>
+      _$this._editingTime = editingTime;
 
   int _selectedId;
   int get selectedId => _$this._selectedId;
@@ -357,7 +359,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   TaskUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
-      _editingTime = _$v.editingTime;
+      _editingTime = _$v.editingTime?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
@@ -385,7 +387,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
       _$result = _$v ??
           new _$TaskUIState._(
               editing: _editing?.build(),
-              editingTime: editingTime,
+              editingTime: _editingTime?.build(),
               selectedId: selectedId,
               listUIState: listUIState.build());
     } catch (_) {
@@ -393,6 +395,8 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
       try {
         _$failedField = 'editing';
         _editing?.build();
+        _$failedField = 'editingTime';
+        _editingTime?.build();
 
         _$failedField = 'listUIState';
         listUIState.build();
