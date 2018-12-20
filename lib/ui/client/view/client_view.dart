@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
@@ -126,6 +127,21 @@ class _ClientViewState extends State<ClientView>
                               Navigator.of(context).pop();
                               store.dispatch(EditProject(
                                   project: ProjectEntity()
+                                      .rebuild((b) => b.clientId = client.id),
+                                  context: context));
+                            },
+                          )
+                        : Container(),
+                    company.isModuleEnabled(EntityType.task) &&
+                            user.canCreate(EntityType.task)
+                        ? ListTile(
+                            //dense: true,
+                            leading: Icon(Icons.add_circle_outline),
+                            title: Text(localization.task),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              store.dispatch(EditTask(
+                                  task: TaskEntity()
                                       .rebuild((b) => b.clientId = client.id),
                                   context: context));
                             },
