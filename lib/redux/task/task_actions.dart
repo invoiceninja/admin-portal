@@ -20,6 +20,7 @@ class ViewTask implements PersistUI {
 class EditTask implements PersistUI {
   EditTask(
       {this.task,
+      this.taskTime,
       this.context,
       this.completer,
       this.trackRoute = true,
@@ -27,6 +28,7 @@ class EditTask implements PersistUI {
 
   final int taskItemIndex;
   final TaskEntity task;
+  final TaskTime taskTime;
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
@@ -108,7 +110,6 @@ class DeleteTaskTime implements PersistUI {
 
   final int index;
 }
-
 
 class LoadTasksRequest implements StartLoading {}
 
