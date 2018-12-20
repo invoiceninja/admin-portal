@@ -58,8 +58,7 @@ class TaskTime {
   final DateTime startDate;
   final DateTime endDate;
 
-  Duration get duration =>
-      (endDate ?? DateTime.now()).difference(startDate);
+  Duration get duration => (endDate ?? DateTime.now()).difference(startDate);
 
   List<dynamic> get asList => <dynamic>[
         (startDate.millisecondsSinceEpoch / 1000).floor(),
@@ -117,8 +116,8 @@ abstract class TaskEntity extends Object
 
       final taskTime = TaskTime(
           startDate: convertTimestampToDate(startDate),
-          endDate: endDate > 0 ? convertTimestampToDate(endDate) : DateTime.now()
-      );
+          endDate:
+              endDate > 0 ? convertTimestampToDate(endDate) : DateTime.now());
 
       details.add(taskTime);
     });
@@ -133,6 +132,9 @@ abstract class TaskEntity extends Object
     taskTimes.add(time.asList);
     return jsonEncode(taskTimes);
   }
+
+  double calculateAmount(double taskRate) =>
+      taskRate * calculateDuration.inSeconds / 3600;
 
   Duration get calculateDuration {
     int seconds = 0;
