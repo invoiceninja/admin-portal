@@ -62,3 +62,13 @@ List<int> filteredTasksSelector(BuiltMap<int, TaskEntity> taskMap,
 
   return list;
 }
+
+double taskRateSelector({CompanyEntity company, ProjectEntity project}) {
+  if (project != null && project.taskRate> 0) {
+    return project.taskRate;
+  } else if (company != null && company.defaultTaskRate > 0) {
+    return company.defaultTaskRate;
+  }
+
+  return 0;
+}

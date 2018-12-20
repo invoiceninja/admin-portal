@@ -43,12 +43,17 @@ String formatNumber(
   int currencyId,
   FormatNumberType formatNumberType = FormatNumberType.money,
   bool zeroIsNull = false,
+  bool roundToTwo = false,
 }) {
   if ((zeroIsNull || formatNumberType == FormatNumberType.input) &&
       value == 0) {
     return null;
   } else if (value == null) {
     return '';
+  }
+
+  if (roundToTwo) {
+    value = round(value, 2);
   }
 
   if (formatNumberType == FormatNumberType.duration) {

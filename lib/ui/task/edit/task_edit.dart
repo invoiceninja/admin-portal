@@ -34,7 +34,8 @@ class _TaskEditState extends State<TaskEdit>
   void initState() {
     super.initState();
 
-    Timer.periodic(Duration(seconds: 1), (Timer t) => setState(() => false));
+    Timer.periodic(Duration(seconds: 1),
+        (Timer t) => mounted ? setState(() => false) : false);
 
     final task = widget.viewModel.task;
     final taskTime = widget.viewModel.taskTime;

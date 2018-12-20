@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/task/task_item_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -27,11 +29,11 @@ class TaskView extends StatefulWidget {
 }
 
 class _TaskViewState extends State<TaskView> {
-
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 1), (Timer t) => setState(() => false));
+    Timer.periodic(Duration(seconds: 1),
+        (Timer t) => mounted ? setState(() => false) : false);
   }
 
   @override
@@ -56,9 +58,16 @@ class _TaskViewState extends State<TaskView> {
 
     List<Widget> _buildView() {
       final widgets = <Widget>[
-        OneValueHeader(
-          label: localization.duration,
-          value: formatDuration(task.calculateDuration),
+        TwoValueHeader(
+          label1: localization.duration,
+          value1: formatDuration(task.calculateDuration),
+          label2: localization.amount,
+          value2: formatNumber(
+              taskRateSelector(company: company, project: project) *
+                  task.calculateDuration.inSeconds /
+                  3600,
+              context,
+              roundToTwo: true),
         ),
       ];
 
