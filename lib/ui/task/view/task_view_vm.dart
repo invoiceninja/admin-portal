@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
@@ -88,9 +91,20 @@ class TaskViewVM {
                 .dispatch(ViewProject(projectId: project.id, context: context));
           }
         },
-        onEditPressed: (BuildContext context, [int taskItemIndex]) {
+        onEditPressed: (BuildContext context, [TaskTime taskItem]) {
+          final Completer<TaskEntity> completer =
+          new Completer<TaskEntity>();
           store.dispatch(EditTask(
-              task: task, context: context, taskItemIndex: taskItemIndex));
+              task: task,
+              taskTime: taskItem,
+              context: context,
+              completer: completer,));
+          completer.future.then((task) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: AppLocalization.of(context).updatedTask,
+                )));
+          });
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {
@@ -124,7 +138,7 @@ class TaskViewVM {
   final ProjectEntity project;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext, [int]) onEditPressed;
+  final Function(BuildContext, [TaskTime]) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, [bool]) onClientPressed;
