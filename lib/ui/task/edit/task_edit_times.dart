@@ -174,10 +174,10 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                     final date = DateTime.parse(_date);
                     final taskTime = TaskTime(
                       startDate: DateTime(date.year, date.month, date.day,
-                          _startTime.hour, _startTime.minute),
+                          _startTime.hour, _startTime.minute).toUtc(),
                       endDate: _endTime != null
                           ? DateTime(date.year, date.month, date.day,
-                              _endTime.hour, _endTime.minute)
+                              _endTime.hour, _endTime.minute).toUtc()
                           : null,
                     );
                     widget.viewModel
