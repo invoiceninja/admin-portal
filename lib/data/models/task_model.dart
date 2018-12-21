@@ -158,6 +158,15 @@ abstract class TaskEntity extends Object
     return jsonEncode(taskTimes);
   }
 
+  String deleteTaskTime(int index) {
+    final List<dynamic> taskTimes =
+    timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
+
+    taskTimes.removeAt(index);
+
+    return jsonEncode(taskTimes);
+  }
+
   double calculateAmount(double taskRate) =>
       taskRate * calculateDuration.inSeconds / 3600;
 

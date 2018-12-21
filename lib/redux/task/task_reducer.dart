@@ -110,10 +110,7 @@ TaskEntity _addTaskTime(TaskEntity task, AddTaskTime action) {
 }
 
 TaskEntity _removeTaskTime(TaskEntity task, DeleteTaskTime action) {
-  return task;
-  /*
-  return invoice.rebuild((b) => b..invoiceItems.removeAt(action.index));
-  */
+  return task.rebuild((b) => b..timeLog = task.deleteTaskTime(action.index));
 }
 
 TaskEntity _updateTaskTime(TaskEntity task, UpdateTaskTime action) {
