@@ -57,7 +57,6 @@ class TaskList extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
 
-    final widgets = <Widget>[];
     BaseEntity filteredEntity;
 
     if (listState.filterEntityType == EntityType.client) {

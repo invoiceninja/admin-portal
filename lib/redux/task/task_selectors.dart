@@ -126,7 +126,7 @@ String taskStatsForProject(int projectId, BuiltMap<int, TaskEntity> taskMap,
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
-    if (task.clientId == taskId) {
+    if (task.projectId == projectId) {
       if (task.isActive) {
         countActive++;
       } else if (task.isArchived) {
