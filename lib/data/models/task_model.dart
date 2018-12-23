@@ -74,8 +74,12 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         endDate != null ? (endDate.millisecondsSinceEpoch / 1000).floor() : 0
       ];
 
+  TaskTime get stop => rebuild((b) => b..endDate = DateTime.now().toUtc());
+
   bool equalTo(TaskTime taskTime) =>
       startDate == taskTime.startDate && endDate == taskTime.endDate;
+
+  bool get isRunning => endDate == null;
 
   static Serializer<TaskTime> get serializer => _$taskTimeSerializer;
 }
@@ -94,7 +98,7 @@ abstract class TaskEntity extends Object
       timeLog: isRunning
           ? '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]'
           : '',
-      isRunning: false,
+      isRunning: isRunning,
       customValue1: '',
       customValue2: '',
       updatedAt: 0,
@@ -132,7 +136,8 @@ abstract class TaskEntity extends Object
 
       final taskTime = TaskTime(
           startDate: convertTimestampToDate(startDate).toUtc(),
-          endDate: endDate > 0 ? convertTimestampToDate(endDate).toUtc() : null);
+          endDate:
+              endDate > 0 ? convertTimestampToDate(endDate).toUtc() : null);
 
       details.add(taskTime);
     });
@@ -140,31 +145,43 @@ abstract class TaskEntity extends Object
     return details;
   }
 
-  String addTaskTime(TaskTime time) {
+  TaskEntity addTaskTime(TaskTime time) {
     final List<dynamic> taskTimes =
-    timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
+        timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
 
     taskTimes.add(time.asList);
 
-    return jsonEncode(taskTimes);
+    return rebuild((b) => b
+      ..timeLog = jsonEncode(taskTimes)
+      ..isRunning = time.isRunning);
   }
 
-  String updateTaskTime(TaskTime time, int index) {
+  TaskEntity updateTaskTime(TaskTime time, int index) {
     final List<dynamic> taskTimes =
-    timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
+        timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
 
     taskTimes[index] = time.asList;
 
-    return jsonEncode(taskTimes);
+    final bool isRunning =
+        taskTimes.last != null && taskTimes.length > 1 && taskTimes.last > 0;
+
+    return rebuild((b) => b
+      ..timeLog = jsonEncode(taskTimes)
+      ..isRunning = isRunning);
   }
 
-  String deleteTaskTime(int index) {
+  TaskEntity deleteTaskTime(int index) {
     final List<dynamic> taskTimes =
-    timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
+        timeLog.isNotEmpty ? jsonDecode(timeLog) : <dynamic>[];
 
     taskTimes.removeAt(index);
 
-    return jsonEncode(taskTimes);
+    final bool isRunning =
+        taskTimes.last != null && taskTimes.length > 1 && taskTimes.last > 0;
+
+    return rebuild((b) => b
+      ..timeLog = jsonEncode(taskTimes)
+      ..isRunning = isRunning);
   }
 
   double calculateAmount(double taskRate) =>

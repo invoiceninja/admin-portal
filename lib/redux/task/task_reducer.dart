@@ -106,16 +106,15 @@ ListUIState _sortTasks(ListUIState taskListState, SortTasks action) {
 }
 
 TaskEntity _addTaskTime(TaskEntity task, AddTaskTime action) {
-  return task.rebuild((b) => b..timeLog = task.addTaskTime(action.taskTime));
+  return task.addTaskTime(action.taskTime);
 }
 
 TaskEntity _removeTaskTime(TaskEntity task, DeleteTaskTime action) {
-  return task.rebuild((b) => b..timeLog = task.deleteTaskTime(action.index));
+  return task.deleteTaskTime(action.index);
 }
 
 TaskEntity _updateTaskTime(TaskEntity task, UpdateTaskTime action) {
-  return task.rebuild(
-      (b) => b..timeLog = task.updateTaskTime(action.taskTime, action.index));
+  return task.updateTaskTime(action.taskTime, action.index);
 }
 
 final tasksReducer = combineReducers<TaskState>([

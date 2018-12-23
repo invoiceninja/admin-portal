@@ -38,6 +38,7 @@ class TaskViewScreen extends StatelessWidget {
 
 class TaskViewVM {
   TaskViewVM({
+    @required this.onFabPressed,
     @required this.task,
     @required this.client,
     @required this.project,
@@ -76,6 +77,16 @@ class TaskViewVM {
         task: task,
         client: client,
         project: project,
+        onFabPressed: () {
+          if (task.isRunning) {
+            final taskTimes = task.taskTimes;
+            final taskTime = taskTimes.last.stop;
+            store.dispatch(UpdateTaskTime(
+                index: taskTimes.length - 1, taskTime: taskTime));
+          } else {
+            store.dispatch(AddTaskTime(TaskTime()));
+          }
+        },
         onClientPressed: (context, [longPress = false]) {
           if (longPress) {
             store.dispatch(EditClient(client: client, context: context));
@@ -92,18 +103,18 @@ class TaskViewVM {
           }
         },
         onEditPressed: (BuildContext context, [TaskTime taskItem]) {
-          final Completer<TaskEntity> completer =
-          new Completer<TaskEntity>();
+          final Completer<TaskEntity> completer = new Completer<TaskEntity>();
           store.dispatch(EditTask(
-              task: task,
-              taskTime: taskItem,
-              context: context,
-              completer: completer,));
+            task: task,
+            taskTime: taskItem,
+            context: context,
+            completer: completer,
+          ));
           completer.future.then((task) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
-                  message: AppLocalization.of(context).updatedTask,
-                )));
+              message: AppLocalization.of(context).updatedTask,
+            )));
           });
         },
         onRefreshed: (context) => _handleRefresh(context),
@@ -140,6 +151,7 @@ class TaskViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [TaskTime]) onEditPressed;
   final Function onBackPressed;
+  final Function onFabPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, [bool]) onClientPressed;
   final Function(BuildContext, [bool]) onProjectPressed;
