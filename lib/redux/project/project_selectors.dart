@@ -85,7 +85,7 @@ List<int> filteredProjectsSelector(
 Duration taskDurationForProject(ProjectEntity project, BuiltMap<int, TaskEntity> taskMap,) {
   int total = 0;
   taskMap.forEach((index, task) {
-    if (task.projectId == project.id) {
+    if (task.isActive && task.projectId == project.id) {
       total += task.calculateDuration.inSeconds;
     }
   });
