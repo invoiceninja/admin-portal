@@ -64,9 +64,34 @@ class TaskViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization
+          .of(context)
+          .refreshComplete);
       store.dispatch(LoadTask(completer: completer, taskId: task.id));
       return completer.future;
+    }
+
+    void _toggleTask(BuildContext context) {
+      final Completer<TaskEntity> completer = new Completer<TaskEntity>();
+      final localization = AppLocalization.of(context);
+      store.dispatch(
+          SaveTaskRequest(completer: completer, task: task.toggle()));
+      completer.future.then((savedTask) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+            content: SnackBarRow(
+              message: savedTask.isRunning
+                  ? (savedTask.duration > 0
+                  ? localization.resumedTask
+                  : localization.startedTask)
+                  : localization.stoppedTask,
+            )));
+      }).catchError((Object error) {
+        showDialog<ErrorDialog>(
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            });
+      });
     }
 
     return TaskViewVM(
@@ -78,28 +103,7 @@ class TaskViewVM {
         task: task,
         client: client,
         project: project,
-        onFabPressed: (BuildContext context) {
-          final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-          final localization = AppLocalization.of(context);
-          store.dispatch(
-              SaveTaskRequest(completer: completer, task: task.toggle()));
-          return completer.future.then((savedTask) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: savedTask.isRunning
-                  ? (savedTask.duration > 0
-                      ? localization.resumedTask
-                      : localization.startedTask)
-                  : localization.stoppedTask,
-            )));
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
-        },
+        onFabPressed: (BuildContext context) => _toggleTask(context),
         onClientPressed: (context, [longPress = false]) {
           if (longPress) {
             store.dispatch(EditClient(client: client, context: context));
@@ -139,6 +143,10 @@ class TaskViewVM {
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.start:
+            case EntityAction.stop:
+              _toggleTask(context);
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveTaskRequest(
                   popCompleter(context, localization.archivedTask), task.id));

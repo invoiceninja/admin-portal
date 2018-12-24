@@ -20,6 +20,8 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'start': 'Start',
+      'stop': 'Stop',
       'started_task': 'Successfully started task',
       'stopped_task': 'Successfully stopped task',
       'resumed_task': 'Successfully resumed task',
@@ -10704,6 +10706,12 @@ class AppLocalization {
 
   String get resumedTask =>
       _localizedValues[locale.toString()]['resumed_task'];
+
+  String get start =>
+      _localizedValues[locale.toString()]['start'];
+
+  String get stop =>
+      _localizedValues[locale.toString()]['stop'];
 
 
   String lookup(String key) {
