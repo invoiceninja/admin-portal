@@ -78,7 +78,7 @@ class TaskViewVM {
         task: task,
         client: client,
         project: project,
-        onFabPressed: () {
+        onFabPressed: (BuildContext context) {
           final Completer<TaskEntity> completer = new Completer<TaskEntity>();
           store.dispatch(
               SaveTaskRequest(completer: completer, task: task.toggle()));
@@ -86,7 +86,7 @@ class TaskViewVM {
               .then((savedTask) {})
               .catchError((Object error) {
             showDialog<ErrorDialog>(
-                //context: context,
+                context: context,
                 builder: (BuildContext context) {
               return ErrorDialog(error);
             });
@@ -156,7 +156,7 @@ class TaskViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [TaskTime]) onEditPressed;
   final Function onBackPressed;
-  final Function onFabPressed;
+  final Function(BuildContext) onFabPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, [bool]) onClientPressed;
   final Function(BuildContext, [bool]) onProjectPressed;

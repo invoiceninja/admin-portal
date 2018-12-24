@@ -68,8 +68,10 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
       );
     }
 
-    final taskTimes =
-        task.taskTimes.toList().map<Widget>((taskTime) => TaskItemListTile(
+    final taskTimes = task.taskTimes
+        .toList()
+        .reversed
+        .map<Widget>((taskTime) => TaskItemListTile(
               task: task,
               taskItem: taskTime,
               onTap: () => _showTaskTimeEditor(taskTime, context),
@@ -173,11 +175,18 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   onPressed: () {
                     final date = DateTime.parse(_date);
                     final taskTime = TaskTime(
-                      startDate: DateTime(date.year, date.month, date.day,
-                          _startTime.hour, _startTime.minute).toUtc(),
+                      startDate: DateTime(
+                              date.year,
+                              date.month,
+                              date.day,
+                              _startTime.hour,
+                              _startTime.minute,
+                              widget.taskTime.startDate.second)
+                          .toUtc(),
                       endDate: _endTime != null
                           ? DateTime(date.year, date.month, date.day,
-                              _endTime.hour, _endTime.minute).toUtc()
+                                  _endTime.hour, _endTime.minute)
+                              .toUtc()
                           : null,
                     );
                     widget.viewModel

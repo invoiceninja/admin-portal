@@ -43,7 +43,8 @@ class _TimePickerState extends State<TimePicker> {
   DateTime _convertToDate(TimeOfDay timeOfDay) {
     final now = new DateTime.now();
     final date = DateTime(now.year, now.month, now.day, timeOfDay?.hour ?? 0,
-        timeOfDay?.minute ?? 0).toUtc();
+            timeOfDay?.minute ?? 0)
+        .toUtc();
 
     return date;
   }

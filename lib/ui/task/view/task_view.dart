@@ -130,7 +130,7 @@ class _TaskViewState extends State<TaskView> {
       }
 
       final items = task.taskTimes;
-      items.forEach((taskItem) {
+      items.reversed.forEach((taskItem) {
         widgets.addAll([
           TaskItemListTile(
             task: task,
@@ -169,7 +169,7 @@ class _TaskViewState extends State<TaskView> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: () => viewModel.onFabPressed(),
+          onPressed: () => viewModel.onFabPressed(context),
           child: Icon(
             task.isRunning ? Icons.stop : Icons.play_arrow,
             color: Colors.white,

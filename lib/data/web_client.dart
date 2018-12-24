@@ -81,10 +81,15 @@ class WebClient {
       headers: {
         'X-Ninja-Token': token,
         'Content-Type': 'application/json',
+        //'X-Requested-With': 'XMLHttpRequest',
       },
     ).timeout(const Duration(seconds: 30));
 
     if (response.statusCode >= 300) {
+      print('==== FAILED ====');
+      print('request: $data');
+      print('response: ${response.body}');
+
       throw _parseError(response.statusCode, response.body);
     }
 
@@ -107,10 +112,15 @@ class WebClient {
       headers: {
         'X-Ninja-Token': token,
         'Content-Type': 'application/json',
+        //'X-Requested-With': 'XMLHttpRequest',
       },
     );
 
     if (response.statusCode >= 300) {
+      print('==== FAILED ====');
+      print('request: $data');
+      print('response: ${response.body}');
+
       throw _parseError(response.statusCode, response.body);
     }
 
