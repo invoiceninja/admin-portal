@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -94,6 +96,30 @@ class TaskListVM {
       },
       onEntityAction: (context, task, action) {
         switch (action) {
+          case EntityAction.start:
+          case EntityAction.stop:
+            final Completer<TaskEntity> completer = new Completer<TaskEntity>();
+            final localization = AppLocalization.of(context);
+            store.dispatch(
+                SaveTaskRequest(completer: completer, task: task.toggle()));
+            completer.future.then((savedTask) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: SnackBarRow(
+                message: savedTask.isRunning
+                    ? (savedTask.duration > 0
+                        ? localization.resumedTask
+                        : localization.startedTask)
+                    : localization.stoppedTask,
+              )));
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+
+            break;
           case EntityAction.clone:
             Navigator.of(context).pop();
             store.dispatch(EditTask(context: context, task: task.clone));
