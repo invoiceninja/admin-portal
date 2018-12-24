@@ -112,9 +112,8 @@ class _TaskEditState extends State<TaskEdit>
             child: Text(
               '${localization.duration}: ${formatDuration(task.calculateDuration)}',
               style: TextStyle(
-                //color: Theme.of(context).selectedRowColor,
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 20.0,
               ),
             ),
           ),

@@ -27,6 +27,8 @@ class ProjectEdit extends StatefulWidget {
 class _ProjectEditState extends State<ProjectEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool autoValidate = false;
+
   final _nameController = TextEditingController();
   final _dueDateController = TextEditingController();
   final _hoursController = TextEditingController();
@@ -117,9 +119,16 @@ class _ProjectEditState extends State<ProjectEdit> {
                 isDirty: project.isNew || project != viewModel.origProject,
                 isSaving: viewModel.isSaving,
                 onPressed: () {
-                  if (!_formKey.currentState.validate()) {
+                  final bool isValid = _formKey.currentState.validate();
+
+                  setState(() {
+                    autoValidate = !isValid;
+                  });
+
+                  if (!isValid) {
                     return;
                   }
+
                   viewModel.onSavePressed(context);
                 },
               );
@@ -145,6 +154,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                       validator: (String val) => val.trim().isEmpty
                           ? localization.pleaseSelectAClient
                           : null,
+                      autoValidate: autoValidate,
                       onSelected: (client) {
                         viewModel.onChanged(
                             project.rebuild((b) => b..clientId = client.id));
@@ -159,6 +169,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                       validator: (String val) => val.trim().isEmpty
                           ? localization.pleaseEnterAName
                           : null,
+                      autovalidate: autoValidate,
                       decoration: InputDecoration(
                         labelText: localization.name,
                       ),
