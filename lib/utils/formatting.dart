@@ -196,7 +196,15 @@ DateTime convertTimestampToDate(int timestamp) =>
 String convertTimestampToDateString(int timestamp) =>
     convertTimestampToDate(timestamp).toIso8601String();
 
-String formatDuration(Duration duration) => duration.toString().split('.')[0];
+String formatDuration(Duration duration, {bool showSeconds = true}) {
+  final time = duration.toString().split('.')[0];
+  
+  if (showSeconds) {
+    return time;
+  } else {
+    return time.substring(0, 5);
+  }
+}
 
 String formatDateRange(String startDate, String endDate, BuildContext context) {
   final today = DateTime.now();

@@ -69,7 +69,7 @@ class _ProjectViewState extends State<ProjectView> {
               taskDurationForProject(project, viewModel.state.taskState.map)),
           label2: localization.budgeted,
           value2:
-          formatDuration(Duration(hours: project.budgetedHours.toInt())),
+          formatDuration(Duration(hours: project.budgetedHours.toInt()), showSeconds: false),
         ),
         Material(
           color: Theme.of(context).canvasColor,
