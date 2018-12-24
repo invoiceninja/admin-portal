@@ -59,11 +59,13 @@ class _TimePickerState extends State<TimePicker> {
     final TimeOfDay selectedTime = await showTimePicker(
         context: context, initialTime: TimeOfDay(hour: hour, minute: minute));
 
-    _textController.text = formatDate(
-        _convertToDate(selectedTime).toIso8601String(), context,
-        showTime: true, showDate: false);
+    if (selectedTime != null) {
+      _textController.text = formatDate(
+          _convertToDate(selectedTime).toIso8601String(), context,
+          showTime: true, showDate: false);
 
-    widget.onSelected(selectedTime);
+      widget.onSelected(selectedTime);
+    }
   }
 
   @override
