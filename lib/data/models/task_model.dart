@@ -247,6 +247,12 @@ abstract class TaskEntity extends Object
   List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
     final actions = <EntityAction>[];
 
+    if (isRunning) {
+      actions.add(EntityAction.stop);
+    } else {
+      actions.add(EntityAction.start);
+    }
+
     return actions..addAll(getBaseActions(user: user));
   }
 
