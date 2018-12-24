@@ -113,6 +113,8 @@ abstract class TaskEntity extends Object
 
   TaskEntity get clone => rebuild((b) => b..id = --TaskEntity.counter);
 
+  bool get isPaid => invoiceId != null && invoiceId > 0;
+
   @override
   EntityType get entityType {
     return EntityType.task;

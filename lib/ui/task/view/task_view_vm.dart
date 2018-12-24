@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -81,11 +82,21 @@ class TaskViewVM {
           if (task.isRunning) {
             final taskTimes = task.taskTimes;
             final taskTime = taskTimes.last.stop;
-            store.dispatch(UpdateTaskTime(
-                index: taskTimes.length - 1, taskTime: taskTime));
+            task.updateTaskTime(taskTime, taskTimes.length - 1);
           } else {
-            store.dispatch(AddTaskTime(TaskTime()));
+            task.addTaskTime(TaskTime());
           }
+          final Completer<TaskEntity> completer = new Completer<TaskEntity>();
+          store.dispatch(SaveTaskRequest(completer: completer, task: task));
+          return completer.future.then((savedTask) {
+
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                //context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         },
         onClientPressed: (context, [longPress = false]) {
           if (longPress) {

@@ -58,7 +58,8 @@ class _TaskViewState extends State<TaskView> {
     List<Widget> _buildView() {
       final widgets = <Widget>[
         TwoValueHeader(
-          backgroundColor: task.isRunning ? Colors.green : null,
+          backgroundColor:
+              task.isPaid ? Colors.green : task.isRunning ? Colors.blue : null,
           label1: localization.duration,
           value1: formatDuration(task.calculateDuration),
           label2: localization.amount,
@@ -167,7 +168,7 @@ class _TaskViewState extends State<TaskView> {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: task.isRunning ? Colors.red : Colors.green,
+          backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () => viewModel.onFabPressed(),
           child: Icon(
             task.isRunning ? Icons.stop : Icons.play_arrow,
