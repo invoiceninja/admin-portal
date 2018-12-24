@@ -79,23 +79,17 @@ class TaskViewVM {
         client: client,
         project: project,
         onFabPressed: () {
-          if (task.isRunning) {
-            final taskTimes = task.taskTimes;
-            final taskTime = taskTimes.last.stop;
-            task.updateTaskTime(taskTime, taskTimes.length - 1);
-          } else {
-            task.addTaskTime(TaskTime());
-          }
           final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-          store.dispatch(SaveTaskRequest(completer: completer, task: task));
-          return completer.future.then((savedTask) {
-
-          }).catchError((Object error) {
+          store.dispatch(
+              SaveTaskRequest(completer: completer, task: task.toggle()));
+          return completer.future
+              .then((savedTask) {})
+              .catchError((Object error) {
             showDialog<ErrorDialog>(
                 //context: context,
                 builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
+              return ErrorDialog(error);
+            });
           });
         },
         onClientPressed: (context, [longPress = false]) {

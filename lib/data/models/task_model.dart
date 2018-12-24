@@ -113,6 +113,17 @@ abstract class TaskEntity extends Object
 
   TaskEntity get clone => rebuild((b) => b..id = --TaskEntity.counter);
 
+  TaskEntity toggle() => isRunning ? stop() : start();
+
+  TaskEntity start() => addTaskTime(TaskTime());
+
+  TaskEntity stop() {
+    final times = taskTimes;
+    final taskTime = times.last.stop;
+
+    return updateTaskTime(taskTime, times.length - 1);
+  }
+
   bool get isPaid => invoiceId != null && invoiceId > 0;
 
   @override
@@ -164,8 +175,13 @@ abstract class TaskEntity extends Object
 
     taskTimes[index] = time.asList;
 
-    final bool isRunning =
-        taskTimes.last != null && taskTimes.length > 1 && taskTimes.last > 0;
+    bool isRunning = false;
+    if (taskTimes.isNotEmpty) {
+      final last = taskTimes.last as List;
+      if (last.length == 1 || (last.length == 2 && last[1] == 0)) {
+        isRunning = true;
+      }
+    }
 
     return rebuild((b) => b
       ..timeLog = jsonEncode(taskTimes)
@@ -178,8 +194,13 @@ abstract class TaskEntity extends Object
 
     taskTimes.removeAt(index);
 
-    final bool isRunning =
-        taskTimes.last != null && taskTimes.length > 1 && taskTimes.last > 0;
+    bool isRunning = false;
+    if (taskTimes.isNotEmpty) {
+      final last = taskTimes.last as List;
+      if (last.length == 1 || (last.length == 2 && last[1] == 0)) {
+        isRunning = true;
+      }
+    }
 
     return rebuild((b) => b
       ..timeLog = jsonEncode(taskTimes)
