@@ -51,9 +51,10 @@ class _TimePickerState extends State<TimePicker> {
 
   void _showDatePicker() async {
     final selectedDate = widget.timeOfDay;
+    final now = DateTime.now();
 
-    final hour = selectedDate?.hour ?? 0;
-    final minute = selectedDate?.minute ?? 0;
+    final hour = selectedDate?.hour ?? now.hour;
+    final minute = selectedDate?.minute ?? now.minute;
 
     final TimeOfDay selectedTime = await showTimePicker(
         context: context, initialTime: TimeOfDay(hour: hour, minute: minute));
