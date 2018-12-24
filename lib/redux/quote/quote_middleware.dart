@@ -310,8 +310,8 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
+      if (state.projectState.isStale) {
+        store.dispatch(LoadProjects());
       }
     }).catchError((Object error) {
       print(error);
