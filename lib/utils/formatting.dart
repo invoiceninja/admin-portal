@@ -202,7 +202,8 @@ String formatDuration(Duration duration, {bool showSeconds = true}) {
   if (showSeconds) {
     return time;
   } else {
-    return time.substring(0, 5);
+    final parts = time.split(':');
+    return '${parts[0]}:${parts[1]}';
   }
 }
 
