@@ -14,7 +14,7 @@ class TaskItemListTile extends StatelessWidget {
     @required this.onTap,
   });
 
-  final Function onTap;
+  final Function(BuildContext context) onTap;
   final TaskEntity task;
   final TaskTime taskItem;
 
@@ -41,7 +41,7 @@ class TaskItemListTile extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ListTile(
-                onTap: onTap,
+                onTap: () => onTap(context),
                 title: Row(
                   children: <Widget>[
                     Expanded(child: Text(title)),

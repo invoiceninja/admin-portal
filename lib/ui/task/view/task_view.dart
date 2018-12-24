@@ -135,7 +135,7 @@ class _TaskViewState extends State<TaskView> {
           TaskItemListTile(
             task: task,
             taskItem: taskItem,
-            onTap: () => company.user.canEditEntity(task)
+            onTap: (BuildContext context) => company.user.canEditEntity(task)
                 ? viewModel.onEditPressed(context, taskItem)
                 : null,
           )

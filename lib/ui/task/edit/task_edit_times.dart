@@ -74,7 +74,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
         .map<Widget>((taskTime) => TaskItemListTile(
               task: task,
               taskItem: taskTime,
-              onTap: () => _showTaskTimeEditor(taskTime, context),
+              onTap: (context) => _showTaskTimeEditor(taskTime, context),
             ));
 
     return ListView(
