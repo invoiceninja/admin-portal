@@ -97,7 +97,7 @@ abstract class TaskEntity extends Object
       projectId: null,
       timeLog: isRunning
           ? '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]'
-          : '',
+          : '[]',
       isRunning: isRunning,
       customValue1: '',
       customValue2: '',

@@ -80,16 +80,24 @@ class TaskViewVM {
         project: project,
         onFabPressed: (BuildContext context) {
           final Completer<TaskEntity> completer = new Completer<TaskEntity>();
+          final localization = AppLocalization.of(context);
           store.dispatch(
               SaveTaskRequest(completer: completer, task: task.toggle()));
-          return completer.future
-              .then((savedTask) {})
-              .catchError((Object error) {
+          return completer.future.then((savedTask) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+              message: savedTask.isRunning
+                  ? (savedTask.duration > 0
+                      ? localization.resumedTask
+                      : localization.startedTask)
+                  : localization.stoppedTask,
+            )));
+          }).catchError((Object error) {
             showDialog<ErrorDialog>(
                 context: context,
                 builder: (BuildContext context) {
-              return ErrorDialog(error);
-            });
+                  return ErrorDialog(error);
+                });
           });
         },
         onClientPressed: (context, [longPress = false]) {

@@ -167,15 +167,17 @@ class _TaskViewState extends State<TaskView> {
             );
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: () => viewModel.onFabPressed(context),
-          child: Icon(
-            task.isRunning ? Icons.stop : Icons.play_arrow,
-            color: Colors.white,
-          ),
-          tooltip: localization.newTask,
-        ),
+        floatingActionButton: Builder(builder: (BuildContext context) {
+          return FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColorDark,
+            onPressed: () => viewModel.onFabPressed(context),
+            child: Icon(
+              task.isRunning ? Icons.stop : Icons.play_arrow,
+              color: Colors.white,
+            ),
+            tooltip: localization.newTask,
+          );
+        }),
       ),
     );
   }
