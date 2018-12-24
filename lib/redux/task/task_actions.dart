@@ -24,9 +24,9 @@ class EditTask implements PersistUI {
       this.context,
       this.completer,
       this.trackRoute = true,
-      this.taskItemIndex});
+      this.taskTimeIndex});
 
-  final int taskItemIndex;
+  final int taskTimeIndex;
   final TaskEntity task;
   final TaskTime taskTime;
   final BuildContext context;

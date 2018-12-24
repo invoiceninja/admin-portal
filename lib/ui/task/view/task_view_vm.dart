@@ -115,11 +115,11 @@ class TaskViewVM {
                 .dispatch(ViewProject(projectId: project.id, context: context));
           }
         },
-        onEditPressed: (BuildContext context, [TaskTime taskItem]) {
+        onEditPressed: (BuildContext context, [TaskTime taskTime]) {
           final Completer<TaskEntity> completer = new Completer<TaskEntity>();
           store.dispatch(EditTask(
             task: task,
-            taskTime: taskItem,
+            taskTime: taskTime,
             context: context,
             completer: completer,
           ));

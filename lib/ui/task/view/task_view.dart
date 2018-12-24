@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
-import 'package:invoiceninja_flutter/ui/task/task_item_view.dart';
+import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -130,13 +130,13 @@ class _TaskViewState extends State<TaskView> {
       }
 
       final items = task.taskTimes;
-      items.reversed.forEach((taskItem) {
+      items.reversed.forEach((taskTime) {
         widgets.addAll([
-          TaskItemListTile(
+          TaskTimeListTile(
             task: task,
-            taskItem: taskItem,
+            taskTime: taskTime,
             onTap: (BuildContext context) => company.user.canEditEntity(task)
-                ? viewModel.onEditPressed(context, taskItem)
+                ? viewModel.onEditPressed(context, taskTime)
                 : null,
           )
         ]);

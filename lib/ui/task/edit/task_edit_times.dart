@@ -3,7 +3,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
-import 'package:invoiceninja_flutter/ui/task/task_item_view.dart';
+import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -71,9 +71,9 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final taskTimes = task.taskTimes
         .toList()
         .reversed
-        .map<Widget>((taskTime) => TaskItemListTile(
+        .map<Widget>((taskTime) => TaskTimeListTile(
               task: task,
-              taskItem: taskTime,
+              taskTime: taskTime,
               onTap: (context) => _showTaskTimeEditor(taskTime, context),
             ));
 
