@@ -169,11 +169,16 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                               date.day,
                               _startDate.hour,
                               _startDate.minute,
-                              widget.taskTime.startDate.second)
+                              _startDate.second)
                           .toUtc(),
                       endDate: _endDate != null
-                          ? DateTime(date.year, date.month, date.day,
-                                  _endDate.hour, _endDate.minute)
+                          ? DateTime(
+                                  date.year,
+                                  date.month,
+                                  date.day,
+                                  _endDate.hour,
+                                  _endDate.minute,
+                                  _endDate.second)
                               .toUtc()
                           : null,
                     );
@@ -216,8 +221,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                 setState(() {
                   _durationController.text =
                       formatDuration(Duration(minutes: minutes));
-                  final dateTime = _startDate
-                      .add(Duration(minutes: minutes));
+                  final dateTime = _startDate.add(Duration(minutes: minutes));
                   _endDate = dateTime;
                 });
               },
