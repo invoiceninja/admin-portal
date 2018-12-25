@@ -28,11 +28,21 @@ class TaskView extends StatefulWidget {
 }
 
 class _TaskViewState extends State<TaskView> {
-  @override
+
+  Timer _timer;
+
+  @overridev
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 1),
+    _timer = Timer.periodic(Duration(seconds: 1),
         (Timer timer) => mounted ? setState(() => false) : false);
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _timer = null;
+    super.dispose();
   }
 
   @override

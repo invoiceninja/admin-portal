@@ -31,11 +31,21 @@ class ProjectView extends StatefulWidget {
 }
 
 class _ProjectViewState extends State<ProjectView> {
+
+  Timer _timer;
+
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 1),
+    _timer = Timer.periodic(Duration(seconds: 1),
         (Timer timer) => mounted ? setState(() => false) : false);
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _timer = null;
+    super.dispose();
   }
 
   @override

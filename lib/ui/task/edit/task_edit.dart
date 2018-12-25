@@ -22,7 +22,10 @@ class TaskEdit extends StatefulWidget {
 
 class _TaskEditState extends State<TaskEdit>
     with SingleTickerProviderStateMixin {
+
+  Timer _timer;
   TabController _controller;
+
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   static const kDetailsScreen = 0;
@@ -32,7 +35,7 @@ class _TaskEditState extends State<TaskEdit>
   void initState() {
     super.initState();
 
-    Timer.periodic(Duration(seconds: 1),
+    _timer = Timer.periodic(Duration(seconds: 1),
         (Timer t) => mounted ? setState(() => false) : false);
 
     final task = widget.viewModel.task;
@@ -46,6 +49,8 @@ class _TaskEditState extends State<TaskEdit>
 
   @override
   void dispose() {
+    _timer.cancel();
+    _timer = null;
     _controller.dispose();
     super.dispose();
   }

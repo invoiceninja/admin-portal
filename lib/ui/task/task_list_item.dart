@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -73,17 +74,17 @@ class TaskListItem extends StatelessWidget {
                 child: Text(
                   task.description.isNotEmpty
                       ? task.description
-                      : formatDate(
-                          convertTimestampToDateString(task.updatedAt), context),
+                      : formatDate(convertTimestampToDateString(task.updatedAt),
+                          context),
                   overflow: TextOverflow.ellipsis,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(
-                  formatNumber(task.listDisplayAmount, context,
-                      formatNumberType: FormatNumberType.duration),
-                  style: Theme.of(context).textTheme.title),
+              LiveText(() {
+                return formatNumber(task.listDisplayAmount, context,
+                    formatNumberType: FormatNumberType.duration);
+              }, style: Theme.of(context).textTheme.title),
             ],
           ),
         ),
@@ -104,3 +105,4 @@ class TaskListItem extends StatelessWidget {
     );
   }
 }
+
