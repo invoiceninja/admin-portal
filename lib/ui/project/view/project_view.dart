@@ -35,7 +35,7 @@ class _ProjectViewState extends State<ProjectView> {
   void initState() {
     super.initState();
     Timer.periodic(Duration(seconds: 1),
-            (Timer timer) => mounted ? setState(() => false) : false);
+        (Timer timer) => mounted ? setState(() => false) : false);
   }
 
   @override
@@ -68,8 +68,8 @@ class _ProjectViewState extends State<ProjectView> {
           value1: formatDuration(
               taskDurationForProject(project, viewModel.state.taskState.map)),
           label2: localization.budgeted,
-          value2:
-          formatDuration(Duration(hours: project.budgetedHours.toInt()), showSeconds: false),
+          value2: formatDuration(Duration(hours: project.budgetedHours.toInt()),
+              showSeconds: false),
         ),
         Material(
           color: Theme.of(context).canvasColor,
@@ -78,6 +78,7 @@ class _ProjectViewState extends State<ProjectView> {
             leading: Icon(FontAwesomeIcons.users, size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onClientPressed(context),
+            onLongPress: () => viewModel.onClientPressed(context, true),
           ),
         ),
         Container(

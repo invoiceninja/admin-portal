@@ -54,6 +54,7 @@ class ProjectViewVM {
   factory ProjectViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final project = state.projectState.map[state.projectUIState.selectedId];
+    final client = state.clientState.map[project.clientId];
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -74,8 +75,10 @@ class ProjectViewVM {
           store.dispatch(EditProject(project: project, context: context));
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onClientPressed: (BuildContext context) => store
-            .dispatch(ViewClient(clientId: project.clientId, context: context)),
+        onClientPressed: (BuildContext context, [bool longPress = false]) =>
+            store.dispatch(longPress
+                ? EditClient(client: client, context: context)
+                : ViewClient(clientId: project.clientId, context: context)),
         onTasksPressed: (BuildContext context) {
           store.dispatch(FilterTasksByEntity(
               entityId: project.id, entityType: EntityType.project));
@@ -120,7 +123,7 @@ class ProjectViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
-  final Function(BuildContext) onClientPressed;
+  final Function(BuildContext, [bool]) onClientPressed;
   final Function onBackPressed;
   final Function(BuildContext) onAddTaskPressed;
   final Function(BuildContext) onTasksPressed;
