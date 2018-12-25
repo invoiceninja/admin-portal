@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -69,7 +70,15 @@ class TaskEditVM {
         store.dispatch(EditTaskTime(taskTime));
       },
       onSavePressed: (BuildContext context) {
-
+        if (!task.areTimesValid) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(AppLocalization.of(context)
+                    .taskErrors);
+              });
+          return null;
+        }
 
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(SaveTaskRequest(completer: completer, task: task));

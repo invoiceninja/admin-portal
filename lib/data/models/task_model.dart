@@ -140,6 +140,28 @@ abstract class TaskEntity extends Object
 
   bool get areTimesValid {
     final times = taskTimes;
+    DateTime lastDateTime = DateTime(2000);
+    int countRunning = 0;
+    bool isValid = true;
+
+    times.forEach((time) {
+      final startDate = time.startDate;
+      final endDate = time.endDate;
+
+      if (time.isRunning) {
+        countRunning++;
+      } else {
+        if (startDate.isBefore(lastDateTime) || startDate.isAfter(endDate)) {
+          isValid = false;
+        }
+        if (endDate.isBefore(startDate) || endDate.isBefore(lastDateTime)) {
+          isValid = false;
+        }
+        lastDateTime = lastDateTime.isAfter(endDate) ? lastDateTime : endDate;
+      }
+    });
+
+    return isValid && countRunning <= 1;
   }
 
   List<TaskTime> get taskTimes {
