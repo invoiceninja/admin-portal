@@ -75,6 +75,7 @@ class TaskListItem extends StatelessWidget {
                       ? task.description
                       : formatDate(
                           convertTimestampToDateString(task.updatedAt), context),
+                  overflow: TextOverflow.ellipsis,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
