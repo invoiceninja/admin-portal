@@ -81,7 +81,7 @@ class WebClient {
       headers: {
         'X-Ninja-Token': token,
         'Content-Type': 'application/json',
-        //'X-Requested-With': 'XMLHttpRequest',
+        'X-Requested-With': 'XMLHttpRequest',
       },
     ).timeout(const Duration(seconds: 30));
 
@@ -112,7 +112,7 @@ class WebClient {
       headers: {
         'X-Ninja-Token': token,
         'Content-Type': 'application/json',
-        //'X-Requested-With': 'XMLHttpRequest',
+        'X-Requested-With': 'XMLHttpRequest',
       },
     );
 
