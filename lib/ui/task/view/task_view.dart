@@ -31,7 +31,7 @@ class _TaskViewState extends State<TaskView> {
 
   Timer _timer;
 
-  @overridev
+  @override
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 1),
