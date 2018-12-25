@@ -142,27 +142,30 @@ class _ProjectEditState extends State<ProjectEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    EntityDropdown(
-                      entityType: EntityType.client,
-                      labelText: localization.client,
-                      initialValue: (state.clientState.map[project.clientId] ??
-                              ClientEntity())
-                          .displayName,
-                      entityMap: state.clientState.map,
-                      entityList: memoizedDropdownClientList(
-                          state.clientState.map, state.clientState.list),
-                      validator: (String val) => val.trim().isEmpty
-                          ? localization.pleaseSelectAClient
-                          : null,
-                      autoValidate: autoValidate,
-                      onSelected: (client) {
-                        viewModel.onChanged(
-                            project.rebuild((b) => b..clientId = client.id));
-                      },
-                      onAddPressed: (completer) {
-                        viewModel.onAddClientPressed(context, completer);
-                      },
-                    ),
+                    project.isNew
+                        ? EntityDropdown(
+                            entityType: EntityType.client,
+                            labelText: localization.client,
+                            initialValue:
+                                (state.clientState.map[project.clientId] ??
+                                        ClientEntity())
+                                    .displayName,
+                            entityMap: state.clientState.map,
+                            entityList: memoizedDropdownClientList(
+                                state.clientState.map, state.clientState.list),
+                            validator: (String val) => val.trim().isEmpty
+                                ? localization.pleaseSelectAClient
+                                : null,
+                            autoValidate: autoValidate,
+                            onSelected: (client) {
+                              viewModel.onChanged(project
+                                  .rebuild((b) => b..clientId = client.id));
+                            },
+                            onAddPressed: (completer) {
+                              viewModel.onAddClientPressed(context, completer);
+                            },
+                          )
+                        : SizedBox(),
                     TextFormField(
                       autocorrect: false,
                       controller: _nameController,
