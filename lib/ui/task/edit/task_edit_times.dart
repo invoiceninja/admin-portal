@@ -103,12 +103,12 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   String _date;
   TimeOfDay _startTime;
   TimeOfDay _endTime;
-  DurationLength _duration;
 
   final _durationController = TextEditingController();
 
   @override
   void didChangeDependencies() {
+    print('didChangeDependencies...');
     _date = widget.taskTime.startDate.toIso8601String();
     _startTime = TimeOfDay(
         hour: widget.taskTime.startDate.hour,
@@ -185,34 +185,35 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             ),
             TimePicker(
               labelText: localization.startTime,
-              timeOfDay: TimeOfDay(
-                  hour: widget.taskTime.startDate.hour,
-                  minute: widget.taskTime.startDate.minute),
+              timeOfDay: convertDateTimeToTimeOfDay(widget.taskTime.startDate),
               onSelected: (timeOfDay) => _startTime = timeOfDay,
             ),
             TimePicker(
               labelText: localization.endTime,
               timeOfDay: widget.taskTime.endDate != null
-                  ? TimeOfDay(
-                      hour: widget.taskTime.endDate.hour,
-                      minute: widget.taskTime.endDate.minute)
+                  ? convertDateTimeToTimeOfDay(widget.taskTime.endDate)
                   : null,
               onSelected: (timeOfDay) => _endTime = timeOfDay,
             ),
             PopupMenuButton<int>(
               padding: EdgeInsets.zero,
               initialValue: null,
-                itemBuilder: (BuildContext context) => [15, 30].map((minutes) => PopupMenuItem<int>(
-                  child: Text(minutes.toString()),
-                  value: minutes,
-                )).toList(),
-              onSelected: (paymentTerm) {
-                /*
-                viewModel.onChanged(client
-                    .rebuild((b) => b..paymentTerms = paymentTerm.numDays));
-                _paymentTermsController.text =
-                    paymentTerm.getPaymentTerm(localization.net);
-                    */
+              itemBuilder: (BuildContext context) =>
+                  [15, 30, 45, 60, 75, 90, 105, 120]
+                      .map((minutes) => PopupMenuItem<int>(
+                            child: Text(formatDuration(
+                                Duration(minutes: minutes),
+                                showSeconds: false)),
+                            value: minutes,
+                          ))
+                      .toList(),
+              onSelected: (duration) {
+                setState(() {
+                  _durationController.text = duration.toString();
+                  final dateTime = convertTimeOfDayToDateTime(_startTime)
+                      .add(Duration(minutes: duration));
+                  _endTime = convertDateTimeToTimeOfDay(dateTime);
+                });
               },
               child: InkWell(
                 child: IgnorePointer(
@@ -232,8 +233,3 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
     );
   }
 }
-
-class DurationLength {
-  DurationLength();
-}
-

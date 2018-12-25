@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
@@ -198,7 +199,7 @@ String convertTimestampToDateString(int timestamp) =>
 
 String formatDuration(Duration duration, {bool showSeconds = true}) {
   final time = duration.toString().split('.')[0];
-  
+
   if (showSeconds) {
     return time;
   } else {
@@ -206,6 +207,18 @@ String formatDuration(Duration duration, {bool showSeconds = true}) {
     return '${parts[0]}:${parts[1]}';
   }
 }
+
+DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay) {
+  final now = new DateTime.now();
+  final date = DateTime(now.year, now.month, now.day, timeOfDay?.hour ?? 0,
+          timeOfDay?.minute ?? 0)
+      .toUtc();
+
+  return date;
+}
+
+TimeOfDay convertDateTimeToTimeOfDay(DateTime dateTime) =>
+    TimeOfDay(hour: dateTime?.hour ?? 0, minute: dateTime?.minute ?? 0);
 
 String formatDateRange(String startDate, String endDate, BuildContext context) {
   final today = DateTime.now();

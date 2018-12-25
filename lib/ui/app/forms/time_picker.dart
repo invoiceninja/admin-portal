@@ -27,7 +27,7 @@ class _TimePickerState extends State<TimePicker> {
   void didChangeDependencies() {
     if (widget.timeOfDay != null) {
       _textController.text = formatDate(
-          _convertToDate(widget.timeOfDay).toIso8601String(), context,
+          convertTimeOfDayToDateTime(widget.timeOfDay).toIso8601String(), context,
           showDate: false, showTime: true);
     }
 
@@ -38,15 +38,6 @@ class _TimePickerState extends State<TimePicker> {
   void dispose() {
     _textController.dispose();
     super.dispose();
-  }
-
-  DateTime _convertToDate(TimeOfDay timeOfDay) {
-    final now = new DateTime.now();
-    final date = DateTime(now.year, now.month, now.day, timeOfDay?.hour ?? 0,
-            timeOfDay?.minute ?? 0)
-        .toUtc();
-
-    return date;
   }
 
   void _showDatePicker() async {
@@ -61,7 +52,7 @@ class _TimePickerState extends State<TimePicker> {
 
     if (selectedTime != null) {
       _textController.text = formatDate(
-          _convertToDate(selectedTime).toIso8601String(), context,
+          convertTimeOfDayToDateTime(selectedTime).toIso8601String(), context,
           showTime: true, showDate: false);
 
       widget.onSelected(selectedTime);
