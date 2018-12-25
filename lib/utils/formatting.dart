@@ -248,7 +248,7 @@ String formatDate(String value, BuildContext context,
   if (showTime) {
     String format;
     if (!showDate) {
-      format = company.enableMilitaryTime ? 'H:mm' : 'h:mm a';
+      format = company.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a';
     } else {
       final dateFormats = state.staticState.datetimeFormatMap;
       final dateFormatId = company.datetimeFormatId > 0
@@ -256,7 +256,7 @@ String formatDate(String value, BuildContext context,
           : kDefaultDateTimeFormat;
       format = dateFormats[dateFormatId].format;
       if (company.enableMilitaryTime) {
-        format = format.replaceFirst('h:mm a', 'H:mm');
+        format = format.replaceFirst('h:mm:ss a', 'H:mm:ss');
       }
     }
     final formatter = DateFormat(format, localeSelector(state));

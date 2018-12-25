@@ -101,8 +101,8 @@ class TimeEditDetails extends StatefulWidget {
 
 class TimeEditDetailsState extends State<TimeEditDetails> {
   String _date;
-  TimeOfDay _startTime;
-  TimeOfDay _endTime;
+  DateTime _startDate;
+  DateTime _endDate;
 
   final _durationController = TextEditingController();
 
@@ -113,9 +113,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
     final endDate = taskTime.endDate;
 
     _date = startDate.toIso8601String();
-    _startTime = TimeOfDay(hour: startDate.hour, minute: startDate.minute);
+    _startDate = startDate;
     if (endDate != null) {
-      _endTime = TimeOfDay(hour: endDate.hour, minute: endDate.minute);
+      _endDate = endDate;
       _durationController.text = formatDuration(taskTime.duration);
     }
 
@@ -167,13 +167,13 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                               date.year,
                               date.month,
                               date.day,
-                              _startTime.hour,
-                              _startTime.minute,
+                              _startDate.hour,
+                              _startDate.minute,
                               widget.taskTime.startDate.second)
                           .toUtc(),
-                      endDate: _endTime != null
+                      endDate: _endDate != null
                           ? DateTime(date.year, date.month, date.day,
-                                  _endTime.hour, _endTime.minute)
+                                  _endDate.hour, _endDate.minute)
                               .toUtc()
                           : null,
                     );
@@ -191,14 +191,14 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             ),
             TimePicker(
               labelText: localization.startTime,
-              timeOfDay: _startTime,
-              onSelected: (timeOfDay) => _startTime = timeOfDay,
+              selectedDate: _startDate,
+              onSelected: (timeOfDay) => _startDate = timeOfDay,
             ),
             TimePicker(
-              key: ValueKey(_endTime),
+              key: ValueKey(_endDate),
               labelText: localization.endTime,
-              timeOfDay: _endTime,
-              onSelected: (timeOfDay) => _endTime = timeOfDay,
+              selectedDate: _endDate,
+              onSelected: (timeOfDay) => _endDate = timeOfDay,
             ),
             PopupMenuButton<int>(
               padding: EdgeInsets.zero,
@@ -216,9 +216,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                 setState(() {
                   _durationController.text =
                       formatDuration(Duration(minutes: minutes));
-                  final dateTime = convertTimeOfDayToDateTime(_startTime)
+                  final dateTime = _startDate
                       .add(Duration(minutes: minutes));
-                  _endTime = convertDateTimeToTimeOfDay(dateTime);
+                  _endDate = dateTime;
                 });
               },
               child: InkWell(

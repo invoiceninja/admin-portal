@@ -6,14 +6,14 @@ class TimePicker extends StatefulWidget {
     Key key,
     @required this.labelText,
     @required this.onSelected,
-    @required this.timeOfDay,
+    @required this.selectedDate,
     this.validator,
     this.autoValidate = false,
   }) : super(key: key);
 
   final String labelText;
-  final TimeOfDay timeOfDay;
-  final Function(TimeOfDay) onSelected;
+  final DateTime selectedDate;
+  final Function(DateTime) onSelected;
   final Function validator;
   final bool autoValidate;
 
@@ -26,9 +26,9 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   void didChangeDependencies() {
-    if (widget.timeOfDay != null) {
+    if (widget.selectedDate != null) {
       _textController.text = formatDate(
-          convertTimeOfDayToDateTime(widget.timeOfDay).toIso8601String(), context,
+          widget.selectedDate.toIso8601String(), context,
           showDate: false, showTime: true);
     }
 
@@ -42,7 +42,7 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   void _showDatePicker() async {
-    final selectedDate = widget.timeOfDay;
+    final selectedDate = widget.selectedDate;
     final now = DateTime.now();
 
     final hour = selectedDate?.hour ?? now.hour;
@@ -52,11 +52,11 @@ class _TimePickerState extends State<TimePicker> {
         context: context, initialTime: TimeOfDay(hour: hour, minute: minute));
 
     if (selectedTime != null) {
-      _textController.text = formatDate(
-          convertTimeOfDayToDateTime(selectedTime).toIso8601String(), context,
+      final dateTime = convertTimeOfDayToDateTime(selectedTime);
+      _textController.text = formatDate(dateTime.toIso8601String(), context,
           showTime: true, showDate: false);
 
-      widget.onSelected(selectedTime);
+      widget.onSelected(dateTime);
     }
   }
 
