@@ -55,7 +55,10 @@ class TaskFields {
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   factory TaskTime({DateTime startDate, DateTime endDate}) {
     return _$TaskTime._(
-      startDate: startDate ?? DateTime.now().toUtc(),
+      startDate: startDate ??
+          DateTime.fromMillisecondsSinceEpoch(
+              (DateTime.now().millisecondsSinceEpoch / 1000).floor() * 1000,
+              isUtc: true),
       endDate: endDate,
     );
   }

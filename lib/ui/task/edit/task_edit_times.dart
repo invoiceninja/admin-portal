@@ -47,7 +47,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final viewModel = widget.viewModel;
     final task = viewModel.task;
     final taskTime =
-    task.taskTimes.contains(viewModel.taskTime) ? viewModel.taskTime : null;
+        task.taskTimes.contains(viewModel.taskTime) ? viewModel.taskTime : null;
 
     if (taskTime != null && taskTime != selectedTaskTime) {
       selectedTaskTime = taskTime;
@@ -71,12 +71,11 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final taskTimes = task.taskTimes
         .toList()
         .reversed
-        .map<Widget>((taskTime) =>
-        TaskTimeListTile(
-          task: task,
-          taskTime: taskTime,
-          onTap: (context) => _showTaskTimeEditor(taskTime, context),
-        ));
+        .map<Widget>((taskTime) => TaskTimeListTile(
+              task: task,
+              taskTime: taskTime,
+              onTap: (context) => _showTaskTimeEditor(taskTime, context),
+            ));
 
     return ListView(
       children: taskTimes.toList(),
@@ -126,8 +125,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery
-            .of(context)
+        bottom: MediaQuery.of(context)
             .viewInsets
             .bottom, // stay clear of the keyboard
       ),
@@ -157,17 +155,17 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                     final date = DateTime.parse(_date);
                     final taskTime = TaskTime(
                       startDate: DateTime(
-                          date.year,
-                          date.month,
-                          date.day,
-                          _startTime.hour,
-                          _startTime.minute,
-                          widget.taskTime.startDate.second)
+                              date.year,
+                              date.month,
+                              date.day,
+                              _startTime.hour,
+                              _startTime.minute,
+                              widget.taskTime.startDate.second)
                           .toUtc(),
                       endDate: _endTime != null
                           ? DateTime(date.year, date.month, date.day,
-                          _endTime.hour, _endTime.minute)
-                          .toUtc()
+                                  _endTime.hour, _endTime.minute)
+                              .toUtc()
                           : null,
                     );
                     widget.viewModel
@@ -193,8 +191,8 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               labelText: localization.endTime,
               timeOfDay: widget.taskTime.endDate != null
                   ? TimeOfDay(
-                  hour: widget.taskTime.endDate.hour,
-                  minute: widget.taskTime.endDate.minute)
+                      hour: widget.taskTime.endDate.hour,
+                      minute: widget.taskTime.endDate.minute)
                   : null,
               onSelected: (timeOfDay) => _endTime = timeOfDay,
             ),
