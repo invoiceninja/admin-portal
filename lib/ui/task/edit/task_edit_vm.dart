@@ -69,6 +69,8 @@ class TaskEditVM {
         store.dispatch(EditTaskTime(taskTime));
       },
       onSavePressed: (BuildContext context) {
+
+
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(SaveTaskRequest(completer: completer, task: task));
         return completer.future.then((savedTask) {

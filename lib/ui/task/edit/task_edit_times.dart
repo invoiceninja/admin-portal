@@ -199,8 +199,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               selectedDate: _startDate,
               onSelected: (timeOfDay) {
                 _startDate = timeOfDay;
-                _durationController.text =
-                    formatDuration(_endDate.difference(_startDate));
+                _durationController.text = _endDate != null
+                    ? formatDuration(_endDate.difference(_startDate))
+                    : '';
               },
             ),
             TimePicker(
@@ -209,8 +210,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               selectedDate: _endDate,
               onSelected: (timeOfDay) {
                 _endDate = timeOfDay;
-                _durationController.text =
-                    formatDuration(_endDate.difference(_startDate));
+                _durationController.text = _endDate != null
+                    ? formatDuration(_endDate.difference(_startDate))
+                    : '';
               },
             ),
             PopupMenuButton<int>(

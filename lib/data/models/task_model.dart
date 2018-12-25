@@ -138,6 +138,10 @@ abstract class TaskEntity extends Object
 
   int get duration;
 
+  bool get areTimesValid {
+    final times = taskTimes;
+  }
+
   List<TaskTime> get taskTimes {
     final List<TaskTime> details = [];
 
@@ -157,6 +161,8 @@ abstract class TaskEntity extends Object
 
       details.add(taskTime);
     });
+
+    details.sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
 
     return details;
   }
