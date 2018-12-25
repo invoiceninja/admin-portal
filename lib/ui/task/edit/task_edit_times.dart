@@ -108,18 +108,24 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
   @override
   void didChangeDependencies() {
-    print('didChangeDependencies...');
-    _date = widget.taskTime.startDate.toIso8601String();
-    _startTime = TimeOfDay(
-        hour: widget.taskTime.startDate.hour,
-        minute: widget.taskTime.startDate.minute);
-    if (widget.taskTime.endDate != null) {
-      _endTime = TimeOfDay(
-          hour: widget.taskTime.endDate.hour,
-          minute: widget.taskTime.endDate.minute);
+    final taskTime = widget.taskTime;
+    final startDate = taskTime.startDate;
+    final endDate = taskTime.endDate;
+
+    _date = startDate.toIso8601String();
+    _startTime = TimeOfDay(hour: startDate.hour, minute: startDate.minute);
+    if (endDate != null) {
+      _endTime = TimeOfDay(hour: endDate.hour, minute: endDate.minute);
+      _durationController.text = formatDuration(taskTime.duration);
     }
 
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _durationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -180,19 +186,18 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             ),
             DatePicker(
               labelText: localization.date,
-              selectedDate: convertDateTimeToSqlDate(widget.taskTime.startDate),
+              selectedDate: _date,
               onSelected: (date) => _date = date,
             ),
             TimePicker(
               labelText: localization.startTime,
-              timeOfDay: convertDateTimeToTimeOfDay(widget.taskTime.startDate),
+              timeOfDay: _startTime,
               onSelected: (timeOfDay) => _startTime = timeOfDay,
             ),
             TimePicker(
+              key: ValueKey(_endTime),
               labelText: localization.endTime,
-              timeOfDay: widget.taskTime.endDate != null
-                  ? convertDateTimeToTimeOfDay(widget.taskTime.endDate)
-                  : null,
+              timeOfDay: _endTime,
               onSelected: (timeOfDay) => _endTime = timeOfDay,
             ),
             PopupMenuButton<int>(
@@ -207,11 +212,12 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                             value: minutes,
                           ))
                       .toList(),
-              onSelected: (duration) {
+              onSelected: (minutes) {
                 setState(() {
-                  _durationController.text = duration.toString();
+                  _durationController.text =
+                      formatDuration(Duration(minutes: minutes));
                   final dateTime = convertTimeOfDayToDateTime(_startTime)
-                      .add(Duration(minutes: duration));
+                      .add(Duration(minutes: minutes));
                   _endTime = convertDateTimeToTimeOfDay(dateTime);
                 });
               },

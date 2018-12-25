@@ -3,12 +3,13 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class TimePicker extends StatefulWidget {
   const TimePicker({
+    Key key,
     @required this.labelText,
     @required this.onSelected,
     @required this.timeOfDay,
     this.validator,
     this.autoValidate = false,
-  });
+  }) : super(key: key);
 
   final String labelText;
   final TimeOfDay timeOfDay;
