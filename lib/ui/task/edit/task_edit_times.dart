@@ -103,6 +103,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   String _date;
   TimeOfDay _startTime;
   TimeOfDay _endTime;
+  DurationLength _duration;
+
+  final _durationController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -196,9 +199,41 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   : null,
               onSelected: (timeOfDay) => _endTime = timeOfDay,
             ),
+            PopupMenuButton<int>(
+              padding: EdgeInsets.zero,
+              initialValue: null,
+                itemBuilder: (BuildContext context) => [15, 30].map((minutes) => PopupMenuItem<int>(
+                  child: Text(minutes.toString()),
+                  value: minutes,
+                )).toList(),
+              onSelected: (paymentTerm) {
+                /*
+                viewModel.onChanged(client
+                    .rebuild((b) => b..paymentTerms = paymentTerm.numDays));
+                _paymentTermsController.text =
+                    paymentTerm.getPaymentTerm(localization.net);
+                    */
+              },
+              child: InkWell(
+                child: IgnorePointer(
+                  child: TextFormField(
+                    controller: _durationController,
+                    decoration: InputDecoration(
+                      labelText: localization.duration,
+                      suffixIcon: const Icon(Icons.arrow_drop_down),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+class DurationLength {
+  DurationLength();
+}
+
