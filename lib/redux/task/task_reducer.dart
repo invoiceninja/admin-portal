@@ -20,7 +20,7 @@ final editingTimeReducer = combineReducers<TaskTime>([
 ]);
 
 TaskTime editTaskTime(TaskTime taskTime, dynamic action) {
-  return action.taskTime ?? TaskTime();
+  return action.taskTime ?? TaskTime(startDate: DateTime(2000).toUtc());
 }
 
 Reducer<int> selectedIdReducer = combineReducers([
