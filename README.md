@@ -50,8 +50,16 @@ The architecture is based off these two projects:
 ## Developer Notes
 - Run `cp lib/.env.dart.example lib/.env.dart` to create the config file
 - Run `cp android/key.properties.example android/key.properties` to create the keys file
-- Run `flutter packages pub run build_runner build` to regenerate the model files
-
+- Run `flutter packages pub run build_runner build --delete-conflicting-outputs` to regenerate the model files. It will also remove the old generated files so conflicts are avoided.
+- Run `keytool -genkey -v -keystore key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias invoiceninja` to generate a key to be able to sign the android application.
+- Update `android/key.properties` according to the parameters you entered in previous command when you generated the key 
+- Open a new Firebase project from your console. Firebase is used for authentication.
+    - Inside the project go to Authentication and enable at least one method.
+    - After go to add a new Android application. For the package name add `com.invoiceninja.flutter`
+    - Press "Register App" button.
+    - Download "google-services.json" and put it in `android/app` directory.
+- Run `flutter run` while you have a device connected to the computer or an emulator running and now you can run it.    
+    
 ## Contributions
 
 We gladly accept contributions! If you'd like to get involved with development please join our [Slack group](http://slack.invoiceninja.com/).
