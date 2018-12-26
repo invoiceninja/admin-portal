@@ -166,17 +166,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         return entity.isActive && entity.matchesFilter(_filter);
       }).toList();
 
-      matches.sort((idA, idB) =>
-          state.productState.map[idA].compareTo(state.productState.map[idB]));
-
       return ListView.builder(
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final int entityId = matches[index];
           final product = state.productState.map[entityId];
-          //final String subtitle = entity.matchesFilterValue(_filter);
-
           return ProductListItem(
             onCheckboxChanged: (checked) => _toggleEntity(product),
             isChecked: _selected.contains(product),
@@ -192,29 +187,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
           );
-
-          /*
-          return ListTile(
-            dense: true,
-            leading: Checkbox(
-              activeColor: Theme.of(context).accentColor,
-              value: _selected.contains(entity),
-              onChanged: (bool value) => _toggleEntity(entity),
-            ),
-            title: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(entity.listDisplayName),
-                ),
-                entity.listDisplayAmount != null
-                    ? Text(formatNumber(entity.listDisplayAmount, context,
-                        formatNumberType: entity.listDisplayAmountType))
-                    : Container(),
-              ],
-            ),
-            subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
-          );
-          */
         },
       );
     }
@@ -225,9 +197,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           .where((entityId) =>
               state.taskState.map[entityId].matchesFilter(_filter))
           .toList();
-
-      //matches.sort((idA, idB) =>
-      //state.productState.map[idA].compareTo(state.productState.map[idB]));
 
       return ListView.builder(
         shrinkWrap: true,
@@ -258,6 +227,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       );
     }
 
+    final state = StoreProvider.of<AppState>(context).state;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Material(
@@ -265,6 +236,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           _headerRow(),
           TabBar(
+            labelColor:
+                state.uiState.enableDarkMode ? Colors.white : Colors.black,
+            indicatorColor: Theme.of(context).accentColor,
             controller: _tabController,
             tabs: <Widget>[
               Tab(
