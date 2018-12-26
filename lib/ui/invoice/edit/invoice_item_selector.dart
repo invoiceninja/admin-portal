@@ -63,10 +63,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       } else {
         var item = (entity as ConvertToInvoiceItem).asInvoiceItem;
         if (entity.entityType == EntityType.task) {
+          final project = state.projectState.map[(entity as TaskEntity).projectId];
           var notes = item.notes;
           item = item.rebuild((b) => b
               ..notes = notes
-              ..cost = 20
+              ..cost = taskRateSelector(company: state.selectedCompany, project: project)
           );
         }
         items.add(item);

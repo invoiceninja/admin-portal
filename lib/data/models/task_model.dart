@@ -140,14 +140,10 @@ abstract class TaskEntity extends Object
 
   @override
   InvoiceItemEntity get asInvoiceItem {
-    String notes = description + '\n';
-    taskTimes.forEach((time) {
-      //notes += '\n' + formatDate(time.startDate, context) + ' - ' + time.endDate;
-    });
-
     return InvoiceItemEntity().rebuild((b) => b
+      ..taskId = id
       ..notes = description
-      ..qty = round(duration / 60 * 60, 2));
+      ..qty = round(duration / (60 * 60), 2));
   }
 
   bool get areTimesValid {

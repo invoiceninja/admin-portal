@@ -74,6 +74,7 @@ class WebClient {
   Future<dynamic> post(String url, String token, [dynamic data]) async {
     url = _checkUrl(url);
     print('POST: $url');
+    print('Data: $data');
 
     final http.Response response = await http.Client().post(
       url,
@@ -87,7 +88,6 @@ class WebClient {
 
     if (response.statusCode >= 300) {
       print('==== FAILED ====');
-      print('request: $data');
       print('response: ${response.body}');
 
       throw _parseError(response.statusCode, response.body);
@@ -105,6 +105,7 @@ class WebClient {
   Future<dynamic> put(String url, String token, dynamic data) async {
     url = _checkUrl(url);
     print('PUT: $url');
+    print('Data: $data');
 
     final http.Response response = await http.Client().put(
       url,
@@ -118,7 +119,6 @@ class WebClient {
 
     if (response.statusCode >= 300) {
       print('==== FAILED ====');
-      print('request: $data');
       print('response: ${response.body}');
 
       throw _parseError(response.statusCode, response.body);
