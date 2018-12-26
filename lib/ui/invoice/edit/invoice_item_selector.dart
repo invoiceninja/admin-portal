@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -142,7 +143,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     Widget _productList() {
       final state = StoreProvider.of<AppState>(context).state;
       final matches =
-      memoizedProductList(state.productState.map).where((entityId) {
+          memoizedProductList(state.productState.map).where((entityId) {
         final entity = state.productState.map[entityId];
         return entity.isActive && entity.matchesFilter(_filter);
       }).toList();
@@ -171,7 +172,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                 ),
                 entity.listDisplayAmount != null
                     ? Text(formatNumber(entity.listDisplayAmount, context,
-                    formatNumberType: entity.listDisplayAmountType))
+                        formatNumberType: entity.listDisplayAmountType))
                     : Container(),
               ],
             ),
@@ -191,22 +192,35 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     Widget _taskList() {
       final state = StoreProvider.of<AppState>(context).state;
-      final matches =
-      memoizedTaskList(state.taskState.map, widget.clientId).where((entityId) {
-        final entity = state.taskState.map[entityId];
-        return entity.isActive && entity.matchesFilter(_filter);
-      }).toList();
+      final matches = memoizedTaskList(state.taskState.map, widget.clientId)
+          .where((entityId) =>
+              state.taskState.map[entityId].matchesFilter(_filter))
+          .toList();
 
       //matches.sort((idA, idB) =>
-          //state.productState.map[idA].compareTo(state.productState.map[idB]));
+      //state.productState.map[idA].compareTo(state.productState.map[idB]));
 
       return ListView.builder(
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final int entityId = matches[index];
-          final entity = state.taskState.map[entityId];
-          final String subtitle = entity.matchesFilterValue(_filter);
+          final task = state.taskState.map[entityId];
+          final project = state.projectState.map[task.projectId];
+          final client = state.clientState.map[task.clientId];
+          final String subtitle = task.matchesFilterValue(_filter);
+
+          return TaskListItem(
+            onLongPress: null,
+            project: project,
+            task: task,
+            onTap: null,
+            client: client,
+            filter: _filter,
+            onEntityAction: null,
+            user: state.selectedCompany.user,
+          );
+          /*
           return ListTile(
             dense: true,
             leading: Checkbox(
@@ -235,6 +249,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
           );
+          */
         },
       );
     }

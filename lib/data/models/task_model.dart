@@ -333,5 +333,7 @@ abstract class TaskEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.duration;
 
+  bool get isStopped => !isRunning;
+
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }
