@@ -14,9 +14,10 @@ class TaskListItem extends StatelessWidget {
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
-    //@required this.onCheckboxChanged,
     @required this.task,
     @required this.filter,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
@@ -25,8 +26,8 @@ class TaskListItem extends StatelessWidget {
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-
-  //final ValueChanged<bool> onCheckboxChanged;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
   final TaskEntity task;
   final String filter;
 
@@ -56,16 +57,12 @@ class TaskListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
+        leading: onCheckboxChanged != null ? Checkbox(
           //key: NinjaKeys.taskItemCheckbox(task.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
+          value: isChecked,
+          onChanged: (value) => onCheckboxChanged(value),
+          activeColor: Theme.of(context).accentColor,
+        ) : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

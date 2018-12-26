@@ -55,13 +55,21 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final state = StoreProvider.of<AppState>(context).state;
 
     _selected.forEach((entity) {
-      final product = entity as ProductEntity;
       if (state.selectedCompany.fillProducts == false) {
+        final product = entity as ProductEntity;
         items.add(InvoiceItemEntity().rebuild((b) => b
           ..productKey = product.productKey
           ..qty = 1));
       } else {
-        items.add(product.asInvoiceItem);
+        var item = (entity as ConvertToInvoiceItem).asInvoiceItem;
+        if (entity.entityType == EntityType.task) {
+          var notes = item.notes;
+          item = item.rebuild((b) => b
+              ..notes = notes
+              ..cost = 20
+          );
+        }
+        items.add(item);
       }
     });
 
@@ -162,7 +170,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
             dense: true,
             leading: Checkbox(
               activeColor: Theme.of(context).accentColor,
-              value: _selected.contains(entityId),
+              value: _selected.contains(entity),
               onChanged: (bool value) => _toggleEntity(entity),
             ),
             title: Row(
@@ -208,48 +216,25 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final task = state.taskState.map[entityId];
           final project = state.projectState.map[task.projectId];
           final client = state.clientState.map[task.clientId];
-          final String subtitle = task.matchesFilterValue(_filter);
-
           return TaskListItem(
-            onLongPress: null,
+            onCheckboxChanged: (checked) => _toggleEntity(task),
+            isChecked: _selected.contains(task),
             project: project,
             task: task,
-            onTap: null,
             client: client,
+            onLongPress: null,
+            onTap: () {
+              if (_selected.isNotEmpty) {
+                _toggleEntity(task);
+              } else {
+                _selected.add(task);
+                _onItemsSelected(context);
+              }
+            },
             filter: _filter,
             onEntityAction: null,
             user: state.selectedCompany.user,
           );
-          /*
-          return ListTile(
-            dense: true,
-            leading: Checkbox(
-              activeColor: Theme.of(context).accentColor,
-              value: _selected.contains(entityId),
-              onChanged: (bool value) => _toggleEntity(entity),
-            ),
-            title: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(entity.listDisplayName),
-                ),
-                entity.listDisplayAmount != null
-                    ? Text(formatNumber(entity.listDisplayAmount, context,
-                    formatNumberType: entity.listDisplayAmountType))
-                    : Container(),
-              ],
-            ),
-            subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
-            onTap: () {
-              if (_selected.isNotEmpty) {
-                _toggleEntity(entity);
-              } else {
-                _selected.add(entity);
-                _onItemsSelected(context);
-              }
-            },
-          );
-          */
         },
       );
     }

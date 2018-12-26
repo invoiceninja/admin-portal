@@ -88,7 +88,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 }
 
 abstract class TaskEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, ConvertToInvoiceItem
     implements Built<TaskEntity, TaskEntityBuilder> {
   factory TaskEntity({bool isRunning = false}) {
     return _$TaskEntity._(
@@ -137,6 +137,18 @@ abstract class TaskEntity extends Object
   String get description;
 
   int get duration;
+
+  @override
+  InvoiceItemEntity get asInvoiceItem {
+    String notes = description + '\n';
+    taskTimes.forEach((time) {
+      //notes += '\n' + formatDate(time.startDate, context) + ' - ' + time.endDate;
+    });
+
+    return InvoiceItemEntity().rebuild((b) => b
+      ..notes = description
+      ..qty = round(duration / 60 * 60, 2));
+  }
 
   bool get areTimesValid {
     final times = taskTimes;
