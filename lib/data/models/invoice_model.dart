@@ -564,6 +564,10 @@ abstract class InvoiceItemEntity extends Object
 
   double get total => round(qty * cost, 2);
 
+  bool get isTask => taskId != null && taskId > 0;
+
+  bool get isExpense => expenseId != null && expenseId > 0;
+
   @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
