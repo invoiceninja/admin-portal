@@ -237,7 +237,7 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
 }
 
 String formatDate(String value, BuildContext context,
-    {bool showDate = true, bool showTime = false}) {
+    {bool showDate = true, bool showTime = false, bool showSeconds = true}) {
   if (value == null || value.isEmpty) {
     return '';
   }
@@ -248,7 +248,9 @@ String formatDate(String value, BuildContext context,
   if (showTime) {
     String format;
     if (!showDate) {
-      format = company.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a';
+      format = showSeconds
+          ? company.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
+          : company.enableMilitaryTime ? 'H:mm' : 'h:mm a';
     } else {
       final dateFormats = state.staticState.datetimeFormatMap;
       final dateFormatId = company.datetimeFormatId > 0
@@ -256,7 +258,9 @@ String formatDate(String value, BuildContext context,
           : kDefaultDateTimeFormat;
       format = dateFormats[dateFormatId].format;
       if (company.enableMilitaryTime) {
-        format = format.replaceFirst('h:mm:ss a', 'H:mm:ss');
+        format = showSeconds
+            ? format.replaceFirst('h:mm:ss a', 'H:mm:ss')
+            : format.replaceFirst('h:mm a', 'H:mm');
       }
     }
     final formatter = DateFormat(format, localeSelector(state));

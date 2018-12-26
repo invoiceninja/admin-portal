@@ -63,12 +63,20 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       } else {
         var item = (entity as ConvertToInvoiceItem).asInvoiceItem;
         if (entity.entityType == EntityType.task) {
-          final project = state.projectState.map[(entity as TaskEntity).projectId];
-          var notes = item.notes;
+          final task = entity as TaskEntity;
+          final project = state.projectState.map[task.projectId];
+          var notes = item.notes + '\n';
+          task.taskTimes.forEach((time) {
+            final start = formatDate(time.startDate.toIso8601String(), context,
+                showTime: true);
+            final end = formatDate(time.endDate.toIso8601String(), context,
+                showTime: true, showDate: false, showSeconds: false);
+            notes += '\n### $start - $end';
+          });
           item = item.rebuild((b) => b
-              ..notes = notes
-              ..cost = taskRateSelector(company: state.selectedCompany, project: project)
-          );
+            ..notes = notes
+            ..cost = taskRateSelector(
+                company: state.selectedCompany, project: project));
         }
         items.add(item);
       }
