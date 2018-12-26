@@ -14,10 +14,12 @@ class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
     @required this.clientId,
     this.onItemsSelected,
+    this.excluded,
   });
 
   final Function(List<InvoiceItemEntity>, [int]) onItemsSelected;
   final int clientId;
+  final List<int> excluded;
 
   @override
   _InvoiceItemSelectorState createState() => new _InvoiceItemSelectorState();
@@ -194,9 +196,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     Widget _taskList() {
       final state = StoreProvider.of<AppState>(context).state;
       final matches = memoizedTaskList(state.taskState.map, widget.clientId)
-          .where((entityId) =>
-              state.taskState.map[entityId].matchesFilter(_filter))
-          .toList();
+          .where((entityId) {
+        final task = state.taskState.map[entityId];
+        return task.matchesFilter(_filter) &&
+            widget.excluded != null &&
+            !widget.excluded.contains(task.id);
+      }).toList();
 
       return ListView.builder(
         shrinkWrap: true,

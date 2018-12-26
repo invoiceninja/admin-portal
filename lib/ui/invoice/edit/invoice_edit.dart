@@ -66,8 +66,12 @@ class _InvoiceEditState extends State<InvoiceEdit>
       child: Scaffold(
         appBar: AppBar(
           title: Text(invoice.isNew
-              ? invoice.isQuote ? localization.newQuote : localization.newInvoice
-              : invoice.isQuote ? localization.editQuote: localization.editInvoice),
+              ? invoice.isQuote
+                  ? localization.newQuote
+                  : localization.newInvoice
+              : invoice.isQuote
+                  ? localization.editQuote
+                  : localization.editInvoice),
           actions: <Widget>[
             RefreshIconButton(
               icon: Icons.cloud_upload,
@@ -140,6 +144,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 context: context,
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
+                    excluded: invoice.invoiceItems
+                        .where((item) => item.isTask)
+                        .map((item) => item.taskId)
+                        .toList(),
                     clientId: invoice.clientId,
                     onItemsSelected: (items, [clientId]) {
                       viewModel.onItemsAdded(items, clientId);
