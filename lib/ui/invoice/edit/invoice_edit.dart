@@ -141,8 +141,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
                     clientId: invoice.clientId,
-                    onItemsSelected: (items) {
-                      viewModel.onItemsAdded(items);
+                    onItemsSelected: (items, [clientId]) {
+                      viewModel.onItemsAdded(items, clientId);
                       _controller.animateTo(kItemScreen);
                     },
                   );

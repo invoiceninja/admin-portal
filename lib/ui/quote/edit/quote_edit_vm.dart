@@ -40,7 +40,7 @@ class QuoteEditVM extends EntityEditVM {
     InvoiceItemEntity invoiceItem,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
-    Function(List<InvoiceItemEntity>) onItemsAdded,
+    Function(List<InvoiceItemEntity>, int) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
   }) : super(
@@ -88,7 +88,7 @@ class QuoteEditVM extends EntityEditVM {
               });
         });
       },
-      onItemsAdded: (items) {
+      onItemsAdded: (items, clientId) {
         if (items.length == 1) {
           store.dispatch(EditQuoteItem(items[0]));
         }

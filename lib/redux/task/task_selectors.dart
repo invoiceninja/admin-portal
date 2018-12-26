@@ -10,10 +10,10 @@ var memoizedTaskList = memo2(
 List<int> taskList(BuiltMap<int, TaskEntity> taskMap, int clientId) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
-    return task.isActive &&
-        task.isStopped &&
-        !task.isInvoiced &&
-        task.clientId == clientId;
+    if (clientId != null && clientId != 0 && task.clientId != clientId) {
+      return false;
+    }
+    return task.isActive && task.isStopped && !task.isInvoiced;
   }).toList();
 
   list.sort((idA, idB) =>

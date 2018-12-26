@@ -15,7 +15,7 @@ class InvoiceItemSelector extends StatefulWidget {
     this.onItemsSelected,
   });
 
-  final Function(List<InvoiceItemEntity>) onItemsSelected;
+  final Function(List<InvoiceItemEntity>, [int]) onItemsSelected;
   final int clientId;
 
   @override
@@ -50,7 +50,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     Navigator.pop(context);
   }
 
-  void _onItemsSelected(BuildContext context) {
+  void _onItemsSelected(BuildContext context, [int clientId]) {
     final List<InvoiceItemEntity> items = [];
     final state = StoreProvider.of<AppState>(context).state;
 
@@ -82,7 +82,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       }
     });
 
-    widget.onItemsSelected(items);
+    widget.onItemsSelected(items, clientId);
     Navigator.pop(context);
   }
 
@@ -237,7 +237,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                 _toggleEntity(task);
               } else {
                 _selected.add(task);
-                _onItemsSelected(context);
+                _onItemsSelected(context, client?.id);
               }
             },
             filter: _filter,

@@ -49,7 +49,7 @@ class EntityEditVM {
   final InvoiceItemEntity invoiceItem;
   final InvoiceEntity origInvoice;
   final Function(BuildContext) onSavePressed;
-  final Function(List<InvoiceItemEntity>) onItemsAdded;
+  final Function(List<InvoiceItemEntity>, int) onItemsAdded;
   final Function onBackPressed;
   final bool isSaving;
 }
@@ -61,7 +61,7 @@ class InvoiceEditVM extends EntityEditVM {
     InvoiceItemEntity invoiceItem,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
-    Function(List<InvoiceItemEntity>) onItemsAdded,
+    Function(List<InvoiceItemEntity>, int) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
   }) : super(
@@ -110,7 +110,11 @@ class InvoiceEditVM extends EntityEditVM {
               });
         });
       },
-      onItemsAdded: (items) {
+      onItemsAdded: (items, clientId) {
+        if (clientId != null && clientId > 0) {
+          store.dispatch(
+              UpdateInvoice(invoice.rebuild((b) => b..clientId = clientId)));
+        }
         store.dispatch(AddInvoiceItems(items));
         // if we're just adding one item automatically show the editor
         if (items.length == 1) {
