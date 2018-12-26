@@ -180,30 +180,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final invoiceItem = widget.invoiceItem;
     final company = viewModel.company;
 
-    void _confirmDelete() {
-      showDialog<AlertDialog>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-              semanticLabel: localization.areYouSure,
-              title: Text(localization.areYouSure),
-              actions: <Widget>[
-                FlatButton(
-                    child: Text(localization.cancel.toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                FlatButton(
-                    child: Text(localization.ok.toUpperCase()),
-                    onPressed: () {
-                      widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
-                      Navigator.pop(context); // confirmation dialog
-                      Navigator.pop(context); // invoice item editor
-                    })
-              ],
-            ),
-      );
-    }
-
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context)
@@ -221,7 +197,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                   color: Colors.red,
                   icon: Icons.delete,
                   label: localization.remove,
-                  onPressed: _confirmDelete,
+                  onPressed: () {
+                    widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
+                    Navigator.pop(context);
+                  },
                 ),
                 SizedBox(
                   width: 10.0,
