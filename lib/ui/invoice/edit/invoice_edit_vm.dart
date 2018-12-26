@@ -111,10 +111,11 @@ class InvoiceEditVM extends EntityEditVM {
         });
       },
       onItemsAdded: (items) {
+        store.dispatch(AddInvoiceItems(items));
+        // if we're just adding one item automatically show the editor
         if (items.length == 1) {
           store.dispatch(EditInvoiceItem(items[0]));
         }
-        store.dispatch(AddInvoiceItems(items));
       },
     );
   }

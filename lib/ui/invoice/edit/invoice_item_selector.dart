@@ -20,7 +20,7 @@ class InvoiceItemSelector extends StatefulWidget {
 
 class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
   String _filter;
-  final List<int> _selectedIds = [];
+  final List<BaseEntity> _selected = [];
 
   final _textController = TextEditingController();
 
@@ -41,8 +41,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     final List<InvoiceItemEntity> items = [];
     final state = StoreProvider.of<AppState>(context).state;
 
-    _selectedIds.forEach((entityId) {
-      final product = state.productState.map[entityId];
+    _selected.forEach((entity) {
+      final product = entity as ProductEntity;
       if (state.selectedCompany.fillProducts == false) {
         items.add(InvoiceItemEntity().rebuild((b) => b
           ..productKey = product.productKey
@@ -56,14 +56,14 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
     Navigator.pop(context);
   }
 
-  void _toggleEntity(int entityId) {
+  void _toggleEntity(BaseEntity entity) {
     setState(() {
       _filter = '';
       _textController.text = '';
-      if (_selectedIds.contains(entityId)) {
-        _selectedIds.remove(entityId);
+      if (_selected.contains(entity)) {
+        _selected.remove(entity);
       } else {
-        _selectedIds.add(entityId);
+        _selected.add(entity);
       }
     });
   }
@@ -105,10 +105,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
               autofocus: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: _selectedIds.isEmpty
+                hintText: _selected.isEmpty
                     ? localization.filter
                     : localization.countSelected
-                        .replaceFirst(':count', '${_selectedIds.length}'),
+                        .replaceFirst(':count', '${_selected.length}'),
               ),
             ),
           ),
@@ -127,7 +127,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
                   }
                 },
               ),
-              _selectedIds.isNotEmpty
+              _selected.isNotEmpty
                   ? IconButton(
                       icon: Icon(Icons.check),
                       onPressed: () => _onItemsSelected(context),
@@ -164,8 +164,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
             dense: true,
             leading: Checkbox(
               activeColor: Theme.of(context).accentColor,
-              value: _selectedIds.contains(entityId),
-              onChanged: (bool value) => _toggleEntity(entityId),
+              value: _selected.contains(entityId),
+              onChanged: (bool value) => _toggleEntity(entity),
             ),
             title: Row(
               children: <Widget>[
@@ -180,10 +180,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
             onTap: () {
-              if (_selectedIds.isNotEmpty) {
-                _toggleEntity(entityId);
+              if (_selected.isNotEmpty) {
+                _toggleEntity(entity);
               } else {
-                _selectedIds.add(entityId);
+                _selected.add(entity);
                 _onItemsSelected(context);
               }
             },
