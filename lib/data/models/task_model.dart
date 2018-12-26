@@ -127,7 +127,7 @@ abstract class TaskEntity extends Object
     return updateTaskTime(taskTime, times.length - 1);
   }
 
-  bool get isPaid => invoiceId != null && invoiceId > 0;
+  bool get isInvoiced => invoiceId != null && invoiceId > 0;
 
   @override
   EntityType get entityType {

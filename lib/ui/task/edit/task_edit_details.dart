@@ -80,45 +80,51 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            task.invoiceId == null ? EntityDropdown(
-              key: Key('__client_${task.clientId}__'),
-              entityType: EntityType.client,
-              labelText: localization.client,
-              initialValue:
-                  (state.clientState.map[task.clientId] ?? ClientEntity())
-                      .displayName,
-              entityMap: state.clientState.map,
-              entityList: memoizedDropdownClientList(
-                  state.clientState.map, state.clientState.list),
-              onSelected: (client) {
-                viewModel.onChanged(task.rebuild((b) => b
-                  ..clientId = client.id
-                  ..projectId = 0));
-              },
-              onAddPressed: (completer) {
-                viewModel.onAddClientPressed(context, completer);
-              },
-            ) : SizedBox(),
-            task.invoiceId == null ? EntityDropdown(
-              key: Key('__project_${task.clientId}__'),
-              entityType: EntityType.project,
-              labelText: localization.project,
-              initialValue:
-                  (state.projectState.map[task.projectId] ?? ProjectEntity())
-                      .name,
-              entityMap: state.projectState.map,
-              entityList: memoizedDropdownProjectList(state.projectState.map,
-                  state.projectState.list, task.clientId),
-              onSelected: (selected) {
-                final project = selected as ProjectEntity;
-                viewModel.onChanged(task.rebuild((b) => b
-                  ..projectId = project.id
-                  ..clientId = project.clientId));
-              },
-              onAddPressed: (completer) {
-                viewModel.onAddProjectPressed(context, completer);
-              },
-            ) : SizedBox(),
+            !task.isInvoiced
+                ? EntityDropdown(
+                    key: Key('__client_${task.clientId}__'),
+                    entityType: EntityType.client,
+                    labelText: localization.client,
+                    initialValue:
+                        (state.clientState.map[task.clientId] ?? ClientEntity())
+                            .displayName,
+                    entityMap: state.clientState.map,
+                    entityList: memoizedDropdownClientList(
+                        state.clientState.map, state.clientState.list),
+                    onSelected: (client) {
+                      viewModel.onChanged(task.rebuild((b) => b
+                        ..clientId = client.id
+                        ..projectId = 0));
+                    },
+                    onAddPressed: (completer) {
+                      viewModel.onAddClientPressed(context, completer);
+                    },
+                  )
+                : SizedBox(),
+            !task.isInvoiced
+                ? EntityDropdown(
+                    key: Key('__project_${task.clientId}__'),
+                    entityType: EntityType.project,
+                    labelText: localization.project,
+                    initialValue: (state.projectState.map[task.projectId] ??
+                            ProjectEntity())
+                        .name,
+                    entityMap: state.projectState.map,
+                    entityList: memoizedDropdownProjectList(
+                        state.projectState.map,
+                        state.projectState.list,
+                        task.clientId),
+                    onSelected: (selected) {
+                      final project = selected as ProjectEntity;
+                      viewModel.onChanged(task.rebuild((b) => b
+                        ..projectId = project.id
+                        ..clientId = project.clientId));
+                    },
+                    onAddPressed: (completer) {
+                      viewModel.onAddProjectPressed(context, completer);
+                    },
+                  )
+                : SizedBox(),
             TextFormField(
               maxLines: 4,
               controller: _descriptionController,

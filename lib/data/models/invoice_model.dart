@@ -554,6 +554,14 @@ abstract class InvoiceItemEntity extends Object
 
   double get discount;
 
+  @nullable
+  @BuiltValueField(wireName: 'task_public_id')
+  int get taskId;
+
+  @nullable
+  @BuiltValueField(wireName: 'expense_public_id')
+  int get expenseId;
+
   double get total => round(qty * cost, 2);
 
   @override

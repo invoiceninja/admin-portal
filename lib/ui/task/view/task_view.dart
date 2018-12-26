@@ -69,7 +69,7 @@ class _TaskViewState extends State<TaskView> {
       final widgets = <Widget>[
         TwoValueHeader(
           backgroundColor:
-              task.isPaid ? Colors.green : task.isRunning ? Colors.blue : null,
+              task.isInvoiced ? Colors.green : task.isRunning ? Colors.blue : null,
           label1: localization.duration,
           value1: formatDuration(task.calculateDuration),
           label2: localization.amount,
