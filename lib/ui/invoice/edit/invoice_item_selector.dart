@@ -3,16 +3,19 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
+    @required this.clientId,
     this.onItemsSelected,
   });
 
   final Function(List<InvoiceItemEntity>) onItemsSelected;
+  final int clientId;
 
   @override
   _InvoiceItemSelectorState createState() => new _InvoiceItemSelectorState();
@@ -136,10 +139,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       );
     }
 
-    Widget _entityList(EntityType entityType) {
+    Widget _productList() {
       final state = StoreProvider.of<AppState>(context).state;
       final matches =
-          memoizedProductList(state.productState.map).where((entityId) {
+      memoizedProductList(state.productState.map).where((entityId) {
         final entity = state.productState.map[entityId];
         return entity.isActive && entity.matchesFilter(_filter);
       }).toList();
@@ -168,7 +171,57 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                 ),
                 entity.listDisplayAmount != null
                     ? Text(formatNumber(entity.listDisplayAmount, context,
-                        formatNumberType: entity.listDisplayAmountType))
+                    formatNumberType: entity.listDisplayAmountType))
+                    : Container(),
+              ],
+            ),
+            subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
+            onTap: () {
+              if (_selected.isNotEmpty) {
+                _toggleEntity(entity);
+              } else {
+                _selected.add(entity);
+                _onItemsSelected(context);
+              }
+            },
+          );
+        },
+      );
+    }
+
+    Widget _taskList() {
+      final state = StoreProvider.of<AppState>(context).state;
+      final matches =
+      memoizedTaskList(state.taskState.map, widget.clientId).where((entityId) {
+        final entity = state.taskState.map[entityId];
+        return entity.isActive && entity.matchesFilter(_filter);
+      }).toList();
+
+      //matches.sort((idA, idB) =>
+          //state.productState.map[idA].compareTo(state.productState.map[idB]));
+
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: matches.length,
+        itemBuilder: (BuildContext context, int index) {
+          final int entityId = matches[index];
+          final entity = state.taskState.map[entityId];
+          final String subtitle = entity.matchesFilterValue(_filter);
+          return ListTile(
+            dense: true,
+            leading: Checkbox(
+              activeColor: Theme.of(context).accentColor,
+              value: _selected.contains(entityId),
+              onChanged: (bool value) => _toggleEntity(entity),
+            ),
+            title: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(entity.listDisplayName),
+                ),
+                entity.listDisplayAmount != null
+                    ? Text(formatNumber(entity.listDisplayAmount, context,
+                    formatNumberType: entity.listDisplayAmountType))
                     : Container(),
               ],
             ),
@@ -212,8 +265,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                _entityList(EntityType.product),
-                _entityList(EntityType.task),
+                _productList(),
+                _taskList(),
               ],
             ),
           ),

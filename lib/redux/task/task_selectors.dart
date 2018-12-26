@@ -3,6 +3,22 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+var memoizedTaskList = memo2(
+    (BuiltMap<int, TaskEntity> taskMap, int clientId) =>
+        taskList(taskMap, clientId));
+
+List<int> taskList(BuiltMap<int, TaskEntity> taskMap, int clientId) {
+  final list = taskMap.keys.where((taskId) {
+    final task = taskMap[taskId];
+    return task.isActive && task.clientId == clientId;
+  }).toList();
+
+  list.sort((idA, idB) =>
+      taskMap[idA].listDisplayName.compareTo(taskMap[idB].listDisplayName));
+
+  return list;
+}
+
 var memoizedDropdownTaskList = memo2(
     (BuiltMap<int, TaskEntity> taskMap, BuiltList<int> taskList) =>
         dropdownTasksSelector(taskMap, taskList));
@@ -78,16 +94,13 @@ double taskRateSelector({CompanyEntity company, ProjectEntity project}) {
 }
 
 var memoizedTaskStatsForClient = memo4((int clientId,
-    BuiltMap<int, TaskEntity> taskMap,
-    String activeLabel,
-    String archivedLabel) =>
+        BuiltMap<int, TaskEntity> taskMap,
+        String activeLabel,
+        String archivedLabel) =>
     taskStatsForClient(clientId, taskMap, activeLabel, archivedLabel));
 
-String taskStatsForClient(
-    int clientId,
-    BuiltMap<int, TaskEntity> taskMap,
-    String activeLabel,
-    String archivedLabel) {
+String taskStatsForClient(int clientId, BuiltMap<int, TaskEntity> taskMap,
+    String activeLabel, String archivedLabel) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -113,7 +126,6 @@ String taskStatsForClient(
 
   return str;
 }
-
 
 var memoizedTaskStatsForProject = memo4((int projectId,
         BuiltMap<int, TaskEntity> taskMap,
