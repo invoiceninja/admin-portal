@@ -28,7 +28,6 @@ class TaskView extends StatefulWidget {
 }
 
 class _TaskViewState extends State<TaskView> {
-
   Timer _timer;
 
   @override
@@ -205,7 +204,7 @@ class _TaskViewState extends State<TaskView> {
               task.isRunning ? Icons.stop : Icons.play_arrow,
               color: Colors.white,
             ),
-            tooltip: localization.newTask,
+            tooltip: task.isRunning ? localization.stop : localization.start,
           );
         }),
       ),

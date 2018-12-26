@@ -37,7 +37,7 @@ class TaskEditVM {
   TaskEditVM({
     @required this.state,
     @required this.task,
-    @required this.onAddTimePressed,
+    @required this.onFabPressed,
     @required this.taskTime,
     @required this.company,
     @required this.isSaving,
@@ -64,18 +64,24 @@ class TaskEditVM {
           store.dispatch(UpdateCurrentRoute(TaskScreen.route));
         }
       },
-      onAddTimePressed: () {
+      onFabPressed: () {
         final taskTime = TaskTime();
-        store.dispatch(AddTaskTime(taskTime));
-        store.dispatch(EditTaskTime(taskTime));
+        if (task.isRunning) {
+          final taskTimes = task.taskTimes;
+          store.dispatch(UpdateTaskTime(
+              index: taskTimes.length - 1, taskTime: taskTime.stop));
+        } else {
+          store.dispatch(AddTaskTime(TaskTime()));
+        }
+
+        //store.dispatch(EditTaskTime(taskTime));
       },
       onSavePressed: (BuildContext context) {
         if (!task.areTimesValid) {
           showDialog<ErrorDialog>(
               context: context,
               builder: (BuildContext context) {
-                return ErrorDialog(AppLocalization.of(context)
-                    .taskErrors);
+                return ErrorDialog(AppLocalization.of(context).taskErrors);
               });
           return null;
         }
@@ -104,7 +110,7 @@ class TaskEditVM {
   final TaskTime taskTime;
   final CompanyEntity company;
   final Function(BuildContext) onSavePressed;
-  final Function onAddTimePressed;
+  final Function onFabPressed;
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;

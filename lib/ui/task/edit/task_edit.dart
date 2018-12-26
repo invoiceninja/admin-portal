@@ -127,11 +127,14 @@ class _TaskEditState extends State<TaskEdit>
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
-            viewModel.onAddTimePressed();
+            viewModel.onFabPressed();
             _controller.animateTo(kTimesScreen);
           },
-          child: const Icon(Icons.add, color: Colors.white),
-          tooltip: localization.addItem,
+          child: Icon(
+            task.isRunning ? Icons.stop : Icons.play_arrow,
+            color: Colors.white,
+          ),
+          tooltip: task.isRunning ? localization.stop : localization.start,
         ),
       ),
     );
