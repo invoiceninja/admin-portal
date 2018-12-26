@@ -114,6 +114,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
     _date = startDate.toIso8601String();
     _startDate = startDate;
+
     if (endDate != null) {
       _endDate = endDate;
       _durationController.text = formatDuration(taskTime.duration);
@@ -173,9 +174,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                           .toUtc(),
                       endDate: _endDate != null
                           ? DateTime(
-                                  date.year,
-                                  date.month,
-                                  date.day,
+                                  _endDate.year,
+                                  _endDate.month,
+                                  _endDate.day,
                                   _endDate.hour,
                                   _endDate.minute,
                                   _endDate.second)
@@ -208,6 +209,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               key: ValueKey(_endDate),
               labelText: localization.endTime,
               selectedDate: _endDate,
+              previousDate: _startDate,
               onSelected: (timeOfDay) {
                 _endDate = timeOfDay;
                 _durationController.text = _endDate != null

@@ -7,11 +7,13 @@ class TimePicker extends StatefulWidget {
     @required this.labelText,
     @required this.onSelected,
     @required this.selectedDate,
+    this.previousDate,
     this.validator,
     this.autoValidate = false,
   }) : super(key: key);
 
   final String labelText;
+  final DateTime previousDate;
   final DateTime selectedDate;
   final Function(DateTime) onSelected;
   final Function validator;
@@ -52,7 +54,13 @@ class _TimePickerState extends State<TimePicker> {
         context: context, initialTime: TimeOfDay(hour: hour, minute: minute));
 
     if (selectedTime != null) {
-      final dateTime = convertTimeOfDayToDateTime(selectedTime);
+      var dateTime = convertTimeOfDayToDateTime(selectedTime);
+
+      if (widget.previousDate != null &&
+          dateTime.isBefore(widget.previousDate)) {
+        dateTime = dateTime.add(Duration(days: 1));
+      }
+
       _textController.text = formatDate(dateTime.toIso8601String(), context,
           showTime: true, showDate: false);
 
