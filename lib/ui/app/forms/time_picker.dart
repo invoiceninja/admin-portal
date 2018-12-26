@@ -41,7 +41,7 @@ class _TimePickerState extends State<TimePicker> {
     super.dispose();
   }
 
-  void _showDatePicker() async {
+  void _showTimePicker() async {
     final selectedDate = widget.selectedDate;
     final now = DateTime.now();
 
@@ -63,7 +63,7 @@ class _TimePickerState extends State<TimePicker> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _showDatePicker(),
+      onTap: () => _showTimePicker(),
       child: IgnorePointer(
         child: TextFormField(
           validator: widget.validator,
