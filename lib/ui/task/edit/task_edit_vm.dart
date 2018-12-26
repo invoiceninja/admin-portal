@@ -65,16 +65,13 @@ class TaskEditVM {
         }
       },
       onFabPressed: () {
-        final taskTime = TaskTime();
         if (task.isRunning) {
           final taskTimes = task.taskTimes;
           store.dispatch(UpdateTaskTime(
-              index: taskTimes.length - 1, taskTime: taskTime.stop));
+              index: taskTimes.length - 1, taskTime: taskTimes.last.stop));
         } else {
           store.dispatch(AddTaskTime(TaskTime()));
         }
-
-        //store.dispatch(EditTaskTime(taskTime));
       },
       onSavePressed: (BuildContext context) {
         if (!task.areTimesValid) {
