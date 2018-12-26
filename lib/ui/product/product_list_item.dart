@@ -8,12 +8,13 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.onTap,
-    @required this.onLongPress,
-    //@required this.onCheckboxChanged,
     @required this.product,
     @required this.filter,
+    this.onEntityAction,
+    this.onLongPress,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   @override
@@ -30,16 +31,12 @@ class ProductListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.productItemCheckbox(product.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
+        leading: onCheckboxChanged != null ? Checkbox(
+          //key: NinjaKeys.productItemCheckbox(task.id),
+          value: isChecked,
+          onChanged: (value) => onCheckboxChanged(value),
+          activeColor: Theme.of(context).accentColor,
+        ) : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -77,6 +74,8 @@ class ProductListItem extends StatelessWidget {
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   //final ValueChanged<bool> onCheckboxChanged;
   final ProductEntity product;

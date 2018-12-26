@@ -11,11 +11,11 @@ class TaskListItem extends StatelessWidget {
     @required this.user,
     @required this.client,
     @required this.project,
-    @required this.onEntityAction,
     @required this.onTap,
-    @required this.onLongPress,
     @required this.task,
     @required this.filter,
+    this.onEntityAction,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });

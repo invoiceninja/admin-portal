@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -173,8 +174,26 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final int entityId = matches[index];
-          final entity = state.productState.map[entityId];
-          final String subtitle = entity.matchesFilterValue(_filter);
+          final product = state.productState.map[entityId];
+          //final String subtitle = entity.matchesFilterValue(_filter);
+
+          return ProductListItem(
+            onCheckboxChanged: (checked) => _toggleEntity(product),
+            isChecked: _selected.contains(product),
+            product: product,
+            user: state.user,
+            filter: _filter,
+            onTap: () {
+              if (_selected.isNotEmpty) {
+                _toggleEntity(product);
+              } else {
+                _selected.add(product);
+                _onItemsSelected(context);
+              }
+            },
+          );
+
+          /*
           return ListTile(
             dense: true,
             leading: Checkbox(
@@ -194,15 +213,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               ],
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
-            onTap: () {
-              if (_selected.isNotEmpty) {
-                _toggleEntity(entity);
-              } else {
-                _selected.add(entity);
-                _onItemsSelected(context);
-              }
-            },
           );
+          */
         },
       );
     }
@@ -231,7 +243,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
             project: project,
             task: task,
             client: client,
-            onLongPress: null,
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(task);
@@ -241,7 +252,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
             filter: _filter,
-            onEntityAction: null,
             user: state.selectedCompany.user,
           );
         },
