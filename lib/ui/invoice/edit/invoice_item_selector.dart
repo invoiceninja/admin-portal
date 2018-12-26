@@ -18,8 +18,10 @@ class InvoiceItemSelector extends StatefulWidget {
   _InvoiceItemSelectorState createState() => new _InvoiceItemSelectorState();
 }
 
-class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
+class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
+    with SingleTickerProviderStateMixin {
   String _filter;
+  TabController _tabController;
   final List<BaseEntity> _selected = [];
 
   final _textController = TextEditingController();
@@ -27,8 +29,15 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
   //EntityType _selectedEntityType = EntityType.product;
 
   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
   void dispose() {
     _textController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -78,21 +87,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: Icon(Icons.search),
-            /*
-                  child: DropdownButton(
-                    value: 'Products',
-                    onChanged: (value) {
-                      //
-                    },
-                    items: <String>['Products', 'Tasks', 'Expenses']
-                        .map((String value) {
-                      return new DropdownMenuItem<String>(
-                        value: value,
-                        child: new Text(value),
-                      );
-                    }).toList(),
-                  ),
-                  */
           ),
           Expanded(
             child: TextField(
@@ -142,7 +136,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
       );
     }
 
-    Widget _entityList() {
+    Widget _entityList(EntityType entityType) {
       final state = StoreProvider.of<AppState>(context).state;
       final matches =
           memoizedProductList(state.productState.map).where((entityId) {
@@ -198,7 +192,31 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector> {
         elevation: 4.0,
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           _headerRow(),
-          Expanded(child: _entityList()),
+          TabBar(
+            controller: _tabController,
+            tabs: <Widget>[
+              Tab(
+                text: localization.products,
+              ),
+              Tab(
+                text: localization.tasks,
+              ),
+              /*
+              Tab(
+                text: localization.expenses,
+              ),
+              */
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                _entityList(EntityType.product),
+                _entityList(EntityType.task),
+              ],
+            ),
+          ),
         ]),
       ),
     );
