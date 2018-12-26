@@ -24,6 +24,10 @@ class DismissibleEntity extends StatelessWidget {
       return child;
     }
 
+    if (onEntityAction == null) {
+      return child;
+    }
+
     final localization = AppLocalization.of(context);
 
     return Slidable(
