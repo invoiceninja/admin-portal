@@ -19,7 +19,7 @@ class InvoiceItemSelector extends StatefulWidget {
 
   final Function(List<InvoiceItemEntity>, [int]) onItemsSelected;
   final int clientId;
-  final List<int> excluded;
+  final List<BaseEntity> excluded;
 
   @override
   _InvoiceItemSelectorState createState() => new _InvoiceItemSelectorState();
@@ -200,7 +200,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         final task = state.taskState.map[entityId];
         return task.matchesFilter(_filter) &&
             widget.excluded != null &&
-            !widget.excluded.contains(task.id);
+            !widget.excluded.contains(task);
       }).toList();
 
       return ListView.builder(

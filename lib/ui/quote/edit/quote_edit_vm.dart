@@ -35,6 +35,7 @@ class QuoteEditScreen extends StatelessWidget {
 
 class QuoteEditVM extends EntityEditVM {
   QuoteEditVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     InvoiceItemEntity invoiceItem,
@@ -44,6 +45,7 @@ class QuoteEditVM extends EntityEditVM {
     Function onBackPressed,
     bool isSaving,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           invoiceItem: invoiceItem,
