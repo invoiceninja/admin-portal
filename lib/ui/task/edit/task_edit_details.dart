@@ -80,7 +80,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            EntityDropdown(
+            task.invoiceId == null ? EntityDropdown(
               key: Key('__client_${task.clientId}__'),
               entityType: EntityType.client,
               labelText: localization.client,
@@ -98,8 +98,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               onAddPressed: (completer) {
                 viewModel.onAddClientPressed(context, completer);
               },
-            ),
-            EntityDropdown(
+            ) : SizedBox(),
+            task.invoiceId == null ? EntityDropdown(
               key: Key('__project_${task.clientId}__'),
               entityType: EntityType.project,
               labelText: localization.project,
@@ -118,7 +118,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               onAddPressed: (completer) {
                 viewModel.onAddProjectPressed(context, completer);
               },
-            ),
+            ) : SizedBox(),
             TextFormField(
               maxLines: 4,
               controller: _descriptionController,

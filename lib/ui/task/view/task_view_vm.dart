@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -51,6 +52,7 @@ class TaskViewVM {
     @required this.onRefreshed,
     @required this.onClientPressed,
     @required this.onProjectPressed,
+    @required this.onInvoicePressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -61,6 +63,7 @@ class TaskViewVM {
     final task = state.taskState.map[state.taskUIState.selectedId];
     final client = state.clientState.map[task.clientId];
     final project = state.projectState.map[task.projectId];
+    final invoice = state.invoiceState.map[task.invoiceId];
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -117,6 +120,14 @@ class TaskViewVM {
           } else {
             store
                 .dispatch(ViewProject(projectId: project.id, context: context));
+          }
+        },
+        onInvoicePressed: (context, [longPress = false]) {
+          if (longPress) {
+            store.dispatch(EditInvoice(invoice: invoice, context: context));
+          } else {
+            store
+                .dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
           }
         },
         onEditPressed: (BuildContext context, [TaskTime taskTime]) {
@@ -176,6 +187,7 @@ class TaskViewVM {
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, [bool]) onClientPressed;
   final Function(BuildContext, [bool]) onProjectPressed;
+  final Function(BuildContext, [bool]) onInvoicePressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

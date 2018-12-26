@@ -52,6 +52,7 @@ class _TaskViewState extends State<TaskView> {
     final project = viewModel.project;
     final client = viewModel.client;
     final company = viewModel.company;
+    final invoice = viewModel.state.invoiceState.map[task.invoiceId];
     final localization = AppLocalization.of(context);
 
     final Map<String, String> fields = {};
@@ -110,6 +111,25 @@ class _TaskViewState extends State<TaskView> {
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onProjectPressed(context),
               onLongPress: () => viewModel.onProjectPressed(context, true),
+            ),
+          ),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+        ]);
+      }
+
+      if (invoice != null) {
+        widgets.addAll([
+          Material(
+            color: Theme.of(context).canvasColor,
+            child: ListTile(
+              title: Text(invoice.invoiceNumber),
+              leading: Icon(getEntityIcon(EntityType.invoice), size: 18.0),
+              trailing: Icon(Icons.navigate_next),
+              onTap: () => viewModel.onInvoicePressed(context),
+              onLongPress: () => viewModel.onInvoicePressed(context, true),
             ),
           ),
           Container(
