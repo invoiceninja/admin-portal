@@ -88,7 +88,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 }
 
 abstract class TaskEntity extends Object
-    with BaseEntity, SelectableEntity, ConvertToInvoiceItem
+    with BaseEntity, SelectableEntity, ConvertToInvoiceItem, BelongsToClient
     implements Built<TaskEntity, TaskEntityBuilder> {
   factory TaskEntity({bool isRunning = false}) {
     return _$TaskEntity._(
@@ -263,6 +263,7 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'invoice_id')
   int get invoiceId;
 
+  @override
   @nullable
   @BuiltValueField(wireName: 'client_id')
   int get clientId;

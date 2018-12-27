@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -28,6 +29,7 @@ class InvoiceItemSelector extends StatefulWidget {
 class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     with SingleTickerProviderStateMixin {
   String _filter;
+  int _filterClientId;
   TabController _tabController;
   final List<BaseEntity> _selected = [];
 
@@ -38,6 +40,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   @override
   void initState() {
     super.initState();
+    _filterClientId = widget.clientId;
     _tabController = TabController(vsync: this, length: 2);
   }
 
@@ -53,12 +56,13 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     Navigator.pop(context);
   }
 
-  void _onItemsSelected(BuildContext context, [int clientId]) {
+  void _onItemsSelected(BuildContext context) {
     final List<InvoiceItemEntity> items = [];
     final state = StoreProvider.of<AppState>(context).state;
 
     _selected.forEach((entity) {
-      if (state.selectedCompany.fillProducts == false) {
+      if (entity.entityType == EntityType.product &&
+          state.selectedCompany.fillProducts == false) {
         final product = entity as ProductEntity;
         items.add(InvoiceItemEntity().rebuild((b) => b
           ..productKey = product.productKey
@@ -85,7 +89,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       }
     });
 
-    widget.onItemsSelected(items, clientId);
+    widget.onItemsSelected(items, _filterClientId);
     Navigator.pop(context);
   }
 
@@ -97,6 +101,17 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         _selected.remove(entity);
       } else {
         _selected.add(entity);
+      }
+
+      final selected = _selected.firstWhere(
+          (entity) =>
+              entity is BelongsToClient &&
+              (((entity as BelongsToClient).clientId ?? 0) > 0),
+          orElse: () => null);
+      if (selected != null) {
+        _filterClientId = (selected as BelongsToClient).clientId;
+      } else if ((widget.clientId ?? 0) == 0) {
+        _filterClientId = 0;
       }
     });
   }
@@ -195,11 +210,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     Widget _taskList() {
       final state = StoreProvider.of<AppState>(context).state;
-      final matches = memoizedTaskList(state.taskState.map, widget.clientId)
+      final matches = memoizedTaskList(state.taskState.map, _filterClientId)
           .where((entityId) {
         final task = state.taskState.map[entityId];
         if (widget.excluded != null && widget.excluded.contains(task)) {
-           return false;
+          return false;
         }
         return task.matchesFilter(_filter);
       }).toList();
@@ -223,7 +238,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                 _toggleEntity(task);
               } else {
                 _selected.add(task);
-                _onItemsSelected(context, client?.id);
+                _onItemsSelected(context);
               }
             },
             filter: _filter,

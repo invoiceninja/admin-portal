@@ -62,7 +62,7 @@ class ExpenseFields {
 }
 
 abstract class ExpenseEntity extends Object
-    with BaseEntity, SelectableEntity, ConvertToInvoiceItem
+    with BaseEntity, SelectableEntity, ConvertToInvoiceItem, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity() {
     return _$ExpenseEntity._(
@@ -146,6 +146,7 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_rate2')
   String get taxRate2;
 
+  @override
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 

@@ -183,6 +183,10 @@ abstract class ConvertToInvoiceItem {
   InvoiceItemEntity get asInvoiceItem;
 }
 
+abstract class BelongsToClient {
+  int get clientId;
+}
+
 abstract class ErrorMessage
     implements Built<ErrorMessage, ErrorMessageBuilder> {
   factory ErrorMessage([void updates(ErrorMessageBuilder b)]) = _$ErrorMessage;
