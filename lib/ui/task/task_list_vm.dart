@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
@@ -120,6 +121,18 @@ class TaskListVM {
                   });
             });
 
+            break;
+          case EntityAction.newInvoice:
+            final item = convertTaskToInvoiceItem(task: task, context: context);
+            store.dispatch(EditInvoice(
+                invoice: InvoiceEntity().rebuild((b) => b
+                  ..clientId = task.clientId
+                  ..invoiceItems.add(item)),
+                context: context));
+            break;
+          case EntityAction.viewInvoice:
+            store.dispatch(
+                ViewInvoice(invoiceId: task.invoiceId, context: context));
             break;
           case EntityAction.clone:
             Navigator.of(context).pop();

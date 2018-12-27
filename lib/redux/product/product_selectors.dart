@@ -1,7 +1,22 @@
+import 'package:flutter/widgets.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+
+InvoiceItemEntity convertProductToInvoiceItem({BuildContext context, ProductEntity product}) {
+  return InvoiceItemEntity().rebuild((b) => b
+    ..productKey = product.productKey
+    ..notes = product.notes
+    ..cost = product.cost
+    ..qty = 1.0
+    ..customValue1 = product.customValue1
+    ..customValue2 = product.customValue2
+    ..taxName1 = product.taxName1
+    ..taxRate1 = product.taxRate1
+    ..taxName2 = product.taxName2
+    ..taxRate2 = product.taxRate2);
+}
 
 var memoizedProductList =
     memo1((BuiltMap<int, ProductEntity> productMap) => productList(productMap));

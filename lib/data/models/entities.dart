@@ -179,10 +179,6 @@ abstract class BaseEntity implements SelectableEntity {
   }
 }
 
-abstract class ConvertToInvoiceItem {
-  InvoiceItemEntity get asInvoiceItem;
-}
-
 abstract class BelongsToClient {
   int get clientId;
 }

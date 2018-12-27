@@ -1,7 +1,32 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+
+InvoiceItemEntity convertTaskToInvoiceItem(
+    {BuildContext context, TaskEntity task}) {
+  final state = StoreProvider.of<AppState>(context).state;
+  final project = state.projectState.map[task.projectId];
+
+  var notes = task.description + '\n';
+  task.taskTimes.forEach((time) {
+    final start =
+        formatDate(time.startDate.toIso8601String(), context, showTime: true);
+    final end = formatDate(time.endDate.toIso8601String(), context,
+        showTime: true, showDate: false, showSeconds: false);
+    notes += '\n### $start - $end';
+  });
+
+  return InvoiceItemEntity().rebuild((b) => b
+    ..taskId = task.id
+    ..notes = notes
+    ..cost = taskRateSelector(company: state.selectedCompany, project: project)
+    ..qty = round(task.duration / (60 * 60), 2));
+}
 
 var memoizedTaskList = memo2(
     (BuiltMap<int, TaskEntity> taskMap, int clientId) =>

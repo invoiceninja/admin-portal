@@ -62,7 +62,7 @@ class ExpenseFields {
 }
 
 abstract class ExpenseEntity extends Object
-    with BaseEntity, SelectableEntity, ConvertToInvoiceItem, BelongsToClient
+    with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity() {
     return _$ExpenseEntity._(
@@ -169,11 +169,6 @@ abstract class ExpenseEntity extends Object
     final actions = <EntityAction>[];
 
     return actions..addAll(getBaseActions(user: user));
-  }
-
-  @override
-  InvoiceItemEntity get asInvoiceItem {
-    return InvoiceItemEntity().rebuild((b) => b);
   }
 
   int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {

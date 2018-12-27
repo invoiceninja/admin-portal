@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
@@ -61,31 +60,19 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final state = StoreProvider.of<AppState>(context).state;
 
     _selected.forEach((entity) {
-      if (entity.entityType == EntityType.product &&
-          state.selectedCompany.fillProducts == false) {
+      if (entity.entityType == EntityType.product) {
         final product = entity as ProductEntity;
-        items.add(InvoiceItemEntity().rebuild((b) => b
-          ..productKey = product.productKey
-          ..qty = 1));
-      } else {
-        var item = (entity as ConvertToInvoiceItem).asInvoiceItem;
-        if (entity.entityType == EntityType.task) {
-          final task = entity as TaskEntity;
-          final project = state.projectState.map[task.projectId];
-          var notes = item.notes + '\n';
-          task.taskTimes.forEach((time) {
-            final start = formatDate(time.startDate.toIso8601String(), context,
-                showTime: true);
-            final end = formatDate(time.endDate.toIso8601String(), context,
-                showTime: true, showDate: false, showSeconds: false);
-            notes += '\n### $start - $end';
-          });
-          item = item.rebuild((b) => b
-            ..notes = notes
-            ..cost = taskRateSelector(
-                company: state.selectedCompany, project: project));
+        if (state.selectedCompany.fillProducts) {
+          items.add(InvoiceItemEntity().rebuild((b) => b
+            ..productKey = product.productKey
+            ..qty = 1));
+        } else {
+          items.add(
+              convertProductToInvoiceItem(product: product, context: context));
         }
-        items.add(item);
+      } else if (entity.entityType == EntityType.task) {
+        final task = entity as TaskEntity;
+        items.add(convertTaskToInvoiceItem(task: task, context: context));
       }
     });
 
