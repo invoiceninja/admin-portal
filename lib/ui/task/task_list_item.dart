@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem({
@@ -35,6 +36,7 @@ class TaskListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? task.matchesFilterValue(filter)
         : null;
@@ -57,12 +59,14 @@ class TaskListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
-        leading: onCheckboxChanged != null ? Checkbox(
-          //key: NinjaKeys.taskItemCheckbox(task.id),
-          value: isChecked,
-          onChanged: (value) => onCheckboxChanged(value),
-          activeColor: Theme.of(context).accentColor,
-        ) : null,
+        leading: onCheckboxChanged != null
+            ? Checkbox(
+                //key: NinjaKeys.taskItemCheckbox(task.id),
+                value: isChecked,
+                onChanged: (value) => onCheckboxChanged(value),
+                activeColor: Theme.of(context).accentColor,
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -88,13 +92,32 @@ class TaskListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Container(),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: subtitle != null && subtitle.isNotEmpty
+                      ? Text(
+                          subtitle,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Container(),
+                ),
+                Text(
+                    task.isInvoiced
+                        ? localization.invoiced
+                        : task.isRunning
+                            ? localization.running
+                            : localization.logged,
+                    style: TextStyle(
+                      color: task.isInvoiced
+                          ? Colors.green
+                          : task.isRunning
+                          ? Colors.blue
+                          : Colors.grey,
+                    )),
+              ],
+            ),
             EntityStateLabel(task),
           ],
         ),
@@ -102,4 +125,3 @@ class TaskListItem extends StatelessWidget {
     );
   }
 }
-

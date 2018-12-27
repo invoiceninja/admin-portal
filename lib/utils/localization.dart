@@ -20,6 +20,9 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'invoiced': 'Invoiced',
+      'logged': 'Logged',
+      'running': 'Running',
       'resume': 'Resume',
       'task_errors': 'Please correct any overlapping times',
       'start': 'Start',
@@ -10720,6 +10723,15 @@ class AppLocalization {
 
   String get resume =>
       _localizedValues[locale.toString()]['resume'];
+
+  String get running =>
+      _localizedValues[locale.toString()]['running'];
+
+  String get invoiced =>
+      _localizedValues[locale.toString()]['invoiced'];
+
+  String get logged =>
+      _localizedValues[locale.toString()]['logged'];
 
 
   String lookup(String key) {
