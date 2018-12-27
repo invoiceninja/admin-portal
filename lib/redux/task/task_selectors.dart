@@ -11,6 +11,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     {BuildContext context, TaskEntity task}) {
   final state = StoreProvider.of<AppState>(context).state;
   final project = state.projectState.map[task.projectId];
+  final client = state.clientState.map[task.clientId];
 
   var notes = task.description + '\n';
   task.taskTimes.forEach((time) {
@@ -24,7 +25,8 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   return InvoiceItemEntity().rebuild((b) => b
     ..taskId = task.id
     ..notes = notes
-    ..cost = taskRateSelector(company: state.selectedCompany, project: project)
+    ..cost = taskRateSelector(
+        company: state.selectedCompany, project: project, client: client)
     ..qty = round(task.duration / (60 * 60), 2));
 }
 
@@ -129,9 +131,12 @@ List<int> filteredTasksSelector(
   return list;
 }
 
-double taskRateSelector({CompanyEntity company, ProjectEntity project}) {
+double taskRateSelector(
+    {CompanyEntity company, ProjectEntity project, ClientEntity client}) {
   if (project != null && project.taskRate > 0) {
     return project.taskRate;
+  } else if (client != null && client.taskRate > 0) {
+    return client.taskRate;
   } else if (company != null && company.defaultTaskRate > 0) {
     return company.defaultTaskRate;
   }

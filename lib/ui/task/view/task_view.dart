@@ -75,8 +75,8 @@ class _TaskViewState extends State<TaskView> {
           value1: formatDuration(task.calculateDuration),
           label2: localization.amount,
           value2: formatNumber(
-              task.calculateAmount(
-                  taskRateSelector(company: company, project: project)),
+              task.calculateAmount(taskRateSelector(
+                  company: company, project: project, client: client)),
               context,
               roundToTwo: true),
         ),
