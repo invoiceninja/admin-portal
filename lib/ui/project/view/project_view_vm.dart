@@ -56,7 +56,8 @@ class ProjectViewVM {
   factory ProjectViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final project = state.projectState.map[state.projectUIState.selectedId];
-    final client = state.clientState.map[project.clientId];
+    final client = state.clientState.map[project.clientId] ??
+        ClientEntity(id: project.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -72,7 +73,7 @@ class ProjectViewVM {
         isLoading: state.isLoading,
         isDirty: project.isNew,
         project: project,
-        client: state.clientState.map[project.clientId],
+        client: client,
         onEditPressed: (BuildContext context) {
           store.dispatch(EditProject(project: project, context: context));
         },

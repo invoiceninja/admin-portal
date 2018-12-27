@@ -26,9 +26,9 @@ class ProjectList extends StatelessWidget {
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
-            children: project
-                .getEntityActions(user: user, client: client)
-                .map((entityAction) {
+                children: project
+                    .getEntityActions(user: user, client: client)
+                    .map((entityAction) {
               if (entityAction == null) {
                 return Divider();
               } else {
@@ -47,8 +47,8 @@ class ProjectList extends StatelessWidget {
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(
-            message: message,
-          )));
+        message: message,
+      )));
     }
   }
 
@@ -58,96 +58,96 @@ class ProjectList extends StatelessWidget {
     final listState = viewModel.listState;
     final filteredClientId = listState.filterEntityId;
     final filteredClient =
-    filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
+        filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
 
     return Column(
       children: <Widget>[
         filteredClient != null
             ? Material(
-          color: Colors.orangeAccent,
-          elevation: 6.0,
-          child: InkWell(
-            onTap: () => viewModel.onViewEntityFilterPressed(context),
-            child: Row(
-              children: <Widget>[
-                SizedBox(width: 18.0),
-                Expanded(
-                  child: Text(
-                    '${localization.filteredBy} ${filteredClient.listDisplayName}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                    ),
+                color: Colors.orangeAccent,
+                elevation: 6.0,
+                child: InkWell(
+                  onTap: () => viewModel.onViewEntityFilterPressed(context),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 18.0),
+                      Expanded(
+                        child: Text(
+                          '${localization.filteredBy} ${filteredClient.listDisplayName}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => viewModel.onClearEntityFilterPressed(),
+                      )
+                    ],
                   ),
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
-                  onPressed: () => viewModel.onClearEntityFilterPressed(),
-                )
-              ],
-            ),
-          ),
-        )
+              )
             : Container(),
         Expanded(
           child: !viewModel.isLoaded
               ? LoadingIndicator()
               : RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: viewModel.projectList.isEmpty
-                ? Opacity(
-              opacity: 0.5,
-              child: Center(
-                child: Text(
-                  AppLocalization.of(context).noRecordsFound,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: viewModel.projectList.isEmpty
+                      ? Opacity(
+                          opacity: 0.5,
+                          child: Center(
+                            child: Text(
+                              AppLocalization.of(context).noRecordsFound,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: viewModel.projectList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            final projectId = viewModel.projectList[index];
+                            final project = viewModel.projectMap[projectId];
+                            final client =
+                                viewModel.clientMap[project.clientId] ??
+                                    ClientEntity(id: project.clientId);
+                            return Column(
+                              children: <Widget>[
+                                ProjectListItem(
+                                  user: viewModel.user,
+                                  filter: viewModel.filter,
+                                  project: project,
+                                  client:
+                                      viewModel.clientMap[project.clientId] ??
+                                          ClientEntity(),
+                                  onTap: () =>
+                                      viewModel.onProjectTap(context, project),
+                                  onEntityAction: (EntityAction action) {
+                                    if (action == EntityAction.more) {
+                                      _showMenu(context, project, client);
+                                    } else {
+                                      viewModel.onEntityAction(
+                                          context, project, action);
+                                    }
+                                  },
+                                  onLongPress: () =>
+                                      _showMenu(context, project, client),
+                                ),
+                                Divider(
+                                  height: 1.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                 ),
-              ),
-            )
-                : ListView.builder(
-              shrinkWrap: true,
-              itemCount: viewModel.projectList.length,
-              itemBuilder: (BuildContext context, index) {
-                final projectId = viewModel.projectList[index];
-                final project = viewModel.projectMap[projectId];
-                final client =
-                    viewModel.clientMap[project.clientId] ??
-                        ClientEntity();
-                return Column(
-                  children: <Widget>[
-                    ProjectListItem(
-                      user: viewModel.user,
-                      filter: viewModel.filter,
-                      project: project,
-                      client:
-                      viewModel.clientMap[project.clientId] ??
-                          ClientEntity(),
-                      onTap: () =>
-                          viewModel.onProjectTap(context, project),
-                      onEntityAction: (EntityAction action) {
-                        if (action == EntityAction.more) {
-                          _showMenu(context, project, client);
-                        } else {
-                          viewModel.onEntityAction(
-                              context, project, action);
-                        }
-                      },
-                      onLongPress: () =>
-                          _showMenu(context, project, client),
-                    ),
-                    Divider(
-                      height: 1.0,
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
         ),
       ],
     );
