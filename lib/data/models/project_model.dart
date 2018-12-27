@@ -103,7 +103,9 @@ abstract class ProjectEntity extends Object
   String get customValue2;
 
   List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction>[
+      EntityAction.newInvoice,
+    ];
     
     return actions..addAll(getBaseActions(user: user));
   }

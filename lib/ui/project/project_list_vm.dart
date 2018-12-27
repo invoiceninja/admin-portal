@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +83,15 @@ class ProjectListVM {
       },
       onEntityAction: (context, project, action) {
         switch (action) {
+          case EntityAction.newInvoice:
+            final items =
+            convertProjectToInvoiceItem(project: project, context: context);
+            store.dispatch(EditInvoice(
+                invoice: InvoiceEntity().rebuild((b) => b
+                  ..clientId = project.clientId
+                  ..invoiceItems.addAll(items)),
+                context: context));
+            break;
           case EntityAction.clone:
             Navigator.of(context).pop();
             store.dispatch(

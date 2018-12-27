@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
@@ -98,6 +100,15 @@ class ProjectViewVM {
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.newInvoice:
+              final items =
+              convertProjectToInvoiceItem(project: project, context: context);
+              store.dispatch(EditInvoice(
+                  invoice: InvoiceEntity().rebuild((b) => b
+                    ..clientId = project.clientId
+                    ..invoiceItems.addAll(items)),
+                  context: context));
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveProjectRequest(
                   popCompleter(context, localization.archivedProject),

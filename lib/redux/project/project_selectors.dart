@@ -1,7 +1,25 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+
+List<InvoiceItemEntity> convertProjectToInvoiceItem(
+    {BuildContext context, ProjectEntity project}) {
+  final List<InvoiceItemEntity> items = [];
+  final state = StoreProvider.of<AppState>(context).state;
+  state.taskState.map.forEach((index, task) {
+    if (task.isStopped && !task.isInvoiced && task.projectId == project.id) {
+      final item = convertTaskToInvoiceItem(task: task, context: context);
+      items.add(item);
+    }
+  });
+
+  return items;
+}
 
 var memoizedDropdownProjectList = memo3(
     (BuiltMap<int, ProjectEntity> projectMap, BuiltList<int> projectList,
