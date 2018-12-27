@@ -95,6 +95,10 @@ List<int> filteredTasksSelector(
     if (!task.matchesStates(taskListState.stateFilters)) {
       return false;
     }
+    if (!task.matchesStatuses(taskListState.statusFilters)) {
+      return false;
+    }
+
     if (taskListState.filterEntityId != null) {
       if (taskListState.filterEntityType == EntityType.client &&
           task.clientId != taskListState.filterEntityId) {

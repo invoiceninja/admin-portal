@@ -49,6 +49,10 @@ const int kInvoiceStatusApproved = 4;
 const int kInvoiceStatusPartial = 5;
 const int kInvoiceStatusPaid = 6;
 
+const int kTaskStatusLogged = -1;
+const int kTaskStatusRunning = -2;
+const int kTaskStatusInvoiced = -3;
+
 const int kPaymentStatusPending = 1;
 const int kPaymentStatusVoided = 2;
 const int kPaymentStatusFailed = 3;

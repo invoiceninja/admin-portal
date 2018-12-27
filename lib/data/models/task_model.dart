@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -330,6 +331,25 @@ abstract class TaskEntity extends Object
     }
 
     return description.toLowerCase().contains(filter);
+  }
+
+  @override
+  bool matchesStatuses(BuiltList<EntityStatus> statuses) {
+    if (statuses.isEmpty) {
+      return true;
+    }
+
+    for (final status in statuses) {
+      if (status.id == kTaskStatusRunning && isRunning) {
+        return true;
+      } else if (status.id == kTaskStatusInvoiced && isInvoiced) {
+        return true;
+      } else if (status.id == kTaskStatusLogged && isStopped && !isInvoiced) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @override
