@@ -62,7 +62,13 @@ List<int> filteredProjectsSelector(
     final project = projectMap[projectId];
     final client =
         clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
-    if (client == null || !client.isActive) {
+
+    if (!client.isActive) {
+      return false;
+    }
+
+    if (!project.matchesFilter(projectListState.filter) &&
+        !client.matchesFilter(projectListState.filter)) {
       return false;
     }
 
@@ -87,7 +93,7 @@ List<int> filteredProjectsSelector(
       return false;
     }
     */
-    return project.matchesFilter(projectListState.filter);
+    return true;
   }).toList();
 
   list.sort((projectAId, projectBId) {
@@ -100,7 +106,10 @@ List<int> filteredProjectsSelector(
   return list;
 }
 
-Duration taskDurationForProject(ProjectEntity project, BuiltMap<int, TaskEntity> taskMap,) {
+Duration taskDurationForProject(
+  ProjectEntity project,
+  BuiltMap<int, TaskEntity> taskMap,
+) {
   int total = 0;
   taskMap.forEach((index, task) {
     if (task.isActive && task.projectId == project.id) {

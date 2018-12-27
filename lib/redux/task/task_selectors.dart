@@ -64,14 +64,32 @@ List<int> dropdownTasksSelector(
   return list;
 }
 
-var memoizedFilteredTaskList = memo3((BuiltMap<int, TaskEntity> taskMap,
-        BuiltList<int> taskList, ListUIState taskListState) =>
-    filteredTasksSelector(taskMap, taskList, taskListState));
+var memoizedFilteredTaskList = memo5((BuiltMap<int, TaskEntity> taskMap,
+        BuiltMap<int, ClientEntity> clientMap,
+        BuiltMap<int, ProjectEntity> projectMap,
+        BuiltList<int> taskList,
+        ListUIState taskListState) =>
+    filteredTasksSelector(
+        taskMap, clientMap, projectMap, taskList, taskListState));
 
-List<int> filteredTasksSelector(BuiltMap<int, TaskEntity> taskMap,
-    BuiltList<int> taskList, ListUIState taskListState) {
+List<int> filteredTasksSelector(
+    BuiltMap<int, TaskEntity> taskMap,
+    BuiltMap<int, ClientEntity> clientMap,
+    BuiltMap<int, ProjectEntity> projectMap,
+    BuiltList<int> taskList,
+    ListUIState taskListState) {
   final list = taskList.where((taskId) {
     final task = taskMap[taskId];
+    final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
+    final project =
+        projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
+
+    if (!task.matchesFilter(taskListState.filter) &&
+        !client.matchesFilter(taskListState.filter) &&
+        !project.matchesFilter(taskListState.filter)) {
+      return false;
+    }
+
     if (!task.matchesStates(taskListState.stateFilters)) {
       return false;
     }
@@ -98,7 +116,7 @@ List<int> filteredTasksSelector(BuiltMap<int, TaskEntity> taskMap,
       return false;
     }
     */
-    return task.matchesFilter(taskListState.filter);
+    return true;
   }).toList();
 
   list.sort((taskAId, taskBId) {

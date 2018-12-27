@@ -71,7 +71,11 @@ class TaskListVM {
       user: state.user,
       listState: state.taskListState,
       taskList: memoizedFilteredTaskList(
-          state.taskState.map, state.taskState.list, state.taskListState),
+          state.taskState.map,
+          state.clientState.map,
+          state.projectState.map,
+          state.taskState.list,
+          state.taskListState),
       taskMap: state.taskState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,

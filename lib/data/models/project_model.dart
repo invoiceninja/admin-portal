@@ -51,9 +51,9 @@ class ProjectFields {
 abstract class ProjectEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ProjectEntity, ProjectEntityBuilder> {
-  factory ProjectEntity() {
+  factory ProjectEntity({int id}) {
     return _$ProjectEntity._(
-      id: --ProjectEntity.counter,
+      id: id ?? --ProjectEntity.counter,
       name: '',
       clientId: 0,
       taskRate: 0.0,
