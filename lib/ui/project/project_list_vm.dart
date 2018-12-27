@@ -65,8 +65,11 @@ class ProjectListVM {
     return ProjectListVM(
       user: state.user,
       listState: state.projectListState,
-      projectList: memoizedFilteredProjectList(state.projectState.map,
-          state.projectState.list, state.projectListState, state.clientState.map),
+      projectList: memoizedFilteredProjectList(
+          state.projectState.map,
+          state.projectState.list,
+          state.projectListState,
+          state.clientState.map),
       projectMap: state.projectState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
@@ -85,9 +88,10 @@ class ProjectListVM {
         switch (action) {
           case EntityAction.newInvoice:
             final items =
-            convertProjectToInvoiceItem(project: project, context: context);
+                convertProjectToInvoiceItem(project: project, context: context);
             store.dispatch(EditInvoice(
                 invoice: InvoiceEntity().rebuild((b) => b
+                  ..hasTasks = true
                   ..clientId = project.clientId
                   ..invoiceItems.addAll(items)),
                 context: context));
@@ -133,5 +137,4 @@ class ProjectListVM {
   final Function(BuildContext, ProjectEntity, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-
 }

@@ -105,6 +105,7 @@ class ProjectViewVM {
                   project: project, context: context);
               store.dispatch(EditInvoice(
                   invoice: InvoiceEntity().rebuild((b) => b
+                    ..hasTasks = true
                     ..clientId = project.clientId
                     ..invoiceItems.addAll(items)),
                   context: context));

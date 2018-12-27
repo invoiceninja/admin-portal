@@ -130,6 +130,7 @@ class TaskListVM {
             final item = convertTaskToInvoiceItem(task: task, context: context);
             store.dispatch(EditInvoice(
                 invoice: InvoiceEntity().rebuild((b) => b
+                  ..hasTasks = true
                   ..clientId = task.clientId
                   ..invoiceItems.add(item)),
                 context: context));
