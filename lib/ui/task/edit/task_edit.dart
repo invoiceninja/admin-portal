@@ -124,7 +124,9 @@ class _TaskEditState extends State<TaskEdit>
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: task.isInvoiced || task.isDeleted
+            ? SizedBox()
+            : FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
             viewModel.onFabPressed();
