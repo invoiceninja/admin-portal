@@ -114,7 +114,14 @@ abstract class TaskEntity extends Object
 
   static int counter = 0;
 
-  TaskEntity get clone => rebuild((b) => b..id = --TaskEntity.counter);
+  TaskEntity get clone => rebuild((b) => b
+    ..id = --TaskEntity.counter
+      ..invoiceId = null
+      ..isRunning = false
+      ..duration = 0
+      ..timeLog = '[]'
+      ..description = ''
+  );
 
   TaskEntity toggle() => isRunning ? stop() : start();
 
@@ -293,6 +300,10 @@ abstract class TaskEntity extends Object
         }
       }
     }
+
+    actions.add(EntityAction.clone);
+    actions.add(null);
+
 
     return actions..addAll(getBaseActions(user: user));
   }

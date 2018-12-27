@@ -93,7 +93,6 @@ class ProjectListVM {
                 context: context));
             break;
           case EntityAction.clone:
-            Navigator.of(context).pop();
             store.dispatch(
                 EditProject(context: context, project: project.clone));
             break;

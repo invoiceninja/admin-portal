@@ -167,6 +167,9 @@ class TaskViewVM {
                     ..invoiceItems.add(item)),
                   context: context));
               break;
+            case EntityAction.clone:
+              store.dispatch(EditTask(context: context, task: task.clone));
+              break;
             case EntityAction.viewInvoice:
               store.dispatch(
                   ViewInvoice(invoiceId: task.invoiceId, context: context));

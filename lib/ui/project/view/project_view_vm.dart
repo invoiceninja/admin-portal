@@ -101,13 +101,17 @@ class ProjectViewVM {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.newInvoice:
-              final items =
-              convertProjectToInvoiceItem(project: project, context: context);
+              final items = convertProjectToInvoiceItem(
+                  project: project, context: context);
               store.dispatch(EditInvoice(
                   invoice: InvoiceEntity().rebuild((b) => b
                     ..clientId = project.clientId
                     ..invoiceItems.addAll(items)),
                   context: context));
+              break;
+            case EntityAction.clone:
+              store.dispatch(
+                  EditProject(context: context, project: project.clone));
               break;
             case EntityAction.archive:
               store.dispatch(ArchiveProjectRequest(

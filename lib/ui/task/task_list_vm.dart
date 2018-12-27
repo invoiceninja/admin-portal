@@ -135,7 +135,6 @@ class TaskListVM {
                 ViewInvoice(invoiceId: task.invoiceId, context: context));
             break;
           case EntityAction.clone:
-            Navigator.of(context).pop();
             store.dispatch(EditTask(context: context, task: task.clone));
             break;
           case EntityAction.restore:

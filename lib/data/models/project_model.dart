@@ -105,8 +105,10 @@ abstract class ProjectEntity extends Object
   List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
     final actions = <EntityAction>[
       EntityAction.newInvoice,
+      EntityAction.clone,
+      null,
     ];
-    
+
     return actions..addAll(getBaseActions(user: user));
   }
 
