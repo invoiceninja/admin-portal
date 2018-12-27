@@ -287,16 +287,18 @@ abstract class TaskEntity extends Object
   List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
     final actions = <EntityAction>[];
 
-    if (isRunning) {
-      actions.add(EntityAction.stop);
+    if (isInvoiced) {
+      actions.add(EntityAction.viewInvoice);
     } else {
-      if (!isInvoiced) {
-        actions.add(EntityAction.newInvoice);
-      }
-      if (duration > 0) {
-        actions.add(EntityAction.resume);
+      if (isRunning) {
+        actions.add(EntityAction.stop);
       } else {
-        actions.add(EntityAction.start);
+        actions.add(EntityAction.newInvoice);
+        if (duration > 0) {
+          actions.add(EntityAction.resume);
+        } else {
+          actions.add(EntityAction.start);
+        }
       }
     }
 
