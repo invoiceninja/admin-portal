@@ -154,6 +154,7 @@ class TaskViewVM {
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.resume:
             case EntityAction.start:
             case EntityAction.stop:
               _toggleTask(context);

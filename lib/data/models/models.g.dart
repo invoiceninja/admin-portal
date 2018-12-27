@@ -36,6 +36,7 @@ const EntityAction _$enterPayment = const EntityAction._('enterPayment');
 const EntityAction _$pdf = const EntityAction._('pdf');
 const EntityAction _$more = const EntityAction._('more');
 const EntityAction _$start = const EntityAction._('start');
+const EntityAction _$resume = const EntityAction._('resume');
 const EntityAction _$stop = const EntityAction._('stop');
 
 EntityAction _$valueOf(String name) {
@@ -74,6 +75,8 @@ EntityAction _$valueOf(String name) {
       return _$more;
     case 'start':
       return _$start;
+    case 'resume':
+      return _$resume;
     case 'stop':
       return _$stop;
     default:
@@ -100,6 +103,7 @@ final BuiltSet<EntityAction> _$values =
   _$pdf,
   _$more,
   _$start,
+  _$resume,
   _$stop,
 ]);
 

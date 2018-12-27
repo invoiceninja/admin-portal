@@ -52,6 +52,7 @@ class EntityAction extends EnumClass {
   static const EntityAction pdf = _$pdf;
   static const EntityAction more = _$more;
   static const EntityAction start = _$start;
+  static const EntityAction resume = _$resume;
   static const EntityAction stop = _$stop;
 
   static BuiltSet<EntityAction> get values => _$values;

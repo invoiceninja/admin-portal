@@ -98,6 +98,7 @@ class TaskListVM {
         switch (action) {
           case EntityAction.start:
           case EntityAction.stop:
+          case EntityAction.resume:
             final Completer<TaskEntity> completer = new Completer<TaskEntity>();
             final localization = AppLocalization.of(context);
             store.dispatch(

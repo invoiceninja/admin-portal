@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'resume': 'Resume',
       'task_errors': 'Please correct any overlapping times',
       'start': 'Start',
       'stop': 'Stop',
@@ -10716,6 +10717,9 @@ class AppLocalization {
 
   String get taskErrors =>
       _localizedValues[locale.toString()]['task_errors'];
+
+  String get resume =>
+      _localizedValues[locale.toString()]['resume'];
 
 
   String lookup(String key) {
