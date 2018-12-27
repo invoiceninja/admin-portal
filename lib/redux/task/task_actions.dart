@@ -235,6 +235,12 @@ class FilterTasksByState implements PersistUI {
   final EntityState state;
 }
 
+class FilterTasksByStatus implements PersistUI {
+  FilterTasksByStatus(this.status);
+
+  final EntityStatus status;
+}
+
 class FilterTasksByCustom1 implements PersistUI {
   FilterTasksByCustom1(this.value);
 

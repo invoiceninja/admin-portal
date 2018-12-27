@@ -30,7 +30,9 @@ class InvoiceStatusFields {
   
 }
 
-abstract class InvoiceStatusEntity extends Object with EntityStatus implements Built<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
+abstract class InvoiceStatusEntity extends Object
+    with EntityStatus
+    implements Built<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
 
   factory InvoiceStatusEntity() {
     return _$InvoiceStatusEntity._(
@@ -38,8 +40,10 @@ abstract class InvoiceStatusEntity extends Object with EntityStatus implements B
       name: '',
     );
   }
+
   InvoiceStatusEntity._();
 
-  static Serializer<InvoiceStatusEntity> get serializer => _$invoiceStatusEntitySerializer;
+  static Serializer<InvoiceStatusEntity> get serializer =>
+      _$invoiceStatusEntitySerializer;
 }
 

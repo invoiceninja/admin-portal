@@ -116,12 +116,11 @@ abstract class TaskEntity extends Object
 
   TaskEntity get clone => rebuild((b) => b
     ..id = --TaskEntity.counter
-      ..invoiceId = null
-      ..isRunning = false
-      ..duration = 0
-      ..timeLog = '[]'
-      ..description = ''
-  );
+    ..invoiceId = null
+    ..isRunning = false
+    ..duration = 0
+    ..timeLog = '[]'
+    ..description = '');
 
   TaskEntity toggle() => isRunning ? stop() : start();
 
@@ -304,7 +303,6 @@ abstract class TaskEntity extends Object
     actions.add(EntityAction.clone);
     actions.add(null);
 
-
     return actions..addAll(getBaseActions(user: user));
   }
 
@@ -357,4 +355,20 @@ abstract class TaskEntity extends Object
   bool get isStopped => !isRunning;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
+}
+
+abstract class TaskStatusEntity extends Object
+    with EntityStatus
+    implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
+  factory TaskStatusEntity() {
+    return _$TaskStatusEntity._(
+      id: 0,
+      name: '',
+    );
+  }
+
+  TaskStatusEntity._();
+
+  static Serializer<TaskStatusEntity> get serializer =>
+      _$taskStatusEntitySerializer;
 }

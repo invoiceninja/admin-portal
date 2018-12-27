@@ -55,6 +55,7 @@ TaskEntity _updateEditing(TaskEntity task, dynamic action) {
 final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortTasks>(_sortTasks),
   TypedReducer<ListUIState, FilterTasksByState>(_filterTasksByState),
+  TypedReducer<ListUIState, FilterTasksByStatus>(_filterTasksByStatus),
   TypedReducer<ListUIState, FilterTasks>(_filterTasks),
   TypedReducer<ListUIState, FilterTasksByCustom1>(_filterTasksByCustom1),
   TypedReducer<ListUIState, FilterTasksByCustom2>(_filterTasksByCustom2),
@@ -92,6 +93,16 @@ ListUIState _filterTasksByState(
     return taskListState.rebuild((b) => b..stateFilters.remove(action.state));
   } else {
     return taskListState.rebuild((b) => b..stateFilters.add(action.state));
+  }
+}
+
+ListUIState _filterTasksByStatus(ListUIState taskListState,
+    FilterTasksByStatus action) {
+  if (taskListState.statusFilters.contains(action.status)) {
+    return taskListState
+        .rebuild((b) => b..statusFilters.remove(action.status));
+  } else {
+    return taskListState.rebuild((b) => b..statusFilters.add(action.status));
   }
 }
 

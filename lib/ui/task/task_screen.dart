@@ -48,6 +48,9 @@ class TaskScreen extends StatelessWidget {
         bottomNavigationBar: AppBottomBar(
           entityType: EntityType.task,
           onSelectedSortField: (value) => store.dispatch(SortTasks(value)),
+          onSelectedStatus: (EntityStatus status, value) {
+            store.dispatch(FilterTasksByStatus(status));
+          },
           customValues1: company.getCustomFieldValues(CustomFieldType.task1,
               excludeBlank: true),
           customValues2: company.getCustomFieldValues(CustomFieldType.task2,
@@ -60,6 +63,18 @@ class TaskScreen extends StatelessWidget {
             TaskFields.description,
             TaskFields.duration,
             TaskFields.updatedAt,
+          ],
+          statuses: [
+            TaskStatusEntity().rebuild(
+                  (b) => b
+                ..id = -1
+                ..name = localization.running,
+            ),
+            TaskStatusEntity().rebuild(
+                  (b) => b
+                ..id = -2
+                ..name = localization.invoiced,
+            ),
           ],
           onSelectedState: (EntityState state, value) {
             store.dispatch(FilterTasksByState(state));
