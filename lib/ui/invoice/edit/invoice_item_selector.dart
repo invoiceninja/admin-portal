@@ -62,7 +62,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     _selected.forEach((entity) {
       if (entity.entityType == EntityType.product) {
         final product = entity as ProductEntity;
-        if (state.selectedCompany.fillProducts) {
+        if (state.selectedCompany.fillProducts ?? false) {
           items.add(InvoiceItemEntity().rebuild((b) => b
             ..productKey = product.productKey
             ..qty = 1));
@@ -236,6 +236,28 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     }
 
     final state = StoreProvider.of<AppState>(context).state;
+    final company = state.selectedCompany;
+    final showTabBar = company.isModuleEnabled(EntityType.task) ||
+        company.isModuleEnabled(EntityType.expense);
+
+    final List<Widget> tabs = [
+      Tab(text: localization.products),
+    ];
+    final List<Widget> tabViews = [
+      _productList(),
+    ];
+
+    if (company.isModuleEnabled(EntityType.task)) {
+      tabs.add(Tab(text: localization.tasks));
+      tabViews.add(_taskList());
+    }
+
+    /*
+    if (company.isModuleEnabled(EntityType.expense)) {
+      tabs.add(Tab(text: localization.expenses));
+      tabs.add(_expenseList);
+    }
+    */
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -243,33 +265,23 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         elevation: 4.0,
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           _headerRow(),
-          TabBar(
-            labelColor:
-                state.uiState.enableDarkMode ? Colors.white : Colors.black,
-            indicatorColor: Theme.of(context).accentColor,
-            controller: _tabController,
-            tabs: <Widget>[
-              Tab(
-                text: localization.products,
-              ),
-              Tab(
-                text: localization.tasks,
-              ),
-              /*
-              Tab(
-                text: localization.expenses,
-              ),
-              */
-            ],
-          ),
+          showTabBar
+              ? TabBar(
+                  labelColor: state.uiState.enableDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                  indicatorColor: Theme.of(context).accentColor,
+                  controller: _tabController,
+                  tabs: tabs,
+                )
+              : SizedBox(),
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: <Widget>[
-                _productList(),
-                _taskList(),
-              ],
-            ),
+            child: showTabBar
+                ? TabBarView(
+                    controller: _tabController,
+                    children: tabViews,
+                  )
+                : tabViews.first,
           ),
         ]),
       ),
