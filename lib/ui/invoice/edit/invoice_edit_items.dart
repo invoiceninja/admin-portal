@@ -162,7 +162,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   void _onChanged() {
     final invoiceItem = widget.invoiceItem.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
-      ..notes = _notesController.text.trim()
+      ..notes = _notesController.text
       ..cost = parseDouble(_costController.text)
       ..qty = parseDouble(_qtyController.text)
       ..discount = parseDouble(_discountController.text)
