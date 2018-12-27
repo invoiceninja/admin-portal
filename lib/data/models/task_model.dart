@@ -171,6 +171,11 @@ abstract class TaskEntity extends Object
     return isValid && countRunning <= 1;
   }
 
+  bool isBetween(String startDate, String endDate) {
+    return false;
+    //return startDate.compareTo(invoiceDate) <= 0 && endDate.compareTo(invoiceDate) == 1;
+  }
+
   List<TaskTime> get taskTimes {
     final List<TaskTime> details = [];
 
