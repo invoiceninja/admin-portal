@@ -251,7 +251,7 @@ abstract class TaskEntity extends Object
   }
 
   double calculateAmount(double taskRate) =>
-      taskRate * calculateDuration.inSeconds / 3600;
+      taskRate * round(calculateDuration.inSeconds / 3600, 3);
 
   Duration get calculateDuration {
     int seconds = 0;
