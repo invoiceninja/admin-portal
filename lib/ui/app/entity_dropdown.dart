@@ -25,7 +25,7 @@ class EntityDropdown extends StatefulWidget {
   final List<int> entityList;
   final String labelText;
   final String initialValue;
-  final Function(int) onSelected;
+  final Function(SelectableEntity) onSelected;
   final Function validator;
   final bool autoValidate;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
@@ -58,7 +58,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             entityList: widget.entityList,
             onSelected: (entity) {
               _textController.text = entity.listDisplayName;
-              widget.onSelected(entity.id);
+              widget.onSelected(entity);
               Navigator.pop(context);
             },
             onAddPressed: widget.onAddPressed != null

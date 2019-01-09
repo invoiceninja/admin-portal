@@ -35,6 +35,9 @@ const EntityAction _$clientPortal = const EntityAction._('clientPortal');
 const EntityAction _$enterPayment = const EntityAction._('enterPayment');
 const EntityAction _$pdf = const EntityAction._('pdf');
 const EntityAction _$more = const EntityAction._('more');
+const EntityAction _$start = const EntityAction._('start');
+const EntityAction _$resume = const EntityAction._('resume');
+const EntityAction _$stop = const EntityAction._('stop');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -70,6 +73,12 @@ EntityAction _$valueOf(String name) {
       return _$pdf;
     case 'more':
       return _$more;
+    case 'start':
+      return _$start;
+    case 'resume':
+      return _$resume;
+    case 'stop':
+      return _$stop;
     default:
       throw new ArgumentError(name);
   }
@@ -93,6 +102,9 @@ final BuiltSet<EntityAction> _$values =
   _$enterPayment,
   _$pdf,
   _$more,
+  _$start,
+  _$resume,
+  _$stop,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

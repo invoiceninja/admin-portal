@@ -66,8 +66,12 @@ class _InvoiceEditState extends State<InvoiceEdit>
       child: Scaffold(
         appBar: AppBar(
           title: Text(invoice.isNew
-              ? invoice.isQuote ? localization.newQuote : localization.newInvoice
-              : invoice.isQuote ? localization.editQuote: localization.editInvoice),
+              ? invoice.isQuote
+                  ? localization.newQuote
+                  : localization.newInvoice
+              : invoice.isQuote
+                  ? localization.editQuote
+                  : localization.editInvoice),
           actions: <Widget>[
             RefreshIconButton(
               icon: Icons.cloud_upload,
@@ -127,7 +131,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
               style: TextStyle(
                 //color: Theme.of(context).selectedRowColor,
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 20.0,
               ),
             ),
           ),
@@ -140,8 +144,15 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 context: context,
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
-                    onItemsSelected: (items) {
-                      viewModel.onItemsAdded(items);
+                    excluded: invoice.invoiceItems
+                        .where((item) => item.isTask || item.isExpense)
+                        //.map((item) => item.isTask ? viewModel.state.taskState.map[item.taskId] : viewModel.expenseState)
+                        .map((item) =>
+                            viewModel.state.taskState.map[item.taskId])
+                        .toList(),
+                    clientId: invoice.clientId,
+                    onItemsSelected: (items, [clientId]) {
+                      viewModel.onItemsAdded(items, clientId);
                       _controller.animateTo(kItemScreen);
                     },
                   );

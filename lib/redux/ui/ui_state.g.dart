@@ -46,6 +46,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'emailPayment',
       serializers.serialize(object.emailPayment,
           specifiedType: const FullType(bool)),
+      'autoStartTasks',
+      serializers.serialize(object.autoStartTasks,
+          specifiedType: const FullType(bool)),
       'dashboardUIState',
       serializers.serialize(object.dashboardUIState,
           specifiedType: const FullType(DashboardUIState)),
@@ -58,6 +61,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'taskUIState',
+      serializers.serialize(object.taskUIState,
+          specifiedType: const FullType(TaskUIState)),
+      'projectUIState',
+      serializers.serialize(object.projectUIState,
+          specifiedType: const FullType(ProjectUIState)),
       'paymentUIState',
       serializers.serialize(object.paymentUIState,
           specifiedType: const FullType(PaymentUIState)),
@@ -106,6 +115,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.emailPayment = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'autoStartTasks':
+          result.autoStartTasks = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(serializers.deserialize(value,
                   specifiedType: const FullType(DashboardUIState))
@@ -126,6 +139,14 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'filter':
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'taskUIState':
+          result.taskUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TaskUIState)) as TaskUIState);
+          break;
+        case 'projectUIState':
+          result.projectUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ProjectUIState)) as ProjectUIState);
           break;
         case 'paymentUIState':
           result.paymentUIState.replace(serializers.deserialize(value,
@@ -154,6 +175,8 @@ class _$UIState extends UIState {
   @override
   final bool emailPayment;
   @override
+  final bool autoStartTasks;
+  @override
   final DashboardUIState dashboardUIState;
   @override
   final ProductUIState productUIState;
@@ -163,6 +186,10 @@ class _$UIState extends UIState {
   final InvoiceUIState invoiceUIState;
   @override
   final String filter;
+  @override
+  final TaskUIState taskUIState;
+  @override
+  final ProjectUIState projectUIState;
   @override
   final PaymentUIState paymentUIState;
   @override
@@ -177,11 +204,14 @@ class _$UIState extends UIState {
       this.enableDarkMode,
       this.requireAuthentication,
       this.emailPayment,
+      this.autoStartTasks,
       this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
       this.filter,
+      this.taskUIState,
+      this.projectUIState,
       this.paymentUIState,
       this.quoteUIState})
       : super._() {
@@ -200,6 +230,9 @@ class _$UIState extends UIState {
     if (emailPayment == null) {
       throw new BuiltValueNullFieldError('UIState', 'emailPayment');
     }
+    if (autoStartTasks == null) {
+      throw new BuiltValueNullFieldError('UIState', 'autoStartTasks');
+    }
     if (dashboardUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
     }
@@ -211,6 +244,12 @@ class _$UIState extends UIState {
     }
     if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    }
+    if (taskUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'taskUIState');
+    }
+    if (projectUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'projectUIState');
     }
     if (paymentUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'paymentUIState');
@@ -236,11 +275,14 @@ class _$UIState extends UIState {
         enableDarkMode == other.enableDarkMode &&
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
+        autoStartTasks == other.autoStartTasks &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
         filter == other.filter &&
+        taskUIState == other.taskUIState &&
+        projectUIState == other.projectUIState &&
         paymentUIState == other.paymentUIState &&
         quoteUIState == other.quoteUIState;
   }
@@ -259,18 +301,27 @@ class _$UIState extends UIState {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    0,
-                                                    selectedCompanyIndex
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                selectedCompanyIndex
+                                                                    .hashCode),
+                                                            currentRoute
+                                                                .hashCode),
+                                                        enableDarkMode
+                                                            .hashCode),
+                                                    requireAuthentication
                                                         .hashCode),
-                                                currentRoute.hashCode),
-                                            enableDarkMode.hashCode),
-                                        requireAuthentication.hashCode),
-                                    emailPayment.hashCode),
-                                dashboardUIState.hashCode),
-                            productUIState.hashCode),
-                        clientUIState.hashCode),
-                    invoiceUIState.hashCode),
-                filter.hashCode),
+                                                emailPayment.hashCode),
+                                            autoStartTasks.hashCode),
+                                        dashboardUIState.hashCode),
+                                    productUIState.hashCode),
+                                clientUIState.hashCode),
+                            invoiceUIState.hashCode),
+                        filter.hashCode),
+                    taskUIState.hashCode),
+                projectUIState.hashCode),
             paymentUIState.hashCode),
         quoteUIState.hashCode));
   }
@@ -283,11 +334,14 @@ class _$UIState extends UIState {
           ..add('enableDarkMode', enableDarkMode)
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
+          ..add('autoStartTasks', autoStartTasks)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
           ..add('filter', filter)
+          ..add('taskUIState', taskUIState)
+          ..add('projectUIState', projectUIState)
           ..add('paymentUIState', paymentUIState)
           ..add('quoteUIState', quoteUIState))
         .toString();
@@ -320,6 +374,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool get emailPayment => _$this._emailPayment;
   set emailPayment(bool emailPayment) => _$this._emailPayment = emailPayment;
 
+  bool _autoStartTasks;
+  bool get autoStartTasks => _$this._autoStartTasks;
+  set autoStartTasks(bool autoStartTasks) =>
+      _$this._autoStartTasks = autoStartTasks;
+
   DashboardUIStateBuilder _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
       _$this._dashboardUIState ??= new DashboardUIStateBuilder();
@@ -348,6 +407,18 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
 
+  TaskUIStateBuilder _taskUIState;
+  TaskUIStateBuilder get taskUIState =>
+      _$this._taskUIState ??= new TaskUIStateBuilder();
+  set taskUIState(TaskUIStateBuilder taskUIState) =>
+      _$this._taskUIState = taskUIState;
+
+  ProjectUIStateBuilder _projectUIState;
+  ProjectUIStateBuilder get projectUIState =>
+      _$this._projectUIState ??= new ProjectUIStateBuilder();
+  set projectUIState(ProjectUIStateBuilder projectUIState) =>
+      _$this._projectUIState = projectUIState;
+
   PaymentUIStateBuilder _paymentUIState;
   PaymentUIStateBuilder get paymentUIState =>
       _$this._paymentUIState ??= new PaymentUIStateBuilder();
@@ -369,11 +440,14 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _enableDarkMode = _$v.enableDarkMode;
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
+      _autoStartTasks = _$v.autoStartTasks;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
       _filter = _$v.filter;
+      _taskUIState = _$v.taskUIState?.toBuilder();
+      _projectUIState = _$v.projectUIState?.toBuilder();
       _paymentUIState = _$v.paymentUIState?.toBuilder();
       _quoteUIState = _$v.quoteUIState?.toBuilder();
       _$v = null;
@@ -405,11 +479,14 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               enableDarkMode: enableDarkMode,
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
+              autoStartTasks: autoStartTasks,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
               filter: filter,
+              taskUIState: taskUIState.build(),
+              projectUIState: projectUIState.build(),
               paymentUIState: paymentUIState.build(),
               quoteUIState: quoteUIState.build());
     } catch (_) {
@@ -424,6 +501,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
 
+        _$failedField = 'taskUIState';
+        taskUIState.build();
+        _$failedField = 'projectUIState';
+        projectUIState.build();
         _$failedField = 'paymentUIState';
         paymentUIState.build();
         _$failedField = 'quoteUIState';

@@ -29,6 +29,11 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.newInvoice:
     case EntityAction.enterPayment:
       return Icons.add_circle_outline;
+    case EntityAction.resume:
+    case EntityAction.start:
+      return Icons.play_arrow;
+    case EntityAction.stop:
+      return Icons.stop;
     default:
       return null;
   }
@@ -37,6 +42,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
 IconData getEntityIcon(EntityType entityType) {
   switch (entityType) {
     case EntityType.product:
+      return FontAwesomeIcons.cube;
+    case EntityType.project:
       return FontAwesomeIcons.cube;
     case EntityType.client:
       return FontAwesomeIcons.users;

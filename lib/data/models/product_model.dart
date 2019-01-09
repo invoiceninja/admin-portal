@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -46,7 +45,7 @@ class ProductFields {
 }
 
 abstract class ProductEntity extends Object
-    with BaseEntity, SelectableEntity, ConvertToInvoiceItem
+    with BaseEntity, SelectableEntity
     implements Built<ProductEntity, ProductEntityBuilder> {
   factory ProductEntity() {
     return _$ProductEntity._(
@@ -112,21 +111,6 @@ abstract class ProductEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
-
-  @override
-  InvoiceItemEntity get asInvoiceItem {
-    return InvoiceItemEntity().rebuild((b) => b
-      ..productKey = productKey
-      ..notes = notes
-      ..cost = cost
-      ..qty = 1.0
-      ..customValue1 = customValue1
-      ..customValue2 = customValue2
-      ..taxName1 = taxName1
-      ..taxRate1 = taxRate1
-      ..taxName2 = taxName2
-      ..taxRate2 = taxRate2);
-  }
 
   int compareTo(ProductEntity product,
       [String sortField, bool sortAscending = true]) {
@@ -205,7 +189,7 @@ abstract class ProductEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(getEntityBaseActions(user: user));
+    return actions..addAll(getBaseActions(user: user));
   }
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;

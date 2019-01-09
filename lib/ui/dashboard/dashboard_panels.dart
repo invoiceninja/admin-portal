@@ -12,6 +12,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
@@ -51,10 +52,12 @@ class DashboardPanels extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: Text(
-                          formatDateRange(uiState.startDate(company),
-                              uiState.endDate(company), context),
-                          style: Theme.of(context).textTheme.title
-                              .copyWith(fontSize: 18),
+                        formatDateRange(uiState.startDate(company),
+                            uiState.endDate(company), context),
+                        style: Theme.of(context)
+                            .textTheme
+                            .title
+                            .copyWith(fontSize: 18),
                       ),
                     ),
                     SizedBox(width: 6.0),
@@ -222,9 +225,9 @@ class DashboardPanels extends StatelessWidget {
   }
 
   Widget _quoteChart(BuildContext context) {
-    final isLoaded = viewModel.state.quoteState.isLoaded;
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
+    final isLoaded = state.quoteState.isLoaded;
     final currentData = memoizedChartQuotes(state.selectedCompany, settings,
         state.quoteState.map, state.clientState.map);
 
@@ -245,8 +248,36 @@ class DashboardPanels extends StatelessWidget {
         title: AppLocalization.of(context).quotes);
   }
 
+  Widget _taskChart(BuildContext context) {
+    final settings = viewModel.dashboardUIState;
+    final state = viewModel.state;
+    final isLoaded = state.taskState.isLoaded;
+
+    final currentData = memoizedChartQuotes(state.selectedCompany, settings,
+        state.quoteState.map, state.clientState.map);
+
+    List<ChartDataGroup> previousData;
+    if (settings.enableComparison) {
+      previousData = memoizedChartQuotes(
+          state.selectedCompany,
+          settings.rebuild((b) => b..offset += 1),
+          state.quoteState.map,
+          state.clientState.map);
+    }
+
+    return _buildChart(
+        context: context,
+        currentData: currentData,
+        previousData: previousData,
+        isLoaded: isLoaded,
+        title: AppLocalization.of(context).tasks);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final state = viewModel.state;
+    final company = state.selectedCompany;
+
     return Stack(
       children: <Widget>[
         ListView(
@@ -256,7 +287,14 @@ class DashboardPanels extends StatelessWidget {
             ),
             _invoiceChart(context),
             _paymentChart(context),
-            _quoteChart(context),
+            company.isModuleEnabled(EntityType.quote)
+                ? _quoteChart(context)
+                : SizedBox(),
+            /*
+            company.isModuleEnabled(EntityType.task)
+                ? _taskChart(context)
+                : SizedBox(),
+                */
           ],
         ),
         ConstrainedBox(

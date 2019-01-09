@@ -34,6 +34,7 @@ class InvoiceEditScreen extends StatelessWidget {
 
 class EntityEditVM {
   EntityEditVM({
+    @required this.state,
     @required this.company,
     @required this.invoice,
     @required this.invoiceItem,
@@ -44,27 +45,30 @@ class EntityEditVM {
     @required this.isSaving,
   });
 
+  final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
   final InvoiceEntity origInvoice;
   final Function(BuildContext) onSavePressed;
-  final Function(List<InvoiceItemEntity>) onItemsAdded;
+  final Function(List<InvoiceItemEntity>, int) onItemsAdded;
   final Function onBackPressed;
   final bool isSaving;
 }
 
 class InvoiceEditVM extends EntityEditVM {
   InvoiceEditVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     InvoiceItemEntity invoiceItem,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
-    Function(List<InvoiceItemEntity>) onItemsAdded,
+    Function(List<InvoiceItemEntity>, int) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           invoiceItem: invoiceItem,
@@ -80,18 +84,24 @@ class InvoiceEditVM extends EntityEditVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditVM(
+      state: state,
       company: state.selectedCompany,
       isSaving: state.isSaving,
       invoice: invoice,
       invoiceItem: state.invoiceUIState.editingItem,
       origInvoice: store.state.invoiceState.map[invoice.id],
-      onBackPressed: () =>
-          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(
+              invoice.isNew ? InvoiceScreen.route : InvoiceViewScreen.route));
+        }
+      },
       onSavePressed: (BuildContext context) {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(
             SaveInvoiceRequest(completer: completer, invoice: invoice));
         return completer.future.then((savedInvoice) {
+          store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
           if (invoice.isNew) {
             Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
           } else {
@@ -105,11 +115,16 @@ class InvoiceEditVM extends EntityEditVM {
               });
         });
       },
-      onItemsAdded: (items) {
+      onItemsAdded: (items, clientId) {
+        if (clientId != null && clientId > 0) {
+          store.dispatch(
+              UpdateInvoice(invoice.rebuild((b) => b..clientId = clientId)));
+        }
+        store.dispatch(AddInvoiceItems(items));
+        // if we're just adding one item automatically show the editor
         if (items.length == 1) {
           store.dispatch(EditInvoiceItem(items[0]));
         }
-        store.dispatch(AddInvoiceItems(items));
       },
     );
   }

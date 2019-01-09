@@ -560,6 +560,18 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
     ];
+    if (object.taskId != null) {
+      result
+        ..add('task_public_id')
+        ..add(serializers.serialize(object.taskId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.expenseId != null) {
+      result
+        ..add('expense_public_id')
+        ..add(serializers.serialize(object.expenseId,
+            specifiedType: const FullType(int)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -658,6 +670,14 @@ class _$InvoiceItemEntitySerializer
         case 'discount':
           result.discount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'task_public_id':
+          result.taskId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'expense_public_id':
+          result.expenseId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -1809,6 +1829,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double discount;
   @override
+  final int taskId;
+  @override
+  final int expenseId;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -1837,6 +1861,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.customValue1,
       this.customValue2,
       this.discount,
+      this.taskId,
+      this.expenseId,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -1907,6 +1933,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         discount == other.discount &&
+        taskId == other.taskId &&
+        expenseId == other.expenseId &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1935,21 +1963,20 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            productKey
-                                                                                .hashCode),
-                                                                        notes
-                                                                            .hashCode),
-                                                                    cost.hashCode),
-                                                                qty.hashCode),
-                                                            taxName1.hashCode),
-                                                        taxRate1.hashCode),
-                                                    taxName2.hashCode),
-                                                taxRate2.hashCode),
-                                            invoiceItemTypeId.hashCode),
-                                        customValue1.hashCode),
-                                    customValue2.hashCode),
-                                discount.hashCode),
+                                                                            $jc($jc(0, productKey.hashCode),
+                                                                                notes.hashCode),
+                                                                            cost.hashCode),
+                                                                        qty.hashCode),
+                                                                    taxName1.hashCode),
+                                                                taxRate1.hashCode),
+                                                            taxName2.hashCode),
+                                                        taxRate2.hashCode),
+                                                    invoiceItemTypeId.hashCode),
+                                                customValue1.hashCode),
+                                            customValue2.hashCode),
+                                        discount.hashCode),
+                                    taskId.hashCode),
+                                expenseId.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -1973,6 +2000,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('discount', discount)
+          ..add('taskId', taskId)
+          ..add('expenseId', expenseId)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -2036,6 +2065,14 @@ class InvoiceItemEntityBuilder
   double get discount => _$this._discount;
   set discount(double discount) => _$this._discount = discount;
 
+  int _taskId;
+  int get taskId => _$this._taskId;
+  set taskId(int taskId) => _$this._taskId = taskId;
+
+  int _expenseId;
+  int get expenseId => _$this._expenseId;
+  set expenseId(int expenseId) => _$this._expenseId = expenseId;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -2076,6 +2113,8 @@ class InvoiceItemEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _discount = _$v.discount;
+      _taskId = _$v.taskId;
+      _expenseId = _$v.expenseId;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -2116,6 +2155,8 @@ class InvoiceItemEntityBuilder
             customValue1: customValue1,
             customValue2: customValue2,
             discount: discount,
+            taskId: taskId,
+            expenseId: expenseId,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

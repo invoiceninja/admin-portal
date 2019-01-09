@@ -102,6 +102,7 @@ class _InvoiceViewState extends State<InvoiceView> {
             leading: Icon(FontAwesomeIcons.users, size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onClientPressed(context),
+            onLongPress: () => viewModel.onClientPressed(context, true),
           ),
         ),
         Container(
@@ -125,6 +126,8 @@ class _InvoiceViewState extends State<InvoiceView> {
                 leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
                 trailing: Icon(Icons.navigate_next),
                 onTap: () => viewModel.onPaymentPressed(context, payment),
+                onLongPress: () =>
+                    viewModel.onPaymentPressed(context, payment, true),
               ),
             ),
           ]);

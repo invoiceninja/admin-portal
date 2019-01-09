@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/quote_repository.dart';
 
@@ -123,7 +122,6 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
             EntityAction.delete)
         .then((InvoiceEntity quote) {
       store.dispatch(DeleteQuoteSuccess(quote));
-      store.dispatch(LoadClient(clientId: quote.clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -147,7 +145,6 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
         EntityAction.restore)
         .then((InvoiceEntity quote) {
       store.dispatch(RestoreQuoteSuccess(quote));
-      store.dispatch(LoadClient(clientId: quote.clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -190,7 +187,6 @@ Middleware<AppState> _markSentQuote(QuoteRepository repository) {
             EntityAction.markSent)
         .then((InvoiceEntity quote) {
       store.dispatch(MarkSentQuoteSuccess(quote));
-      store.dispatch(LoadClient(clientId: quote.clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -214,7 +210,6 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
         origQuote, action.template, action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailQuoteSuccess());
-      store.dispatch(LoadClient(clientId: origQuote.clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -270,6 +265,9 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
+      if (state.projectState.isStale) {
+        store.dispatch(LoadProjects());
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuoteFailure(error));
@@ -306,8 +304,8 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
+      if (state.projectState.isStale) {
+        store.dispatch(LoadProjects());
       }
     }).catchError((Object error) {
       print(error);

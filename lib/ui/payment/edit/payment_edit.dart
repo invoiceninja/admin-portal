@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -126,7 +127,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   children: <Widget>[
                     payment.isNew
                         ? EntityDropdown(
-                            key: Key('__${payment.clientId}__'),
+                            key: Key('__client_${payment.clientId}__'),
                             entityType: EntityType.client,
                             labelText: AppLocalization.of(context).client,
                             entityMap: viewModel.clientMap,
@@ -134,9 +135,10 @@ class _PaymentEditState extends State<PaymentEdit> {
                                 (viewModel.clientMap[payment.clientId] ??
                                         ClientEntity())
                                     .listDisplayName,
-                            onSelected: (clientId) {
-                              viewModel.onChanged(payment
-                                  .rebuild((b) => b..clientId = clientId));
+                            onSelected: (client) {
+                              viewModel.onChanged(payment.rebuild((b) => b
+                                ..clientId = client.id
+                                ..invoiceId = 0));
                             },
                             entityList: memoizedDropdownClientList(
                                 viewModel.clientMap, viewModel.clientList),
@@ -144,6 +146,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         : Container(),
                     payment.isNew
                         ? EntityDropdown(
+                            key: Key('__invoice_${payment.clientId}__'),
                             entityType: EntityType.invoice,
                             labelText: AppLocalization.of(context).invoice,
                             entityMap: viewModel.invoiceMap,
@@ -158,13 +161,13 @@ class _PaymentEditState extends State<PaymentEdit> {
                                 viewModel.invoiceMap,
                                 viewModel.invoiceList,
                                 payment.clientId),
-                            onSelected: (invoiceId) {
-                              final invoice = viewModel.invoiceMap[invoiceId];
+                            onSelected: (selected) {
+                              final invoice = selected as InvoiceEntity;
                               _amountController.text = formatNumber(
                                   invoice.balance, context,
                                   formatNumberType: FormatNumberType.input);
                               viewModel.onChanged(payment.rebuild((b) => b
-                                ..invoiceId = invoiceId
+                                ..invoiceId = invoice.id
                                 ..clientId = invoice.clientId
                                 ..amount = invoice.balance));
                             },
@@ -188,9 +191,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                       labelText: localization.paymentType,
                       initialValue: viewModel.staticState
                           .paymentTypeMap[payment.paymentTypeId]?.name,
-                      onSelected: (int paymentTypeId) => viewModel.onChanged(
-                          payment.rebuild(
-                              (b) => b..paymentTypeId = paymentTypeId)),
+                      onSelected: (paymentType) => viewModel.onChanged(payment
+                          .rebuild((b) => b..paymentTypeId = paymentType.id)),
                     ),
                     DatePicker(
                       validator: (String val) => val.trim().isEmpty

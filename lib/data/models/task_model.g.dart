@@ -23,7 +23,10 @@ Serializer<TaskListResponse> _$taskListResponseSerializer =
     new _$TaskListResponseSerializer();
 Serializer<TaskItemResponse> _$taskItemResponseSerializer =
     new _$TaskItemResponseSerializer();
+Serializer<TaskTime> _$taskTimeSerializer = new _$TaskTimeSerializer();
 Serializer<TaskEntity> _$taskEntitySerializer = new _$TaskEntitySerializer();
+Serializer<TaskStatusEntity> _$taskStatusEntitySerializer =
+    new _$TaskStatusEntitySerializer();
 
 class _$TaskListResponseSerializer
     implements StructuredSerializer<TaskListResponse> {
@@ -109,6 +112,56 @@ class _$TaskItemResponseSerializer
   }
 }
 
+class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
+  @override
+  final Iterable<Type> types = const [TaskTime, _$TaskTime];
+  @override
+  final String wireName = 'TaskTime';
+
+  @override
+  Iterable serialize(Serializers serializers, TaskTime object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'startDate',
+      serializers.serialize(object.startDate,
+          specifiedType: const FullType(DateTime)),
+    ];
+    if (object.endDate != null) {
+      result
+        ..add('endDate')
+        ..add(serializers.serialize(object.endDate,
+            specifiedType: const FullType(DateTime)));
+    }
+
+    return result;
+  }
+
+  @override
+  TaskTime deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new TaskTimeBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'startDate':
+          result.startDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+        case 'endDate':
+          result.endDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
   @override
   final Iterable<Type> types = const [TaskEntity, _$TaskEntity];
@@ -125,15 +178,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'duration',
       serializers.serialize(object.duration,
           specifiedType: const FullType(int)),
-      'invoice_id',
-      serializers.serialize(object.invoiceId,
-          specifiedType: const FullType(int)),
-      'client_id',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(int)),
-      'project_id',
-      serializers.serialize(object.projectId,
-          specifiedType: const FullType(int)),
       'time_log',
       serializers.serialize(object.timeLog,
           specifiedType: const FullType(String)),
@@ -147,6 +191,24 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
     ];
+    if (object.invoiceId != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
+            specifiedType: const FullType(int)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -257,6 +319,52 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$TaskStatusEntitySerializer
+    implements StructuredSerializer<TaskStatusEntity> {
+  @override
+  final Iterable<Type> types = const [TaskStatusEntity, _$TaskStatusEntity];
+  @override
+  final String wireName = 'TaskStatusEntity';
+
+  @override
+  Iterable serialize(Serializers serializers, TaskStatusEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  TaskStatusEntity deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new TaskStatusEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -448,6 +556,94 @@ class TaskItemResponseBuilder
   }
 }
 
+class _$TaskTime extends TaskTime {
+  @override
+  final DateTime startDate;
+  @override
+  final DateTime endDate;
+
+  factory _$TaskTime([void updates(TaskTimeBuilder b)]) =>
+      (new TaskTimeBuilder()..update(updates)).build();
+
+  _$TaskTime._({this.startDate, this.endDate}) : super._() {
+    if (startDate == null) {
+      throw new BuiltValueNullFieldError('TaskTime', 'startDate');
+    }
+  }
+
+  @override
+  TaskTime rebuild(void updates(TaskTimeBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TaskTimeBuilder toBuilder() => new TaskTimeBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TaskTime &&
+        startDate == other.startDate &&
+        endDate == other.endDate;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, startDate.hashCode), endDate.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TaskTime')
+          ..add('startDate', startDate)
+          ..add('endDate', endDate))
+        .toString();
+  }
+}
+
+class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
+  _$TaskTime _$v;
+
+  DateTime _startDate;
+  DateTime get startDate => _$this._startDate;
+  set startDate(DateTime startDate) => _$this._startDate = startDate;
+
+  DateTime _endDate;
+  DateTime get endDate => _$this._endDate;
+  set endDate(DateTime endDate) => _$this._endDate = endDate;
+
+  TaskTimeBuilder();
+
+  TaskTimeBuilder get _$this {
+    if (_$v != null) {
+      _startDate = _$v.startDate;
+      _endDate = _$v.endDate;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TaskTime other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$TaskTime;
+  }
+
+  @override
+  void update(void updates(TaskTimeBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TaskTime build() {
+    final _$result =
+        _$v ?? new _$TaskTime._(startDate: startDate, endDate: endDate);
+    replace(_$result);
+    return _$result;
+  }
+}
+
 class _$TaskEntity extends TaskEntity {
   @override
   final String description;
@@ -505,15 +701,6 @@ class _$TaskEntity extends TaskEntity {
     }
     if (duration == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'duration');
-    }
-    if (invoiceId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'invoiceId');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'clientId');
-    }
-    if (projectId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'projectId');
     }
     if (timeLog == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'timeLog');
@@ -734,6 +921,96 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
             isDeleted: isDeleted,
             isOwner: isOwner,
             id: id);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$TaskStatusEntity extends TaskStatusEntity {
+  @override
+  final int id;
+  @override
+  final String name;
+
+  factory _$TaskStatusEntity([void updates(TaskStatusEntityBuilder b)]) =>
+      (new TaskStatusEntityBuilder()..update(updates)).build();
+
+  _$TaskStatusEntity._({this.id, this.name}) : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('TaskStatusEntity', 'id');
+    }
+    if (name == null) {
+      throw new BuiltValueNullFieldError('TaskStatusEntity', 'name');
+    }
+  }
+
+  @override
+  TaskStatusEntity rebuild(void updates(TaskStatusEntityBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TaskStatusEntityBuilder toBuilder() =>
+      new TaskStatusEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TaskStatusEntity && id == other.id && name == other.name;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, id.hashCode), name.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TaskStatusEntity')
+          ..add('id', id)
+          ..add('name', name))
+        .toString();
+  }
+}
+
+class TaskStatusEntityBuilder
+    implements Builder<TaskStatusEntity, TaskStatusEntityBuilder> {
+  _$TaskStatusEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  TaskStatusEntityBuilder();
+
+  TaskStatusEntityBuilder get _$this {
+    if (_$v != null) {
+      _id = _$v.id;
+      _name = _$v.name;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TaskStatusEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$TaskStatusEntity;
+  }
+
+  @override
+  void update(void updates(TaskStatusEntityBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TaskStatusEntity build() {
+    final _$result = _$v ?? new _$TaskStatusEntity._(id: id, name: name);
     replace(_$result);
     return _$result;
   }

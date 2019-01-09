@@ -102,8 +102,11 @@ class QuoteViewVM extends EntityViewVM {
           });
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () =>
-            store.dispatch(UpdateCurrentRoute(QuoteScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
+          }
+        },
         onClientPressed: (BuildContext context) {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         },

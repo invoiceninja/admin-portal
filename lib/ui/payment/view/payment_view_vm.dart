@@ -60,10 +60,16 @@ class PaymentViewVM {
         onEditPressed: (BuildContext context) {
           store.dispatch(EditPayment(payment: payment, context: context));
         },
-        onTapClient: (context) =>
-            store.dispatch(ViewClient(clientId: client.id, context: context)),
-        onTapInvoice: (context) => store.dispatch(
-            ViewInvoice(invoiceId: payment.invoiceId, context: context)),
+        onTapClient: (context, [bool longPress = false]) => store.dispatch(
+            longPress
+                ? EditClient(client: client, context: context)
+                : ViewClient(clientId: client.id, context: context)),
+        onTapInvoice: (context, [bool longPress = false]) => store.dispatch(
+            longPress
+                ? EditInvoice(
+                    invoice: state.invoiceState.map[payment.invoiceId],
+                    context: context)
+                : ViewInvoice(invoiceId: payment.invoiceId, context: context)),
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
@@ -94,8 +100,8 @@ class PaymentViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
-  final Function(BuildContext) onTapInvoice;
-  final Function(BuildContext) onTapClient;
+  final Function(BuildContext, [bool]) onTapInvoice;
+  final Function(BuildContext, [bool]) onTapClient;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

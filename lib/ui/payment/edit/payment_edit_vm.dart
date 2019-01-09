@@ -83,11 +83,15 @@ class PaymentEditVM {
         store.dispatch(UserSettingsChanged(emailPayment: value));
       },
       onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
+        if (state.uiState.currentRoute.contains(PaymentScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(
+              payment.isNew ? PaymentScreen.route : PaymentViewScreen.route));
+        }
       },
       onSavePressed: (BuildContext context) {
         final Completer<Null> completer = errorCompleter(context)
           ..future.then((_) {
+            store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
             if (payment.isNew) {
               Navigator.of(context)
                   .pushReplacementNamed(PaymentViewScreen.route);

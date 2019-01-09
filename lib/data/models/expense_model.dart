@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'expense_model.g.dart';
@@ -61,7 +62,7 @@ class ExpenseFields {
 }
 
 abstract class ExpenseEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity() {
     return _$ExpenseEntity._(
@@ -145,6 +146,7 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_rate2')
   String get taxRate2;
 
+  @override
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 
@@ -162,6 +164,12 @@ abstract class ExpenseEntity extends Object
 
   @BuiltValueField(wireName: 'expense_category')
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
+
+  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+    final actions = <EntityAction>[];
+
+    return actions..addAll(getBaseActions(user: user));
+  }
 
   int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {
     int response = 0;

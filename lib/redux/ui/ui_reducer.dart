@@ -9,6 +9,10 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:redux/redux.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
+
+import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
+
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
@@ -20,14 +24,18 @@ UIState uiReducer(UIState state, dynamic action) {
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
-    ..requireAuthentication = requireAuthenticationReducer(
-        state.requireAuthentication, action)
+    ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
+    ..requireAuthentication =
+        requireAuthenticationReducer(state.requireAuthentication, action)
     ..emailPayment = emailPaymentReducer(state.emailPayment, action)
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
-    ..dashboardUIState.replace(dashboardUIReducer(state.dashboardUIState, action))
+    ..dashboardUIState
+        .replace(dashboardUIReducer(state.dashboardUIState, action))
     // STARTER: reducer - do not remove comment
+    ..taskUIState.replace(taskUIReducer(state.taskUIState, action))
+    ..projectUIState.replace(projectUIReducer(state.projectUIState, action))
     ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
     ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action)));
 }
@@ -54,6 +62,14 @@ Reducer<bool> darkModeReducer = combineReducers([
 
 bool updateDarkModeReducer(bool enableDarkMode, UserSettingsChanged action) {
   return action.enableDarkMode ?? enableDarkMode;
+}
+
+Reducer<bool> autoStartTasksReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>(updateAutoStartTasksReducer),
+]);
+
+bool updateAutoStartTasksReducer(bool autoStartTasks, UserSettingsChanged action) {
+  return action.autoStartTasks ?? autoStartTasks;
 }
 
 Reducer<bool> requireAuthenticationReducer = combineReducers([

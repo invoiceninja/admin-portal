@@ -5,79 +5,45 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_item.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class StubList extends StatelessWidget {
-  final StubListVM viewModel;
-
   const StubList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    if (!viewModel.isLoaded) {
-      return LoadingIndicator();
-    } else if (viewModel.stubList.isEmpty) {
-      return Opacity(
-        opacity: 0.5,
-        child: Center(
-          child: Text(
-            AppLocalization.of(context).noRecordsFound,
-            style: TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-        ),
-      );
+  final StubListVM viewModel;
+
+  void _showMenu(
+      BuildContext context, StubEntity stub, ClientEntity client) async {
+    if (stub == null || client == null) {
+      return;
     }
 
-    return _buildListView(context);
-  }
-
-  void _showMenu(BuildContext context, StubEntity stub) async {
-  if (stub == null) {
-    return;
-  }
     final user = viewModel.user;
     final message = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              user.canCreate(EntityType.stub)
-                  ? ListTile(
-                      leading: Icon(Icons.control_point_duplicate),
-                      title: Text(AppLocalization.of(context).clone),
-                      onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.clone),
-                    )
-                  : Container(),
-              Divider(),
-              user.canEditEntity(stub) && !stub.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.restore),
-                      title: Text(AppLocalization.of(context).restore),
-                      onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.restore),
-                    )
-                  : Container(),
-              user.canEditEntity(stub) && stub.isActive
-                  ? ListTile(
-                      leading: Icon(Icons.archive),
-                      title: Text(AppLocalization.of(context).archive),
-                      onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.archive),
-                    )
-                  : Container(),
-              user.canEditEntity(stub) && !stub.isDeleted
-                  ? ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text(AppLocalization.of(context).delete),
-                      onTap: () => viewModel.onEntityAction(
-                          context, stub, EntityAction.delete),
-                    )
-                  : Container(),
-            ]));
+        builder: (BuildContext dialogContext) => SimpleDialog(
+                children: stub
+                    .getEntityActions(user: user, client: client)
+                    .map((entityAction) {
+              if (entityAction == null) {
+                return Divider();
+              } else {
+                return ListTile(
+                  leading: Icon(getEntityActionIcon(entityAction)),
+                  title: Text(AppLocalization.of(context)
+                      .lookup(entityAction.toString())),
+                  onTap: () {
+                    Navigator.of(dialogContext).pop();
+                    viewModel.onEntityAction(context, stub, entityAction);
+                  },
+                );
+              }
+            }).toList()));
+
     if (message != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: SnackBarRow(
@@ -86,29 +52,104 @@ class StubList extends StatelessWidget {
     }
   }
 
-  Widget _buildListView(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () => viewModel.onRefreshed(context),
-      child: ListView.builder(
-          itemCount: viewModel.stubList.length,
-          itemBuilder: (BuildContext context, index) {
-            final stubId = viewModel.stubList[index];
-            final stub = viewModel.stubMap[stubId];
-            return Column(children: <Widget>[
-              StubListItem(
-                user: viewModel.user,
-                filter: viewModel.filter,
-                stub: stub,
-                onDismissed: (DismissDirection direction) =>
-                    viewModel.onDismissed(context, stub, direction),
-                onTap: () => viewModel.onStubTap(context, stub),
-                onLongPress: () => _showMenu(context, stub),
-              ),
-              Divider(
-                height: 1.0,
-              ),
-            ]);
-          }),
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final listState = viewModel.listState;
+    final filteredClientId = listState.filterEntityId;
+    final filteredClient =
+        filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
+
+    return Column(
+      children: <Widget>[
+        filteredClient != null
+            ? Material(
+                color: Colors.orangeAccent,
+                elevation: 6.0,
+                child: InkWell(
+                  onTap: () => viewModel.onViewEntityFilterPressed(context),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 18.0),
+                      Expanded(
+                        child: Text(
+                          '${localization.filteredBy} ${filteredClient.listDisplayName}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => viewModel.onClearEntityFilterPressed(),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            : Container(),
+        Expanded(
+          child: !viewModel.isLoaded
+              ? LoadingIndicator()
+              : RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: viewModel.stubList.isEmpty
+                      ? Opacity(
+                          opacity: 0.5,
+                          child: Center(
+                            child: Text(
+                              AppLocalization.of(context).noRecordsFound,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: viewModel.stubList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            final stubId = viewModel.stubList[index];
+                            final stub = viewModel.stubMap[stubId];
+                            final client =
+                                viewModel.clientMap[stub.clientId] ??
+                                    ClientEntity();
+                            return Column(
+                              children: <Widget>[
+                                StubListItem(
+                                  user: viewModel.user,
+                                  filter: viewModel.filter,
+                                  stub: stub,
+                                  client:
+                                      viewModel.clientMap[stub.clientId] ??
+                                          ClientEntity(),
+                                  onTap: () =>
+                                      viewModel.onStubTap(context, stub),
+                                  onEntityAction: (EntityAction action) {
+                                    if (action == EntityAction.more) {
+                                      _showMenu(context, stub, client);
+                                    } else {
+                                      viewModel.onEntityAction(
+                                          context, stub, action);
+                                    }
+                                  },
+                                  onLongPress: () =>
+                                      _showMenu(context, stub, client),
+                                ),
+                                Divider(
+                                  height: 1.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                ),
+        ),
+      ],
     );
   }
 }

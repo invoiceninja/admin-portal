@@ -12,7 +12,9 @@ import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -58,8 +60,12 @@ class ClientEditVM {
         origClient: state.clientState.map[client.id],
         staticState: state.staticState,
         isSaving: state.isSaving,
-        onBackPressed: () =>
-            store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(ClientScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(
+                client.isNew ? ClientScreen.route : ClientViewScreen.route));
+          }
+        },
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
         onSavePressed: (BuildContext context) {
@@ -76,9 +82,16 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
+            if (state.uiState.currentRoute.contains(ClientScreen.route)) {
+              store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
+            }
             if (client.isNew) {
-              if ([InvoiceEditScreen.route, QuoteEditScreen.route]
-                  .contains(store.state.uiState.currentRoute)) {
+              if ([
+                InvoiceEditScreen.route,
+                QuoteEditScreen.route,
+                ProjectEditScreen.route,
+                TaskEditScreen.route,
+              ].contains(store.state.uiState.currentRoute)) {
                 Navigator.of(context).pop(savedClient);
               } else {
                 Navigator.of(context)

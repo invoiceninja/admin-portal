@@ -420,7 +420,7 @@ abstract class InvoiceEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(getEntityBaseActions(user: user));
+    return actions..addAll(getBaseActions(user: user));
   }
 
   InvoiceEntity applyTax(TaxRateEntity taxRate) {
@@ -554,7 +554,19 @@ abstract class InvoiceItemEntity extends Object
 
   double get discount;
 
+  @nullable
+  @BuiltValueField(wireName: 'task_public_id')
+  int get taskId;
+
+  @nullable
+  @BuiltValueField(wireName: 'expense_public_id')
+  int get expenseId;
+
   double get total => round(qty * cost, 2);
+
+  bool get isTask => taskId != null && taskId > 0;
+
+  bool get isExpense => expenseId != null && expenseId > 0;
 
   @override
   bool matchesFilter(String filter) {

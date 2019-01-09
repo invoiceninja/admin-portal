@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class StubScreen extends StatelessWidget {
   static const String route = '/stub';
@@ -69,7 +68,7 @@ class StubScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: user.canCreate(EntityType.stub)
             ? FloatingActionButton(
-                key: Key(StubKeys.stubScreenFABKeyString),
+                //key: Key(StubKeys.stubScreenFABKeyString),
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(

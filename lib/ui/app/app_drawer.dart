@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -17,6 +18,10 @@ import 'package:redux/redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -150,7 +155,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.client,
-            icon: FontAwesomeIcons.users,
+            icon: getEntityIcon(EntityType.client),
             title: localization.clients,
             onTap: () => store.dispatch(ViewClientList(context)),
             onCreateTap: () {
@@ -162,7 +167,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.product,
-            icon: FontAwesomeIcons.cube,
+            icon: getEntityIcon(EntityType.product),
             title: localization.products,
             onTap: () {
               store.dispatch(ViewProductList(context));
@@ -176,7 +181,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.invoice,
-            icon: FontAwesomeIcons.filePdf,
+            icon: getEntityIcon(EntityType.invoice),
             title: localization.invoices,
             onTap: () => store.dispatch(ViewInvoiceList(context)),
             onCreateTap: () {
@@ -185,11 +190,10 @@ class AppDrawer extends StatelessWidget {
                   EditInvoice(invoice: InvoiceEntity(), context: context));
             },
           ),
-          // STARTER: menu - do not remove comment
           DrawerTile(
             company: company,
             entityType: EntityType.payment,
-            icon: FontAwesomeIcons.creditCard,
+            icon: getEntityIcon(EntityType.payment),
             title: localization.payments,
             onTap: () => store.dispatch(ViewPaymentList(context)),
             onCreateTap: () {
@@ -201,7 +205,7 @@ class AppDrawer extends StatelessWidget {
           DrawerTile(
             company: company,
             entityType: EntityType.quote,
-            icon: FontAwesomeIcons.fileAlt,
+            icon: getEntityIcon(EntityType.quote),
             title: localization.quotes,
             onTap: () => store.dispatch(ViewQuoteList(context)),
             onCreateTap: () {
@@ -210,16 +214,42 @@ class AppDrawer extends StatelessWidget {
                   quote: InvoiceEntity(isQuote: true), context: context));
             },
           ),
+          // STARTER: menu - do not remove comment
+          DrawerTile(
+            company: company,
+            entityType: EntityType.project,
+            icon: getEntityIcon(EntityType.project),
+            title: localization.projects,
+            onTap: () => store.dispatch(ViewProjectList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(
+                  EditProject(project: ProjectEntity(), context: context));
+            },
+          ),
+          DrawerTile(
+            company: company,
+            entityType: EntityType.task,
+            icon: getEntityIcon(EntityType.task),
+            title: localization.tasks,
+            onTap: () => store.dispatch(ViewTaskList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditTask(
+                  task: TaskEntity(isRunning: state.uiState.autoStartTasks),
+                  context: context));
+            },
+          ),
           ListTile(
             dense: true,
-            leading: Icon(FontAwesomeIcons.clock, size: 22.0),
-            title: Text('Task & Expenses'),
+            leading: Icon(FontAwesomeIcons.building, size: 22.0),
+            title: Text('Vendors & Expenses'),
             onTap: () {
               showDialog<AlertDialog>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                      semanticLabel: 'Task & Expenses',
-                      title: Text('Task & Expenses'),
+                      semanticLabel: 'Vendors & Expenses',
+                      title: Text('Vendors & Expenses'),
                       content: RichText(
                         text: TextSpan(
                           children: <TextSpan>[
@@ -350,7 +380,6 @@ class DrawerTile extends StatelessWidget {
 'tasks' => 'clock-o',
 'expenses' => 'file-image-o',
 'vendors' => 'building',
-'projects' => 'briefcase',
 */
 
 class _LinkTextSpan extends TextSpan {

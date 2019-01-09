@@ -58,7 +58,9 @@ class ProductEditVM {
           store.dispatch(UpdateProduct(product));
         },
         onBackPressed: () {
-          store.dispatch(UpdateCurrentRoute(ProductScreen.route));
+          if (state.uiState.currentRoute.contains(ProductScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(ProductScreen.route));
+          }
         },
         onSavePressed: (BuildContext context) {
           store.dispatch(SaveProductRequest(

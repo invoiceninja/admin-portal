@@ -3,15 +3,17 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientOverview extends StatelessWidget {
@@ -67,7 +69,7 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         EntityListTile(
-          icon: FontAwesomeIcons.filePdf,
+          icon: getEntityIcon(EntityType.invoice),
           title: localization.invoices,
           onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
           subtitle: memoizedInvoiceStatsForClient(
@@ -77,7 +79,7 @@ class ClientOverview extends StatelessWidget {
               localization.archived),
         ),
         EntityListTile(
-          icon: FontAwesomeIcons.creditCard,
+          icon: getEntityIcon(EntityType.payment),
           title: localization.payments,
           onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
           subtitle: memoizedPaymentStatsForClient(
@@ -87,16 +89,45 @@ class ClientOverview extends StatelessWidget {
               localization.active,
               localization.archived),
         ),
-        company.isModuleEnabled(EntityType.quote) ? EntityListTile(
-          icon: FontAwesomeIcons.fileAlt,
-          title: localization.quotes,
-          onTap: () => viewModel.onEntityPressed(context, EntityType.quote),
-          subtitle: memoizedQuoteStatsForClient(
-              client.id,
-              state.quoteState.map,
-              localization.active,
-              localization.archived),
-        ) : Container(),
+        company.isModuleEnabled(EntityType.quote)
+            ? EntityListTile(
+                icon: getEntityIcon(EntityType.quote),
+                title: localization.quotes,
+                onTap: () =>
+                    viewModel.onEntityPressed(context, EntityType.quote),
+                subtitle: memoizedQuoteStatsForClient(
+                    client.id,
+                    state.quoteState.map,
+                    localization.active,
+                    localization.archived),
+              )
+            : Container(),
+        company.isModuleEnabled(EntityType.project)
+            ? EntityListTile(
+                icon: getEntityIcon(EntityType.project),
+                title: localization.projects,
+                onTap: () =>
+                    viewModel.onEntityPressed(context, EntityType.project),
+                subtitle: memoizedProjectStatsForClient(
+                    client.id,
+                    state.projectState.map,
+                    localization.active,
+                    localization.archived),
+              )
+            : Container(),
+        company.isModuleEnabled(EntityType.task)
+            ? EntityListTile(
+                icon: getEntityIcon(EntityType.task),
+                title: localization.tasks,
+                onTap: () =>
+                    viewModel.onEntityPressed(context, EntityType.task),
+                subtitle: memoizedTaskStatsForClient(
+                    client.id,
+                    state.taskState.map,
+                    localization.active,
+                    localization.archived),
+              )
+            : Container(),
       ],
     );
   }

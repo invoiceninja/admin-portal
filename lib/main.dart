@@ -40,6 +40,18 @@ import 'package:local_auth/local_auth.dart';
 //import 'package:quick_actions/quick_actions.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
+
+import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
+import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
+
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
@@ -69,6 +81,8 @@ void main() async {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreTasksMiddleware())
+        ..addAll(createStoreProjectsMiddleware())
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
         ..addAll([
@@ -87,8 +101,8 @@ class InvoiceNinjaApp extends StatefulWidget {
 }
 
 class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
-
   bool _authenticated = false;
+
   Future<Null> _authenticate() async {
     bool authenticated = false;
     try {
@@ -240,6 +254,19 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
+            TaskScreen.route: (context) {
+              widget.store.dispatch(LoadTasks());
+              return TaskScreen();
+            },
+            TaskViewScreen.route: (context) => TaskViewScreen(),
+            TaskEditScreen.route: (context) => TaskEditScreen(),
+            ProjectScreen.route: (context) {
+              widget.store.dispatch(LoadProjects());
+              return ProjectScreen();
+            },
+            ProjectViewScreen.route: (context) => ProjectViewScreen(),
+            ProjectEditScreen.route: (context) => ProjectEditScreen(),
+
             PaymentScreen.route: (context) {
               if (widget.store.state.paymentState.isStale) {
                 widget.store.dispatch(LoadPayments());

@@ -35,15 +35,17 @@ class QuoteEditScreen extends StatelessWidget {
 
 class QuoteEditVM extends EntityEditVM {
   QuoteEditVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     InvoiceItemEntity invoiceItem,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
-    Function(List<InvoiceItemEntity>) onItemsAdded,
+    Function(List<InvoiceItemEntity>, int) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           invoiceItem: invoiceItem,
@@ -64,12 +66,17 @@ class QuoteEditVM extends EntityEditVM {
       invoice: quote,
       invoiceItem: state.quoteUIState.editingItem,
       origInvoice: store.state.quoteState.map[quote.id],
-      onBackPressed: () =>
-          store.dispatch(UpdateCurrentRoute(QuoteScreen.route)),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(
+              quote.isNew ? QuoteScreen.route : QuoteViewScreen.route));
+        }
+      },
       onSavePressed: (BuildContext context) {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
         return completer.future.then((savedQuote) {
+          store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
           if (quote.isNew) {
             Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);
           } else {
@@ -83,7 +90,7 @@ class QuoteEditVM extends EntityEditVM {
               });
         });
       },
-      onItemsAdded: (items) {
+      onItemsAdded: (items, clientId) {
         if (items.length == 1) {
           store.dispatch(EditQuoteItem(items[0]));
         }

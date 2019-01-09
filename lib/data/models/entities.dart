@@ -132,11 +132,11 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isNew => id == null || id < 0;
 
-  bool get isActive => archivedAt == null;
+  bool get isActive => archivedAt == null || archivedAt == 0;
 
-  bool get isArchived => archivedAt != null && !isDeleted;
+  bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
-  List<EntityAction> getEntityBaseActions({UserEntity user}) {
+  List<EntityAction> getBaseActions({UserEntity user}) {
     final actions = <EntityAction>[];
 
     if (user.canEditEntity(this) && (isArchived || isDeleted)) {
@@ -179,8 +179,8 @@ abstract class BaseEntity implements SelectableEntity {
   }
 }
 
-abstract class ConvertToInvoiceItem {
-  InvoiceItemEntity get asInvoiceItem;
+abstract class BelongsToClient {
+  int get clientId;
 }
 
 abstract class ErrorMessage

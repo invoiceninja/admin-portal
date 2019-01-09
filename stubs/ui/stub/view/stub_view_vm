@@ -1,6 +1,9 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
@@ -8,11 +11,10 @@ import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/stub/view/stub_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 
 class StubViewScreen extends StatelessWidget {
-  static const String route = '/stub/view';
   const StubViewScreen({Key key}) : super(key: key);
+  static const String route = '/stub/view';
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +32,15 @@ class StubViewScreen extends StatelessWidget {
 }
 
 class StubViewVM {
-  final StubEntity stub;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext) onEditPressed;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
 
   StubViewVM({
+    @required this.state,
     @required this.stub,
     @required this.company,
     @required this.onActionSelected,
     @required this.onEditPressed,
+    @required this.onBackPressed,
+    @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -50,13 +48,30 @@ class StubViewVM {
 
   factory StubViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final payment = state.stubState.map[state.stubUIState.selectedId];
+    final stub = state.stubState.map[state.stubUIState.selectedId];
+
+    Future<Null> _handleRefresh(BuildContext context) {
+      final completer = snackBarCompleter(
+          context, AppLocalization.of(context).refreshComplete);
+      store.dispatch(LoadStub(completer: completer, stubId: stub.id));
+      return completer.future;
+    }
 
     return StubViewVM(
-        isLoading: store.state.isLoading,
+        state: state,
+        company: state.selectedCompany,
+        isSaving: state.isSaving,
+        isLoading: state.isLoading,
+        isDirty: stub.isNew,
         stub: stub,
         onEditPressed: (BuildContext context) {
           store.dispatch(EditStub(stub: stub, context: context));
+        },
+        onRefreshed: (context) => _handleRefresh(context),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(StubScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(StubScreen.route));
+          }
         },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
@@ -79,4 +94,15 @@ class StubViewVM {
           }
         });
   }
+
+  final AppState state;
+  final StubEntity stub;
+  final CompanyEntity company;
+  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext) onEditPressed;
+  final Function onBackPressed;
+  final Function(BuildContext) onRefreshed;
+  final bool isSaving;
+  final bool isLoading;
+  final bool isDirty;
 }

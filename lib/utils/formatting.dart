@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:intl/number_symbols.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 double round(double value, int precision) {
   final int fac = pow(10, precision);
@@ -32,6 +34,7 @@ enum FormatNumberType {
   int, // 1,000
   double, // 1,000.00
   input, // 1000.00
+  duration,
 }
 
 String formatNumber(
@@ -41,10 +44,21 @@ String formatNumber(
   int currencyId,
   FormatNumberType formatNumberType = FormatNumberType.money,
   bool zeroIsNull = false,
+  bool roundToTwo = false,
 }) {
   if ((zeroIsNull || formatNumberType == FormatNumberType.input) &&
       value == 0) {
     return null;
+  } else if (value == null) {
+    return '';
+  }
+
+  if (roundToTwo) {
+    value = round(value, 2);
+  }
+
+  if (formatNumberType == FormatNumberType.duration) {
+    return formatDuration(Duration(seconds: value.toInt()));
   }
 
   final state = StoreProvider.of<AppState>(context).state;
@@ -177,11 +191,34 @@ String convertDateTimeToSqlDate([DateTime date]) {
   return date.toIso8601String().split('T').first;
 }
 
-String convertTimestampToSqlDate(int timestamp) {
-  final DateTime date =
-      new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-  return date.toIso8601String();
+DateTime convertTimestampToDate(int timestamp) =>
+    DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+
+String convertTimestampToDateString(int timestamp) =>
+    convertTimestampToDate(timestamp).toIso8601String();
+
+String formatDuration(Duration duration, {bool showSeconds = true}) {
+  final time = duration.toString().split('.')[0];
+
+  if (showSeconds) {
+    return time;
+  } else {
+    final parts = time.split(':');
+    return '${parts[0]}:${parts[1]}';
+  }
 }
+
+DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay) {
+  final now = new DateTime.now();
+  final date = DateTime(now.year, now.month, now.day, timeOfDay?.hour ?? 0,
+          timeOfDay?.minute ?? 0)
+      .toUtc();
+
+  return date;
+}
+
+TimeOfDay convertDateTimeToTimeOfDay(DateTime dateTime) =>
+    TimeOfDay(hour: dateTime?.hour ?? 0, minute: dateTime?.minute ?? 0);
 
 String formatDateRange(String startDate, String endDate, BuildContext context) {
   final today = DateTime.now();
@@ -199,7 +236,8 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
   return '$startDateTimeString - $endDateTimeString';
 }
 
-String formatDate(String value, BuildContext context, {bool showTime = false}) {
+String formatDate(String value, BuildContext context,
+    {bool showDate = true, bool showTime = false, bool showSeconds = true}) {
   if (value == null || value.isEmpty) {
     return '';
   }
@@ -208,21 +246,31 @@ String formatDate(String value, BuildContext context, {bool showTime = false}) {
   final CompanyEntity company = state.selectedCompany;
 
   if (showTime) {
-    final dateFormats = state.staticState.datetimeFormatMap;
-    final dateFormatId = company.datetimeFormatId > 0
-        ? company.datetimeFormatId
-        : kDefaultDateTimeFormat;
-    String format = dateFormats[dateFormatId].format;
-    if (company.enableMilitaryTime) {
-      format = format.replaceFirst('h:mm a', 'H:mm');
+    String format;
+    if (!showDate) {
+      format = showSeconds
+          ? company.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
+          : company.enableMilitaryTime ? 'H:mm' : 'h:mm a';
+    } else {
+      final dateFormats = state.staticState.datetimeFormatMap;
+      final dateFormatId = company.datetimeFormatId > 0
+          ? company.datetimeFormatId
+          : kDefaultDateTimeFormat;
+      format = dateFormats[dateFormatId].format;
+      if (company.enableMilitaryTime) {
+        format = showSeconds
+            ? format.replaceFirst('h:mm:ss a', 'H:mm:ss')
+            : format.replaceFirst('h:mm a', 'H:mm');
+      }
     }
-    final formatter = DateFormat(format);
+    final formatter = DateFormat(format, localeSelector(state));
     return formatter.format(DateTime.tryParse(value).toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;
     final dateFormatId =
         company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
-    final formatter = DateFormat(dateFormats[dateFormatId].format);
+    final formatter =
+        DateFormat(dateFormats[dateFormatId].format, localeSelector(state));
     return formatter.format(DateTime.tryParse(value));
   }
 }

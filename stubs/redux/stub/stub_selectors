@@ -3,14 +3,20 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownStubList = memo2(
-    (BuiltMap<int, StubEntity> stubMap, BuiltList<int> stubList) =>
-        dropdownStubsSelector(stubMap, stubList));
+var memoizedDropdownStubList = memo3(
+    (BuiltMap<int, StubEntity> stubMap, BuiltList<int> stubList,
+            int clientId) =>
+        dropdownStubsSelector(stubMap, stubList, clientId));
 
-List<int> dropdownStubsSelector(
-    BuiltMap<int, StubEntity> stubMap, BuiltList<int> stubList) {
-  final list =
-      stubList.where((stubId) => stubMap[stubId].isActive).toList();
+List<int> dropdownStubsSelector(BuiltMap<int, StubEntity> stubMap,
+    BuiltList<int> stubList, int clientId) {
+  final list = stubList.where((stubId) {
+    final stub = stubMap[stubId];
+    if (clientId != null && clientId > 0 && stub.clientId != clientId) {
+      return false;
+    }
+    return stub.isActive;
+  }).toList();
 
   list.sort((stubAId, stubBId) {
     final stubA = stubMap[stubAId];
@@ -30,6 +36,10 @@ List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
   final list = stubList.where((stubId) {
     final stub = stubMap[stubId];
     if (!stub.matchesStates(stubListState.stateFilters)) {
+      return false;
+    }
+    if (stubListState.filterEntityId != null &&
+        stub.clientId != stubListState.filterEntityId) {
       return false;
     }
     if (stubListState.custom1Filters.isNotEmpty &&

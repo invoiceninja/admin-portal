@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -99,12 +101,25 @@ class ClientViewVM {
                   entityId: client.id, entityType: EntityType.client));
               store.dispatch(ViewPaymentList(context));
               break;
+            case EntityType.project:
+              store.dispatch(FilterProjectsByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewProjectList(context));
+              break;
+            case EntityType.task:
+              store.dispatch(FilterTasksByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewTaskList(context));
+              break;
           }
         },
         onRefreshed: (context, loadActivities) =>
             _handleRefresh(context, loadActivities),
-        onBackPressed: () =>
-            store.dispatch(UpdateCurrentRoute(ClientScreen.route)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(ClientScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(ClientScreen.route));
+          }
+        },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {

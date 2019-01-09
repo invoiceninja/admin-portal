@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '0.1.24';
+const String kAppVersion = '0.1.25';
 const String kAppUrl = 'https://app.invoiceninja.com';
 
 const String kAppleStoreUrl =
@@ -14,6 +14,7 @@ const String kSharedPrefUrl = 'url';
 const String kSharedPrefSecret = 'secret';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
 const String kSharedPrefEmailPayment = 'email_payment';
+const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefRequireAuthentication = 'require_authentication';
 
@@ -47,6 +48,10 @@ const int kInvoiceStatusViewed = 3;
 const int kInvoiceStatusApproved = 4;
 const int kInvoiceStatusPartial = 5;
 const int kInvoiceStatusPaid = 6;
+
+const int kTaskStatusLogged = -1;
+const int kTaskStatusRunning = -2;
+const int kTaskStatusInvoiced = -3;
 
 const int kPaymentStatusPending = 1;
 const int kPaymentStatusVoided = 2;

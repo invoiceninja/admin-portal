@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'credit_model.g.dart';
@@ -95,6 +96,12 @@ abstract class CreditEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 
+  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+    final actions = <EntityAction>[];
+
+    return actions..addAll(getBaseActions(user: user));
+  }
+
   int compareTo(CreditEntity credit, String sortField, bool sortAscending) {
     int response = 0;
     final CreditEntity creditA = sortAscending ? this : credit;
@@ -114,7 +121,7 @@ abstract class CreditEntity extends Object
       return true;
     }
 
-    return publicNotes.contains(filter);
+    return publicNotes.toLowerCase().contains(filter);
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'project_model.g.dart';
@@ -50,9 +51,9 @@ class ProjectFields {
 abstract class ProjectEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ProjectEntity, ProjectEntityBuilder> {
-  factory ProjectEntity() {
+  factory ProjectEntity({int id}) {
     return _$ProjectEntity._(
-      id: --ProjectEntity.counter,
+      id: id ?? --ProjectEntity.counter,
       name: '',
       clientId: 0,
       taskRate: 0.0,
@@ -101,6 +102,16 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+    final actions = <EntityAction>[
+      EntityAction.newInvoice,
+      EntityAction.clone,
+      null,
+    ];
+
+    return actions..addAll(getBaseActions(user: user));
+  }
+
   int compareTo(ProjectEntity project, String sortField, bool sortAscending) {
     int response = 0;
     final ProjectEntity projectA = sortAscending ? this : project;
@@ -124,7 +135,7 @@ abstract class ProjectEntity extends Object
       return true;
     }
 
-    return name.contains(filter);
+    return name.toLowerCase().contains(filter);
   }
 
   @override

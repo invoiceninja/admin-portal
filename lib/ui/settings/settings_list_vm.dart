@@ -33,10 +33,13 @@ class SettingsListBuilder extends StatelessWidget {
 
 class SettingsListVM {
   SettingsListVM({
+    @required this.state,
     @required this.onLogoutTap,
     @required this.onRefreshTap,
     @required this.onDarkModeChanged,
     @required this.enableDarkMode,
+    @required this.autoStartTasks,
+    @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
     @required this.requireAuthentication,
     @required this.authenticationSupported,
@@ -87,12 +90,19 @@ class SettingsListVM {
     }
 
     return SettingsListVM(
+      state: store.state,
       onLogoutTap: (BuildContext context) => _confirmLogout(context),
       onRefreshTap: (BuildContext context) => _refreshData(context),
       onDarkModeChanged: (BuildContext context, bool value) async {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(kSharedPrefEnableDarkMode, value);
         store.dispatch(UserSettingsChanged(enableDarkMode: value));
+        AppBuilder.of(context).rebuild();
+      },
+      onAutoStartTasksChanged: (BuildContext context, bool value) async {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool(kSharedPrefAutoStartTasks, value);
+        store.dispatch(UserSettingsChanged(autoStartTasks: value));
         AppBuilder.of(context).rebuild();
       },
       onRequireAuthenticationChanged: (BuildContext context, bool value) async {
@@ -113,16 +123,20 @@ class SettingsListVM {
           store.dispatch(UserSettingsChanged(requireAuthentication: value));
         } else {}
       },
+      autoStartTasks: store.state.uiState.autoStartTasks,
       enableDarkMode: store.state.uiState.enableDarkMode,
       requireAuthentication: store.state.uiState.requireAuthentication,
       authenticationSupported: LocalAuthentication().canCheckBiometrics,
     );
   }
 
+  final AppState state;
   final Function(BuildContext context) onLogoutTap;
   final Function(BuildContext context) onRefreshTap;
   final Function(BuildContext context, bool value) onDarkModeChanged;
+  final Function(BuildContext context, bool value) onAutoStartTasksChanged;
   final bool enableDarkMode;
+  final bool autoStartTasks;
   final Function(BuildContext context, bool value)
       onRequireAuthenticationChanged;
   final bool requireAuthentication;

@@ -62,9 +62,9 @@ class EntityViewVM {
   final bool isDirty;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
-  final Function(BuildContext) onClientPressed;
+  final Function(BuildContext, [bool]) onClientPressed;
   final Function(BuildContext) onPaymentsPressed;
-  final Function(BuildContext, PaymentEntity) onPaymentPressed;
+  final Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed;
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;
 
@@ -94,8 +94,8 @@ class InvoiceViewVM extends EntityViewVM {
     bool isDirty,
     Function(BuildContext, EntityAction) onActionSelected,
     Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
-    Function(BuildContext) onClientPressed,
-    Function(BuildContext, PaymentEntity) onPaymentPressed,
+    Function(BuildContext, [bool]) onClientPressed,
+    Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext) onRefreshed,
     Function onBackPressed,
@@ -149,12 +149,20 @@ class InvoiceViewVM extends EntityViewVM {
           });
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () =>
-            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route)),
-        onClientPressed: (BuildContext context) =>
-            store.dispatch(ViewClient(clientId: client.id, context: context)),
-        onPaymentPressed: (BuildContext context, PaymentEntity payment) => store
-            .dispatch(ViewPayment(paymentId: payment.id, context: context)),
+        onBackPressed: () {
+          if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
+          }
+        },
+        onClientPressed: (BuildContext context, [bool longPress = false]) =>
+            store.dispatch(longPress
+                ? EditClient(client: client, context: context)
+                : ViewClient(clientId: client.id, context: context)),
+        onPaymentPressed: (BuildContext context, PaymentEntity payment,
+                [bool longPress = false]) =>
+            store.dispatch(longPress
+                ? EditPayment(payment: payment, context: context)
+                : ViewPayment(paymentId: payment.id, context: context)),
         onPaymentsPressed: (BuildContext context) {
           store.dispatch(FilterPaymentsByEntity(
               entityId: invoice.id, entityType: EntityType.invoice));

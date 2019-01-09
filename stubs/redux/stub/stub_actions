@@ -218,8 +218,9 @@ class FilterStubsByCustom2 implements PersistUI {
   final String value;
 }
 
-class FilterStubsByClient implements PersistUI {
-  FilterStubsByClient([this.clientId]);
+class FilterStubsByEntity implements PersistUI {
+  FilterStubsByEntity({this.entityId, this.entityType});
 
-  final int clientId;
+  final int entityId;
+  final EntityType entityType;
 }

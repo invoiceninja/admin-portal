@@ -367,7 +367,7 @@ abstract class ClientEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(getEntityBaseActions(user: user));
+    return actions..addAll(getBaseActions(user: user));
   }
 
   @override
