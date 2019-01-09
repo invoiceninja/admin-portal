@@ -290,9 +290,11 @@ class DashboardPanels extends StatelessWidget {
             company.isModuleEnabled(EntityType.quote)
                 ? _quoteChart(context)
                 : SizedBox(),
+            /*
             company.isModuleEnabled(EntityType.task)
                 ? _taskChart(context)
                 : SizedBox(),
+                */
           ],
         ),
         ConstrainedBox(
