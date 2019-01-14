@@ -48,7 +48,7 @@ class QuoteViewVM extends EntityViewVM {
     bool isDirty,
     Function(BuildContext, EntityAction) onActionSelected,
     Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
-    Function(BuildContext) onClientPressed,
+    Function(BuildContext, [bool]) onClientPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
@@ -107,9 +107,10 @@ class QuoteViewVM extends EntityViewVM {
             store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
           }
         },
-        onClientPressed: (BuildContext context) {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
-        },
+        onClientPressed: (BuildContext context, [bool longPress = false]) =>
+            store.dispatch(longPress
+                ? EditClient(client: client, context: context)
+                : ViewClient(clientId: client.id, context: context)),
         onActionSelected: (BuildContext context, EntityAction action) async {
           final localization = AppLocalization.of(context);
           switch (action) {
