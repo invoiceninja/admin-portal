@@ -11109,35 +11109,35 @@ class AppLocalization {
   String get restoredProject =>
       _localizedValues[locale.toString()]['restored_project'];
 
-  String get newProject => _localizedValues[locale.languageCode]['new_project'];
+  String get newProject => _localizedValues[locale.toString()]['new_project'];
 
   String get thankYouForUsingOurApp =>
-      _localizedValues[locale.languageCode]['thank_you_for_using_our_app'];
+      _localizedValues[locale.toString()]['thank_you_for_using_our_app'];
 
   String get ifYouLikeIt =>
-      _localizedValues[locale.languageCode]['if_you_like_it'];
+      _localizedValues[locale.toString()]['if_you_like_it'];
 
-  String get clickHere => _localizedValues[locale.languageCode]['click_here'];
+  String get clickHere => _localizedValues[locale.toString()]['click_here'];
 
-  String get toRateIt => _localizedValues[locale.languageCode]['to_rate_it'];
+  String get toRateIt => _localizedValues[locale.toString()]['to_rate_it'];
 
-  String get average => _localizedValues[locale.languageCode]['average'];
+  String get average => _localizedValues[locale.toString()]['average'];
 
-  String get unapproved => _localizedValues[locale.languageCode]['unapproved'];
+  String get unapproved => _localizedValues[locale.toString()]['unapproved'];
 
   String get authenticateToChangeSetting =>
-      _localizedValues[locale.languageCode]['authenticate_to_change_setting'];
+      _localizedValues[locale.toString()]['authenticate_to_change_setting'];
 
-  String get locked => _localizedValues[locale.languageCode]['locked'];
+  String get locked => _localizedValues[locale.toString()]['locked'];
 
   String get authenticate =>
-      _localizedValues[locale.languageCode]['authenticate'];
+      _localizedValues[locale.toString()]['authenticate'];
 
   String get pleaseAuthenticate =>
-      _localizedValues[locale.languageCode]['please_authenticate'];
+      _localizedValues[locale.toString()]['please_authenticate'];
 
   String get biometricAuthentication =>
-      _localizedValues[locale.languageCode]['biometric_authentication'];
+      _localizedValues[locale.toString()]['biometric_authentication'];
 
   String get footer => _localizedValues[locale.toString()]['footer'];
 
