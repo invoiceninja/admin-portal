@@ -29,8 +29,8 @@ android {
         applicationId "com.invoiceninja.flutter"
         minSdkVersion 18
         targetSdkVersion 27
-        versionCode 26
-        versionName "0.1.26"
+        versionCode 27
+        versionName "0.1.27"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
