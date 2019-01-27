@@ -61,7 +61,8 @@ class TaskViewVM {
 
   factory TaskViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final task = state.taskState.map[state.taskUIState.selectedId];
+    final task = state.taskState.map[state.taskUIState.selectedId] ??
+        TaskEntity(id: state.taskUIState.selectedId);
     final client = state.clientState.map[task.clientId];
     final project = state.projectState.map[task.projectId];
     final invoice = state.invoiceState.map[task.invoiceId];

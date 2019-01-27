@@ -70,8 +70,10 @@ class QuoteViewVM extends EntityViewVM {
 
   factory QuoteViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final quote = state.quoteState.map[state.quoteUIState.selectedId];
-    final client = store.state.clientState.map[quote.clientId];
+    final quote = state.quoteState.map[state.quoteUIState.selectedId] ??
+        InvoiceEntity(id: state.quoteUIState.selectedId);
+    final client = store.state.clientState.map[quote.clientId] ??
+        ClientEntity(id: quote.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(

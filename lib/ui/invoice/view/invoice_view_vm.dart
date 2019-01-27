@@ -116,7 +116,8 @@ class InvoiceViewVM extends EntityViewVM {
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final invoice = state.invoiceState.map[state.invoiceUIState.selectedId];
+    final invoice = state.invoiceState.map[state.invoiceUIState.selectedId] ??
+        InvoiceEntity(id: state.invoiceUIState.selectedId);
     final client = store.state.clientState.map[invoice.clientId] ??
         ClientEntity(id: invoice.clientId);
 

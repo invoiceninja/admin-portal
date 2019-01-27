@@ -122,10 +122,11 @@ class CustomTabBarView extends StatelessWidget {
                     action = EditProduct(product: entity, context: context);
                     break;
                   case EntityType.project:
-                    action = EditProject(project: entity, context: context);
+                    action =
+                        ViewProject(projectId: entity.id, context: context);
                     break;
                   case EntityType.task:
-                    action = EditTask(task: entity, context: context);
+                    action = ViewTask(taskId: entity.id, context: context);
                     break;
                   case EntityType.payment:
                     action =

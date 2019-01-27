@@ -55,7 +55,8 @@ class ProjectViewVM {
 
   factory ProjectViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final project = state.projectState.map[state.projectUIState.selectedId];
+    final project = state.projectState.map[state.projectUIState.selectedId] ??
+        ProjectEntity(id: state.projectUIState.selectedId);
     final client = state.clientState.map[project.clientId] ??
         ClientEntity(id: project.clientId);
 

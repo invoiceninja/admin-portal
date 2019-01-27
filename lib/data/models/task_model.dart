@@ -91,9 +91,9 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 abstract class TaskEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<TaskEntity, TaskEntityBuilder> {
-  factory TaskEntity({bool isRunning = false}) {
+  factory TaskEntity({int id, bool isRunning = false}) {
     return _$TaskEntity._(
-      id: --TaskEntity.counter,
+      id: id ?? --TaskEntity.counter,
       description: '',
       duration: 0,
       invoiceId: null,

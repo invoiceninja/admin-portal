@@ -55,7 +55,8 @@ class ClientViewVM {
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final client = state.clientState.map[state.clientUIState.selectedId];
+    final client = state.clientState.map[state.clientUIState.selectedId] ??
+        ClientEntity(id: state.clientUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
       final completer = snackBarCompleter(
