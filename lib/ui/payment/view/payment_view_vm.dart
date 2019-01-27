@@ -48,8 +48,9 @@ class PaymentViewVM {
 
   factory PaymentViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final payment = state.paymentState.map[state.paymentUIState.selectedId];
-    final client = paymentClientSelector(payment.id, state);
+    final payment = state.paymentState.map[state.paymentUIState.selectedId] ??
+        PaymentEntity(id: state.paymentUIState.selectedId);
+    final client = paymentClientSelector(payment.id, state) ?? ClientEntity();
 
     return PaymentViewVM(
         company: state.selectedCompany,
