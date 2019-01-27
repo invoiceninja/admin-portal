@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -45,33 +46,43 @@ class ActivityListTile extends StatelessWidget {
           ? null
           : () {
               switch (activity.entityType) {
-                /*
-                case EntityType.project:
-                  store.dispatch(ViewProject(
-                      projectId: activity.projectId, context: context));
-                  break;
-                  */
                 case EntityType.task:
-                  store.dispatch(ViewTask(
-                      taskId: activity.taskId, context: context));
+                  if (state.taskState.map.containsKey(activity.taskId)) {
+                    return store.dispatch(
+                        ViewTask(taskId: activity.taskId, context: context));
+                  }
                   break;
                 case EntityType.client:
-                  store.dispatch(ViewClient(
-                      clientId: activity.clientId, context: context));
+                  if (state.clientState.map.containsKey(activity.clientId)) {
+                    return store.dispatch(ViewClient(
+                        clientId: activity.clientId, context: context));
+                  }
                   break;
                 case EntityType.invoice:
-                  store.dispatch(ViewInvoice(
-                      invoiceId: activity.invoiceId, context: context));
+                  if (state.invoiceState.map.containsKey(activity.invoiceId)) {
+                    return store.dispatch(ViewInvoice(
+                        invoiceId: activity.invoiceId, context: context));
+                  }
                   break;
                 case EntityType.quote:
-                  store.dispatch(ViewQuote(
-                      quoteId: activity.invoiceId, context: context));
+                  if (state.quoteState.map.containsKey(activity.invoiceId)) {
+                    return store.dispatch(ViewQuote(
+                        quoteId: activity.invoiceId, context: context));
+                  }
                   break;
                 case EntityType.payment:
-                  store.dispatch(ViewPayment(
-                      paymentId: activity.paymentId, context: context));
+                  if (state.paymentState.map.containsKey(activity.paymentId)) {
+                    return store.dispatch(ViewPayment(
+                        paymentId: activity.paymentId, context: context));
+                  }
                   break;
               }
+              showDialog<ErrorDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(
+                        AppLocalization.of(context).failedToFindRecord);
+                  });
             },
       trailing: enableNavigation ? Icon(Icons.navigate_next) : null,
       subtitle: Row(
