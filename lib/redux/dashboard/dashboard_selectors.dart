@@ -322,8 +322,8 @@ List<ChartDataGroup> chartPayments(
 
 var memoizedChartTasks = memo6((CompanyEntity company,
         DashboardUIState settings,
-    BuiltMap<int, TaskEntity> taskMap,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
+        BuiltMap<int, TaskEntity> taskMap,
+        BuiltMap<int, InvoiceEntity> invoiceMap,
         BuiltMap<int, ProjectEntity> projectMap,
         BuiltMap<int, ClientEntity> clientMap) =>
     chartTasks(company, settings, taskMap, invoiceMap, projectMap, clientMap));
@@ -368,7 +368,6 @@ List<ChartDataGroup> chartTasks(
     } else {
       task.taskTimes.forEach((taskTime) {
         taskTime.getParts(0).forEach((date, duration) {
-
           if (totals[STATUS_LOGGED][date] == null) {
             totals[STATUS_LOGGED][date] = 0.0;
             totals[STATUS_INVOICED][date] = 0.0;
@@ -412,9 +411,12 @@ List<ChartDataGroup> chartTasks(
       invoicedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
       invoicedData.total += totals[STATUS_INVOICED][key];
+      paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
+      paidData.total += totals[STATUS_PAID][key];
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
       invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
+      paidData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
     date = date.add(Duration(days: 1));
   }
@@ -423,6 +425,7 @@ List<ChartDataGroup> chartTasks(
       round(loggedData.total ?? 0 / counts[STATUS_LOGGED] ?? 0, 2);
   invoicedData.average =
       round(invoicedData.total ?? 0 / counts[STATUS_INVOICED] ?? 0, 2);
+  paidData.average = round(paidData.total ?? 0 / counts[STATUS_PAID] ?? 0, 2);
 
   final List<ChartDataGroup> data = [
     loggedData,
