@@ -85,6 +85,41 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   bool get isRunning => endDate == null;
 
+  Map<String, Duration> getParts(int timezoneOffset) {
+    print('getParts');
+    final startSqlDate = convertDateTimeToSqlDate(startDate);
+    final endSqlDate = convertDateTimeToSqlDate(endDate);
+
+    if (startSqlDate == endSqlDate) {
+      return {startSqlDate: duration};
+    }
+
+    int offset = 1;
+    DateTime nextDate;
+    final Map<String, Duration> dates = {
+      startSqlDate: 
+          DateTime(startDate.year, startDate.month, startDate.day)
+              .add(Duration(days: offset)).difference(startDate)
+    };
+
+    do {
+      nextDate = DateTime(startDate.year, startDate.month, startDate.day)
+          .add(Duration(days: offset));
+      print('Next Date: $nextDate');
+      offset++;
+      
+      Duration duration = endDate.difference(nextDate);
+      if (duration.inHours > 24) {
+        duration = Duration(hours: 24);
+      }
+      
+      dates[convertDateTimeToSqlDate(nextDate)] = duration;
+    } while (nextDate.isBefore(endDate.subtract(Duration(days: 1))));
+
+    print('returning: $dates');
+    return dates;
+  }
+
   static Serializer<TaskTime> get serializer => _$taskTimeSerializer;
 }
 
@@ -172,8 +207,13 @@ abstract class TaskEntity extends Object
   }
 
   bool isBetween(String startDate, String endDate) {
-    return false;
-    //return startDate.compareTo(invoiceDate) <= 0 && endDate.compareTo(invoiceDate) == 1;
+    final times = taskTimes;
+    print('isBetween');
+    print('start: $startDate, end: $endDate');
+    print('first start: ${times.first.startDate}');
+    print('last end: ${times.last.endDate}');
+    return DateTime.parse(startDate).compareTo(times.first.endDate) <= 0 &&
+        DateTime.parse(endDate).compareTo(times.last.endDate) == 1;
   }
 
   List<TaskTime> get taskTimes {

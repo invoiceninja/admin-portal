@@ -253,15 +253,16 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final isLoaded = state.taskState.isLoaded;
 
-    final currentData = memoizedChartQuotes(state.selectedCompany, settings,
-        state.quoteState.map, state.clientState.map);
+    final currentData = memoizedChartTasks(state.selectedCompany, settings,
+        state.taskState.map, state.projectState.map, state.clientState.map);
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
-      previousData = memoizedChartQuotes(
+      previousData = memoizedChartTasks(
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
-          state.quoteState.map,
+          state.taskState.map,
+          state.projectState.map,
           state.clientState.map);
     }
 
@@ -285,16 +286,16 @@ class DashboardPanels extends StatelessWidget {
             SizedBox(
               height: 74.0,
             ),
+            /*
             _invoiceChart(context),
             _paymentChart(context),
             company.isModuleEnabled(EntityType.quote)
                 ? _quoteChart(context)
                 : SizedBox(),
-            /*
+                */
             company.isModuleEnabled(EntityType.task)
                 ? _taskChart(context)
                 : SizedBox(),
-                */
           ],
         ),
         ConstrainedBox(

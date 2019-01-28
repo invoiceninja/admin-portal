@@ -357,32 +357,39 @@ List<ChartDataGroup> chartTasks(
 
     if (task.isDeleted || client.isDeleted || project.isDeleted) {
       // skip it
+      print('Skip 1');
     } else if (!task.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
+      print('Skip 2');
     } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
       // skip it
+      print('Skip 3');
     } else {
-      final times = task.taskTimes;
-      final date = convertDateTimeToSqlDate(times.first.startDate);
-      if (totals[STATUS_LOGGED][date] == null) {
-        totals[STATUS_LOGGED][date] = 0.0;
-        totals[STATUS_INVOICED][date] = 0.0;
-        totals[STATUS_PAID][date] = 0.0;
-      }
-      totals[STATUS_LOGGED][date] += 0;
-      totals[STATUS_INVOICED][date] += 0;
-      totals[STATUS_PAID][date] += 0;
+      task.taskTimes.forEach((taskTime) {
+        taskTime.getParts(0).forEach((date, duration) {
+          if (totals[STATUS_LOGGED][date] == null) {
+            totals[STATUS_LOGGED][date] = 0.0;
+            totals[STATUS_INVOICED][date] = 0.0;
+            totals[STATUS_PAID][date] = 0.0;
+          }
+          print('Task: $task');
+          print('Task - date: $date');
 
-      counts[STATUS_LOGGED]++;
-      if (task.isInvoiced) {
-        counts[STATUS_INVOICED]++;
-      }
-      /*
-      if (task.isPaid) {
-        counts[STATUS_PAID]++;
-      }
-      */
+          if (false) {
+            totals[STATUS_PAID][date] += 0;
+          } else if (task.isInvoiced) {
+            totals[STATUS_INVOICED][date] += 0;
+          } else {
+            totals[STATUS_LOGGED][date] += duration.inHours;
+          }
+
+          counts[STATUS_LOGGED]++;
+          if (task.isInvoiced) {
+            counts[STATUS_INVOICED]++;
+          }
+        });
+      });
     }
   });
 
