@@ -320,17 +320,19 @@ List<ChartDataGroup> chartPayments(
   return data;
 }
 
-var memoizedChartTasks = memo5((CompanyEntity company,
+var memoizedChartTasks = memo6((CompanyEntity company,
         DashboardUIState settings,
-        BuiltMap<int, TaskEntity> taskMap,
+    BuiltMap<int, TaskEntity> taskMap,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
         BuiltMap<int, ProjectEntity> projectMap,
         BuiltMap<int, ClientEntity> clientMap) =>
-    chartTasks(company, settings, taskMap, projectMap, clientMap));
+    chartTasks(company, settings, taskMap, invoiceMap, projectMap, clientMap));
 
 List<ChartDataGroup> chartTasks(
     CompanyEntity company,
     DashboardUIState settings,
     BuiltMap<int, TaskEntity> taskMap,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
     BuiltMap<int, ProjectEntity> projectMap,
     BuiltMap<int, ClientEntity> clientMap) {
   const STATUS_LOGGED = 'logged';
@@ -366,6 +368,7 @@ List<ChartDataGroup> chartTasks(
     } else {
       task.taskTimes.forEach((taskTime) {
         taskTime.getParts(0).forEach((date, duration) {
+
           if (totals[STATUS_LOGGED][date] == null) {
             totals[STATUS_LOGGED][date] = 0.0;
             totals[STATUS_INVOICED][date] = 0.0;
@@ -376,17 +379,17 @@ List<ChartDataGroup> chartTasks(
               company: company, project: project, client: client);
           final double amount = taskRate * round(duration.inSeconds / 3600, 3);
 
-          if (false) {
-            totals[STATUS_PAID][date] += amount;
-          } else if (task.isInvoiced) {
-            totals[STATUS_INVOICED][date] += amount;
+          if (task.isInvoiced) {
+            if (invoiceMap[task.invoiceId].isPaid) {
+              totals[STATUS_PAID][date] += amount;
+              counts[STATUS_PAID]++;
+            } else {
+              totals[STATUS_INVOICED][date] += amount;
+              counts[STATUS_INVOICED]++;
+            }
           } else {
             totals[STATUS_LOGGED][date] += amount;
-          }
-
-          counts[STATUS_LOGGED]++;
-          if (task.isInvoiced) {
-            counts[STATUS_INVOICED]++;
+            counts[STATUS_LOGGED]++;
           }
         });
       });

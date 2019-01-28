@@ -459,6 +459,8 @@ abstract class InvoiceEntity extends Object
 
   bool get isUnpaid => invoiceStatusId != kInvoiceStatusPaid;
 
+  bool get isPaid => invoiceStatusId == kInvoiceStatusPaid;
+
   bool get isPastDue {
     if (dueDate.isEmpty) {
       return false;
