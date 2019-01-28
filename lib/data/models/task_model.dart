@@ -86,41 +86,38 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   bool get isRunning => endDate == null;
 
   Map<String, Duration> getParts(int timezoneOffset) {
-    print('start date: $startDate');
-    print('end date: $endDate');
     final localStartDate = startDate.toLocal();
     final localEndDate = endDate.toLocal();
     final startSqlDate = convertDateTimeToSqlDate(localStartDate);
     final endSqlDate = convertDateTimeToSqlDate(localEndDate);
 
     if (startSqlDate == endSqlDate) {
-      print('start eq end');
       return {startSqlDate: duration};
     }
 
     int offset = 1;
     DateTime nextDate;
     final Map<String, Duration> dates = {
-      startSqlDate: 
-          DateTime(localStartDate.year, localStartDate.month, localStartDate.day)
-              .add(Duration(days: offset)).difference(localStartDate)
+      startSqlDate: DateTime(
+              localStartDate.year, localStartDate.month, localStartDate.day)
+          .add(Duration(days: offset))
+          .difference(localStartDate)
     };
 
     do {
-      nextDate = DateTime(localStartDate.year, localStartDate.month, localStartDate.day)
+      nextDate = DateTime(
+              localStartDate.year, localStartDate.month, localStartDate.day)
           .add(Duration(days: offset));
-      print('Next Date: $nextDate');
       offset++;
-      
+
       Duration duration = localEndDate.difference(nextDate);
       if (duration.inHours > 24) {
         duration = Duration(hours: 24);
       }
-      
+
       dates[convertDateTimeToSqlDate(nextDate)] = duration;
     } while (nextDate.isBefore(localEndDate.subtract(Duration(days: 1))));
 
-    print('returning: $dates');
     return dates;
   }
 
@@ -212,12 +209,9 @@ abstract class TaskEntity extends Object
 
   bool isBetween(String startDate, String endDate) {
     final times = taskTimes;
-    print('isBetween');
-    print('start: $startDate, end: $endDate');
-    print('first start: ${times.first.startDate}');
-    print('last end: ${times.last.endDate}');
-    return DateTime.parse(startDate).compareTo(times.first.endDate) <= 0 &&
-        DateTime.parse(endDate).compareTo(times.last.endDate) == 1;
+    return DateTime.parse(startDate).compareTo(times.first.endDate.toLocal()) <=
+            0 &&
+        DateTime.parse(endDate).compareTo(times.last.endDate.toLocal()) == 1;
   }
 
   List<TaskTime> get taskTimes {

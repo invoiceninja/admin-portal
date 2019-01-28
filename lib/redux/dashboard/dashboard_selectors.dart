@@ -358,14 +358,11 @@ List<ChartDataGroup> chartTasks(
 
     if (task.isDeleted || client.isDeleted || project.isDeleted) {
       // skip it
-      print('Skip 1');
     } else if (!task.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-      print('Skip 2');
     } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
       // skip it
-      print('Skip 3');
     } else {
       task.taskTimes.forEach((taskTime) {
         taskTime.getParts(0).forEach((date, duration) {
@@ -374,8 +371,6 @@ List<ChartDataGroup> chartTasks(
             totals[STATUS_INVOICED][date] = 0.0;
             totals[STATUS_PAID][date] = 0.0;
           }
-          print('Task: $task');
-          print('Task - date: $date');
 
           final taskRate = taskRateSelector(
               company: company, project: project, client: client);
