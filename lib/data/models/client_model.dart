@@ -409,6 +409,7 @@ abstract class ContactEntity extends Object
       firstName: '',
       lastName: '',
       email: '',
+      password: '',
       phone: '',
       contactKey: '',
       isPrimary: false,
@@ -432,6 +433,9 @@ abstract class ContactEntity extends Object
   String get lastName;
 
   String get email;
+
+  @nullable
+  String get password;
 
   String get phone;
 

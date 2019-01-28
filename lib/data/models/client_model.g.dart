@@ -516,6 +516,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
     ];
+    if (object.password != null) {
+      result
+        ..add('password')
+        ..add(serializers.serialize(object.password,
+            specifiedType: const FullType(String)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -577,6 +583,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           break;
         case 'email':
           result.email = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'password':
+          result.password = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'phone':
@@ -1559,6 +1569,8 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String email;
   @override
+  final String password;
+  @override
   final String phone;
   @override
   final String contactKey;
@@ -1590,6 +1602,7 @@ class _$ContactEntity extends ContactEntity {
       {this.firstName,
       this.lastName,
       this.email,
+      this.password,
       this.phone,
       this.contactKey,
       this.isPrimary,
@@ -1646,6 +1659,7 @@ class _$ContactEntity extends ContactEntity {
         firstName == other.firstName &&
         lastName == other.lastName &&
         email == other.email &&
+        password == other.password &&
         phone == other.phone &&
         contactKey == other.contactKey &&
         isPrimary == other.isPrimary &&
@@ -1677,11 +1691,14 @@ class _$ContactEntity extends ContactEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                firstName
+                                                                $jc(
+                                                                    0,
+                                                                    firstName
+                                                                        .hashCode),
+                                                                lastName
                                                                     .hashCode),
-                                                            lastName.hashCode),
-                                                        email.hashCode),
+                                                            email.hashCode),
+                                                        password.hashCode),
                                                     phone.hashCode),
                                                 contactKey.hashCode),
                                             isPrimary.hashCode),
@@ -1702,6 +1719,7 @@ class _$ContactEntity extends ContactEntity {
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('email', email)
+          ..add('password', password)
           ..add('phone', phone)
           ..add('contactKey', contactKey)
           ..add('isPrimary', isPrimary)
@@ -1733,6 +1751,10 @@ class ContactEntityBuilder
   String _email;
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
+
+  String _password;
+  String get password => _$this._password;
+  set password(String password) => _$this._password = password;
 
   String _phone;
   String get phone => _$this._phone;
@@ -1789,6 +1811,7 @@ class ContactEntityBuilder
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _email = _$v.email;
+      _password = _$v.password;
       _phone = _$v.phone;
       _contactKey = _$v.contactKey;
       _isPrimary = _$v.isPrimary;
@@ -1826,6 +1849,7 @@ class ContactEntityBuilder
             firstName: firstName,
             lastName: lastName,
             email: email,
+            password: password,
             phone: phone,
             contactKey: contactKey,
             isPrimary: isPrimary,

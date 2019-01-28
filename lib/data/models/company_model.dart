@@ -67,6 +67,7 @@ abstract class CompanyEntity
       emailBodyReminder2: '',
       emailBodyReminder3: '',
       fillProducts: true,
+      enablePortalPassword: false,
     );
   }
 
@@ -236,6 +237,10 @@ abstract class CompanyEntity
   @nullable
   @BuiltValueField(wireName: 'fill_products')
   bool get fillProducts;
+
+  @nullable
+  @BuiltValueField(wireName: 'enable_portal_password')
+  bool get enablePortalPassword;
 
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')

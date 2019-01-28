@@ -34,8 +34,8 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
             key: Key(contact.entityKey),
             contact: contact,
             areButtonsVisible: client.contacts.length > 1,
-            index: client.contacts.indexOf(client.contacts
-                .firstWhere((c) => c.id == contact.id)),
+            index: client.contacts
+                .indexOf(client.contacts.firstWhere((c) => c.id == contact.id)),
           );
         });
   }
@@ -152,6 +152,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -168,6 +169,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _firstNameController,
       _lastNameController,
       _emailController,
+      _passwordController,
       _phoneController,
       _custom1Controller,
       _custom2Controller,
@@ -205,6 +207,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
+      ..password = _passwordController.text.trim()
       ..phone = _phoneController.text.trim()
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim());
@@ -311,6 +314,19 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   ? localization.emailIsInvalid
                   : null,
             ),
+            company.enablePortalPassword ?? false
+                ? TextFormField(
+                    autocorrect: false,
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: localization.password,
+                    ),
+                    obscureText: true,
+                    validator: (value) => value.isNotEmpty && value.length < 8
+                        ? localization.passwordIsTooShort
+                        : null,
+                  )
+                : SizedBox(),
             TextFormField(
               autocorrect: false,
               controller: _phoneController,
