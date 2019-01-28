@@ -292,13 +292,11 @@ class DashboardPanels extends StatelessWidget {
             SizedBox(
               height: 74.0,
             ),
-            /*
             _invoiceChart(context),
             _paymentChart(context),
             company.isModuleEnabled(EntityType.quote)
                 ? _quoteChart(context)
                 : SizedBox(),
-                */
             company.isModuleEnabled(EntityType.task)
                 ? _taskChart(context)
                 : SizedBox(),
