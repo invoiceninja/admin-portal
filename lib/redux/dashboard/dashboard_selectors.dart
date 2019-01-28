@@ -1,5 +1,6 @@
 import 'package:charts_common/common.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -376,12 +377,16 @@ List<ChartDataGroup> chartTasks(
           print('Task: $task');
           print('Task - date: $date');
 
+          final taskRate = taskRateSelector(
+              company: company, project: project, client: client);
+          final double amount = taskRate * round(duration.inSeconds / 3600, 3);
+
           if (false) {
-            totals[STATUS_PAID][date] += 0;
+            totals[STATUS_PAID][date] += amount;
           } else if (task.isInvoiced) {
-            totals[STATUS_INVOICED][date] += 0;
+            totals[STATUS_INVOICED][date] += amount;
           } else {
-            totals[STATUS_LOGGED][date] += duration.inHours;
+            totals[STATUS_LOGGED][date] += amount;
           }
 
           counts[STATUS_LOGGED]++;

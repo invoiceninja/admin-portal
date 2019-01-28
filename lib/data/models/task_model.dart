@@ -86,11 +86,15 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   bool get isRunning => endDate == null;
 
   Map<String, Duration> getParts(int timezoneOffset) {
-    print('getParts');
-    final startSqlDate = convertDateTimeToSqlDate(startDate);
-    final endSqlDate = convertDateTimeToSqlDate(endDate);
+    print('start date: $startDate');
+    print('end date: $endDate');
+    final localStartDate = startDate.toLocal();
+    final localEndDate = endDate.toLocal();
+    final startSqlDate = convertDateTimeToSqlDate(localStartDate);
+    final endSqlDate = convertDateTimeToSqlDate(localEndDate);
 
     if (startSqlDate == endSqlDate) {
+      print('start eq end');
       return {startSqlDate: duration};
     }
 
@@ -98,23 +102,23 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     DateTime nextDate;
     final Map<String, Duration> dates = {
       startSqlDate: 
-          DateTime(startDate.year, startDate.month, startDate.day)
-              .add(Duration(days: offset)).difference(startDate)
+          DateTime(localStartDate.year, localStartDate.month, localStartDate.day)
+              .add(Duration(days: offset)).difference(localStartDate)
     };
 
     do {
-      nextDate = DateTime(startDate.year, startDate.month, startDate.day)
+      nextDate = DateTime(localStartDate.year, localStartDate.month, localStartDate.day)
           .add(Duration(days: offset));
       print('Next Date: $nextDate');
       offset++;
       
-      Duration duration = endDate.difference(nextDate);
+      Duration duration = localEndDate.difference(nextDate);
       if (duration.inHours > 24) {
         duration = Duration(hours: 24);
       }
       
       dates[convertDateTimeToSqlDate(nextDate)] = duration;
-    } while (nextDate.isBefore(endDate.subtract(Duration(days: 1))));
+    } while (nextDate.isBefore(localEndDate.subtract(Duration(days: 1))));
 
     print('returning: $dates');
     return dates;
