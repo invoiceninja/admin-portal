@@ -326,6 +326,8 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  
+
   List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
     final actions = <EntityAction>[];
 
