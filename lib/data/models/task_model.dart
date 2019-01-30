@@ -209,9 +209,10 @@ abstract class TaskEntity extends Object
 
   bool isBetween(String startDate, String endDate) {
     final times = taskTimes;
-    return DateTime.parse(startDate).compareTo(times.first.endDate.toLocal()) <=
-            0 &&
-        DateTime.parse(endDate).compareTo(times.last.endDate.toLocal()) == 1;
+    final firstEndDate = times.first.endDate ?? DateTime.now();
+    final lastEndDate = times.first.endDate ?? DateTime.now();
+    return DateTime.parse(startDate).compareTo(firstEndDate.toLocal()) <= 0 &&
+        DateTime.parse(endDate).compareTo(lastEndDate.toLocal()) == 1;
   }
 
   List<TaskTime> get taskTimes {
@@ -228,8 +229,9 @@ abstract class TaskEntity extends Object
 
       final taskTime = TaskTime(
           startDate: convertTimestampToDate(startDate).toUtc(),
-          endDate:
-              endDate > 0 ? convertTimestampToDate(endDate).toUtc() : null);
+          endDate: (endDate ?? 0) > 0
+              ? convertTimestampToDate(endDate).toUtc()
+              : null);
 
       details.add(taskTime);
     });
@@ -325,8 +327,6 @@ abstract class TaskEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
-
-  
 
   List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
     final actions = <EntityAction>[];
