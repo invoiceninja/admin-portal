@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/.env.dart';
+import 'package:sentry/sentry.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
@@ -37,27 +41,24 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
-//import 'package:quick_actions/quick_actions.dart';
 
+//import 'package:quick_actions/quick_actions.dart';
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
@@ -65,10 +66,12 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 
 void main() async {
+  final SentryClient _sentry = SentryClient(dsn: Config.SENTRY_DNS);
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
   final requireAuthentication =
       prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
+
   final store = Store<AppState>(appReducer,
       initialState: AppState(
           enableDarkMode: enableDarkMode,
@@ -89,7 +92,38 @@ void main() async {
           LoggingMiddleware<dynamic>.printer(),
         ]));
 
-  runApp(InvoiceNinjaApp(store: store));
+  Future<void> _reportError(dynamic error, dynamic stackTrace) async {
+    print('Caught error: $error');
+    if (isInDebugMode) {
+      print(stackTrace);
+      return;
+    } else {
+      _sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
+  runZoned<Future<void>>(() async {
+    runApp(InvoiceNinjaApp(store: store));
+  }, onError: (dynamic error, dynamic stackTrace) {
+    _reportError(error, stackTrace);
+  });
+
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (isInDebugMode) {
+      FlutterError.dumpErrorToConsole(details);
+    } else {
+      Zone.current.handleUncaughtError(details.exception, details.stack);
+    }
+  };
+}
+
+bool get isInDebugMode {
+  bool inDebugMode = false;
+  assert(inDebugMode = true);
+  return inDebugMode;
 }
 
 class InvoiceNinjaApp extends StatefulWidget {
