@@ -159,6 +159,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                                 : null,
                             entityList: memoizedDropdownInvoiceList(
                                 viewModel.invoiceMap,
+                                viewModel.clientMap,
                                 viewModel.invoiceList,
                                 payment.clientId),
                             onSelected: (selected) {

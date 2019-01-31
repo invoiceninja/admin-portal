@@ -60,7 +60,7 @@ class AuthRepository {
 
   Future<LoginResponseData> sendRequest(
       {String url, dynamic data, String token}) async {
-    url += '?include=tax_rates,users,custom_payment_terms&include_static=true';
+    url += '?include=tax_rates,users,custom_payment_terms,task_statuses&include_static=true';
 
     final dynamic response =
         await webClient.post(url, token ?? '', json.encode(data));

@@ -113,6 +113,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     entityList: memoizedDropdownProjectList(
                         state.projectState.map,
                         state.projectState.list,
+                        state.clientState.map,
                         task.clientId),
                     onSelected: (selected) {
                       final project = selected as ProjectEntity;

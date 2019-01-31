@@ -53,7 +53,7 @@ abstract class DashboardUIState
       compareCustomStartDate: '',
       compareCustomEndDate: convertDateTimeToSqlDate(),
       offset: 0,
-      currencyId: 0,
+      currencyId: kDefaultCurrencyId,
     );
   }
 

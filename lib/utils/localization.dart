@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
       'logged': 'Logged',
@@ -62,7 +63,7 @@ class AppLocalization {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -73,7 +74,7 @@ class AppLocalization {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\n\nWe hope to have them completed in the next few months.\n\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\n\nWe hope to have them completed in the next few months.\n\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom',
@@ -269,7 +270,7 @@ class AppLocalization {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -393,6 +394,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'sq': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faturuar',
       'logged': 'Regjistruar',
       'running': 'Duke ndodhur',
@@ -433,7 +436,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -443,7 +447,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -638,7 +643,8 @@ class AppLocalization {
       'mark_sent': 'Shenja është dërguar',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Përfundo',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Modeli i errët',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -748,7 +754,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) ka dështuar',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -762,6 +769,8 @@ class AppLocalization {
       'expired': 'Skaduar',
     },
     'zh_TW': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': '已開立發票的',
       'logged': '已登入',
       'running': '執行中',
@@ -802,7 +811,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -812,7 +822,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': '自訂範圍',
@@ -1007,7 +1018,8 @@ class AppLocalization {
       'mark_sent': '標記為已送出',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': '作業完畢',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': '黑暗模式',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -1131,6 +1143,8 @@ class AppLocalization {
       'expired': '過期',
     },
     'hr': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturirano',
       'logged': 'Logirano',
       'running': 'Pokrenuto',
@@ -1171,7 +1185,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -1181,7 +1196,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -1376,7 +1392,8 @@ class AppLocalization {
       'mark_sent': 'Označi kao poslano',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Dovršeno',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Tamni prikaz',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -1486,7 +1503,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -1500,6 +1518,8 @@ class AppLocalization {
       'expired': 'Isteklo',
     },
     'cs': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturováno',
       'logged': 'Přihlášen',
       'running': 'Bežící',
@@ -1540,7 +1560,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -1550,7 +1571,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -1662,7 +1684,7 @@ class AppLocalization {
       'created_client': 'Klient úspěšně vytvořen',
       'updated_client': 'Klient úspěšně aktualizován',
       'archived_client': 'Klient úspěšně archivován',
-      'deleted_client': 'Klient úspěšně smazán',
+      'deleted_client': 'Klient úspěšně smazán',
       'restored_client': 'Klient úspěšně obnoven',
       'address1': 'Ulice',
       'address2': 'Pokoj',
@@ -1673,8 +1695,8 @@ class AppLocalization {
       'invoice': 'Faktura',
       'invoices': 'Faktury',
       'new_invoice': 'Nová faktura',
-      'created_invoice': 'Faktura úspěšně vytvořena',
-      'updated_invoice': 'Faktura úspěšně aktualizována',
+      'created_invoice': 'Faktura úspěšně vytvořena',
+      'updated_invoice': 'Faktura úspěšně aktualizována',
       'archived_invoice': 'Faktura úspěšně archivována',
       'deleted_invoice': 'Faktura úspěšně smazána',
       'restored_invoice': 'Faktura úspěšně obnovena',
@@ -1745,7 +1767,8 @@ class AppLocalization {
       'mark_sent': 'Značka odesláno',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Hotovo',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Tmavý mód',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -1855,7 +1878,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -1869,6 +1893,8 @@ class AppLocalization {
       'expired': 'Expirované',
     },
     'da': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faktureret',
       'logged': 'Ajourført',
       'running': 'Kører',
@@ -1909,7 +1935,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -1919,7 +1946,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -2114,7 +2142,8 @@ class AppLocalization {
       'mark_sent': 'Markér som sendt',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Færdig',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Mørk tilstand',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -2224,7 +2253,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -2238,6 +2268,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'nl': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Gefactureerd',
       'logged': 'Gelogd',
       'running': 'Lopend',
@@ -2278,7 +2310,8 @@ class AppLocalization {
       'to_rate_it': 'om een score te geven.',
       'average': 'Gemiddeld',
       'unapproved': 'Afgekeurd',
-      'authenticate_to_change_setting': 'Gelieve te authenticeren om deze instelling te wijzigen',
+      'authenticate_to_change_setting':
+          'Gelieve te authenticeren om deze instelling te wijzigen',
       'locked': 'Locked',
       'authenticate': 'Authenticeer',
       'please_authenticate': 'Gelieve te authenticeren',
@@ -2288,7 +2321,8 @@ class AppLocalization {
       'hosted_login': 'Hosted login',
       'selfhost_login': 'Self-Host login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'oude mobiele app',
       'today': 'Vandaag',
       'custom_range': 'Aangepast bereik',
@@ -2464,7 +2498,8 @@ class AppLocalization {
       'created_at': 'Aanmaakdatum',
       'updated_at': 'Bijgewerkt',
       'tax': 'Belasting',
-      'please_enter_an_invoice_number': 'Gelieve een factuurnummer in te voeren',
+      'please_enter_an_invoice_number':
+          'Gelieve een factuurnummer in te voeren',
       'please_enter_a_quote_number': 'Gelieve een offertenummer in te voeren',
       'filtered_by': 'Gefilterd op',
       'past_due': 'Verlopen',
@@ -2483,9 +2518,11 @@ class AppLocalization {
       'mark_sent': 'Markeer als verzonden',
       'marked_invoice_as_sent': 'Factuur succesvol gemarkeerd als verzonden',
       'done': 'Klaar',
-      'please_enter_a_client_or_contact_name': 'Gelieve een bedrijfsnaam of contactpersoon in te voeren',
+      'please_enter_a_client_or_contact_name':
+          'Gelieve een bedrijfsnaam of contactpersoon in te voeren',
       'dark_mode': 'Donkere modus',
-      'restart_app_to_apply_change': 'Herstart de applicatie om de wijziging toe te passen',
+      'restart_app_to_apply_change':
+          'Herstart de applicatie om de wijziging toe te passen',
       'refresh_data': 'Gegevens verversen',
       'blank_contact': 'Leeg contact',
       'activity': 'Activiteit',
@@ -2564,7 +2601,8 @@ class AppLocalization {
       'activity_7': ':contact heeft factuur :invoice bekeken',
       'activity_8': ':user heeft factuur :invoice gearchiveerd',
       'activity_9': ':user heeft factuur :invoice verwijderd',
-      'activity_10': ':contact heeft betaling :payment ingevoerd voor factuur :invoice',
+      'activity_10':
+          ':contact heeft betaling :payment ingevoerd voor factuur :invoice',
       'activity_11': ':user heeft betaling :payment bijgewerkt',
       'activity_12': ':user heeft betaling :payment gearchiveerd',
       'activity_13': ':user heeft betaling :payment verwijderd',
@@ -2592,8 +2630,10 @@ class AppLocalization {
       'activity_35': ':user heeft uitgave :expense gearchiveerd',
       'activity_36': ':user heeft uitgave :expense verwijderd',
       'activity_37': ':user heeft uitgave :expense hersteld',
-      'activity_39': ':user heeft een a :payment_amount betaling geannuleerd :payment',
-      'activity_40': ':user heeft :adjustment van een :payment_amount betaling :payment',
+      'activity_39':
+          ':user heeft een a :payment_amount betaling geannuleerd :payment',
+      'activity_40':
+          ':user heeft :adjustment van een :payment_amount betaling :payment',
       'activity_41': 'Betaling van :payment_amount mislukt (:payment)',
       'activity_42': ':user heeft taak :task aangemaakt',
       'activity_43': ':user heeft taak :task bijgewerkt',
@@ -2607,6 +2647,8 @@ class AppLocalization {
       'expired': 'Verlopen',
     },
     'en_AU': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
       'logged': 'Logged',
       'running': 'Running',
@@ -2647,7 +2689,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -2657,7 +2700,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -2852,7 +2896,8 @@ class AppLocalization {
       'mark_sent': 'Mark as Sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Done',
-      'please_enter_a_client_or_contact_name': 'Please enter a customer or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a customer or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -2962,7 +3007,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -2976,6 +3022,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'en_GB': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
       'logged': 'Logged',
       'running': 'Running',
@@ -3016,7 +3064,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -3026,7 +3075,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -3221,7 +3271,8 @@ class AppLocalization {
       'mark_sent': 'Mark Sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Done',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -3331,7 +3382,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -3345,6 +3397,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'fi': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Laskutettu',
       'logged': 'Kirjattu',
       'running': 'Käynnissä',
@@ -3385,7 +3439,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -3395,7 +3450,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -3590,7 +3646,8 @@ class AppLocalization {
       'mark_sent': 'Merkitse lähetetyksi',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Valmis',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Tumma tila',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -3667,7 +3724,8 @@ class AppLocalization {
       'activity_3': ':user poisti asiakkaan :client',
       'activity_4': ':user loi laskun :invoice',
       'activity_5': ':user päivitti laskun :invoice',
-      'activity_6': ':user lähetti laskun :invoice sähköpostilla asiakkaalle :contact',
+      'activity_6':
+          ':user lähetti laskun :invoice sähköpostilla asiakkaalle :contact',
       'activity_7': ':contact näki laskun :invoice',
       'activity_8': ':user arkistoi laskun :invoice',
       'activity_9': ':user poisti laskun :invoice',
@@ -3681,7 +3739,8 @@ class AppLocalization {
       'activity_17': ':user poisti :credit hyvityksen',
       'activity_18': ':user loi tarjouksen :quote',
       'activity_19': ':user päivitti tarjouksen :quote',
-      'activity_20': ':user lähetti sähköpostilla tarjouksen :quote asiakkaalle :contact',
+      'activity_20':
+          ':user lähetti sähköpostilla tarjouksen :quote asiakkaalle :contact',
       'activity_21': ':contact luki tarjouksen :quote',
       'activity_22': ':user arkistoi tarjouksen :quote',
       'activity_23': ':user poisti tarjouksen :quote',
@@ -3700,7 +3759,8 @@ class AppLocalization {
       'activity_36': ':user poisti kulun :expense',
       'activity_37': ':user palautti kulun :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user loi tehtävän :task',
       'activity_43': ':user päivitti tehtävän :task',
@@ -3714,6 +3774,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'fr': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturé',
       'logged': 'Connecté',
       'running': 'En cours',
@@ -3754,7 +3816,8 @@ class AppLocalization {
       'to_rate_it': 'd\'évaluer notre app.',
       'average': 'Moyenne',
       'unapproved': 'Non approuvé',
-      'authenticate_to_change_setting': 'Veuillez vous connecter pour changer ce paramètre',
+      'authenticate_to_change_setting':
+          'Veuillez vous connecter pour changer ce paramètre',
       'locked': 'Verrouillé',
       'authenticate': 'Connexion',
       'please_authenticate': 'Veuillez vous connecter',
@@ -3764,7 +3827,8 @@ class AppLocalization {
       'hosted_login': 'Authentification Hosted',
       'selfhost_login': 'Authentification Selfhost',
       'google_login': 'Authentification Google',
-      'thanks_for_patience': 'Merci de votre patience pendant l\'implémentation de ces fonctionnalités.\\n\\nNous espérons terminer dans les prochains mois.\\n\\nD\'ici là, nous continuerons le support de',
+      'thanks_for_patience':
+          'Merci de votre patience pendant l\'implémentation de ces fonctionnalités.\\n\\nNous espérons terminer dans les prochains mois.\\n\\nD\'ici là, nous continuerons le support de',
       'legacy_mobile_app': 'Ancienne App mobile',
       'today': 'Aujourd\'hui',
       'custom_range': 'Intervalle personnalisé',
@@ -3959,9 +4023,11 @@ class AppLocalization {
       'mark_sent': 'Marquer comme envoyé',
       'marked_invoice_as_sent': 'Facture marquee comme envoyee avec succes',
       'done': 'Terminé',
-      'please_enter_a_client_or_contact_name': 'Veuillez introduire un nom de client',
+      'please_enter_a_client_or_contact_name':
+          'Veuillez introduire un nom de client',
       'dark_mode': 'Mode sombre',
-      'restart_app_to_apply_change': 'Recommencer k\'app pour introduire l\'app change',
+      'restart_app_to_apply_change':
+          'Recommencer k\'app pour introduire l\'app change',
       'refresh_data': 'Rafraichier les details',
       'blank_contact': 'Details pour contacter la Banque',
       'activity': 'Activité',
@@ -4036,7 +4102,8 @@ class AppLocalization {
       'activity_3': ':user a supprimé le client :client',
       'activity_4': ':user a créé la facture :invoice',
       'activity_5': ':user a mis à jour la facture :invoice',
-      'activity_6': ':user a envoyé la facture :invoice par courriel à :contact',
+      'activity_6':
+          ':user a envoyé la facture :invoice par courriel à :contact',
       'activity_7': ':contact a lu la facture :invoice',
       'activity_8': ':user a archivé la facture :invoice',
       'activity_9': ':user a supprimé la facture :invoice',
@@ -4069,7 +4136,8 @@ class AppLocalization {
       'activity_36': ':user a supprimé la dépense :expense',
       'activity_37': ':user a restauré la dépense :expense',
       'activity_39': ':user a annulé un paiement de :payment_amount (:payment)',
-      'activity_40': ':user a remboursé :adjustment d\'un paiement de :payment_amount (:payment)',
+      'activity_40':
+          ':user a remboursé :adjustment d\'un paiement de :payment_amount (:payment)',
       'activity_41': 'Le paiement de :payment_amount a échoué (:payment)',
       'activity_42': ':user a créé la tâche :task',
       'activity_43': ':user a mis à jour la tâche :task',
@@ -4083,6 +4151,8 @@ class AppLocalization {
       'expired': 'Expiré',
     },
     'fr_CA': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturée',
       'logged': 'Enregistrée',
       'running': 'En cours',
@@ -4094,10 +4164,10 @@ class AppLocalization {
       'stopped_task': 'La tâche a été arrêtée',
       'resumed_task': 'La tâche est en cours',
       'now': 'Maintenant',
-      'auto_start_tasks': 'Auto Start Tasks',
+      'auto_start_tasks': 'Démarrage de tâches automatique',
       'timer': 'Minuteur',
       'manual': 'Manuel',
-      'budgeted': 'Budgeted',
+      'budgeted': 'Budgété',
       'start_time': 'Démarrée à',
       'end_time': 'Arrêtée à',
       'date': 'Date',
@@ -4109,7 +4179,7 @@ class AppLocalization {
       'archived_task': 'La tâche a été archivée',
       'deleted_task': 'La tâche a été supprimée',
       'restored_task': 'La tâche a été restaurée',
-      'please_enter_a_name': 'Please enter a name',
+      'please_enter_a_name': 'Veuillez entrer un nom',
       'budgeted_hours': 'Heures budgétées',
       'created_project': 'Le projet a été créé',
       'updated_project': 'Le projet a été mis à  jour',
@@ -4123,7 +4193,8 @@ class AppLocalization {
       'to_rate_it': 'd\'évaluer notre app.',
       'average': 'Moyenne',
       'unapproved': 'Non approuvé',
-      'authenticate_to_change_setting': 'Veuillez vous connecter pour changer ce paramètre',
+      'authenticate_to_change_setting':
+          'Veuillez vous connecter pour changer ce paramètre',
       'locked': 'Verrouillé',
       'authenticate': 'Connexion',
       'please_authenticate': 'Veuillez vous connecter',
@@ -4133,7 +4204,8 @@ class AppLocalization {
       'hosted_login': 'Connexion hébergée',
       'selfhost_login': 'Connexion autohébergée',
       'google_login': 'Connexion Google',
-      'thanks_for_patience': 'Merci de votre patience pendant que nous travaillons à l\'implémentation de ces fonctionnalités.\\n\\nNous espérons compléter cette implémentation dans les prochains mois.\\n\\nPendant ce temps, nous continuerons de supporter',
+      'thanks_for_patience':
+          'Merci de votre patience pendant que nous travaillons à l\'implémentation de ces fonctionnalités.\\n\\nNous espérons compléter cette implémentation dans les prochains mois.\\n\\nPendant ce temps, nous continuerons de supporter',
       'legacy_mobile_app': 'Ancienne App mobile',
       'today': 'Aujourd\'hui',
       'custom_range': 'Personnalisé',
@@ -4293,7 +4365,7 @@ class AppLocalization {
       'invoice_status_id': 'État de la facture',
       'quote_status': 'État de la soumission',
       'click_plus_to_add_item': 'Cliquez + pour ajouter un article',
-      'click_plus_to_add_time': 'Click + to add time',
+      'click_plus_to_add_time': 'Cliquez sur + pour ajouter du temps',
       'count_selected': ':count sélectionnés',
       'total': 'Total',
       'percent': 'Pourcent',
@@ -4328,9 +4400,11 @@ class AppLocalization {
       'mark_sent': 'Marquer comme envoyé',
       'marked_invoice_as_sent': 'Facture marquée comme envoyée',
       'done': 'Valider',
-      'please_enter_a_client_or_contact_name': 'Veuillez saisir un nom de client ou de contact',
+      'please_enter_a_client_or_contact_name':
+          'Veuillez saisir un nom de client ou de contact',
       'dark_mode': 'Mode foncé',
-      'restart_app_to_apply_change': 'Redémarrez l\'app pour mettre à jour les changements',
+      'restart_app_to_apply_change':
+          'Redémarrez l\'app pour mettre à jour les changements',
       'refresh_data': 'Actualiser les données',
       'blank_contact': 'Contact vide',
       'activity': 'Activité',
@@ -4438,7 +4512,8 @@ class AppLocalization {
       'activity_36': ':user a supprimé la dépense :expense',
       'activity_37': ':user a restauré la dépense :expense',
       'activity_39': ':user a annulé un paiement :payment de :payment_amount',
-      'activity_40': ':user a remboursé :adjustment d\'un paiement :payment de :payment_amount',
+      'activity_40':
+          ':user a remboursé :adjustment d\'un paiement :payment de :payment_amount',
       'activity_41': 'Le paiement de :payment_amount a échoué (:payment)',
       'activity_42': ':user a créé la tâche :task',
       'activity_43': ':user a mis à jour la tâche :task',
@@ -4452,6 +4527,8 @@ class AppLocalization {
       'expired': 'Expiré',
     },
     'de': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'In Rechnung gestellt',
       'logged': 'Protokolliert',
       'running': 'Läuft',
@@ -4463,10 +4540,10 @@ class AppLocalization {
       'stopped_task': 'Aufgabe erfolgreich angehalten',
       'resumed_task': 'Aufgabe fortgesetzt',
       'now': 'Jetzt',
-      'auto_start_tasks': 'Auto Start Tasks',
+      'auto_start_tasks': 'Aufgaben für den automatischen Start',
       'timer': 'Zeitmesser',
       'manual': 'Manuell',
-      'budgeted': 'Budgeted',
+      'budgeted': 'Budgetiert',
       'start_time': 'Startzeit',
       'end_time': 'Endzeit',
       'date': 'Datum',
@@ -4478,7 +4555,7 @@ class AppLocalization {
       'archived_task': 'Aufgabe erfolgreich archiviert',
       'deleted_task': 'Aufgabe erfolgreich gelöscht',
       'restored_task': 'Aufgabe erfolgreich wiederhergestellt',
-      'please_enter_a_name': 'Please enter a name',
+      'please_enter_a_name': 'Bitte geben Sie einen Namen ein',
       'budgeted_hours': 'In Rechnung gestellte Stunden',
       'created_project': 'Projekt erfolgreich erstellt',
       'updated_project': 'Projekt erfolgreich aktualisiert',
@@ -4486,46 +4563,48 @@ class AppLocalization {
       'deleted_project': 'Projekt erfolgreich gelöscht',
       'restored_project': 'Projekt erfolgreich wiederhergestellt',
       'new_project': 'neues Projekt',
-      'thank_you_for_using_our_app': 'Thank you for using our app!',
-      'if_you_like_it': 'If you like it please',
+      'thank_you_for_using_our_app': 'Vielen Dank, dass Sie unsere App nutzen!',
+      'if_you_like_it': 'Wenn es dir gefällt, bitte',
       'click_here': 'hier klicken',
-      'to_rate_it': 'to rate it.',
-      'average': 'Average',
-      'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
-      'locked': 'Locked',
-      'authenticate': 'Authenticate',
-      'please_authenticate': 'Please authenticate',
-      'biometric_authentication': 'Biometric Authentication',
+      'to_rate_it': ', um es zu bewerten.',
+      'average': 'Durchschnittlich',
+      'unapproved': 'Nicht genehmigt',
+      'authenticate_to_change_setting':
+          'Bitte authentifizieren Sie sich, um diese Einstellung zu ändern.',
+      'locked': 'Gesperrt',
+      'authenticate': 'Authentifizieren',
+      'please_authenticate': 'Bitte authentifizieren Sie sich',
+      'biometric_authentication': 'Biometrische Authentifizierung',
       'footer': 'Fußzeile',
-      'compare': 'Compare',
+      'compare': 'Vergleiche',
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
-      'legacy_mobile_app': 'legacy mobile app',
-      'today': 'Today',
+      'thanks_for_patience':
+          'Vielen Dank für Ihre Geduld, während wir an der Implementierung dieser Funktionen arbeiten. Wir hoffen, dass sie in den nächsten Monaten fertiggestellt werden.... Bis dahin werden wir weiterhin die',
+      'legacy_mobile_app': 'legacy Mobile App',
+      'today': 'Heute',
       'custom_range': 'Benutzerdefinierter Bereich',
       'date_range': 'Datumsbereich',
-      'current': 'Current',
-      'previous': 'Previous',
-      'current_period': 'Current Period',
-      'comparison_period': 'Comparison Period',
-      'previous_period': 'Previous Period',
-      'previous_year': 'Previous Year',
-      'compare_to': 'Compare to',
-      'last7_days': 'Last 7 Days',
-      'last_week': 'Last Week',
-      'last30_days': 'Last 30 Days',
+      'current': 'Aktuell',
+      'previous': 'Vorherige',
+      'current_period': 'Aktuelle Periode',
+      'comparison_period': 'Vergleichsperiode',
+      'previous_period': 'Vorherige Periode',
+      'previous_year': 'Vorjahr',
+      'compare_to': 'Vergleiche mit',
+      'last7_days': 'Letzte 7 Tage',
+      'last_week': 'Letzte Woche',
+      'last30_days': 'Letzte 30 Tage',
       'this_month': 'Dieser Monat',
       'last_month': 'Letzter Monat',
       'this_year': 'Dieses Jahr',
       'last_year': 'Letztes Jahr',
       'custom': 'Benutzerdefiniert',
-      'clone_to_invoice': 'Clone to Invoice',
-      'clone_to_quote': 'Clone to Quote',
+      'clone_to_invoice': 'Klone in Rechnung',
+      'clone_to_quote': 'Klone in Angebot',
       'view_invoice': 'Rechnung anschauen',
-      'convert': 'Convert',
+      'convert': 'Konvertiere',
       'more': 'Mehr',
       'edit_client': 'Kunde bearbeiten',
       'edit_product': 'Produkt bearbeiten',
@@ -4569,7 +4648,8 @@ class AppLocalization {
       'please_enter_your_email': 'Bitte geben Sie Ihre E-Mail-Adresse ein',
       'please_enter_your_password': 'Bitte geben Sie Ihr Passwort ein',
       'please_enter_your_url': 'Bitte geben Sie Ihre URL ein',
-      'please_enter_a_product_key': 'Bitte geben Sie Ihren Produkt schlüssel ein',
+      'please_enter_a_product_key':
+          'Bitte geben Sie Ihren Produkt schlüssel ein',
       'ascending': 'Aufsteigend',
       'descending': 'Absteigend',
       'save': 'Speichern',
@@ -4582,13 +4662,13 @@ class AppLocalization {
       'phone': 'Telefon',
       'website': 'Webseite',
       'vat_number': 'USt-IdNr.',
-      'id_number': 'Kundennummer',
+      'id_number': 'Steuernummer',
       'create': 'Erstellen',
-      'copied_to_clipboard': 'Copied :value to the clipboard',
+      'copied_to_clipboard': ':value in die Zwischenablage kopiert',
       'error': 'Fehler',
-      'could_not_launch': 'Could not launch',
+      'could_not_launch': 'Konnte nicht gestartet werden',
       'contacts': 'Kontakte',
-      'additional': 'Additional',
+      'additional': 'Zusätzlich',
       'first_name': 'Vorname',
       'last_name': 'Nachname',
       'add_contact': 'Kontakt hinzufügen',
@@ -4646,28 +4726,29 @@ class AppLocalization {
       'quote_number': 'Angebotsnummer',
       'quote_date': 'Angebotsdatum',
       'valid_until': 'Gültig bis',
-      'items': 'Items',
-      'partial_deposit': 'Partial/Deposit',
+      'items': 'Element',
+      'partial_deposit': 'Teil-/Anzahlung',
       'description': 'Beschreibung',
       'unit_cost': 'Einzelpreis',
       'quantity': 'Menge',
-      'add_item': 'Add Item',
+      'add_item': 'Artikel hinzufügen',
       'contact': 'Kontakt',
       'work_phone': 'Telefon',
-      'total_amount': 'Total Amount',
+      'total_amount': 'Gesamtbetrag',
       'pdf': 'PDF',
       'due_date': 'Fälligkeitsdatum',
       'partial_due_date': 'Teilzahlungsziel',
       'status': 'Status',
       'invoice_status_id': 'Rechnungs Status',
       'quote_status': 'Angebots Status',
-      'click_plus_to_add_item': 'Click + to add an item',
-      'click_plus_to_add_time': 'Click + to add time',
+      'click_plus_to_add_item':
+          'Klicken Sie auf +, um ein Element hinzuzufügen.',
+      'click_plus_to_add_time': 'Klicken Sie auf +, um die Zeit hinzuzufügen.',
       'count_selected': ':count ausgewählt',
       'total': 'Gesamt',
       'percent': 'Prozent',
       'edit': 'Bearbeiten',
-      'dismiss': 'Dismiss',
+      'dismiss': 'Verwerfen',
       'please_select_a_date': 'Bitte wählen Sie ein Datum',
       'please_select_a_client': 'Bitte wählen Sie einen Kunden',
       'please_select_an_invoice': 'Bitte wählen Sie eine Rechnung aus',
@@ -4678,15 +4759,16 @@ class AppLocalization {
       'created_at': 'Erstellt am',
       'updated_at': 'Aktualisiert',
       'tax': 'Steuer',
-      'please_enter_an_invoice_number': 'Bitte geben Sie eine Rechnungs Nummer ein',
+      'please_enter_an_invoice_number':
+          'Bitte geben Sie eine Rechnungs Nummer ein',
       'please_enter_a_quote_number': 'Bitte geben Sie eine Angebots Nummer ein',
-      'filtered_by': 'Filtered by',
+      'filtered_by': 'Gefiltert nach',
       'past_due': 'Überfällig',
       'draft': 'Entwurf',
       'sent': 'Versendet',
       'viewed': 'Angesehen',
       'approved': 'Bestätigt',
-      'partial': 'Teilzahlung/Anzahlung',
+      'partial': 'Teil-/Anzahlung',
       'paid': 'Bezahlt',
       'invoice_status_1': 'Entwurf',
       'invoice_status_2': 'Versendet',
@@ -4695,11 +4777,13 @@ class AppLocalization {
       'invoice_status_5': 'Teilweise',
       'invoice_status_6': 'Bezahlt',
       'mark_sent': 'Als versendet markieren',
-      'marked_invoice_as_sent': 'Successfully marked invoice as sent',
+      'marked_invoice_as_sent': 'Rechnung erfolgreich als versendet markiert',
       'done': 'Erledigt',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Bitte geben Sie einen Kunden- oder Kontaktnamen ein',
       'dark_mode': 'Dunkler Modus',
-      'restart_app_to_apply_change': 'Restart the app to apply the change',
+      'restart_app_to_apply_change':
+          'Starten Sie die App neu, um die Änderung zu übernehmen.',
       'refresh_data': 'Daten aktualisieren',
       'blank_contact': 'Leerer Kontakt',
       'activity': 'Aktivität',
@@ -4737,7 +4821,7 @@ class AppLocalization {
       'send_email': 'E-Mail senden',
       'email_receipt': 'Zahlungsbestätigung an Kunden per E-Mail senden',
       'documents': 'Dokumente',
-      'auto_billing': 'Auto billing',
+      'auto_billing': 'Automatische Rechnungsstellung',
       'button': 'Knopf',
       'preview': 'Vorschau',
       'customize': 'Anpassen',
@@ -4778,7 +4862,8 @@ class AppLocalization {
       'activity_7': ':contact schaute Rechnung :invoice an',
       'activity_8': ':user archivierte Rechnung :invoice',
       'activity_9': ':user löschte Rechnung :invoice',
-      'activity_10': ':contact gab Zahlungsinformation :payment für :invoice ein',
+      'activity_10':
+          ':contact gab Zahlungsinformation :payment für :invoice ein',
       'activity_11': ':user aktualisierte Zahlung :payment',
       'activity_12': ':user archivierte Zahlung :payment',
       'activity_13': ':user löschte Zahlung :payment',
@@ -4806,8 +4891,10 @@ class AppLocalization {
       'activity_35': ':user hat Ausgabe :expense archiviert',
       'activity_36': ':user hat Ausgabe :expense gelöscht',
       'activity_37': ':user hat Ausgabe :expense wiederhergestellt',
-      'activity_39': ':user brach eine Zahlung über :payment_amount ab :payment',
-      'activity_40': ':user hat :adjustment von :payment_amount der Zahlung :payment zurück erstattet',
+      'activity_39':
+          ':user brach eine Zahlung über :payment_amount ab :payment',
+      'activity_40':
+          ':user hat :adjustment von :payment_amount der Zahlung :payment zurück erstattet',
       'activity_41': ':payment_amount Zahlung (:payment) schlug fehl',
       'activity_42': ':user hat Aufgabe :task erstellt',
       'activity_43': ':user hat Aufgabe :task bearbeitet',
@@ -4821,6 +4908,8 @@ class AppLocalization {
       'expired': 'Abgelaufen',
     },
     'el': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Τιμολογημένα',
       'logged': 'Εισηγμένο',
       'running': 'Εκτελείται',
@@ -4832,10 +4921,10 @@ class AppLocalization {
       'stopped_task': 'Επιτυχής διακοπή εργασίας',
       'resumed_task': 'Επιτυχής επανέναρξη εργασίας',
       'now': 'Τώρα',
-      'auto_start_tasks': 'Auto Start Tasks',
+      'auto_start_tasks': 'Αυτόματη Έναρξη Εργασιών',
       'timer': 'Μετρητής',
       'manual': 'Χειροκίνητο',
-      'budgeted': 'Budgeted',
+      'budgeted': 'Προϋπολογισμένο',
       'start_time': 'Ώρα Έναρξης',
       'end_time': 'Ώρα Λήξης',
       'date': 'Ημερομηνία',
@@ -4847,7 +4936,7 @@ class AppLocalization {
       'archived_task': 'Επιτυχής αρχειοθέτηση εργασίας',
       'deleted_task': 'Επιτυχής διαγραφή εργασίας',
       'restored_task': 'Επιτυχής ανάκτηση εργασίας',
-      'please_enter_a_name': 'Please enter a name',
+      'please_enter_a_name': 'Παρακαλούμε εισάγετε ένα όνομα',
       'budgeted_hours': 'Χρεώσιμες Ώρες',
       'created_project': 'Επιτυχής δημιουργία project',
       'updated_project': 'Επιτυχής ενημέρωση project',
@@ -4855,13 +4944,15 @@ class AppLocalization {
       'deleted_project': 'Επιτυχής διαγραφή project',
       'restored_project': 'Επιτυχής ανάκτηση project',
       'new_project': 'Νέο Project',
-      'thank_you_for_using_our_app': 'Ευχαριστούμε που χρησιμοποιήσατε την εφαρμογή μας!',
+      'thank_you_for_using_our_app':
+          'Ευχαριστούμε που χρησιμοποιήσατε την εφαρμογή μας!',
       'if_you_like_it': 'Εάν σας αρέσει παρακαλούμε',
       'click_here': 'πατήστε εδώ',
       'to_rate_it': 'για να το αξιολογήσετε.',
       'average': 'Μέσος όρος',
       'unapproved': 'Μη εγκεκριμένη',
-      'authenticate_to_change_setting': 'Παρακαλούμε αυθεντικοποιήστε για να αλλάξετε αυτή τη ρύθμιση',
+      'authenticate_to_change_setting':
+          'Παρακαλούμε αυθεντικοποιήστε για να αλλάξετε αυτή τη ρύθμιση',
       'locked': 'Κλειδωμένη',
       'authenticate': 'Αυθεντικοποιήστε',
       'please_authenticate': 'Παρακαλούμε αυθεντικοποιήστε',
@@ -4871,7 +4962,8 @@ class AppLocalization {
       'hosted_login': 'Εισαγωγή σε φιλοξενούμενη έκδοση',
       'selfhost_login': 'Εισαγωγή σε αυτο-φιλοξενούμενη έκδοση',
       'google_login': 'Εισαγωγή μέσω Google',
-      'thanks_for_patience': 'Ευχαριστούμε για την υπομονή σας καθώς εργαζόμαστε για την ενσωμάτωση αυτών των χαρακτηριστικών.\\n\\nΕλπίζουμε να τα έχουμε ολοκληρώσει μέσα στους επόμενους μήνες.\\n\\nΜέχρι τότε θα συνεχίσουμε να υποστηρίζουμε την',
+      'thanks_for_patience':
+          'Ευχαριστούμε για την υπομονή σας καθώς εργαζόμαστε για την ενσωμάτωση αυτών των χαρακτηριστικών.\\n\\nΕλπίζουμε να τα έχουμε ολοκληρώσει μέσα στους επόμενους μήνες.\\n\\nΜέχρι τότε θα συνεχίσουμε να υποστηρίζουμε την',
       'legacy_mobile_app': 'Εφαρμογή προηγούμενης γενιάς για κινητά',
       'today': 'Σήμερα',
       'custom_range': 'Προσαρμοσμένο Εύρος',
@@ -4936,7 +5028,8 @@ class AppLocalization {
       'restore': 'Ανάκτηση',
       'refresh_complete': 'Ανανέωση Ολοκληρώθηκε',
       'please_enter_your_email': 'Παρακαλώ εισάγετε το email σας',
-      'please_enter_your_password': 'Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας',
+      'please_enter_your_password':
+          'Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας',
       'please_enter_your_url': 'Παρακαλώ εισάγετε το URL σας',
       'please_enter_a_product_key': 'Παρακαλώ εισάγετε το κλειδί προϊόντος σας',
       'ascending': 'Αύξουσα σειρά',
@@ -5031,7 +5124,7 @@ class AppLocalization {
       'invoice_status_id': 'Κατάσταση Τιμολογίου',
       'quote_status': 'Κατάσταση Προσφοράς',
       'click_plus_to_add_item': 'Πιέστε το + για την προσθήκη ενός προϊόντος',
-      'click_plus_to_add_time': 'Click + to add time',
+      'click_plus_to_add_time': 'Πιέστε το + για να προσθέσετε χρόνο',
       'count_selected': ':count επιλέχθηκε',
       'total': 'Σύνολο',
       'percent': 'Ποσοστό',
@@ -5047,7 +5140,8 @@ class AppLocalization {
       'created_at': 'Ημ/νία Δημιουργίας',
       'updated_at': 'Ενημερώθηκε',
       'tax': 'Φόρος',
-      'please_enter_an_invoice_number': 'Παρακαλώ εισάγετε ένα αριθμό τιμολογίου',
+      'please_enter_an_invoice_number':
+          'Παρακαλώ εισάγετε ένα αριθμό τιμολογίου',
       'please_enter_a_quote_number': 'Παρακαλώ εισάγετε ένα αριθμό προσφοράς',
       'filtered_by': 'Φιλτράρισμα με',
       'past_due': 'Ληγμένα',
@@ -5066,9 +5160,11 @@ class AppLocalization {
       'mark_sent': 'Σήμανση ως Απεσταλμένο',
       'marked_invoice_as_sent': 'Επιτυχής ορισμός τιμολογίου ως απεσταλμένο',
       'done': 'Έτοιμο',
-      'please_enter_a_client_or_contact_name': 'Παρακαλώ εισάγετε ένα πελάτη ή το όνομα μίας επαφής',
+      'please_enter_a_client_or_contact_name':
+          'Παρακαλώ εισάγετε ένα πελάτη ή το όνομα μίας επαφής',
       'dark_mode': 'Σκοτεινό Περιβάλλον',
-      'restart_app_to_apply_change': 'Επανεκκινήστε την εφαρμογή για να εφαρμόσετε την αλλαγή',
+      'restart_app_to_apply_change':
+          'Επανεκκινήστε την εφαρμογή για να εφαρμόσετε την αλλαγή',
       'refresh_data': 'Ανανέωση Δεδομένων',
       'blank_contact': 'Κενή Επαφή',
       'activity': 'Δραστηριότητα',
@@ -5147,7 +5243,8 @@ class AppLocalization {
       'activity_7': 'Η επαφή :contact είδε το τιμολόγιο :invoice',
       'activity_8': 'Ο χρήστης :user αρχειοθέτησε το τιμολόγιο :invoice',
       'activity_9': 'Ο χρήστης :user διέγραψε το τιμολόγιο :invoice',
-      'activity_10': 'Η επαφή :contact καταχώρησε την πληρωμή :payment για το :Invoice',
+      'activity_10':
+          'Η επαφή :contact καταχώρησε την πληρωμή :payment για το :Invoice',
       'activity_11': 'Ο χρήστης :user ενημέρωσε την πληρωμή :payment',
       'activity_12': 'Ο χρήστης :user αρχειοθέτησε την πληρωμή :payment',
       'activity_13': 'Ο χρήστης :user διέγραψε την πληρωμή :payment',
@@ -5157,7 +5254,8 @@ class AppLocalization {
       'activity_17': 'Ο χρήστης :user διέγραψε την πίστωση :credit',
       'activity_18': 'Ο χρήστης :user δημιουργησε την προσφορά :quote',
       'activity_19': 'Ο χρήστης :user ενημέρωσε την προσφορά :quote',
-      'activity_20': 'Ο χρήστης :user έστειλε με email την προσφορά :quote στην επαφή :contact',
+      'activity_20':
+          'Ο χρήστης :user έστειλε με email την προσφορά :quote στην επαφή :contact',
       'activity_21': 'Η επαφή :contact είδε την προσφορά :quote',
       'activity_22': 'Ο χρήστης :user αρχειοθέτησε την προσφορά :quote',
       'activity_23': 'Ο χρήστης :user διέγραψε την προσφορά :quote',
@@ -5176,7 +5274,8 @@ class AppLocalization {
       'activity_36': 'Ο χρήστης :user διέγραψε τη δαπάνη :expense',
       'activity_37': 'Ο χρήστης :user επανέφερε τη δαπάνη :expense',
       'activity_39': ':user ακύρωσε :payment_amount πληρωμής :payment',
-      'activity_40': ':user επέστρεψε :adjustment μιας :payment_amount πληρωμής :payment',
+      'activity_40':
+          ':user επέστρεψε :adjustment μιας :payment_amount πληρωμής :payment',
       'activity_41': ':payment_amount πληρωμής (:payment) απέτυχε',
       'activity_42': 'Ο χρήστης :user δημιούργησε την εργασία :task',
       'activity_43': 'Ο χρήστης :user ενημέρωσε την εργασία :task',
@@ -5190,11 +5289,14 @@ class AppLocalization {
       'expired': 'Ληγμένα',
     },
     'it': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fatturato',
       'logged': 'Loggato',
       'running': 'In corso',
       'resume': 'Riprendi',
-      'task_errors': 'Si prega di correggere eventuali tempi di sovrapposizione',
+      'task_errors':
+          'Si prega di correggere eventuali tempi di sovrapposizione',
       'start': 'Inizia',
       'stop': 'Ferma',
       'started_task': 'Successfully started task',
@@ -5230,7 +5332,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -5240,7 +5343,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Oggi',
       'custom_range': 'Intervallo personalizzato',
@@ -5435,7 +5539,8 @@ class AppLocalization {
       'mark_sent': 'Contrassegna come inviato',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Fatto',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Modalità scura',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -5545,7 +5650,8 @@ class AppLocalization {
       'activity_36': 'L\'utente :user ha eliminato la spesa :expense',
       'activity_37': 'L\'utente :user ha ripristinato la spesa :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'pagamento di :payment_amount (:payment) fallito',
       'activity_42': 'L\'utente :user ha creato l\'attività :task',
       'activity_43': 'L\'utente :user ha aggiornato l\'attività :task',
@@ -5559,6 +5665,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'ja': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
       'logged': 'Logged',
       'running': 'Running',
@@ -5599,7 +5707,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -5609,7 +5718,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -5804,7 +5914,8 @@ class AppLocalization {
       'mark_sent': '送付済みにする',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': '完了',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'ダークモード',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -5914,7 +6025,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -5928,6 +6040,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'lt': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
       'logged': 'Logged',
       'running': 'Vykdomas',
@@ -5968,7 +6082,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -5978,7 +6093,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -6173,7 +6289,8 @@ class AppLocalization {
       'mark_sent': 'Mark sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Baigta',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -6283,7 +6400,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount mokėjimas (:payment) nepavyko',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -6297,6 +6415,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'mk_MK': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Фактурирано',
       'logged': 'Најавено',
       'running': 'Во тек',
@@ -6337,7 +6457,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -6347,7 +6468,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Прилагоден опсег',
@@ -6542,7 +6664,8 @@ class AppLocalization {
       'mark_sent': 'Белегот е пратен',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Завршено',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Темен режим',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -6619,7 +6742,8 @@ class AppLocalization {
       'activity_3': ':user го избриша клиентот :client',
       'activity_4': ':user ја креираше фактурата :invoice',
       'activity_5': ':user ја ажурираше фактурата :invoice',
-      'activity_6': ':user ја испрати по е-пошта фактурата :invoice на :contact',
+      'activity_6':
+          ':user ја испрати по е-пошта фактурата :invoice на :contact',
       'activity_7': ':contact ја прегледа фактурата :invoice',
       'activity_8': ':user ја архивира фактурата :invoice',
       'activity_9': ':user ја избриша фактурата :invoice',
@@ -6652,7 +6776,8 @@ class AppLocalization {
       'activity_36': ':user го избриша трошокот :expense',
       'activity_37': ':user го поврати трошокот :expense',
       'activity_39': ':user го откажа :payment_amount плаќањето :payment',
-      'activity_40': ':user го рефундира :adjustment на :payment_amount плаќање :payment',
+      'activity_40':
+          ':user го рефундира :adjustment на :payment_amount плаќање :payment',
       'activity_41': ':payment_amount плаќање (:payment) е неуспешно',
       'activity_42': ':user ја креира задачата :task',
       'activity_43': ':user ажурира задачата :task',
@@ -6666,6 +6791,8 @@ class AppLocalization {
       'expired': 'Истечено',
     },
     'nb_NO': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturert',
       'logged': 'Logget',
       'running': 'Løpende',
@@ -6706,7 +6833,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -6716,7 +6844,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Tilpass Utvalg',
@@ -6911,7 +7040,8 @@ class AppLocalization {
       'mark_sent': 'Merk som Sendt',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Ferdig',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Mørk Modus',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -7021,7 +7151,8 @@ class AppLocalization {
       'activity_36': ':user slettet utgift :expense',
       'activity_37': ':user gjenopprettet utgift :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user opprettet oppgave :task',
       'activity_43': ':user oppdaterte oppgave :task',
@@ -7035,6 +7166,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'pl': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Zafakturowano',
       'logged': 'Zapisano',
       'running': 'W trakcie',
@@ -7075,7 +7208,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -7085,7 +7219,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Określony okres',
@@ -7280,7 +7415,8 @@ class AppLocalization {
       'mark_sent': 'Oznacz jako wysłane',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Gotowe',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Tryb ciemny',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -7390,7 +7526,8 @@ class AppLocalization {
       'activity_36': ':user usunął wydatek :expense',
       'activity_37': ':user przywrócił wydatek :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'płatność :payment_amount (:payment) nieudana',
       'activity_42': ':user stworzył zadanie :task',
       'activity_43': ':user zaktualizował zadanie :task',
@@ -7404,6 +7541,8 @@ class AppLocalization {
       'expired': 'Wygasło',
     },
     'pt_BR': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faturado',
       'logged': 'Logado',
       'running': 'Executando',
@@ -7444,7 +7583,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -7454,11 +7594,12 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
-      'custom_range': 'Custom Range',
-      'date_range': 'Date Range',
+      'custom_range': 'Período Personalizado',
+      'date_range': 'Período',
       'current': 'Current',
       'previous': 'Previous',
       'current_period': 'Current Period',
@@ -7467,20 +7608,20 @@ class AppLocalization {
       'previous_year': 'Previous Year',
       'compare_to': 'Compare to',
       'last7_days': 'Last 7 Days',
-      'last_week': 'Last Week',
+      'last_week': 'Última Semana',
       'last30_days': 'Last 30 Days',
-      'this_month': 'This Month',
-      'last_month': 'Last Month',
+      'this_month': 'Este Mês',
+      'last_month': 'Último Mês',
       'this_year': 'This Year',
-      'last_year': 'Last Year',
+      'last_year': 'Último Ano',
       'custom': 'Personalizado',
-      'clone_to_invoice': 'Clone to Invoice',
+      'clone_to_invoice': 'Clonar Fatura',
       'clone_to_quote': 'Clone to Quote',
       'view_invoice': 'Visualizar fatura',
       'convert': 'Convert',
       'more': 'More',
       'edit_client': 'Editar Cliente',
-      'edit_product': 'Editar Prodruto',
+      'edit_product': 'Editar Produto',
       'edit_invoice': 'Editar Fatura',
       'edit_quote': 'Editar Orçamento',
       'edit_payment': 'Editar Pagamento',
@@ -7633,7 +7774,7 @@ class AppLocalization {
       'please_enter_an_invoice_number': 'Please enter an invoice number',
       'please_enter_a_quote_number': 'Please enter a quote number',
       'filtered_by': 'Filtered by',
-      'past_due': 'Past Due',
+      'past_due': 'Vencido',
       'draft': 'Draft',
       'sent': 'Enviado',
       'viewed': 'Viewed',
@@ -7649,7 +7790,8 @@ class AppLocalization {
       'mark_sent': 'Marcar como Enviada',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Feito',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Modo Escuro',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -7688,7 +7830,7 @@ class AppLocalization {
       'body': 'Conteúdo',
       'send_email': 'Enviar Email',
       'email_receipt': 'E-mail para envio do recibo de pagamento',
-      'documents': 'Documents',
+      'documents': 'Documentos',
       'auto_billing': 'Auto billing',
       'button': 'Button',
       'preview': 'Preview',
@@ -7730,7 +7872,8 @@ class AppLocalization {
       'activity_7': ':contact visualizou a fatura :invoice',
       'activity_8': ':user arquivou a fatura :invoice',
       'activity_9': ':user removeu a fatura :invoice',
-      'activity_10': ':contact efetuou o pagamento de :payment para a fatura :invoice',
+      'activity_10':
+          ':contact efetuou o pagamento de :payment para a fatura :invoice',
       'activity_11': ':user atualizou o pagamento :payment',
       'activity_12': ':user arquivou o pagamento :payment',
       'activity_13': ':user removeu o pagamento :payment',
@@ -7759,7 +7902,8 @@ class AppLocalization {
       'activity_36': ':user apagou a despesa :expense',
       'activity_37': ':user restaurou a despesa :expense',
       'activity_39': ':user cancelou :payment_amount pelo pagamento :payment',
-      'activity_40': ':user reembolsou :adjustment de :payment_amount do pagamento :payment',
+      'activity_40':
+          ':user reembolsou :adjustment de :payment_amount do pagamento :payment',
       'activity_41': ':payment_amount payment (:payment) falhou',
       'activity_42': ':user criou a tarefa :task',
       'activity_43': ':user atualizou a tarefa :task',
@@ -7773,6 +7917,8 @@ class AppLocalization {
       'expired': 'Vencida',
     },
     'pt_PT': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faturado',
       'logged': 'Em aberto',
       'running': 'Em execução',
@@ -7813,7 +7959,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -7823,7 +7970,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Intervalo Personalizado',
@@ -8018,7 +8166,8 @@ class AppLocalization {
       'mark_sent': 'Marcar como Enviada',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Feito',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Modo Escuro',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -8099,7 +8248,8 @@ class AppLocalization {
       'activity_7': ':contact visualizou a nota de pagamento :invoice',
       'activity_8': ':user arquivou a nota de pagamento :invoice',
       'activity_9': ':user removeu a nota de pagamento :invoice',
-      'activity_10': ':contact introduziu o pagamento :payment para a nota de pag. :invoice',
+      'activity_10':
+          ':contact introduziu o pagamento :payment para a nota de pag. :invoice',
       'activity_11': ':user atualizou o pagamento :payment',
       'activity_12': ':user arquivou o pagamento :payment',
       'activity_13': ':user removeu o pagamento :payment',
@@ -8128,7 +8278,8 @@ class AppLocalization {
       'activity_36': ':user apagou a despesa :expense',
       'activity_37': ':user restaurou a despesa :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'pagamento (:payment)  de :payment_amount falhou',
       'activity_42': ':user criou a tarefa :task',
       'activity_43': ':user atualizou a tarefa :task',
@@ -8142,6 +8293,8 @@ class AppLocalization {
       'expired': 'Expirada',
     },
     'ro': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturat',
       'logged': 'Înregistrat',
       'running': 'În derulare',
@@ -8182,7 +8335,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -8192,7 +8346,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Autentificare Google',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Astăzi',
       'custom_range': 'Custom Range',
@@ -8387,7 +8542,8 @@ class AppLocalization {
       'mark_sent': 'Marchează ca trimis',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Gata',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -8497,7 +8653,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -8511,6 +8668,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'sr_RS': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturisano',
       'logged': 'Logovano',
       'running': 'Pokrenuto',
@@ -8551,7 +8710,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -8561,7 +8721,8 @@ class AppLocalization {
       'hosted_login': 'Hostovan login',
       'selfhost_login': 'Samohostovan login',
       'google_login': 'Google login',
-      'thanks_for_patience': 'Hvala na stpljenju dok radimo na implementaciji ovih mogućnosti.\\n\\nNadamo se da će biti završeno u sledećih par meseci.\\n\\nDo tada ćemo nastaviti da podržavamo',
+      'thanks_for_patience':
+          'Hvala na stpljenju dok radimo na implementaciji ovih mogućnosti.\\n\\nNadamo se da će biti završeno u sledećih par meseci.\\n\\nDo tada ćemo nastaviti da podržavamo',
       'legacy_mobile_app': 'nasleđenu mobilnu aplikaciju',
       'today': 'Danas',
       'custom_range': 'Custom Range',
@@ -8756,9 +8917,11 @@ class AppLocalization {
       'mark_sent': 'Označi kao poslato',
       'marked_invoice_as_sent': 'Račun uspešno obeležen kao poslat',
       'done': 'Završeno',
-      'please_enter_a_client_or_contact_name': 'Unesite klijenta ili ime kontakta',
+      'please_enter_a_client_or_contact_name':
+          'Unesite klijenta ili ime kontakta',
       'dark_mode': 'Tamni prikaz',
-      'restart_app_to_apply_change': 'Restartuje aplikaciju za aktiviranje izmene',
+      'restart_app_to_apply_change':
+          'Restartuje aplikaciju za aktiviranje izmene',
       'refresh_data': 'Osveži podatke',
       'blank_contact': 'Prazan kontakt',
       'activity': 'Aktivnost',
@@ -8866,7 +9029,8 @@ class AppLocalization {
       'activity_36': ':user deleted expense :expense',
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user je otkazao :payment_amount plaćanje :payment',
-      'activity_40': ':user vratio :adjustment od :payment_amount plaćanja :payment',
+      'activity_40':
+          ':user vratio :adjustment od :payment_amount plaćanja :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -8880,6 +9044,8 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'sl': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturirano',
       'logged': 'Prijavljeno',
       'running': 'V teku',
@@ -8920,7 +9086,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -8930,7 +9097,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Obseg po meri',
@@ -9125,7 +9293,8 @@ class AppLocalization {
       'mark_sent': 'Označi kot poslano',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Končano',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Temen način',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -9235,7 +9404,8 @@ class AppLocalization {
       'activity_36': ':user je izbrisal strošek :expense',
       'activity_37': ':user je obnovil strošek :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount plačilo (:payment) ni uspelo',
       'activity_42': ':user je vnesel opravilo :task',
       'activity_43': ':user je posodobil opravilo :task',
@@ -9249,11 +9419,14 @@ class AppLocalization {
       'expired': 'Poteklo',
     },
     'es': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturado',
       'logged': 'Registrado',
       'running': 'Ejecutando',
       'resume': 'Continuar',
-      'task_errors': 'Por favor corrija cualquier tiempo que se sobreponga con otro',
+      'task_errors':
+          'Por favor corrija cualquier tiempo que se sobreponga con otro',
       'start': 'Iniciar',
       'stop': 'Detener',
       'started_task': 'Tarea iniciada con éxito',
@@ -9289,7 +9462,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -9299,7 +9473,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Rango Personalizado',
@@ -9494,7 +9669,8 @@ class AppLocalization {
       'mark_sent': 'Marcar como enviado',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Hecho',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Modo Oscuro',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -9532,7 +9708,8 @@ class AppLocalization {
       'subject': 'Asunto',
       'body': 'Mensaje',
       'send_email': 'Enviar email',
-      'email_receipt': 'Enviar por correo electrónico el recibo de pago al cliente',
+      'email_receipt':
+          'Enviar por correo electrónico el recibo de pago al cliente',
       'documents': 'Documents',
       'auto_billing': 'Auto billing',
       'button': 'Button',
@@ -9571,7 +9748,8 @@ class AppLocalization {
       'activity_3': ':user eliminó el cliente :client',
       'activity_4': ':user creó la factura :invoice',
       'activity_5': ':user actualizó la factura :invoice',
-      'activity_6': ':user envió por correo electrónico la factura :invoice to :contact',
+      'activity_6':
+          ':user envió por correo electrónico la factura :invoice to :contact',
       'activity_7': ':contact vió la factura :invoice',
       'activity_8': ':user archivó la factura :invoice',
       'activity_9': ':user eliminó la factura :invoice',
@@ -9585,7 +9763,8 @@ class AppLocalization {
       'activity_17': ':user eliminó :credit créditos',
       'activity_18': ':user creó la cotización :quote',
       'activity_19': ':user actualizó la cotización :quote',
-      'activity_20': ':user envió por correo electrónico la cotización :quote to :contact',
+      'activity_20':
+          ':user envió por correo electrónico la cotización :quote to :contact',
       'activity_21': ':contact vió la cotización :quote',
       'activity_22': ':user archivó la cotización :quote',
       'activity_23': ':user eliminó la cotización :quote',
@@ -9604,7 +9783,8 @@ class AppLocalization {
       'activity_36': ':user eliminó el gasto :expense',
       'activity_37': ':user restauró el gasto :expense',
       'activity_39': ':usaer canceló :payment_amount pago :payment',
-      'activity_40': ':user reembolsó :adjustment de un pago de :payment_amount :payment',
+      'activity_40':
+          ':user reembolsó :adjustment de un pago de :payment_amount :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user creó la tarea :task',
       'activity_43': ':user actualizó la tarea :task',
@@ -9618,11 +9798,14 @@ class AppLocalization {
       'expired': 'Vencida',
     },
     'es_ES': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturado',
       'logged': 'Registrado',
       'running': 'Ejecutando',
       'resume': 'Reanudar',
-      'task_errors': 'Por favor corrija cualquier tiempo que se solape con otro',
+      'task_errors':
+          'Por favor corrija cualquier tiempo que se solape con otro',
       'start': 'Iniciar',
       'stop': 'Parar',
       'started_task': 'Tarea empezada correctamente',
@@ -9658,7 +9841,8 @@ class AppLocalization {
       'to_rate_it': 'para valorar.',
       'average': 'Promedio',
       'unapproved': 'No aprobado',
-      'authenticate_to_change_setting': 'Por favor, autenticarse para cambiar esta configuración',
+      'authenticate_to_change_setting':
+          'Por favor, autenticarse para cambiar esta configuración',
       'locked': 'Bloqueado',
       'authenticate': 'Autenticación',
       'please_authenticate': 'Por favor, autenticarse',
@@ -9668,7 +9852,8 @@ class AppLocalization {
       'hosted_login': 'Acceso alojado',
       'selfhost_login': 'Acceso auto alojado',
       'google_login': 'Acceso con Google',
-      'thanks_for_patience': 'Gracias por tu paciencia mientras trabajamos en implementar esas características.\\n\\nEsperamos tenerlas completadas en los próximos meses.\\n\\nHasta entonces continuaremos soportando el',
+      'thanks_for_patience':
+          'Gracias por tu paciencia mientras trabajamos en implementar esas características.\\n\\nEsperamos tenerlas completadas en los próximos meses.\\n\\nHasta entonces continuaremos soportando el',
       'legacy_mobile_app': 'app móvil heredada',
       'today': 'Hoy',
       'custom_range': 'Rango personalizado',
@@ -9844,8 +10029,10 @@ class AppLocalization {
       'created_at': 'Fecha de Creación',
       'updated_at': 'Actualizado',
       'tax': 'Impuesto',
-      'please_enter_an_invoice_number': 'Por favor introduce un número de factura',
-      'please_enter_a_quote_number': 'Por favor introduce un número de presupuesto',
+      'please_enter_an_invoice_number':
+          'Por favor introduce un número de factura',
+      'please_enter_a_quote_number':
+          'Por favor introduce un número de presupuesto',
       'filtered_by': 'Filtrado por',
       'past_due': 'Vencido',
       'draft': 'Borrador',
@@ -9863,7 +10050,8 @@ class AppLocalization {
       'mark_sent': 'Marcar como Enviado',
       'marked_invoice_as_sent': 'Factura marcada como enviada correctamente',
       'done': 'Hecho',
-      'please_enter_a_client_or_contact_name': 'Por favor introduce un cliente o nombre de contacto',
+      'please_enter_a_client_or_contact_name':
+          'Por favor introduce un cliente o nombre de contacto',
       'dark_mode': 'Modo Oscuro',
       'restart_app_to_apply_change': 'Reinicia la app para aplicar el cambio',
       'refresh_data': 'Actualizar Datos',
@@ -9973,7 +10161,8 @@ class AppLocalization {
       'activity_36': ':user eliminó el gasto :expense',
       'activity_37': ':user restauró el gasto :expense',
       'activity_39': ':user cancelo :payment_amount del pago :payment',
-      'activity_40': ':user reembolsó :adjustment de :payment_amount del pago :payment',
+      'activity_40':
+          ':user reembolsó :adjustment de :payment_amount del pago :payment',
       'activity_41': 'Fallo el pago de :payment_amount para  (:payment)',
       'activity_42': ':user creó la tarea :task',
       'activity_43': ':user actualizó la tarea :task',
@@ -9987,6 +10176,8 @@ class AppLocalization {
       'expired': 'Expirada',
     },
     'sv': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturerad',
       'logged': 'Loggat',
       'running': 'Körs',
@@ -10027,7 +10218,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -10037,7 +10229,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Anpassat intervall',
@@ -10232,7 +10425,8 @@ class AppLocalization {
       'mark_sent': 'Markera skickad',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Klar',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Mörkt läge',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -10342,7 +10536,8 @@ class AppLocalization {
       'activity_36': ':user tog bort kostnad :expense',
       'activity_37': ':user återställde kostnad :expense',
       'activity_39': ':user avbröt en :payment_amount betalning :payment',
-      'activity_40': ':user återbetalade :adjustment av en :payment_amount betalning :payment',
+      'activity_40':
+          ':user återbetalade :adjustment av en :payment_amount betalning :payment',
       'activity_41': ':payment_amount betalning (:payment) misslyckad',
       'activity_42': ':user skapade uppgift :task',
       'activity_43': ':user uppdaterade uppgift :task',
@@ -10356,6 +10551,8 @@ class AppLocalization {
       'expired': 'Utgått',
     },
     'th': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'ออกใบแจ้งหนี้',
       'logged': 'บันทึกการเข้า',
       'running': 'กำลังทำงาน',
@@ -10396,7 +10593,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -10406,7 +10604,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'ระบุช่วง',
@@ -10601,7 +10800,8 @@ class AppLocalization {
       'mark_sent': 'ทำเครื่องหมายไว้',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'เรียบร้อย',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'โหมดกลางคืน',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -10711,7 +10911,8 @@ class AppLocalization {
       'activity_36': ':user ได้ลบค่าใช้จ่าย :expense',
       'activity_37': ':user ได้กู้คืนค่าใช้จ่าย :expense',
       'activity_39': ':user ยกเลิก :payment_amount  การชำระเงิน :payment',
-      'activity_40': ':usre คืนเงิน :adjustment ของ  :payment_amount การชำระเงิน :payment',
+      'activity_40':
+          ':usre คืนเงิน :adjustment ของ  :payment_amount การชำระเงิน :payment',
       'activity_41': ':payment_amount จ่ายชำระเงิน (:payment) ล้มเหลว',
       'activity_42': ':user ได้สร้างงาน :task',
       'activity_43': ':user ได้อัปเดตงาน :task',
@@ -10725,6 +10926,8 @@ class AppLocalization {
       'expired': 'หมดอายุ',
     },
     'tr_TR': {
+      'password_is_too_short': 'Password is too short',
+      'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faturalandı',
       'logged': 'Loglandı',
       'running': 'Çalışıyor',
@@ -10765,7 +10968,8 @@ class AppLocalization {
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting': 'Please authenticate to change this setting',
+      'authenticate_to_change_setting':
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -10775,7 +10979,8 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience': 'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+      'thanks_for_patience':
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -10970,7 +11175,8 @@ class AppLocalization {
       'mark_sent': 'Gönderilmiş Olarak İşaretle',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Tamam',
-      'please_enter_a_client_or_contact_name': 'Please enter a client or contact name',
+      'please_enter_a_client_or_contact_name':
+          'Please enter a client or contact name',
       'dark_mode': 'Karanlık Mod',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -11047,11 +11253,13 @@ class AppLocalization {
       'activity_3': ':user :client müştei hesabını sildi',
       'activity_4': ':user :invoice nolu faturayı oluşturdu',
       'activity_5': ':user :invoice nolu faturayı güncelledi',
-      'activity_6': ':user :invoice nolu faturayı :contact adlı yetkiliye gönderdi',
+      'activity_6':
+          ':user :invoice nolu faturayı :contact adlı yetkiliye gönderdi',
       'activity_7': ':contact adlı yetkili :invoice nolu faturayı görüntüledi',
       'activity_8': ':user :invoice nolu faturayı arşivledi',
       'activity_9': ':user :invoice nolu faturayı sildi',
-      'activity_10': ':contact adlı yetkili :invoice nolu fatura için :payment tutarında ödeme girdi',
+      'activity_10':
+          ':contact adlı yetkili :invoice nolu fatura için :payment tutarında ödeme girdi',
       'activity_11': ':user :payment tutarlı ödemeyi güncelledi',
       'activity_12': ':user :payment tutarlı ödemeyi arşivledi',
       'activity_13': ':user :payment tutarlı ödemeyi sildi',
@@ -11061,7 +11269,8 @@ class AppLocalization {
       'activity_17': ':user :credit kredi sildi',
       'activity_18': ':user :quote nolu teklifi oluşturdu',
       'activity_19': ':user :quote nolu teklifi güncelledi',
-      'activity_20': ':user :quote nolu teklifi :contact adlı yetkiliye gönderdi',
+      'activity_20':
+          ':user :quote nolu teklifi :contact adlı yetkiliye gönderdi',
       'activity_21': ':contact adlı yetkili :quote nolu teklifi görüntüledi',
       'activity_22': ':user :quote nolu teklifi arşivledi',
       'activity_23': ':user :quote nolu teklifi sildi',
@@ -11080,7 +11289,8 @@ class AppLocalization {
       'activity_36': ':user masraf sildi :expense',
       'activity_37': ':user masraf geri yükledi :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
-      'activity_40': ':user refunded :adjustment of a :payment_amount payment :payment',
+      'activity_40':
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user :task görevini oluşturdu',
       'activity_43': ':user :task görevini güncelledi',
@@ -11607,7 +11817,7 @@ class AppLocalization {
 
   String get pleaseEnterAClientOrContactName =>
       _localizedValues[locale.toString()]
-      ['please_enter_a_client_or_contact_name'];
+          ['please_enter_a_client_or_contact_name'];
 
   String get darkMode => _localizedValues[locale.toString()]['dark_mode'];
 
@@ -11880,78 +12090,60 @@ class AppLocalization {
   String get restoredTask =>
       _localizedValues[locale.toString()]['restored_task'];
 
-  String get newTask =>
-      _localizedValues[locale.toString()]['new_task'];
+  String get newTask => _localizedValues[locale.toString()]['new_task'];
 
-  String get duration =>
-      _localizedValues[locale.toString()]['duration'];
+  String get duration => _localizedValues[locale.toString()]['duration'];
 
-  String get times =>
-      _localizedValues[locale.toString()]['times'];
+  String get times => _localizedValues[locale.toString()]['times'];
 
-  String get date =>
-      _localizedValues[locale.toString()]['date'];
+  String get date => _localizedValues[locale.toString()]['date'];
 
-  String get startTime =>
-      _localizedValues[locale.toString()]['start_time'];
+  String get startTime => _localizedValues[locale.toString()]['start_time'];
 
-  String get endTime =>
-      _localizedValues[locale.toString()]['end_time'];
+  String get endTime => _localizedValues[locale.toString()]['end_time'];
 
-  String get budgeted =>
-      _localizedValues[locale.toString()]['budgeted'];
+  String get budgeted => _localizedValues[locale.toString()]['budgeted'];
 
-  String get timer =>
-      _localizedValues[locale.toString()]['timer'];
+  String get timer => _localizedValues[locale.toString()]['timer'];
 
-  String get manual =>
-      _localizedValues[locale.toString()]['manual'];
+  String get manual => _localizedValues[locale.toString()]['manual'];
 
   String get autoStartTasks =>
       _localizedValues[locale.toString()]['auto_start_tasks'];
 
-  String get now =>
-      _localizedValues[locale.toString()]['now'];
+  String get now => _localizedValues[locale.toString()]['now'];
 
-  String get startedTask =>
-      _localizedValues[locale.toString()]['started_task'];
+  String get startedTask => _localizedValues[locale.toString()]['started_task'];
 
-  String get stoppedTask =>
-      _localizedValues[locale.toString()]['stopped_task'];
+  String get stoppedTask => _localizedValues[locale.toString()]['stopped_task'];
 
-  String get resumedTask =>
-      _localizedValues[locale.toString()]['resumed_task'];
+  String get resumedTask => _localizedValues[locale.toString()]['resumed_task'];
 
-  String get start =>
-      _localizedValues[locale.toString()]['start'];
+  String get start => _localizedValues[locale.toString()]['start'];
 
-  String get stop =>
-      _localizedValues[locale.toString()]['stop'];
+  String get stop => _localizedValues[locale.toString()]['stop'];
 
-  String get taskErrors =>
-      _localizedValues[locale.toString()]['task_errors'];
+  String get taskErrors => _localizedValues[locale.toString()]['task_errors'];
 
-  String get resume =>
-      _localizedValues[locale.toString()]['resume'];
+  String get resume => _localizedValues[locale.toString()]['resume'];
 
-  String get running =>
-      _localizedValues[locale.toString()]['running'];
+  String get running => _localizedValues[locale.toString()]['running'];
 
-  String get invoiced =>
-      _localizedValues[locale.toString()]['invoiced'];
+  String get invoiced => _localizedValues[locale.toString()]['invoiced'];
 
-  String get logged =>
-      _localizedValues[locale.toString()]['logged'];
+  String get logged => _localizedValues[locale.toString()]['logged'];
 
   String get failedToFindRecord =>
       _localizedValues[locale.toString()]['failed_to_find_record'];
 
+  String get passwordIsTooShort =>
+      _localizedValues[locale.toString()]['password_is_too_short'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
     return _localizedValues[locale.toString()][lookupKey] ??
         _localizedValues[locale.toString()]
-        [lookupKey.replaceFirst('_id', '')] ??
+            [lookupKey.replaceFirst('_id', '')] ??
         key;
   }
 }

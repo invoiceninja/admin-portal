@@ -85,6 +85,42 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   bool get isRunning => endDate == null;
 
+  Map<String, Duration> getParts(int timezoneOffset) {
+    final localStartDate = startDate.toLocal();
+    final localEndDate = endDate.toLocal();
+    final startSqlDate = convertDateTimeToSqlDate(localStartDate);
+    final endSqlDate = convertDateTimeToSqlDate(localEndDate);
+
+    if (startSqlDate == endSqlDate) {
+      return {startSqlDate: duration};
+    }
+
+    int offset = 1;
+    DateTime nextDate;
+    final Map<String, Duration> dates = {
+      startSqlDate: DateTime(
+              localStartDate.year, localStartDate.month, localStartDate.day)
+          .add(Duration(days: offset))
+          .difference(localStartDate)
+    };
+
+    do {
+      nextDate = DateTime(
+              localStartDate.year, localStartDate.month, localStartDate.day)
+          .add(Duration(days: offset));
+      offset++;
+
+      Duration duration = localEndDate.difference(nextDate);
+      if (duration.inHours > 24) {
+        duration = Duration(hours: 24);
+      }
+
+      dates[convertDateTimeToSqlDate(nextDate)] = duration;
+    } while (nextDate.isBefore(localEndDate.subtract(Duration(days: 1))));
+
+    return dates;
+  }
+
   static Serializer<TaskTime> get serializer => _$taskTimeSerializer;
 }
 
@@ -172,8 +208,11 @@ abstract class TaskEntity extends Object
   }
 
   bool isBetween(String startDate, String endDate) {
-    return false;
-    //return startDate.compareTo(invoiceDate) <= 0 && endDate.compareTo(invoiceDate) == 1;
+    final times = taskTimes;
+    final firstEndDate = times.first.endDate ?? DateTime.now();
+    final lastEndDate = times.first.endDate ?? DateTime.now();
+    return DateTime.parse(startDate).compareTo(firstEndDate.toLocal()) <= 0 &&
+        DateTime.parse(endDate).compareTo(lastEndDate.toLocal()) == 1;
   }
 
   List<TaskTime> get taskTimes {
@@ -190,8 +229,9 @@ abstract class TaskEntity extends Object
 
       final taskTime = TaskTime(
           startDate: convertTimestampToDate(startDate).toUtc(),
-          endDate:
-              endDate > 0 ? convertTimestampToDate(endDate).toUtc() : null);
+          endDate: (endDate ?? 0) > 0
+              ? convertTimestampToDate(endDate).toUtc()
+              : null);
 
       details.add(taskTime);
     });

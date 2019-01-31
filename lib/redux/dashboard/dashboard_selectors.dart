@@ -1,5 +1,6 @@
 import 'package:charts_common/common.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -319,17 +320,19 @@ List<ChartDataGroup> chartPayments(
   return data;
 }
 
-var memoizedChartTasks = memo5((CompanyEntity company,
+var memoizedChartTasks = memo6((CompanyEntity company,
         DashboardUIState settings,
         BuiltMap<int, TaskEntity> taskMap,
+        BuiltMap<int, InvoiceEntity> invoiceMap,
         BuiltMap<int, ProjectEntity> projectMap,
         BuiltMap<int, ClientEntity> clientMap) =>
-    chartTasks(company, settings, taskMap, projectMap, clientMap));
+    chartTasks(company, settings, taskMap, invoiceMap, projectMap, clientMap));
 
 List<ChartDataGroup> chartTasks(
     CompanyEntity company,
     DashboardUIState settings,
     BuiltMap<int, TaskEntity> taskMap,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
     BuiltMap<int, ProjectEntity> projectMap,
     BuiltMap<int, ClientEntity> clientMap) {
   const STATUS_LOGGED = 'logged';
@@ -363,26 +366,32 @@ List<ChartDataGroup> chartTasks(
     } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
       // skip it
     } else {
-      final times = task.taskTimes;
-      final date = convertDateTimeToSqlDate(times.first.startDate);
-      if (totals[STATUS_LOGGED][date] == null) {
-        totals[STATUS_LOGGED][date] = 0.0;
-        totals[STATUS_INVOICED][date] = 0.0;
-        totals[STATUS_PAID][date] = 0.0;
-      }
-      totals[STATUS_LOGGED][date] += 0;
-      totals[STATUS_INVOICED][date] += 0;
-      totals[STATUS_PAID][date] += 0;
+      task.taskTimes.forEach((taskTime) {
+        taskTime.getParts(0).forEach((date, duration) {
+          if (totals[STATUS_LOGGED][date] == null) {
+            totals[STATUS_LOGGED][date] = 0.0;
+            totals[STATUS_INVOICED][date] = 0.0;
+            totals[STATUS_PAID][date] = 0.0;
+          }
 
-      counts[STATUS_LOGGED]++;
-      if (task.isInvoiced) {
-        counts[STATUS_INVOICED]++;
-      }
-      /*
-      if (task.isPaid) {
-        counts[STATUS_PAID]++;
-      }
-      */
+          final taskRate = taskRateSelector(
+              company: company, project: project, client: client);
+          final double amount = taskRate * round(duration.inSeconds / 3600, 3);
+
+          if (task.isInvoiced) {
+            if (invoiceMap[task.invoiceId].isPaid) {
+              totals[STATUS_PAID][date] += amount;
+              counts[STATUS_PAID]++;
+            } else {
+              totals[STATUS_INVOICED][date] += amount;
+              counts[STATUS_INVOICED]++;
+            }
+          } else {
+            totals[STATUS_LOGGED][date] += amount;
+            counts[STATUS_LOGGED]++;
+          }
+        });
+      });
     }
   });
 
@@ -402,9 +411,12 @@ List<ChartDataGroup> chartTasks(
       invoicedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
       invoicedData.total += totals[STATUS_INVOICED][key];
+      paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
+      paidData.total += totals[STATUS_PAID][key];
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
       invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
+      paidData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
     date = date.add(Duration(days: 1));
   }
@@ -413,6 +425,7 @@ List<ChartDataGroup> chartTasks(
       round(loggedData.total ?? 0 / counts[STATUS_LOGGED] ?? 0, 2);
   invoicedData.average =
       round(invoicedData.total ?? 0 / counts[STATUS_INVOICED] ?? 0, 2);
+  paidData.average = round(paidData.total ?? 0 / counts[STATUS_PAID] ?? 0, 2);
 
   final List<ChartDataGroup> data = [
     loggedData,
