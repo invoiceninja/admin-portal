@@ -66,7 +66,11 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 
 void main() async {
-  final SentryClient _sentry = SentryClient(dsn: Config.SENTRY_DNS);
+  final SentryClient _sentry = SentryClient(
+      dsn: Config.SENTRY_DNS,
+      environmentAttributes: Event(
+        release: kAppVersion,
+      ));
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
   final requireAuthentication =
