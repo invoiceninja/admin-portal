@@ -31,9 +31,15 @@ class UserLoginLoaded {
 
 class OAuthLoginRequest implements StartLoading {
   OAuthLoginRequest(
-      {this.completer, this.token, this.url, this.secret, this.platform});
+      {this.completer,
+      this.email,
+      this.token,
+      this.url,
+      this.secret,
+      this.platform});
 
   final Completer completer;
+  final String email; // TODO remove this property, break up _saveAuthLocal
   final String token;
   final String url;
   final String secret;
