@@ -209,6 +209,9 @@ abstract class TaskEntity extends Object
 
   bool isBetween(String startDate, String endDate) {
     final times = taskTimes;
+    if (times.isEmpty) {
+      return false;
+    }
     final firstEndDate = times.first.endDate ?? DateTime.now();
     final lastEndDate = times.first.endDate ?? DateTime.now();
     return DateTime.parse(startDate).compareTo(firstEndDate.toLocal()) <= 0 &&
