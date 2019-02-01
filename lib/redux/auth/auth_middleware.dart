@@ -28,7 +28,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 
 void _saveAuthLocal(dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kKeychainEmail, action.email);
+  prefs.setString(kKeychainEmail, action.email ?? '');
 
   if (formatApiUrlReadable(action.url) != kAppUrl) {
     prefs.setString(kKeychainUrl, formatApiUrlMachine(action.url));
