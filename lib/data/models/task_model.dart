@@ -232,7 +232,7 @@ abstract class TaskEntity extends Object
       if ((detail as List)[1] == false) {
         endDate = 0;
       } else {
-        endDate = (detail as List)[1];
+        endDate = ((detail as List)[1]).round();
       }
 
       final taskTime = TaskTime(
