@@ -379,7 +379,8 @@ List<ChartDataGroup> chartTasks(
           final double amount = taskRate * round(duration.inSeconds / 3600, 3);
 
           if (task.isInvoiced) {
-            if (invoiceMap[task.invoiceId].isPaid) {
+            if (invoiceMap.containsKey(task.invoiceId) &&
+                invoiceMap[task.invoiceId].isPaid) {
               totals[STATUS_PAID][date] += amount;
               counts[STATUS_PAID]++;
             } else {
