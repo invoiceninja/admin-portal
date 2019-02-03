@@ -28,7 +28,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
       autoStartTasks: false,
-      dashboardUIState: DashboardUIState(),
+      dashboardUIState: DashboardUIState(company),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
