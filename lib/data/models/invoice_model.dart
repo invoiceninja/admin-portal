@@ -473,13 +473,17 @@ abstract class InvoiceEntity extends Object
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
-  String get invitationLink => invitations.first?.link;
+  String get invitationLink =>
+      invitations.isEmpty ? '' : invitations.first.link;
 
-  String get invitationBorderlessLink => invitations.first?.borderlessLink;
+  String get invitationBorderlessLink =>
+      invitations.isEmpty ? '' : invitations.first.borderlessLink;
 
-  String get invitationSilentLink => invitations.first?.silentLink;
+  String get invitationSilentLink =>
+      invitations.isEmpty ? '' : invitations.first.silentLink;
 
-  String get invitationDownloadLink => invitations.first?.downloadLink;
+  String get invitationDownloadLink =>
+      invitations.isEmpty ? '' : invitations.first.downloadLink;
 
   PaymentEntity createPayment(CompanyEntity company) {
     return PaymentEntity(company: company).rebuild((b) => b
