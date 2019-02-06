@@ -85,7 +85,7 @@ Middleware<AppState> _showEmailQuote() {
     final emailWasSent =
         await Navigator.of(action.context).pushNamed(QuoteEmailScreen.route);
 
-    if (action.completer != null && emailWasSent) {
+    if (action.completer != null && emailWasSent != null && emailWasSent) {
       action.completer.complete(null);
     }
   };

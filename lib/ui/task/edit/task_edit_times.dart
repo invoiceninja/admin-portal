@@ -113,10 +113,10 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
     final endDate = taskTime.endDate;
 
     _date = startDate.toIso8601String();
-    _startDate = startDate;
+    _startDate = startDate.toLocal();
 
     if (endDate != null) {
-      _endDate = endDate;
+      _endDate = endDate.toLocal();
       _durationController.text = formatDuration(taskTime.duration);
     }
 

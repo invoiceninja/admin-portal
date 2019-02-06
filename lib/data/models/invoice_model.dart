@@ -407,8 +407,10 @@ abstract class InvoiceEntity extends Object
       actions.add(EntityAction.viewInvoice);
     }
 
-    actions.add(EntityAction.pdf);
-    actions.add(EntityAction.clientPortal);
+    if (invitations.isNotEmpty) {
+      actions.add(EntityAction.pdf);
+      actions.add(EntityAction.clientPortal);
+    }
 
     if (actions.isNotEmpty) {
       actions.add(null);

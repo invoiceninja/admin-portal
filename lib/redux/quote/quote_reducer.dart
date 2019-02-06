@@ -191,6 +191,10 @@ QuoteState _archiveQuoteFailure(
 
 QuoteState _deleteQuoteRequest(
     QuoteState quoteState, DeleteQuoteRequest action) {
+  if (!quoteState.map.containsKey(action.quoteId)) {
+    return quoteState;
+  }
+
   final quote = quoteState.map[action.quoteId].rebuild((b) => b
     ..archivedAt = DateTime.now().millisecondsSinceEpoch
     ..isDeleted = true);
@@ -200,6 +204,10 @@ QuoteState _deleteQuoteRequest(
 
 QuoteState _deleteQuoteSuccess(
     QuoteState quoteState, DeleteQuoteSuccess action) {
+  if (!quoteState.map.containsKey(action.quote.id)) {
+    return quoteState;
+  }
+
   return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
@@ -229,9 +237,8 @@ QuoteState _restoreQuoteFailure(
 QuoteState _convertQuoteSuccess(
     QuoteState quoteState, ConvertQuoteSuccess action) {
   final quote = action.quote.rebuild((b) => b
-      ..quoteInvoiceId = action.invoice.id
-      ..invoiceStatusId = kInvoiceStatusApproved
-  );
+    ..quoteInvoiceId = action.invoice.id
+    ..invoiceStatusId = kInvoiceStatusApproved);
   return quoteState.rebuild((b) => b..map[action.quote.id] = quote);
 }
 

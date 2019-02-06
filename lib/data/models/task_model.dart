@@ -87,7 +87,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   Map<String, Duration> getParts(int timezoneOffset) {
     final localStartDate = startDate.toLocal();
-    final localEndDate = endDate.toLocal();
+    final localEndDate = (endDate ?? DateTime.now()).toLocal();
     final startSqlDate = convertDateTimeToSqlDate(localStartDate);
     final endSqlDate = convertDateTimeToSqlDate(localEndDate);
 
