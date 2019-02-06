@@ -215,6 +215,10 @@ InvoiceState _archiveInvoiceFailure(InvoiceState invoiceState,
 
 InvoiceState _deleteInvoiceRequest(InvoiceState invoiceState,
     DeleteInvoiceRequest action) {
+  if (!invoiceState.map.containsKey(action.invoiceId)) {
+    return invoiceState;
+  }
+
   final invoice = invoiceState.map[action.invoiceId].rebuild((b) =>
   b
     ..archivedAt = DateTime
@@ -227,6 +231,10 @@ InvoiceState _deleteInvoiceRequest(InvoiceState invoiceState,
 
 InvoiceState _deleteInvoiceSuccess(InvoiceState invoiceState,
     DeleteInvoiceSuccess action) {
+  if (!invoiceState.map.containsKey(action.invoice.id)) {
+    return invoiceState;
+  }
+
   return invoiceState
       .rebuild((b) => b..map[action.invoice.id] = action.invoice);
 }

@@ -64,7 +64,7 @@ class _TimePickerState extends State<TimePicker> {
       _textController.text = formatDate(dateTime.toIso8601String(), context,
           showTime: true, showDate: false);
 
-      widget.onSelected(dateTime);
+      widget.onSelected(dateTime.toLocal());
     }
   }
 

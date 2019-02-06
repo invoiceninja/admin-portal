@@ -126,7 +126,18 @@ class SettingsListVM {
       autoStartTasks: store.state.uiState.autoStartTasks,
       enableDarkMode: store.state.uiState.enableDarkMode,
       requireAuthentication: store.state.uiState.requireAuthentication,
-      authenticationSupported: LocalAuthentication().canCheckBiometrics,
+      //authenticationSupported: LocalAuthentication().canCheckBiometrics,
+      // TODO remove this once issue is resolved:
+      // https://github.com/flutter/flutter/issues/24339
+      authenticationSupported: Future<bool>(() async {
+        bool enable = false;
+        try {
+          enable = await LocalAuthentication().canCheckBiometrics;
+        } catch (e) {
+          // do nothing
+        }
+        return enable;
+      }),
     );
   }
 
