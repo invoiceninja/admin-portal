@@ -43,7 +43,7 @@ abstract class DashboardState
 
 abstract class DashboardUIState
     implements Built<DashboardUIState, DashboardUIStateBuilder> {
-  factory DashboardUIState(CompanyEntity company) {
+  factory DashboardUIState() {
     return _$DashboardUIState._(
       dateRange: DateRange.last30Days,
       customStartDate: '',
@@ -53,7 +53,7 @@ abstract class DashboardUIState
       compareCustomStartDate: '',
       compareCustomEndDate: convertDateTimeToSqlDate(),
       offset: 0,
-      currencyId: company.currencyId,
+      currencyId: 0,
     );
   }
 

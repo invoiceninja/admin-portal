@@ -70,6 +70,7 @@ void main() async {
       dsn: Config.SENTRY_DNS,
       environmentAttributes: Event(
         release: kAppVersion,
+        environment: Config.PLATFORM,
       ));
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;

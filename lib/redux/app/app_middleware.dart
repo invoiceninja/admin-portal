@@ -286,11 +286,11 @@ Middleware<AppState> _createDataLoaded() {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString(getKeychainTokenKey(i), company.token);
 
-      store.dispatch(SelectCompany(i + 1));
+      store.dispatch(SelectCompany(i + 1, company));
       store.dispatch(LoadCompanySuccess(company));
     }
 
-    store.dispatch(SelectCompany(1));
+    store.dispatch(SelectCompany(1, data.accounts[0]));
     store.dispatch(UserLoginSuccess());
 
     action.completer.complete(null);

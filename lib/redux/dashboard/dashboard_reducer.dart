@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
@@ -31,6 +32,8 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
     } else if (action.currencyId != null) {
       return state.rebuild((b) => b..currencyId = action.currencyId);
     }
+  } else if (action is SelectCompany) {
+    return state.rebuild((b) => b..currencyId = action.company.currencyId);
   }
 
   return state;

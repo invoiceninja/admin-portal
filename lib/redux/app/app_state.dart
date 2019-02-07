@@ -173,6 +173,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Date Formats: ${staticState.dateFormatMap}';
-    return 'Route: ${uiState.currentRoute}';
+    return 'Company Currency Id: ${selectedCompany.currencyId}, Dashboard Currency Id: ${uiState.dashboardUIState.currencyId}';
+    //return 'Route: ${uiState.currentRoute}';
   }
 }
