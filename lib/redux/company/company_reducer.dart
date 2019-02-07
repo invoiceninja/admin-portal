@@ -29,12 +29,9 @@ CompanyState companyReducer(CompanyState state, dynamic action) {
     ..productState.replace(productsReducer(state.productState, action))
     ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
     // STARTER: reducer - do not remove comment
-..taskState.replace(tasksReducer(state.taskState, action))
-
-..projectState.replace(projectsReducer(state.projectState, action))
-
-..paymentState.replace(paymentsReducer(state.paymentState, action))
-
+    ..taskState.replace(tasksReducer(state.taskState, action))
+    ..projectState.replace(projectsReducer(state.projectState, action))
+    ..paymentState.replace(paymentsReducer(state.paymentState, action))
     ..quoteState.replace(quotesReducer(state.quoteState, action)));
 }
 

@@ -37,7 +37,7 @@ class AppDrawerVM {
   final CompanyEntity selectedCompany;
   final UserEntity user;
   final String selectedCompanyIndex;
-  final Function(BuildContext context, String) onCompanyChanged;
+  final Function(BuildContext context, String, CompanyEntity) onCompanyChanged;
   final bool isLoading;
 
   static AppDrawerVM fromStore(Store<AppState> store) {
@@ -49,8 +49,8 @@ class AppDrawerVM {
       user: state.user,
       selectedCompany: state.selectedCompany,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
-      onCompanyChanged: (BuildContext context, String companyIndex) {
-        store.dispatch(SelectCompany(int.parse(companyIndex)));
+      onCompanyChanged: (BuildContext context, String companyIndex, CompanyEntity company) {
+        store.dispatch(SelectCompany(int.parse(companyIndex), company));
         AppBuilder.of(context).rebuild();
       },
     );

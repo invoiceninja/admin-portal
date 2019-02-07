@@ -2,7 +2,6 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -45,10 +44,10 @@ abstract class PaymentState
 abstract class PaymentUIState extends Object
     with EntityUIState
     implements Built<PaymentUIState, PaymentUIStateBuilder> {
-  factory PaymentUIState(CompanyEntity company) {
+  factory PaymentUIState() {
     return _$PaymentUIState._(
       listUIState: ListUIState(PaymentFields.paymentDate, sortAscending: false),
-      editing: PaymentEntity(company: company),
+      editing: PaymentEntity(),
       selectedId: 0,
     );
   }

@@ -74,7 +74,8 @@ class AppDrawer extends StatelessWidget {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  viewModel.onCompanyChanged(context, value);
+                  viewModel.onCompanyChanged(
+                      context, value, viewModel.companies[int.parse(value) - 1]);
                 },
               ),
             )

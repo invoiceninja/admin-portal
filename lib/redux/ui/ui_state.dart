@@ -28,14 +28,14 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
       autoStartTasks: false,
-      dashboardUIState: DashboardUIState(company),
+      dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       taskUIState: TaskUIState(),
       projectUIState: ProjectUIState(),
-      paymentUIState: PaymentUIState(company),
+      paymentUIState: PaymentUIState(),
       quoteUIState: QuoteUIState(),
     );
   }
