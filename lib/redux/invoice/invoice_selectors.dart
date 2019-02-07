@@ -20,7 +20,8 @@ List<int> dropdownInvoiceSelector(
     if (clientId != null && clientId > 0 && invoice.clientId != clientId) {
       return false;
     }
-    if (! clientMap[invoice.clientId].isActive) {
+    if (!clientMap.containsKey(invoice.clientId) ||
+        !clientMap[invoice.clientId].isActive) {
       return false;
     }
     return invoice.isActive && invoice.isUnpaid;
