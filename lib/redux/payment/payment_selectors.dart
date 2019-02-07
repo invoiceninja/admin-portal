@@ -72,7 +72,7 @@ List<int> filteredPaymentsSelector(
         invoiceMap[payment.invoiceId] ?? InvoiceEntity(id: payment.invoiceId);
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    if (invoice.isDeleted || ! client.isActive) {
+    if (invoice.isDeleted || !client.isActive) {
       return false;
     }
 
@@ -116,7 +116,8 @@ String invoiceStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
-    if (invoiceMap[payment.invoiceId].clientId == clientId) {
+    if (invoiceMap.containsKey(payment.invoiceId) &&
+        invoiceMap[payment.invoiceId].clientId == clientId) {
       if (payment.isActive) {
         countActive++;
       } else if (payment.isArchived) {
