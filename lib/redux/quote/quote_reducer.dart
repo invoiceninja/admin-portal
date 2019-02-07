@@ -75,10 +75,16 @@ InvoiceEntity _addQuoteItems(InvoiceEntity quote, AddQuoteItems action) {
 }
 
 InvoiceEntity _removeQuoteItem(InvoiceEntity quote, DeleteQuoteItem action) {
+  if (quote.invoiceItems.length < action.index) {
+    return quote;
+  }
   return quote.rebuild((b) => b..invoiceItems.removeAt(action.index));
 }
 
 InvoiceEntity _updateQuoteItem(InvoiceEntity quote, UpdateQuoteItem action) {
+  if (quote.invoiceItems.length < action.index) {
+    return quote;
+  }
   return quote.rebuild((b) => b..invoiceItems[action.index] = action.quoteItem);
 }
 
