@@ -84,7 +84,8 @@ class ClientListVM {
         switch (action) {
           case EntityAction.newInvoice:
             store.dispatch(EditInvoice(
-                invoice: InvoiceEntity().rebuild((b) => b.clientId = client.id),
+                invoice: InvoiceEntity(company: state.selectedCompany)
+                    .rebuild((b) => b.clientId = client.id),
                 context: context));
             break;
           case EntityAction.enterPayment:

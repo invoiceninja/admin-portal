@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
@@ -12138,6 +12139,9 @@ class AppLocalization {
 
   String get passwordIsTooShort =>
       _localizedValues[locale.toString()]['password_is_too_short'];
+
+  String get design =>
+      _localizedValues[locale.toString()]['design'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

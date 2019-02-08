@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -35,6 +36,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _custom2Controller = TextEditingController();
   final _surcharge1Controller = TextEditingController();
   final _surcharge2Controller = TextEditingController();
+  final _designController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -50,6 +52,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       _custom2Controller,
       _surcharge1Controller,
       _surcharge2Controller,
+      _designController,
     ];
 
     _controllers
@@ -69,7 +72,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(invoice.customValue2, context,
         formatNumberType: FormatNumberType.input);
-
+    _designController.text = invoice.designId != null
+        ? kInvoiceDesigns.elementAt(invoice.designId - 1)
+        : '';
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -234,7 +239,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     onChanged: (bool value) => viewModel.onChanged(
                         invoice.rebuild((b) => b..isAmountDiscount = value)),
                   ),
-                )
+                ),
+                SizedBox(width: 12),
               ],
             ),
             CustomField(
@@ -287,6 +293,32 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialTaxRate: invoice.taxRate2,
                   )
                 : Container(),
+            invoice.designId == null
+                ? SizedBox()
+                : PopupMenuButton<String>(
+                    padding: EdgeInsets.zero,
+                    onSelected: (String design) {
+                      _designController.text = design;
+                      viewModel.onChanged(invoice.rebuild((b) =>
+                          b..designId = kInvoiceDesigns.indexOf(design) + 1));
+                    },
+                    child: InkWell(
+                      child: IgnorePointer(
+                        child: TextFormField(
+                          controller: _designController,
+                          decoration: InputDecoration(
+                            labelText: localization.design,
+                            suffixIcon: const Icon(Icons.arrow_drop_down),
+                          ),
+                        ),
+                      ),
+                    ),
+                    itemBuilder: (BuildContext context) => kInvoiceDesigns
+                        .map((design) => PopupMenuItem<String>(
+                              value: design,
+                              child: Text(design),
+                            ))
+                        .toList()),
           ],
         ),
       ],

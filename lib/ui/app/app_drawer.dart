@@ -74,8 +74,8 @@ class AppDrawer extends StatelessWidget {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  viewModel.onCompanyChanged(
-                      context, value, viewModel.companies[int.parse(value) - 1]);
+                  viewModel.onCompanyChanged(context, value,
+                      viewModel.companies[int.parse(value) - 1]);
                 },
               ),
             )
@@ -187,8 +187,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () => store.dispatch(ViewInvoiceList(context)),
             onCreateTap: () {
               navigator.pop();
-              store.dispatch(
-                  EditInvoice(invoice: InvoiceEntity(), context: context));
+              store.dispatch(EditInvoice(
+                  invoice: InvoiceEntity(company: company), context: context));
             },
           ),
           DrawerTile(

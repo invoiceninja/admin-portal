@@ -86,7 +86,7 @@ class InvoiceFields {
 abstract class InvoiceEntity extends Object
     with BaseEntity, SelectableEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-  factory InvoiceEntity({int id, bool isQuote = false}) {
+  factory InvoiceEntity({int id, bool isQuote = false, CompanyEntity company}) {
     return _$InvoiceEntity._(
       id: id ?? --InvoiceEntity.counter,
       amount: 0.0,
@@ -134,6 +134,11 @@ abstract class InvoiceEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      designId: company != null
+          ? (isQuote
+              ? company.defaultQuoteDesignId
+              : company.defaultInvoiceDesignId)
+          : 1,
     );
   }
 
@@ -292,6 +297,10 @@ abstract class InvoiceEntity extends Object
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
   BuiltList<InvitationEntity> get invitations;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_design_id')
+  int get designId;
 
   bool get isApproved =>
       invoiceStatusId == kInvoiceStatusApproved || quoteInvoiceId > 0;
