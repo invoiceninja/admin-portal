@@ -115,6 +115,11 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final invoice = viewModel.invoice;
     final company = viewModel.company;
 
+    var designs = kInvoiceDesigns;
+    if (!company.isProPlan) {
+      designs = designs.sublist(0, 4);
+    }
+
     return ListView(
       children: <Widget>[
         FormCard(
@@ -293,7 +298,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialTaxRate: invoice.taxRate2,
                   )
                 : Container(),
-            invoice.designId == null
+            invoice.designId == null // TODO Remove check in v2
                 ? SizedBox()
                 : PopupMenuButton<String>(
                     padding: EdgeInsets.zero,
@@ -313,7 +318,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         ),
                       ),
                     ),
-                    itemBuilder: (BuildContext context) => kInvoiceDesigns
+                    itemBuilder: (BuildContext context) => designs
                         .map((design) => PopupMenuItem<String>(
                               value: design,
                               child: Text(design),

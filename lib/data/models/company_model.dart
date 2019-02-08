@@ -15,6 +15,7 @@ abstract class CompanyEntity
       token: '',
       plan: '',
       logoUrl: '',
+      appUrl: '',
       convertProductExchangeRate: false,
       companyCurrencyId: 1,
       dateFormatId: 1,
@@ -83,6 +84,9 @@ abstract class CompanyEntity
 
   @BuiltValueField(wireName: 'logo_url')
   String get logoUrl;
+
+  @BuiltValueField(wireName: 'default_url')
+  String get appUrl;
 
   @BuiltValueField(wireName: 'currency_id')
   int get companyCurrencyId;
@@ -284,6 +288,14 @@ abstract class CompanyEntity
         return data;
       }
     }
+  }
+
+  bool get isProPlan {
+    if (appUrl != kAppUrl) {
+      return true;
+    }
+
+    return plan.isNotEmpty;
   }
 
   bool isModuleEnabled(EntityType entityType) {
