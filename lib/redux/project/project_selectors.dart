@@ -23,18 +23,22 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem(
 
 var memoizedDropdownProjectList = memo4(
     (BuiltMap<int, ProjectEntity> projectMap, BuiltList<int> projectList,
-        BuiltMap<int, ClientEntity> clientMap,
-            int clientId) =>
+            BuiltMap<int, ClientEntity> clientMap, int clientId) =>
         dropdownProjectsSelector(projectMap, projectList, clientMap, clientId));
 
-List<int> dropdownProjectsSelector(BuiltMap<int, ProjectEntity> projectMap,
-    BuiltList<int> projectList, BuiltMap<int, ClientEntity> clientMap, int clientId) {
+List<int> dropdownProjectsSelector(
+    BuiltMap<int, ProjectEntity> projectMap,
+    BuiltList<int> projectList,
+    BuiltMap<int, ClientEntity> clientMap,
+    int clientId) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
     if (clientId != null && clientId > 0 && project.clientId != clientId) {
       return false;
     }
-    if (!clientMap[project.clientId].isActive) {
+    if (project.clientId > 0 &&
+        clientMap.containsKey(project.clientId) &&
+        !clientMap[project.clientId].isActive) {
       return false;
     }
     return project.isActive;
