@@ -380,6 +380,30 @@ abstract class ClientEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  bool get areAddressesDifferent =>
+      address1 != shippingAddress1 ||
+      address2 != shippingAddress2 ||
+      city != shippingCity ||
+      state != shippingState ||
+      postalCode != shippingPostalCode ||
+      countryId != shippingCountryId;
+
+  bool get hasShippingAddress =>
+      shippingAddress1.isNotEmpty ||
+      shippingAddress2.isNotEmpty ||
+      shippingCity.isNotEmpty ||
+      shippingState.isNotEmpty ||
+      shippingPostalCode.isNotEmpty ||
+      shippingCountryId > 0;
+
+  bool get hasBillingAddress =>
+      address1.isNotEmpty ||
+      address2.isNotEmpty ||
+      city.isNotEmpty ||
+      state.isNotEmpty ||
+      postalCode.isNotEmpty ||
+      countryId > 0;
+
   bool get hasNameSet {
     final contact = contacts.first;
     return name.isNotEmpty ||
