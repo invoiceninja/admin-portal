@@ -82,6 +82,10 @@ class ClientListVM {
       onEntityAction: (context, client, action) {
         final localization = AppLocalization.of(context);
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditClient(context: context, client: client));
+            break;
           case EntityAction.newInvoice:
             store.dispatch(EditInvoice(
                 invoice: InvoiceEntity(company: state.selectedCompany)

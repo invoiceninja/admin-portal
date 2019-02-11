@@ -19,6 +19,7 @@ part of 'models.dart';
 // ignore_for_file: unnecessary_new
 // ignore_for_file: test_types_in_equals
 
+const EntityAction _$edit = const EntityAction._('edit');
 const EntityAction _$archive = const EntityAction._('archive');
 const EntityAction _$delete = const EntityAction._('delete');
 const EntityAction _$restore = const EntityAction._('restore');
@@ -41,6 +42,8 @@ const EntityAction _$stop = const EntityAction._('stop');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
+    case 'edit':
+      return _$edit;
     case 'archive':
       return _$archive;
     case 'delete':
@@ -86,6 +89,7 @@ EntityAction _$valueOf(String name) {
 
 final BuiltSet<EntityAction> _$values =
     new BuiltSet<EntityAction>(const <EntityAction>[
+  _$edit,
   _$archive,
   _$delete,
   _$restore,

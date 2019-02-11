@@ -356,8 +356,12 @@ abstract class ClientEntity extends Object
   }
 
   List<EntityAction> getEntityActions(
-      {UserEntity user, bool includeCreate = false}) {
+      {UserEntity user, bool includeCreate = false, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     if (includeCreate && user.canCreate(EntityType.client) && isActive) {
       actions.add(EntityAction.newInvoice);

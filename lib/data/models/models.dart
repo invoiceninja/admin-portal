@@ -35,6 +35,7 @@ class EntityAction extends EnumClass {
 
   static Serializer<EntityAction> get serializer => _$entityActionSerializer;
 
+  static const EntityAction edit = _$edit;
   static const EntityAction archive = _$archive;
   static const EntityAction delete = _$delete;
   static const EntityAction restore = _$restore;

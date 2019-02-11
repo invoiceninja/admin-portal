@@ -388,8 +388,13 @@ abstract class InvoiceEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     if (user.canCreate(EntityType.invoice)) {
       if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {

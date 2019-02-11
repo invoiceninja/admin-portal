@@ -27,7 +27,8 @@ class TaskList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: task
-                    .getEntityActions(user: user, client: client)
+                    .getEntityActions(
+                        user: user, client: client, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {
                 return Divider();
@@ -64,7 +65,7 @@ class TaskList extends StatelessWidget {
       filteredEntity = filteredClientId != null
           ? viewModel.clientMap[filteredClientId]
           : null;
-    } else if (listState.filterEntityType == EntityType.project){
+    } else if (listState.filterEntityType == EntityType.project) {
       final filteredProjectId = listState.filterEntityId;
       filteredEntity = filteredProjectId != null
           ? viewModel.state.projectState.map[filteredProjectId]

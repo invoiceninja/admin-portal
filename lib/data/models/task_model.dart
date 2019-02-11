@@ -336,8 +336,13 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     if (isInvoiced) {
       actions.add(EntityAction.viewInvoice);

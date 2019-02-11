@@ -69,6 +69,10 @@ class ProductListVM {
       onEntityAction: (context, product, action) {
         final localization = AppLocalization.of(context);
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditProduct(context: context, product: product));
+            break;
           case EntityAction.clone:
             store.dispatch(
                 EditProduct(context: context, product: product.clone));

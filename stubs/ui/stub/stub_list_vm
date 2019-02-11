@@ -80,6 +80,10 @@ class StubListVM {
         },
         onEntityAction: (context, stub, action) {
           switch (action) {
+          case EntityAction.edit:
+              store.dispatch(
+                  EditStub(context: context, stub: stub));
+              break;
             case EntityAction.clone:
               Navigator.of(context).pop();
               store.dispatch(

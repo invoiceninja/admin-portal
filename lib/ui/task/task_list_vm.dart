@@ -101,6 +101,10 @@ class TaskListVM {
       },
       onEntityAction: (context, task, action) {
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditTask(context: context, task: task));
+            break;
           case EntityAction.start:
           case EntityAction.stop:
           case EntityAction.resume:

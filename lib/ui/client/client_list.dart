@@ -68,8 +68,9 @@ class ClientList extends StatelessWidget {
             actions.add(Divider());
           }
 
-          actions
-              .addAll(client.getEntityActions(user: user).map((entityAction) {
+          actions.addAll(client
+              .getEntityActions(user: user, includeEdit: true)
+              .map((entityAction) {
             if (entityAction == null) {
               return Divider();
             } else {

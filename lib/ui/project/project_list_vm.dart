@@ -86,6 +86,10 @@ class ProjectListVM {
       },
       onEntityAction: (context, project, action) {
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditProject(context: context, project: project));
+            break;
           case EntityAction.newInvoice:
             final items =
                 convertProjectToInvoiceItem(project: project, context: context);

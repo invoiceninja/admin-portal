@@ -4,6 +4,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 
 IconData getEntityActionIcon(EntityAction entityAction) {
   switch (entityAction) {
+    case EntityAction.edit:
+      return Icons.edit;
     case EntityAction.pdf:
       return Icons.picture_as_pdf;
     case EntityAction.clientPortal:

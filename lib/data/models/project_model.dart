@@ -102,12 +102,19 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
-    final actions = <EntityAction>[
-      EntityAction.newInvoice,
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+    final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
+
+    actions.addAll([
       EntityAction.clone,
+      EntityAction.newInvoice,
       null,
-    ];
+    ]);
 
     return actions..addAll(getBaseActions(user: user));
   }

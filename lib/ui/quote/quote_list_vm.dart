@@ -102,6 +102,10 @@ class QuoteListVM extends EntityListVM {
       onEntityAction: (context, quote, action) async {
         final localization = AppLocalization.of(context);
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditQuote(context: context, quote: quote));
+            break;
           case EntityAction.pdf:
             viewPdf(quote, context);
             break;
