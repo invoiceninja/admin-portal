@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -69,9 +70,16 @@ class ProductListVM {
       onEntityAction: (context, product, action) {
         final localization = AppLocalization.of(context);
         switch (action) {
+          case EntityAction.newInvoice:
+            final item =
+                convertProductToInvoiceItem(context: context, product: product);
+            store.dispatch(EditInvoice(
+                context: context,
+                invoice: InvoiceEntity(company: state.selectedCompany)
+                    .rebuild((b) => b..invoiceItems.add(item))));
+            break;
           case EntityAction.edit:
-            store.dispatch(
-                EditProduct(context: context, product: product));
+            store.dispatch(EditProduct(context: context, product: product));
             break;
           case EntityAction.clone:
             store.dispatch(

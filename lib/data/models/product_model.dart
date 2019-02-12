@@ -185,8 +185,12 @@ abstract class ProductEntity extends Object
       actions.add(EntityAction.edit);
     }
 
-    if (user.canCreate(EntityType.invoice)) {
+    if (user.canCreate(EntityType.product)) {
       actions.add(EntityAction.clone);
+    }
+
+    if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.newInvoice);
     }
 
     if (actions.isNotEmpty) {

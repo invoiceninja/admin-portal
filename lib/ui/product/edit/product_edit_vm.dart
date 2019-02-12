@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -74,6 +76,14 @@ class ProductEditVM {
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.newInvoice:
+              final item =
+              convertProductToInvoiceItem(context: context, product: product);
+              store.dispatch(EditInvoice(
+                  context: context,
+                  invoice: InvoiceEntity(company: state.selectedCompany)
+                      .rebuild((b) => b..invoiceItems.add(item))));
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveProductRequest(
                   popCompleter(context, localization.archivedProduct),

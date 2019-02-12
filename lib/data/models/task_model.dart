@@ -359,7 +359,10 @@ abstract class TaskEntity extends Object
       }
     }
 
-    actions.add(EntityAction.clone);
+    if (user.canCreate(EntityType.task)) {
+      actions.add(EntityAction.clone);
+    }
+
     actions.add(null);
 
     return actions..addAll(getBaseActions(user: user));
