@@ -141,6 +141,7 @@ const List<String> kLanguages = [
   'ro',
   'sl',
   'sq',
+  'sr_RS',
   'sv',
   'th',
   'tr_TR',
