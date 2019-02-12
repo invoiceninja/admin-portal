@@ -229,7 +229,7 @@ abstract class TaskEntity extends Object
     log.forEach((dynamic detail) {
       final int startDate = (detail as List)[0];
       int endDate;
-      if ((detail as List)[1] == false) {
+      if ((detail as List)[1] == false || (detail as List)[1] == null) {
         endDate = 0;
       } else {
         endDate = ((detail as List)[1]).round();
