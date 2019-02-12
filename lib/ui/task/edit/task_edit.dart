@@ -128,10 +128,7 @@ class _TaskEditState extends State<TaskEdit>
             ? SizedBox()
             : FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: () {
-            viewModel.onFabPressed();
-            _controller.animateTo(kTimesScreen);
-          },
+          onPressed: () => viewModel.onFabPressed(),
           child: Icon(
             task.isRunning ? Icons.stop : Icons.play_arrow,
             color: Colors.white,
