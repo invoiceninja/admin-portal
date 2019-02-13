@@ -93,7 +93,9 @@ abstract class VendorEntity extends Object
 
   static int counter = 0;
 
-  VendorEntity get clone => rebuild((b) => b..id = --VendorEntity.counter);
+  VendorEntity get clone => rebuild((b) => b
+    ..id = --VendorEntity.counter
+    ..isDeleted = false);
 
   @override
   EntityType get entityType {

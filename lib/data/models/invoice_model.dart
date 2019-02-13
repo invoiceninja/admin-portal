@@ -148,6 +148,7 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
+    ..isDeleted = false
     ..invoiceStatusId = kInvoiceStatusDraft
     ..quoteInvoiceId = 0
     ..invoiceNumber = ''

@@ -69,7 +69,9 @@ abstract class ProductEntity extends Object
 
   static int counter = 0;
 
-  ProductEntity get clone => rebuild((b) => b..id = --ProductEntity.counter);
+  ProductEntity get clone => rebuild((b) => b
+    ..id = --ProductEntity.counter
+    ..isDeleted = false);
 
   @override
   EntityType get entityType {

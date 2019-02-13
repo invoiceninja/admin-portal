@@ -107,7 +107,9 @@ abstract class ClientEntity extends Object
 
   static int counter = 0;
 
-  ClientEntity get clone => rebuild((b) => b..id = --ClientEntity.counter);
+  ClientEntity get clone => rebuild((b) => b
+    ..id = --ClientEntity.counter
+    ..isDeleted = false);
 
   @nullable
   int get lastUpdatedActivities;

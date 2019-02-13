@@ -70,7 +70,9 @@ abstract class CreditEntity extends Object
 
   static int counter = 0;
 
-  CreditEntity get clone => rebuild((b) => b..id = --CreditEntity.counter);
+  CreditEntity get clone => rebuild((b) => b
+    ..id = --CreditEntity.counter
+    ..isDeleted = false);
 
   @override
   EntityType get entityType {

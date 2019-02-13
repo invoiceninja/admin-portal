@@ -72,7 +72,9 @@ abstract class ProjectEntity extends Object
 
   static int counter = 0;
 
-  ProjectEntity get clone => rebuild((b) => b..id = --ProjectEntity.counter);
+  ProjectEntity get clone => rebuild((b) => b
+    ..id = --ProjectEntity.counter
+    ..isDeleted = false);
 
   @override
   EntityType get entityType {

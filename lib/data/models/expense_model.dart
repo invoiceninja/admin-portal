@@ -95,7 +95,9 @@ abstract class ExpenseEntity extends Object
 
   static int counter = 0;
 
-  ExpenseEntity get clone => rebuild((b) => b..id = --ExpenseEntity.counter);
+  ExpenseEntity get clone => rebuild((b) => b
+    ..id = --ExpenseEntity.counter
+    ..isDeleted = false);
 
   @override
   EntityType get entityType {
