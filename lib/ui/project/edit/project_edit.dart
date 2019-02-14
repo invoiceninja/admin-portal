@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/refresh_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -112,7 +112,7 @@ class _ProjectEditState extends State<ProjectEdit> {
               : localization.editProject),
           actions: <Widget>[
             Builder(builder: (BuildContext context) {
-              return RefreshIconButton(
+              return ActionIconButton(
                 icon: Icons.cloud_upload,
                 tooltip: localization.save,
                 isVisible: !project.isDeleted,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class RefreshIconButton extends StatelessWidget {
-  const RefreshIconButton({
+class ActionIconButton extends StatelessWidget {
+  const ActionIconButton({
     this.isSaving,
     this.onPressed,
     this.tooltip,
