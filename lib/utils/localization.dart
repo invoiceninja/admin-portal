@@ -237,7 +237,7 @@ class AppLocalization {
       'invoice_status_id': 'Invoice Status',
       'quote_status': 'Quote Status',
       'click_plus_to_add_item': 'Click + to add an item',
-      'click_plus_to_add_time': 'Click + to add time',
+      'click_plus_to_add_time': 'Click ▶ to add time',
       'count_selected': ':count selected',
       'total': 'Total',
       'percent': 'Percent',
