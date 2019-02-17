@@ -228,21 +228,30 @@ abstract class TaskEntity extends Object
 
     final List<dynamic> log = jsonDecode(timeLog);
     log.forEach((dynamic detail) {
-      final int startDate = (detail as List)[0];
+      int startDate;
       int endDate;
-      if ((detail as List)[1] == false || (detail as List)[1] == null) {
-        endDate = 0;
+
+      if ((detail as List)[0] == false || (detail as List)[0] == null) {
+        startDate = 0;
       } else {
-        endDate = ((detail as List)[1]).round();
+        startDate = ((detail as List)[0]).round();
       }
 
-      final taskTime = TaskTime(
-          startDate: convertTimestampToDate(startDate).toUtc(),
-          endDate: (endDate ?? 0) > 0
-              ? convertTimestampToDate(endDate).toUtc()
-              : null);
+      if (startDate > 0) {
+        if ((detail as List)[1] == false || (detail as List)[1] == null) {
+          endDate = 0;
+        } else {
+          endDate = ((detail as List)[1]).round();
+        }
 
-      details.add(taskTime);
+        final taskTime = TaskTime(
+            startDate: convertTimestampToDate(startDate).toUtc(),
+            endDate: (endDate ?? 0) > 0
+                ? convertTimestampToDate(endDate).toUtc()
+                : null);
+
+        details.add(taskTime);
+      }
     });
 
     details.sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
