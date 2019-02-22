@@ -101,6 +101,10 @@ class TaskListVM {
       },
       onEntityAction: (context, task, action) {
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditTask(context: context, task: task));
+            break;
           case EntityAction.start:
           case EntityAction.stop:
           case EntityAction.resume:
@@ -129,10 +133,11 @@ class TaskListVM {
           case EntityAction.newInvoice:
             final item = convertTaskToInvoiceItem(task: task, context: context);
             store.dispatch(EditInvoice(
-                invoice: InvoiceEntity().rebuild((b) => b
-                  ..hasTasks = true
-                  ..clientId = task.clientId
-                  ..invoiceItems.add(item)),
+                invoice: InvoiceEntity(company: state.selectedCompany)
+                    .rebuild((b) => b
+                      ..hasTasks = true
+                      ..clientId = task.clientId
+                      ..invoiceItems.add(item)),
                 context: context));
             break;
           case EntityAction.viewInvoice:

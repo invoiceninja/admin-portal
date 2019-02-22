@@ -70,27 +70,27 @@ class QuoteScreen extends StatelessWidget {
           },
           statuses: [
             InvoiceStatusEntity().rebuild(
-                  (b) => b
+              (b) => b
                 ..id = 1
                 ..name = localization.draft,
             ),
             InvoiceStatusEntity().rebuild(
-                  (b) => b
+              (b) => b
                 ..id = 2
                 ..name = localization.sent,
             ),
             InvoiceStatusEntity().rebuild(
-                  (b) => b
+              (b) => b
                 ..id = 3
                 ..name = localization.viewed,
             ),
             InvoiceStatusEntity().rebuild(
-                  (b) => b
+              (b) => b
                 ..id = 4
                 ..name = localization.approved,
             ),
             InvoiceStatusEntity().rebuild(
-                  (b) => b
+              (b) => b
                 ..id = -1
                 ..name = localization.expired,
             ),
@@ -101,8 +101,13 @@ class QuoteScreen extends StatelessWidget {
             ? FloatingActionButton(
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
-                  store.dispatch(
-                      EditQuote(quote: InvoiceEntity(isQuote: true), context: context));
+                  store.dispatch(EditQuote(
+                      quote: InvoiceEntity(company: company, isQuote: true)
+                          .rebuild((b) => b
+                            ..clientId =
+                                store.state.quoteListState.filterEntityId ??
+                                    0),
+                      context: context));
                 },
                 child: Icon(
                   Icons.add,

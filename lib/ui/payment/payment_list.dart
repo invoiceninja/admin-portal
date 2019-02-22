@@ -31,7 +31,8 @@ class PaymentList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: payment
-                    .getEntityActions(user: user, client: client)
+                    .getEntityActions(
+                        user: user, client: client, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {
                 return Divider();

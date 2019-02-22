@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
@@ -21,7 +22,6 @@ class ClientEditBillingAddress extends StatefulWidget {
 }
 
 class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
-
   final _address1Controller = TextEditingController();
   final _address2Controller = TextEditingController();
   final _cityController = TextEditingController();
@@ -32,7 +32,6 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
       _address1Controller,
       _address2Controller,
@@ -41,7 +40,8 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
       _postalCodeController,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final client = widget.viewModel.client;
     _address1Controller.text = client.address1;
@@ -50,7 +50,8 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
     _stateController.text = client.state;
     _postalCodeController.text = client.postalCode;
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -68,11 +69,10 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   void _onChanged() {
     final client = widget.viewModel.client.rebuild((b) => b
       ..address1 = _address1Controller.text.trim()
-        ..address2 = _address2Controller.text.trim()
-        ..city = _cityController.text.trim()
-        ..state = _stateController.text.trim()
-        ..postalCode = _postalCodeController.text.trim()
-    );
+      ..address2 = _address2Controller.text.trim()
+      ..city = _cityController.text.trim()
+      ..state = _stateController.text.trim()
+      ..postalCode = _postalCodeController.text.trim());
     if (client != widget.viewModel.client) {
       widget.viewModel.onChanged(client);
     }
@@ -124,16 +124,32 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
             keyboardType: TextInputType.phone,
           ),
           EntityDropdown(
+            key: ValueKey(client.countryId),
             entityType: EntityType.country,
             entityMap: viewModel.staticState.countryMap,
             entityList: memoizedCountryList(viewModel.staticState.countryMap),
             labelText: localization.country,
-            initialValue: viewModel.staticState.countryMap[client.countryId]?.name,
+            initialValue:
+                viewModel.staticState.countryMap[client.countryId]?.name,
             onSelected: (SelectableEntity country) => viewModel
                 .onChanged(client.rebuild((b) => b..countryId = country.id)),
           ),
         ],
-      )
+      ),
+      client.hasShippingAddress && client.areAddressesDifferent
+          ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ElevatedButton(
+                label: localization.copyShipping.toUpperCase(),
+                onPressed: () {
+                  viewModel.copyShippingAddress();
+                  WidgetsBinding.instance.addPostFrameCallback((duration) {
+                    didChangeDependencies();
+                  });
+                },
+              ),
+            )
+          : SizedBox(),
     ]);
   }
 }

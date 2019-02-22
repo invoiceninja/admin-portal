@@ -69,7 +69,9 @@ abstract class ProductEntity extends Object
 
   static int counter = 0;
 
-  ProductEntity get clone => rebuild((b) => b..id = --ProductEntity.counter);
+  ProductEntity get clone => rebuild((b) => b
+    ..id = --ProductEntity.counter
+    ..isDeleted = false);
 
   @override
   EntityType get entityType {
@@ -178,11 +180,19 @@ abstract class ProductEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user}) {
+  List<EntityAction> getEntityActions({UserEntity user, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (user.canCreate(EntityType.invoice)) {
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
+
+    if (user.canCreate(EntityType.product)) {
       actions.add(EntityAction.clone);
+    }
+
+    if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.newInvoice);
     }
 
     if (actions.isNotEmpty) {

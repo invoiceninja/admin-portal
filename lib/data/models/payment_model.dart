@@ -175,8 +175,13 @@ abstract class PaymentEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     if (user.canEditEntity(this) && client.hasEmailAddress) {
       actions.add(EntityAction.sendEmail);

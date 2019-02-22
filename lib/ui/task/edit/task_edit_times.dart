@@ -162,21 +162,32 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   icon: Icons.check_circle,
                   label: localization.done,
                   onPressed: () {
-                    final date = DateTime.parse(_date);
+                    final startDate = DateTime.parse(_date);
+                    DateTime endDate = startDate;
+                    if (_startDate.isAfter(DateTime(
+                        _startDate.year,
+                        _startDate.month,
+                        _startDate.day,
+                        _endDate.hour,
+                        _endDate.minute,
+                        _endDate.second))) {
+                      endDate = endDate.add(Duration(days: 1));
+                    }
+
                     final taskTime = TaskTime(
                       startDate: DateTime(
-                              date.year,
-                              date.month,
-                              date.day,
+                              startDate.year,
+                              startDate.month,
+                              startDate.day,
                               _startDate.hour,
                               _startDate.minute,
                               _startDate.second)
                           .toUtc(),
                       endDate: _endDate != null
                           ? DateTime(
-                                  _endDate.year,
-                                  _endDate.month,
-                                  _endDate.day,
+                                  endDate.year,
+                                  endDate.month,
+                                  endDate.day,
                                   _endDate.hour,
                                   _endDate.minute,
                                   _endDate.second)

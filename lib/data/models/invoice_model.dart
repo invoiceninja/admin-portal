@@ -86,7 +86,7 @@ class InvoiceFields {
 abstract class InvoiceEntity extends Object
     with BaseEntity, SelectableEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-  factory InvoiceEntity({int id, bool isQuote = false}) {
+  factory InvoiceEntity({int id, bool isQuote = false, CompanyEntity company}) {
     return _$InvoiceEntity._(
       id: id ?? --InvoiceEntity.counter,
       amount: 0.0,
@@ -134,6 +134,11 @@ abstract class InvoiceEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      designId: company != null
+          ? (isQuote
+              ? company.defaultQuoteDesignId
+              : company.defaultInvoiceDesignId)
+          : 1,
     );
   }
 
@@ -143,6 +148,7 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = --InvoiceEntity.counter
+    ..isDeleted = false
     ..invoiceStatusId = kInvoiceStatusDraft
     ..quoteInvoiceId = 0
     ..invoiceNumber = ''
@@ -293,6 +299,10 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<InvitationEntity> get invitations;
 
+  @nullable
+  @BuiltValueField(wireName: 'invoice_design_id')
+  int get designId;
+
   bool get isApproved =>
       invoiceStatusId == kInvoiceStatusApproved || quoteInvoiceId > 0;
 
@@ -379,8 +389,13 @@ abstract class InvoiceEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     if (user.canCreate(EntityType.invoice)) {
       if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {

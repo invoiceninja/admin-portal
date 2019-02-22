@@ -139,6 +139,10 @@ class InvoiceListVM extends EntityListVM {
       onEntityAction: (context, invoice, action) async {
         final localization = AppLocalization.of(context);
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditInvoice(context: context, invoice: invoice));
+            break;
           case EntityAction.pdf:
             viewPdf(invoice, context);
             break;

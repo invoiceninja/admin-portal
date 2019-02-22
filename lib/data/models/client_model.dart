@@ -107,7 +107,9 @@ abstract class ClientEntity extends Object
 
   static int counter = 0;
 
-  ClientEntity get clone => rebuild((b) => b..id = --ClientEntity.counter);
+  ClientEntity get clone => rebuild((b) => b
+    ..id = --ClientEntity.counter
+    ..isDeleted = false);
 
   @nullable
   int get lastUpdatedActivities;
@@ -356,8 +358,12 @@ abstract class ClientEntity extends Object
   }
 
   List<EntityAction> getEntityActions(
-      {UserEntity user, bool includeCreate = false}) {
+      {UserEntity user, bool includeCreate = false, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     if (includeCreate && user.canCreate(EntityType.client) && isActive) {
       actions.add(EntityAction.newInvoice);
@@ -375,6 +381,30 @@ abstract class ClientEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  bool get areAddressesDifferent =>
+      address1 != shippingAddress1 ||
+      address2 != shippingAddress2 ||
+      city != shippingCity ||
+      state != shippingState ||
+      postalCode != shippingPostalCode ||
+      countryId != shippingCountryId;
+
+  bool get hasShippingAddress =>
+      shippingAddress1.isNotEmpty ||
+      shippingAddress2.isNotEmpty ||
+      shippingCity.isNotEmpty ||
+      shippingState.isNotEmpty ||
+      shippingPostalCode.isNotEmpty ||
+      shippingCountryId > 0;
+
+  bool get hasBillingAddress =>
+      address1.isNotEmpty ||
+      address2.isNotEmpty ||
+      city.isNotEmpty ||
+      state.isNotEmpty ||
+      postalCode.isNotEmpty ||
+      countryId > 0;
 
   bool get hasNameSet {
     final contact = contacts.first;

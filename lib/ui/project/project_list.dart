@@ -27,7 +27,8 @@ class ProjectList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: project
-                    .getEntityActions(user: user, client: client)
+                    .getEntityActions(
+                        user: user, client: client, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {
                 return Divider();

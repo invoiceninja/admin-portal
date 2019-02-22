@@ -153,6 +153,7 @@ abstract class TaskEntity extends Object
 
   TaskEntity get clone => rebuild((b) => b
     ..id = --TaskEntity.counter
+    ..isDeleted = false
     ..invoiceId = null
     ..isRunning = false
     ..duration = 0
@@ -227,21 +228,30 @@ abstract class TaskEntity extends Object
 
     final List<dynamic> log = jsonDecode(timeLog);
     log.forEach((dynamic detail) {
-      final int startDate = (detail as List)[0];
+      int startDate;
       int endDate;
-      if ((detail as List)[1] == false) {
-        endDate = 0;
+
+      if ((detail as List)[0] == false || (detail as List)[0] == null) {
+        startDate = 0;
       } else {
-        endDate = ((detail as List)[1]).round();
+        startDate = ((detail as List)[0]).round();
       }
 
-      final taskTime = TaskTime(
-          startDate: convertTimestampToDate(startDate).toUtc(),
-          endDate: (endDate ?? 0) > 0
-              ? convertTimestampToDate(endDate).toUtc()
-              : null);
+      if (startDate > 0) {
+        if ((detail as List)[1] == false || (detail as List)[1] == null) {
+          endDate = 0;
+        } else {
+          endDate = ((detail as List)[1]).round();
+        }
 
-      details.add(taskTime);
+        final taskTime = TaskTime(
+            startDate: convertTimestampToDate(startDate).toUtc(),
+            endDate: (endDate ?? 0) > 0
+                ? convertTimestampToDate(endDate).toUtc()
+                : null);
+
+        details.add(taskTime);
+      }
     });
 
     details.sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
@@ -336,8 +346,13 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     if (isInvoiced) {
       actions.add(EntityAction.viewInvoice);
@@ -354,7 +369,10 @@ abstract class TaskEntity extends Object
       }
     }
 
-    actions.add(EntityAction.clone);
+    if (user.canCreate(EntityType.task)) {
+      actions.add(EntityAction.clone);
+    }
+
     actions.add(null);
 
     return actions..addAll(getBaseActions(user: user));

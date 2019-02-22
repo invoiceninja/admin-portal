@@ -86,14 +86,19 @@ class ProjectListVM {
       },
       onEntityAction: (context, project, action) {
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditProject(context: context, project: project));
+            break;
           case EntityAction.newInvoice:
             final items =
                 convertProjectToInvoiceItem(project: project, context: context);
             store.dispatch(EditInvoice(
-                invoice: InvoiceEntity().rebuild((b) => b
-                  ..hasTasks = true
-                  ..clientId = project.clientId
-                  ..invoiceItems.addAll(items)),
+                invoice: InvoiceEntity(company: state.selectedCompany)
+                    .rebuild((b) => b
+                      ..hasTasks = true
+                      ..clientId = project.clientId
+                      ..invoiceItems.addAll(items)),
                 context: context));
             break;
           case EntityAction.clone:

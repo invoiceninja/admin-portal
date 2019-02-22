@@ -48,6 +48,8 @@ class ClientEditVM {
     @required this.onSavePressed,
     @required this.onBackPressed,
     @required this.staticState,
+    @required this.copyBillingAddress,
+    @required this.copyShippingAddress,
   });
 
   factory ClientEditVM.fromStore(Store<AppState> store) {
@@ -68,6 +70,22 @@ class ClientEditVM {
         },
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
+        copyBillingAddress: () =>
+            store.dispatch(UpdateClient(client.rebuild((b) => b
+              ..shippingAddress1 = client.address1
+              ..shippingAddress2 = client.address2
+              ..shippingCity = client.city
+              ..shippingState = client.state
+              ..shippingPostalCode = client.postalCode
+              ..shippingCountryId = client.countryId))),
+        copyShippingAddress: () =>
+            store.dispatch(UpdateClient(client.rebuild((b) => b
+              ..address1 = client.shippingAddress1
+              ..address2 = client.shippingAddress2
+              ..city = client.shippingCity
+              ..state = client.shippingState
+              ..postalCode = client.shippingPostalCode
+              ..countryId = client.shippingCountryId))),
         onSavePressed: (BuildContext context) {
           if (!client.hasNameSet) {
             showDialog<ErrorDialog>(
@@ -118,4 +136,6 @@ class ClientEditVM {
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
   final StaticState staticState;
+  final Function() copyShippingAddress;
+  final Function() copyBillingAddress;
 }

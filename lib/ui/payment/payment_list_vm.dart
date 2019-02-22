@@ -82,6 +82,10 @@ class PaymentListVM {
       onEntityAction: (context, payment, action) {
         final localization = AppLocalization.of(context);
         switch (action) {
+          case EntityAction.edit:
+            store.dispatch(
+                EditPayment(context: context, payment: payment));
+            break;
           case EntityAction.sendEmail:
             store.dispatch(EmailPaymentRequest(
                 snackBarCompleter(context, localization.emailedPayment),

@@ -72,6 +72,8 @@ class ClientOverview extends StatelessWidget {
           icon: getEntityIcon(EntityType.invoice),
           title: localization.invoices,
           onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
+          onLongPress: () =>
+              viewModel.onEntityPressed(context, EntityType.invoice, true),
           subtitle: memoizedInvoiceStatsForClient(
               client.id,
               state.invoiceState.map,
@@ -82,6 +84,8 @@ class ClientOverview extends StatelessWidget {
           icon: getEntityIcon(EntityType.payment),
           title: localization.payments,
           onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
+          onLongPress: () =>
+              viewModel.onEntityPressed(context, EntityType.payment, true),
           subtitle: memoizedPaymentStatsForClient(
               client.id,
               state.paymentState.map,
@@ -95,6 +99,8 @@ class ClientOverview extends StatelessWidget {
                 title: localization.quotes,
                 onTap: () =>
                     viewModel.onEntityPressed(context, EntityType.quote),
+                onLongPress: () =>
+                    viewModel.onEntityPressed(context, EntityType.quote, true),
                 subtitle: memoizedQuoteStatsForClient(
                     client.id,
                     state.quoteState.map,
@@ -108,6 +114,8 @@ class ClientOverview extends StatelessWidget {
                 title: localization.projects,
                 onTap: () =>
                     viewModel.onEntityPressed(context, EntityType.project),
+                onLongPress: () => viewModel.onEntityPressed(
+                    context, EntityType.project, true),
                 subtitle: memoizedProjectStatsForClient(
                     client.id,
                     state.projectState.map,
@@ -121,6 +129,8 @@ class ClientOverview extends StatelessWidget {
                 title: localization.tasks,
                 onTap: () =>
                     viewModel.onEntityPressed(context, EntityType.task),
+                onLongPress: () =>
+                    viewModel.onEntityPressed(context, EntityType.task, true),
                 subtitle: memoizedTaskStatsForClient(
                     client.id,
                     state.taskState.map,
@@ -134,9 +144,11 @@ class ClientOverview extends StatelessWidget {
 }
 
 class EntityListTile extends StatelessWidget {
-  const EntityListTile({this.icon, this.onTap, this.title, this.subtitle});
+  const EntityListTile(
+      {this.icon, this.onTap, this.onLongPress, this.title, this.subtitle});
 
   final Function onTap;
+  final Function onLongPress;
   final IconData icon;
   final String title;
   final String subtitle;
@@ -153,6 +165,7 @@ class EntityListTile extends StatelessWidget {
             leading: Icon(icon, size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: onTap,
+            onLongPress: onLongPress,
           ),
         ),
         Divider(),

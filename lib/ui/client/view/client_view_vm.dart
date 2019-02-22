@@ -85,32 +85,69 @@ class ClientViewVM {
             )));
           });
         },
-        onEntityPressed: (BuildContext context, EntityType entityType) {
+        onEntityPressed: (BuildContext context, EntityType entityType,
+            [longPress = false]) {
           switch (entityType) {
             case EntityType.invoice:
-              store.dispatch(FilterInvoicesByEntity(
-                  entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewInvoiceList(context));
+              if (longPress) {
+                store.dispatch(EditInvoice(
+                    context: context,
+                    invoice: InvoiceEntity(company: state.selectedCompany)
+                        .rebuild((b) => b..clientId = client.id)));
+              } else {
+                store.dispatch(FilterInvoicesByEntity(
+                    entityId: client.id, entityType: EntityType.client));
+                store.dispatch(ViewInvoiceList(context));
+              }
               break;
             case EntityType.quote:
-              store.dispatch(FilterQuotesByEntity(
-                  entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewQuoteList(context));
+              if (longPress) {
+                store.dispatch(EditQuote(
+                    context: context,
+                    quote: InvoiceEntity(
+                            company: state.selectedCompany, isQuote: true)
+                        .rebuild((b) => b..clientId = client.id)));
+              } else {
+                store.dispatch(FilterQuotesByEntity(
+                    entityId: client.id, entityType: EntityType.client));
+                store.dispatch(ViewQuoteList(context));
+              }
               break;
             case EntityType.payment:
-              store.dispatch(FilterPaymentsByEntity(
-                  entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewPaymentList(context));
+              if (longPress) {
+                store.dispatch(EditPayment(
+                    context: context,
+                    payment: PaymentEntity(company: state.selectedCompany)
+                        .rebuild((b) => b..clientId = client.id)));
+              } else {
+                store.dispatch(FilterPaymentsByEntity(
+                    entityId: client.id, entityType: EntityType.client));
+                store.dispatch(ViewPaymentList(context));
+              }
               break;
             case EntityType.project:
-              store.dispatch(FilterProjectsByEntity(
-                  entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewProjectList(context));
+              if (longPress) {
+                store.dispatch(EditProject(
+                    context: context,
+                    project: ProjectEntity()
+                        .rebuild((b) => b..clientId = client.id)));
+              } else {
+                store.dispatch(FilterProjectsByEntity(
+                    entityId: client.id, entityType: EntityType.client));
+                store.dispatch(ViewProjectList(context));
+              }
               break;
             case EntityType.task:
-              store.dispatch(FilterTasksByEntity(
-                  entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewTaskList(context));
+              if (longPress) {
+                store.dispatch(EditTask(
+                    context: context,
+                    task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+                        .rebuild((b) => b..clientId = client.id)));
+              } else {
+                store.dispatch(FilterTasksByEntity(
+                    entityId: client.id, entityType: EntityType.client));
+                store.dispatch(ViewTaskList(context));
+              }
               break;
           }
         },
@@ -148,7 +185,7 @@ class ClientViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
-  final Function(BuildContext, EntityType) onEntityPressed;
+  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext, bool) onRefreshed;
   final bool isSaving;
   final bool isLoading;

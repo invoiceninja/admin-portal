@@ -70,8 +70,11 @@ class ProjectScreen extends StatelessWidget {
                 //key: Key(ProjectKeys.projectScreenFABKeyString),
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
-                  store.dispatch(
-                      EditProject(project: ProjectEntity(), context: context));
+                  store.dispatch(EditProject(
+                      project: ProjectEntity().rebuild((b) => b
+                        ..clientId =
+                            store.state.projectListState.filterEntityId ?? 0),
+                      context: context));
                 },
                 child: Icon(
                   Icons.add,

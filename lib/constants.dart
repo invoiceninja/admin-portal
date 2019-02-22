@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '0.1.35';
+const String kAppVersion = '0.1.36';
 const String kAppUrl = 'https://app.invoiceninja.com';
 
 const String kAppleStoreUrl =
@@ -99,6 +99,22 @@ class PaymentStatusColors {
 
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
+const List<String> kInvoiceDesigns = [
+  'Clean',
+  'Bold',
+  'Modern',
+  'Plain',
+  'Business',
+  'Creative',
+  'Elegant',
+  'Hipster',
+  'Playful',
+  'Photo',
+  'Custom 1',
+  'Custom 2',
+  'Custom 3',
+];
+
 const List<String> kLanguages = [
   'ca',
   'cs',
@@ -125,6 +141,7 @@ const List<String> kLanguages = [
   'ro',
   'sl',
   'sq',
+  'sr_RS',
   'sv',
   'th',
   'tr_TR',

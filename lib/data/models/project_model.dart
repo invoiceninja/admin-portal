@@ -72,7 +72,9 @@ abstract class ProjectEntity extends Object
 
   static int counter = 0;
 
-  ProjectEntity get clone => rebuild((b) => b..id = --ProjectEntity.counter);
+  ProjectEntity get clone => rebuild((b) => b
+    ..id = --ProjectEntity.counter
+    ..isDeleted = false);
 
   @override
   EntityType get entityType {
@@ -102,12 +104,19 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
-    final actions = <EntityAction>[
-      EntityAction.newInvoice,
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+    final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
+
+    actions.addAll([
       EntityAction.clone,
+      EntityAction.newInvoice,
       null,
-    ];
+    ]);
 
     return actions..addAll(getBaseActions(user: user));
   }

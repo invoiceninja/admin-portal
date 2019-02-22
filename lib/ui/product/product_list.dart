@@ -45,8 +45,9 @@ class ProductList extends StatelessWidget {
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
-                children:
-                    product.getEntityActions(user: user).map((entityAction) {
+                children: product
+                    .getEntityActions(user: user, includeEdit: true)
+                    .map((entityAction) {
               if (entityAction == null) {
                 return Divider();
               } else {
