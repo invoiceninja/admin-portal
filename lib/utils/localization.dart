@@ -397,6 +397,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'sq': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faturuar',
@@ -772,6 +775,9 @@ class AppLocalization {
       'expired': 'Skaduar',
     },
     'zh_TW': {
+      'copy_shipping': '複製送貨資料',
+      'copy_billing': '複製帳單資料',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': '已開立發票的',
@@ -1146,6 +1152,9 @@ class AppLocalization {
       'expired': '過期',
     },
     'hr': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturirano',
@@ -1521,6 +1530,9 @@ class AppLocalization {
       'expired': 'Isteklo',
     },
     'cs': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturováno',
@@ -1896,6 +1908,9 @@ class AppLocalization {
       'expired': 'Expirované',
     },
     'da': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faktureret',
@@ -2271,6 +2286,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'nl': {
+      'copy_shipping': 'Levering kopiëren',
+      'copy_billing': 'Facturatie kopiëren',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Gefactureerd',
@@ -2650,6 +2668,9 @@ class AppLocalization {
       'expired': 'Verlopen',
     },
     'en_AU': {
+      'copy_shipping': 'Copy Delivery',
+      'copy_billing': 'Copy Billing Address',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
@@ -3025,6 +3046,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'en_GB': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
@@ -3400,6 +3424,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'fi': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Laskutettu',
@@ -3777,10 +3804,13 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'fr': {
+      'copy_shipping': 'Copier expédition',
+      'copy_billing': 'Copier facturation',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturé',
-      'logged': 'Connecté',
+      'logged': 'Enregistré',
       'running': 'En cours',
       'resume': 'Reprendre',
       'task_errors': 'Merci de corriger les horaires conflictuels',
@@ -3790,10 +3820,10 @@ class AppLocalization {
       'stopped_task': 'Tâche stoppée avec succès',
       'resumed_task': 'Tâche relancée avec succès',
       'now': 'Maintenant',
-      'auto_start_tasks': 'Auto Start Tasks',
+      'auto_start_tasks': 'Démarrer automatiquement les tâches',
       'timer': 'Compteur',
       'manual': 'Manuel',
-      'budgeted': 'Budgeted',
+      'budgeted': 'Budgétisé',
       'start_time': 'Début',
       'end_time': 'Heure de fin',
       'date': 'Date',
@@ -3805,7 +3835,7 @@ class AppLocalization {
       'archived_task': 'Tâche archivée avec succès',
       'deleted_task': 'Tâche supprimée avec succès',
       'restored_task': 'Tâche restaurée avec succès',
-      'please_enter_a_name': 'Please enter a name',
+      'please_enter_a_name': 'Veuillez entrer un nom',
       'budgeted_hours': 'Heures budgétées',
       'created_project': 'Le projet a été créé',
       'updated_project': 'Le projet a été mis à  jour',
@@ -3991,7 +4021,7 @@ class AppLocalization {
       'invoice_status_id': 'Etat de Facture',
       'quote_status': 'État du devis',
       'click_plus_to_add_item': 'Cliquer pour ajouter un article (objet)',
-      'click_plus_to_add_time': 'Click + to add time',
+      'click_plus_to_add_time': 'Cliquez sur + pour ajouter du temps',
       'count_selected': 'nombre selectionne',
       'total': 'Total',
       'percent': 'Pourcent',
@@ -4154,6 +4184,9 @@ class AppLocalization {
       'expired': 'Expiré',
     },
     'fr_CA': {
+      'copy_shipping': 'Copier livraison',
+      'copy_billing': 'Copier facturation',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturée',
@@ -4530,6 +4563,9 @@ class AppLocalization {
       'expired': 'Expiré',
     },
     'de': {
+      'copy_shipping': 'Versand kopieren',
+      'copy_billing': 'Zahlung kopieren',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'In Rechnung gestellt',
@@ -4911,6 +4947,9 @@ class AppLocalization {
       'expired': 'Abgelaufen',
     },
     'el': {
+      'copy_shipping': 'Αντιγραφή Αποστολής',
+      'copy_billing': 'Αντιγραφή Χρέωσης',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Τιμολογημένα',
@@ -5292,6 +5331,9 @@ class AppLocalization {
       'expired': 'Ληγμένα',
     },
     'it': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fatturato',
@@ -5668,6 +5710,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'ja': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
@@ -6043,6 +6088,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'lt': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
@@ -6278,7 +6326,7 @@ class AppLocalization {
       'filtered_by': 'Filtered by',
       'past_due': 'Past Due',
       'draft': 'Draft',
-      'sent': 'Sent',
+      'sent': 'Išsiųsta',
       'viewed': 'Viewed',
       'approved': 'Approved',
       'partial': 'Partial/Deposit',
@@ -6418,6 +6466,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'mk_MK': {
+      'copy_shipping': 'Копирај достава',
+      'copy_billing': 'Копирај наплата',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Фактурирано',
@@ -6794,6 +6845,9 @@ class AppLocalization {
       'expired': 'Истечено',
     },
     'nb_NO': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturert',
@@ -6928,7 +6982,7 @@ class AppLocalization {
       'phone': 'Telefon',
       'website': 'Nettside',
       'vat_number': 'MVA-nummer',
-      'id_number': 'Organisasjonsnummer',
+      'id_number': 'Id nummer',
       'create': 'Lag',
       'copied_to_clipboard': 'Copied :value to the clipboard',
       'error': 'Error',
@@ -7169,6 +7223,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'pl': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Zafakturowano',
@@ -7544,6 +7601,9 @@ class AppLocalization {
       'expired': 'Wygasło',
     },
     'pt_BR': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faturado',
@@ -7920,6 +7980,9 @@ class AppLocalization {
       'expired': 'Vencida',
     },
     'pt_PT': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faturado',
@@ -8296,6 +8359,9 @@ class AppLocalization {
       'expired': 'Expirada',
     },
     'ro': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturat',
@@ -8671,6 +8737,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'sr_RS': {
+      'copy_shipping': 'Kopiraj adresu za slanje',
+      'copy_billing': 'Kopiraj adresu za naplatu',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturisano',
@@ -9047,6 +9116,9 @@ class AppLocalization {
       'expired': 'Expired',
     },
     'sl': {
+      'copy_shipping': 'Kopiraj naslov za dostavo',
+      'copy_billing': 'Kopiraj naslov za račun',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturirano',
@@ -9422,6 +9494,9 @@ class AppLocalization {
       'expired': 'Poteklo',
     },
     'es': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturado',
@@ -9801,6 +9876,9 @@ class AppLocalization {
       'expired': 'Vencida',
     },
     'es_ES': {
+      'copy_shipping': 'Copiar Envío',
+      'copy_billing': 'Copia Facturación',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Facturado',
@@ -9815,10 +9893,10 @@ class AppLocalization {
       'stopped_task': 'Tarea parada correctamente',
       'resumed_task': 'La tarea se reanudó correctamente',
       'now': 'Ahora',
-      'auto_start_tasks': 'Auto Start Tasks',
+      'auto_start_tasks': 'Tareas programadas',
       'timer': 'Temporizador',
       'manual': 'Manual',
-      'budgeted': 'Budgeted',
+      'budgeted': 'Presupuestado',
       'start_time': 'Hora de Inicio',
       'end_time': 'Hora de Fin',
       'date': 'Fecha',
@@ -9830,7 +9908,7 @@ class AppLocalization {
       'archived_task': 'Tarea archivada correctamente',
       'deleted_task': 'Tarea borrada correctamente',
       'restored_task': 'Tarea restaurada correctamente',
-      'please_enter_a_name': 'Please enter a name',
+      'please_enter_a_name': 'Por favor introduce un nombre',
       'budgeted_hours': 'Horas Presupuestadas',
       'created_project': 'Proyecto creado correctamente',
       'updated_project': 'Proyecto actualizado correctamente',
@@ -10016,7 +10094,7 @@ class AppLocalization {
       'invoice_status_id': 'Estado de Factura',
       'quote_status': 'Estado de Presupuesto',
       'click_plus_to_add_item': 'Pulsa + para añadir un artículo',
-      'click_plus_to_add_time': 'Click + to add time',
+      'click_plus_to_add_time': 'Pulsa + para añadir tiempo',
       'count_selected': ':count seleccionado',
       'total': 'Total',
       'percent': 'Porcentaje',
@@ -10179,6 +10257,9 @@ class AppLocalization {
       'expired': 'Expirada',
     },
     'sv': {
+      'copy_shipping': 'Kopiera frakt',
+      'copy_billing': 'Kopiera betalning',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Fakturerad',
@@ -10554,6 +10635,9 @@ class AppLocalization {
       'expired': 'Utgått',
     },
     'th': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'ออกใบแจ้งหนี้',
@@ -10929,6 +11013,9 @@ class AppLocalization {
       'expired': 'หมดอายุ',
     },
     'tr_TR': {
+      'copy_shipping': 'Copy Shipping',
+      'copy_billing': 'Copy Billing',
+      'design': 'Design',
       'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Faturalandı',
@@ -12142,14 +12229,12 @@ class AppLocalization {
   String get passwordIsTooShort =>
       _localizedValues[locale.toString()]['password_is_too_short'];
 
-  String get design =>
-      _localizedValues[locale.toString()]['design'];
+  String get design => _localizedValues[locale.toString()]['design'];
 
   String get copyShipping =>
       _localizedValues[locale.toString()]['copy_shipping'];
 
-  String get copyBilling =>
-      _localizedValues[locale.toString()]['copy_billing'];
+  String get copyBilling => _localizedValues[locale.toString()]['copy_billing'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
