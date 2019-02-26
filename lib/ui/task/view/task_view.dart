@@ -56,6 +56,11 @@ class _TaskViewState extends State<TaskView> {
 
     final Map<String, String> fields = {};
 
+    if ((task.taskStatusId ?? 0) > 0) {
+      fields[localization.status] =
+          company.taskStatusMap[task.taskStatusId].name ?? '';
+    }
+
     if (task.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.task1);
       fields[label1] = task.customValue1;

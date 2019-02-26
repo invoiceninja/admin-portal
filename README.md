@@ -22,8 +22,8 @@ Note: the mobile app requires the latest version of the web app.
 - [x] Invoices
 - [x] Quotes
 - [x] Payments
-- [ ] Projects
-- [ ] Tasks
+- [x] Projects
+- [x] Tasks
 - [ ] Vendors
 - [ ] Expenses
 - [ ] Credits

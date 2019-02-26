@@ -346,6 +346,15 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @nullable
+  @BuiltValueField(wireName: 'task_status_id')
+  int get taskStatusId;
+
+  @nullable
+  @BuiltValueField(wireName: 'task_status_sort_order')
+  int get taskStatusSortOrder;
+
+
   List<EntityAction> getEntityActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
@@ -449,16 +458,23 @@ abstract class TaskEntity extends Object
 }
 
 abstract class TaskStatusEntity extends Object
-    with EntityStatus
+    with EntityStatus, SelectableEntity
     implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
   factory TaskStatusEntity() {
     return _$TaskStatusEntity._(
       id: 0,
       name: '',
+      sortOrder: 0,
     );
   }
 
   TaskStatusEntity._();
+
+  @BuiltValueField(wireName: 'sort_order')
+  int get sortOrder;
+
+  @override
+  String get listDisplayName => name;
 
   static Serializer<TaskStatusEntity> get serializer =>
       _$taskStatusEntitySerializer;

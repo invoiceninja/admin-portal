@@ -41,7 +41,18 @@ Reducer<CompanyEntity> companyEntityReducer = combineReducers([
 
 CompanyEntity loadCompanySuccessReducer(
     CompanyEntity company, LoadCompanySuccess action) {
-  return action.company;
+
+  if (action.company.taskStatuses == null) {
+    return action.company;
+  } else {
+    return action.company.rebuild((b) => b
+      ..taskStatusMap.addAll(Map.fromIterable(
+        action.company.taskStatuses,
+        key: (dynamic item) => item.id,
+        value: (dynamic item) => item,
+      ))
+    );
+  }
 
   /*
   return action.company.rebuild((b) => b

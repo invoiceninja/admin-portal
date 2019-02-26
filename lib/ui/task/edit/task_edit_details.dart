@@ -126,6 +126,21 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     },
                   )
                 : SizedBox(),
+            EntityDropdown(
+              entityType: EntityType.taskStatus,
+              labelText: localization.status,
+              initialValue: (company.taskStatusMap[task.taskStatusId] ??
+                      TaskStatusEntity())
+                  .name,
+              entityMap: company.taskStatusMap,
+              entityList: company.taskStatusMap.keys.toList(),
+              onSelected: (selected) {
+                final taskStatus = selected as TaskStatusEntity;
+                viewModel.onChanged(task.rebuild((b) => b
+                  ..taskStatusId = taskStatus.id
+                  ..taskStatusSortOrder = 9999));
+              },
+            ),
             TextFormField(
               maxLines: 4,
               controller: _descriptionController,

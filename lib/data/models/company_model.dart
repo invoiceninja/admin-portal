@@ -49,6 +49,7 @@ abstract class CompanyEntity
       customPaymentTerms: BuiltList<PaymentTermEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
+      taskStatusMap: BuiltMap<int, TaskStatusEntity>(),
       user: UserEntity(),
       //userId: 0,
       //users: BuiltList<UserEntity>(),
@@ -187,6 +188,7 @@ abstract class CompanyEntity
   @nullable
   @BuiltValueField(wireName: 'task_statuses')
   BuiltList<TaskStatusEntity> get taskStatuses;
+  BuiltMap<int, TaskStatusEntity> get taskStatusMap;
 
   //@BuiltValueField(wireName: 'user_id')
   //int get userId;
