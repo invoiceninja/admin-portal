@@ -81,7 +81,7 @@ InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
 
 InvoiceEntity _removeInvoiceItem(
     InvoiceEntity invoice, DeleteInvoiceItem action) {
-  if (invoice.invoiceItems.length < action.index) {
+  if (invoice.invoiceItems.length <= action.index) {
     return invoice;
   }
   return invoice.rebuild((b) => b..invoiceItems.removeAt(action.index));
@@ -89,7 +89,7 @@ InvoiceEntity _removeInvoiceItem(
 
 InvoiceEntity _updateInvoiceItem(
     InvoiceEntity invoice, UpdateInvoiceItem action) {
-  if (invoice.invoiceItems.length < action.index) {
+  if (invoice.invoiceItems.length <= action.index) {
     return invoice;
   }
   return invoice
