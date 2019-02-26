@@ -157,10 +157,6 @@ class _TaskViewState extends State<TaskView> {
       if (fields.isNotEmpty) {
         widgets.addAll([
           FieldGrid(fields),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
         ]);
       }
 
