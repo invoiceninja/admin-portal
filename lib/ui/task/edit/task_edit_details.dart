@@ -126,7 +126,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     },
                   )
                 : SizedBox(),
-            EntityDropdown(
+            // TODO Remove isNotEmpty check in v2
+            company.taskStatusMap.isNotEmpty ? EntityDropdown(
               entityType: EntityType.taskStatus,
               labelText: localization.status,
               initialValue: (company.taskStatusMap[task.taskStatusId] ??
@@ -140,7 +141,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                   ..taskStatusId = taskStatus.id
                   ..taskStatusSortOrder = 9999));
               },
-            ),
+            ) : SizedBox(),
             TextFormField(
               maxLines: 4,
               controller: _descriptionController,
