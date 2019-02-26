@@ -115,7 +115,16 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final invoice = viewModel.invoice;
     final company = viewModel.company;
 
-    var designs = kInvoiceDesigns;
+    var designs = new List<String>.from(kInvoiceDesigns);
+    if (!company.hasCustomDesign1) {
+      designs.remove(kDesignCustom1);
+    }
+    if (!company.hasCustomDesign2) {
+      designs.remove(kDesignCustom2);
+    }
+    if (!company.hasCustomDesign3) {
+      designs.remove(kDesignCustom3);
+    }
     if (!company.isProPlan) {
       designs = designs.sublist(0, 4);
     }

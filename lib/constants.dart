@@ -99,6 +99,10 @@ class PaymentStatusColors {
 
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
+const String kDesignCustom1 = 'Custom 1';
+const String kDesignCustom2 = 'Custom 2';
+const String kDesignCustom3 = 'Custom 3';
+
 const List<String> kInvoiceDesigns = [
   'Clean',
   'Bold',
@@ -110,9 +114,9 @@ const List<String> kInvoiceDesigns = [
   'Hipster',
   'Playful',
   'Photo',
-  'Custom 1',
-  'Custom 2',
-  'Custom 3',
+  kDesignCustom1,
+  kDesignCustom2,
+  kDesignCustom3,
 ];
 
 const List<String> kLanguages = [
