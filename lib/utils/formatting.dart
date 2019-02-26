@@ -208,13 +208,10 @@ String formatDuration(Duration duration, {bool showSeconds = true}) {
   }
 }
 
-DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay) {
-  final now = new DateTime.now();
-  final date = DateTime(now.year, now.month, now.day, timeOfDay?.hour ?? 0,
-          timeOfDay?.minute ?? 0)
+DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay, DateTime dateTime) {
+  return DateTime(dateTime.year, dateTime.month, dateTime.day,
+          timeOfDay?.hour ?? 0, timeOfDay?.minute ?? 0)
       .toUtc();
-
-  return date;
 }
 
 TimeOfDay convertDateTimeToTimeOfDay(DateTime dateTime) =>
