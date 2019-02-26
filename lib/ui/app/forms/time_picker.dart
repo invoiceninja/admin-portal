@@ -54,7 +54,7 @@ class _TimePickerState extends State<TimePicker> {
         context: context, initialTime: TimeOfDay(hour: hour, minute: minute));
 
     if (selectedTime != null) {
-      var dateTime = convertTimeOfDayToDateTime(selectedTime);
+      var dateTime = convertTimeOfDayToDateTime(selectedTime, selectedDate);
 
       if (widget.previousDate != null &&
           dateTime.isBefore(widget.previousDate)) {

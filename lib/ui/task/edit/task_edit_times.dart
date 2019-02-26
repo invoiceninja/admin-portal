@@ -168,9 +168,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                         _startDate.year,
                         _startDate.month,
                         _startDate.day,
-                        _endDate.hour,
-                        _endDate.minute,
-                        _endDate.second))) {
+                        _endDate?.hour ?? _startDate.hour,
+                        _endDate?.minute ?? _startDate.minute,
+                        _endDate?.second ?? _startDate.second))) {
                       endDate = endDate.add(Duration(days: 1));
                     }
 
