@@ -69,7 +69,7 @@ class ProductScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: user.canCreate(EntityType.product)
             ? FloatingActionButton(
-                key: Key(ProductKeys.productScreenFABKeyString),
+                key: Key(ProductKeys.fab),
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(

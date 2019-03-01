@@ -46,10 +46,10 @@ void main() {
       driver = await FlutterDriver.connect();
 
       // read config file
-      loginEmail = Config.LOGIN_EMAIL;
-      loginPassword = Config.LOGIN_PASSWORD;
-      loginUrl = Config.LOGIN_URL;
-      loginSecret = Config.LOGIN_SECRET;
+      loginEmail = Config.TEST_EMAIL;
+      loginPassword = Config.TEST_PASSWORD;
+      loginUrl = Config.TEST_URL;
+      loginSecret = Config.TEST_SECRET;
     });
 
     tearDown(() async {
@@ -60,18 +60,19 @@ void main() {
 
     // Login into the app with details from .env.dart
     test('Login into the app and switch to products screen', () async {
-      
-      await driver.tap(find.byValueKey(LoginKeys.emailKeyString), timeout: new Duration(seconds: 60));
+
+      await driver.tap(find.byValueKey(LoginKeys.loginSelfHost));
+      await driver.tap(find.byValueKey(LoginKeys.email), timeout: new Duration(seconds: 60));
       await driver.enterText(loginEmail);
-      await driver.tap(find.byValueKey(LoginKeys.passwordKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.password));
       await driver.enterText(loginPassword);
-      await driver.tap(find.byValueKey(LoginKeys.urlKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.url));
       await driver.enterText(loginUrl);
-      await driver.tap(find.byValueKey(LoginKeys.secretKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.secret));
       await driver.enterText(loginSecret);
 
       await driver.tap(find.text(Constants.loginButton));
-      await driver.waitUntilNoTransientCallbacks();
+      await driver.waitUntilNoTransientCallbacks(timeout: Duration(minutes: 1));
 
       await driver.waitFor(find.byType(Constants.dashboardScreen));
 
@@ -89,13 +90,13 @@ void main() {
 
     // Create a new product
     test('Add a new product', () async {
-      await driver.tap(find.byValueKey(ProductKeys.productScreenFABKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.fab));
 
-      await driver.tap(find.byValueKey(ProductKeys.productEditProductFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.productKey));
       await driver.enterText(Constants.newProductKey);
-      await driver.tap(find.byValueKey(ProductKeys.productEditNotesFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.notes));
       await driver.enterText(Constants.newProductNotes);
-      await driver.tap(find.byValueKey(ProductKeys.productEditCostFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.cost));
       await driver.enterText(Constants.newProductCost);
 
       await driver.tap(find.byTooltip(Constants.saveToolTip));
@@ -118,11 +119,11 @@ void main() {
     test('Edit an existing product', () async {
       await driver.tap(find.text(Constants.newProductKey));
 
-      await driver.tap(find.byValueKey(ProductKeys.productEditProductFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.productKey));
       await driver.enterText(Constants.updatedProductKey);
-      await driver.tap(find.byValueKey(ProductKeys.productEditNotesFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.notes));
       await driver.enterText(Constants.updatedProductNotes);
-      await driver.tap(find.byValueKey(ProductKeys.productEditCostFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.cost));
       await driver.enterText(Constants.updatedProductCost);
 
       await driver.tap(find.byTooltip(Constants.saveToolTip));

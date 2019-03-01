@@ -38,11 +38,11 @@ void _saveAuthLocal(dynamic action) async {
 
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String email = prefs.getString(kSharedPrefEmail) ?? Config.LOGIN_EMAIL;
+  final String email = prefs.getString(kSharedPrefEmail) ?? '';
   final String url =
-      formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
+      formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? '');
   final String secret =
-      prefs.getString(kSharedPrefSecret) ?? Config.LOGIN_SECRET;
+      prefs.getString(kSharedPrefSecret) ?? '';
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
@@ -136,7 +136,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String url = formatApiUrlMachine(
-        prefs.getString(kSharedPrefUrl) ?? Config.LOGIN_URL);
+        prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
     final String token = prefs.getString(getKeychainTokenKey());
 
     repository

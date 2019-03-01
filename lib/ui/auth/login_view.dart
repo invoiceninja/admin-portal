@@ -31,12 +31,12 @@ class _LoginState extends State<LoginView> {
 
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
-  static final ValueKey _emailKey = Key(LoginKeys.emailKeyString);
-  static final ValueKey _passwordKey = Key(LoginKeys.passwordKeyString);
-  static final ValueKey _urlKey = Key(LoginKeys.urlKeyString);
-  static final ValueKey _secretKey = Key(LoginKeys.secretKeyString);
+  static final ValueKey _emailKey = Key(LoginKeys.email);
+  static final ValueKey _passwordKey = Key(LoginKeys.password);
+  static final ValueKey _urlKey = Key(LoginKeys.url);
+  static final ValueKey _secretKey = Key(LoginKeys.secret);
   static final ValueKey _oneTimePasswordKey =
-      Key(LoginKeys.oneTimePasswordKeyString);
+      Key(LoginKeys.oneTimePassword);
 
   final FocusNode _focusNode1 = new FocusNode();
 
@@ -227,6 +227,7 @@ class _LoginState extends State<LoginView> {
                                         setState(() => _isSelfHosted = false),
                                     child: Text(localization.hostedLogin))
                                 : FlatButton(
+                                    key: Key(LoginKeys.loginSelfHost),
                                     onPressed: () =>
                                         setState(() => _isSelfHosted = true),
                                     child: Text(localization.selfhostLogin)),
