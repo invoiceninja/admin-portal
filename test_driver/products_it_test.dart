@@ -9,7 +9,7 @@ class Constants {
   static String newProductNotes = 'Example Test Driver Notes';
   static String newProductCost = '100.5';
 
-  static String updatedProductKey =  'Updated Example Test Driver Product';
+  static String updatedProductKey = 'Updated Example Test Driver Product';
   static String updatedProductNotes = 'Updated Example Test Driver Notes';
   static String updatedProductCost = '200.5';
 
@@ -24,21 +24,14 @@ class Constants {
 
   static String loginButton = 'LOGIN';
 
-  static String dashboardScreen = 'DashboardScreen';
-  static String productScreen = 'ProductScreen';
-
   static String snackbarProductCreated = 'Successfully created product';
   static String snackbarProductUpdated = 'Successfully updated product';
   static String snackbarProductDeleted = 'Successfully deleted product';
   static String snackbarArchiveProduct = 'Successfully archived product';
-
-  static String openAppDrawer = 'Open navigation menu';
-  static String appDrawerProducts = 'Products';
 }
 
 void main() {
   group('PRODUCTS TEST', () {
-    
     FlutterDriver driver;
     String loginEmail, loginPassword, loginUrl, loginSecret;
 
@@ -53,16 +46,16 @@ void main() {
     });
 
     tearDown(() async {
-      if(driver!=null) {
+      if (driver != null) {
         driver.close();
       }
     });
 
     // Login into the app with details from .env.dart
     test('Login into the app and switch to products screen', () async {
-
       await driver.tap(find.byValueKey(LoginKeys.loginSelfHost));
-      await driver.tap(find.byValueKey(LoginKeys.email), timeout: new Duration(seconds: 60));
+      await driver.tap(find.byValueKey(LoginKeys.email),
+          timeout: new Duration(seconds: 60));
       await driver.enterText(loginEmail);
       await driver.tap(find.byValueKey(LoginKeys.password));
       await driver.enterText(loginPassword);
@@ -74,20 +67,18 @@ void main() {
       await driver.tap(find.text(Constants.loginButton));
       await driver.waitUntilNoTransientCallbacks(timeout: Duration(minutes: 1));
 
-      await driver.waitFor(find.byType(Constants.dashboardScreen));
+      await driver.waitFor(find.byType(AppKeys.dashboardScreen));
 
       // open the app drawer and switch to products screen
       // https://github.com/flutter/flutter/issues/9002[Issue still open] - Using this solution to implement it
-      final SerializableFinder drawerOpenButton = find.byTooltip(Constants.openAppDrawer);
+      await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
 
-      await driver.tap(drawerOpenButton);
+      await driver.tap(find.byValueKey(AppKeys.productDrawer));
 
-      final SerializableFinder productsDrawerButton = find.text(Constants.appDrawerProducts);
-      await driver.tap(productsDrawerButton);
-
-      await driver.waitFor(find.byType(Constants.productScreen));
+      //await driver.waitFor(find.byType(AppKeys.productScreen));
     });
 
+    /*
     // Create a new product
     test('Add a new product', () async {
       await driver.tap(find.byValueKey(ProductKeys.fab));
@@ -214,5 +205,7 @@ void main() {
       // verify not in list
       await driver.waitForAbsent(find.text(Constants.updatedProductKey));
     });
+
+    */
   });
 }

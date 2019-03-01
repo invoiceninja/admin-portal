@@ -362,6 +362,7 @@ class DrawerTile extends StatelessWidget {
     }
 
     return ListTile(
+      key: Key('${entityType}Drawer'),
       dense: true,
       leading: Icon(icon, size: 22.0),
       title: Text(title),

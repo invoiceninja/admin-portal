@@ -1,3 +1,10 @@
+class AppKeys {
+  static const String openAppDrawer = 'Open navigation menu';
+  static const String dashboardScreen = 'DashboardScreen';
+  static const String productScreen = 'ProductScreen';
+  static const String productDrawer = 'productDrawer';
+}
+
 class LoginKeys {
   static const String email = 'loginEmail';
   static const String password = 'loginPassword';
