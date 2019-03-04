@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -336,13 +337,14 @@ class AppDrawer extends StatelessWidget {
 
 class DrawerTile extends StatelessWidget {
   const DrawerTile({
+    Key key,
     @required this.company,
     @required this.icon,
     @required this.title,
     @required this.onTap,
     this.onCreateTap,
     this.entityType,
-  });
+  }) : super(key: key);
 
   final CompanyEntity company;
   final EntityType entityType;
@@ -362,10 +364,9 @@ class DrawerTile extends StatelessWidget {
     }
 
     return ListTile(
-      key: Key('${entityType}Drawer'),
       dense: true,
-      leading: Icon(icon, size: 22.0),
-      title: Text(title),
+      leading: Icon(icon, size: 22.0, key: ValueKey(title)),
+      title: Tooltip(message: title, child: Text(title)),
       onTap: onTap,
       trailing: onCreateTap == null || !user.canCreate(entityType)
           ? null

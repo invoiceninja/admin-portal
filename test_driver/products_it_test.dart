@@ -73,7 +73,10 @@ void main() {
       // https://github.com/flutter/flutter/issues/9002[Issue still open] - Using this solution to implement it
       await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
 
-      await driver.tap(find.byValueKey(AppKeys.productDrawer));
+      //expect(await driver.getText(find.text('Products')), 'Products');
+
+      await driver.waitFor(find.text('Products'));
+      await driver.tap(find.text('Products'));
 
       //await driver.waitFor(find.byType(AppKeys.productScreen));
     });

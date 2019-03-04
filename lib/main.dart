@@ -159,11 +159,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     }
   }
 
+  /*
   @override
   void initState() {
     super.initState();
 
-    /*
     const QuickActions quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
       if (shortcutType == 'action_new_client') {
@@ -178,8 +178,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           localizedTitle: 'New Client',
           icon: 'AppIcon'),
     ]);
-    */
   }
+  */
 
   @override
   void didChangeDependencies() {
