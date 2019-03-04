@@ -65,7 +65,6 @@ void main() {
       await driver.enterText(loginSecret);
 
       await driver.tap(find.text(Constants.loginButton));
-      await driver.waitUntilNoTransientCallbacks(timeout: Duration(minutes: 1));
 
       await driver.waitFor(find.byType(AppKeys.dashboardScreen));
 
@@ -73,12 +72,9 @@ void main() {
       // https://github.com/flutter/flutter/issues/9002[Issue still open] - Using this solution to implement it
       await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
 
-      //expect(await driver.getText(find.text('Products')), 'Products');
+      await driver.tap(find.byTooltip('Products'));
 
-      await driver.waitFor(find.text('Products'));
-      await driver.tap(find.text('Products'));
-
-      //await driver.waitFor(find.byType(AppKeys.productScreen));
+      await driver.waitFor(find.byType(AppKeys.productScreen));
     });
 
     /*

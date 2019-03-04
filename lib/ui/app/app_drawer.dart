@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -20,9 +19,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -107,13 +104,6 @@ class AppDrawer extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Center(
-                      /*
-                      child: viewModel.selectedCompany.logoUrl != null &&
-                              viewModel.selectedCompany.logoUrl.isNotEmpty
-                          ? Image.network(viewModel.selectedCompany.logoUrl)
-                          : Image.asset('assets/images/logo.png',
-                              width: 100.0, height: 100.0)),
-                              */
                       child: viewModel.selectedCompany.logoUrl != null &&
                               viewModel.selectedCompany.logoUrl.isNotEmpty
                           ? CachedNetworkImage(
@@ -136,13 +126,13 @@ class AppDrawer extends StatelessWidget {
                                 !viewModel.isLoading
                             ? _multipleCompanies
                             : _singleCompany),
-                    Opacity(
-                      opacity: viewModel.isLoading ? 1.0 : 0.0,
-                      child: SizedBox(
-                          child: CircularProgressIndicator(),
-                          width: 20.0,
-                          height: 20.0),
-                    )
+                    SizedBox(
+                      child: viewModel.isLoading
+                          ? CircularProgressIndicator()
+                          : null,
+                      width: 20.0,
+                      height: 20.0,
+                    ),
                   ],
                 ),
               ],
