@@ -1,9 +1,10 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:test/test.dart';
-
+import 'package:faker/faker.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
+/*
 class Constants {
   static String newProductKey = 'Example Test Driver Product';
   static String newProductNotes = 'Example Test Driver Notes';
@@ -29,6 +30,7 @@ class Constants {
   static String snackbarProductDeleted = 'Successfully deleted product';
   static String snackbarArchiveProduct = 'Successfully archived product';
 }
+*/
 
 void main() {
   group('PRODUCTS TEST', () {
@@ -54,8 +56,7 @@ void main() {
     // Login into the app with details from .env.dart
     test('Login into the app and switch to products screen', () async {
       await driver.tap(find.byValueKey(LoginKeys.loginSelfHost));
-      await driver.tap(find.byValueKey(LoginKeys.email),
-          timeout: new Duration(seconds: 60));
+      await driver.tap(find.byValueKey(LoginKeys.email));
       await driver.enterText(loginEmail);
       await driver.tap(find.byValueKey(LoginKeys.password));
       await driver.enterText(loginPassword);
@@ -64,47 +65,49 @@ void main() {
       await driver.tap(find.byValueKey(LoginKeys.secret));
       await driver.enterText(loginSecret);
 
-      await driver.tap(find.text(Constants.loginButton));
-
+      await driver.tap(find.text(LoginKeys.loginButton.toUpperCase()));
       await driver.waitFor(find.byType(AppKeys.dashboardScreen));
-
-      // open the app drawer and switch to products screen
-      // https://github.com/flutter/flutter/issues/9002[Issue still open] - Using this solution to implement it
       await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
-
-      await driver.tap(find.byTooltip('Products'));
-
-      await driver.waitFor(find.byType(AppKeys.productScreen));
+      await driver.tap(find.byValueKey(ProductKeys.drawer));
+      await driver.waitFor(find.byType(ProductKeys.screen));
     });
 
-    /*
     // Create a new product
     test('Add a new product', () async {
+      final productKey = faker.food.cuisine();
+      final notes = faker.food.dish();
+
       await driver.tap(find.byValueKey(ProductKeys.fab));
 
       await driver.tap(find.byValueKey(ProductKeys.productKey));
-      await driver.enterText(Constants.newProductKey);
+      await driver.enterText(productKey);
+
       await driver.tap(find.byValueKey(ProductKeys.notes));
-      await driver.enterText(Constants.newProductNotes);
+      await driver.enterText(notes);
+
+      await driver.tap(find.byTooltip(AppTooltips.save));
+
+      await driver.waitFor(find.text(AppKeys.successfullyCreated));
+
+      await driver.tap(find.byTooltip(AppTooltips.back));
+
+      await driver.tap(find.text(productKey));
+      await driver.waitFor(find.text(productKey));
+
+      /*
       await driver.tap(find.byValueKey(ProductKeys.cost));
       await driver.enterText(Constants.newProductCost);
 
-      await driver.tap(find.byTooltip(Constants.saveToolTip));
-
-      // verify snackbar
-      await driver.waitFor(find.text(Constants.snackbarProductCreated));
-
-      await driver.tap(find.byTooltip(Constants.backToolTip));
-
       // verify entered text while new product creation
-      await driver.tap(find.text(Constants.newProductKey));
       await driver.waitFor(find.text(Constants.newProductKey));
       await driver.waitFor(find.text(Constants.newProductNotes));
       await driver.waitFor(find.text(Constants.newProductCost));
 
       await driver.tap(find.byTooltip(Constants.backToolTip));
+      */
     });
 
+    /*
     // Edit the newly created product
     test('Edit an existing product', () async {
       await driver.tap(find.text(Constants.newProductKey));

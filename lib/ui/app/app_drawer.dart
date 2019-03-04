@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -159,6 +160,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
+            key: Key(ProductKeys.drawer),
             company: company,
             entityType: EntityType.product,
             icon: getEntityIcon(EntityType.product),
