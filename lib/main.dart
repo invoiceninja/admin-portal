@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';

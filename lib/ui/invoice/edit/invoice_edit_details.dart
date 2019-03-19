@@ -300,8 +300,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             company.enableInvoiceTaxes && company.enableSecondTaxRate
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(invoice.applyTax(taxRate)),
+                    onSelected: (taxRate) => viewModel
+                        .onChanged(invoice.applyTax(taxRate, isSecond: true)),
                     labelText: localization.tax,
                     initialTaxName: invoice.taxName2,
                     initialTaxRate: invoice.taxRate2,
