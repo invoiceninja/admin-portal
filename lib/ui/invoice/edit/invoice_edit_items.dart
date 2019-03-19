@@ -111,11 +111,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   List<TextEditingController> _controllers = [];
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     if (_controllers.isNotEmpty) {
       return;

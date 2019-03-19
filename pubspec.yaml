@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Mobile app for Invoice Ninja
-version: 0.1.38
+version: 0.1.39
 author: Hillel Coren
 homepage: https://www.invoiceninja.com
 documentation: http://docs.invoiceninja.com
@@ -42,6 +42,7 @@ dev_dependencies:
   #  sdk: flutter
   build_runner: ^0.10.2
   built_value_generator: ^6.1.2
+  faker: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

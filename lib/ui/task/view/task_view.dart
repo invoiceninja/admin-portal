@@ -56,6 +56,12 @@ class _TaskViewState extends State<TaskView> {
 
     final Map<String, String> fields = {};
 
+    // TODO Remove isNotEmpty check in v2
+    if (company.taskStatusMap.isNotEmpty && (task.taskStatusId ?? 0) > 0) {
+      fields[localization.status] =
+          company.taskStatusMap[task.taskStatusId].name ?? '';
+    }
+
     if (task.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.task1);
       fields[label1] = task.customValue1;
@@ -152,10 +158,6 @@ class _TaskViewState extends State<TaskView> {
       if (fields.isNotEmpty) {
         widgets.addAll([
           FieldGrid(fields),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
         ]);
       }
 

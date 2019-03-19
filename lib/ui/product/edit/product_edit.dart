@@ -148,7 +148,7 @@ class _ProductEditState extends State<ProductEdit> {
               FormCard(
                 children: <Widget>[
                   TextFormField(
-                    key: Key(ProductKeys.productEditProductFieldKeyString),
+                    key: Key(ProductKeys.productKey),
                     controller: _productKeyController,
                     autocorrect: false,
                     decoration: InputDecoration(
@@ -160,7 +160,7 @@ class _ProductEditState extends State<ProductEdit> {
                     autovalidate: autoValidate,
                   ),
                   TextFormField(
-                    key: Key(ProductKeys.productEditNotesFieldKeyString),
+                    key: Key(ProductKeys.notes),
                     controller: _notesController,
                     maxLines: 4,
                     decoration: InputDecoration(
@@ -182,7 +182,7 @@ class _ProductEditState extends State<ProductEdit> {
                         company.getCustomFieldValues(CustomFieldType.product2),
                   ),
                   TextFormField(
-                    key: Key(ProductKeys.productEditCostFieldKeyString),
+                    key: Key(ProductKeys.cost),
                     controller: _costController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(

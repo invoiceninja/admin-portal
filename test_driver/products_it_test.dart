@@ -1,15 +1,16 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:test/test.dart';
-
+import 'package:faker/faker.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
+/*
 class Constants {
   static String newProductKey = 'Example Test Driver Product';
   static String newProductNotes = 'Example Test Driver Notes';
   static String newProductCost = '100.5';
 
-  static String updatedProductKey =  'Updated Example Test Driver Product';
+  static String updatedProductKey = 'Updated Example Test Driver Product';
   static String updatedProductNotes = 'Updated Example Test Driver Notes';
   static String updatedProductCost = '200.5';
 
@@ -24,21 +25,15 @@ class Constants {
 
   static String loginButton = 'LOGIN';
 
-  static String dashboardScreen = 'DashboardScreen';
-  static String productScreen = 'ProductScreen';
-
   static String snackbarProductCreated = 'Successfully created product';
   static String snackbarProductUpdated = 'Successfully updated product';
   static String snackbarProductDeleted = 'Successfully deleted product';
   static String snackbarArchiveProduct = 'Successfully archived product';
-
-  static String openAppDrawer = 'Open navigation menu';
-  static String appDrawerProducts = 'Products';
 }
+*/
 
 void main() {
   group('PRODUCTS TEST', () {
-    
     FlutterDriver driver;
     String loginEmail, loginPassword, loginUrl, loginSecret;
 
@@ -46,83 +41,82 @@ void main() {
       driver = await FlutterDriver.connect();
 
       // read config file
-      loginEmail = Config.LOGIN_EMAIL;
-      loginPassword = Config.LOGIN_PASSWORD;
-      loginUrl = Config.LOGIN_URL;
-      loginSecret = Config.LOGIN_SECRET;
+      loginEmail = Config.TEST_EMAIL;
+      loginPassword = Config.TEST_PASSWORD;
+      loginUrl = Config.TEST_URL;
+      loginSecret = Config.TEST_SECRET;
     });
 
     tearDown(() async {
-      if(driver!=null) {
+      if (driver != null) {
         driver.close();
       }
     });
 
     // Login into the app with details from .env.dart
     test('Login into the app and switch to products screen', () async {
-      
-      await driver.tap(find.byValueKey(LoginKeys.emailKeyString), timeout: new Duration(seconds: 60));
+      await driver.tap(find.byValueKey(LoginKeys.loginSelfHost));
+      await driver.tap(find.byValueKey(LoginKeys.email));
       await driver.enterText(loginEmail);
-      await driver.tap(find.byValueKey(LoginKeys.passwordKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.password));
       await driver.enterText(loginPassword);
-      await driver.tap(find.byValueKey(LoginKeys.urlKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.url));
       await driver.enterText(loginUrl);
-      await driver.tap(find.byValueKey(LoginKeys.secretKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.secret));
       await driver.enterText(loginSecret);
 
-      await driver.tap(find.text(Constants.loginButton));
-      await driver.waitUntilNoTransientCallbacks();
-
-      await driver.waitFor(find.byType(Constants.dashboardScreen));
-
-      // open the app drawer and switch to products screen
-      // https://github.com/flutter/flutter/issues/9002[Issue still open] - Using this solution to implement it
-      final SerializableFinder drawerOpenButton = find.byTooltip(Constants.openAppDrawer);
-
-      await driver.tap(drawerOpenButton);
-
-      final SerializableFinder productsDrawerButton = find.text(Constants.appDrawerProducts);
-      await driver.tap(productsDrawerButton);
-
-      await driver.waitFor(find.byType(Constants.productScreen));
+      await driver.tap(find.text(LoginKeys.loginButton.toUpperCase()));
+      await driver.waitFor(find.byType(AppKeys.dashboardScreen));
+      await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
+      await driver.tap(find.byValueKey(ProductKeys.drawer));
+      await driver.waitFor(find.byType(ProductKeys.screen));
     });
 
     // Create a new product
     test('Add a new product', () async {
-      await driver.tap(find.byValueKey(ProductKeys.productScreenFABKeyString));
+      final productKey = faker.food.cuisine();
+      final notes = faker.food.dish();
 
-      await driver.tap(find.byValueKey(ProductKeys.productEditProductFieldKeyString));
-      await driver.enterText(Constants.newProductKey);
-      await driver.tap(find.byValueKey(ProductKeys.productEditNotesFieldKeyString));
-      await driver.enterText(Constants.newProductNotes);
-      await driver.tap(find.byValueKey(ProductKeys.productEditCostFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.fab));
+
+      await driver.tap(find.byValueKey(ProductKeys.productKey));
+      await driver.enterText(productKey);
+
+      await driver.tap(find.byValueKey(ProductKeys.notes));
+      await driver.enterText(notes);
+
+      await driver.tap(find.byTooltip(AppTooltips.save));
+
+      await driver.waitFor(find.text(AppKeys.successfullyCreated));
+
+      await driver.tap(find.byTooltip(AppTooltips.back));
+
+      await driver.tap(find.text(productKey));
+      await driver.waitFor(find.text(productKey));
+
+      /*
+      await driver.tap(find.byValueKey(ProductKeys.cost));
       await driver.enterText(Constants.newProductCost);
 
-      await driver.tap(find.byTooltip(Constants.saveToolTip));
-
-      // verify snackbar
-      await driver.waitFor(find.text(Constants.snackbarProductCreated));
-
-      await driver.tap(find.byTooltip(Constants.backToolTip));
-
       // verify entered text while new product creation
-      await driver.tap(find.text(Constants.newProductKey));
       await driver.waitFor(find.text(Constants.newProductKey));
       await driver.waitFor(find.text(Constants.newProductNotes));
       await driver.waitFor(find.text(Constants.newProductCost));
 
       await driver.tap(find.byTooltip(Constants.backToolTip));
+      */
     });
 
+    /*
     // Edit the newly created product
     test('Edit an existing product', () async {
       await driver.tap(find.text(Constants.newProductKey));
 
-      await driver.tap(find.byValueKey(ProductKeys.productEditProductFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.productKey));
       await driver.enterText(Constants.updatedProductKey);
-      await driver.tap(find.byValueKey(ProductKeys.productEditNotesFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.notes));
       await driver.enterText(Constants.updatedProductNotes);
-      await driver.tap(find.byValueKey(ProductKeys.productEditCostFieldKeyString));
+      await driver.tap(find.byValueKey(ProductKeys.cost));
       await driver.enterText(Constants.updatedProductCost);
 
       await driver.tap(find.byTooltip(Constants.saveToolTip));
@@ -213,5 +207,7 @@ void main() {
       // verify not in list
       await driver.waitForAbsent(find.text(Constants.updatedProductKey));
     });
+
+    */
   });
 }

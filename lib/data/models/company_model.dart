@@ -49,6 +49,7 @@ abstract class CompanyEntity
       customPaymentTerms: BuiltList<PaymentTermEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
+      taskStatusMap: BuiltMap<int, TaskStatusEntity>(),
       user: UserEntity(),
       //userId: 0,
       //users: BuiltList<UserEntity>(),
@@ -71,6 +72,9 @@ abstract class CompanyEntity
       emailBodyReminder3: '',
       fillProducts: true,
       enablePortalPassword: false,
+      hasCustomDesign1: false,
+      hasCustomDesign2: false,
+      hasCustomDesign3: false,
     );
   }
 
@@ -187,6 +191,7 @@ abstract class CompanyEntity
   @nullable
   @BuiltValueField(wireName: 'task_statuses')
   BuiltList<TaskStatusEntity> get taskStatuses;
+  BuiltMap<int, TaskStatusEntity> get taskStatusMap;
 
   //@BuiltValueField(wireName: 'user_id')
   //int get userId;
@@ -251,6 +256,19 @@ abstract class CompanyEntity
   @nullable
   @BuiltValueField(wireName: 'enable_portal_password')
   bool get enablePortalPassword;
+
+  @nullable
+  @BuiltValueField(wireName: 'has_custom_design1')
+  bool get hasCustomDesign1;
+
+  @nullable
+  @BuiltValueField(wireName: 'has_custom_design2')
+  bool get hasCustomDesign2;
+
+  @nullable
+  @BuiltValueField(wireName: 'has_custom_design3')
+  bool get hasCustomDesign3;
+
 
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')

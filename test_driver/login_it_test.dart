@@ -14,10 +14,10 @@ void main() {
       driver = await FlutterDriver.connect();
 
       // read config file
-      loginEmail = Config.LOGIN_EMAIL;
-      loginPassword = Config.LOGIN_PASSWORD;
-      loginUrl = Config.LOGIN_URL;
-      loginSecret = Config.LOGIN_SECRET;
+      loginEmail = Config.TEST_EMAIL;
+      loginPassword = Config.TEST_PASSWORD;
+      loginUrl = Config.TEST_URL;
+      loginSecret = Config.TEST_SECRET;
     });
 
     tearDown(() async {
@@ -28,16 +28,16 @@ void main() {
 
     test('No input provided by user test', () async {
 
-      await driver.tap(find.byValueKey(LoginKeys.emailKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.email));
       await driver.enterText('');
 
-      await driver.tap(find.byValueKey(LoginKeys.passwordKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.password));
       await driver.enterText('');
 
-      await driver.tap(find.byValueKey(LoginKeys.urlKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.url));
       await driver.enterText('');
 
-      await driver.tap(find.byValueKey(LoginKeys.secretKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.secret));
       await driver.enterText('');
 
       await driver.tap(find.text('LOGIN'));
@@ -47,16 +47,16 @@ void main() {
 
     test('Details filled by user and login', () async {
 
-      await driver.tap(find.byValueKey(LoginKeys.emailKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.email));
       await driver.enterText(loginEmail);
 
-      await driver.tap(find.byValueKey(LoginKeys.passwordKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.password));
       await driver.enterText(loginPassword);
 
-      await driver.tap(find.byValueKey(LoginKeys.urlKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.url));
       await driver.enterText(loginUrl);
 
-      await driver.tap(find.byValueKey(LoginKeys.secretKeyString));
+      await driver.tap(find.byValueKey(LoginKeys.secret));
       await driver.enterText(loginSecret);
 
       await driver.tap(find.text('LOGIN'));

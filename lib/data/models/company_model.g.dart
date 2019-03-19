@@ -147,6 +147,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.taxRates,
           specifiedType:
               const FullType(BuiltList, const [const FullType(TaxRateEntity)])),
+      'taskStatusMap',
+      serializers.serialize(object.taskStatusMap,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(int), const FullType(TaskStatusEntity)])),
       'user',
       serializers.serialize(object.user,
           specifiedType: const FullType(UserEntity)),
@@ -218,6 +222,24 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       result
         ..add('enable_portal_password')
         ..add(serializers.serialize(object.enablePortalPassword,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.hasCustomDesign1 != null) {
+      result
+        ..add('has_custom_design1')
+        ..add(serializers.serialize(object.hasCustomDesign1,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.hasCustomDesign2 != null) {
+      result
+        ..add('has_custom_design2')
+        ..add(serializers.serialize(object.hasCustomDesign2,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.hasCustomDesign3 != null) {
+      result
+        ..add('has_custom_design3')
+        ..add(serializers.serialize(object.hasCustomDesign3,
             specifiedType: const FullType(bool)));
     }
 
@@ -391,6 +413,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(TaskStatusEntity)]))
               as BuiltList);
           break;
+        case 'taskStatusMap':
+          result.taskStatusMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(TaskStatusEntity)
+              ])) as BuiltMap);
+          break;
         case 'user':
           result.user.replace(serializers.deserialize(value,
               specifiedType: const FullType(UserEntity)) as UserEntity);
@@ -470,6 +499,18 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'enable_portal_password':
           result.enablePortalPassword = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'has_custom_design1':
+          result.hasCustomDesign1 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'has_custom_design2':
+          result.hasCustomDesign2 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'has_custom_design3':
+          result.hasCustomDesign3 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -770,6 +811,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<TaskStatusEntity> taskStatuses;
   @override
+  final BuiltMap<int, TaskStatusEntity> taskStatusMap;
+  @override
   final UserEntity user;
   @override
   final BuiltMap<String, String> customFields;
@@ -807,6 +850,12 @@ class _$CompanyEntity extends CompanyEntity {
   final bool fillProducts;
   @override
   final bool enablePortalPassword;
+  @override
+  final bool hasCustomDesign1;
+  @override
+  final bool hasCustomDesign2;
+  @override
+  final bool hasCustomDesign3;
 
   factory _$CompanyEntity([void updates(CompanyEntityBuilder b)]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
@@ -850,6 +899,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.enableCustomInvoiceTaxes2,
       this.taxRates,
       this.taskStatuses,
+      this.taskStatusMap,
       this.user,
       this.customFields,
       this.customPaymentTerms,
@@ -868,7 +918,10 @@ class _$CompanyEntity extends CompanyEntity {
       this.emailBodyReminder2,
       this.emailBodyReminder3,
       this.fillProducts,
-      this.enablePortalPassword})
+      this.enablePortalPassword,
+      this.hasCustomDesign1,
+      this.hasCustomDesign2,
+      this.hasCustomDesign3})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
@@ -994,6 +1047,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (taxRates == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taxRates');
     }
+    if (taskStatusMap == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatusMap');
+    }
     if (user == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'user');
     }
@@ -1101,6 +1157,7 @@ class _$CompanyEntity extends CompanyEntity {
         enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2 &&
         taxRates == other.taxRates &&
         taskStatuses == other.taskStatuses &&
+        taskStatusMap == other.taskStatusMap &&
         user == other.user &&
         customFields == other.customFields &&
         customPaymentTerms == other.customPaymentTerms &&
@@ -1119,7 +1176,10 @@ class _$CompanyEntity extends CompanyEntity {
         emailBodyReminder2 == other.emailBodyReminder2 &&
         emailBodyReminder3 == other.emailBodyReminder3 &&
         fillProducts == other.fillProducts &&
-        enablePortalPassword == other.enablePortalPassword;
+        enablePortalPassword == other.enablePortalPassword &&
+        hasCustomDesign1 == other.hasCustomDesign1 &&
+        hasCustomDesign2 == other.hasCustomDesign2 &&
+        hasCustomDesign3 == other.hasCustomDesign3;
   }
 
   @override
@@ -1142,26 +1202,26 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode),
-                                                                                user.hashCode),
-                                                                            customFields.hashCode),
-                                                                        customPaymentTerms.hashCode),
-                                                                    invoiceFields.hashCode),
-                                                                emailFooter.hashCode),
-                                                            emailSubjectInvoice.hashCode),
-                                                        emailSubjectQuote.hashCode),
-                                                    emailSubjectPayment.hashCode),
-                                                emailBodyInvoice.hashCode),
-                                            emailBodyQuote.hashCode),
-                                        emailBodyPayment.hashCode),
-                                    emailSubjectReminder1.hashCode),
-                                emailSubjectReminder2.hashCode),
-                            emailSubjectReminder3.hashCode),
-                        emailBodyReminder1.hashCode),
-                    emailBodyReminder2.hashCode),
-                emailBodyReminder3.hashCode),
-            fillProducts.hashCode),
-        enablePortalPassword.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), user.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
+                                                                                invoiceFields.hashCode),
+                                                                            emailFooter.hashCode),
+                                                                        emailSubjectInvoice.hashCode),
+                                                                    emailSubjectQuote.hashCode),
+                                                                emailSubjectPayment.hashCode),
+                                                            emailBodyInvoice.hashCode),
+                                                        emailBodyQuote.hashCode),
+                                                    emailBodyPayment.hashCode),
+                                                emailSubjectReminder1.hashCode),
+                                            emailSubjectReminder2.hashCode),
+                                        emailSubjectReminder3.hashCode),
+                                    emailBodyReminder1.hashCode),
+                                emailBodyReminder2.hashCode),
+                            emailBodyReminder3.hashCode),
+                        fillProducts.hashCode),
+                    enablePortalPassword.hashCode),
+                hasCustomDesign1.hashCode),
+            hasCustomDesign2.hashCode),
+        hasCustomDesign3.hashCode));
   }
 
   @override
@@ -1205,6 +1265,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2)
           ..add('taxRates', taxRates)
           ..add('taskStatuses', taskStatuses)
+          ..add('taskStatusMap', taskStatusMap)
           ..add('user', user)
           ..add('customFields', customFields)
           ..add('customPaymentTerms', customPaymentTerms)
@@ -1223,7 +1284,10 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('emailBodyReminder2', emailBodyReminder2)
           ..add('emailBodyReminder3', emailBodyReminder3)
           ..add('fillProducts', fillProducts)
-          ..add('enablePortalPassword', enablePortalPassword))
+          ..add('enablePortalPassword', enablePortalPassword)
+          ..add('hasCustomDesign1', hasCustomDesign1)
+          ..add('hasCustomDesign2', hasCustomDesign2)
+          ..add('hasCustomDesign3', hasCustomDesign3))
         .toString();
   }
 }
@@ -1414,6 +1478,12 @@ class CompanyEntityBuilder
   set taskStatuses(ListBuilder<TaskStatusEntity> taskStatuses) =>
       _$this._taskStatuses = taskStatuses;
 
+  MapBuilder<int, TaskStatusEntity> _taskStatusMap;
+  MapBuilder<int, TaskStatusEntity> get taskStatusMap =>
+      _$this._taskStatusMap ??= new MapBuilder<int, TaskStatusEntity>();
+  set taskStatusMap(MapBuilder<int, TaskStatusEntity> taskStatusMap) =>
+      _$this._taskStatusMap = taskStatusMap;
+
   UserEntityBuilder _user;
   UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
   set user(UserEntityBuilder user) => _$this._user = user;
@@ -1508,6 +1578,21 @@ class CompanyEntityBuilder
   set enablePortalPassword(bool enablePortalPassword) =>
       _$this._enablePortalPassword = enablePortalPassword;
 
+  bool _hasCustomDesign1;
+  bool get hasCustomDesign1 => _$this._hasCustomDesign1;
+  set hasCustomDesign1(bool hasCustomDesign1) =>
+      _$this._hasCustomDesign1 = hasCustomDesign1;
+
+  bool _hasCustomDesign2;
+  bool get hasCustomDesign2 => _$this._hasCustomDesign2;
+  set hasCustomDesign2(bool hasCustomDesign2) =>
+      _$this._hasCustomDesign2 = hasCustomDesign2;
+
+  bool _hasCustomDesign3;
+  bool get hasCustomDesign3 => _$this._hasCustomDesign3;
+  set hasCustomDesign3(bool hasCustomDesign3) =>
+      _$this._hasCustomDesign3 = hasCustomDesign3;
+
   CompanyEntityBuilder();
 
   CompanyEntityBuilder get _$this {
@@ -1550,6 +1635,7 @@ class CompanyEntityBuilder
       _enableCustomInvoiceTaxes2 = _$v.enableCustomInvoiceTaxes2;
       _taxRates = _$v.taxRates?.toBuilder();
       _taskStatuses = _$v.taskStatuses?.toBuilder();
+      _taskStatusMap = _$v.taskStatusMap?.toBuilder();
       _user = _$v.user?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
@@ -1569,6 +1655,9 @@ class CompanyEntityBuilder
       _emailBodyReminder3 = _$v.emailBodyReminder3;
       _fillProducts = _$v.fillProducts;
       _enablePortalPassword = _$v.enablePortalPassword;
+      _hasCustomDesign1 = _$v.hasCustomDesign1;
+      _hasCustomDesign2 = _$v.hasCustomDesign2;
+      _hasCustomDesign3 = _$v.hasCustomDesign3;
       _$v = null;
     }
     return this;
@@ -1631,6 +1720,7 @@ class CompanyEntityBuilder
               enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2,
               taxRates: taxRates.build(),
               taskStatuses: _taskStatuses?.build(),
+              taskStatusMap: taskStatusMap.build(),
               user: user.build(),
               customFields: customFields.build(),
               customPaymentTerms: customPaymentTerms.build(),
@@ -1649,7 +1739,10 @@ class CompanyEntityBuilder
               emailBodyReminder2: emailBodyReminder2,
               emailBodyReminder3: emailBodyReminder3,
               fillProducts: fillProducts,
-              enablePortalPassword: enablePortalPassword);
+              enablePortalPassword: enablePortalPassword,
+              hasCustomDesign1: hasCustomDesign1,
+              hasCustomDesign2: hasCustomDesign2,
+              hasCustomDesign3: hasCustomDesign3);
     } catch (_) {
       String _$failedField;
       try {
@@ -1657,6 +1750,8 @@ class CompanyEntityBuilder
         taxRates.build();
         _$failedField = 'taskStatuses';
         _taskStatuses?.build();
+        _$failedField = 'taskStatusMap';
+        taskStatusMap.build();
         _$failedField = 'user';
         user.build();
         _$failedField = 'customFields';

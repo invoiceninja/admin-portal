@@ -22,8 +22,8 @@ Note: the mobile app requires the latest version of the web app.
 - [x] Invoices
 - [x] Quotes
 - [x] Payments
-- [ ] Projects
-- [ ] Tasks
+- [x] Projects
+- [x] Tasks
 - [ ] Vendors
 - [ ] Expenses
 - [ ] Credits
@@ -59,6 +59,7 @@ The architecture is based off these two projects:
     - Press "Register App" button.
     - Download "google-services.json" and put it in `android/app` directory.
 - Run `flutter run` while you have a device connected to the computer or an emulator running and now you can run it.    
+- Run `flutter drive --target=test_driver/products_it.dart` to run the tests
     
 ## Contributions
 
