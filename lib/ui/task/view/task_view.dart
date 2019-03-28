@@ -59,7 +59,7 @@ class _TaskViewState extends State<TaskView> {
     // TODO Remove isNotEmpty check in v2
     if (company.taskStatusMap.isNotEmpty && (task.taskStatusId ?? 0) > 0) {
       fields[localization.status] =
-          company.taskStatusMap[task.taskStatusId].name ?? '';
+          company.taskStatusMap[task.taskStatusId]?.name ?? '';
     }
 
     if (task.customValue1.isNotEmpty) {
