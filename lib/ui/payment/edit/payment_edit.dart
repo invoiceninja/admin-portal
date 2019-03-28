@@ -178,7 +178,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         ? TextFormField(
                             controller: _amountController,
                             autocorrect: false,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
                             decoration: InputDecoration(
                               labelText: localization.amount,
                             ),

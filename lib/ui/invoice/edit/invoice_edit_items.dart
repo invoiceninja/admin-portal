@@ -237,7 +237,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             ),
             TextFormField(
               controller: _costController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: localization.unitCost,
               ),
@@ -245,7 +245,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             company.hasInvoiceField('quantity')
                 ? TextFormField(
                     controller: _qtyController,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: localization.quantity,
                     ),
@@ -254,7 +254,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             company.hasInvoiceField('discount')
                 ? TextFormField(
                     controller: _discountController,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: localization.discount,
                     ),
