@@ -186,14 +186,14 @@ class _ProjectEditState extends State<ProjectEdit> {
                       },
                     ),
                     TextFormField(
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       controller: _hoursController,
                       decoration: InputDecoration(
                         labelText: localization.budgetedHours,
                       ),
                     ),
                     TextFormField(
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       controller: _taskRateController,
                       decoration: InputDecoration(
                         labelText: localization.taskRate,

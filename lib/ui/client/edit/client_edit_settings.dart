@@ -138,7 +138,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             ),
             TextFormField(
               controller: _taskRateController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: localization.taskRate,
               ),

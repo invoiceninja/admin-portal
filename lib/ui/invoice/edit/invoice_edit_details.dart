@@ -193,7 +193,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               decoration: InputDecoration(
                 labelText: localization.partialDeposit,
               ),
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
             invoice.partial != null && invoice.partial > 0
                 ? DatePicker(
@@ -221,7 +221,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     decoration: InputDecoration(
                       labelText: localization.discount,
                     ),
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                   ),
                 ),
                 const SizedBox(
@@ -274,7 +274,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                       labelText: company
                           .getCustomFieldLabel(CustomFieldType.surcharge1),
                     ),
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
             company.getCustomFieldLabel(CustomFieldType.surcharge2).isNotEmpty
@@ -284,7 +284,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                       labelText: company
                           .getCustomFieldLabel(CustomFieldType.surcharge2),
                     ),
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
             company.enableInvoiceTaxes
