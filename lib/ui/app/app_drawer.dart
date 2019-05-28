@@ -110,9 +110,12 @@ class AppDrawer extends StatelessWidget {
                           ? CachedNetworkImage(
                               key: ValueKey(viewModel.selectedCompany.logoUrl),
                               imageUrl: viewModel.selectedCompany.logoUrl,
-                              placeholder: CircularProgressIndicator(),
-                              errorWidget: Image.asset('assets/images/logo.png',
-                                  width: 100.0, height: 100.0),
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => Image.asset(
+                                  'assets/images/logo.png',
+                                  width: 100.0,
+                                  height: 100.0),
                             )
                           : Image.asset('assets/images/logo.png',
                               width: 100.0, height: 100.0)),
