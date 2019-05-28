@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
+//import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
-  final navigator = Navigator.of(context);
-
-  navigator.push(
-      MaterialPageRoute<PDFViewer>(builder: (context) => PDFScreen(invoice)));
 
   /*
+  final navigator = Navigator.of(context);
+  navigator.push(
+      MaterialPageRoute<PDFViewer>(builder: (context) => PDFScreen(invoice)));
+  */
+
   final localization = AppLocalization.of(context);
   if (Theme.of(context).platform == TargetPlatform.iOS) {
     if (await canLaunch(invoice.invitationBorderlessLink)) {
@@ -27,9 +30,9 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
       throw localization.anErrorOccurred;
     }
   }
-  */
 }
 
+/*
 class PDFScreen extends StatefulWidget {
   const PDFScreen(this.invoice);
 
@@ -68,3 +71,4 @@ class _PDFScreenState extends State<PDFScreen> {
     );
   }
 }
+*/
