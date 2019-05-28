@@ -26,10 +26,9 @@ Note: the mobile app requires the latest version of the web app.
 - [x] Tasks
 - [ ] Vendors
 - [ ] Expenses
-- [ ] Credits
-- [ ] Recurring
 - [ ] Tablet support
 - [ ] Desktop support
+- [ ] Web support
 
 ## Application Architecture
 
