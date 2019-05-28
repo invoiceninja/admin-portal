@@ -65,12 +65,15 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 
 void main() async {
-  final SentryClient _sentry = SentryClient(
-      dsn: Config.SENTRY_DNS,
-      environmentAttributes: Event(
-        release: kAppVersion,
-        environment: Config.PLATFORM,
-      ));
+  final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
+      ? null
+      : SentryClient(
+          dsn: Config.SENTRY_DNS,
+          environmentAttributes: Event(
+            release: kAppVersion,
+            environment: Config.PLATFORM,
+          ));
+
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
   final requireAuthentication =
@@ -109,11 +112,15 @@ void main() async {
     }
   }
 
-  runZoned<Future<void>>(() async {
+  if (_sentry == null) {
     runApp(InvoiceNinjaApp(store: store));
-  }, onError: (dynamic error, dynamic stackTrace) {
-    _reportError(error, stackTrace);
-  });
+  } else {
+    runZoned<Future<void>>(() async {
+      runApp(InvoiceNinjaApp(store: store));
+    }, onError: (dynamic error, dynamic stackTrace) {
+      _reportError(error, stackTrace);
+    });
+  }
 
   FlutterError.onError = (FlutterErrorDetails details) {
     if (isInDebugMode) {
