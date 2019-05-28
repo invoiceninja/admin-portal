@@ -48,9 +48,19 @@ The architecture is based off these two projects:
 - [Additional thoughts](https://hillelcoren.com/2018/08/24/ongoing-adventures-with-flutter-and-redux/)
 
 ## Developer Notes
-- Run `cp lib/.env.dart.example lib/.env.dart` to create the config file
+- Run `cp lib/.env.dart.example lib/.env.dart` to create the config file.
+- Run `cp android/app/build.gradle.dev android/app/build.gradle` to support running the code unsigned.
+- Run `flutter run` while you have a device connected to the computer or an emulator running and now you can run it.
+
+### Code generation
+- Run `flutter packages pub run build_runner build --delete-conflicting-outputs` to regenerate the model files. It will also remove the old generated files so conflicts are avoided..
+
+### Tests
+- Run `flutter drive --target=test_driver/products_it.dart` to run the tests
+    
+### Code Signing
+- Run `cp android/app/build.gradle.prod android/app/build.gradle` to support running the code signed
 - Run `cp android/key.properties.example android/key.properties` to create the keys file
-- Run `flutter packages pub run build_runner build --delete-conflicting-outputs` to regenerate the model files. It will also remove the old generated files so conflicts are avoided.
 - Run `keytool -genkey -v -keystore key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias invoiceninja` to generate a key to be able to sign the android application.
 - Update `android/key.properties` according to the parameters you entered in previous command when you generated the key 
 - Open a new Firebase project from your console. Firebase is used for authentication.
@@ -58,9 +68,7 @@ The architecture is based off these two projects:
     - After go to add a new Android application. For the package name add `com.invoiceninja.flutter`
     - Press "Register App" button.
     - Download "google-services.json" and put it in `android/app` directory.
-- Run `flutter run` while you have a device connected to the computer or an emulator running and now you can run it.    
-- Run `flutter drive --target=test_driver/products_it.dart` to run the tests
-    
+
 ## Contributions
 
 We gladly accept contributions! If you'd like to get involved with development please join our [Slack group](http://slack.invoiceninja.com/).
