@@ -78,8 +78,8 @@ class _LoginState extends State<LoginView> {
     widget.viewModel.onLoginPressed(context,
         email: _emailController.text,
         password: _passwordController.text,
-        url: _urlController.text,
-        secret: _secretController.text,
+        url: _isSelfHosted ? _urlController.text : '',
+        secret: _isSelfHosted ? _secretController.text : '',
         oneTimePassword: _oneTimePasswordController.text);
   }
 
