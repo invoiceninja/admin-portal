@@ -152,8 +152,13 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'vendor_contacts')
   BuiltList<VendorContactEntity> get vendorContacts;
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     return actions..addAll(getBaseActions(user: user));
   }

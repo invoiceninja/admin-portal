@@ -57,8 +57,6 @@ class StubScreen extends StatelessWidget {
           onSelectedCustom2: (value) =>
               store.dispatch(FilterStubsByCustom2(value)),
           sortFields: [
-            StubFields.stubKey,
-            StubFields.cost,
             StubFields.updatedAt,
           ],
           onSelectedState: (EntityState state, value) {

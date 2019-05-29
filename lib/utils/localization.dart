@@ -20,6 +20,18 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'new_vendor': 'New Vendor',
+      'created_vendor': 'Successfully created vendor',
+      'updated_vendor': 'Successfully updated vendor',
+      'archived_vendor': 'Successfully archived vendor',
+      'deleted_vendor': 'Successfully deleted vendor',
+      'restored_vendor': 'Successfully restored vendor',
+      'new_expense': 'New Expense',
+      'created_expense': 'Successfully created expense',
+      'updated_expense': 'Successfully updated expense',
+      'archived_expense': 'Successfully archived expense',
+      'deleted_expense': 'Successfully deleted expense',
+      'restored_expense': 'Successfully restored expense',
       'copy_shipping': 'Copy Shipping',
       'copy_billing': 'Copy Billing',
       'design': 'Design',
@@ -11673,6 +11685,8 @@ class AppLocalization {
 
   String get products => _localizedValues[locale.toString()]['products'];
 
+
+
   String get newProduct => _localizedValues[locale.toString()]['new_product'];
 
   String get createdProduct =>
@@ -11689,6 +11703,45 @@ class AppLocalization {
 
   String get restoredProduct =>
       _localizedValues[locale.toString()]['restored_product'];
+
+
+  String get newVendor => _localizedValues[locale.toString()]['new_vendor'];
+
+  String get createdVendor =>
+      _localizedValues[locale.toString()]['created_vendor'];
+
+  String get updatedVendor =>
+      _localizedValues[locale.toString()]['updated_vendor'];
+
+  String get archivedVendor =>
+      _localizedValues[locale.toString()]['archived_vendor'];
+
+  String get deletedVendor =>
+      _localizedValues[locale.toString()]['deleted_vendor'];
+
+  String get restoredVendor =>
+      _localizedValues[locale.toString()]['restored_vendor'];
+
+
+
+  String get newExpense => _localizedValues[locale.toString()]['new_expense'];
+
+  String get createdExpense =>
+      _localizedValues[locale.toString()]['created_expense'];
+
+  String get updatedExpense =>
+      _localizedValues[locale.toString()]['updated_expense'];
+
+  String get archivedExpense =>
+      _localizedValues[locale.toString()]['archived_expense'];
+
+  String get deletedExpense =>
+      _localizedValues[locale.toString()]['deleted_expense'];
+
+  String get restoredExpense =>
+      _localizedValues[locale.toString()]['restored_expense'];
+
+
 
   String get productKey => _localizedValues[locale.toString()]['product_key'];
 

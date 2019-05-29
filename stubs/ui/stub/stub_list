@@ -56,12 +56,16 @@ class StubList extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
+
+    /*
     final filteredClientId = listState.filterEntityId;
     final filteredClient =
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
+    */
 
     return Column(
       children: <Widget>[
+        /*
         filteredClient != null
             ? Material(
                 color: Colors.orangeAccent,
@@ -148,7 +152,7 @@ class StubList extends StatelessWidget {
                           },
                         ),
                 ),
-        ),
+        ),*/
       ],
     );
   }
