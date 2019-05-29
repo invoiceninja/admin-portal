@@ -186,7 +186,7 @@ Middleware<AppState> _createLoadState(
       print(error);
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(getKeychainTokenKey()) ?? '';
+      final token = prefs.getString(getCompanyTokenKey()) ?? '';
 
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
@@ -284,7 +284,7 @@ Middleware<AppState> _createDataLoaded() {
       final CompanyEntity company = data.accounts[i];
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString(getKeychainTokenKey(i), company.token);
+      prefs.setString(getCompanyTokenKey(i), company.token);
 
       store.dispatch(SelectCompany(i + 1, company));
       store.dispatch(LoadCompanySuccess(company));
@@ -353,7 +353,7 @@ Middleware<AppState> _createDeleteState(
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     for (int i=0; i<5; i++) {
-      prefs.setString(getKeychainTokenKey(i), '');
+      prefs.setString(getCompanyTokenKey(i), '');
     }
 
     next(action);

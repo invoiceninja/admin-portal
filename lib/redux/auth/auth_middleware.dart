@@ -28,11 +28,11 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 
 void _saveAuthLocal(dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kKeychainEmail, action.email ?? '');
+  prefs.setString(kSharedPrefEmail, action.email ?? '');
 
   if (formatApiUrlReadable(action.url) != kAppUrl) {
-    prefs.setString(kKeychainUrl, formatApiUrlMachine(action.url));
-    prefs.setString(kKeychainSecret, action.secret);
+    prefs.setString(kSharedPrefUrl, formatApiUrlMachine(action.url));
+    prefs.setString(kSharedPrefSecret, action.secret);
   }
 }
 
@@ -137,7 +137,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String url = formatApiUrlMachine(
         prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
-    final String token = prefs.getString(getKeychainTokenKey());
+    final String token = prefs.getString(getCompanyTokenKey());
 
     repository
         .refresh(url: url, token: token, platform: action.platform)
