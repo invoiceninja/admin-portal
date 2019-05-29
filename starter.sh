@@ -306,7 +306,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/data\/models\/${module}_model.dart';${lineBreak}"
+    #code="import 'package:${package}\/data\/models\/${module}_model.dart';${lineBreak}"
     code="${code}import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
