@@ -5,16 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
 
 class WebClient {
-
   const WebClient();
 
   String _checkUrl(String url) {
-
-    if (! url.startsWith('http')) {
+    if (!url.startsWith('http')) {
       url = kAppUrl + url;
     }
 
-    if (! url.contains('?')) {
+    if (!url.contains('?')) {
       url += '?';
     }
 
@@ -27,12 +25,18 @@ class WebClient {
     if (response.contains('DOCTYPE html')) {
       return '$code: An error occurred';
     }
-    
+
     try {
       final dynamic jsonResponse = json.decode(response);
       message = jsonResponse['error'] ?? jsonResponse;
       message = message['message'] ?? message;
-    } catch(error) {
+      try {
+        jsonResponse['errors'].forEach((String field, List<String> errors) =>
+            errors.forEach((error) => message += '\n$field: $error'));
+      } catch (error) {
+        // do nothing
+      }
+    } catch (error) {
       // do nothing
     }
 
@@ -40,7 +44,6 @@ class WebClient {
   }
 
   Future<dynamic> get(String url, String token) async {
-
     url = _checkUrl(url);
     print('GET: $url');
 
