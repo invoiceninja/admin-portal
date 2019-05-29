@@ -99,14 +99,14 @@ class StubList extends StatelessWidget {
                                             viewModel.onVendorTap(context, stub),
                                         onEntityAction: (EntityAction action) {
                                           if (action == EntityAction.more) {
-                                            _showMenu(context, stub);
+                                            _showMenu(context, stub, null);
                                           } else {
                                             viewModel.onEntityAction(
                                                 context, stub, action);
                                           }
                                         },
                                         onLongPress: () =>
-                                            _showMenu(context, stub),
+                                            _showMenu(context, stub, null),
                                       ),
                                       Divider(
                                         height: 1.0,
