@@ -73,6 +73,6 @@ class UserLoginFailure implements StopLoading {
   final Object error;
 }
 
-class UserLogout implements PersistData {}
+class UserLogout implements PersistData, PersistUI {}
 
 class ClearAuthError {}
