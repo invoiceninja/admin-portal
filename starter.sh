@@ -344,14 +344,14 @@ else
     code="${code}company: company,${lineBreak}"
     code="${code}entityType: EntityType.${module},${lineBreak}"
     code="${code}icon: getEntityIcon(EntityType.${module}),${lineBreak}"
-    code="${code}title: localization.${modules}s,${lineBreak}"
+    code="${code}title: localization.${module}s,${lineBreak}"
     code="${code}onTap: () => store.dispatch(View${Module}List(context)),${lineBreak}"
     code="${code}onCreateTap: () {${lineBreak}"
     code="${code}navigator.pop();${lineBreak}"
     code="${code}store.dispatch(Edit${Module}(${lineBreak}"
     code="${code}${module}: ${Module}Entity(), context: context));${lineBreak}"
     code="${code}},${lineBreak}"
-    code="${code}},${lineBreak}"
+    code="${code}),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/app_drawer.dart
 
     comment="STARTER: import - do not remove comment"
