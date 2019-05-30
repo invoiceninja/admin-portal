@@ -253,14 +253,14 @@ else
         code="${code}),${lineBreak}"
         sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/edit/${module}_edit.dart"
 
-        comment="STARTER: widgets - do not remove comment"
-        if [ ${element} = ${fieldsArray[0]} ]; then
-            code="Text(${module}.${element}, style: Theme.of(context).textTheme.title),${lineBreak}"
-            code="${code}SizedBox(height: 12.0),${lineBreak}"
-        else
-            code="Text(${module}.${element}),"
-        fi
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/view/${module}_view.dart"
+        #comment="STARTER: widgets - do not remove comment"
+        #if [ ${element} = ${fieldsArray[0]} ]; then
+        #    code="Text(${module}.${element}, style: Theme.of(context).textTheme.title),${lineBreak}"
+        #    code="${code}SizedBox(height: 12.0),${lineBreak}"
+        #else
+        #    code="Text(${module}.${element}),"
+        #fi
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/view/${module}_view.dart"
 
         comment="STARTER: sort - do not remove comment"
         code="${Module}Fields.${element},${lineBreak}"
