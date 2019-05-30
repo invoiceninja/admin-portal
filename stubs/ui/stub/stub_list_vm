@@ -76,7 +76,7 @@ class StubListVM {
                   clientId: state.stubListState.filterEntityId,
                   context: context)),
         onStubTap: (context, stub) {
-          store.dispatch(EditStub(stub: stub, context: context));
+          store.dispatch(ViewStub(stubId: stub.id, context: context));
         },
         onEntityAction: (context, stub, action) {
           switch (action) {
