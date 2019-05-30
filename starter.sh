@@ -279,7 +279,7 @@ else
         if [ "$idx" -eq 1 ]; then
             comment="STARTER: subtitle - do not remove comment"
             code="subtitle: Text(${module}.${element}, maxLines: 4),${lineBreak}"
-            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/${module}_item.dart"
+            #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/${module}_item.dart"
         fi
     done
 
