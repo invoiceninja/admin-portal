@@ -176,7 +176,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
       'vendor_contacts',
-      serializers.serialize(object.vendorContacts,
+      serializers.serialize(object.contacts,
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
     ];
@@ -695,7 +695,7 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String customValue2;
   @override
-  final BuiltList<VendorContactEntity> vendorContacts;
+  final BuiltList<VendorContactEntity> contacts;
   @override
   final int createdAt;
   @override
@@ -731,7 +731,7 @@ class _$VendorEntity extends VendorEntity {
       this.currencyId,
       this.customValue1,
       this.customValue2,
-      this.vendorContacts,
+      this.contacts,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -793,7 +793,7 @@ class _$VendorEntity extends VendorEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue2');
     }
-    if (vendorContacts == null) {
+    if (contacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'vendorContacts');
     }
   }
@@ -827,7 +827,7 @@ class _$VendorEntity extends VendorEntity {
         currencyId == other.currencyId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        vendorContacts == other.vendorContacts &&
+        contacts == other.contacts &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -869,7 +869,7 @@ class _$VendorEntity extends VendorEntity {
                                             currencyId.hashCode),
                                         customValue1.hashCode),
                                     customValue2.hashCode),
-                                vendorContacts.hashCode),
+                                contacts.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -899,7 +899,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('currencyId', currencyId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('vendorContacts', vendorContacts)
+          ..add('vendorContacts', contacts)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1038,7 +1038,7 @@ class VendorEntityBuilder
       _currencyId = _$v.currencyId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _vendorContacts = _$v.vendorContacts?.toBuilder();
+      _vendorContacts = _$v.contacts?.toBuilder();
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1087,7 +1087,7 @@ class VendorEntityBuilder
               currencyId: currencyId,
               customValue1: customValue1,
               customValue2: customValue2,
-              vendorContacts: vendorContacts.build(),
+              contacts: vendorContacts.build(),
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,

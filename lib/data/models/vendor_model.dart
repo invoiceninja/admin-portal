@@ -82,7 +82,7 @@ abstract class VendorEntity extends Object
       currencyId: 0,
       customValue1: '',
       customValue2: '',
-      vendorContacts: BuiltList<VendorContactEntity>(),
+      contacts: BuiltList<VendorContactEntity>(),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -150,7 +150,7 @@ abstract class VendorEntity extends Object
   String get customValue2;
 
   @BuiltValueField(wireName: 'vendor_contacts')
-  BuiltList<VendorContactEntity> get vendorContacts;
+  BuiltList<VendorContactEntity> get contacts;
 
   List<EntityAction> getEntityActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
@@ -241,6 +241,10 @@ abstract class VendorContactEntity extends Object
   bool get isPrimary;
 
   String get phone;
+
+  String get fullName {
+    return (firstName + ' ' + lastName).trim();
+  }
 
   @override
   bool matchesFilter(String filter) {

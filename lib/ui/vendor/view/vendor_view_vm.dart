@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -65,7 +67,15 @@ class VendorViewVM {
         isDirty: vendor.isNew,
         vendor: vendor,
         onEditPressed: (BuildContext context) {
-          store.dispatch(EditVendor(vendor: vendor, context: context));
+          final Completer<VendorEntity> completer = Completer<VendorEntity>();
+          store.dispatch(EditVendor(
+              vendor: vendor, context: context, completer: completer));
+          completer.future.then((client) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: AppLocalization.of(context).updatedVendor,
+                )));
+          });
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {
