@@ -17,8 +17,8 @@ class VendorList extends StatelessWidget {
   final VendorListVM viewModel;
 
   void _showMenu(
-      BuildContext context, VendorEntity vendor, ClientEntity client) async {
-    if (vendor == null || client == null) {
+      BuildContext context, VendorEntity vendor) async {
+    if (vendor == null) {
       return;
     }
 
@@ -27,7 +27,7 @@ class VendorList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: vendor
-                    .getEntityActions(user: user, client: client, includeEdit: true)
+                    .getEntityActions(user: user, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {
                 return Divider();
@@ -98,14 +98,14 @@ class VendorList extends StatelessWidget {
                                             viewModel.onVendorTap(context, vendor),
                                         onEntityAction: (EntityAction action) {
                                           if (action == EntityAction.more) {
-                                            _showMenu(context, vendor, null);
+                                            _showMenu(context, vendor);
                                           } else {
                                             viewModel.onEntityAction(
                                                 context, vendor, action);
                                           }
                                         },
                                         onLongPress: () =>
-                                            _showMenu(context, vendor, null),
+                                            _showMenu(context, vendor),
                                       ),
                                       Divider(
                                         height: 1.0,

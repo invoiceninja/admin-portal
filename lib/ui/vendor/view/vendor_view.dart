@@ -161,9 +161,6 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Tab(
             text: localization.details,
           ),
-          Tab(
-            text: localization.activity,
-          ),
         ],
       ),
       actions: vendor.isNew
