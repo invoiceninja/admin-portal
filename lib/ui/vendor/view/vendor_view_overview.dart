@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -44,12 +45,9 @@ class VendorOverview extends StatelessWidget {
 
     return ListView(
       children: <Widget>[
-        TwoValueHeader(
-          label1: localization.paidToDate,
-          value1: formatNumber(vendor.paidToDate, context,
-              currencyId: vendor.currencyId),
-          label2: localization.balanceDue,
-          value2: formatNumber(vendor.balance, context,
+        OneValueHeader(
+          label: localization.balanceDue,
+          value: formatNumber(vendor.balance, context,
               currencyId: vendor.currencyId),
         ),
         vendor.privateNotes != null && vendor.privateNotes.isNotEmpty

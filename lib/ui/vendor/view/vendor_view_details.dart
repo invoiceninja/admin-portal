@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -126,13 +125,12 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         ));
       }
 
-      final billingAddress = formatAddress(object: vendor);
-      final shippingAddress = formatAddress(object: vendor, isShipping: true);
+      final address = formatAddress(object: vendor);
 
-      if (billingAddress.isNotEmpty) {
+      if (address.isNotEmpty) {
         listTiles.add(AppListTile(
             icon: Icons.pin_drop,
-            title: billingAddress,
+            title: address,
             subtitle: localization.billingAddress,
             onTap: () {
               _launched = _launchURL(
@@ -140,20 +138,6 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
                   getMapURL(context) +
                       Uri.encodeFull(
                           formatAddress(object: vendor, delimiter: ',')));
-            }));
-      }
-
-      if (shippingAddress.isNotEmpty) {
-        listTiles.add(AppListTile(
-            icon: Icons.pin_drop,
-            title: shippingAddress,
-            subtitle: localization.shippingAddress,
-            onTap: () {
-              _launched = _launchURL(
-                  context,
-                  getMapURL(context) +
-                      Uri.encodeFull(formatAddress(
-                          object: vendor, delimiter: ',', isShipping: true)));
             }));
       }
 
