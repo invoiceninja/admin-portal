@@ -88,9 +88,6 @@ class AppLocalization {
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'thanks_for_patience':
-          'Thank for your patience while we work to implement these features.\n\nWe hope to have them completed in the next few months.\n\nUntil then we\'ll continue to support the',
-      'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom',
       'date_range': 'Date Range',
@@ -11464,12 +11461,6 @@ class AppLocalization {
       _localizedValues[locale.toString()]['selfhost_login'];
 
   String get googleLogin => _localizedValues[locale.toString()]['google_login'];
-
-  String get thanksForPatience =>
-      _localizedValues[locale.toString()]['thanks_for_patience'];
-
-  String get legacyMobileApp =>
-      _localizedValues[locale.toString()]['legacy_mobile_app'];
 
   String get today => _localizedValues[locale.toString()]['today'];
 

@@ -44,6 +44,9 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
       'invoiceState',
       serializers.serialize(object.invoiceState,
           specifiedType: const FullType(InvoiceState)),
+      'vendorState',
+      serializers.serialize(object.vendorState,
+          specifiedType: const FullType(VendorState)),
       'taskState',
       serializers.serialize(object.taskState,
           specifiedType: const FullType(TaskState)),
@@ -98,6 +101,10 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
           result.invoiceState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceState)) as InvoiceState);
           break;
+        case 'vendorState':
+          result.vendorState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(VendorState)) as VendorState);
+          break;
         case 'taskState':
           result.taskState.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaskState)) as TaskState);
@@ -133,6 +140,8 @@ class _$CompanyState extends CompanyState {
   @override
   final InvoiceState invoiceState;
   @override
+  final VendorState vendorState;
+  @override
   final TaskState taskState;
   @override
   final ProjectState projectState;
@@ -150,6 +159,7 @@ class _$CompanyState extends CompanyState {
       this.productState,
       this.clientState,
       this.invoiceState,
+      this.vendorState,
       this.taskState,
       this.projectState,
       this.paymentState,
@@ -166,6 +176,9 @@ class _$CompanyState extends CompanyState {
     }
     if (invoiceState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'invoiceState');
+    }
+    if (vendorState == null) {
+      throw new BuiltValueNullFieldError('CompanyState', 'vendorState');
     }
     if (taskState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'taskState');
@@ -197,6 +210,7 @@ class _$CompanyState extends CompanyState {
         productState == other.productState &&
         clientState == other.clientState &&
         invoiceState == other.invoiceState &&
+        vendorState == other.vendorState &&
         taskState == other.taskState &&
         projectState == other.projectState &&
         paymentState == other.paymentState &&
@@ -212,11 +226,13 @@ class _$CompanyState extends CompanyState {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, company.hashCode),
-                                    dashboardState.hashCode),
-                                productState.hashCode),
-                            clientState.hashCode),
-                        invoiceState.hashCode),
+                                $jc(
+                                    $jc($jc(0, company.hashCode),
+                                        dashboardState.hashCode),
+                                    productState.hashCode),
+                                clientState.hashCode),
+                            invoiceState.hashCode),
+                        vendorState.hashCode),
                     taskState.hashCode),
                 projectState.hashCode),
             paymentState.hashCode),
@@ -231,6 +247,7 @@ class _$CompanyState extends CompanyState {
           ..add('productState', productState)
           ..add('clientState', clientState)
           ..add('invoiceState', invoiceState)
+          ..add('vendorState', vendorState)
           ..add('taskState', taskState)
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
@@ -272,6 +289,12 @@ class CompanyStateBuilder
   set invoiceState(InvoiceStateBuilder invoiceState) =>
       _$this._invoiceState = invoiceState;
 
+  VendorStateBuilder _vendorState;
+  VendorStateBuilder get vendorState =>
+      _$this._vendorState ??= new VendorStateBuilder();
+  set vendorState(VendorStateBuilder vendorState) =>
+      _$this._vendorState = vendorState;
+
   TaskStateBuilder _taskState;
   TaskStateBuilder get taskState =>
       _$this._taskState ??= new TaskStateBuilder();
@@ -304,6 +327,7 @@ class CompanyStateBuilder
       _productState = _$v.productState?.toBuilder();
       _clientState = _$v.clientState?.toBuilder();
       _invoiceState = _$v.invoiceState?.toBuilder();
+      _vendorState = _$v.vendorState?.toBuilder();
       _taskState = _$v.taskState?.toBuilder();
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
@@ -337,6 +361,7 @@ class CompanyStateBuilder
               productState: productState.build(),
               clientState: clientState.build(),
               invoiceState: invoiceState.build(),
+              vendorState: vendorState.build(),
               taskState: taskState.build(),
               projectState: projectState.build(),
               paymentState: paymentState.build(),
@@ -354,6 +379,8 @@ class CompanyStateBuilder
         clientState.build();
         _$failedField = 'invoiceState';
         invoiceState.build();
+        _$failedField = 'vendorState';
+        vendorState.build();
         _$failedField = 'taskState';
         taskState.build();
         _$failedField = 'projectState';

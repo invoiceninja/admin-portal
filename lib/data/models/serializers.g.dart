@@ -127,6 +127,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(VendorEntity.serializer)
       ..add(VendorItemResponse.serializer)
       ..add(VendorListResponse.serializer)
+      ..add(VendorState.serializer)
+      ..add(VendorUIState.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ActivityEntity)]),
           () => new ListBuilder<ActivityEntity>())
@@ -363,5 +365,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(ProjectEntity)]), () => new MapBuilder<int, ProjectEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(int)]), () => new ListBuilder<int>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(TaskEntity)]), () => new MapBuilder<int, TaskEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(int)]), () => new ListBuilder<int>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(VendorEntity)]), () => new MapBuilder<int, VendorEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(int)]), () => new ListBuilder<int>()))
     .build();

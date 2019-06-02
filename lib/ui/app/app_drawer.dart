@@ -19,6 +19,8 @@ import 'package:redux/redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -213,7 +215,6 @@ class AppDrawer extends StatelessWidget {
                   quote: InvoiceEntity(isQuote: true), context: context));
             },
           ),
-          // STARTER: menu - do not remove comment
           DrawerTile(
             company: company,
             entityType: EntityType.project,
@@ -239,45 +240,19 @@ class AppDrawer extends StatelessWidget {
                   context: context));
             },
           ),
-          ListTile(
-            dense: true,
-            leading: Icon(FontAwesomeIcons.building, size: 22.0),
-            title: Text('Vendors & Expenses'),
-            onTap: () {
-              showDialog<AlertDialog>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                      semanticLabel: 'Vendors & Expenses',
-                      title: Text('Vendors & Expenses'),
-                      content: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              style: aboutTextStyle,
-                              text: localization.thanksForPatience + ' ',
-                            ),
-                            _LinkTextSpan(
-                              style: linkStyle,
-                              url: getLegacyAppURL(context),
-                              text: localization.legacyMobileApp,
-                            ),
-                            TextSpan(
-                              style: aboutTextStyle,
-                              text: '.',
-                            ),
-                          ],
-                        ),
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(localization.ok.toUpperCase()),
-                          onPressed: () => Navigator.pop(context),
-                        )
-                      ],
-                    ),
-              );
+          DrawerTile(
+            company: company,
+            entityType: EntityType.vendor,
+            icon: getEntityIcon(EntityType.vendor),
+            title: localization.vendors,
+            onTap: () => store.dispatch(ViewVendorList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(
+                  EditVendor(vendor: VendorEntity(), context: context));
             },
           ),
+          // STARTER: menu - do not remove comment
           DrawerTile(
             company: company,
             icon: FontAwesomeIcons.cog,
