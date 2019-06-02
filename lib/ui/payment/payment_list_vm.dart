@@ -83,8 +83,7 @@ class PaymentListVM {
         final localization = AppLocalization.of(context);
         switch (action) {
           case EntityAction.edit:
-            store.dispatch(
-                EditPayment(context: context, payment: payment));
+            store.dispatch(EditPayment(context: context, payment: payment));
             break;
           case EntityAction.sendEmail:
             store.dispatch(EmailPaymentRequest(

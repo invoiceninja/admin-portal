@@ -49,7 +49,8 @@ class AppDrawerVM {
       user: state.user,
       selectedCompany: state.selectedCompany,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
-      onCompanyChanged: (BuildContext context, String companyIndex, CompanyEntity company) {
+      onCompanyChanged:
+          (BuildContext context, String companyIndex, CompanyEntity company) {
         store.dispatch(SelectCompany(int.parse(companyIndex), company));
         AppBuilder.of(context).rebuild();
       },

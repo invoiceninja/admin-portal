@@ -142,8 +142,8 @@ class _ClientViewState extends State<ClientView>
                               Navigator.of(context).pop();
                               store.dispatch(EditTask(
                                   task: TaskEntity(
-                                          isRunning:
-                                              store.state.uiState.autoStartTasks)
+                                          isRunning: store
+                                              .state.uiState.autoStartTasks)
                                       .rebuild((b) => b.clientId = client.id),
                                   context: context));
                             },

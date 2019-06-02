@@ -78,7 +78,7 @@ part 'serializers.g.dart';
   TimezoneItemResponse,
   TimezoneListResponse,
   // STARTER: serializers - do not remove comment
-VendorEntity,
+  VendorEntity,
 
   TaskEntity,
   ProjectEntity,

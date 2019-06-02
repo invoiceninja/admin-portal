@@ -142,7 +142,7 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-        EntityAction.restore)
+            EntityAction.restore)
         .then((InvoiceEntity quote) {
       store.dispatch(RestoreQuoteSuccess(quote));
       if (action.completer != null) {
@@ -165,7 +165,7 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
     final quote = store.state.quoteState.map[action.quoteId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, quote,
-        EntityAction.convert)
+            EntityAction.convert)
         .then((InvoiceEntity invoice) {
       store.dispatch(ConvertQuoteSuccess(quote: quote, invoice: invoice));
       action.completer.complete(invoice);
@@ -207,7 +207,7 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .emailQuote(store.state.selectedCompany, store.state.authState,
-        origQuote, action.template, action.subject, action.body)
+            origQuote, action.template, action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailQuoteSuccess());
       if (action.completer != null) {

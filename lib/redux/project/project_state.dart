@@ -8,8 +8,8 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 part 'project_state.g.dart';
 
-abstract class ProjectState implements Built<ProjectState, ProjectStateBuilder> {
-
+abstract class ProjectState
+    implements Built<ProjectState, ProjectStateBuilder> {
   factory ProjectState() {
     return _$ProjectState._(
       lastUpdated: 0,
@@ -26,11 +26,12 @@ abstract class ProjectState implements Built<ProjectState, ProjectStateBuilder> 
   BuiltList<int> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -38,8 +39,9 @@ abstract class ProjectState implements Built<ProjectState, ProjectStateBuilder> 
   static Serializer<ProjectState> get serializer => _$projectStateSerializer;
 }
 
-abstract class ProjectUIState extends Object with EntityUIState implements Built<ProjectUIState, ProjectUIStateBuilder> {
-
+abstract class ProjectUIState extends Object
+    with EntityUIState
+    implements Built<ProjectUIState, ProjectUIStateBuilder> {
   factory ProjectUIState() {
     return _$ProjectUIState._(
       listUIState: ListUIState(ProjectFields.name),
@@ -55,5 +57,6 @@ abstract class ProjectUIState extends Object with EntityUIState implements Built
   @override
   bool get isCreatingNew => editing.isNew;
 
-  static Serializer<ProjectUIState> get serializer => _$projectUIStateSerializer;
+  static Serializer<ProjectUIState> get serializer =>
+      _$projectUIStateSerializer;
 }

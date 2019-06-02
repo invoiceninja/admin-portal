@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 part 'list_ui_state.g.dart';
 
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
-
   factory ListUIState(String sortField, {bool sortAscending = true}) {
     return _$ListUIState._(
       sortField: sortField,
@@ -37,7 +36,8 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   BuiltList<String> get custom1Filters;
   BuiltList<String> get custom2Filters;
 
-  bool get hasStateFilters => stateFilters.length != 1 || stateFilters.first != EntityState.active;
+  bool get hasStateFilters =>
+      stateFilters.length != 1 || stateFilters.first != EntityState.active;
   bool get hasStatusFilters => statusFilters.isNotEmpty;
   bool get hasCustom1Filters => custom1Filters.isNotEmpty;
   bool get hasCustom2Filters => custom2Filters.isNotEmpty;

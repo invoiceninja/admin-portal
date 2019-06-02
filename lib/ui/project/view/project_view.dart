@@ -31,7 +31,6 @@ class ProjectView extends StatefulWidget {
 }
 
 class _ProjectViewState extends State<ProjectView> {
-
   Timer _timer;
 
   @override

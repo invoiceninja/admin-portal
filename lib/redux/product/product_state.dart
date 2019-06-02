@@ -8,8 +8,8 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 part 'product_state.g.dart';
 
-abstract class ProductState implements Built<ProductState, ProductStateBuilder> {
-
+abstract class ProductState
+    implements Built<ProductState, ProductStateBuilder> {
   factory ProductState() {
     return _$ProductState._(
       lastUpdated: 0,
@@ -26,11 +26,12 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
   BuiltList<int> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -38,8 +39,9 @@ abstract class ProductState implements Built<ProductState, ProductStateBuilder> 
   static Serializer<ProductState> get serializer => _$productStateSerializer;
 }
 
-abstract class ProductUIState extends Object with EntityUIState implements Built<ProductUIState, ProductUIStateBuilder> {
-
+abstract class ProductUIState extends Object
+    with EntityUIState
+    implements Built<ProductUIState, ProductUIStateBuilder> {
   factory ProductUIState() {
     return _$ProductUIState._(
       listUIState: ListUIState(ProductFields.productKey),
@@ -55,5 +57,6 @@ abstract class ProductUIState extends Object with EntityUIState implements Built
   @override
   bool get isCreatingNew => editing.isNew;
 
-  static Serializer<ProductUIState> get serializer => _$productUIStateSerializer;
+  static Serializer<ProductUIState> get serializer =>
+      _$productUIStateSerializer;
 }

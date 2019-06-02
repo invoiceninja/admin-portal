@@ -43,10 +43,10 @@ class InvoiceEditNotesVM extends EntityEditNotesVM {
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
   }) : super(
-    company: company,
-    invoice: invoice,
-    onChanged: onChanged,
-  );
+          company: company,
+          invoice: invoice,
+          onChanged: onChanged,
+        );
 
   factory InvoiceEditNotesVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

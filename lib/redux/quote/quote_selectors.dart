@@ -8,13 +8,11 @@ ClientEntity quoteClientSelector(
   return clientMap[quote.clientId];
 }
 
-var memoizedFilteredQuoteList = memo4(
-        (BuiltMap<int, InvoiceEntity> quoteMap,
+var memoizedFilteredQuoteList = memo4((BuiltMap<int, InvoiceEntity> quoteMap,
         BuiltList<int> quoteList,
         BuiltMap<int, ClientEntity> clientMap,
         ListUIState quoteListState) =>
-        filteredQuotesSelector(
-            quoteMap, quoteList, clientMap, quoteListState));
+    filteredQuotesSelector(quoteMap, quoteList, clientMap, quoteListState));
 
 List<int> filteredQuotesSelector(
     BuiltMap<int, InvoiceEntity> quoteMap,
@@ -24,7 +22,7 @@ List<int> filteredQuotesSelector(
   final list = quoteList.where((quoteId) {
     final quote = quoteMap[quoteId];
     final client = clientMap[quote.clientId];
-    if (client == null || ! client.isActive) {
+    if (client == null || !client.isActive) {
       return false;
     }
     if (!quote.matchesStates(quoteListState.stateFilters)) {
@@ -61,16 +59,13 @@ List<int> filteredQuotesSelector(
 }
 
 var memoizedQuoteStatsForClient = memo4((int clientId,
-    BuiltMap<int, InvoiceEntity> quoteMap,
-    String activeLabel,
-    String archivedLabel) =>
+        BuiltMap<int, InvoiceEntity> quoteMap,
+        String activeLabel,
+        String archivedLabel) =>
     quoteStatsForClient(clientId, quoteMap, activeLabel, archivedLabel));
 
-String quoteStatsForClient(
-    int clientId,
-    BuiltMap<int, InvoiceEntity> quoteMap,
-    String activeLabel,
-    String archivedLabel) {
+String quoteStatsForClient(int clientId, BuiltMap<int, InvoiceEntity> quoteMap,
+    String activeLabel, String archivedLabel) {
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {

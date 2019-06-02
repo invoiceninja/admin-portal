@@ -36,8 +36,7 @@ UIState uiReducer(UIState state, dynamic action) {
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
     // STARTER: reducer - do not remove comment
-..vendorUIState.replace(vendorUIReducer(state.vendorUIState, action))
-
+    ..vendorUIState.replace(vendorUIReducer(state.vendorUIState, action))
     ..taskUIState.replace(taskUIReducer(state.taskUIState, action))
     ..projectUIState.replace(projectUIReducer(state.projectUIState, action))
     ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
@@ -72,7 +71,8 @@ Reducer<bool> autoStartTasksReducer = combineReducers([
   TypedReducer<bool, UserSettingsChanged>(updateAutoStartTasksReducer),
 ]);
 
-bool updateAutoStartTasksReducer(bool autoStartTasks, UserSettingsChanged action) {
+bool updateAutoStartTasksReducer(
+    bool autoStartTasks, UserSettingsChanged action) {
   return action.autoStartTasks ?? autoStartTasks;
 }
 

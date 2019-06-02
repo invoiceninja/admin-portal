@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 //import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
-
   /*
   final navigator = Navigator.of(context);
   navigator.push(

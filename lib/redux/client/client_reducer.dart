@@ -200,7 +200,7 @@ ClientState _setLoadedClient(
     ClientState clientState, LoadClientSuccess action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client.rebuild((b) =>
-    b..lastUpdatedActivities = DateTime.now().millisecondsSinceEpoch));
+        b..lastUpdatedActivities = DateTime.now().millisecondsSinceEpoch));
 }
 
 ClientState _setLoadedClients(

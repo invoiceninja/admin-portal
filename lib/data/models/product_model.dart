@@ -180,7 +180,8 @@ abstract class ProductEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user, bool includeEdit = false}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (includeEdit && user.canEditEntity(this)) {

@@ -103,8 +103,7 @@ class QuoteListVM extends EntityListVM {
         final localization = AppLocalization.of(context);
         switch (action) {
           case EntityAction.edit:
-            store.dispatch(
-                EditQuote(context: context, quote: quote));
+            store.dispatch(EditQuote(context: context, quote: quote));
             break;
           case EntityAction.pdf:
             viewPdf(quote, context);

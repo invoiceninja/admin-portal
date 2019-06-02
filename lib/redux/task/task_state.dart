@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 part 'task_state.g.dart';
 
 abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
-
   factory TaskState() {
     return _$TaskState._(
       lastUpdated: 0,
@@ -26,11 +25,12 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   BuiltList<int> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -38,8 +38,9 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   static Serializer<TaskState> get serializer => _$taskStateSerializer;
 }
 
-abstract class TaskUIState extends Object with EntityUIState implements Built<TaskUIState, TaskUIStateBuilder> {
-
+abstract class TaskUIState extends Object
+    with EntityUIState
+    implements Built<TaskUIState, TaskUIStateBuilder> {
   factory TaskUIState() {
     return _$TaskUIState._(
       listUIState: ListUIState(TaskFields.updatedAt, sortAscending: false),

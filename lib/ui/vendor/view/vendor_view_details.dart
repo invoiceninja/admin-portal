@@ -157,11 +157,10 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
             }));
       }
 
-      listTiles
-          .add(Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
-          ));
+      listTiles.add(Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
+      ));
 
       return listTiles;
     }
@@ -203,8 +202,7 @@ class AppListTile extends StatelessWidget {
         onLongPress: () {
           Clipboard.setData(ClipboardData(text: copyValue ?? title));
           Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalization
-                  .of(context)
+              content: Text(AppLocalization.of(context)
                   .copiedToClipboard
                   .replaceFirst(':value', copyValue ?? title))));
         },

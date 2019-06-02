@@ -31,8 +31,7 @@ CompanyState companyReducer(CompanyState state, dynamic action) {
     ..productState.replace(productsReducer(state.productState, action))
     ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
     // STARTER: reducer - do not remove comment
-..vendorState.replace(vendorsReducer(state.vendorState, action))
-
+    ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     ..projectState.replace(projectsReducer(state.projectState, action))
     ..paymentState.replace(paymentsReducer(state.paymentState, action))
@@ -45,7 +44,6 @@ Reducer<CompanyEntity> companyEntityReducer = combineReducers([
 
 CompanyEntity loadCompanySuccessReducer(
     CompanyEntity company, LoadCompanySuccess action) {
-
   if (action.company.taskStatuses == null) {
     return action.company;
   } else {
@@ -54,8 +52,7 @@ CompanyEntity loadCompanySuccessReducer(
         action.company.taskStatuses,
         key: (dynamic item) => item.id,
         value: (dynamic item) => item,
-      ))
-    );
+      )));
   }
 
   /*

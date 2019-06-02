@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 part 'client_state.g.dart';
 
 abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
-
   factory ClientState() {
     return _$ClientState._(
       lastUpdated: 0,
@@ -26,11 +25,12 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   BuiltList<int> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -38,8 +38,9 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   static Serializer<ClientState> get serializer => _$clientStateSerializer;
 }
 
-abstract class ClientUIState extends Object with EntityUIState implements Built<ClientUIState, ClientUIStateBuilder> {
-
+abstract class ClientUIState extends Object
+    with EntityUIState
+    implements Built<ClientUIState, ClientUIStateBuilder> {
   factory ClientUIState() {
     return _$ClientUIState._(
       listUIState: ListUIState(ClientFields.name),

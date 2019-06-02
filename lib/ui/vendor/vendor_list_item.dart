@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class VendorListItem extends StatelessWidget {
-
   const VendorListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -70,12 +69,13 @@ class VendorListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty ?
-            Text(
-              subtitle,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ) : Container(),
+            subtitle != null && subtitle.isNotEmpty
+                ? Text(
+                    subtitle,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : Container(),
             EntityStateLabel(vendor),
           ],
         ),

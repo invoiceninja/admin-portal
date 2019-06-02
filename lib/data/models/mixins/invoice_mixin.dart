@@ -15,7 +15,8 @@ abstract class CalculateInvoiceTotal {
   bool get customTaxes2;
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
-  double _calculateTaxAmount(double amount, double rate, bool useInclusiveTaxes) {
+  double _calculateTaxAmount(
+      double amount, double rate, bool useInclusiveTaxes) {
     double taxAmount;
     if (useInclusiveTaxes) {
       taxAmount = amount - (amount / (1 + (rate / 100)));
@@ -57,11 +58,13 @@ abstract class CalculateInvoiceTotal {
 
       if (taxRate1 != 0) {
         taxAmount = _calculateTaxAmount(lineTotal, taxRate1, useInclusiveTaxes);
-        map.update(item.taxName1, (value) => value + taxAmount, ifAbsent: () => taxAmount);
+        map.update(item.taxName1, (value) => value + taxAmount,
+            ifAbsent: () => taxAmount);
       }
       if (taxRate2 != 0) {
         taxAmount = _calculateTaxAmount(lineTotal, taxRate2, useInclusiveTaxes);
-        map.update(item.taxName2, (value) => value + taxAmount, ifAbsent: () => taxAmount);
+        map.update(item.taxName2, (value) => value + taxAmount,
+            ifAbsent: () => taxAmount);
       }
     });
 
@@ -81,15 +84,16 @@ abstract class CalculateInvoiceTotal {
       total += round(customValue2, 2);
     }
 
-
     if (taxRate1 != 0) {
       taxAmount = _calculateTaxAmount(total, taxRate1, useInclusiveTaxes);
-      map.update(taxName1, (value) => value + taxAmount, ifAbsent: () => taxAmount);
+      map.update(taxName1, (value) => value + taxAmount,
+          ifAbsent: () => taxAmount);
     }
 
     if (taxRate2 != 0) {
       taxAmount = _calculateTaxAmount(total, taxRate2, useInclusiveTaxes);
-      map.update(taxName2, (value) => value + taxAmount, ifAbsent: () => taxAmount);
+      map.update(taxName2, (value) => value + taxAmount,
+          ifAbsent: () => taxAmount);
     }
 
     return map;
@@ -147,18 +151,18 @@ abstract class CalculateInvoiceTotal {
       total += round(customValue2, 2);
     }
 
-    if (! useInclusiveTaxes) {
+    if (!useInclusiveTaxes) {
       final double taxAmount1 = round(total * taxRate1 / 100, 2);
       final double taxAmount2 = round(total * taxRate2 / 100, 2);
 
       total += itemTax + taxAmount1 + taxAmount2;
     }
 
-    if (customValue1 != 0.0 && ! customTaxes1) {
+    if (customValue1 != 0.0 && !customTaxes1) {
       total += round(customValue1, 2);
     }
 
-    if (customValue2 != 0.0 && ! customTaxes2) {
+    if (customValue2 != 0.0 && !customTaxes2) {
       total += round(customValue2, 2);
     }
 
@@ -189,4 +193,3 @@ abstract class CalculateInvoiceTotal {
     return total;
   }
 }
-

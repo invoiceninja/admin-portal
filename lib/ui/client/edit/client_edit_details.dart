@@ -19,7 +19,6 @@ class ClientEditDetails extends StatefulWidget {
 }
 
 class ClientEditDetailsState extends State<ClientEditDetails> {
-
   final _nameController = TextEditingController();
   final _idNumberController = TextEditingController();
   final _vatNumberController = TextEditingController();
@@ -42,7 +41,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       _custom2Controller,
     ];
 
-    _controllers.forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final client = widget.viewModel.client;
     _nameController.text = client.name;
@@ -53,7 +53,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     _custom1Controller.text = client.customValue1;
     _custom2Controller.text = client.customValue2;
 
-    _controllers.forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
   }
@@ -71,14 +72,13 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   void _onChanged() {
     final viewModel = widget.viewModel;
     final client = viewModel.client.rebuild((b) => b
-        ..name = _nameController.text.trim()
-        ..idNumber = _idNumberController.text.trim()
-        ..vatNumber = _vatNumberController.text.trim()
-        ..website = _websiteController.text.trim()
-        ..workPhone = _phoneController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-    );
+      ..name = _nameController.text.trim()
+      ..idNumber = _idNumberController.text.trim()
+      ..vatNumber = _vatNumberController.text.trim()
+      ..website = _websiteController.text.trim()
+      ..workPhone = _phoneController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim());
     if (client != viewModel.client) {
       viewModel.onChanged(client);
     }
@@ -101,14 +101,15 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               decoration: InputDecoration(
                 labelText: localization.name,
               ),
-              validator: (String val) => ! viewModel.client.hasNameSet
+              validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
             ),
             TextFormField(
               autocorrect: false,
               controller: _idNumberController,
-              decoration: InputDecoration(labelText: localization.idNumber,
+              decoration: InputDecoration(
+                labelText: localization.idNumber,
               ),
             ),
             TextFormField(

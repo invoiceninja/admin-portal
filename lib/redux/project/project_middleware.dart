@@ -70,7 +70,8 @@ Middleware<AppState> _viewProjectList() {
 
     store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(ProjectScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        ProjectScreen.route, (Route<dynamic> route) => false);
   };
 }
 

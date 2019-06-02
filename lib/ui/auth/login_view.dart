@@ -15,7 +15,6 @@ class LoginView extends StatefulWidget {
 
   final LoginVM viewModel;
 
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -35,8 +34,7 @@ class _LoginState extends State<LoginView> {
   static final ValueKey _passwordKey = Key(LoginKeys.password);
   static final ValueKey _urlKey = Key(LoginKeys.url);
   static final ValueKey _secretKey = Key(LoginKeys.secret);
-  static final ValueKey _oneTimePasswordKey =
-      Key(LoginKeys.oneTimePassword);
+  static final ValueKey _oneTimePasswordKey = Key(LoginKeys.oneTimePassword);
 
   final FocusNode _focusNode1 = new FocusNode();
 

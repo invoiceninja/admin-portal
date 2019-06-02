@@ -77,8 +77,8 @@ class ProductEditVM {
           final localization = AppLocalization.of(context);
           switch (action) {
             case EntityAction.newInvoice:
-              final item =
-              convertProductToInvoiceItem(context: context, product: product);
+              final item = convertProductToInvoiceItem(
+                  context: context, product: product);
               store.dispatch(EditInvoice(
                   context: context,
                   invoice: InvoiceEntity(company: state.selectedCompany)

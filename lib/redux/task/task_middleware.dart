@@ -66,7 +66,8 @@ Middleware<AppState> _viewTaskList() {
 
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(TaskScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        TaskScreen.route, (Route<dynamic> route) => false);
   };
 }
 
@@ -74,8 +75,8 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origTask, EntityAction.archive)
+        .saveData(store.state.selectedCompany, store.state.authState, origTask,
+            EntityAction.archive)
         .then((TaskEntity task) {
       store.dispatch(ArchiveTaskSuccess(task));
       if (action.completer != null) {
@@ -97,8 +98,8 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origTask, EntityAction.delete)
+        .saveData(store.state.selectedCompany, store.state.authState, origTask,
+            EntityAction.delete)
         .then((TaskEntity task) {
       store.dispatch(DeleteTaskSuccess(task));
       if (action.completer != null) {
@@ -120,8 +121,8 @@ Middleware<AppState> _restoreTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origTask, EntityAction.restore)
+        .saveData(store.state.selectedCompany, store.state.authState, origTask,
+            EntityAction.restore)
         .then((TaskEntity task) {
       store.dispatch(RestoreTaskSuccess(task));
       if (action.completer != null) {

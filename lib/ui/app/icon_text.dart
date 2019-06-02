@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class IconText extends StatelessWidget {
-
   const IconText({this.text, this.icon});
   final String text;
   final IconData icon;

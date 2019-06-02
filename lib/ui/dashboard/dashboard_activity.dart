@@ -28,4 +28,3 @@ class DashboardActivity extends StatelessWidget {
     );
   }
 }
-

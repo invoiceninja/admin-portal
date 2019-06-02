@@ -17,24 +17,30 @@ import 'package:invoiceninja_flutter/data/models/static/frequency_model.dart';
 
 part 'static_data_model.g.dart';
 
-abstract class StaticDataListResponse implements Built<StaticDataListResponse, StaticDataListResponseBuilder> {
-
-  factory StaticDataListResponse([void updates(StaticDataListResponseBuilder b)]) = _$StaticDataListResponse;
+abstract class StaticDataListResponse
+    implements Built<StaticDataListResponse, StaticDataListResponseBuilder> {
+  factory StaticDataListResponse(
+          [void updates(StaticDataListResponseBuilder b)]) =
+      _$StaticDataListResponse;
   StaticDataListResponse._();
 
   BuiltList<StaticDataEntity> get data;
 
-  static Serializer<StaticDataListResponse> get serializer => _$staticDataListResponseSerializer;
+  static Serializer<StaticDataListResponse> get serializer =>
+      _$staticDataListResponseSerializer;
 }
 
-abstract class StaticDataItemResponse implements Built<StaticDataItemResponse, StaticDataItemResponseBuilder> {
-
-  factory StaticDataItemResponse([void updates(StaticDataItemResponseBuilder b)]) = _$StaticDataItemResponse;
+abstract class StaticDataItemResponse
+    implements Built<StaticDataItemResponse, StaticDataItemResponseBuilder> {
+  factory StaticDataItemResponse(
+          [void updates(StaticDataItemResponseBuilder b)]) =
+      _$StaticDataItemResponse;
   StaticDataItemResponse._();
 
   StaticDataEntity get data;
 
-  static Serializer<StaticDataItemResponse> get serializer => _$staticDataItemResponseSerializer;
+  static Serializer<StaticDataItemResponse> get serializer =>
+      _$staticDataItemResponseSerializer;
 }
 
 class StaticDataFields {
@@ -56,8 +62,8 @@ class StaticDataFields {
   static const String banks = 'banks';
 }
 
-abstract class StaticDataEntity implements Built<StaticDataEntity, StaticDataEntityBuilder> {
-
+abstract class StaticDataEntity
+    implements Built<StaticDataEntity, StaticDataEntityBuilder> {
   factory StaticDataEntity() {
     return _$StaticDataEntity._(
       currencies: BuiltList<CurrencyEntity>(),
@@ -100,6 +106,6 @@ abstract class StaticDataEntity implements Built<StaticDataEntity, StaticDataEnt
 
   BuiltList<FrequencyEntity> get frequencies;
 
-  static Serializer<StaticDataEntity> get serializer => _$staticDataEntitySerializer;
+  static Serializer<StaticDataEntity> get serializer =>
+      _$staticDataEntitySerializer;
 }
-

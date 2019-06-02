@@ -30,7 +30,6 @@ export 'package:invoiceninja_flutter/data/models/static/frequency_model.dart';
 part 'models.g.dart';
 
 class EntityAction extends EnumClass {
-
   const EntityAction._(String name) : super(name);
 
   static Serializer<EntityAction> get serializer => _$entityActionSerializer;
@@ -59,4 +58,3 @@ class EntityAction extends EnumClass {
   static BuiltSet<EntityAction> get values => _$values;
   static EntityAction valueOf(String name) => _$valueOf(name);
 }
-

@@ -31,12 +31,14 @@ class ProductListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
-        leading: onCheckboxChanged != null ? Checkbox(
-          //key: NinjaKeys.productItemCheckbox(task.id),
-          value: isChecked,
-          onChanged: (value) => onCheckboxChanged(value),
-          activeColor: Theme.of(context).accentColor,
-        ) : null,
+        leading: onCheckboxChanged != null
+            ? Checkbox(
+                //key: NinjaKeys.productItemCheckbox(task.id),
+                value: isChecked,
+                onChanged: (value) => onCheckboxChanged(value),
+                activeColor: Theme.of(context).accentColor,
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

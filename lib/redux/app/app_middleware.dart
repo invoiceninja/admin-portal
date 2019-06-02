@@ -352,7 +352,7 @@ Middleware<AppState> _createDeleteState(
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    for (int i=0; i<5; i++) {
+    for (int i = 0; i < 5; i++) {
       prefs.setString(getCompanyTokenKey(i), '');
     }
 

@@ -32,10 +32,10 @@ class QuoteEditNotesVM extends EntityEditNotesVM {
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
   }) : super(
-    company: company,
-    invoice: invoice,
-    onChanged: onChanged,
-  );
+          company: company,
+          invoice: invoice,
+          onChanged: onChanged,
+        );
 
   factory QuoteEditNotesVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -44,8 +44,7 @@ class QuoteEditNotesVM extends EntityEditNotesVM {
     return QuoteEditNotesVM(
       company: state.selectedCompany,
       invoice: quote,
-      onChanged: (InvoiceEntity quote) =>
-          store.dispatch(UpdateQuote(quote)),
+      onChanged: (InvoiceEntity quote) => store.dispatch(UpdateQuote(quote)),
     );
   }
 }

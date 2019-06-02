@@ -105,8 +105,7 @@ class QuoteScreen extends StatelessWidget {
                       quote: InvoiceEntity(company: company, isQuote: true)
                           .rebuild((b) => b
                             ..clientId =
-                                store.state.quoteListState.filterEntityId ??
-                                    0),
+                                store.state.quoteListState.filterEntityId ?? 0),
                       context: context));
                 },
                 child: Icon(

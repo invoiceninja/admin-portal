@@ -16,8 +16,7 @@ class VendorList extends StatelessWidget {
 
   final VendorListVM viewModel;
 
-  void _showMenu(
-      BuildContext context, VendorEntity vendor) async {
+  void _showMenu(BuildContext context, VendorEntity vendor) async {
     if (vendor == null) {
       return;
     }
@@ -64,60 +63,57 @@ class VendorList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-      
-              Expanded(
-                child: !viewModel.isLoaded
-                    ? LoadingIndicator()
-                    : RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
-                        child: viewModel.vendorList.isEmpty
-                            ? Opacity(
-                                opacity: 0.5,
-                                child: Center(
-                                  child: Text(
-                                    AppLocalization.of(context).noRecordsFound,
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: viewModel.vendorList.length,
-                                itemBuilder: (BuildContext context, index) {
-                                  final vendorId = viewModel.vendorList[index];
-                                  final vendor = viewModel.vendorMap[vendorId];
-                                  return Column(
-                                    children: <Widget>[
-                                      VendorListItem(
-                                        user: viewModel.user,
-                                        filter: viewModel.filter,
-                                        vendor: vendor,
-                                        onTap: () =>
-                                            viewModel.onVendorTap(context, vendor),
-                                        onEntityAction: (EntityAction action) {
-                                          if (action == EntityAction.more) {
-                                            _showMenu(context, vendor);
-                                          } else {
-                                            viewModel.onEntityAction(
-                                                context, vendor, action);
-                                          }
-                                        },
-                                        onLongPress: () =>
-                                            _showMenu(context, vendor),
-                                      ),
-                                      Divider(
-                                        height: 1.0,
-                                      ),
-                                    ],
-                                  );
-                                },
+        Expanded(
+          child: !viewModel.isLoaded
+              ? LoadingIndicator()
+              : RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: viewModel.vendorList.isEmpty
+                      ? Opacity(
+                          opacity: 0.5,
+                          child: Center(
+                            child: Text(
+                              AppLocalization.of(context).noRecordsFound,
+                              style: TextStyle(
+                                fontSize: 18.0,
                               ),
-                      ),
-              ),
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: viewModel.vendorList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            final vendorId = viewModel.vendorList[index];
+                            final vendor = viewModel.vendorMap[vendorId];
+                            return Column(
+                              children: <Widget>[
+                                VendorListItem(
+                                  user: viewModel.user,
+                                  filter: viewModel.filter,
+                                  vendor: vendor,
+                                  onTap: () =>
+                                      viewModel.onVendorTap(context, vendor),
+                                  onEntityAction: (EntityAction action) {
+                                    if (action == EntityAction.more) {
+                                      _showMenu(context, vendor);
+                                    } else {
+                                      viewModel.onEntityAction(
+                                          context, vendor, action);
+                                    }
+                                  },
+                                  onLongPress: () => _showMenu(context, vendor),
+                                ),
+                                Divider(
+                                  height: 1.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                ),
+        ),
 
-      
         /*
         filteredClient != null
             ? Material(

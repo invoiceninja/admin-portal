@@ -29,7 +29,7 @@ abstract class CompanyState
       clientState: ClientState(),
       invoiceState: InvoiceState(),
       // STARTER: constructor - do not remove comment
-vendorState: VendorState(),
+      vendorState: VendorState(),
 
       taskState: TaskState(),
       projectState: ProjectState(),
@@ -52,7 +52,7 @@ vendorState: VendorState(),
   InvoiceState get invoiceState;
 
   // STARTER: fields - do not remove comment
-VendorState get vendorState;
+  VendorState get vendorState;
 
   TaskState get taskState;
 

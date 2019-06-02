@@ -139,7 +139,8 @@ class _DashboardChartState extends State<DashboardChart> {
                 },
                 child: Container(
                   color: isSelected ? Colors.blue : theme.cardColor,
-                  padding: EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 8),
+                  padding:
+                      EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -189,13 +190,12 @@ class _DashboardChartState extends State<DashboardChart> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                        localization.average +
-                            ': ' +
-                            formatNumber(series.average, context,
-                                currencyId: widget.currencyId),
-                        style:
-                            theme.textTheme.subhead,
-                      ),
+                  localization.average +
+                      ': ' +
+                      formatNumber(series.average, context,
+                          currencyId: widget.currencyId),
+                  style: theme.textTheme.subhead,
+                ),
               ),
               _selected != null
                   ? Text(

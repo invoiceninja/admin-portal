@@ -12,8 +12,7 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, ClearAuthError>(clearAuthErrorReducer),
 ]);
 
-AuthState clearAuthErrorReducer(
-    AuthState authState, ClearAuthError action) {
+AuthState clearAuthErrorReducer(AuthState authState, ClearAuthError action) {
   return authState.rebuild((b) => b..error = null);
 }
 

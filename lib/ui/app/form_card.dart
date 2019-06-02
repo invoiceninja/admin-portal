@@ -21,7 +21,7 @@ class FormCard extends StatelessWidget {
             width: double.infinity,
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment:CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: children,
             ),
           ),

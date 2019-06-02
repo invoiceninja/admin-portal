@@ -96,11 +96,10 @@ ListUIState _filterTasksByState(
   }
 }
 
-ListUIState _filterTasksByStatus(ListUIState taskListState,
-    FilterTasksByStatus action) {
+ListUIState _filterTasksByStatus(
+    ListUIState taskListState, FilterTasksByStatus action) {
   if (taskListState.statusFilters.contains(action.status)) {
-    return taskListState
-        .rebuild((b) => b..statusFilters.remove(action.status));
+    return taskListState.rebuild((b) => b..statusFilters.remove(action.status));
   } else {
     return taskListState.rebuild((b) => b..statusFilters.add(action.status));
   }

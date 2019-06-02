@@ -39,7 +39,6 @@ VendorEntity _updateEditing(VendorEntity vendor, dynamic action) {
   return action.vendor;
 }
 
-
 final vendorListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortVendors>(_sortVendors),
   TypedReducer<ListUIState, FilterVendorsByState>(_filterVendorsByState),
@@ -52,8 +51,8 @@ final vendorListReducer = combineReducers<ListUIState>([
 ListUIState _filterVendorsByClient(
     ListUIState vendorListState, FilterVendorsByEntity action) {
   return vendorListState.rebuild((b) => b
-  ..filterEntityId = action.entityId
-  ..filterEntityType = action.entityType);
+    ..filterEntityId = action.entityId
+    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterVendorsByCustom1(
@@ -173,14 +172,12 @@ VendorState _addVendor(VendorState vendorState, AddVendorSuccess action) {
 }
 
 VendorState _updateVendor(VendorState vendorState, SaveVendorSuccess action) {
-  return vendorState.rebuild((b) => b
-    ..map[action.vendor.id] = action.vendor);
+  return vendorState.rebuild((b) => b..map[action.vendor.id] = action.vendor);
 }
 
 VendorState _setLoadedVendor(
     VendorState vendorState, LoadVendorSuccess action) {
-  return vendorState.rebuild((b) => b
-    ..map[action.vendor.id] = action.vendor);
+  return vendorState.rebuild((b) => b..map[action.vendor.id] = action.vendor);
 }
 
 VendorState _setLoadedVendors(

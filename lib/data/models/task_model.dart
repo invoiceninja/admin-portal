@@ -354,7 +354,6 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'task_status_sort_order')
   int get taskStatusSortOrder;
 
-
   List<EntityAction> getEntityActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];

@@ -109,8 +109,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
-case EntityType.vendor:
-return vendorUIState;
+      case EntityType.vendor:
+        return vendorUIState;
 
       case EntityType.task:
         return taskUIState;
@@ -150,10 +150,9 @@ return vendorUIState;
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
-VendorState get vendorState => selectedCompanyState.vendorState;
-ListUIState get vendorListState => uiState.vendorUIState.listUIState;
-VendorUIState get vendorUIState => uiState.vendorUIState;
-
+  VendorState get vendorState => selectedCompanyState.vendorState;
+  ListUIState get vendorListState => uiState.vendorUIState.listUIState;
+  VendorUIState get vendorUIState => uiState.vendorUIState;
 
   TaskState get taskState => selectedCompanyState.taskState;
 

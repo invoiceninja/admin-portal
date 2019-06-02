@@ -269,7 +269,6 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'has_custom_design3')
   bool get hasCustomDesign3;
 
-
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')
 
@@ -341,7 +340,8 @@ abstract class CompanyEntity
       companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
 
   // Handle bug in earlier version of API
-  int get firstMonthOfYear => financialYearStart == 2000 ? 1 : financialYearStart;
+  int get firstMonthOfYear =>
+      financialYearStart == 2000 ? 1 : financialYearStart;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

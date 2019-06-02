@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class VendorRepository {
-
   const VendorRepository({
     this.webClient = const WebClient(),
   });
@@ -18,8 +17,8 @@ class VendorRepository {
 
   Future<VendorEntity> loadItem(
       CompanyEntity company, AuthState auth, int entityId) async {
-    final dynamic response = await webClient.get(
-        '${auth.url}/vendors/$entityId', company.token);
+    final dynamic response =
+        await webClient.get('${auth.url}/vendors/$entityId', company.token);
 
     final VendorItemResponse vendorResponse =
         serializers.deserializeWith(VendorItemResponse.serializer, response);
@@ -42,7 +41,7 @@ class VendorRepository {
 
     return vendorResponse.data;
   }
-  
+
   Future<VendorEntity> saveData(
       CompanyEntity company, AuthState auth, VendorEntity vendor,
       [EntityAction action]) async {
@@ -51,9 +50,7 @@ class VendorRepository {
 
     if (vendor.isNew) {
       response = await webClient.post(
-          auth.url + '/vendors',
-          company.token,
-          json.encode(data));
+          auth.url + '/vendors', company.token, json.encode(data));
     } else {
       var url = auth.url + '/vendors/' + vendor.id.toString();
       if (action != null) {
@@ -63,7 +60,7 @@ class VendorRepository {
     }
 
     final VendorItemResponse vendorResponse =
-    serializers.deserializeWith(VendorItemResponse.serializer, response);
+        serializers.deserializeWith(VendorItemResponse.serializer, response);
 
     return vendorResponse.data;
   }

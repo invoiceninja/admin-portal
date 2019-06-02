@@ -27,7 +27,6 @@ class QuoteEditItemsScreen extends StatelessWidget {
 }
 
 class QuoteEditItemsVM extends EntityEditItemsVM {
-
   QuoteEditItemsVM({
     CompanyEntity company,
     InvoiceEntity invoice,
@@ -36,13 +35,13 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
   }) : super(
-    company: company,
-    invoice: invoice,
-    invoiceItem: invoiceItem,
-    onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
-    onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
-    onChangedInvoiceItem: onChangedInvoiceItem,
-  );
+          company: company,
+          invoice: invoice,
+          invoiceItem: invoiceItem,
+          onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+          onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
+          onChangedInvoiceItem: onChangedInvoiceItem,
+        );
 
   factory QuoteEditItemsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -56,8 +55,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
             store.dispatch(DeleteQuoteItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditQuoteItem()),
         onChangedInvoiceItem: (quoteItem, index) {
-          store.dispatch(
-              UpdateQuoteItem(quoteItem: quoteItem, index: index));
+          store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
         });
   }
 }

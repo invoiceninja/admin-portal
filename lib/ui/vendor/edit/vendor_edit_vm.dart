@@ -61,27 +61,29 @@ class VendorEditVM {
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(VendorScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(vendor.isNew ? VendorScreen.route : VendorViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(
+              vendor.isNew ? VendorScreen.route : VendorViewScreen.route));
         }
       },
       onSavePressed: (BuildContext context) {
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();
         store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
         return completer.future.then((_) {
-            return completer.future.then((savedVendor) {
-              store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
-              if (vendor.isNew) {
-                Navigator.of(context).pushReplacementNamed(VendorViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedVendor);
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
+          return completer.future.then((savedVendor) {
+            store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
+            if (vendor.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(VendorViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedVendor);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

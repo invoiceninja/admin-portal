@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 part 'static_state.g.dart';
 
 abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
-
   factory StaticState() {
     return _$StaticState._(
       currencyMap: BuiltMap<int, CurrencyEntity>(),

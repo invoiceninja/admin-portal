@@ -35,7 +35,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
-vendorUIState: VendorUIState(),
+      vendorUIState: VendorUIState(),
 
       taskUIState: TaskUIState(),
       projectUIState: ProjectUIState(),
@@ -70,7 +70,7 @@ vendorUIState: VendorUIState(),
   String get filter;
 
   // STARTER: properties - do not remove comment
-VendorUIState get vendorUIState;
+  VendorUIState get vendorUIState;
 
   TaskUIState get taskUIState;
 

@@ -65,7 +65,8 @@ Middleware<AppState> _viewVendorList() {
 
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(VendorScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        VendorScreen.route, (Route<dynamic> route) => false);
   };
 }
 

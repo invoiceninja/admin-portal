@@ -34,7 +34,6 @@ class VendorViewScreen extends StatelessWidget {
 }
 
 class VendorViewVM {
-
   VendorViewVM({
     @required this.state,
     @required this.vendor,
@@ -73,8 +72,8 @@ class VendorViewVM {
           completer.future.then((client) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
-                  message: AppLocalization.of(context).updatedVendor,
-                )));
+              message: AppLocalization.of(context).updatedVendor,
+            )));
           });
         },
         onRefreshed: (context) => _handleRefresh(context),

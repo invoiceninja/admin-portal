@@ -11676,8 +11676,6 @@ class AppLocalization {
 
   String get products => _localizedValues[locale.toString()]['products'];
 
-
-
   String get newProduct => _localizedValues[locale.toString()]['new_product'];
 
   String get createdProduct =>
@@ -11694,7 +11692,6 @@ class AppLocalization {
 
   String get restoredProduct =>
       _localizedValues[locale.toString()]['restored_product'];
-
 
   String get newVendor => _localizedValues[locale.toString()]['new_vendor'];
 
@@ -11713,8 +11710,6 @@ class AppLocalization {
   String get restoredVendor =>
       _localizedValues[locale.toString()]['restored_vendor'];
 
-
-
   String get newExpense => _localizedValues[locale.toString()]['new_expense'];
 
   String get createdExpense =>
@@ -11731,8 +11726,6 @@ class AppLocalization {
 
   String get restoredExpense =>
       _localizedValues[locale.toString()]['restored_expense'];
-
-
 
   String get productKey => _localizedValues[locale.toString()]['product_key'];
 

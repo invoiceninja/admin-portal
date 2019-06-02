@@ -44,8 +44,8 @@ class OneValueHeader extends StatelessWidget {
         child: Card(
           elevation: 2.0,
           child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: _value1(),
+            padding: EdgeInsets.all(16.0),
+            child: _value1(),
           ),
         ),
       ),

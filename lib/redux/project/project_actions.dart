@@ -18,7 +18,8 @@ class ViewProject implements PersistUI {
 }
 
 class EditProject implements PersistUI {
-  EditProject({this.project, this.context, this.completer, this.trackRoute = true});
+  EditProject(
+      {this.project, this.context, this.completer, this.trackRoute = true});
 
   final ProjectEntity project;
   final BuildContext context;
@@ -102,7 +103,6 @@ class LoadProjectsSuccess implements StopLoading, PersistData {
   }
 }
 
-
 class SaveProjectRequest implements StartSaving {
   SaveProjectRequest({this.completer, this.project});
 
@@ -123,7 +123,7 @@ class AddProjectSuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class SaveProjectFailure implements StopSaving {
-  SaveProjectFailure (this.error);
+  SaveProjectFailure(this.error);
 
   final Object error;
 }
@@ -184,9 +184,6 @@ class RestoreProjectFailure implements StopSaving {
 
   final ProjectEntity project;
 }
-
-
-
 
 class FilterProjects {
   FilterProjects(this.filter);

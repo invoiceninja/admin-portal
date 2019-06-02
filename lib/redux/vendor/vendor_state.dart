@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 part 'vendor_state.g.dart';
 
 abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
-
   factory VendorState() {
     return _$VendorState._(
       lastUpdated: 0,
@@ -26,11 +25,12 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   BuiltList<int> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -38,8 +38,9 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   static Serializer<VendorState> get serializer => _$vendorStateSerializer;
 }
 
-abstract class VendorUIState extends Object with EntityUIState implements Built<VendorUIState, VendorUIStateBuilder> {
-
+abstract class VendorUIState extends Object
+    with EntityUIState
+    implements Built<VendorUIState, VendorUIStateBuilder> {
   factory VendorUIState() {
     return _$VendorUIState._(
       listUIState: ListUIState(VendorFields.name),

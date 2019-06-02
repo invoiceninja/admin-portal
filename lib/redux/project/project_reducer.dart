@@ -39,7 +39,6 @@ ProjectEntity _updateEditing(ProjectEntity project, dynamic action) {
   return action.project;
 }
 
-
 final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortProjects>(_sortProjects),
   TypedReducer<ListUIState, FilterProjectsByState>(_filterProjectsByState),
@@ -52,8 +51,8 @@ final projectListReducer = combineReducers<ListUIState>([
 ListUIState _filterProjectsByClient(
     ListUIState projectListState, FilterProjectsByEntity action) {
   return projectListState.rebuild((b) => b
-  ..filterEntityId = action.entityId
-  ..filterEntityType = action.entityType);
+    ..filterEntityId = action.entityId
+    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterProjectsByCustom1(
@@ -79,13 +78,15 @@ ListUIState _filterProjectsByCustom2(
 ListUIState _filterProjectsByState(
     ListUIState projectListState, FilterProjectsByState action) {
   if (projectListState.stateFilters.contains(action.state)) {
-    return projectListState.rebuild((b) => b..stateFilters.remove(action.state));
+    return projectListState
+        .rebuild((b) => b..stateFilters.remove(action.state));
   } else {
     return projectListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
-ListUIState _filterProjects(ListUIState projectListState, FilterProjects action) {
+ListUIState _filterProjects(
+    ListUIState projectListState, FilterProjects action) {
   return projectListState.rebuild((b) => b..filter = action.filter);
 }
 
@@ -121,12 +122,14 @@ ProjectState _archiveProjectRequest(
 
 ProjectState _archiveProjectSuccess(
     ProjectState projectState, ArchiveProjectSuccess action) {
-  return projectState.rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState
+      .rebuild((b) => b..map[action.project.id] = action.project);
 }
 
 ProjectState _archiveProjectFailure(
     ProjectState projectState, ArchiveProjectFailure action) {
-  return projectState.rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState
+      .rebuild((b) => b..map[action.project.id] = action.project);
 }
 
 ProjectState _deleteProjectRequest(
@@ -140,12 +143,14 @@ ProjectState _deleteProjectRequest(
 
 ProjectState _deleteProjectSuccess(
     ProjectState projectState, DeleteProjectSuccess action) {
-  return projectState.rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState
+      .rebuild((b) => b..map[action.project.id] = action.project);
 }
 
 ProjectState _deleteProjectFailure(
     ProjectState projectState, DeleteProjectFailure action) {
-  return projectState.rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState
+      .rebuild((b) => b..map[action.project.id] = action.project);
 }
 
 ProjectState _restoreProjectRequest(
@@ -158,12 +163,14 @@ ProjectState _restoreProjectRequest(
 
 ProjectState _restoreProjectSuccess(
     ProjectState projectState, RestoreProjectSuccess action) {
-  return projectState.rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState
+      .rebuild((b) => b..map[action.project.id] = action.project);
 }
 
 ProjectState _restoreProjectFailure(
     ProjectState projectState, RestoreProjectFailure action) {
-  return projectState.rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState
+      .rebuild((b) => b..map[action.project.id] = action.project);
 }
 
 ProjectState _addProject(ProjectState projectState, AddProjectSuccess action) {
@@ -172,15 +179,16 @@ ProjectState _addProject(ProjectState projectState, AddProjectSuccess action) {
     ..list.add(action.project.id));
 }
 
-ProjectState _updateProject(ProjectState projectState, SaveProjectSuccess action) {
-  return projectState.rebuild((b) => b
-    ..map[action.project.id] = action.project);
+ProjectState _updateProject(
+    ProjectState projectState, SaveProjectSuccess action) {
+  return projectState
+      .rebuild((b) => b..map[action.project.id] = action.project);
 }
 
 ProjectState _setLoadedProject(
     ProjectState projectState, LoadProjectSuccess action) {
-  return projectState.rebuild((b) => b
-    ..map[action.project.id] = action.project);
+  return projectState
+      .rebuild((b) => b..map[action.project.id] = action.project);
 }
 
 ProjectState _setLoadedProjects(

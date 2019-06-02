@@ -61,55 +61,52 @@ class VendorListVM {
     final state = store.state;
 
     return VendorListVM(
-        user: state.user,
-        listState: state.vendorListState,
-        vendorList: memoizedFilteredVendorList(state.vendorState.map,
-            state.vendorState.list, state.vendorListState),
-        vendorMap: state.vendorState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.vendorState.isLoaded,
-        filter: state.vendorUIState.listUIState.filter,
-          onClearEntityFilterPressed: () =>
-              store.dispatch(FilterVendorsByEntity()),
-          onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-              ViewClient(
-                  clientId: state.vendorListState.filterEntityId,
-                  context: context)),
-        onVendorTap: (context, vendor) {
-          store.dispatch(ViewVendor(vendorId: vendor.id, context: context));
-        },
-        onEntityAction: (context, vendor, action) {
-          switch (action) {
+      user: state.user,
+      listState: state.vendorListState,
+      vendorList: memoizedFilteredVendorList(
+          state.vendorState.map, state.vendorState.list, state.vendorListState),
+      vendorMap: state.vendorState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.vendorState.isLoaded,
+      filter: state.vendorUIState.listUIState.filter,
+      onClearEntityFilterPressed: () => store.dispatch(FilterVendorsByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewClient(
+              clientId: state.vendorListState.filterEntityId,
+              context: context)),
+      onVendorTap: (context, vendor) {
+        store.dispatch(ViewVendor(vendorId: vendor.id, context: context));
+      },
+      onEntityAction: (context, vendor, action) {
+        switch (action) {
           case EntityAction.edit:
-              store.dispatch(
-                  EditVendor(context: context, vendor: vendor));
-              break;
-            case EntityAction.clone:
-              Navigator.of(context).pop();
-              store.dispatch(
-                  EditVendor(context: context, vendor: vendor.clone));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreVendorRequest(
-                  snackBarCompleter(
-                      context, AppLocalization.of(context).restoredVendor),
-                  vendor.id));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveVendorRequest(
-                  snackBarCompleter(
-                      context, AppLocalization.of(context).archivedVendor),
-                  vendor.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteVendorRequest(
-                  snackBarCompleter(
-                      context, AppLocalization.of(context).deletedVendor),
-                  vendor.id));
-              break;
-          }
-        },
-        onRefreshed: (context) => _handleRefresh(context),
+            store.dispatch(EditVendor(context: context, vendor: vendor));
+            break;
+          case EntityAction.clone:
+            Navigator.of(context).pop();
+            store.dispatch(EditVendor(context: context, vendor: vendor.clone));
+            break;
+          case EntityAction.restore:
+            store.dispatch(RestoreVendorRequest(
+                snackBarCompleter(
+                    context, AppLocalization.of(context).restoredVendor),
+                vendor.id));
+            break;
+          case EntityAction.archive:
+            store.dispatch(ArchiveVendorRequest(
+                snackBarCompleter(
+                    context, AppLocalization.of(context).archivedVendor),
+                vendor.id));
+            break;
+          case EntityAction.delete:
+            store.dispatch(DeleteVendorRequest(
+                snackBarCompleter(
+                    context, AppLocalization.of(context).deletedVendor),
+                vendor.id));
+            break;
+        }
+      },
+      onRefreshed: (context) => _handleRefresh(context),
     );
   }
 
@@ -125,5 +122,4 @@ class VendorListVM {
   final Function(BuildContext, VendorEntity, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-
 }

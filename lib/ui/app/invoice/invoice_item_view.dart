@@ -37,12 +37,14 @@ class InvoiceItemListTile extends StatelessWidget {
     }
 
     if (invoiceItem.taxRate1 != 0) {
-      final taxRate1 = formatNumber(invoiceItem.taxRate1, context, formatNumberType: FormatNumberType.percent);
+      final taxRate1 = formatNumber(invoiceItem.taxRate1, context,
+          formatNumberType: FormatNumberType.percent);
       subtitle += ' • $taxRate1 ${invoiceItem.taxName1}';
     }
 
     if (invoiceItem.taxRate2 != 0) {
-      final taxRate2 = formatNumber(invoiceItem.taxRate2, context, formatNumberType: FormatNumberType.percent);
+      final taxRate2 = formatNumber(invoiceItem.taxRate2, context,
+          formatNumberType: FormatNumberType.percent);
       subtitle += ' • $taxRate2 ${invoiceItem.taxName2}';
     }
 
@@ -67,21 +69,22 @@ class InvoiceItemListTile extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ListTile(
-                  onTap: onTap,
-                  title: Row(
-                    children: <Widget>[
-                      Expanded(child: Text(invoiceItem.productKey)),
-                      Text(formatNumber(invoiceItem.total, context,
-                          clientId: invoice.clientId)),
-                    ],
-                  ),
-                  subtitle: Text(subtitle),
-                  trailing: onTap != null ? Icon(Icons.navigate_next) : null,
+                onTap: onTap,
+                title: Row(
+                  children: <Widget>[
+                    Expanded(child: Text(invoiceItem.productKey)),
+                    Text(formatNumber(invoiceItem.total, context,
+                        clientId: invoice.clientId)),
+                  ],
+                ),
+                subtitle: Text(subtitle),
+                trailing: onTap != null ? Icon(Icons.navigate_next) : null,
               ),
-              Divider(height: 1.0,),
+              Divider(
+                height: 1.0,
+              ),
             ],
           ),
-        )
-    );
+        ));
   }
 }

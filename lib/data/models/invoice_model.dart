@@ -441,7 +441,6 @@ abstract class InvoiceEntity extends Object
   }
 
   InvoiceEntity applyTax(TaxRateEntity taxRate, {bool isSecond = false}) {
-
     InvoiceEntity invoice;
 
     if (isSecond) {

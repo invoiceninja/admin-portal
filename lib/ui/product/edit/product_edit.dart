@@ -184,7 +184,8 @@ class _ProductEditState extends State<ProductEdit> {
                   TextFormField(
                     key: Key(ProductKeys.cost),
                     controller: _costController,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: localization.cost,
                     ),

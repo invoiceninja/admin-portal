@@ -18,7 +18,8 @@ class ViewVendor implements PersistUI {
 }
 
 class EditVendor implements PersistUI {
-  EditVendor({this.vendor, this.context, this.completer, this.trackRoute = true});
+  EditVendor(
+      {this.vendor, this.context, this.completer, this.trackRoute = true});
 
   final VendorEntity vendor;
   final BuildContext context;
@@ -102,7 +103,6 @@ class LoadVendorsSuccess implements StopLoading, PersistData {
   }
 }
 
-
 class SaveVendorRequest implements StartSaving {
   SaveVendorRequest({this.completer, this.vendor});
 
@@ -123,7 +123,7 @@ class AddVendorSuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class SaveVendorFailure implements StopSaving {
-  SaveVendorFailure (this.error);
+  SaveVendorFailure(this.error);
 
   final Object error;
 }
@@ -184,9 +184,6 @@ class RestoreVendorFailure implements StopSaving {
 
   final VendorEntity vendor;
 }
-
-
-
 
 class FilterVendors {
   FilterVendors(this.filter);

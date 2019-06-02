@@ -52,9 +52,8 @@ class _ClientEditState extends State<ClientEdit>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(client.isNew
-              ? localization.newClient
-              : localization.editClient),
+          title: Text(
+              client.isNew ? localization.newClient : localization.editClient),
           actions: <Widget>[
             ActionIconButton(
               icon: Icons.cloud_upload,
@@ -63,7 +62,7 @@ class _ClientEditState extends State<ClientEdit>
               isDirty: client.isNew || client != viewModel.origClient,
               isSaving: viewModel.isSaving,
               onPressed: () {
-                if (! _formKey.currentState.validate()) {
+                if (!_formKey.currentState.validate()) {
                   return;
                 }
                 viewModel.onSavePressed(context);

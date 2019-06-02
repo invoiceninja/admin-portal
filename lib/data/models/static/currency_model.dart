@@ -5,24 +5,28 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'currency_model.g.dart';
 
-abstract class CurrencyListResponse implements Built<CurrencyListResponse, CurrencyListResponseBuilder> {
-
-  factory CurrencyListResponse([void updates(CurrencyListResponseBuilder b)]) = _$CurrencyListResponse;
+abstract class CurrencyListResponse
+    implements Built<CurrencyListResponse, CurrencyListResponseBuilder> {
+  factory CurrencyListResponse([void updates(CurrencyListResponseBuilder b)]) =
+      _$CurrencyListResponse;
   CurrencyListResponse._();
 
   BuiltList<CurrencyEntity> get data;
 
-  static Serializer<CurrencyListResponse> get serializer => _$currencyListResponseSerializer;
+  static Serializer<CurrencyListResponse> get serializer =>
+      _$currencyListResponseSerializer;
 }
 
-abstract class CurrencyItemResponse implements Built<CurrencyItemResponse, CurrencyItemResponseBuilder> {
-
-  factory CurrencyItemResponse([void updates(CurrencyItemResponseBuilder b)]) = _$CurrencyItemResponse;
+abstract class CurrencyItemResponse
+    implements Built<CurrencyItemResponse, CurrencyItemResponseBuilder> {
+  factory CurrencyItemResponse([void updates(CurrencyItemResponseBuilder b)]) =
+      _$CurrencyItemResponse;
   CurrencyItemResponse._();
 
   CurrencyEntity get data;
 
-  static Serializer<CurrencyItemResponse> get serializer => _$currencyItemResponseSerializer;
+  static Serializer<CurrencyItemResponse> get serializer =>
+      _$currencyItemResponseSerializer;
 }
 
 class CurrencyFields {
@@ -36,8 +40,9 @@ class CurrencyFields {
   static const String exchangeRate = 'exchangeRate';
 }
 
-abstract class CurrencyEntity extends Object with SelectableEntity implements Built<CurrencyEntity, CurrencyEntityBuilder> {
-
+abstract class CurrencyEntity extends Object
+    with SelectableEntity
+    implements Built<CurrencyEntity, CurrencyEntityBuilder> {
   factory CurrencyEntity() {
     return _$CurrencyEntity._(
       id: 0,
@@ -115,5 +120,6 @@ abstract class CurrencyEntity extends Object with SelectableEntity implements Bu
   @override
   double get listDisplayAmount => null;
 
-  static Serializer<CurrencyEntity> get serializer => _$currencyEntitySerializer;
+  static Serializer<CurrencyEntity> get serializer =>
+      _$currencyEntitySerializer;
 }

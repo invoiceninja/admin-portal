@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomField extends StatelessWidget {
-
   const CustomField({
     @required this.controller,
     @required this.labelText,
@@ -31,10 +30,12 @@ class CustomField extends StatelessWidget {
         ),
       );
     } else {
-      final menuItems = options.map((option) => PopupMenuItem<String>(
-        value: option,
-        child: Text(option),
-      )).toList();
+      final menuItems = options
+          .map((option) => PopupMenuItem<String>(
+                value: option,
+                child: Text(option),
+              ))
+          .toList();
 
       return PopupMenuButton<String>(
         padding: EdgeInsets.zero,

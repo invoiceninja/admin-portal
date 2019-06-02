@@ -45,11 +45,9 @@ class TaskRepository {
   Future<TaskEntity> saveData(
       CompanyEntity company, AuthState auth, TaskEntity task,
       [EntityAction action]) async {
-
     // Workaround for API issue
     if (task.isNew) {
-      task = task.rebuild((b) => b
-        ..id = null);
+      task = task.rebuild((b) => b..id = null);
     }
 
     final data = serializers.serializeWith(TaskEntity.serializer, task);
