@@ -22,6 +22,7 @@ class EntityType extends EnumClass {
   static const EntityType project = _$project;
   static const EntityType expense = _$expense;
   static const EntityType vendor = _$vendor;
+  static const EntityType vendorContact = _$vendorContact;
   static const EntityType credit = _$credit;
   static const EntityType payment = _$payment;
   static const EntityType country = _$country;

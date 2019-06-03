@@ -227,6 +227,11 @@ abstract class VendorContactEntity extends Object
 
   VendorContactEntity._();
 
+  @override
+  EntityType get entityType {
+    return EntityType.vendorContact;
+  }
+
   static int counter = 0;
 
   @BuiltValueField(wireName: 'first_name')
