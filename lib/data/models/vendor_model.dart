@@ -82,7 +82,11 @@ abstract class VendorEntity extends Object
       currencyId: 0,
       customValue1: '',
       customValue2: '',
-      contacts: BuiltList<VendorContactEntity>(),
+      contacts: BuiltList<VendorContactEntity>(
+        <VendorContactEntity>[
+          VendorContactEntity().rebuild((b) => b..isPrimary = true)
+        ],
+      ),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
