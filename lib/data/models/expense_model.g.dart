@@ -145,8 +145,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       serializers.serialize(object.transactionReference,
           specifiedType: const FullType(String)),
       'bank_id',
-      serializers.serialize(object.bankId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.bankId, specifiedType: const FullType(int)),
       'expense_currency_id',
       serializers.serialize(object.expenseCurrencyId,
           specifiedType: const FullType(int)),
@@ -162,7 +161,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'exchange_rate',
       serializers.serialize(object.exchangeRate,
           specifiedType: const FullType(double)),
-      'invoiceCurrencyId',
+      'invoice_currency_id',
       serializers.serialize(object.invoiceCurrencyId,
           specifiedType: const FullType(int)),
       'tax_name1',
@@ -267,7 +266,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'bank_id':
           result.bankId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(int)) as int;
           break;
         case 'expense_currency_id':
           result.expenseCurrencyId = serializers.deserialize(value,
@@ -289,7 +288,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.exchangeRate = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'invoiceCurrencyId':
+        case 'invoice_currency_id':
           result.invoiceCurrencyId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
@@ -663,7 +662,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String transactionReference;
   @override
-  final String bankId;
+  final int bankId;
   @override
   final int expenseCurrencyId;
   @override
@@ -948,9 +947,9 @@ class ExpenseEntityBuilder
   set transactionReference(String transactionReference) =>
       _$this._transactionReference = transactionReference;
 
-  String _bankId;
-  String get bankId => _$this._bankId;
-  set bankId(String bankId) => _$this._bankId = bankId;
+  int _bankId;
+  int get bankId => _$this._bankId;
+  set bankId(int bankId) => _$this._bankId = bankId;
 
   int _expenseCurrencyId;
   int get expenseCurrencyId => _$this._expenseCurrencyId;

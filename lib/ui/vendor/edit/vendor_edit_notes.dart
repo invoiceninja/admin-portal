@@ -81,7 +81,8 @@ class VendorEditNotesState extends State<VendorEditNotes> {
               entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
-              initialValue: staticState.currencyMap[viewModel.vendor.currencyId]?.name,
+              initialValue:
+                  staticState.currencyMap[viewModel.vendor.currencyId]?.name,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
                   viewModel.vendor.rebuild((b) => b..currencyId = currency.id)),
             ),

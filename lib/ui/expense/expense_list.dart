@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_list_item.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class StubList extends StatelessWidget {
-  const StubList({
+class ExpenseList extends StatelessWidget {
+  const ExpenseList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final StubListVM viewModel;
+  final ExpenseListVM viewModel;
 
   void _showMenu(
-      BuildContext context, StubEntity stub, ClientEntity client) async {
-    if (stub == null || client == null) {
+      BuildContext context, ExpenseEntity expense, ClientEntity client) async {
+    if (expense == null || client == null) {
       return;
     }
 
@@ -26,8 +26,9 @@ class StubList extends StatelessWidget {
     final message = await showDialog<String>(
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
-                children: stub
-                    .getEntityActions(user: user, client: client, includeEdit: true)
+                children: expense
+                    .getEntityActions(
+                        user: user, client: client, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {
                 return Divider();
@@ -38,7 +39,7 @@ class StubList extends StatelessWidget {
                       .lookup(entityAction.toString())),
                   onTap: () {
                     Navigator.of(dialogContext).pop();
-                    viewModel.onEntityAction(context, stub, entityAction);
+                    viewModel.onEntityAction(context, expense, entityAction);
                   },
                 );
               }
@@ -64,60 +65,58 @@ class StubList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-      
-              Expanded(
-                child: !viewModel.isLoaded
-                    ? LoadingIndicator()
-                    : RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
-                        child: viewModel.stubList.isEmpty
-                            ? Opacity(
-                                opacity: 0.5,
-                                child: Center(
-                                  child: Text(
-                                    AppLocalization.of(context).noRecordsFound,
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: viewModel.stubList.length,
-                                itemBuilder: (BuildContext context, index) {
-                                  final stubId = viewModel.stubList[index];
-                                  final stub = viewModel.stubMap[stubId];
-                                  return Column(
-                                    children: <Widget>[
-                                      StubListItem(
-                                        user: viewModel.user,
-                                        filter: viewModel.filter,
-                                        stub: stub,
-                                        onTap: () =>
-                                            viewModel.onStubTap(context, stub),
-                                        onEntityAction: (EntityAction action) {
-                                          if (action == EntityAction.more) {
-                                            _showMenu(context, stub, null);
-                                          } else {
-                                            viewModel.onEntityAction(
-                                                context, stub, action);
-                                          }
-                                        },
-                                        onLongPress: () =>
-                                            _showMenu(context, stub, null),
-                                      ),
-                                      Divider(
-                                        height: 1.0,
-                                      ),
-                                    ],
-                                  );
-                                },
+        Expanded(
+          child: !viewModel.isLoaded
+              ? LoadingIndicator()
+              : RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: viewModel.expenseList.isEmpty
+                      ? Opacity(
+                          opacity: 0.5,
+                          child: Center(
+                            child: Text(
+                              AppLocalization.of(context).noRecordsFound,
+                              style: TextStyle(
+                                fontSize: 18.0,
                               ),
-                      ),
-              ),
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: viewModel.expenseList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            final expenseId = viewModel.expenseList[index];
+                            final expense = viewModel.expenseMap[expenseId];
+                            return Column(
+                              children: <Widget>[
+                                ExpenseListItem(
+                                  user: viewModel.user,
+                                  filter: viewModel.filter,
+                                  expense: expense,
+                                  onTap: () =>
+                                      viewModel.onExpenseTap(context, expense),
+                                  onEntityAction: (EntityAction action) {
+                                    if (action == EntityAction.more) {
+                                      _showMenu(context, expense, null);
+                                    } else {
+                                      viewModel.onEntityAction(
+                                          context, expense, action);
+                                    }
+                                  },
+                                  onLongPress: () =>
+                                      _showMenu(context, expense, null),
+                                ),
+                                Divider(
+                                  height: 1.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                ),
+        ),
 
-      
         /*
         filteredClient != null
             ? Material(
@@ -154,7 +153,7 @@ class StubList extends StatelessWidget {
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
-                  child: viewModel.stubList.isEmpty
+                  child: viewModel.expenseList.isEmpty
                       ? Opacity(
                           opacity: 0.5,
                           child: Center(
@@ -168,34 +167,34 @@ class StubList extends StatelessWidget {
                         )
                       : ListView.builder(
                           shrinkWrap: true,
-                          itemCount: viewModel.stubList.length,
+                          itemCount: viewModel.expenseList.length,
                           itemBuilder: (BuildContext context, index) {
-                            final stubId = viewModel.stubList[index];
-                            final stub = viewModel.stubMap[stubId];
+                            final expenseId = viewModel.expenseList[index];
+                            final expense = viewModel.expenseMap[expenseId];
                             final client =
-                                viewModel.clientMap[stub.clientId] ??
+                                viewModel.clientMap[expense.clientId] ??
                                     ClientEntity();
                             return Column(
                               children: <Widget>[
-                                StubListItem(
+                                ExpenseListItem(
                                   user: viewModel.user,
                                   filter: viewModel.filter,
-                                  stub: stub,
+                                  expense: expense,
                                   client:
-                                      viewModel.clientMap[stub.clientId] ??
+                                      viewModel.clientMap[expense.clientId] ??
                                           ClientEntity(),
                                   onTap: () =>
-                                      viewModel.onStubTap(context, stub),
+                                      viewModel.onExpenseTap(context, expense),
                                   onEntityAction: (EntityAction action) {
                                     if (action == EntityAction.more) {
-                                      _showMenu(context, stub, client);
+                                      _showMenu(context, expense, client);
                                     } else {
                                       viewModel.onEntityAction(
-                                          context, stub, action);
+                                          context, expense, action);
                                     }
                                   },
                                   onLongPress: () =>
-                                      _showMenu(context, stub, client),
+                                      _showMenu(context, expense, client),
                                 ),
                                 Divider(
                                   height: 1.0,

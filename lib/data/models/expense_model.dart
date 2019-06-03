@@ -72,7 +72,7 @@ abstract class ExpenseEntity extends Object
       shouldBeInvoiced: false,
       transactionId: '',
       transactionReference: '',
-      bankId: '',
+      bankId: 0,
       expenseCurrencyId: 0,
       exchangeCurrencyId: 0,
       amount: 0.0,
@@ -120,7 +120,7 @@ abstract class ExpenseEntity extends Object
   String get transactionReference;
 
   @BuiltValueField(wireName: 'bank_id')
-  String get bankId;
+  int get bankId;
 
   @BuiltValueField(wireName: 'expense_currency_id')
   int get expenseCurrencyId;
@@ -136,7 +136,7 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
-  @BuiltValueField(wireName: 'invoiceCurrencyId')
+  @BuiltValueField(wireName: 'invoice_currency_id')
   int get invoiceCurrencyId;
 
   @BuiltValueField(wireName: 'tax_name1')
@@ -167,7 +167,8 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'expense_category')
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  List<EntityAction> getEntityActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     return actions..addAll(getBaseActions(user: user));

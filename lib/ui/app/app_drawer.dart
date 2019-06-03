@@ -19,6 +19,8 @@ import 'package:redux/redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -253,6 +255,19 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
+          DrawerTile(
+            company: company,
+            entityType: EntityType.expense,
+            icon: getEntityIcon(EntityType.expense),
+            title: localization.expenses,
+            onTap: () => store.dispatch(ViewExpenseList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(
+                  EditExpense(expense: ExpenseEntity(), context: context));
+            },
+          ),
+
           DrawerTile(
             company: company,
             icon: FontAwesomeIcons.cog,

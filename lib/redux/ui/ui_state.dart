@@ -8,6 +8,8 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
+
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
@@ -35,6 +37,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
+      expenseUIState: ExpenseUIState(),
+
       vendorUIState: VendorUIState(),
 
       taskUIState: TaskUIState(),
@@ -70,6 +74,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   String get filter;
 
   // STARTER: properties - do not remove comment
+  ExpenseUIState get expenseUIState;
+
   VendorUIState get vendorUIState;
 
   TaskUIState get taskUIState;

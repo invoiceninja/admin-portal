@@ -49,7 +49,8 @@ class VendorEditContactsVM {
           store.dispatch(AddVendorContact(contact));
           store.dispatch(EditVendorContact(contact));
         },
-        onRemoveContactPressed: (index) => store.dispatch(DeleteVendorContact(index)),
+        onRemoveContactPressed: (index) =>
+            store.dispatch(DeleteVendorContact(index)),
         onDoneContactPressed: () => store.dispatch(EditVendorContact()),
         onChangedContact: (contact, index) {
           store.dispatch(UpdateVendorContact(contact: contact, index: index));

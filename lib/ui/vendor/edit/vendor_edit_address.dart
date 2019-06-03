@@ -16,8 +16,7 @@ class VendorEditAddress extends StatefulWidget {
   final VendorEditVM viewModel;
 
   @override
-  VendorEditAddressState createState() =>
-      VendorEditAddressState();
+  VendorEditAddressState createState() => VendorEditAddressState();
 }
 
 class VendorEditAddressState extends State<VendorEditAddress> {
@@ -126,7 +125,8 @@ class VendorEditAddressState extends State<VendorEditAddress> {
             key: ValueKey(vendor.countryId),
             entityType: EntityType.country,
             entityMap: viewModel.state.staticState.countryMap,
-            entityList: memoizedCountryList(viewModel.state.staticState.countryMap),
+            entityList:
+                memoizedCountryList(viewModel.state.staticState.countryMap),
             labelText: localization.country,
             initialValue:
                 viewModel.state.staticState.countryMap[vendor.countryId]?.name,

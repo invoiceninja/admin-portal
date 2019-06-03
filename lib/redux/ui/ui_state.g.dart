@@ -61,6 +61,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'expenseUIState',
+      serializers.serialize(object.expenseUIState,
+          specifiedType: const FullType(ExpenseUIState)),
       'vendorUIState',
       serializers.serialize(object.vendorUIState,
           specifiedType: const FullType(VendorUIState)),
@@ -143,6 +146,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'expenseUIState':
+          result.expenseUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ExpenseUIState)) as ExpenseUIState);
+          break;
         case 'vendorUIState':
           result.vendorUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(VendorUIState)) as VendorUIState);
@@ -194,6 +201,8 @@ class _$UIState extends UIState {
   @override
   final String filter;
   @override
+  final ExpenseUIState expenseUIState;
+  @override
   final VendorUIState vendorUIState;
   @override
   final TaskUIState taskUIState;
@@ -219,6 +228,7 @@ class _$UIState extends UIState {
       this.clientUIState,
       this.invoiceUIState,
       this.filter,
+      this.expenseUIState,
       this.vendorUIState,
       this.taskUIState,
       this.projectUIState,
@@ -254,6 +264,9 @@ class _$UIState extends UIState {
     }
     if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    }
+    if (expenseUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'expenseUIState');
     }
     if (vendorUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'vendorUIState');
@@ -294,6 +307,7 @@ class _$UIState extends UIState {
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
         filter == other.filter &&
+        expenseUIState == other.expenseUIState &&
         vendorUIState == other.vendorUIState &&
         taskUIState == other.taskUIState &&
         projectUIState == other.projectUIState &&
@@ -319,22 +333,24 @@ class _$UIState extends UIState {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    selectedCompanyIndex
+                                                                    $jc(
+                                                                        0,
+                                                                        selectedCompanyIndex
+                                                                            .hashCode),
+                                                                    currentRoute
                                                                         .hashCode),
-                                                                currentRoute
+                                                                enableDarkMode
                                                                     .hashCode),
-                                                            enableDarkMode
+                                                            requireAuthentication
                                                                 .hashCode),
-                                                        requireAuthentication
-                                                            .hashCode),
-                                                    emailPayment.hashCode),
-                                                autoStartTasks.hashCode),
-                                            dashboardUIState.hashCode),
-                                        productUIState.hashCode),
-                                    clientUIState.hashCode),
-                                invoiceUIState.hashCode),
-                            filter.hashCode),
+                                                        emailPayment.hashCode),
+                                                    autoStartTasks.hashCode),
+                                                dashboardUIState.hashCode),
+                                            productUIState.hashCode),
+                                        clientUIState.hashCode),
+                                    invoiceUIState.hashCode),
+                                filter.hashCode),
+                            expenseUIState.hashCode),
                         vendorUIState.hashCode),
                     taskUIState.hashCode),
                 projectUIState.hashCode),
@@ -356,6 +372,7 @@ class _$UIState extends UIState {
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
           ..add('filter', filter)
+          ..add('expenseUIState', expenseUIState)
           ..add('vendorUIState', vendorUIState)
           ..add('taskUIState', taskUIState)
           ..add('projectUIState', projectUIState)
@@ -424,6 +441,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
 
+  ExpenseUIStateBuilder _expenseUIState;
+  ExpenseUIStateBuilder get expenseUIState =>
+      _$this._expenseUIState ??= new ExpenseUIStateBuilder();
+  set expenseUIState(ExpenseUIStateBuilder expenseUIState) =>
+      _$this._expenseUIState = expenseUIState;
+
   VendorUIStateBuilder _vendorUIState;
   VendorUIStateBuilder get vendorUIState =>
       _$this._vendorUIState ??= new VendorUIStateBuilder();
@@ -469,6 +492,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
       _filter = _$v.filter;
+      _expenseUIState = _$v.expenseUIState?.toBuilder();
       _vendorUIState = _$v.vendorUIState?.toBuilder();
       _taskUIState = _$v.taskUIState?.toBuilder();
       _projectUIState = _$v.projectUIState?.toBuilder();
@@ -509,6 +533,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
               filter: filter,
+              expenseUIState: expenseUIState.build(),
               vendorUIState: vendorUIState.build(),
               taskUIState: taskUIState.build(),
               projectUIState: projectUIState.build(),
@@ -526,6 +551,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
 
+        _$failedField = 'expenseUIState';
+        expenseUIState.build();
         _$failedField = 'vendorUIState';
         vendorUIState.build();
         _$failedField = 'taskUIState';

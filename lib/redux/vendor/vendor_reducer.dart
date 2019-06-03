@@ -20,7 +20,8 @@ final editingVendorContactReducer = combineReducers<VendorContactEntity>([
   TypedReducer<VendorContactEntity, EditVendorContact>(editVendorContact),
 ]);
 
-VendorContactEntity editVendorContact(VendorContactEntity contact, dynamic action) {
+VendorContactEntity editVendorContact(
+    VendorContactEntity contact, dynamic action) {
   return action.contact ?? VendorContactEntity();
 }
 

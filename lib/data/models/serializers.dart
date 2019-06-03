@@ -23,6 +23,8 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
+
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
@@ -78,6 +80,8 @@ part 'serializers.g.dart';
   TimezoneItemResponse,
   TimezoneListResponse,
   // STARTER: serializers - do not remove comment
+  ExpenseEntity,
+
   VendorEntity,
 
   TaskEntity,

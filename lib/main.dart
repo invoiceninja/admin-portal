@@ -43,6 +43,12 @@ import 'package:local_auth/local_auth.dart';
 
 //import 'package:quick_actions/quick_actions.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
+
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
@@ -97,6 +103,7 @@ void main() async {
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreExpensesMiddleware())
         ..addAll(createStoreVendorsMiddleware())
         ..addAll(createStoreTasksMiddleware())
         ..addAll(createStoreProjectsMiddleware())
@@ -306,6 +313,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
+            ExpenseScreen.route: (context) {
+              widget.store.dispatch(LoadExpenses());
+              return ExpenseScreen();
+            },
+            ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
+            ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
+
             VendorScreen.route: (context) {
               widget.store.dispatch(LoadVendors());
               return VendorScreen();
