@@ -69,7 +69,7 @@ class _VendorEditState extends State<VendorEdit>
           ],
           bottom: TabBar(
             controller: _controller,
-            isScrollable: true,
+            //isScrollable: true,
             tabs: [
               Tab(
                 text: localization.details,
@@ -81,13 +81,7 @@ class _VendorEditState extends State<VendorEdit>
                 text: localization.notes,
               ),
               Tab(
-                text: localization.settings,
-              ),
-              Tab(
-                text: localization.billingAddress,
-              ),
-              Tab(
-                text: localization.shippingAddress,
+                text: localization.address,
               ),
             ],
           ),

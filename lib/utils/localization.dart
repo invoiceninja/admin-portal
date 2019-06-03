@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'address': 'Address',
       'new_vendor': 'New Vendor',
       'created_vendor': 'Successfully created vendor',
       'updated_vendor': 'Successfully updated vendor',
@@ -12274,6 +12275,8 @@ class AppLocalization {
       _localizedValues[locale.toString()]['copy_shipping'];
 
   String get copyBilling => _localizedValues[locale.toString()]['copy_billing'];
+
+  String get address => _localizedValues[locale.toString()]['address'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
