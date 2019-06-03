@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_details.dart';
@@ -40,11 +38,7 @@ class _VendorViewState extends State<VendorView>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
-    final vendor = viewModel.vendor;
-    final company = viewModel.company;
-    final user = company.user;
 
     return WillPopScope(
       onWillPop: () async {

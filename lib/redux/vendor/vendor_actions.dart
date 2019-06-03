@@ -185,6 +185,33 @@ class RestoreVendorFailure implements StopSaving {
   final VendorEntity vendor;
 }
 
+
+class EditVendorContact implements PersistUI {
+  EditVendorContact([this.contact]);
+
+  final VendorContactEntity contact;
+}
+
+class AddVendorContact implements PersistUI {
+  AddVendorContact([this.contact]);
+
+  final VendorContactEntity contact;
+}
+
+class UpdateVendorContact implements PersistUI {
+  UpdateVendorContact({this.index, this.contact});
+
+  final int index;
+  final VendorContactEntity contact;
+}
+
+class DeleteVendorContact implements PersistUI {
+  DeleteVendorContact(this.index);
+
+  final int index;
+}
+
+
 class FilterVendors {
   FilterVendors(this.filter);
 

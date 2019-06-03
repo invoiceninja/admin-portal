@@ -45,6 +45,7 @@ abstract class VendorUIState extends Object
     return _$VendorUIState._(
       listUIState: ListUIState(VendorFields.name),
       editing: VendorEntity(),
+      editingContact: VendorContactEntity(),
       selectedId: 0,
     );
   }
@@ -52,6 +53,9 @@ abstract class VendorUIState extends Object
 
   @nullable
   VendorEntity get editing;
+
+  @nullable
+  VendorContactEntity get editingContact;
 
   @override
   bool get isCreatingNew => editing.isNew;

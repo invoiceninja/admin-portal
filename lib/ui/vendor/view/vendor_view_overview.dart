@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorOverview extends StatelessWidget {

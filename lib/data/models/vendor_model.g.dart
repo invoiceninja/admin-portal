@@ -304,7 +304,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'vendor_contacts':
-          result.vendorContacts.replace(serializers.deserialize(value,
+          result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorContactEntity)]))
               as BuiltList);
@@ -794,7 +794,7 @@ class _$VendorEntity extends VendorEntity {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue2');
     }
     if (contacts == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'vendorContacts');
+      throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
     }
   }
 
@@ -899,7 +899,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('currencyId', currencyId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('vendorContacts', contacts)
+          ..add('contacts', contacts)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -986,11 +986,11 @@ class VendorEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  ListBuilder<VendorContactEntity> _vendorContacts;
-  ListBuilder<VendorContactEntity> get vendorContacts =>
-      _$this._vendorContacts ??= new ListBuilder<VendorContactEntity>();
-  set vendorContacts(ListBuilder<VendorContactEntity> vendorContacts) =>
-      _$this._vendorContacts = vendorContacts;
+  ListBuilder<VendorContactEntity> _contacts;
+  ListBuilder<VendorContactEntity> get contacts =>
+      _$this._contacts ??= new ListBuilder<VendorContactEntity>();
+  set contacts(ListBuilder<VendorContactEntity> contacts) =>
+      _$this._contacts = contacts;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -1038,7 +1038,7 @@ class VendorEntityBuilder
       _currencyId = _$v.currencyId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _vendorContacts = _$v.contacts?.toBuilder();
+      _contacts = _$v.contacts?.toBuilder();
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1087,7 +1087,7 @@ class VendorEntityBuilder
               currencyId: currencyId,
               customValue1: customValue1,
               customValue2: customValue2,
-              contacts: vendorContacts.build(),
+              contacts: contacts.build(),
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
@@ -1097,8 +1097,8 @@ class VendorEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'vendorContacts';
-        vendorContacts.build();
+        _$failedField = 'contacts';
+        contacts.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'VendorEntity', _$failedField, e.toString());
