@@ -19,9 +19,14 @@ class ViewVendor implements PersistUI {
 
 class EditVendor implements PersistUI {
   EditVendor(
-      {this.vendor, this.context, this.completer, this.trackRoute = true});
+      {this.vendor,
+      this.contact,
+      this.context,
+      this.completer,
+      this.trackRoute = true});
 
   final VendorEntity vendor;
+  final VendorContactEntity contact;
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
@@ -185,7 +190,6 @@ class RestoreVendorFailure implements StopSaving {
   final VendorEntity vendor;
 }
 
-
 class EditVendorContact implements PersistUI {
   EditVendorContact([this.contact]);
 
@@ -210,7 +214,6 @@ class DeleteVendorContact implements PersistUI {
 
   final int index;
 }
-
 
 class FilterVendors {
   FilterVendors(this.filter);

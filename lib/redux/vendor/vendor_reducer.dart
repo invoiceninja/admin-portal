@@ -10,7 +10,18 @@ EntityUIState vendorUIReducer(VendorUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(vendorListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
+    ..editingContact
+        .replace(editingVendorContactReducer(state.editingContact, action))
     ..selectedId = selectedIdReducer(state.selectedId, action));
+}
+
+final editingVendorContactReducer = combineReducers<VendorContactEntity>([
+  TypedReducer<VendorContactEntity, EditVendor>(editVendorContact),
+  TypedReducer<VendorContactEntity, EditVendorContact>(editVendorContact),
+]);
+
+VendorContactEntity editVendorContact(VendorContactEntity contact, dynamic action) {
+  return action.contact ?? VendorContactEntity();
 }
 
 Reducer<int> selectedIdReducer = combineReducers([
@@ -28,6 +39,9 @@ final editingReducer = combineReducers<VendorEntity>([
   TypedReducer<VendorEntity, DeleteVendorSuccess>(_updateEditing),
   TypedReducer<VendorEntity, EditVendor>(_updateEditing),
   TypedReducer<VendorEntity, UpdateVendor>(_updateEditing),
+  TypedReducer<VendorEntity, AddVendorContact>(_addContact),
+  TypedReducer<VendorEntity, DeleteVendorContact>(_removeContact),
+  TypedReducer<VendorEntity, UpdateVendorContact>(_updateContact),
   TypedReducer<VendorEntity, SelectCompany>(_clearEditing),
 ]);
 
@@ -37,6 +51,19 @@ VendorEntity _clearEditing(VendorEntity vendor, dynamic action) {
 
 VendorEntity _updateEditing(VendorEntity vendor, dynamic action) {
   return action.vendor;
+}
+
+VendorEntity _addContact(VendorEntity vendor, AddVendorContact action) {
+  return vendor
+      .rebuild((b) => b..contacts.add(action.contact ?? VendorContactEntity()));
+}
+
+VendorEntity _removeContact(VendorEntity vendor, DeleteVendorContact action) {
+  return vendor.rebuild((b) => b..contacts.removeAt(action.index));
+}
+
+VendorEntity _updateContact(VendorEntity vendor, UpdateVendorContact action) {
+  return vendor.rebuild((b) => b..contacts[action.index] = action.contact);
 }
 
 final vendorListReducer = combineReducers<ListUIState>([
