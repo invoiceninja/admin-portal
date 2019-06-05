@@ -44,6 +44,7 @@ class ExpenseFields {
   static const String expenseCategoryId = 'expenseCategoryId';
   static const String amount = 'amount';
   static const String expenseDate = 'expenseDate';
+  static const String paymentDate = 'paymentDate';
   static const String exchangeRate = 'exchangeRate';
   static const String invoiceCurrencyId = 'invoiceCurrencyId';
   static const String taxName1 = 'taxName1';
@@ -76,6 +77,7 @@ abstract class ExpenseEntity extends Object
       expenseCurrencyId: 0,
       amount: 0.0,
       expenseDate: '',
+      paymentDate: '',
       exchangeRate: 0.0,
       invoiceCurrencyId: 0,
       taxName1: '',
@@ -134,6 +136,9 @@ abstract class ExpenseEntity extends Object
 
   @BuiltValueField(wireName: 'expense_date')
   String get expenseDate;
+
+  @BuiltValueField(wireName: 'payment_date')
+  String get paymentDate;
 
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;

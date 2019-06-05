@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
@@ -86,6 +87,28 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     initialTaxRate: expense.taxRate2,
                   )
                 : SizedBox(),
+            SizedBox(height: 20),
+            SwitchListTile(
+              activeColor: Theme.of(context).accentColor,
+              title: Text(localization.markBillable),
+              value: expense.shouldBeInvoiced,
+              onChanged: (value) => viewModel.onChanged(
+                  expense.rebuild((b) => b..shouldBeInvoiced = value)),
+            ),
+            SwitchListTile(
+              activeColor: Theme.of(context).accentColor,
+              title: Text(localization.markPaid),
+              value: expense.paymentDate.isNotEmpty,
+              onChanged: (value) => viewModel.onChanged(expense.rebuild((b) =>
+                  b..paymentDate = value ? convertDateTimeToSqlDate() : '')),
+            ),
+            expense.paymentDate.isNotEmpty ? TextFormField(
+              //controller: _privateNotesController,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: localization.transactionReference,
+              ),
+            ) : SizedBox(),
           ],
         ),
       ],
