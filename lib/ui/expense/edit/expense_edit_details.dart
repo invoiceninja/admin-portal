@@ -3,12 +3,14 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 class ExpenseEditDetails extends StatefulWidget {
@@ -82,6 +84,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
     final company = viewModel.company;
     final staticState = viewModel.state.staticState;
     final vendorState = viewModel.state.vendorState;
+    final clientState = viewModel.state.clientState;
 
     return ListView(
       shrinkWrap: true,
@@ -138,6 +141,31 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
                   viewModel.expense
                       .rebuild((b) => b..expenseCurrencyId = currency.id)),
+            ),
+            DatePicker(
+              labelText: localization.date,
+              selectedDate: expense.expenseDate,
+              onSelected: (date) {
+                viewModel
+                    .onChanged(expense.rebuild((b) => b..expenseDate = date));
+              },
+            ),
+            EntityDropdown(
+              entityType: EntityType.client,
+              labelText: localization.client,
+              initialValue:
+                  (clientState.map[expense.clientId] ?? ClientEntity())
+                      .displayName,
+              entityMap: clientState.map,
+              entityList:
+                  memoizedDropdownClientList(clientState.map, clientState.list),
+              onSelected: (client) {
+                viewModel
+                    .onChanged(expense.rebuild((b) => b..clientId = client.id));
+              },
+              onAddPressed: (completer) {
+                //viewModel.onAddClientPressed(context, completer);
+              },
             ),
             CustomField(
               controller: _custom1Controller,
