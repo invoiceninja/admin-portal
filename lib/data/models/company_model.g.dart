@@ -151,6 +151,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.taskStatusMap,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(int), const FullType(TaskStatusEntity)])),
+      'expenseCategoryMap',
+      serializers.serialize(object.expenseCategoryMap,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(int),
+            const FullType(ExpenseCategoryEntity)
+          ])),
       'user',
       serializers.serialize(object.user,
           specifiedType: const FullType(UserEntity)),
@@ -211,6 +217,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.taskStatuses,
             specifiedType: const FullType(
                 BuiltList, const [const FullType(TaskStatusEntity)])));
+    }
+    if (object.expenseCategories != null) {
+      result
+        ..add('expense_categories')
+        ..add(serializers.serialize(object.expenseCategories,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(ExpenseCategoryEntity)])));
     }
     if (object.fillProducts != null) {
       result
@@ -418,6 +431,19 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(TaskStatusEntity)
+              ])) as BuiltMap);
+          break;
+        case 'expense_categories':
+          result.expenseCategories.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ExpenseCategoryEntity)]))
+              as BuiltList);
+          break;
+        case 'expenseCategoryMap':
+          result.expenseCategoryMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(ExpenseCategoryEntity)
               ])) as BuiltMap);
           break;
         case 'user':
@@ -813,6 +839,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltMap<int, TaskStatusEntity> taskStatusMap;
   @override
+  final BuiltList<ExpenseCategoryEntity> expenseCategories;
+  @override
+  final BuiltMap<int, ExpenseCategoryEntity> expenseCategoryMap;
+  @override
   final UserEntity user;
   @override
   final BuiltMap<String, String> customFields;
@@ -900,6 +930,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.taxRates,
       this.taskStatuses,
       this.taskStatusMap,
+      this.expenseCategories,
+      this.expenseCategoryMap,
       this.user,
       this.customFields,
       this.customPaymentTerms,
@@ -1050,6 +1082,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (taskStatusMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatusMap');
     }
+    if (expenseCategoryMap == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategoryMap');
+    }
     if (user == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'user');
     }
@@ -1158,6 +1193,8 @@ class _$CompanyEntity extends CompanyEntity {
         taxRates == other.taxRates &&
         taskStatuses == other.taskStatuses &&
         taskStatusMap == other.taskStatusMap &&
+        expenseCategories == other.expenseCategories &&
+        expenseCategoryMap == other.expenseCategoryMap &&
         user == other.user &&
         customFields == other.customFields &&
         customPaymentTerms == other.customPaymentTerms &&
@@ -1202,7 +1239,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), user.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), user.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -1266,6 +1303,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('taxRates', taxRates)
           ..add('taskStatuses', taskStatuses)
           ..add('taskStatusMap', taskStatusMap)
+          ..add('expenseCategories', expenseCategories)
+          ..add('expenseCategoryMap', expenseCategoryMap)
           ..add('user', user)
           ..add('customFields', customFields)
           ..add('customPaymentTerms', customPaymentTerms)
@@ -1484,6 +1523,20 @@ class CompanyEntityBuilder
   set taskStatusMap(MapBuilder<int, TaskStatusEntity> taskStatusMap) =>
       _$this._taskStatusMap = taskStatusMap;
 
+  ListBuilder<ExpenseCategoryEntity> _expenseCategories;
+  ListBuilder<ExpenseCategoryEntity> get expenseCategories =>
+      _$this._expenseCategories ??= new ListBuilder<ExpenseCategoryEntity>();
+  set expenseCategories(ListBuilder<ExpenseCategoryEntity> expenseCategories) =>
+      _$this._expenseCategories = expenseCategories;
+
+  MapBuilder<int, ExpenseCategoryEntity> _expenseCategoryMap;
+  MapBuilder<int, ExpenseCategoryEntity> get expenseCategoryMap =>
+      _$this._expenseCategoryMap ??=
+          new MapBuilder<int, ExpenseCategoryEntity>();
+  set expenseCategoryMap(
+          MapBuilder<int, ExpenseCategoryEntity> expenseCategoryMap) =>
+      _$this._expenseCategoryMap = expenseCategoryMap;
+
   UserEntityBuilder _user;
   UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
   set user(UserEntityBuilder user) => _$this._user = user;
@@ -1636,6 +1689,8 @@ class CompanyEntityBuilder
       _taxRates = _$v.taxRates?.toBuilder();
       _taskStatuses = _$v.taskStatuses?.toBuilder();
       _taskStatusMap = _$v.taskStatusMap?.toBuilder();
+      _expenseCategories = _$v.expenseCategories?.toBuilder();
+      _expenseCategoryMap = _$v.expenseCategoryMap?.toBuilder();
       _user = _$v.user?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
@@ -1721,6 +1776,8 @@ class CompanyEntityBuilder
               taxRates: taxRates.build(),
               taskStatuses: _taskStatuses?.build(),
               taskStatusMap: taskStatusMap.build(),
+              expenseCategories: _expenseCategories?.build(),
+              expenseCategoryMap: expenseCategoryMap.build(),
               user: user.build(),
               customFields: customFields.build(),
               customPaymentTerms: customPaymentTerms.build(),
@@ -1752,6 +1809,10 @@ class CompanyEntityBuilder
         _taskStatuses?.build();
         _$failedField = 'taskStatusMap';
         taskStatusMap.build();
+        _$failedField = 'expenseCategories';
+        _expenseCategories?.build();
+        _$failedField = 'expenseCategoryMap';
+        expenseCategoryMap.build();
         _$failedField = 'user';
         user.build();
         _$failedField = 'customFields';

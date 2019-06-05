@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 
 part 'company_model.g.dart';
@@ -50,6 +51,8 @@ abstract class CompanyEntity
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
       taskStatusMap: BuiltMap<int, TaskStatusEntity>(),
+      expenseCategories: BuiltList<ExpenseCategoryEntity>(),
+      expenseCategoryMap: BuiltMap<int, ExpenseCategoryEntity>(),
       user: UserEntity(),
       //userId: 0,
       //users: BuiltList<UserEntity>(),
@@ -192,6 +195,11 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'task_statuses')
   BuiltList<TaskStatusEntity> get taskStatuses;
   BuiltMap<int, TaskStatusEntity> get taskStatusMap;
+
+  @nullable
+  @BuiltValueField(wireName: 'expense_categories')
+  BuiltList<ExpenseCategoryEntity> get expenseCategories;
+  BuiltMap<int, ExpenseCategoryEntity> get expenseCategoryMap;
 
   //@BuiltValueField(wireName: 'user_id')
   //int get userId;
