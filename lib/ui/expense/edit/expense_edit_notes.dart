@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
-
 class ExpenseEditNotes extends StatefulWidget {
   const ExpenseEditNotes({
     Key key,
@@ -56,8 +55,8 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
   void _onChanged() {
     final viewModel = widget.viewModel;
     final expense = viewModel.expense.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text
-      ..privateNotes = _privateNotesController.text);
+      ..publicNotes = _publicNotesController.text.trim()
+      ..privateNotes = _privateNotesController.text.trim());
     if (expense != viewModel.expense) {
       viewModel.onChanged(expense);
     }
