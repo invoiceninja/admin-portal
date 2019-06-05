@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 
 class ExpenseEditDetails extends StatefulWidget {
   const ExpenseEditDetails({
@@ -69,8 +71,10 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final expense = viewModel.expense;
     final company = viewModel.company;
     final staticState = viewModel.state.staticState;
+    final vendorState = viewModel.state.vendorState;
 
     return ListView(
       shrinkWrap: true,
@@ -78,14 +82,34 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
+              entityType: EntityType.vendor,
+              labelText: localization.vendor,
+              initialValue:
+                  (vendorState.map[expense.vendorId] ?? VendorEntity()).name,
+              entityMap: vendorState.map,
+              entityList:
+                  memoizedDropdownVendorList(vendorState.map, vendorState.list),
+              validator: (String val) => val.trim().isEmpty
+                  ? AppLocalization.of(context).pleaseSelectAClient
+                  : null,
+              onSelected: (vendor) {
+                viewModel
+                    .onChanged(expense.rebuild((b) => b..vendorId = vendor.id));
+              },
+              onAddPressed: (completer) {
+                //viewModel.onAddVendorPressed(context, completer);
+              },
+            ),
+            EntityDropdown(
               entityType: EntityType.currency,
               entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
-              initialValue:
-              staticState.currencyMap[viewModel.expense.expenseCurrencyId]?.name,
+              initialValue: staticState
+                  .currencyMap[viewModel.expense.expenseCurrencyId]?.name,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  viewModel.expense.rebuild((b) => b..expenseCurrencyId = currency.id)),
+                  viewModel.expense
+                      .rebuild((b) => b..expenseCurrencyId = currency.id)),
             ),
             CustomField(
               controller: _custom1Controller,

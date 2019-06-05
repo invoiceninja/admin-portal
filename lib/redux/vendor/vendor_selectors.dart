@@ -3,19 +3,14 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownVendorList = memo3((BuiltMap<int, VendorEntity> vendorMap,
-        BuiltList<int> vendorList, int clientId) =>
-    dropdownVendorsSelector(vendorMap, vendorList, clientId));
+var memoizedDropdownVendorList = memo2(
+    (BuiltMap<int, VendorEntity> vendorMap, BuiltList<int> vendorList) =>
+        dropdownVendorsSelector(vendorMap, vendorList));
 
-List<int> dropdownVendorsSelector(BuiltMap<int, VendorEntity> vendorMap,
-    BuiltList<int> vendorList, int clientId) {
+List<int> dropdownVendorsSelector(
+    BuiltMap<int, VendorEntity> vendorMap, BuiltList<int> vendorList) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
-    /*
-    if (clientId != null && clientId > 0 && vendor.clientId != clientId) {
-      return false;
-    }
-    */
     return vendor.isActive;
   }).toList();
 
