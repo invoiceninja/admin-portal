@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_details.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_documents.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
@@ -48,8 +50,9 @@ class _ExpenseEditState extends State<ExpenseEdit>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-              expense.isNew ? localization.newExpense : localization.editExpense),
+          title: Text(expense.isNew
+              ? localization.newExpense
+              : localization.editExpense),
           actions: <Widget>[
             ActionIconButton(
               icon: Icons.cloud_upload,
@@ -73,7 +76,13 @@ class _ExpenseEditState extends State<ExpenseEdit>
                 text: localization.details,
               ),
               Tab(
+                text: localization.settings,
+              ),
+              Tab(
                 text: localization.notes,
+              ),
+              Tab(
+                text: localization.documents,
               ),
             ],
           ),
@@ -86,7 +95,13 @@ class _ExpenseEditState extends State<ExpenseEdit>
               ExpenseEditDetails(
                 viewModel: widget.viewModel,
               ),
+              ExpenseEditSettings(
+                viewModel: widget.viewModel,
+              ),
               ExpenseEditNotes(
+                viewModel: widget.viewModel,
+              ),
+              ExpenseEditDocuments(
                 viewModel: widget.viewModel,
               ),
             ],
