@@ -169,8 +169,12 @@ abstract class ExpenseEntity extends Object
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
 
   List<EntityAction> getEntityActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserEntity user, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+    if (includeEdit && user.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
 
     return actions..addAll(getBaseActions(user: user));
   }

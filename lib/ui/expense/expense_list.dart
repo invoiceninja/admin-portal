@@ -16,9 +16,8 @@ class ExpenseList extends StatelessWidget {
 
   final ExpenseListVM viewModel;
 
-  void _showMenu(
-      BuildContext context, ExpenseEntity expense, ClientEntity client) async {
-    if (expense == null || client == null) {
+  void _showMenu(BuildContext context, ExpenseEntity expense) async {
+    if (expense == null) {
       return;
     }
 
@@ -27,8 +26,7 @@ class ExpenseList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: expense
-                    .getEntityActions(
-                        user: user, client: client, includeEdit: true)
+                    .getEntityActions(user: user, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {
                 return Divider();
@@ -98,14 +96,14 @@ class ExpenseList extends StatelessWidget {
                                       viewModel.onExpenseTap(context, expense),
                                   onEntityAction: (EntityAction action) {
                                     if (action == EntityAction.more) {
-                                      _showMenu(context, expense, null);
+                                      _showMenu(context, expense);
                                     } else {
                                       viewModel.onEntityAction(
                                           context, expense, action);
                                     }
                                   },
                                   onLongPress: () =>
-                                      _showMenu(context, expense, null),
+                                      _showMenu(context, expense),
                                 ),
                                 Divider(
                                   height: 1.0,
