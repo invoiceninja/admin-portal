@@ -79,8 +79,9 @@ abstract class ExpenseEntity extends Object
       exchangeRate: 0.0,
       invoiceCurrencyId: 0,
       taxName1: '',
-      taxRate1: '',
-      taxRate2: '',
+      taxName2: '',
+      taxRate1: 0,
+      taxRate2: 0,
       clientId: 0,
       invoiceId: 0,
       vendorId: 0,
@@ -143,11 +144,14 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
 
+  @BuiltValueField(wireName: 'tax_name2')
+  String get taxName2;
+
   @BuiltValueField(wireName: 'tax_rate1')
-  String get taxRate1;
+  double get taxRate1;
 
   @BuiltValueField(wireName: 'tax_rate2')
-  String get taxRate2;
+  double get taxRate2;
 
   @override
   @BuiltValueField(wireName: 'client_id')
