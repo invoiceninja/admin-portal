@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
 class ExpenseEditSettings extends StatefulWidget {
   const ExpenseEditSettings({
@@ -64,6 +67,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final staticState = viewModel.state.staticState;
     final company = viewModel.company;
     final expense = viewModel.expense;
 
@@ -94,7 +98,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     initialTaxRate: expense.taxRate2,
                   )
                 : SizedBox(),
-            SizedBox(height: 20),
+            SizedBox(height: 16),
             SwitchListTile(
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.markBillable),
@@ -109,6 +113,20 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               onChanged: (value) => viewModel.onChanged(expense.rebuild((b) =>
                   b..paymentDate = value ? convertDateTimeToSqlDate() : '')),
             ),
+            SizedBox(height: 8),
+            expense.paymentDate.isNotEmpty
+                ? EntityDropdown(
+                    entityType: EntityType.paymentType,
+                    entityMap: staticState.paymentTypeMap,
+                    entityList:
+                        memoizedPaymentTypeList(staticState.paymentTypeMap),
+                    labelText: localization.paymentType,
+                    initialValue:
+                        staticState.paymentTypeMap[expense.paymentTypeId]?.name,
+                    onSelected: (paymentType) => viewModel.onChanged(expense
+                        .rebuild((b) => b..paymentTypeId = paymentType.id)),
+                  )
+                : SizedBox(),
             expense.paymentDate.isNotEmpty
                 ? DatePicker(
                     labelText: localization.date,

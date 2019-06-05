@@ -78,6 +78,7 @@ abstract class ExpenseEntity extends Object
       amount: 0.0,
       expenseDate: '',
       paymentDate: '',
+      paymentTypeId: 0,
       exchangeRate: 0.0,
       invoiceCurrencyId: 0,
       taxName1: '',
@@ -145,6 +146,9 @@ abstract class ExpenseEntity extends Object
 
   @BuiltValueField(wireName: 'invoice_currency_id')
   int get invoiceCurrencyId;
+
+  @BuiltValueField(wireName: 'payment_type_id')
+  int get paymentTypeId;
 
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
