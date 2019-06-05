@@ -66,10 +66,8 @@ class ExpenseEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        final Completer<ExpenseEntity> completer =
-            new Completer<ExpenseEntity>();
-        store.dispatch(
-            SaveExpenseRequest(completer: completer, expense: expense));
+        final Completer<ExpenseEntity> completer = new Completer<ExpenseEntity>();
+        store.dispatch(SaveExpenseRequest(completer: completer, expense: expense));
         return completer.future.then((_) {
           return completer.future.then((savedExpense) {
             store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));

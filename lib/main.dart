@@ -319,7 +319,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             },
             ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
             ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
-
             VendorScreen.route: (context) {
               widget.store.dispatch(LoadVendors());
               return VendorScreen();

@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_details.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 
 class ExpenseEdit extends StatefulWidget {
   const ExpenseEdit({
@@ -17,52 +18,27 @@ class ExpenseEdit extends StatefulWidget {
   _ExpenseEditState createState() => _ExpenseEditState();
 }
 
-class _ExpenseEditState extends State<ExpenseEdit> {
+class _ExpenseEditState extends State<ExpenseEdit>
+    with SingleTickerProviderStateMixin {
+  TabController _controller;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // STARTER: controllers - do not remove comment
-
-  List<TextEditingController> _controllers = [];
-
   @override
-  void didChangeDependencies() {
-    _controllers = [
-      // STARTER: array - do not remove comment
-    ];
-
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
-
-    final expense = widget.viewModel.expense;
-    // STARTER: read value - do not remove comment
-
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    _controller = TabController(vsync: this, length: 6);
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
-
+    _controller.dispose();
     super.dispose();
-  }
-
-  void _onChanged() {
-    final expense = widget.viewModel.expense.rebuild((b) => b
-        // STARTER: set value - do not remove comment
-        );
-    if (expense != widget.viewModel.expense) {
-      widget.viewModel.onChanged(expense);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
     final expense = viewModel.expense;
 
     return WillPopScope(
@@ -72,9 +48,8 @@ class _ExpenseEditState extends State<ExpenseEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(viewModel.expense.isNew
-              ? localization.newExpense
-              : localization.editExpense),
+          title: Text(
+              expense.isNew ? localization.newExpense : localization.editExpense),
           actions: <Widget>[
             ActionIconButton(
               icon: Icons.cloud_upload,
@@ -88,22 +63,35 @@ class _ExpenseEditState extends State<ExpenseEdit> {
                 }
                 viewModel.onSavePressed(context);
               },
-            ),
+            )
           ],
+          bottom: TabBar(
+            controller: _controller,
+            //isScrollable: true,
+            tabs: [
+              Tab(
+                text: localization.details,
+              ),
+              Tab(
+                text: localization.notes,
+              ),
+            ],
+          ),
         ),
         body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      // STARTER: widgets - do not remove comment
-                    ],
-                  ),
-                ],
-              );
-            })),
+          key: _formKey,
+          child: TabBarView(
+            controller: _controller,
+            children: <Widget>[
+              ExpenseEditDetails(
+                viewModel: widget.viewModel,
+              ),
+              ExpenseEditNotes(
+                viewModel: widget.viewModel,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
