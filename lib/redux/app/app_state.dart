@@ -190,7 +190,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
-    return 'Expense Categories: ${selectedCompany.expenseCategories}';
-    //return 'Route: ${uiState.currentRoute}';
+    //return 'Expense Categories: ${selectedCompany.expenseCategories}';
+    return 'Route: ${uiState.currentRoute}';
   }
 }

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 class ExpenseEditDetails extends StatefulWidget {
   const ExpenseEditDetails({
@@ -89,12 +90,26 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityMap: vendorState.map,
               entityList:
                   memoizedDropdownVendorList(vendorState.map, vendorState.list),
-              validator: (String val) => val.trim().isEmpty
-                  ? AppLocalization.of(context).pleaseSelectAClient
-                  : null,
               onSelected: (vendor) {
                 viewModel
                     .onChanged(expense.rebuild((b) => b..vendorId = vendor.id));
+              },
+              onAddPressed: (completer) {
+                //viewModel.onAddVendorPressed(context, completer);
+              },
+            ),
+            EntityDropdown(
+              entityType: EntityType.expenseCategory,
+              labelText: localization.category,
+              initialValue: (company.expenseCategoryMap[expense.categoryId] ??
+                      ExpenseCategoryEntity())
+                  .name,
+              entityMap: company.expenseCategoryMap,
+              entityList: memoizedDropdownExpenseCategoriesList(
+                  company.expenseCategoryMap, company.expenseCategories),
+              onSelected: (category) {
+                viewModel
+                    .onChanged(expense.rebuild((b) => b..categoryId = category.id));
               },
               onAddPressed: (completer) {
                 //viewModel.onAddVendorPressed(context, completer);

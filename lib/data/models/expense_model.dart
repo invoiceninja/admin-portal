@@ -74,7 +74,6 @@ abstract class ExpenseEntity extends Object
       transactionReference: '',
       bankId: 0,
       expenseCurrencyId: 0,
-      exchangeCurrencyId: 0,
       amount: 0.0,
       expenseDate: '',
       exchangeRate: 0.0,
@@ -85,9 +84,9 @@ abstract class ExpenseEntity extends Object
       clientId: 0,
       invoiceId: 0,
       vendorId: 0,
+      categoryId: 0,
       customValue1: '',
       customValue2: '',
-      expenseCategories: BuiltList<ExpenseCategoryEntity>(),
       isDeleted: false,
     );
   }
@@ -126,8 +125,9 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'expense_currency_id')
   int get expenseCurrencyId;
 
+  @nullable
   @BuiltValueField(wireName: 'expense_category_id')
-  int get exchangeCurrencyId;
+  int get categoryId;
 
   double get amount;
 
@@ -164,9 +164,6 @@ abstract class ExpenseEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
-
-  @BuiltValueField(wireName: 'expense_category')
-  BuiltList<ExpenseCategoryEntity> get expenseCategories;
 
   List<EntityAction> getEntityActions(
       {UserEntity user, bool includeEdit = false}) {
@@ -228,17 +225,33 @@ abstract class ExpenseEntity extends Object
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 
+class ExpenseCategoryFields {
+  static const String name = 'name';
+}
+
 abstract class ExpenseCategoryEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
-  factory ExpenseCategoryEntity(
-      [void updates(ExpenseCategoryEntityBuilder b)]) = _$ExpenseCategoryEntity;
+  factory ExpenseCategoryEntity() {
+    return _$ExpenseCategoryEntity._(
+      id: --ExpenseCategoryEntity.counter,
+      name: '',
+      isDeleted: false,
+    );
+  }
 
   ExpenseCategoryEntity._();
+
+  static int counter = 0;
 
   @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
+      return true;
+    }
+
+    filter = filter.toLowerCase();
+    if (name.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -256,7 +269,7 @@ abstract class ExpenseCategoryEntity extends Object
 
   @override
   String get listDisplayName {
-    return '';
+    return name;
   }
 
   @override
@@ -266,6 +279,22 @@ abstract class ExpenseCategoryEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   String get name;
+
+  int compareTo(
+      ExpenseCategoryEntity category, String sortField, bool sortAscending) {
+    int response = 0;
+    final ExpenseCategoryEntity categoryA = sortAscending ? this : category;
+    final ExpenseCategoryEntity categoryB = sortAscending ? category : this;
+
+    switch (sortField) {
+      case ExpenseCategoryFields.name:
+        response = categoryA.name
+            .toLowerCase()
+            .compareTo(categoryB.name.toLowerCase());
+    }
+
+    return response;
+  }
 
   static Serializer<ExpenseCategoryEntity> get serializer =>
       _$expenseCategoryEntitySerializer;

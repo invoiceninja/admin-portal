@@ -149,9 +149,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'expense_currency_id',
       serializers.serialize(object.expenseCurrencyId,
           specifiedType: const FullType(int)),
-      'expense_category_id',
-      serializers.serialize(object.exchangeCurrencyId,
-          specifiedType: const FullType(int)),
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -188,11 +185,13 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
-      'expense_category',
-      serializers.serialize(object.expenseCategories,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(ExpenseCategoryEntity)])),
     ];
+    if (object.categoryId != null) {
+      result
+        ..add('expense_category_id')
+        ..add(serializers.serialize(object.categoryId,
+            specifiedType: const FullType(int)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -273,7 +272,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
               specifiedType: const FullType(int)) as int;
           break;
         case 'expense_category_id':
-          result.exchangeCurrencyId = serializers.deserialize(value,
+          result.categoryId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'amount':
@@ -323,12 +322,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'expense_category':
-          result.expenseCategories.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(ExpenseCategoryEntity)]))
-              as BuiltList);
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -666,7 +659,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final int expenseCurrencyId;
   @override
-  final int exchangeCurrencyId;
+  final int categoryId;
   @override
   final double amount;
   @override
@@ -692,8 +685,6 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String customValue2;
   @override
-  final BuiltList<ExpenseCategoryEntity> expenseCategories;
-  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -717,7 +708,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.transactionReference,
       this.bankId,
       this.expenseCurrencyId,
-      this.exchangeCurrencyId,
+      this.categoryId,
       this.amount,
       this.expenseDate,
       this.exchangeRate,
@@ -730,7 +721,6 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.vendorId,
       this.customValue1,
       this.customValue2,
-      this.expenseCategories,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -759,9 +749,6 @@ class _$ExpenseEntity extends ExpenseEntity {
     }
     if (expenseCurrencyId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCurrencyId');
-    }
-    if (exchangeCurrencyId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'exchangeCurrencyId');
     }
     if (amount == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'amount');
@@ -799,9 +786,6 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue2');
     }
-    if (expenseCategories == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCategories');
-    }
   }
 
   @override
@@ -822,7 +806,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         transactionReference == other.transactionReference &&
         bankId == other.bankId &&
         expenseCurrencyId == other.expenseCurrencyId &&
-        exchangeCurrencyId == other.exchangeCurrencyId &&
+        categoryId == other.categoryId &&
         amount == other.amount &&
         expenseDate == other.expenseDate &&
         exchangeRate == other.exchangeRate &&
@@ -835,7 +819,6 @@ class _$ExpenseEntity extends ExpenseEntity {
         vendorId == other.vendorId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        expenseCategories == other.expenseCategories &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -864,20 +847,20 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), exchangeCurrencyId.hashCode),
-                                                                                amount.hashCode),
-                                                                            expenseDate.hashCode),
-                                                                        exchangeRate.hashCode),
-                                                                    invoiceCurrencyId.hashCode),
-                                                                taxName1.hashCode),
-                                                            taxRate1.hashCode),
-                                                        taxRate2.hashCode),
-                                                    clientId.hashCode),
-                                                invoiceId.hashCode),
-                                            vendorId.hashCode),
-                                        customValue1.hashCode),
-                                    customValue2.hashCode),
-                                expenseCategories.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode),
+                                                                                categoryId.hashCode),
+                                                                            amount.hashCode),
+                                                                        expenseDate.hashCode),
+                                                                    exchangeRate.hashCode),
+                                                                invoiceCurrencyId.hashCode),
+                                                            taxName1.hashCode),
+                                                        taxRate1.hashCode),
+                                                    taxRate2.hashCode),
+                                                clientId.hashCode),
+                                            invoiceId.hashCode),
+                                        vendorId.hashCode),
+                                    customValue1.hashCode),
+                                customValue2.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -896,7 +879,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('transactionReference', transactionReference)
           ..add('bankId', bankId)
           ..add('expenseCurrencyId', expenseCurrencyId)
-          ..add('exchangeCurrencyId', exchangeCurrencyId)
+          ..add('categoryId', categoryId)
           ..add('amount', amount)
           ..add('expenseDate', expenseDate)
           ..add('exchangeRate', exchangeRate)
@@ -909,7 +892,6 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('vendorId', vendorId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('expenseCategories', expenseCategories)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -956,10 +938,9 @@ class ExpenseEntityBuilder
   set expenseCurrencyId(int expenseCurrencyId) =>
       _$this._expenseCurrencyId = expenseCurrencyId;
 
-  int _exchangeCurrencyId;
-  int get exchangeCurrencyId => _$this._exchangeCurrencyId;
-  set exchangeCurrencyId(int exchangeCurrencyId) =>
-      _$this._exchangeCurrencyId = exchangeCurrencyId;
+  int _categoryId;
+  int get categoryId => _$this._categoryId;
+  set categoryId(int categoryId) => _$this._categoryId = categoryId;
 
   double _amount;
   double get amount => _$this._amount;
@@ -1010,12 +991,6 @@ class ExpenseEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  ListBuilder<ExpenseCategoryEntity> _expenseCategories;
-  ListBuilder<ExpenseCategoryEntity> get expenseCategories =>
-      _$this._expenseCategories ??= new ListBuilder<ExpenseCategoryEntity>();
-  set expenseCategories(ListBuilder<ExpenseCategoryEntity> expenseCategories) =>
-      _$this._expenseCategories = expenseCategories;
-
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1051,7 +1026,7 @@ class ExpenseEntityBuilder
       _transactionReference = _$v.transactionReference;
       _bankId = _$v.bankId;
       _expenseCurrencyId = _$v.expenseCurrencyId;
-      _exchangeCurrencyId = _$v.exchangeCurrencyId;
+      _categoryId = _$v.categoryId;
       _amount = _$v.amount;
       _expenseDate = _$v.expenseDate;
       _exchangeRate = _$v.exchangeRate;
@@ -1064,7 +1039,6 @@ class ExpenseEntityBuilder
       _vendorId = _$v.vendorId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _expenseCategories = _$v.expenseCategories?.toBuilder();
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1091,48 +1065,34 @@ class ExpenseEntityBuilder
 
   @override
   _$ExpenseEntity build() {
-    _$ExpenseEntity _$result;
-    try {
-      _$result = _$v ??
-          new _$ExpenseEntity._(
-              privateNotes: privateNotes,
-              publicNotes: publicNotes,
-              shouldBeInvoiced: shouldBeInvoiced,
-              transactionId: transactionId,
-              transactionReference: transactionReference,
-              bankId: bankId,
-              expenseCurrencyId: expenseCurrencyId,
-              exchangeCurrencyId: exchangeCurrencyId,
-              amount: amount,
-              expenseDate: expenseDate,
-              exchangeRate: exchangeRate,
-              invoiceCurrencyId: invoiceCurrencyId,
-              taxName1: taxName1,
-              taxRate1: taxRate1,
-              taxRate2: taxRate2,
-              clientId: clientId,
-              invoiceId: invoiceId,
-              vendorId: vendorId,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              expenseCategories: expenseCategories.build(),
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
-              isDeleted: isDeleted,
-              isOwner: isOwner,
-              id: id);
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'expenseCategories';
-        expenseCategories.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'ExpenseEntity', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$ExpenseEntity._(
+            privateNotes: privateNotes,
+            publicNotes: publicNotes,
+            shouldBeInvoiced: shouldBeInvoiced,
+            transactionId: transactionId,
+            transactionReference: transactionReference,
+            bankId: bankId,
+            expenseCurrencyId: expenseCurrencyId,
+            categoryId: categoryId,
+            amount: amount,
+            expenseDate: expenseDate,
+            exchangeRate: exchangeRate,
+            invoiceCurrencyId: invoiceCurrencyId,
+            taxName1: taxName1,
+            taxRate1: taxRate1,
+            taxRate2: taxRate2,
+            clientId: clientId,
+            invoiceId: invoiceId,
+            vendorId: vendorId,
+            customValue1: customValue1,
+            customValue2: customValue2,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            archivedAt: archivedAt,
+            isDeleted: isDeleted,
+            isOwner: isOwner,
+            id: id);
     replace(_$result);
     return _$result;
   }

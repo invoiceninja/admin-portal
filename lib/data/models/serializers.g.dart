@@ -249,10 +249,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(ExpenseCategoryEntity)]),
-          () => new ListBuilder<ExpenseCategoryEntity>())
-      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ExpenseEntity)]),
           () => new ListBuilder<ExpenseEntity>())
       ..addBuilderFactory(
@@ -310,8 +306,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(ExpenseCategoryEntity)]),
           () => new ListBuilder<ExpenseCategoryEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltMap,
-              const [const FullType(int), const FullType(ExpenseCategoryEntity)]),
+          const FullType(BuiltMap, const [
+            const FullType(int),
+            const FullType(ExpenseCategoryEntity)
+          ]),
           () => new MapBuilder<int, ExpenseCategoryEntity>())
       ..addBuilderFactory(
           const FullType(
@@ -335,10 +333,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltMap, const [const FullType(String), const FullType(bool)]),
           () => new MapBuilder<String, bool>())
       ..addBuilderFactory(
-          const FullType(
-              BuiltMap, const [const FullType(int), const FullType(ClientEntity)]),
+          const FullType(BuiltMap,
+              const [const FullType(int), const FullType(ClientEntity)]),
           () => new MapBuilder<int, ClientEntity>())
-      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(int)]), () => new ListBuilder<int>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(CurrencyEntity)]), () => new MapBuilder<int, CurrencyEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(SizeEntity)]), () => new MapBuilder<int, SizeEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(IndustryEntity)]), () => new MapBuilder<int, IndustryEntity>())
