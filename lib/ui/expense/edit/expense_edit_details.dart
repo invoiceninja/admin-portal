@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -23,6 +24,7 @@ class ExpenseEditDetails extends StatefulWidget {
 }
 
 class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
+  final _amountController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
@@ -31,6 +33,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   @override
   void didChangeDependencies() {
     final List<TextEditingController> _controllers = [
+      _amountController,
       _custom1Controller,
       _custom2Controller,
     ];
@@ -39,6 +42,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final expense = widget.viewModel.expense;
+    _amountController.text = formatNumber(expense.amount, context,
+        formatNumberType: FormatNumberType.input);
     _custom1Controller.text = expense.customValue1;
     _custom2Controller.text = expense.customValue2;
 
@@ -61,6 +66,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   void _onChanged() {
     final viewModel = widget.viewModel;
     final expense = viewModel.expense.rebuild((b) => b
+      ..amount = parseDouble(_amountController.text)
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim());
     if (expense != viewModel.expense) {
@@ -108,12 +114,19 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityList: memoizedDropdownExpenseCategoriesList(
                   company.expenseCategoryMap, company.expenseCategories),
               onSelected: (category) {
-                viewModel
-                    .onChanged(expense.rebuild((b) => b..categoryId = category.id));
+                viewModel.onChanged(
+                    expense.rebuild((b) => b..categoryId = category.id));
               },
               onAddPressed: (completer) {
                 //viewModel.onAddVendorPressed(context, completer);
               },
+            ),
+            TextFormField(
+              controller: _amountController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(
+                labelText: localization.amount,
+              ),
             ),
             EntityDropdown(
               entityType: EntityType.currency,
