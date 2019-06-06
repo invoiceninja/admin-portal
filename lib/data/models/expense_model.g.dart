@@ -138,6 +138,9 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'should_be_invoiced',
       serializers.serialize(object.shouldBeInvoiced,
           specifiedType: const FullType(bool)),
+      'invoice_documents',
+      serializers.serialize(object.invoiceDocuments,
+          specifiedType: const FullType(bool)),
       'transaction_id',
       serializers.serialize(object.transactionId,
           specifiedType: const FullType(String)),
@@ -262,6 +265,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'should_be_invoiced':
           result.shouldBeInvoiced = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_documents':
+          result.invoiceDocuments = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'transaction_id':
@@ -672,6 +679,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final bool shouldBeInvoiced;
   @override
+  final bool invoiceDocuments;
+  @override
   final String transactionId;
   @override
   final String transactionReference;
@@ -731,6 +740,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       {this.privateNotes,
       this.publicNotes,
       this.shouldBeInvoiced,
+      this.invoiceDocuments,
       this.transactionId,
       this.transactionReference,
       this.bankId,
@@ -766,6 +776,9 @@ class _$ExpenseEntity extends ExpenseEntity {
     }
     if (shouldBeInvoiced == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'shouldBeInvoiced');
+    }
+    if (invoiceDocuments == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceDocuments');
     }
     if (transactionId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'transactionId');
@@ -841,6 +854,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         privateNotes == other.privateNotes &&
         publicNotes == other.publicNotes &&
         shouldBeInvoiced == other.shouldBeInvoiced &&
+        invoiceDocuments == other.invoiceDocuments &&
         transactionId == other.transactionId &&
         transactionReference == other.transactionReference &&
         bankId == other.bankId &&
@@ -889,7 +903,7 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode),
                                                                                 paymentDate.hashCode),
                                                                             exchangeRate.hashCode),
                                                                         invoiceCurrencyId.hashCode),
@@ -917,6 +931,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('privateNotes', privateNotes)
           ..add('publicNotes', publicNotes)
           ..add('shouldBeInvoiced', shouldBeInvoiced)
+          ..add('invoiceDocuments', invoiceDocuments)
           ..add('transactionId', transactionId)
           ..add('transactionReference', transactionReference)
           ..add('bankId', bankId)
@@ -963,6 +978,11 @@ class ExpenseEntityBuilder
   bool get shouldBeInvoiced => _$this._shouldBeInvoiced;
   set shouldBeInvoiced(bool shouldBeInvoiced) =>
       _$this._shouldBeInvoiced = shouldBeInvoiced;
+
+  bool _invoiceDocuments;
+  bool get invoiceDocuments => _$this._invoiceDocuments;
+  set invoiceDocuments(bool invoiceDocuments) =>
+      _$this._invoiceDocuments = invoiceDocuments;
 
   String _transactionId;
   String get transactionId => _$this._transactionId;
@@ -1079,6 +1099,7 @@ class ExpenseEntityBuilder
       _privateNotes = _$v.privateNotes;
       _publicNotes = _$v.publicNotes;
       _shouldBeInvoiced = _$v.shouldBeInvoiced;
+      _invoiceDocuments = _$v.invoiceDocuments;
       _transactionId = _$v.transactionId;
       _transactionReference = _$v.transactionReference;
       _bankId = _$v.bankId;
@@ -1130,6 +1151,7 @@ class ExpenseEntityBuilder
             privateNotes: privateNotes,
             publicNotes: publicNotes,
             shouldBeInvoiced: shouldBeInvoiced,
+            invoiceDocuments: invoiceDocuments,
             transactionId: transactionId,
             transactionReference: transactionReference,
             bankId: bankId,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseEditDocuments extends StatefulWidget {
   const ExpenseEditDocuments({
@@ -53,14 +54,22 @@ class ExpenseEditDocumentsState extends State<ExpenseEditDocuments> {
 
   @override
   Widget build(BuildContext context) {
-    //final localization = AppLocalization.of(context);
-    //final viewModel = widget.viewModel;
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final expense = viewModel.expense;
 
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
         FormCard(
           children: <Widget>[
+            SwitchListTile(
+              activeColor: Theme.of(context).accentColor,
+              title: Text(localization.addDocumentsToInvoice),
+              value: expense.invoiceDocuments,
+              onChanged: (value) => viewModel.onChanged(
+                  expense.rebuild((b) => b..invoiceDocuments = value)),
+            )
           ],
         ),
       ],

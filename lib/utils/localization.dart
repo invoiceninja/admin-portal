@@ -20,6 +20,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'add_documents_to_invoice': 'Add documents to invoice',
       'exchange_rate': 'Exchange Rate',
       'convert_currency': 'Convert Currency',
       'mark_paid': 'Mark Paid',
@@ -12290,11 +12291,14 @@ class AppLocalization {
 
   String get markPaid => _localizedValues[locale.toString()]['mark_paid'];
 
-  String get convertCurrency => _localizedValues[locale.toString()]['convert_currency'];
+  String get convertCurrency =>
+      _localizedValues[locale.toString()]['convert_currency'];
 
-  String get exchangeRate => _localizedValues[locale.toString()]['exchange_rate'];
+  String get exchangeRate =>
+      _localizedValues[locale.toString()]['exchange_rate'];
 
-
+  String get addDocumentsToInvoice =>
+      _localizedValues[locale.toString()]['add_documents_to_invoice'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

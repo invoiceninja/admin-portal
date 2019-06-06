@@ -72,6 +72,7 @@ abstract class ExpenseEntity extends Object
       privateNotes: '',
       publicNotes: '',
       shouldBeInvoiced: false,
+      invoiceDocuments: false,
       transactionId: '',
       transactionReference: '',
       bankId: 0,
@@ -117,6 +118,9 @@ abstract class ExpenseEntity extends Object
 
   @BuiltValueField(wireName: 'should_be_invoiced')
   bool get shouldBeInvoiced;
+
+  @BuiltValueField(wireName: 'invoice_documents')
+  bool get invoiceDocuments;
 
   @BuiltValueField(wireName: 'transaction_id')
   String get transactionId;
