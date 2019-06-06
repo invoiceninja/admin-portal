@@ -76,7 +76,7 @@ abstract class ExpenseEntity extends Object
       transactionReference: '',
       bankId: 0,
       amount: 0.0,
-      expenseDate: '',
+      expenseDate: convertDateTimeToSqlDate(),
       paymentDate: '',
       paymentTypeId: 0,
       exchangeRate: 0.0,

@@ -51,7 +51,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
 
     showPaymentFields = expense.paymentDate.isNotEmpty;
     showConvertCurrencyFields =
-        expense.expenseCurrencyId != expense.invoiceCurrencyId;
+        expense.exchangeRate != 0 && expense.exchangeRate != 1;
 
     super.didChangeDependencies();
   }
@@ -112,13 +112,15 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   )
                 : SizedBox(),
             SizedBox(height: 16),
-            expense.isInvoiced ? SizedBox() : SwitchListTile(
-              activeColor: Theme.of(context).accentColor,
-              title: Text(localization.markBillable),
-              value: expense.shouldBeInvoiced,
-              onChanged: (value) => viewModel.onChanged(
-                  expense.rebuild((b) => b..shouldBeInvoiced = value)),
-            ),
+            expense.isInvoiced
+                ? SizedBox()
+                : SwitchListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.markBillable),
+                    value: expense.shouldBeInvoiced,
+                    onChanged: (value) => viewModel.onChanged(
+                        expense.rebuild((b) => b..shouldBeInvoiced = value)),
+                  ),
             SwitchListTile(
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.markPaid),
