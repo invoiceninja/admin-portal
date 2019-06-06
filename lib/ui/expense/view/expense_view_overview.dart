@@ -1,7 +1,4 @@
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
@@ -23,8 +20,6 @@ class ExpenseOverview extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final expense = viewModel.expense;
     final company = viewModel.company;
-    final state = StoreProvider.of<AppState>(context).state;
-    final statics = state.staticState;
     final fields = <String, String>{};
 
     if (expense.customValue1.isNotEmpty) {

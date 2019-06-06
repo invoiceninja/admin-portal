@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class ExpenseEditDocuments extends StatefulWidget {
@@ -26,7 +25,7 @@ class ExpenseEditDocumentsState extends State<ExpenseEditDocuments> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final expense = widget.viewModel.expense;
+    //final expense = widget.viewModel.expense;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -55,7 +54,7 @@ class ExpenseEditDocumentsState extends State<ExpenseEditDocuments> {
   @override
   Widget build(BuildContext context) {
     //final localization = AppLocalization.of(context);
-    final viewModel = widget.viewModel;
+    //final viewModel = widget.viewModel;
 
     return ListView(
       shrinkWrap: true,

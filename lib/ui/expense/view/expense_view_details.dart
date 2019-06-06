@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ExpenseViewDetails extends StatefulWidget {
   const ExpenseViewDetails({this.expense});
@@ -17,6 +16,7 @@ class ExpenseViewDetails extends StatefulWidget {
 class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
   Future<Null> _launched;
 
+  /*
   Future<Null> _launchURL(BuildContext context, String url) async {
     final localization = AppLocalization.of(context);
     if (await canLaunch(url)) {
@@ -25,6 +25,7 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
       throw '${localization.couldNotLaunch}';
     }
   }
+  */
 
   Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
     final localization = AppLocalization.of(context);
@@ -37,8 +38,8 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-    final expense = widget.expense;
+    //final localization = AppLocalization.of(context);
+    //final expense = widget.expense;
 
     List<Widget> _buildDetailsList() {
       final listTiles = <Widget>[];

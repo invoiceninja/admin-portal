@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -65,7 +66,7 @@ class ExpenseFields {
 abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
-  factory ExpenseEntity() {
+  factory ExpenseEntity({CompanyEntity company}) {
     return _$ExpenseEntity._(
       id: --ExpenseEntity.counter,
       privateNotes: '',
@@ -74,13 +75,13 @@ abstract class ExpenseEntity extends Object
       transactionId: '',
       transactionReference: '',
       bankId: 0,
-      expenseCurrencyId: 0,
       amount: 0.0,
       expenseDate: '',
       paymentDate: '',
       paymentTypeId: 0,
       exchangeRate: 0.0,
-      invoiceCurrencyId: 0,
+      invoiceCurrencyId: company?.currencyId ?? kDefaultCurrencyId,
+      expenseCurrencyId: company?.currencyId ?? kDefaultCurrencyId,
       taxName1: '',
       taxName2: '',
       taxRate1: 0,
