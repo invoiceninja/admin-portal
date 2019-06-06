@@ -22,7 +22,11 @@ class ExpenseEditSettings extends StatefulWidget {
 }
 
 class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
+  bool showPaymentFields = false;
+  bool showConvertCurrencyFields = false;
+
   final _transactionReferenceController = TextEditingController();
+  final _exchangeRateController = TextEditingController();
 
   final List<TextEditingController> _controllers = [];
 
@@ -30,6 +34,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   void didChangeDependencies() {
     final List<TextEditingController> _controllers = [
       _transactionReferenceController,
+      _exchangeRateController,
     ];
 
     _controllers
@@ -37,9 +42,15 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
 
     final expense = widget.viewModel.expense;
     _transactionReferenceController.text = expense.transactionReference;
+    _exchangeRateController.text = formatNumber(expense.exchangeRate, context,
+        formatNumberType: FormatNumberType.input);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    showPaymentFields = expense.paymentDate.isNotEmpty;
+    showConvertCurrencyFields =
+        expense.expenseCurrencyId != expense.invoiceCurrencyId;
 
     super.didChangeDependencies();
   }
@@ -56,8 +67,9 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final expense = viewModel.expense.rebuild((b) =>
-        b..transactionReference = _transactionReferenceController.text.trim());
+    final expense = viewModel.expense.rebuild((b) => b
+      ..transactionReference = _transactionReferenceController.text.trim()
+      ..exchangeRate = parseDouble(_exchangeRateController.text));
     if (expense != viewModel.expense) {
       viewModel.onChanged(expense);
     }
@@ -109,41 +121,83 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             SwitchListTile(
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.markPaid),
-              value: expense.paymentDate.isNotEmpty,
-              onChanged: (value) => viewModel.onChanged(expense.rebuild((b) =>
-                  b..paymentDate = value ? convertDateTimeToSqlDate() : '')),
+              value: showPaymentFields,
+              onChanged: (value) {
+                if (value && expense.paymentDate.isEmpty) {
+                  viewModel.onChanged(expense.rebuild(
+                      (b) => b..paymentDate = convertDateTimeToSqlDate()));
+                }
+                setState(() => showPaymentFields = value);
+              },
             ),
-            SizedBox(height: 8),
-            expense.paymentDate.isNotEmpty
-                ? EntityDropdown(
-                    entityType: EntityType.paymentType,
-                    entityMap: staticState.paymentTypeMap,
-                    entityList:
-                        memoizedPaymentTypeList(staticState.paymentTypeMap),
-                    labelText: localization.paymentType,
-                    initialValue:
-                        staticState.paymentTypeMap[expense.paymentTypeId]?.name,
-                    onSelected: (paymentType) => viewModel.onChanged(expense
-                        .rebuild((b) => b..paymentTypeId = paymentType.id)),
+            showPaymentFields
+                ? Column(
+                    children: <Widget>[
+                      SizedBox(height: 8),
+                      EntityDropdown(
+                        entityType: EntityType.paymentType,
+                        entityMap: staticState.paymentTypeMap,
+                        entityList:
+                            memoizedPaymentTypeList(staticState.paymentTypeMap),
+                        labelText: localization.paymentType,
+                        initialValue: staticState
+                            .paymentTypeMap[expense.paymentTypeId]?.name,
+                        onSelected: (paymentType) => viewModel.onChanged(expense
+                            .rebuild((b) => b..paymentTypeId = paymentType.id)),
+                      ),
+                      DatePicker(
+                        labelText: localization.date,
+                        selectedDate: expense.paymentDate,
+                        onSelected: (date) {
+                          viewModel.onChanged(
+                              expense.rebuild((b) => b..paymentDate = date));
+                        },
+                      ),
+                      TextFormField(
+                        controller: _transactionReferenceController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: localization.transactionReference,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                    ],
                   )
                 : SizedBox(),
-            expense.paymentDate.isNotEmpty
-                ? DatePicker(
-                    labelText: localization.date,
-                    selectedDate: expense.paymentDate,
-                    onSelected: (date) {
-                      viewModel.onChanged(
-                          expense.rebuild((b) => b..paymentDate = date));
-                    },
-                  )
-                : SizedBox(),
-            expense.paymentDate.isNotEmpty
-                ? TextFormField(
-                    controller: _transactionReferenceController,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      labelText: localization.transactionReference,
-                    ),
+            SwitchListTile(
+              activeColor: Theme.of(context).accentColor,
+              title: Text(localization.convertCurrency),
+              value: showConvertCurrencyFields,
+              onChanged: (value) =>
+                  setState(() => showConvertCurrencyFields = value),
+            ),
+            showConvertCurrencyFields
+                ? Column(
+                    children: <Widget>[
+                      SizedBox(height: 8),
+                      EntityDropdown(
+                        entityType: EntityType.currency,
+                        entityMap: staticState.currencyMap,
+                        entityList:
+                            memoizedCurrencyList(staticState.currencyMap),
+                        labelText: localization.currency,
+                        initialValue: staticState
+                            .currencyMap[viewModel.expense.invoiceCurrencyId]
+                            ?.name,
+                        onSelected: (SelectableEntity currency) =>
+                            viewModel.onChanged(viewModel.expense.rebuild(
+                                (b) => b..invoiceCurrencyId = currency.id)),
+                      ),
+                      TextFormField(
+                        controller: _exchangeRateController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        decoration: InputDecoration(
+                          labelText: localization.exchangeRate,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                    ],
                   )
                 : SizedBox(),
           ],
