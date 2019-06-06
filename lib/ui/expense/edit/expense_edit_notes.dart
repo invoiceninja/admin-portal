@@ -72,7 +72,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
         FormCard(
           children: <Widget>[
             TextFormField(
-              maxLines: 4,
+              maxLines: 8,
               controller: _publicNotesController,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
@@ -80,7 +80,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
               ),
             ),
             TextFormField(
-              maxLines: 4,
+              maxLines: 8,
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
