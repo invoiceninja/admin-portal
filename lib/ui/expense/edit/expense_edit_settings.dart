@@ -67,6 +67,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _onChanged() {
+    print('FORM: _onChanged...');
     final viewModel = widget.viewModel;
     final expense = viewModel.expense.rebuild((b) => b
       ..transactionReference = _transactionReferenceController.text.trim()
@@ -192,12 +193,18 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                           viewModel.onChanged(expense.rebuild((b) => b
                             ..invoiceCurrencyId = currency.id
                             ..exchangeRate = exchangeRate));
-                          _exchangeRateController.text = formatNumber(
-                              exchangeRate, context,
-                              formatNumberType: FormatNumberType.input);
+                          // addPostFrameCallback is needed to prevent the
+                          // new invoiceCurrencyId value from being cleared
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((duration) {
+                            _exchangeRateController.text = formatNumber(
+                                exchangeRate, context,
+                                formatNumberType: FormatNumberType.input);
+                          });
                         },
                       ),
                       TextFormField(
+                        key: ValueKey('__${expense.invoiceCurrencyId}__'),
                         controller: _exchangeRateController,
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
