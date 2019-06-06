@@ -78,6 +78,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _setCurrency(CurrencyEntity currency) {
+    print('set currency: $currency');
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
     final exchangeRate = currency == null
