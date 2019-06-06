@@ -162,7 +162,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               onSelected: (client) {
                 viewModel.onChanged(expense.rebuild((b) => b
                   ..clientId = client.id
-                  ..invoiceCurrencyId = (client as ClientEntity).currencyId));
+                  ..invoiceCurrencyId = (client as ClientEntity).currencyId ??
+                      company.currencyId));
               },
               onAddPressed: (completer) {
                 //viewModel.onAddClientPressed(context, completer);

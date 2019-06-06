@@ -80,11 +80,14 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   void _setCurrency(CurrencyEntity currency) {
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
-    final exchangeRate = getExchangeRate(context,
-        fromCurrencyId: expense.expenseCurrencyId, toCurrencyId: currency.id);
+    final exchangeRate = currency == null
+        ? 0.0
+        : getExchangeRate(context,
+            fromCurrencyId: expense.expenseCurrencyId,
+            toCurrencyId: currency.id);
 
     viewModel.onChanged(expense.rebuild((b) => b
-      ..invoiceCurrencyId = currency.id
+      ..invoiceCurrencyId = currency?.id ?? 0
       ..exchangeRate = exchangeRate));
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       _exchangeRateController.text = formatNumber(exchangeRate, context,
