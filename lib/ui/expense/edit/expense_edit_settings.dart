@@ -67,7 +67,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _onChanged() {
-    print('FORM: _onChanged...');
     final viewModel = widget.viewModel;
     final expense = viewModel.expense.rebuild((b) => b
       ..transactionReference = _transactionReferenceController.text.trim()
