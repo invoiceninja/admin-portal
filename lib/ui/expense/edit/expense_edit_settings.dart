@@ -133,9 +133,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   }
                 } else {
                   viewModel.onChanged(expense.rebuild((b) => b
-                    ..paymentDate = ''
-                    ..paymentTypeId = 0
-                    ..transactionReference = ''));
+                    ..paymentDate = ''));
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _transactionReferenceController.text = '';
                   });
@@ -185,7 +183,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 setState(() => showConvertCurrencyFields = value);
                 if (!value) {
                   viewModel.onChanged(expense.rebuild((b) => b
-                    ..invoiceCurrencyId = 0
                     ..exchangeRate = 0));
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _exchangeRateController.text = '';
