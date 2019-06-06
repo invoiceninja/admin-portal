@@ -112,7 +112,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   )
                 : SizedBox(),
             SizedBox(height: 16),
-            SwitchListTile(
+            expense.isInvoiced ? SizedBox() : SwitchListTile(
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.markBillable),
               value: expense.shouldBeInvoiced,
@@ -124,9 +124,19 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               title: Text(localization.markPaid),
               value: showPaymentFields,
               onChanged: (value) {
-                if (value && expense.paymentDate.isEmpty) {
-                  viewModel.onChanged(expense.rebuild(
-                      (b) => b..paymentDate = convertDateTimeToSqlDate()));
+                if (value) {
+                  if (expense.paymentDate.isEmpty) {
+                    viewModel.onChanged(expense.rebuild(
+                        (b) => b..paymentDate = convertDateTimeToSqlDate()));
+                  }
+                } else {
+                  viewModel.onChanged(expense.rebuild((b) => b
+                    ..paymentDate = ''
+                    ..paymentTypeId = 0
+                    ..transactionReference = ''));
+                  WidgetsBinding.instance.addPostFrameCallback((duration) {
+                    _transactionReferenceController.text = '';
+                  });
                 }
                 setState(() => showPaymentFields = value);
               },
@@ -169,8 +179,17 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.convertCurrency),
               value: showConvertCurrencyFields,
-              onChanged: (value) =>
-                  setState(() => showConvertCurrencyFields = value),
+              onChanged: (value) {
+                setState(() => showConvertCurrencyFields = value);
+                if (!value) {
+                  viewModel.onChanged(expense.rebuild((b) => b
+                    ..invoiceCurrencyId = 0
+                    ..exchangeRate = 0));
+                  WidgetsBinding.instance.addPostFrameCallback((duration) {
+                    _exchangeRateController.text = '';
+                  });
+                }
+              },
             ),
             showConvertCurrencyFields
                 ? Column(

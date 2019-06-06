@@ -80,8 +80,8 @@ abstract class ExpenseEntity extends Object
       paymentDate: '',
       paymentTypeId: 0,
       exchangeRate: 0.0,
-      invoiceCurrencyId: company?.currencyId ?? kDefaultCurrencyId,
       expenseCurrencyId: company?.currencyId ?? kDefaultCurrencyId,
+      invoiceCurrencyId: 0,
       taxName1: '',
       taxName2: '',
       taxRate1: 0,
@@ -235,6 +235,8 @@ abstract class ExpenseEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  bool get isInvoiced => invoiceId != null && invoiceId > 0;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
