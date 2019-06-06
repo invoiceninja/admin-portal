@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -76,6 +77,21 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     }
   }
 
+  void _setCurrency(CurrencyEntity currency) {
+    final viewModel = widget.viewModel;
+    final expense = viewModel.expense;
+    final exchangeRate = getExchangeRate(context,
+        fromCurrencyId: expense.expenseCurrencyId, toCurrencyId: currency.id);
+
+    viewModel.onChanged(expense.rebuild((b) => b
+      ..invoiceCurrencyId = currency.id
+      ..exchangeRate = exchangeRate));
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      _exchangeRateController.text = formatNumber(exchangeRate, context,
+          formatNumberType: FormatNumberType.input);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -132,8 +148,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         (b) => b..paymentDate = convertDateTimeToSqlDate()));
                   }
                 } else {
-                  viewModel.onChanged(expense.rebuild((b) => b
-                    ..paymentDate = ''));
+                  viewModel
+                      .onChanged(expense.rebuild((b) => b..paymentDate = ''));
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _transactionReferenceController.text = '';
                   });
@@ -181,9 +197,12 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               value: showConvertCurrencyFields,
               onChanged: (value) {
                 setState(() => showConvertCurrencyFields = value);
-                if (!value) {
-                  viewModel.onChanged(expense.rebuild((b) => b
-                    ..exchangeRate = 0));
+                if (value) {
+                  _setCurrency(
+                      staticState.currencyMap[expense.invoiceCurrencyId]);
+                } else {
+                  viewModel
+                      .onChanged(expense.rebuild((b) => b..exchangeRate = 0));
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _exchangeRateController.text = '';
                   });
@@ -203,22 +222,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         initialValue: staticState
                             .currencyMap[viewModel.expense.invoiceCurrencyId]
                             ?.name,
-                        onSelected: (SelectableEntity currency) {
-                          final exchangeRate = getExchangeRate(context,
-                              fromCurrencyId: expense.expenseCurrencyId,
-                              toCurrencyId: currency.id);
-                          viewModel.onChanged(expense.rebuild((b) => b
-                            ..invoiceCurrencyId = currency.id
-                            ..exchangeRate = exchangeRate));
-                          // addPostFrameCallback is needed to prevent the
-                          // new invoiceCurrencyId value from being cleared
-                          WidgetsBinding.instance
-                              .addPostFrameCallback((duration) {
-                            _exchangeRateController.text = formatNumber(
-                                exchangeRate, context,
-                                formatNumberType: FormatNumberType.input);
-                          });
-                        },
+                        onSelected: (SelectableEntity currency) =>
+                            _setCurrency(currency),
                       ),
                       TextFormField(
                         key: ValueKey('__${expense.invoiceCurrencyId}__'),
