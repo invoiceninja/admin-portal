@@ -156,11 +156,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   ExpenseState get expenseState => selectedCompanyState.expenseState;
+
   ListUIState get expenseListState => uiState.expenseUIState.listUIState;
+
   ExpenseUIState get expenseUIState => uiState.expenseUIState;
 
   VendorState get vendorState => selectedCompanyState.vendorState;
+
   ListUIState get vendorListState => uiState.vendorUIState.listUIState;
+
   VendorUIState get vendorUIState => uiState.vendorUIState;
 
   TaskState get taskState => selectedCompanyState.taskState;
@@ -191,6 +195,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Expense Categories: ${selectedCompany.expenseCategories}';
+    return 'Expense: ${uiState.expenseUIState.editing.expenseCurrencyId} - Invoice: ${uiState.expenseUIState.editing.invoiceCurrencyId}';
     return 'Route: ${uiState.currentRoute}';
   }
 }

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 
 class ExpenseEditSettings extends StatefulWidget {
   const ExpenseEditSettings({
@@ -184,9 +185,17 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         initialValue: staticState
                             .currencyMap[viewModel.expense.invoiceCurrencyId]
                             ?.name,
-                        onSelected: (SelectableEntity currency) =>
-                            viewModel.onChanged(viewModel.expense.rebuild(
-                                (b) => b..invoiceCurrencyId = currency.id)),
+                        onSelected: (SelectableEntity currency) {
+                          final exchangeRate = getExchangeRate(context,
+                              fromCurrencyId: expense.expenseCurrencyId,
+                              toCurrencyId: currency.id);
+                          viewModel.onChanged(expense.rebuild((b) => b
+                            ..invoiceCurrencyId = currency.id
+                            ..exchangeRate = exchangeRate));
+                          _exchangeRateController.text = formatNumber(
+                              exchangeRate, context,
+                              formatNumberType: FormatNumberType.input);
+                        },
                       ),
                       TextFormField(
                         controller: _exchangeRateController,
