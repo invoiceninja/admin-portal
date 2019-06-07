@@ -1,10 +1,12 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseOverview extends StatelessWidget {
@@ -20,6 +22,7 @@ class ExpenseOverview extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final expense = viewModel.expense;
     final company = viewModel.company;
+    final invoice = viewModel.state.invoiceState.map[expense.invoiceId];
     final fields = <String, String>{};
 
     if (expense.customValue1.isNotEmpty) {
@@ -46,51 +49,16 @@ class ExpenseOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
-        /*
-        EntityListTile(
-          icon: getEntityIcon(EntityType.invoice),
-          title: localization.invoices,
-          onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
-          onLongPress: () =>
-              viewModel.onEntityPressed(context, EntityType.invoice, true),
-          subtitle: memoizedInvoiceStatsForExpense(
-              expense.id,
-              state.invoiceState.map,
-              localization.active,
-              localization.archived),
-        ),
-        */
-      ],
-    );
-  }
-}
-
-class EntityListTile extends StatelessWidget {
-  const EntityListTile(
-      {this.icon, this.onTap, this.onLongPress, this.title, this.subtitle});
-
-  final Function onTap;
-  final Function onLongPress;
-  final IconData icon;
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Material(
-          color: Theme.of(context).canvasColor,
-          child: ListTile(
-            title: Text(title),
-            subtitle: Text(subtitle),
-            leading: Icon(icon, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: onTap,
-            onLongPress: onLongPress,
-          ),
-        ),
-        Divider(),
+        invoice == null
+            ? SizedBox()
+            : EntityListTile(
+                icon: getEntityIcon(EntityType.invoice),
+                title: '${localization.invoice} ${invoice.invoiceNumber}',
+                onTap: () =>
+                    viewModel.onEntityPressed(context, EntityType.invoice),
+                onLongPress: () => viewModel.onEntityPressed(
+                    context, EntityType.invoice, true),
+              ),
       ],
     );
   }

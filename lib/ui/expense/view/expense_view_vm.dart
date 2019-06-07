@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class ExpenseViewVM {
     @required this.expense,
     @required this.company,
     @required this.onActionSelected,
+    @required this.onEntityPressed,
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
@@ -50,6 +52,7 @@ class ExpenseViewVM {
   factory ExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final expense = state.expenseState.map[state.expenseUIState.selectedId];
+    final invoice = state.invoiceState.map[expense.invoiceId];
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -82,6 +85,19 @@ class ExpenseViewVM {
             store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
           }
         },
+        onEntityPressed: (BuildContext context, EntityType entityType,
+            [longPress = false]) {
+          switch (entityType) {
+            case EntityType.invoice:
+              if (longPress) {
+                store.dispatch(EditInvoice(context: context, invoice: invoice));
+              } else {
+                store.dispatch(
+                    ViewInvoice(context: context, invoiceId: invoice.id));
+              }
+              break;
+          }
+        },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
@@ -108,6 +124,7 @@ class ExpenseViewVM {
   final ExpenseEntity expense;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
