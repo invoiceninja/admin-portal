@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +54,8 @@ class ExpenseViewVM {
   factory ExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final expense = state.expenseState.map[state.expenseUIState.selectedId];
+    final vendor = state.vendorState.map[expense.vendorId];
+    final client = state.clientState.map[expense.clientId];
     final invoice = state.invoiceState.map[expense.invoiceId];
 
     Future<Null> _handleRefresh(BuildContext context) {
@@ -88,6 +92,22 @@ class ExpenseViewVM {
         onEntityPressed: (BuildContext context, EntityType entityType,
             [longPress = false]) {
           switch (entityType) {
+            case EntityType.vendor:
+              if (longPress) {
+                store.dispatch(EditVendor(context: context, vendor: vendor));
+              } else {
+                store.dispatch(
+                    ViewVendor(context: context, vendorId: vendor.id));
+              }
+              break;
+            case EntityType.client:
+              if (longPress) {
+                store.dispatch(EditClient(context: context, client: client));
+              } else {
+                store.dispatch(
+                    ViewClient(context: context, clientId: client.id));
+              }
+              break;
             case EntityType.invoice:
               if (longPress) {
                 store.dispatch(EditInvoice(context: context, invoice: invoice));

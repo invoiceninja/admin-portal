@@ -22,7 +22,10 @@ class ExpenseOverview extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final expense = viewModel.expense;
     final company = viewModel.company;
-    final invoice = viewModel.state.invoiceState.map[expense.invoiceId];
+    final state = viewModel.state;
+    final vendor = state.vendorState.map[expense.vendorId];
+    final client = state.clientState.map[expense.clientId];
+    final invoice = state.invoiceState.map[expense.invoiceId];
     final fields = <String, String>{};
 
     if (expense.customValue1.isNotEmpty) {
@@ -49,6 +52,26 @@ class ExpenseOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
+        vendor == null
+            ? SizedBox()
+            : EntityListTile(
+                icon: getEntityIcon(EntityType.vendor),
+                title: vendor.name,
+                onTap: () =>
+                    viewModel.onEntityPressed(context, EntityType.vendor),
+                onLongPress: () =>
+                    viewModel.onEntityPressed(context, EntityType.vendor, true),
+              ),
+        client == null
+            ? SizedBox()
+            : EntityListTile(
+                icon: getEntityIcon(EntityType.client),
+                title: client.listDisplayName,
+                onTap: () =>
+                    viewModel.onEntityPressed(context, EntityType.client),
+                onLongPress: () =>
+                    viewModel.onEntityPressed(context, EntityType.client, true),
+              ),
         invoice == null
             ? SizedBox()
             : EntityListTile(
