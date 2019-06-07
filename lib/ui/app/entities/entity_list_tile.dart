@@ -13,6 +13,7 @@ class EntityListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Material(
           color: Theme.of(context).canvasColor,
@@ -26,7 +27,7 @@ class EntityListTile extends StatelessWidget {
             onLongPress: onLongPress,
           ),
         ),
-        Divider(),
+        Divider(height: 10),
       ],
     );
   }
