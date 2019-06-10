@@ -39,6 +39,7 @@ class VendorViewVM {
     @required this.state,
     @required this.vendor,
     @required this.company,
+    @required this.onAddExpensePressed,
     @required this.onActionSelected,
     @required this.onEntityPressed,
     @required this.onEditPressed,
@@ -51,6 +52,7 @@ class VendorViewVM {
 
   factory VendorViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
+    final company = state.selectedCompany;
     final vendor = state.vendorState.map[state.vendorUIState.selectedId];
 
     Future<Null> _handleRefresh(BuildContext context) {
@@ -101,6 +103,9 @@ class VendorViewVM {
               break;
           }
         },
+        onAddExpensePressed: (context) => store.dispatch(EditExpense(
+            expense: ExpenseEntity(company: company, vendor: vendor),
+            context: context)),
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
@@ -131,6 +136,7 @@ class VendorViewVM {
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
+  final Function(BuildContext) onAddExpensePressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

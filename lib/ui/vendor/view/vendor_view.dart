@@ -56,29 +56,7 @@ class _VendorViewState extends State<VendorView>
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: () {
-            showDialog<SimpleDialog>(
-              context: context,
-              builder: (BuildContext context) =>
-                  SimpleDialog(children: <Widget>[
-                    /*
-                    user.canCreate(EntityType.expense)
-                        ? ListTile(
-                            //dense: true,
-                            leading: Icon(Icons.add_circle_outline),
-                            title: Text(localization.invoice),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              store.dispatch(EditExpense(
-                                  invoice: ExpenseEntity(company: company, vendor: vendor),
-                                  context: context));
-                            },
-                          )
-                        : Container(),
-                        */
-                  ]),
-            );
-          },
+          onPressed: () => viewModel.onAddExpensePressed(context),
           child: Icon(
             Icons.add,
             color: Colors.white,

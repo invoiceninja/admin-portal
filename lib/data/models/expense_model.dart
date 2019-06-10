@@ -83,9 +83,13 @@ abstract class ExpenseEntity extends Object
       paymentTypeId: 0,
       exchangeRate: 0.0,
       expenseCurrencyId:
-          vendor?.currencyId ?? company?.currencyId ?? kDefaultCurrencyId,
+          (vendor != null && vendor.currencyId != null && vendor.currencyId > 0)
+              ? vendor.currencyId
+              : (company?.currencyId ?? kDefaultCurrencyId),
       invoiceCurrencyId:
-          client?.currencyId ?? company?.currencyId ?? kDefaultCurrencyId,
+          (client != null && client.currencyId != null && client.currencyId > 0)
+              ? client.currencyId
+              : (company?.currencyId ?? kDefaultCurrencyId),
       taxName1: '',
       taxName2: '',
       taxRate1: 0,
