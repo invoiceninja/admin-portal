@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -62,6 +63,9 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
         Divider(
           height: 1.0,
         ),
+        expense.publicNotes != null && expense.publicNotes.isNotEmpty
+            ? IconMessage(expense.publicNotes)
+            : Container(),
       ];
 
       return listTiles;
