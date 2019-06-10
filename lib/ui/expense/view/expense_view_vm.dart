@@ -43,6 +43,7 @@ class ExpenseViewVM {
     @required this.company,
     @required this.onActionSelected,
     @required this.onEntityPressed,
+    @required this.onCategoryPressed,
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
@@ -88,6 +89,11 @@ class ExpenseViewVM {
           if (state.uiState.currentRoute.contains(ExpenseScreen.route)) {
             store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
           }
+        },
+        onCategoryPressed: (BuildContext context) {
+          store.dispatch(FilterExpensesByEntity(
+              entityId: expense.categoryId, entityType: EntityType.expenseCategory));
+          store.dispatch(ViewExpenseList(context));
         },
         onEntityPressed: (BuildContext context, EntityType entityType,
             [longPress = false]) {
@@ -145,6 +151,7 @@ class ExpenseViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
+  final Function(BuildContext) onCategoryPressed;
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;

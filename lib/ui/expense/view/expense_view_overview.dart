@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -26,6 +27,7 @@ class ExpenseOverview extends StatelessWidget {
     final vendor = state.vendorState.map[expense.vendorId];
     final client = state.clientState.map[expense.clientId];
     final invoice = state.invoiceState.map[expense.invoiceId];
+    final category = company.expenseCategoryMap[expense.categoryId];
     final fields = <String, String>{};
 
     if (expense.customValue1.isNotEmpty) {
@@ -82,6 +84,13 @@ class ExpenseOverview extends StatelessWidget {
                 onLongPress: () => viewModel.onEntityPressed(
                     context, EntityType.invoice, true),
               ),
+        category == null
+        ? SizedBox()
+            : EntityListTile(
+          icon: FontAwesomeIcons.objectGroup,
+          title: category.name,
+          onTap: () => viewModel.onCategoryPressed(context),
+        ),
       ],
     );
   }
