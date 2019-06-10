@@ -53,157 +53,111 @@ class ExpenseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
     final filteredClientId = listState.filterEntityId;
-    final filteredClient =
-        filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
-    */
+    final state = viewModel.state;
+    final widgets = <Widget>[];
+    BaseEntity filteredEntity;
 
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: !viewModel.isLoaded
-              ? LoadingIndicator()
-              : RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: viewModel.expenseList.isEmpty
-                      ? Opacity(
-                          opacity: 0.5,
-                          child: Center(
-                            child: Text(
-                              AppLocalization.of(context).noRecordsFound,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: viewModel.expenseList.length,
-                          itemBuilder: (BuildContext context, index) {
-                            final expenseId = viewModel.expenseList[index];
-                            final expense = viewModel.expenseMap[expenseId];
-                            return Column(
-                              children: <Widget>[
-                                ExpenseListItem(
-                                  user: viewModel.user,
-                                  filter: viewModel.filter,
-                                  expense: expense,
-                                  onTap: () =>
-                                      viewModel.onExpenseTap(context, expense),
-                                  onEntityAction: (EntityAction action) {
-                                    if (action == EntityAction.more) {
-                                      _showMenu(context, expense);
-                                    } else {
-                                      viewModel.onEntityAction(
-                                          context, expense, action);
-                                    }
-                                  },
-                                  onLongPress: () =>
-                                      _showMenu(context, expense),
-                                ),
-                                Divider(
-                                  height: 1.0,
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+    if (listState.filterEntityType == EntityType.vendor) {
+      filteredEntity = state.vendorState.map[listState.filterEntityId];
+    } else if (listState.filterEntityType == EntityType.client) {
+      filteredEntity = state.clientState.map[listState.filterEntityId];
+    }
+
+    if (filteredEntity != null) {
+      widgets.add(Material(
+        color: Colors.orangeAccent,
+        elevation: 6.0,
+        child: InkWell(
+          onTap: () => viewModel.onViewEntityFilterPressed(context),
+          child: Row(
+            children: <Widget>[
+              SizedBox(width: 18.0),
+              Expanded(
+                child: Text(
+                  '${localization.filteredBy} ${filteredEntity.listDisplayName}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
                 ),
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+                onPressed: () => viewModel.onClearEntityFilterPressed(),
+              )
+            ],
+          ),
         ),
+      ));
+    }
 
-        /*
-        filteredClient != null
-            ? Material(
-                color: Colors.orangeAccent,
-                elevation: 6.0,
-                child: InkWell(
-                  onTap: () => viewModel.onViewEntityFilterPressed(context),
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(width: 18.0),
-                      Expanded(
+    widgets.add(Expanded(
+      child: !viewModel.isLoaded
+          ? LoadingIndicator()
+          : RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: viewModel.expenseList.isEmpty
+                  ? Opacity(
+                      opacity: 0.5,
+                      child: Center(
                         child: Text(
-                          '${localization.filteredBy} ${filteredClient.listDisplayName}',
+                          AppLocalization.of(context).noRecordsFound,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: 18.0,
                           ),
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => viewModel.onClearEntityFilterPressed(),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            : Container(),
-        Expanded(
-          child: !viewModel.isLoaded
-              ? LoadingIndicator()
-              : RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: viewModel.expenseList.isEmpty
-                      ? Opacity(
-                          opacity: 0.5,
-                          child: Center(
-                            child: Text(
-                              AppLocalization.of(context).noRecordsFound,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                              ),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: viewModel.expenseList.length,
+                      itemBuilder: (BuildContext context, index) {
+                        final expenseId = viewModel.expenseList[index];
+                        final expense = viewModel.expenseMap[expenseId];
+                        final client =
+                            viewModel.state.clientState.map[expense.clientId] ??
+                                ClientEntity();
+                        return Column(
+                          children: <Widget>[
+                            ExpenseListItem(
+                              user: viewModel.user,
+                              filter: viewModel.filter,
+                              expense: expense,
+                              /*
+                              client: viewModel.state.clientState
+                                      .map[expense.clientId] ??
+                                  ClientEntity(),
+                                  */
+                              onTap: () =>
+                                  viewModel.onExpenseTap(context, expense),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  _showMenu(context, expense);
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, expense, action);
+                                }
+                              },
+                              onLongPress: () => _showMenu(context, expense),
                             ),
-                          ),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: viewModel.expenseList.length,
-                          itemBuilder: (BuildContext context, index) {
-                            final expenseId = viewModel.expenseList[index];
-                            final expense = viewModel.expenseMap[expenseId];
-                            final client =
-                                viewModel.clientMap[expense.clientId] ??
-                                    ClientEntity();
-                            return Column(
-                              children: <Widget>[
-                                ExpenseListItem(
-                                  user: viewModel.user,
-                                  filter: viewModel.filter,
-                                  expense: expense,
-                                  client:
-                                      viewModel.clientMap[expense.clientId] ??
-                                          ClientEntity(),
-                                  onTap: () =>
-                                      viewModel.onExpenseTap(context, expense),
-                                  onEntityAction: (EntityAction action) {
-                                    if (action == EntityAction.more) {
-                                      _showMenu(context, expense, client);
-                                    } else {
-                                      viewModel.onEntityAction(
-                                          context, expense, action);
-                                    }
-                                  },
-                                  onLongPress: () =>
-                                      _showMenu(context, expense, client),
-                                ),
-                                Divider(
-                                  height: 1.0,
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                ),
-        ),*/
-      ],
+                            Divider(
+                              height: 1.0,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+            ),
+    ));
+
+    return Column(
+      children: widgets,
     );
   }
 }

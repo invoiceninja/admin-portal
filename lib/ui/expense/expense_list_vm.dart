@@ -33,6 +33,7 @@ class ExpenseListBuilder extends StatelessWidget {
 
 class ExpenseListVM {
   ExpenseListVM({
+    @required this.state,
     @required this.user,
     @required this.expenseList,
     @required this.expenseMap,
@@ -61,6 +62,7 @@ class ExpenseListVM {
     final state = store.state;
 
     return ExpenseListVM(
+      state: state,
       user: state.user,
       listState: state.expenseListState,
       expenseList: memoizedFilteredExpenseList(state.expenseState.map,
@@ -112,6 +114,7 @@ class ExpenseListVM {
     );
   }
 
+  final AppState state;
   final UserEntity user;
   final List<int> expenseList;
   final BuiltMap<int, ExpenseEntity> expenseMap;
