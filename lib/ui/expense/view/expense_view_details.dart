@@ -1,7 +1,9 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseViewDetails extends StatefulWidget {
@@ -14,97 +16,59 @@ class ExpenseViewDetails extends StatefulWidget {
 }
 
 class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
-  Future<Null> _launched;
-
-  /*
-  Future<Null> _launchURL(BuildContext context, String url) async {
-    final localization = AppLocalization.of(context);
-    if (await canLaunch(url)) {
-      await launch(url, forceSafariVC: false, forceWebView: false);
-    } else {
-      throw '${localization.couldNotLaunch}';
-    }
-  }
-  */
-
-  Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
-    final localization = AppLocalization.of(context);
-    if (snapshot.hasError) {
-      return Text('${localization.error}: ${snapshot.error}');
-    } else {
-      return const Text('');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    //final localization = AppLocalization.of(context);
-    //final expense = widget.expense;
+    final state = StoreProvider.of<AppState>(context).state;
+    final localization = AppLocalization.of(context);
+    final expense = widget.expense;
 
     List<Widget> _buildDetailsList() {
-      final listTiles = <Widget>[];
-
-      /*
-      if (listTiles.isNotEmpty) {
-        listTiles.add(
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
-        );
+      String tax = '';
+      if (expense.taxName1.isNotEmpty) {
+        tax += formatNumber(expense.taxRate1, context,
+                formatNumberType: FormatNumberType.percent) +
+            ' ' +
+            expense.taxName1;
       }
-      */
+      if (expense.taxName2.isNotEmpty) {
+        tax += ' ' +
+            formatNumber(expense.taxRate2, context,
+                formatNumberType: FormatNumberType.percent) +
+            ' ' +
+            expense.taxName2;
+      }
 
-      listTiles.add(Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
-      ));
+      final fields = <String, String>{
+        localization.tax: tax,
+        localization.paymentType:
+            state.staticState.paymentTypeMap[expense.paymentTypeId]?.name,
+        localization.paymentDate: formatDate(expense.paymentDate, context),
+        localization.transactionReference: expense.transactionReference,
+        localization.exchangeRate: expense.isConverted
+            ? formatNumber(expense.exchangeRate, context,
+                formatNumberType: FormatNumberType.double)
+            : null,
+        localization.currency: expense.isConverted
+            ? state.staticState.currencyMap[expense.invoiceCurrencyId]?.name
+            : null,
+      };
+
+      final listTiles = <Widget>[
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
+        ),
+        FieldGrid(fields),
+        Divider(
+          height: 1.0,
+        ),
+      ];
 
       return listTiles;
     }
 
     return ListView(
       children: _buildDetailsList(),
-    );
-  }
-}
-
-class AppListTile extends StatelessWidget {
-  const AppListTile({
-    this.icon,
-    this.title,
-    this.subtitle,
-    this.dense = false,
-    this.onTap,
-    this.copyValue,
-  });
-
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final bool dense;
-  final Function onTap;
-  final String copyValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).canvasColor,
-      child: ListTile(
-        contentPadding: EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
-        leading: Icon(icon),
-        title: Text(title),
-        subtitle: subtitle == null ? Container() : Text(subtitle),
-        dense: dense,
-        onTap: onTap,
-        onLongPress: () {
-          Clipboard.setData(ClipboardData(text: copyValue ?? title));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalization.of(context)
-                  .copiedToClipboard
-                  .replaceFirst(':value', copyValue ?? title))));
-        },
-      ),
     );
   }
 }

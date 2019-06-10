@@ -242,6 +242,8 @@ abstract class ExpenseEntity extends Object
 
   bool get isInvoiced => invoiceId != null && invoiceId > 0;
 
+  bool get isConverted => exchangeRate != 1 && exchangeRate != 0;
+
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
 
