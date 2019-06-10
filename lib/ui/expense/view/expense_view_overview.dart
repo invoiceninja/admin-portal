@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +45,16 @@ class ExpenseOverview extends StatelessWidget {
 
     return ListView(
       children: <Widget>[
-        OneValueHeader(
-          label: localization.balanceDue,
-          value: formatNumber(expense.amount, context,
+        expense.isConverted ? TwoValueHeader(
+          label1: localization.amount,
+          value1: formatNumber(expense.amountWithTax, context,
+              currencyId: expense.expenseCurrencyId),
+          label2: localization.converted,
+          value2: formatNumber(expense.convertedAmountWithTax, context,
+              currencyId: expense.invoiceCurrencyId),
+        ) : OneValueHeader(
+          label: localization.amount,
+          value: formatNumber(expense.amountWithTax, context,
               currencyId: expense.expenseCurrencyId),
         ),
         expense.privateNotes != null && expense.privateNotes.isNotEmpty

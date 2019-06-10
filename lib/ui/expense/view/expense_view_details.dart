@@ -40,6 +40,8 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
       }
 
       final fields = <String, String>{
+        localization.amount: formatNumber(expense.amount, context,
+            currencyId: expense.expenseCurrencyId),
         localization.tax: tax,
         localization.paymentType:
             state.staticState.paymentTypeMap[expense.paymentTypeId]?.name,

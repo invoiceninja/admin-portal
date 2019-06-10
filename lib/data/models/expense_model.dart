@@ -244,6 +244,19 @@ abstract class ExpenseEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  double get amountWithTax {
+    var total = amount;
+    if (taxRate1 != 0) {
+      total += amount * taxRate1 / 100;
+    }
+    if (taxRate2 != 0) {
+      total += amount * taxRate2 / 100;
+    }
+    return round(total, 2);
+  }
+
+  double get convertedAmountWithTax => round(amountWithTax * exchangeRate, 2);
+
   bool get isInvoiced => invoiceId != null && invoiceId > 0;
 
   bool get isConverted => exchangeRate != 1 && exchangeRate != 0;
