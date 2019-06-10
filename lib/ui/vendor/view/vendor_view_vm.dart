@@ -91,8 +91,8 @@ class VendorViewVM {
               if (longPress) {
                 store.dispatch(EditExpense(
                     context: context,
-                    expense: ExpenseEntity(company: state.selectedCompany)
-                        .rebuild((b) => b..vendorId = vendor.id)));
+                    expense: ExpenseEntity(
+                        company: state.selectedCompany, vendor: vendor)));
               } else {
                 store.dispatch(FilterExpensesByEntity(
                     entityId: vendor.id, entityType: EntityType.vendor));

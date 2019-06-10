@@ -66,7 +66,8 @@ class ExpenseFields {
 abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
-  factory ExpenseEntity({CompanyEntity company}) {
+  factory ExpenseEntity(
+      {CompanyEntity company, VendorEntity vendor, ClientEntity client}) {
     return _$ExpenseEntity._(
       id: --ExpenseEntity.counter,
       privateNotes: '',
@@ -81,15 +82,15 @@ abstract class ExpenseEntity extends Object
       paymentDate: '',
       paymentTypeId: 0,
       exchangeRate: 0.0,
-      expenseCurrencyId: company?.currencyId ?? kDefaultCurrencyId,
-      invoiceCurrencyId: 0,
+      expenseCurrencyId: vendor?.currencyId ?? company?.currencyId,
+      invoiceCurrencyId: client?.currencyId ?? company?.currencyId,
       taxName1: '',
       taxName2: '',
       taxRate1: 0,
       taxRate2: 0,
-      clientId: 0,
+      clientId: client?.id ?? 0,
+      vendorId: vendor?.id ?? 0,
       invoiceId: 0,
-      vendorId: 0,
       categoryId: 0,
       customValue1: '',
       customValue2: '',

@@ -70,8 +70,7 @@ class _VendorViewState extends State<VendorView>
                             onTap: () {
                               Navigator.of(context).pop();
                               store.dispatch(EditExpense(
-                                  invoice: ExpenseEntity(company: company)
-                                      .rebuild((b) => b.vendorId = vendor.id),
+                                  invoice: ExpenseEntity(company: company, vendor: vendor),
                                   context: context));
                             },
                           )
