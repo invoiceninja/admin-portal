@@ -41,12 +41,19 @@ List<int> filteredExpensesSelector(BuiltMap<int, ExpenseEntity> expenseMap,
     if (!expense.matchesStates(expenseListState.stateFilters)) {
       return false;
     }
-    /*
+
     if (expenseListState.filterEntityId != null &&
+        expenseListState.filterEntityType == EntityType.client &&
         expense.clientId != expenseListState.filterEntityId) {
       return false;
     }
-    */
+
+    if (expenseListState.filterEntityId != null &&
+        expenseListState.filterEntityType == EntityType.vendor &&
+        expense.vendorId != expenseListState.filterEntityId) {
+      return false;
+    }
+
     if (expenseListState.custom1Filters.isNotEmpty &&
         !expenseListState.custom1Filters.contains(expense.customValue1)) {
       return false;

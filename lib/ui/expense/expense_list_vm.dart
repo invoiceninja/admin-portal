@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -73,10 +74,20 @@ class ExpenseListVM {
       filter: state.expenseUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterExpensesByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.expenseListState.filterEntityId,
-              context: context)),
+      onViewEntityFilterPressed: (BuildContext context) {
+        switch (state.expenseListState.filterEntityType) {
+          case EntityType.client:
+            store.dispatch(ViewClient(
+                clientId: state.expenseListState.filterEntityId,
+                context: context));
+            break;
+          case EntityType.vendor:
+            store.dispatch(ViewVendor(
+                vendorId: state.expenseListState.filterEntityId,
+                context: context));
+            break;
+        }
+      },
       onExpenseTap: (context, expense) {
         store.dispatch(ViewExpense(expenseId: expense.id, context: context));
       },
