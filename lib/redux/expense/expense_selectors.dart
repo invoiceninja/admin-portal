@@ -73,3 +73,41 @@ List<int> filteredExpensesSelector(BuiltMap<int, ExpenseEntity> expenseMap,
 
   return list;
 }
+
+
+var memoizedExpenseStatsForVendor = memo4((int vendorId,
+    BuiltMap<int, ExpenseEntity> expenseMap,
+    String activeLabel,
+    String archivedLabel) =>
+    expenseStatsForVendor(vendorId, expenseMap, activeLabel, archivedLabel));
+
+String expenseStatsForVendor(
+    int vendorId,
+    BuiltMap<int, ExpenseEntity> expenseMap,
+    String activeLabel,
+    String archivedLabel) {
+  int countActive = 0;
+  int countArchived = 0;
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.vendorId == vendorId) {
+      if (expense.isActive) {
+        countActive++;
+      } else if (expense.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  String str = '';
+  if (countActive > 0) {
+    str = '$countActive $activeLabel';
+    if (countArchived > 0) {
+      str += ' • ';
+    }
+  }
+  if (countArchived > 0) {
+    str += '$countArchived $archivedLabel';
+  }
+
+  return str;
+}

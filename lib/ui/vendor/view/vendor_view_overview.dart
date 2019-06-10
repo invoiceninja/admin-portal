@@ -2,12 +2,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorOverview extends StatelessWidget {
@@ -56,20 +58,18 @@ class VendorOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
-        /*
         EntityListTile(
-          icon: getEntityIcon(EntityType.invoice),
-          title: localization.invoices,
-          onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
+          icon: getEntityIcon(EntityType.expense),
+          title: localization.expenses,
+          onTap: () => viewModel.onEntityPressed(context, EntityType.expense),
           onLongPress: () =>
-              viewModel.onEntityPressed(context, EntityType.invoice, true),
-          subtitle: memoizedInvoiceStatsForVendor(
+              viewModel.onEntityPressed(context, EntityType.expense, true),
+          subtitle: memoizedExpenseStatsForVendor(
               vendor.id,
-              state.invoiceState.map,
+              state.expenseState.map,
               localization.active,
               localization.archived),
         ),
-        */
       ],
     );
   }

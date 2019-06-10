@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -39,6 +40,7 @@ class VendorViewVM {
     @required this.vendor,
     @required this.company,
     @required this.onActionSelected,
+    @required this.onEntityPressed,
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
@@ -82,6 +84,23 @@ class VendorViewVM {
             store.dispatch(UpdateCurrentRoute(VendorScreen.route));
           }
         },
+        onEntityPressed: (BuildContext context, EntityType entityType,
+            [longPress = false]) {
+          switch (entityType) {
+            case EntityType.expense:
+              if (longPress) {
+                store.dispatch(EditExpense(
+                    context: context,
+                    expense: ExpenseEntity(company: state.selectedCompany)
+                        .rebuild((b) => b..vendorId = vendor.id)));
+              } else {
+                store.dispatch(FilterExpensesByEntity(
+                    entityId: vendor.id, entityType: EntityType.vendor));
+                store.dispatch(ViewExpenseList(context));
+              }
+              break;
+          }
+        },
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
@@ -109,6 +128,7 @@ class VendorViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
+  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
