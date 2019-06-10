@@ -144,10 +144,9 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text(expense.expenseDate ?? ''), // Text(localizations.expenseDetails),
+      title: Text(expense.listDisplayName ?? localization.expense), // Text(localizations.expenseDetails),
       bottom: TabBar(
         controller: controller,
-        //isScrollable: true,
         tabs: [
           Tab(
             text: localization.overview,

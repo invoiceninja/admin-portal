@@ -231,7 +231,11 @@ abstract class ExpenseEntity extends Object
 
   @override
   String get listDisplayName {
-    return publicNotes;
+    if (publicNotes != null && publicNotes.isNotEmpty) {
+      return publicNotes;
+    } else {
+      return null;
+    }
   }
 
   @override
