@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -134,6 +135,21 @@ class ClientOverview extends StatelessWidget {
                 subtitle: memoizedTaskStatsForClient(
                     client.id,
                     state.taskState.map,
+                    localization.active,
+                    localization.archived),
+              )
+            : Container(),
+        company.isModuleEnabled(EntityType.expense)
+            ? EntityListTile(
+                icon: getEntityIcon(EntityType.expense),
+                title: localization.expenses,
+                onTap: () =>
+                    viewModel.onEntityPressed(context, EntityType.expense),
+                onLongPress: () =>
+                    viewModel.onEntityPressed(context, EntityType.expense, true),
+                subtitle: memoizedExpenseStatsForClient(
+                    client.id,
+                    state.expenseState.map,
                     localization.active,
                     localization.archived),
               )

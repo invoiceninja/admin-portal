@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -145,6 +146,21 @@ class _ClientViewState extends State<ClientView>
                                           isRunning: store
                                               .state.uiState.autoStartTasks)
                                       .rebuild((b) => b.clientId = client.id),
+                                  context: context));
+                            },
+                          )
+                        : Container(),
+                    company.isModuleEnabled(EntityType.expense) &&
+                            user.canCreate(EntityType.expense)
+                        ? ListTile(
+                            //dense: true,
+                            leading: Icon(Icons.add_circle_outline),
+                            title: Text(localization.expense),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              store.dispatch(EditExpense(
+                                  expense: ExpenseEntity(
+                                      company: company, client: client),
                                   context: context));
                             },
                           )

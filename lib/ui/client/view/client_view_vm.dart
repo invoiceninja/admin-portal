@@ -150,6 +150,18 @@ class ClientViewVM {
                 store.dispatch(ViewTaskList(context));
               }
               break;
+            case EntityType.expense:
+              if (longPress) {
+                store.dispatch(EditExpense(
+                    context: context,
+                    expense: ExpenseEntity(
+                        company: state.selectedCompany, client: client)));
+              } else {
+                store.dispatch(FilterExpensesByEntity(
+                    entityId: client.id, entityType: EntityType.client));
+                store.dispatch(ViewExpenseList(context));
+              }
+              break;
           }
         },
         onRefreshed: (context, loadActivities) =>
@@ -170,7 +182,8 @@ class ClientViewVM {
               break;
             case EntityAction.newExpense:
               store.dispatch(EditExpense(
-                  expense: ExpenseEntity(company: state.selectedCompany, client: client),
+                  expense: ExpenseEntity(
+                      company: state.selectedCompany, client: client),
                   context: context));
               break;
             case EntityAction.enterPayment:
