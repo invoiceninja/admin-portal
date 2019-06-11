@@ -3,6 +3,16 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+InvoiceItemEntity convertExpenseToInvoiceItem({ExpenseEntity expense}) {
+  return InvoiceItemEntity().rebuild(
+    (b) => b
+      ..expenseId = expense.id
+      ..notes = expense.publicNotes
+      ..qty = 1
+      ..cost = expense.convertedAmountWithTax,
+  );
+}
+
 var memoizedDropdownExpenseList = memo3(
     (BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList,
             int clientId) =>
@@ -155,12 +165,12 @@ var memoizedExpenseStatsForVendor = memo4((int vendorId,
         String archivedLabel) =>
     expenseStatsForVendor(vendorId, expenseMap, activeLabel, archivedLabel));
 
-
 var memoizedClientExpenseList = memo2(
-        (BuiltMap<int, ExpenseEntity> expenseMap, int clientId) =>
+    (BuiltMap<int, ExpenseEntity> expenseMap, int clientId) =>
         clientExpenseList(expenseMap, clientId));
 
-List<int> clientExpenseList(BuiltMap<int, ExpenseEntity> expenseMap, int clientId) {
+List<int> clientExpenseList(
+    BuiltMap<int, ExpenseEntity> expenseMap, int clientId) {
   final list = expenseMap.keys.where((expenseid) {
     final expense = expenseMap[expenseid];
     if (clientId != null && clientId != 0 && expense.clientId != clientId) {
@@ -169,8 +179,9 @@ List<int> clientExpenseList(BuiltMap<int, ExpenseEntity> expenseMap, int clientI
     return expense.isActive && !expense.isInvoiced;
   }).toList();
 
-  list.sort((idA, idB) =>
-      expenseMap[idA].listDisplayName.compareTo(expenseMap[idB].listDisplayName));
+  list.sort((idA, idB) => expenseMap[idA]
+      .listDisplayName
+      .compareTo(expenseMap[idB].listDisplayName));
 
   return list;
 }
