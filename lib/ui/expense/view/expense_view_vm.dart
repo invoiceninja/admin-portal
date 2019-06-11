@@ -121,6 +121,14 @@ class ExpenseViewVM {
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.clone:
+              store.dispatch(
+                  EditExpense(context: context, expense: expense.clone));
+              break;
+            case EntityAction.viewInvoice:
+              store.dispatch(
+                  ViewInvoice(invoiceId: expense.invoiceId, context: context));
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveExpenseRequest(
                   popCompleter(context, localization.archivedExpense),

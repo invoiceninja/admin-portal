@@ -368,12 +368,12 @@ abstract class TaskEntity extends Object
       if (isRunning) {
         actions.add(EntityAction.stop);
       } else {
-        actions.add(EntityAction.newInvoice);
         if (duration > 0) {
           actions.add(EntityAction.resume);
         } else {
           actions.add(EntityAction.start);
         }
+        actions.add(EntityAction.newInvoice);
       }
     }
 
