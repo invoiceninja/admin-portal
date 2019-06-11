@@ -31,6 +31,7 @@ const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$sendEmail = const EntityAction._('sendEmail');
 const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$newInvoice = const EntityAction._('newInvoice');
+const EntityAction _$newExpense = const EntityAction._('newExpense');
 const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
 const EntityAction _$clientPortal = const EntityAction._('clientPortal');
 const EntityAction _$enterPayment = const EntityAction._('enterPayment');
@@ -66,6 +67,8 @@ EntityAction _$valueOf(String name) {
       return _$markSent;
     case 'newInvoice':
       return _$newInvoice;
+    case 'newExpense':
+      return _$newExpense;
     case 'viewInvoice':
       return _$viewInvoice;
     case 'clientPortal':
@@ -101,6 +104,7 @@ final BuiltSet<EntityAction> _$values =
   _$sendEmail,
   _$markSent,
   _$newInvoice,
+  _$newExpense,
   _$viewInvoice,
   _$clientPortal,
   _$enterPayment,

@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
@@ -47,8 +48,11 @@ class VendorOverview extends StatelessWidget {
     return ListView(
       children: <Widget>[
         OneValueHeader(
-          label: localization.balanceDue,
-          value: formatNumber(vendor.balance, context,
+          label: localization.balance,
+          value: formatNumber(
+              memoizedCalculateVendorBalance(
+                  vendor.id, state.expenseState.map, state.expenseState.list),
+              context,
               currencyId: vendor.currencyId),
         ),
         vendor.privateNotes != null && vendor.privateNotes.isNotEmpty

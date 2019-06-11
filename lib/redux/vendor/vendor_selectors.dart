@@ -77,7 +77,7 @@ double calculateVendorBalance(int vendorId,
 
   expenseList.forEach((expenseId) {
     final expense = expenseMap[expenseId] ?? ExpenseEntity();
-    if (expense.isActive) {
+    if (expense.vendorId == vendorId && expense.isActive) {
       total += expense.amountWithTax;
     }
   });

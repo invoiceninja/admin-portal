@@ -164,6 +164,10 @@ abstract class VendorEntity extends Object
       actions.add(EntityAction.edit);
     }
 
+    if (user.canCreate(EntityType.expense) && isActive) {
+      actions.add(EntityAction.newExpense);
+    }
+
     if (actions.isNotEmpty) {
       actions.add(null);
     }

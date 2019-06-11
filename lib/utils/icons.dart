@@ -29,6 +29,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.viewInvoice:
       return Icons.insert_drive_file;
     case EntityAction.newInvoice:
+    case EntityAction.newExpense:
     case EntityAction.enterPayment:
       return Icons.add_circle_outline;
     case EntityAction.resume:
