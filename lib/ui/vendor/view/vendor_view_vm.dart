@@ -109,6 +109,12 @@ class VendorViewVM {
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.newExpense:
+              store.dispatch(EditExpense(
+                  expense: ExpenseEntity(
+                      company: state.selectedCompany, vendor: vendor),
+                  context: context));
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveVendorRequest(
                   popCompleter(context, localization.archivedVendor),
