@@ -154,3 +154,23 @@ var memoizedExpenseStatsForVendor = memo4((int vendorId,
         String activeLabel,
         String archivedLabel) =>
     expenseStatsForVendor(vendorId, expenseMap, activeLabel, archivedLabel));
+
+
+var memoizedClientExpenseList = memo2(
+        (BuiltMap<int, ExpenseEntity> expenseMap, int clientId) =>
+        clientExpenseList(expenseMap, clientId));
+
+List<int> clientExpenseList(BuiltMap<int, ExpenseEntity> expenseMap, int clientId) {
+  final list = expenseMap.keys.where((expenseid) {
+    final expense = expenseMap[expenseid];
+    if (clientId != null && clientId != 0 && expense.clientId != clientId) {
+      return false;
+    }
+    return expense.isActive && !expense.isInvoiced;
+  }).toList();
+
+  list.sort((idA, idB) =>
+      expenseMap[idA].listDisplayName.compareTo(expenseMap[idB].listDisplayName));
+
+  return list;
+}

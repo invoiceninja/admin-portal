@@ -267,7 +267,7 @@ abstract class ExpenseEntity extends Object
     if (publicNotes != null && publicNotes.isNotEmpty) {
       return publicNotes;
     } else {
-      return null;
+      return expenseDate;
     }
   }
 

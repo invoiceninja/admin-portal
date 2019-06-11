@@ -10,23 +10,25 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.onTap,
-    @required this.onLongPress,
-    //@required this.onCheckboxChanged,
     @required this.expense,
     @required this.client,
     @required this.vendor,
     @required this.filter,
+    this.onEntityAction,
+    this.onLongPress,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  //final ValueChanged<bool> onCheckboxChanged;
+  final ValueChanged<bool> onCheckboxChanged;
   final ExpenseEntity expense;
   final ClientEntity client;
+  final bool isChecked;
   final VendorEntity vendor;
   final String filter;
 
@@ -42,14 +44,14 @@ class ExpenseListItem extends StatelessWidget {
     String subtitle = '';
     if (filterMatch != null) {
       subtitle = filterMatch;
-    } else if (expense.clientId > 0 || expense.vendorId > 0) {
-      if (expense.clientId > 0) {
+    } else if (client != null || vendor != null) {
+      if (client != null) {
         subtitle += client.displayName;
-        if (expense.vendorId > 0) {
+        if (vendor != null) {
           subtitle += ' • ';
         }
       }
-      if (expense.vendorId > 0) {
+      if (vendor != null) {
         subtitle += vendor.name;
       }
     }
@@ -61,16 +63,13 @@ class ExpenseListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.expenseItemCheckbox(expense.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
+        leading: onCheckboxChanged != null
+            ? Checkbox(
+                value: isChecked,
+                onChanged: (value) => onCheckboxChanged(value),
+                activeColor: Theme.of(context).accentColor,
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

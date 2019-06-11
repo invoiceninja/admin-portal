@@ -121,11 +121,9 @@ class ExpenseList extends StatelessWidget {
                         final expenseId = viewModel.expenseList[index];
                         final expense = viewModel.expenseMap[expenseId];
                         final client =
-                            viewModel.state.clientState.map[expense.clientId] ??
-                                ClientEntity();
+                            viewModel.state.clientState.map[expense.clientId];
                         final vendor =
-                            viewModel.state.vendorState.map[expense.vendorId] ??
-                                VendorEntity();
+                            viewModel.state.vendorState.map[expense.vendorId];
                         return Column(
                           children: <Widget>[
                             ExpenseListItem(
