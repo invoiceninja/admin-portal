@@ -123,17 +123,17 @@ class ExpenseList extends StatelessWidget {
                         final client =
                             viewModel.state.clientState.map[expense.clientId] ??
                                 ClientEntity();
+                        final vendor =
+                            viewModel.state.vendorState.map[expense.vendorId] ??
+                                VendorEntity();
                         return Column(
                           children: <Widget>[
                             ExpenseListItem(
                               user: viewModel.user,
                               filter: viewModel.filter,
                               expense: expense,
-                              /*
-                              client: viewModel.state.clientState
-                                      .map[expense.clientId] ??
-                                  ClientEntity(),
-                                  */
+                              client: client,
+                              vendor: vendor,
                               onTap: () =>
                                   viewModel.onExpenseTap(context, expense),
                               onEntityAction: (EntityAction action) {

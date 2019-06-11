@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
@@ -13,6 +14,8 @@ class ExpenseListItem extends StatelessWidget {
     @required this.onLongPress,
     //@required this.onCheckboxChanged,
     @required this.expense,
+    @required this.client,
+    @required this.vendor,
     @required this.filter,
   });
 
@@ -22,16 +25,33 @@ class ExpenseListItem extends StatelessWidget {
   final GestureTapCallback onLongPress;
   //final ValueChanged<bool> onCheckboxChanged;
   final ExpenseEntity expense;
+  final ClientEntity client;
+  final VendorEntity vendor;
   final String filter;
 
   static final expenseItemKey = (int id) => Key('__expense_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? expense.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch;
+
+    String subtitle = '';
+    if (filterMatch != null) {
+      subtitle = filterMatch;
+    } else if (expense.clientId > 0 || expense.vendorId > 0) {
+      if (expense.clientId > 0) {
+        subtitle += client.displayName;
+        if (expense.vendorId > 0) {
+          subtitle += ' • ';
+        }
+      }
+      if (expense.vendorId > 0) {
+        subtitle += vendor.name;
+      }
+    }
 
     return DismissibleEntity(
       user: user,
