@@ -194,6 +194,8 @@ abstract class VendorEntity extends Object
       return true;
     }
 
+    filter = filter.toLowerCase();
+
     return name.toLowerCase().contains(filter);
   }
 
@@ -202,6 +204,8 @@ abstract class VendorEntity extends Object
     if (filter == null || filter.isEmpty) {
       return null;
     }
+
+    filter = filter.toLowerCase();
 
     return null;
   }

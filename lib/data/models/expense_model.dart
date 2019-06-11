@@ -224,13 +224,26 @@ abstract class ExpenseEntity extends Object
       return true;
     }
 
-    return privateNotes.contains(filter);
+    filter = filter.toLowerCase();
+
+    if (publicNotes.toLowerCase().contains(filter)) {
+      return true;
+    } else if (privateNotes.toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    return false;
   }
 
   @override
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    }
+
+    filter = filter.toLowerCase();
+    if (privateNotes.toLowerCase().contains(filter)) {
+      return privateNotes;
     }
 
     return null;
