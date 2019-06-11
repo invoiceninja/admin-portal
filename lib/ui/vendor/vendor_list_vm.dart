@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -82,9 +83,11 @@ class VendorListVM {
           case EntityAction.edit:
             store.dispatch(EditVendor(context: context, vendor: vendor));
             break;
-          case EntityAction.clone:
-            Navigator.of(context).pop();
-            store.dispatch(EditVendor(context: context, vendor: vendor.clone));
+          case EntityAction.newExpense:
+            store.dispatch(EditExpense(
+                expense: ExpenseEntity(
+                    company: state.selectedCompany, vendor: vendor),
+                context: context));
             break;
           case EntityAction.restore:
             store.dispatch(RestoreVendorRequest(

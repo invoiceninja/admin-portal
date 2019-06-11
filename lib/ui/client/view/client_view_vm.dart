@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -161,6 +162,23 @@ class ClientViewVM {
         onActionSelected: (BuildContext context, EntityAction action) {
           final localization = AppLocalization.of(context);
           switch (action) {
+            case EntityAction.newInvoice:
+              store.dispatch(EditInvoice(
+                  invoice: InvoiceEntity(company: state.selectedCompany)
+                      .rebuild((b) => b.clientId = client.id),
+                  context: context));
+              break;
+            case EntityAction.newExpense:
+              store.dispatch(EditExpense(
+                  expense: ExpenseEntity(company: state.selectedCompany, client: client),
+                  context: context));
+              break;
+            case EntityAction.enterPayment:
+              store.dispatch(EditPayment(
+                  payment: PaymentEntity(company: state.selectedCompany)
+                      .rebuild((b) => b.clientId = client.id),
+                  context: context));
+              break;
             case EntityAction.archive:
               store.dispatch(ArchiveClientRequest(
                   popCompleter(context, localization.archivedClient),
