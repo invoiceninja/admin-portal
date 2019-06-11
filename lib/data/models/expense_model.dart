@@ -110,7 +110,12 @@ abstract class ExpenseEntity extends Object
 
   ExpenseEntity get clone => rebuild((b) => b
     ..id = --ExpenseEntity.counter
-    ..isDeleted = false);
+    ..isDeleted = false
+    ..invoiceId = 0
+    ..expenseDate = convertDateTimeToSqlDate()
+    ..transactionReference = ''
+    ..paymentTypeId = 0
+    ..paymentDate = '');
 
   @override
   EntityType get entityType {
