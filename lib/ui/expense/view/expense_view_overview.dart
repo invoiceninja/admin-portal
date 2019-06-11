@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -45,18 +46,22 @@ class ExpenseOverview extends StatelessWidget {
 
     return ListView(
       children: <Widget>[
-        expense.isConverted ? TwoValueHeader(
-          label1: localization.amount,
-          value1: formatNumber(expense.amountWithTax, context,
-              currencyId: expense.expenseCurrencyId),
-          label2: localization.converted,
-          value2: formatNumber(expense.convertedAmountWithTax, context,
-              currencyId: expense.invoiceCurrencyId),
-        ) : OneValueHeader(
-          label: localization.amount,
-          value: formatNumber(expense.amountWithTax, context,
-              currencyId: expense.expenseCurrencyId),
-        ),
+        expense.isConverted
+            ? TwoValueHeader(
+                backgroundColor: ExpenseStatusColors.colors[expense.statusId],
+                label1: localization.amount,
+                value1: formatNumber(expense.amountWithTax, context,
+                    currencyId: expense.expenseCurrencyId),
+                label2: localization.converted,
+                value2: formatNumber(expense.convertedAmountWithTax, context,
+                    currencyId: expense.invoiceCurrencyId),
+              )
+            : OneValueHeader(
+                backgroundColor: ExpenseStatusColors.colors[expense.statusId],
+                label: localization.amount,
+                value: formatNumber(expense.amountWithTax, context,
+                    currencyId: expense.expenseCurrencyId),
+              ),
         expense.privateNotes != null && expense.privateNotes.isNotEmpty
             ? IconMessage(expense.privateNotes)
             : Container(),
