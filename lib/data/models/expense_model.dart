@@ -275,6 +275,16 @@ abstract class ExpenseEntity extends Object
     return round(total, 2);
   }
 
+  int get statusId {
+    if ((invoiceId ?? 0) > 0) {
+      return kExpenseStatusInvoiced;
+    } else if (shouldBeInvoiced) {
+      return kExpenseStatusPending;
+    } else {
+      return kExpenseStatusLogged;
+    }
+  }
+
   double get convertedAmountWithTax => round(amountWithTax * exchangeRate, 2);
 
   bool get isInvoiced => invoiceId != null && invoiceId > 0;

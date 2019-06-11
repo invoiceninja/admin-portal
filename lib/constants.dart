@@ -56,6 +56,10 @@ const int kPaymentStatusCompleted = 4;
 const int kPaymentStatusPartiallyRefunded = 5;
 const int kPaymentStatusRefunded = 6;
 
+const int kExpenseStatusLogged = 1;
+const int kExpenseStatusPending = 2;
+const int kExpenseStatusInvoiced = 3;
+
 const int kDefaultCurrencyId = 1;
 const int kDefaultDateFormat = 5;
 const int kDefaultDateTimeFormat = 5;
@@ -92,6 +96,16 @@ class PaymentStatusColors {
     kPaymentStatusRefunded: Colors.red,
   };
 }
+
+class ExpenseStatusColors {
+  static const colors = {
+    kExpenseStatusLogged: Colors.grey,
+    kExpenseStatusPending: Colors.orange,
+    kExpenseStatusInvoiced: Colors.green,
+  };
+}
+
+
 
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 

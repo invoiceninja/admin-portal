@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -93,13 +94,23 @@ class ExpenseListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Container(),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: subtitle != null && subtitle.isNotEmpty
+                      ? Text(
+                          subtitle,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Container(),
+                ),
+                Text(localization.lookup('expense_status_${expense.statusId}'),
+                    style: TextStyle(
+                      color: ExpenseStatusColors.colors[expense.statusId],
+                    )),
+              ],
+            ),
             EntityStateLabel(expense),
           ],
         ),
