@@ -76,13 +76,17 @@ class ExpenseListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  expense.expenseDate,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
+                  expense.publicNotes.isNotEmpty
+                      ? expense.publicNotes
+                      : formatDate(expense.expenseDate, context),
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(expense.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.title),
+              Text(
+                  formatNumber(expense.amountWithTax, context,
+                      currencyId: expense.expenseCurrencyId),
+                  style: Theme.of(context).textTheme.title)
             ],
           ),
         ),
