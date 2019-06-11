@@ -369,6 +369,10 @@ abstract class ClientEntity extends Object
       actions.add(EntityAction.newInvoice);
     }
 
+    if (user.canCreate(EntityType.payment) && isActive) {
+      actions.add(EntityAction.enterPayment);
+    }
+
     if (actions.isNotEmpty) {
       actions.add(null);
     }

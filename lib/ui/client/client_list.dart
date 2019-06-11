@@ -47,27 +47,6 @@ class ClientList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) {
           final actions = <Widget>[];
-          if (user.canCreate(EntityType.invoice)) {
-            actions.add(EntityActionListTile(
-              client: client,
-              entityAction: EntityAction.newInvoice,
-              mainContext: context,
-              viewModel: viewModel,
-            ));
-          }
-          if (user.canCreate(EntityType.payment)) {
-            actions.add(EntityActionListTile(
-              client: client,
-              entityAction: EntityAction.enterPayment,
-              mainContext: context,
-              viewModel: viewModel,
-            ));
-          }
-
-          if (actions.isNotEmpty) {
-            actions.add(Divider());
-          }
-
           actions.addAll(client
               .getEntityActions(user: user, includeEdit: true)
               .map((entityAction) {
