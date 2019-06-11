@@ -66,3 +66,20 @@ List<int> filteredVendorsSelector(BuiltMap<int, VendorEntity> vendorMap,
 
   return list;
 }
+
+var memoizedCalculateVendorBalance = memo3((int vendorId,
+        BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList) =>
+    calculateVendorBalance(vendorId, expenseMap, expenseList));
+
+double calculateVendorBalance(int vendorId,
+    BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList) {
+  double total = 0;
+
+  expenseList.forEach((expenseId) {
+    final expense = expenseMap[expenseId] ?? ExpenseEntity();
+    if (expense.isActive) {
+      total += expense.amountWithTax;
+    }
+  });
+  return total;
+}
