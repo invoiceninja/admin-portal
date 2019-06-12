@@ -55,7 +55,6 @@ class ExpenseList extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
-    final filteredClientId = listState.filterEntityId;
     final state = viewModel.state;
     final widgets = <Widget>[];
     BaseEntity filteredEntity;

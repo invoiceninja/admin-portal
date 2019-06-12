@@ -37,7 +37,7 @@ class _ExpenseViewState extends State<ExpenseView>
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    //final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
 
     return WillPopScope(

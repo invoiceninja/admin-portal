@@ -275,7 +275,9 @@ abstract class ExpenseEntity extends Object
         return true;
       } else if (status.id == kExpenseStatusPending && isPending) {
         return true;
-      } else if (status.id == kExpenseStatusLogged && !isInvoiced && !isPending) {
+      } else if (status.id == kExpenseStatusLogged &&
+          !isInvoiced &&
+          !isPending) {
         return true;
       }
     }
@@ -290,6 +292,10 @@ abstract class ExpenseEntity extends Object
     } else {
       return expenseDate;
     }
+  }
+
+  bool isBetween(String startDate, String endDate) {
+    return startDate.compareTo(endDate) <= 0 && endDate.compareTo(endDate) >= 0;
   }
 
   @override
