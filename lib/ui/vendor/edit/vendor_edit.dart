@@ -28,7 +28,7 @@ class _VendorEditState extends State<VendorEdit>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 6);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
