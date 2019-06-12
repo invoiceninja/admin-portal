@@ -20,6 +20,8 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'expense_date': 'Expense Date',
+      'pending': 'Pending',
       'expense_status_1': 'Logged',
       'expense_status_2': 'Pending',
       'expense_status_3': 'Invoiced',
@@ -12304,6 +12306,9 @@ class AppLocalization {
   String get addDocumentsToInvoice =>
       _localizedValues[locale.toString()]['add_documents_to_invoice'];
 
+  String get pending =>
+      _localizedValues[locale.toString()]['pending'];
+
   String get converted =>
       _localizedValues[locale.toString()]['converted'];
 
@@ -12315,6 +12320,9 @@ class AppLocalization {
 
   String get expenseStatus3 =>
       _localizedValues[locale.toString()]['expense_status_3'];
+
+  String get expenseDate =>
+      _localizedValues[locale.toString()]['expense_date'];
 
 
   String lookup(String key) {

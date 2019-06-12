@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -57,10 +58,30 @@ class ExpenseScreen extends StatelessWidget {
           onSelectedCustom2: (value) =>
               store.dispatch(FilterExpensesByCustom2(value)),
           sortFields: [
+            ExpenseFields.publicNotes,
+            ExpenseFields.expenseDate,
             ExpenseFields.updatedAt,
           ],
           onSelectedState: (EntityState state, value) {
             store.dispatch(FilterExpensesByState(state));
+          },
+          statuses: [
+            ExpenseStatusEntity().rebuild((b) => b
+              ..id = kExpenseStatusLogged
+              ..name = localization.logged),
+            ExpenseStatusEntity().rebuild(
+              (b) => b
+                ..id = kExpenseStatusPending
+                ..name = localization.pending,
+            ),
+            ExpenseStatusEntity().rebuild(
+              (b) => b
+                ..id = kExpenseStatusInvoiced
+                ..name = localization.invoiced,
+            ),
+          ],
+          onSelectedStatus: (EntityStatus status, value) {
+            store.dispatch(FilterExpensesByStatus(status));
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

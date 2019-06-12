@@ -203,6 +203,12 @@ class FilterExpensesByState implements PersistUI {
   final EntityState state;
 }
 
+class FilterExpensesByStatus implements PersistUI {
+  FilterExpensesByStatus(this.status);
+
+  final ExpenseStatusEntity status;
+}
+
 class FilterExpensesByCustom1 implements PersistUI {
   FilterExpensesByCustom1(this.value);
 

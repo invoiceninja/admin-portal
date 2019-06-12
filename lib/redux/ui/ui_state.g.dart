@@ -125,6 +125,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.autoStartTasks = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'filter':
+          result.filter = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(serializers.deserialize(value,
                   specifiedType: const FullType(DashboardUIState))
@@ -141,10 +145,6 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'invoiceUIState':
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
-          break;
-        case 'filter':
-          result.filter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'expenseUIState':
           result.expenseUIState.replace(serializers.deserialize(value,
@@ -191,6 +191,8 @@ class _$UIState extends UIState {
   @override
   final bool autoStartTasks;
   @override
+  final String filter;
+  @override
   final DashboardUIState dashboardUIState;
   @override
   final ProductUIState productUIState;
@@ -198,8 +200,6 @@ class _$UIState extends UIState {
   final ClientUIState clientUIState;
   @override
   final InvoiceUIState invoiceUIState;
-  @override
-  final String filter;
   @override
   final ExpenseUIState expenseUIState;
   @override
@@ -223,11 +223,11 @@ class _$UIState extends UIState {
       this.requireAuthentication,
       this.emailPayment,
       this.autoStartTasks,
+      this.filter,
       this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
-      this.filter,
       this.expenseUIState,
       this.vendorUIState,
       this.taskUIState,
@@ -302,11 +302,11 @@ class _$UIState extends UIState {
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
         autoStartTasks == other.autoStartTasks &&
+        filter == other.filter &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
-        filter == other.filter &&
         expenseUIState == other.expenseUIState &&
         vendorUIState == other.vendorUIState &&
         taskUIState == other.taskUIState &&
@@ -345,11 +345,11 @@ class _$UIState extends UIState {
                                                                 .hashCode),
                                                         emailPayment.hashCode),
                                                     autoStartTasks.hashCode),
-                                                dashboardUIState.hashCode),
-                                            productUIState.hashCode),
-                                        clientUIState.hashCode),
-                                    invoiceUIState.hashCode),
-                                filter.hashCode),
+                                                filter.hashCode),
+                                            dashboardUIState.hashCode),
+                                        productUIState.hashCode),
+                                    clientUIState.hashCode),
+                                invoiceUIState.hashCode),
                             expenseUIState.hashCode),
                         vendorUIState.hashCode),
                     taskUIState.hashCode),
@@ -367,11 +367,11 @@ class _$UIState extends UIState {
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
           ..add('autoStartTasks', autoStartTasks)
+          ..add('filter', filter)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
-          ..add('filter', filter)
           ..add('expenseUIState', expenseUIState)
           ..add('vendorUIState', vendorUIState)
           ..add('taskUIState', taskUIState)
@@ -413,6 +413,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set autoStartTasks(bool autoStartTasks) =>
       _$this._autoStartTasks = autoStartTasks;
 
+  String _filter;
+  String get filter => _$this._filter;
+  set filter(String filter) => _$this._filter = filter;
+
   DashboardUIStateBuilder _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
       _$this._dashboardUIState ??= new DashboardUIStateBuilder();
@@ -436,10 +440,6 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
-
-  String _filter;
-  String get filter => _$this._filter;
-  set filter(String filter) => _$this._filter = filter;
 
   ExpenseUIStateBuilder _expenseUIState;
   ExpenseUIStateBuilder get expenseUIState =>
@@ -487,11 +487,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
       _autoStartTasks = _$v.autoStartTasks;
+      _filter = _$v.filter;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
-      _filter = _$v.filter;
       _expenseUIState = _$v.expenseUIState?.toBuilder();
       _vendorUIState = _$v.vendorUIState?.toBuilder();
       _taskUIState = _$v.taskUIState?.toBuilder();
@@ -528,11 +528,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
               autoStartTasks: autoStartTasks,
+              filter: filter,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
-              filter: filter,
               expenseUIState: expenseUIState.build(),
               vendorUIState: vendorUIState.build(),
               taskUIState: taskUIState.build(),
@@ -550,7 +550,6 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
-
         _$failedField = 'expenseUIState';
         expenseUIState.build();
         _$failedField = 'vendorUIState';

@@ -42,6 +42,7 @@ ExpenseEntity _updateEditing(ExpenseEntity expense, dynamic action) {
 final expenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortExpenses>(_sortExpenses),
   TypedReducer<ListUIState, FilterExpensesByState>(_filterExpensesByState),
+  TypedReducer<ListUIState, FilterExpensesByStatus>(_filterExpensesByStatus),
   TypedReducer<ListUIState, FilterExpenses>(_filterExpenses),
   TypedReducer<ListUIState, FilterExpensesByCustom1>(_filterExpensesByCustom1),
   TypedReducer<ListUIState, FilterExpensesByCustom2>(_filterExpensesByCustom2),
@@ -84,6 +85,16 @@ ListUIState _filterExpensesByState(
     return expenseListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
+
+ListUIState _filterExpensesByStatus(
+    ListUIState expenseListState, FilterExpensesByStatus action) {
+  if (expenseListState.statusFilters.contains(action.status)) {
+    return expenseListState.rebuild((b) => b..statusFilters.remove(action.status));
+  } else {
+    return expenseListState.rebuild((b) => b..statusFilters.add(action.status));
+  }
+}
+
 
 ListUIState _filterExpenses(
     ListUIState expenseListState, FilterExpenses action) {

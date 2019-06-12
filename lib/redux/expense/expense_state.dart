@@ -44,7 +44,7 @@ abstract class ExpenseUIState extends Object
     implements Built<ExpenseUIState, ExpenseUIStateBuilder> {
   factory ExpenseUIState() {
     return _$ExpenseUIState._(
-      listUIState: ListUIState(ExpenseFields.expenseDate),
+      listUIState: ListUIState(ExpenseFields.publicNotes),
       editing: ExpenseEntity(),
       selectedId: 0,
     );

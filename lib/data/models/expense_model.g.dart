@@ -27,6 +27,8 @@ Serializer<ExpenseEntity> _$expenseEntitySerializer =
     new _$ExpenseEntitySerializer();
 Serializer<ExpenseCategoryEntity> _$expenseCategoryEntitySerializer =
     new _$ExpenseCategoryEntitySerializer();
+Serializer<ExpenseStatusEntity> _$expenseStatusEntitySerializer =
+    new _$ExpenseStatusEntitySerializer();
 
 class _$ExpenseListResponseSerializer
     implements StructuredSerializer<ExpenseListResponse> {
@@ -478,6 +480,55 @@ class _$ExpenseCategoryEntitySerializer
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ExpenseStatusEntitySerializer
+    implements StructuredSerializer<ExpenseStatusEntity> {
+  @override
+  final Iterable<Type> types = const [
+    ExpenseStatusEntity,
+    _$ExpenseStatusEntity
+  ];
+  @override
+  final String wireName = 'ExpenseStatusEntity';
+
+  @override
+  Iterable serialize(Serializers serializers, ExpenseStatusEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ExpenseStatusEntity deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ExpenseStatusEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -1338,6 +1389,96 @@ class ExpenseCategoryEntityBuilder
             isDeleted: isDeleted,
             isOwner: isOwner,
             id: id);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ExpenseStatusEntity extends ExpenseStatusEntity {
+  @override
+  final int id;
+  @override
+  final String name;
+
+  factory _$ExpenseStatusEntity([void updates(ExpenseStatusEntityBuilder b)]) =>
+      (new ExpenseStatusEntityBuilder()..update(updates)).build();
+
+  _$ExpenseStatusEntity._({this.id, this.name}) : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('ExpenseStatusEntity', 'id');
+    }
+    if (name == null) {
+      throw new BuiltValueNullFieldError('ExpenseStatusEntity', 'name');
+    }
+  }
+
+  @override
+  ExpenseStatusEntity rebuild(void updates(ExpenseStatusEntityBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ExpenseStatusEntityBuilder toBuilder() =>
+      new ExpenseStatusEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ExpenseStatusEntity && id == other.id && name == other.name;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, id.hashCode), name.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ExpenseStatusEntity')
+          ..add('id', id)
+          ..add('name', name))
+        .toString();
+  }
+}
+
+class ExpenseStatusEntityBuilder
+    implements Builder<ExpenseStatusEntity, ExpenseStatusEntityBuilder> {
+  _$ExpenseStatusEntity _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  ExpenseStatusEntityBuilder();
+
+  ExpenseStatusEntityBuilder get _$this {
+    if (_$v != null) {
+      _id = _$v.id;
+      _name = _$v.name;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ExpenseStatusEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$ExpenseStatusEntity;
+  }
+
+  @override
+  void update(void updates(ExpenseStatusEntityBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ExpenseStatusEntity build() {
+    final _$result = _$v ?? new _$ExpenseStatusEntity._(id: id, name: name);
     replace(_$result);
     return _$result;
   }

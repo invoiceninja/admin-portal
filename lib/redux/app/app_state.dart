@@ -113,13 +113,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.expense:
         return expenseUIState;
-
       case EntityType.vendor:
         return vendorUIState;
-
       case EntityType.task:
         return taskUIState;
-
       case EntityType.project:
         return projectUIState;
       case EntityType.payment:

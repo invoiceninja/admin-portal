@@ -265,6 +265,25 @@ abstract class ExpenseEntity extends Object
   }
 
   @override
+  bool matchesStatuses(BuiltList<EntityStatus> statuses) {
+    if (statuses.isEmpty) {
+      return true;
+    }
+
+    for (final status in statuses) {
+      if (status.id == kExpenseStatusInvoiced && isInvoiced) {
+        return true;
+      } else if (status.id == kExpenseStatusPending && isPending) {
+        return true;
+      } else if (status.id == kExpenseStatusLogged && !isInvoiced && !isPending) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @override
   String get listDisplayName {
     if (publicNotes != null && publicNotes.isNotEmpty) {
       return publicNotes;
@@ -303,6 +322,8 @@ abstract class ExpenseEntity extends Object
   double get convertedAmountWithTax => round(amountWithTax * exchangeRate, 2);
 
   bool get isInvoiced => invoiceId != null && invoiceId > 0;
+
+  bool get isPending => !isInvoiced && shouldBeInvoiced;
 
   bool get isConverted => exchangeRate != 1 && exchangeRate != 0;
 
@@ -382,4 +403,23 @@ abstract class ExpenseCategoryEntity extends Object
 
   static Serializer<ExpenseCategoryEntity> get serializer =>
       _$expenseCategoryEntitySerializer;
+}
+
+abstract class ExpenseStatusEntity extends Object
+    with EntityStatus, SelectableEntity
+    implements Built<ExpenseStatusEntity, ExpenseStatusEntityBuilder> {
+  factory ExpenseStatusEntity() {
+    return _$ExpenseStatusEntity._(
+      id: 0,
+      name: '',
+    );
+  }
+
+  ExpenseStatusEntity._();
+
+  @override
+  String get listDisplayName => name;
+
+  static Serializer<ExpenseStatusEntity> get serializer =>
+      _$expenseStatusEntitySerializer;
 }

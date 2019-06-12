@@ -38,9 +38,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       expenseUIState: ExpenseUIState(),
-
       vendorUIState: VendorUIState(),
-
       taskUIState: TaskUIState(),
       projectUIState: ProjectUIState(),
       paymentUIState: PaymentUIState(),
@@ -62,6 +60,9 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   bool get autoStartTasks;
 
+  @nullable
+  String get filter;
+
   DashboardUIState get dashboardUIState;
 
   ProductUIState get productUIState;
@@ -69,9 +70,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   ClientUIState get clientUIState;
 
   InvoiceUIState get invoiceUIState;
-
-  @nullable
-  String get filter;
 
   // STARTER: properties - do not remove comment
   ExpenseUIState get expenseUIState;

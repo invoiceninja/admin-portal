@@ -53,6 +53,9 @@ List<int> filteredExpensesSelector(BuiltMap<int, ExpenseEntity> expenseMap,
     if (!expense.matchesStates(expenseListState.stateFilters)) {
       return false;
     }
+    if (!expense.matchesStatuses(expenseListState.statusFilters)) {
+      return false;
+    }
 
     if (expenseListState.filterEntityId != null &&
         expenseListState.filterEntityType == EntityType.client &&

@@ -32,9 +32,7 @@ abstract class CompanyState
       invoiceState: InvoiceState(),
       // STARTER: constructor - do not remove comment
       expenseState: ExpenseState(),
-
       vendorState: VendorState(),
-
       taskState: TaskState(),
       projectState: ProjectState(),
       paymentState: PaymentState(),
