@@ -533,12 +533,15 @@ List<ChartDataGroup> chartExpenses(
 
   loggedData.average =
       round(loggedData.total ?? 0 / counts[STATUS_LOGGED] ?? 0, 2);
+  pendingData.average =
+      round(pendingData.total ?? 0 / counts[STATUS_PENDING] ?? 0, 2);
   invoicedData.average =
       round(invoicedData.total ?? 0 / counts[STATUS_INVOICED] ?? 0, 2);
   paidData.average = round(paidData.total ?? 0 / counts[STATUS_PAID] ?? 0, 2);
 
   final List<ChartDataGroup> data = [
     loggedData,
+    pendingData,
     invoicedData,
     paidData,
   ];
