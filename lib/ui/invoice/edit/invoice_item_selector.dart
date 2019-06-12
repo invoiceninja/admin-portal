@@ -79,6 +79,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       }
     });
 
+    _updateClientId();
+
     widget.onItemsSelected(items, _filterClientId);
     Navigator.pop(context);
   }
@@ -93,17 +95,22 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         _selected.add(entity);
       }
 
-      final selected = _selected.firstWhere(
-          (entity) =>
-              entity is BelongsToClient &&
-              (((entity as BelongsToClient).clientId ?? 0) > 0),
-          orElse: () => null);
-      if (selected != null) {
-        _filterClientId = (selected as BelongsToClient).clientId;
-      } else if ((widget.clientId ?? 0) == 0) {
-        _filterClientId = 0;
-      }
+      _updateClientId();
     });
+  }
+
+  void _updateClientId() {
+    final selected = _selected.firstWhere(
+            (entity) =>
+        entity is BelongsToClient &&
+            (((entity as BelongsToClient).clientId ?? 0) > 0),
+        orElse: () => null);
+
+    if (selected != null) {
+      _filterClientId = (selected as BelongsToClient).clientId;
+    } else if ((widget.clientId ?? 0) == 0) {
+      _filterClientId = 0;
+    }
   }
 
   @override
