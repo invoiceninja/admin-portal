@@ -2,8 +2,12 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -43,6 +47,8 @@ class ExpenseEditVM {
     @required this.onSavePressed,
     @required this.onBackPressed,
     @required this.isLoading,
+    @required this.onAddClientPressed,
+    @required this.onAddVendorPressed,
   });
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
@@ -65,9 +71,37 @@ class ExpenseEditVM {
               expense.isNew ? ExpenseScreen.route : ExpenseViewScreen.route));
         }
       },
+      onAddClientPressed: (context, completer) {
+        store.dispatch(EditClient(
+            client: ClientEntity(),
+            context: context,
+            completer: completer,
+            trackRoute: false));
+        completer.future.then((SelectableEntity client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).createdClient,
+          )));
+        });
+      },
+      onAddVendorPressed: (context, completer) {
+        store.dispatch(EditVendor(
+            vendor: VendorEntity(),
+            context: context,
+            completer: completer,
+            trackRoute: false));
+        completer.future.then((SelectableEntity client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).createdClient,
+          )));
+        });
+      },
       onSavePressed: (BuildContext context) {
-        final Completer<ExpenseEntity> completer = new Completer<ExpenseEntity>();
-        store.dispatch(SaveExpenseRequest(completer: completer, expense: expense));
+        final Completer<ExpenseEntity> completer =
+            new Completer<ExpenseEntity>();
+        store.dispatch(
+            SaveExpenseRequest(completer: completer, expense: expense));
         return completer.future.then((_) {
           return completer.future.then((savedExpense) {
             store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
@@ -98,4 +132,8 @@ class ExpenseEditVM {
   final bool isSaving;
   final ExpenseEntity origExpense;
   final AppState state;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddClientPressed;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddVendorPressed;
 }

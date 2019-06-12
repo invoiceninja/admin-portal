@@ -104,7 +104,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     .onChanged(expense.rebuild((b) => b..vendorId = vendor.id));
               },
               onAddPressed: (completer) {
-                //viewModel.onAddVendorPressed(context, completer);
+                viewModel.onAddVendorPressed(context, completer);
               },
             ),
             EntityDropdown(
@@ -119,9 +119,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               onSelected: (category) {
                 viewModel.onChanged(
                     expense.rebuild((b) => b..categoryId = category.id));
-              },
-              onAddPressed: (completer) {
-                //viewModel.onAddVendorPressed(context, completer);
               },
             ),
             TextFormField(
@@ -171,7 +168,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                         ..invoiceCurrencyId = currencyId));
                     },
                     onAddPressed: (completer) {
-                      //viewModel.onAddClientPressed(context, completer);
+                      viewModel.onAddClientPressed(context, completer);
                     },
                   ),
             CustomField(
