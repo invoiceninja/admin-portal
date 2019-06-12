@@ -205,6 +205,8 @@ abstract class ExpenseEntity extends Object
 
     if (isInvoiced) {
       actions.add(EntityAction.viewInvoice);
+    } else if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.newInvoice);
     }
 
     if (user.canCreate(EntityType.task)) {

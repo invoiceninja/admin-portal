@@ -101,6 +101,16 @@ class ExpenseListVM {
             store.dispatch(
                 EditExpense(context: context, expense: expense.clone));
             break;
+          case EntityAction.newInvoice:
+            final item = convertExpenseToInvoiceItem(expense: expense);
+            store.dispatch(EditInvoice(
+                invoice: InvoiceEntity(company: state.selectedCompany)
+                    .rebuild((b) => b
+                      ..hasExpenses = true
+                      ..clientId = expense.clientId
+                      ..invoiceItems.add(item)),
+                context: context));
+            break;
           case EntityAction.viewInvoice:
             store.dispatch(
                 ViewInvoice(invoiceId: expense.invoiceId, context: context));

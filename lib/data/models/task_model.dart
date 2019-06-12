@@ -373,7 +373,10 @@ abstract class TaskEntity extends Object
         } else {
           actions.add(EntityAction.start);
         }
-        actions.add(EntityAction.newInvoice);
+
+        if (user.canCreate(EntityType.invoice)) {
+          actions.add(EntityAction.newInvoice);
+        }
       }
     }
 

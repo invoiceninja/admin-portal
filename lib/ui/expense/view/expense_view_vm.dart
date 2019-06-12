@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
@@ -124,6 +125,16 @@ class ExpenseViewVM {
             case EntityAction.clone:
               store.dispatch(
                   EditExpense(context: context, expense: expense.clone));
+              break;
+            case EntityAction.newInvoice:
+              final item = convertExpenseToInvoiceItem(expense: expense);
+              store.dispatch(EditInvoice(
+                  invoice: InvoiceEntity(company: state.selectedCompany)
+                      .rebuild((b) => b
+                    ..hasExpenses = true
+                    ..clientId = expense.clientId
+                    ..invoiceItems.add(item)),
+                  context: context));
               break;
             case EntityAction.viewInvoice:
               store.dispatch(

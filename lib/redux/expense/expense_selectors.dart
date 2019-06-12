@@ -4,13 +4,15 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 InvoiceItemEntity convertExpenseToInvoiceItem({ExpenseEntity expense}) {
-  return InvoiceItemEntity().rebuild(
-    (b) => b
-      ..expenseId = expense.id
-      ..notes = expense.publicNotes
-      ..qty = 1
-      ..cost = expense.convertedAmountWithTax,
-  );
+  return InvoiceItemEntity().rebuild((b) => b
+    ..expenseId = expense.id
+    ..notes = expense.publicNotes
+    ..qty = 1
+    ..cost = expense.amount
+    ..taxName1 = expense.taxName1
+    ..taxRate1 = expense.taxRate1
+    ..taxName2 = expense.taxName2
+    ..taxRate2 = expense.taxRate2);
 }
 
 var memoizedDropdownExpenseList = memo3(

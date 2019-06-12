@@ -273,7 +273,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     ),
                   )
                 : Container(),
-            company.enableInvoiceTaxes
+            company.enableInvoiceItemTaxes
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) {
@@ -285,7 +285,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     initialTaxRate: invoiceItem.taxRate1,
                   )
                 : Container(),
-            company.enableInvoiceTaxes && company.enableSecondTaxRate
+            company.enableInvoiceItemTaxes && company.enableSecondTaxRate
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) {
