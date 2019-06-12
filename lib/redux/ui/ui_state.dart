@@ -32,6 +32,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
       autoStartTasks: false,
+      addDocumentsToInvoice: false,
       dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
@@ -59,6 +60,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   bool get emailPayment;
 
   bool get autoStartTasks;
+
+  bool get addDocumentsToInvoice;
 
   @nullable
   String get filter;

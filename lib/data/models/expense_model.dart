@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'expense_model.g.dart';
@@ -67,13 +68,13 @@ abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity(
-      {CompanyEntity company, VendorEntity vendor, ClientEntity client}) {
+      {CompanyEntity company, UIState uiState, VendorEntity vendor, ClientEntity client}) {
     return _$ExpenseEntity._(
       id: --ExpenseEntity.counter,
       privateNotes: '',
       publicNotes: '',
       shouldBeInvoiced: false,
-      invoiceDocuments: false,
+      invoiceDocuments: uiState?.addDocumentsToInvoice ?? false,
       transactionId: '',
       transactionReference: '',
       bankId: 0,

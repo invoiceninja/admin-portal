@@ -138,8 +138,10 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     activeColor: Theme.of(context).accentColor,
                     title: Text(localization.markBillable),
                     value: expense.shouldBeInvoiced,
-                    onChanged: (value) => viewModel.onChanged(
-                        expense.rebuild((b) => b..shouldBeInvoiced = value)),
+                    onChanged: (value) {
+                      viewModel.onChanged(
+                          expense.rebuild((b) => b..shouldBeInvoiced = value));
+                    },
                   ),
             SwitchListTile(
               activeColor: Theme.of(context).accentColor,

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
@@ -16,6 +18,7 @@ import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ExpenseEditScreen extends StatelessWidget {
   const ExpenseEditScreen({Key key}) : super(key: key);
@@ -49,6 +52,7 @@ class ExpenseEditVM {
     @required this.isLoading,
     @required this.onAddClientPressed,
     @required this.onAddVendorPressed,
+    @required this.onAddDocumentsChanged,
   });
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
@@ -120,6 +124,14 @@ class ExpenseEditVM {
           });
         });
       },
+      onAddDocumentsChanged: (value) async {
+        if (expense.isOld) {
+          return;
+        }
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool(kSharedPrefEmailPayment, value);
+        store.dispatch(UserSettingsChanged(addDocumentsToInvoice: value));
+      },
     );
   }
 
@@ -136,4 +148,5 @@ class ExpenseEditVM {
       onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddVendorPressed;
+  final Function(bool) onAddDocumentsChanged;
 }

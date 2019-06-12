@@ -32,6 +32,8 @@ UIState uiReducer(UIState state, dynamic action) {
     ..requireAuthentication =
         requireAuthenticationReducer(state.requireAuthentication, action)
     ..emailPayment = emailPaymentReducer(state.emailPayment, action)
+    ..addDocumentsToInvoice =
+        addDocumentsToInvoiceReducer(state.addDocumentsToInvoice, action)
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
@@ -77,6 +79,15 @@ Reducer<bool> autoStartTasksReducer = combineReducers([
 bool updateAutoStartTasksReducer(
     bool autoStartTasks, UserSettingsChanged action) {
   return action.autoStartTasks ?? autoStartTasks;
+}
+
+Reducer<bool> addDocumentsToInvoiceReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>(updateAddDocumentsToInvoiceReducer),
+]);
+
+bool updateAddDocumentsToInvoiceReducer(
+    bool addDocumentsToInvoice, UserSettingsChanged action) {
+  return action.addDocumentsToInvoice ?? addDocumentsToInvoice;
 }
 
 Reducer<bool> requireAuthenticationReducer = combineReducers([

@@ -18,6 +18,7 @@ const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefRequireAuthentication = 'require_authentication';
+const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
 
 String getCompanyTokenKey([int companyIndex = 0]) =>
     '${kSharedPrefToken}_$companyIndex';

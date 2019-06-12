@@ -91,7 +91,8 @@ class ExpenseScreen extends StatelessWidget {
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () {
                   store.dispatch(EditExpense(
-                      expense: ExpenseEntity(company: company),
+                      expense: ExpenseEntity(
+                          company: company, uiState: store.state.uiState),
                       context: context));
                 },
                 child: Icon(

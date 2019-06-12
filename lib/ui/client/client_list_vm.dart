@@ -94,7 +94,10 @@ class ClientListVM {
             break;
           case EntityAction.newExpense:
             store.dispatch(EditExpense(
-                expense: ExpenseEntity(company: state.selectedCompany, client: client),
+                expense: ExpenseEntity(
+                    company: state.selectedCompany,
+                    client: client,
+                    uiState: state.uiState),
                 context: context));
             break;
           case EntityAction.enterPayment:

@@ -49,6 +49,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'autoStartTasks',
       serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
+      'addDocumentsToInvoice',
+      serializers.serialize(object.addDocumentsToInvoice,
+          specifiedType: const FullType(bool)),
       'dashboardUIState',
       serializers.serialize(object.dashboardUIState,
           specifiedType: const FullType(DashboardUIState)),
@@ -125,6 +128,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.autoStartTasks = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'addDocumentsToInvoice':
+          result.addDocumentsToInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'filter':
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -191,6 +198,8 @@ class _$UIState extends UIState {
   @override
   final bool autoStartTasks;
   @override
+  final bool addDocumentsToInvoice;
+  @override
   final String filter;
   @override
   final DashboardUIState dashboardUIState;
@@ -223,6 +232,7 @@ class _$UIState extends UIState {
       this.requireAuthentication,
       this.emailPayment,
       this.autoStartTasks,
+      this.addDocumentsToInvoice,
       this.filter,
       this.dashboardUIState,
       this.productUIState,
@@ -252,6 +262,9 @@ class _$UIState extends UIState {
     }
     if (autoStartTasks == null) {
       throw new BuiltValueNullFieldError('UIState', 'autoStartTasks');
+    }
+    if (addDocumentsToInvoice == null) {
+      throw new BuiltValueNullFieldError('UIState', 'addDocumentsToInvoice');
     }
     if (dashboardUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
@@ -302,6 +315,7 @@ class _$UIState extends UIState {
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
         autoStartTasks == other.autoStartTasks &&
+        addDocumentsToInvoice == other.addDocumentsToInvoice &&
         filter == other.filter &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
@@ -334,17 +348,22 @@ class _$UIState extends UIState {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        selectedCompanyIndex
+                                                                        $jc(
+                                                                            0,
+                                                                            selectedCompanyIndex
+                                                                                .hashCode),
+                                                                        currentRoute
                                                                             .hashCode),
-                                                                    currentRoute
+                                                                    enableDarkMode
                                                                         .hashCode),
-                                                                enableDarkMode
+                                                                requireAuthentication
                                                                     .hashCode),
-                                                            requireAuthentication
+                                                            emailPayment
                                                                 .hashCode),
-                                                        emailPayment.hashCode),
-                                                    autoStartTasks.hashCode),
+                                                        autoStartTasks
+                                                            .hashCode),
+                                                    addDocumentsToInvoice
+                                                        .hashCode),
                                                 filter.hashCode),
                                             dashboardUIState.hashCode),
                                         productUIState.hashCode),
@@ -367,6 +386,7 @@ class _$UIState extends UIState {
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
           ..add('autoStartTasks', autoStartTasks)
+          ..add('addDocumentsToInvoice', addDocumentsToInvoice)
           ..add('filter', filter)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
@@ -412,6 +432,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool get autoStartTasks => _$this._autoStartTasks;
   set autoStartTasks(bool autoStartTasks) =>
       _$this._autoStartTasks = autoStartTasks;
+
+  bool _addDocumentsToInvoice;
+  bool get addDocumentsToInvoice => _$this._addDocumentsToInvoice;
+  set addDocumentsToInvoice(bool addDocumentsToInvoice) =>
+      _$this._addDocumentsToInvoice = addDocumentsToInvoice;
 
   String _filter;
   String get filter => _$this._filter;
@@ -487,6 +512,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
       _autoStartTasks = _$v.autoStartTasks;
+      _addDocumentsToInvoice = _$v.addDocumentsToInvoice;
       _filter = _$v.filter;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
@@ -528,6 +554,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
               autoStartTasks: autoStartTasks,
+              addDocumentsToInvoice: addDocumentsToInvoice,
               filter: filter,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),

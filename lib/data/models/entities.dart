@@ -135,6 +135,8 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isNew => id == null || id < 0;
 
+  bool get isOld => !isNew;
+
   bool get isActive => archivedAt == null || archivedAt == 0;
 
   bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;

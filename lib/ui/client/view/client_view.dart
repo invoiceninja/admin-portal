@@ -160,7 +160,9 @@ class _ClientViewState extends State<ClientView>
                               Navigator.of(context).pop();
                               store.dispatch(EditExpense(
                                   expense: ExpenseEntity(
-                                      company: company, client: client),
+                                      company: company,
+                                      client: client,
+                                      uiState: store.state.uiState),
                                   context: context));
                             },
                           )

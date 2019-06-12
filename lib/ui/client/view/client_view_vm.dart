@@ -155,7 +155,9 @@ class ClientViewVM {
                 store.dispatch(EditExpense(
                     context: context,
                     expense: ExpenseEntity(
-                        company: state.selectedCompany, client: client)));
+                        company: state.selectedCompany,
+                        client: client,
+                        uiState: state.uiState)));
               } else {
                 store.dispatch(FilterExpensesByEntity(
                     entityId: client.id, entityType: EntityType.client));
@@ -183,7 +185,9 @@ class ClientViewVM {
             case EntityAction.newExpense:
               store.dispatch(EditExpense(
                   expense: ExpenseEntity(
-                      company: state.selectedCompany, client: client),
+                      company: state.selectedCompany,
+                      client: client,
+                      uiState: state.uiState),
                   context: context));
               break;
             case EntityAction.enterPayment:

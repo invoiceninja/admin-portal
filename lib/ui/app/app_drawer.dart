@@ -264,7 +264,9 @@ class AppDrawer extends StatelessWidget {
             onCreateTap: () {
               navigator.pop();
               store.dispatch(EditExpense(
-                  expense: ExpenseEntity(company: company), context: context));
+                  expense:
+                      ExpenseEntity(company: company, uiState: state.uiState),
+                  context: context));
             },
           ),
 

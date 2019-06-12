@@ -67,8 +67,11 @@ class ExpenseEditDocumentsState extends State<ExpenseEditDocuments> {
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.addDocumentsToInvoice),
               value: expense.invoiceDocuments,
-              onChanged: (value) => viewModel.onChanged(
-                  expense.rebuild((b) => b..invoiceDocuments = value)),
+              onChanged: (value) {
+                viewModel.onChanged(
+                    expense.rebuild((b) => b..invoiceDocuments = value));
+                viewModel.onAddDocumentsChanged(value);
+              }
             )
           ],
         ),
