@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -70,10 +71,18 @@ class VendorEditVM {
         store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
         return completer.future.then((_) {
           return completer.future.then((savedVendor) {
-            store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
+            if (state.uiState.currentRoute.contains(VendorScreen.route)) {
+              store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
+            }
             if (vendor.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(VendorViewScreen.route);
+              if ([
+                ExpenseEditScreen.route,
+              ].contains(store.state.uiState.currentRoute)) {
+                Navigator.of(context).pop(savedVendor);
+              } else {
+                Navigator.of(context)
+                    .pushReplacementNamed(VendorViewScreen.route);
+              }
             } else {
               Navigator.of(context).pop(savedVendor);
             }
