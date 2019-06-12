@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
@@ -74,6 +75,12 @@ class ActivityListTile extends StatelessWidget {
                   if (state.paymentState.map.containsKey(activity.paymentId)) {
                     return store.dispatch(ViewPayment(
                         paymentId: activity.paymentId, context: context));
+                  }
+                  break;
+                case EntityType.expense:
+                  if (state.expenseState.map.containsKey(activity.expenseId)) {
+                    return store.dispatch(ViewExpense(
+                        expenseId: activity.expenseId, context: context));
                   }
                   break;
               }
