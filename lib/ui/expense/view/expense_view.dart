@@ -130,7 +130,9 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text(expense.listDisplayName ?? localization.expense), // Text(localizations.expenseDetails),
+      title: Text(expense.publicNotes.isNotEmpty
+          ? expense.publicNotes
+          : localization.expense), // Text(localizations.expenseDetails),
       bottom: TabBar(
         controller: controller,
         tabs: [
@@ -145,20 +147,20 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: expense.isNew
           ? []
           : [
-        user.canEditEntity(expense)
-            ? EditIconButton(
-          isVisible: !expense.isDeleted,
-          onPressed: () => viewModel.onEditPressed(context),
-        )
-            : Container(),
-        ActionMenuButton(
-          user: viewModel.company.user,
-          isSaving: viewModel.isSaving,
-          entity: expense,
-          onSelected: viewModel.onActionSelected,
-          entityActions: viewModel.expense.getEntityActions(user: user),
-        )
-      ],
+              user.canEditEntity(expense)
+                  ? EditIconButton(
+                      isVisible: !expense.isDeleted,
+                      onPressed: () => viewModel.onEditPressed(context),
+                    )
+                  : Container(),
+              ActionMenuButton(
+                user: viewModel.company.user,
+                isSaving: viewModel.isSaving,
+                entity: expense,
+                onSelected: viewModel.onActionSelected,
+                entityActions: viewModel.expense.getEntityActions(user: user),
+              )
+            ],
     );
   }
 }

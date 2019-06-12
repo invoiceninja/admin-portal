@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -223,6 +224,9 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       }
       if (invoice.hasTasks) {
         store.dispatch(LoadTasks(force: true));
+      }
+      if (invoice.hasExpenses) {
+        store.dispatch(LoadExpenses(force: true));
       }
       action.completer.complete(invoice);
     }).catchError((Object error) {
