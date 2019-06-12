@@ -41,7 +41,10 @@ Middleware<AppState> _editVendor() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
+    if (action.trackRoute) {
+      store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
+    }
+
     final vendor =
         await Navigator.of(action.context).pushNamed(VendorEditScreen.route);
 
