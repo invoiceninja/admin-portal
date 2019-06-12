@@ -150,28 +150,30 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     .onChanged(expense.rebuild((b) => b..expenseDate = date));
               },
             ),
-            EntityDropdown(
-              entityType: EntityType.client,
-              labelText: localization.client,
-              initialValue:
-                  (clientState.map[expense.clientId] ?? ClientEntity())
-                      .displayName,
-              entityMap: clientState.map,
-              entityList:
-                  memoizedDropdownClientList(clientState.map, clientState.list),
-              onSelected: (client) {
-                var currencyId = (client as ClientEntity).currencyId;
-                if (currencyId == 0) {
-                  currencyId = company.currencyId;
-                }
-                viewModel.onChanged(expense.rebuild((b) => b
-                  ..clientId = client.id
-                  ..invoiceCurrencyId = currencyId));
-              },
-              onAddPressed: (completer) {
-                //viewModel.onAddClientPressed(context, completer);
-              },
-            ),
+            expense.isInvoiced
+                ? SizedBox()
+                : EntityDropdown(
+                    entityType: EntityType.client,
+                    labelText: localization.client,
+                    initialValue:
+                        (clientState.map[expense.clientId] ?? ClientEntity())
+                            .displayName,
+                    entityMap: clientState.map,
+                    entityList: memoizedDropdownClientList(
+                        clientState.map, clientState.list),
+                    onSelected: (client) {
+                      var currencyId = (client as ClientEntity).currencyId;
+                      if (currencyId == 0) {
+                        currencyId = company.currencyId;
+                      }
+                      viewModel.onChanged(expense.rebuild((b) => b
+                        ..clientId = client.id
+                        ..invoiceCurrencyId = currencyId));
+                    },
+                    onAddPressed: (completer) {
+                      //viewModel.onAddClientPressed(context, completer);
+                    },
+                  ),
             CustomField(
               controller: _custom1Controller,
               labelText: company.getCustomFieldLabel(CustomFieldType.expense1),
