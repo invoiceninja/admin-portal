@@ -8,7 +8,7 @@ InvoiceItemEntity convertExpenseToInvoiceItem({ExpenseEntity expense}) {
     ..expenseId = expense.id
     ..notes = expense.publicNotes
     ..qty = 1
-    ..cost = expense.amount
+    ..cost = expense.convertedAmount
     ..taxName1 = expense.taxName1
     ..taxRate1 = expense.taxRate1
     ..taxName2 = expense.taxName2
