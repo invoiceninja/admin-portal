@@ -3,8 +3,8 @@ import 'package:test/test.dart';
 import 'package:faker/faker.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
-import 'common_actions.dart';
-import 'localizations.dart';
+import 'utils/common_actions.dart';
+import 'utils/localizations.dart';
 
 void main() {
   group('PRODUCTS TEST', () {

@@ -3,8 +3,8 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
-import 'common_actions.dart';
-import 'localizations.dart';
+import 'utils/common_actions.dart';
+import 'utils/localizations.dart';
 
 void main() {
   group('LOGIN TEST', () {
