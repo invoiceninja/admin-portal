@@ -31,7 +31,6 @@ class VendorListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? vendor.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch;
 
     return DismissibleEntity(
       user: user,
@@ -66,19 +65,19 @@ class VendorListItem extends StatelessWidget {
             ],
           ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
+        subtitle: (filterMatch == null && vendor.isActive)
+            ? null
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    filterMatch,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                  )
-                : Container(),
-            EntityStateLabel(vendor),
-          ],
-        ),
+                  ),
+                  EntityStateLabel(vendor),
+                ],
+              ),
       ),
     );
   }
