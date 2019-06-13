@@ -28,9 +28,3 @@ class ProductKeys {
   static const String cost = 'productCost';
   static const String filter = 'productFilter';
 }
-
-class SettingKeys {
-  static const String screen = 'SettingsScreen';
-  static const String drawer = 'settingsDrawer';
-  static const String logoutButton = 'Log Out';
-}

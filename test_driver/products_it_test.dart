@@ -1,213 +1,157 @@
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:invoiceninja_flutter/.env.dart';
 import 'package:test/test.dart';
 import 'package:faker/faker.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
 
-/*
-class Constants {
-  static String newProductKey = 'Example Test Driver Product';
-  static String newProductNotes = 'Example Test Driver Notes';
-  static String newProductCost = '100.5';
-
-  static String updatedProductKey = 'Updated Example Test Driver Product';
-  static String updatedProductNotes = 'Updated Example Test Driver Notes';
-  static String updatedProductCost = '200.5';
-
-  static String deleteText = 'Delete';
-  static String restoreText = 'Restore';
-  static String archiveText = 'Archive';
-
-  static String saveToolTip = 'Save';
-  static String backToolTip = 'Back';
-  static String menuToolTip = 'Show menu';
-  static String filterToolTip = 'Filter';
-
-  static String loginButton = 'LOGIN';
-
-  static String snackbarProductCreated = 'Successfully created product';
-  static String snackbarProductUpdated = 'Successfully updated product';
-  static String snackbarProductDeleted = 'Successfully deleted product';
-  static String snackbarArchiveProduct = 'Successfully archived product';
-}
-*/
+import 'common_actions.dart';
+import 'localizations.dart';
 
 void main() {
   group('PRODUCTS TEST', () {
-    FlutterDriver driver;
-    String loginEmail, loginPassword, loginUrl, loginSecret;
 
-    setUp(() async {
+    TestLocalization localization;
+    FlutterDriver driver;
+
+    final productKey = faker.food.cuisine();
+    final notes = faker.food.dish();
+    final cost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
+
+    final updatedProductKey = faker.food.cuisine();
+    final updatedNotes = faker.food.dish();
+    final updatedCost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
+
+    setUpAll(() async {
+      localization = TestLocalization('en');
+
       driver = await FlutterDriver.connect();
 
-      // read config file
-      loginEmail = Config.TEST_EMAIL;
-      loginPassword = Config.TEST_PASSWORD;
-      loginUrl = Config.TEST_URL;
-      loginSecret = Config.TEST_SECRET;
+      await loginAndOpenProducts(driver);
     });
 
-    tearDown(() async {
+    tearDownAll(() async {
       if (driver != null) {
         driver.close();
       }
     });
 
-    // Login into the app with details from .env.dart
-    test('Login into the app and switch to products screen', () async {
-      await driver.tap(find.byValueKey(LoginKeys.loginSelfHost));
-      await driver.tap(find.byValueKey(LoginKeys.email));
-      await driver.enterText(loginEmail);
-      await driver.tap(find.byValueKey(LoginKeys.password));
-      await driver.enterText(loginPassword);
-      await driver.tap(find.byValueKey(LoginKeys.url));
-      await driver.enterText(loginUrl);
-      await driver.tap(find.byValueKey(LoginKeys.secret));
-      await driver.enterText(loginSecret);
-
-      await driver.tap(find.text(LoginKeys.loginButton.toUpperCase()));
-      await driver.waitFor(find.byType(AppKeys.dashboardScreen));
-      await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
-      await driver.tap(find.byValueKey(ProductKeys.drawer));
-      await driver.waitFor(find.byType(ProductKeys.screen));
-    });
-
     // Create a new product
     test('Add a new product', () async {
-      final productKey = faker.food.cuisine();
-      final notes = faker.food.dish();
-
       await driver.tap(find.byValueKey(ProductKeys.fab));
 
       await driver.tap(find.byValueKey(ProductKeys.productKey));
       await driver.enterText(productKey);
-
       await driver.tap(find.byValueKey(ProductKeys.notes));
       await driver.enterText(notes);
+      await driver.tap(find.byValueKey(ProductKeys.cost));
+      await driver.enterText(cost);
 
-      await driver.tap(find.byTooltip(AppTooltips.save));
+      await driver.tap(find.byTooltip(localization.save));
 
-      await driver.waitFor(find.text(AppKeys.successfullyCreated));
+      await driver.waitFor(find.text(localization.createdProduct));
 
-      await driver.tap(find.byTooltip(AppTooltips.back));
+      await driver.tap(find.pageBack());
 
+      //TODO: This will not work if the product is out of the scrollable view
       await driver.tap(find.text(productKey));
       await driver.waitFor(find.text(productKey));
+      await driver.waitFor(find.text(notes));
+      await driver.waitFor(find.text(cost));
 
-      /*
-      await driver.tap(find.byValueKey(ProductKeys.cost));
-      await driver.enterText(Constants.newProductCost);
-
-      // verify entered text while new product creation
-      await driver.waitFor(find.text(Constants.newProductKey));
-      await driver.waitFor(find.text(Constants.newProductNotes));
-      await driver.waitFor(find.text(Constants.newProductCost));
-
-      await driver.tap(find.byTooltip(Constants.backToolTip));
-      */
+      await driver.tap(find.pageBack());
     });
 
-    /*
+
     // Edit the newly created product
     test('Edit an existing product', () async {
-      await driver.tap(find.text(Constants.newProductKey));
+      //TODO: This will not work if the product is out of the scrollable view
+      await driver.tap(find.text(productKey), timeout: Duration(seconds: 3));
 
       await driver.tap(find.byValueKey(ProductKeys.productKey));
-      await driver.enterText(Constants.updatedProductKey);
+      await driver.enterText(updatedProductKey);
       await driver.tap(find.byValueKey(ProductKeys.notes));
-      await driver.enterText(Constants.updatedProductNotes);
+      await driver.enterText(updatedNotes);
       await driver.tap(find.byValueKey(ProductKeys.cost));
-      await driver.enterText(Constants.updatedProductCost);
+      await driver.enterText(updatedCost);
 
-      await driver.tap(find.byTooltip(Constants.saveToolTip));
+      await driver.tap(find.byTooltip(localization.save));
 
       // verify snackbar
-      await driver.waitFor(find.text(Constants.snackbarProductUpdated));
+      await driver.waitFor(find.text(localization.updatedProduct));
 
-      await driver.tap(find.byTooltip(Constants.backToolTip));
+      await driver.tap(find.pageBack());
 
       // verify updated values while editing existing product 
-      await driver.tap(find.text(Constants.updatedProductKey));
-      await driver.waitFor(find.text(Constants.updatedProductKey));
-      await driver.waitFor(find.text(Constants.updatedProductNotes));
-      await driver.waitFor(find.text(Constants.updatedProductCost));
+      await driver.tap(find.text(updatedProductKey));
+      await driver.waitFor(find.text(updatedProductKey));
+      await driver.waitFor(find.text(updatedNotes));
+      await driver.waitFor(find.text(updatedCost));
 
-      await driver.tap(find.byTooltip(Constants.backToolTip));
+      await driver.tap(find.pageBack());
     });
 
     // Archive the edited product
     test('Archieve a product test', () async {
       // delete the test product created
-      await driver.tap(find.text(Constants.updatedProductKey));
+      await driver.tap(find.text(updatedProductKey));
 
-      await driver.tap(find.byTooltip(Constants.menuToolTip));
-      await driver.tap(find.text(Constants.archiveText));
+      await driver.tap(find.byType('ActionMenuButton'));
+      await driver.tap(find.text(localization.archive));
 
-      // verify snackbar
-      await driver.waitFor(find.text(Constants.snackbarArchiveProduct));
-
-      await driver.tap(find.byTooltip(Constants.backToolTip));
-
-      // veify the product goes away from active product list when archived is not selected
-      await driver.waitForAbsent(find.text(Constants.updatedProductKey));
+      // verify the product goes away from active product list when archived is not selected
+      await driver.waitForAbsent(find.text(updatedProductKey));
 
       // Verify product in archived list
       // Show archived products
-      await driver.tap(find.byTooltip(Constants.filterToolTip));
+      await driver.tap(find.byValueKey(ProductKeys.filter));
       // tick the checkbox archived to show archived products
       // ** Here we assume that only active box is ticked, rest are not
       // ** Currently there is no way to determite if a checkbox is ticked or not
       // ** We also use the state value as the key because
       // ** Currently there is no way to check a checkbox without using a key
-      await driver.tap(find.byValueKey('archived'));
+      await driver.tap(find.text(localization.archived));
 
       // verify product in archived product list
-      await driver.waitFor(find.text(Constants.updatedProductKey));
+      await driver.waitFor(find.text(updatedProductKey));
 
       //open and check product details
-      await driver.tap(find.text(Constants.updatedProductKey));
-      await driver.waitFor(find.text(Constants.updatedProductKey));
-      await driver.waitFor(find.text(Constants.updatedProductNotes));
-      await driver.waitFor(find.text(Constants.updatedProductCost));
+      await driver.tap(find.text(updatedProductKey));
+      await driver.waitFor(find.text(updatedProductKey));
+      await driver.waitFor(find.text(updatedNotes));
+      await driver.waitFor(find.text(updatedCost));
 
       // restore the product
-      await driver.tap(find.byTooltip(Constants.menuToolTip));
-      await driver.tap(find.text(Constants.restoreText));
+      await driver.tap(find.byType('ActionMenuButton'));
+      await driver.tap(find.text(localization.restore));
 
-      // go back
-      await driver.tap(find.byTooltip(Constants.backToolTip));
+      await driver.waitFor(find.text(localization.restoredProduct));
+
+      await driver.tap(find.pageBack());
 
       // uncheck archive and close filters
-      await driver.tap(find.byValueKey('archived'));
-      await driver.tap(find.byTooltip(Constants.filterToolTip));
+      await driver.tap(find.text(localization.archived));
+      await driver.tap(find.byValueKey(ProductKeys.filter));
 
       // veify product is in active products
-      await driver.tap(find.text(Constants.updatedProductKey));
-      await driver.waitFor(find.text(Constants.updatedProductKey));
-      await driver.waitFor(find.text(Constants.updatedProductNotes));
-      await driver.waitFor(find.text(Constants.updatedProductCost));
+      await driver.tap(find.text(updatedProductKey));
+      await driver.waitFor(find.text(updatedProductKey));
+      await driver.waitFor(find.text(updatedNotes));
+      await driver.waitFor(find.text(updatedCost));
 
       // go back
-      await driver.tap(find.byTooltip(Constants.backToolTip));
+      await driver.tap(find.pageBack());
     });
 
     // Delete the edited product
     test('Deleteing a product test', () async {
 
-      await driver.tap(find.text(Constants.updatedProductKey));
+      await driver.tap(find.text(updatedProductKey));
 
-      await driver.tap(find.byTooltip(Constants.menuToolTip));
-      await driver.tap(find.text(Constants.deleteText));
-
-      // verify snackbar
-      await driver.waitFor(find.text(Constants.snackbarProductDeleted));
-
-      await driver.tap(find.byTooltip(Constants.backToolTip));
+      await driver.tap(find.byType('ActionMenuButton'));
+      await driver.tap(find.text(localization.delete));
 
       // verify not in list
-      await driver.waitForAbsent(find.text(Constants.updatedProductKey));
+      await driver.waitForAbsent(find.text(updatedProductKey));
     });
 
-    */
   });
 }
