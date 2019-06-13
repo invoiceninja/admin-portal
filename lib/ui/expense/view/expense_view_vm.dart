@@ -54,7 +54,8 @@ class ExpenseViewVM {
 
   factory ExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final expense = state.expenseState.map[state.expenseUIState.selectedId];
+    final expense = state.expenseState.map[state.expenseUIState.selectedId] ??
+        ExpenseEntity(id: state.expenseUIState.selectedId);
     final vendor = state.vendorState.map[expense.vendorId];
     final client = state.clientState.map[expense.clientId];
     final invoice = state.invoiceState.map[expense.invoiceId];
@@ -131,9 +132,9 @@ class ExpenseViewVM {
               store.dispatch(EditInvoice(
                   invoice: InvoiceEntity(company: state.selectedCompany)
                       .rebuild((b) => b
-                    ..hasExpenses = true
-                    ..clientId = expense.clientId
-                    ..invoiceItems.add(item)),
+                        ..hasExpenses = true
+                        ..clientId = expense.clientId
+                        ..invoiceItems.add(item)),
                   context: context));
               break;
             case EntityAction.viewInvoice:

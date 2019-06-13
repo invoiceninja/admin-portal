@@ -61,9 +61,9 @@ class VendorFields {
 abstract class VendorEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<VendorEntity, VendorEntityBuilder> {
-  factory VendorEntity() {
+  factory VendorEntity({int id}) {
     return _$VendorEntity._(
-      id: --VendorEntity.counter,
+      id: id ?? --VendorEntity.counter,
       name: '',
       balance: 0.0,
       paidToDate: 0.0,

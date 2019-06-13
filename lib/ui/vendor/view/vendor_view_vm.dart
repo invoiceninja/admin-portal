@@ -53,7 +53,8 @@ class VendorViewVM {
   factory VendorViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final company = state.selectedCompany;
-    final vendor = state.vendorState.map[state.vendorUIState.selectedId];
+    final vendor = state.vendorState.map[state.vendorUIState.selectedId] ??
+        VendorEntity(id: state.vendorUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
