@@ -54,19 +54,21 @@ class ClientListItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.title)
           ],
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            filterMatch == null
-                ? Container()
-                : Text(
-                    filterMatch,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-            EntityStateLabel(client),
-          ],
-        ),
+        subtitle: (filterMatch == null && client.isActive)
+            ? null
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  filterMatch == null
+                      ? Container()
+                      : Text(
+                          filterMatch,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                  EntityStateLabel(client),
+                ],
+              ),
       ),
     );
   }

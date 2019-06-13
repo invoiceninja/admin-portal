@@ -50,7 +50,8 @@ class StubViewVM {
 
   factory StubViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final stub = state.stubState.map[state.stubUIState.selectedId];
+    final stub = state.stubState.map[state.stubUIState.selectedId] ??
+        StubEntity(id: state.stubUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(

@@ -76,30 +76,28 @@ class ClientList extends StatelessWidget {
   Widget _buildListView(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
-      child: ListView.builder(
+      child: ListView.separated(
+          separatorBuilder: (context, index) => Divider(
+                height: 1,
+              ),
           itemCount: viewModel.clientList.length,
           itemBuilder: (BuildContext context, index) {
             final clientId = viewModel.clientList[index];
             final client = viewModel.clientMap[clientId];
-            return Column(children: <Widget>[
-              ClientListItem(
-                user: viewModel.user,
-                filter: viewModel.filter,
-                client: client,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    _showMenu(context, client, viewModel.user);
-                  } else {
-                    viewModel.onEntityAction(context, client, action);
-                  }
-                },
-                onTap: () => viewModel.onClientTap(context, client),
-                onLongPress: () => _showMenu(context, client, viewModel.user),
-              ),
-              Divider(
-                height: 1.0,
-              ),
-            ]);
+            return ClientListItem(
+              user: viewModel.user,
+              filter: viewModel.filter,
+              client: client,
+              onEntityAction: (EntityAction action) {
+                if (action == EntityAction.more) {
+                  _showMenu(context, client, viewModel.user);
+                } else {
+                  viewModel.onEntityAction(context, client, action);
+                }
+              },
+              onTap: () => viewModel.onClientTap(context, client),
+              onLongPress: () => _showMenu(context, client, viewModel.user),
+            );
           }),
     );
   }
