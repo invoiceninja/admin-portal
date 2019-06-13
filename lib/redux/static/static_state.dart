@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
 part 'static_state.g.dart';
@@ -22,6 +23,20 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
     );
   }
   StaticState._();
+
+  @nullable
+  int get updatedAt;
+
+  bool get isLoaded => updatedAt != null && updatedAt > 0;
+
+  bool get isStale {
+    if (!isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - updatedAt >
+        kMillisecondsToRefreshStaticData;
+  }
 
   BuiltMap<int, CurrencyEntity> get currencyMap;
   BuiltMap<int, SizeEntity> get sizeMap;

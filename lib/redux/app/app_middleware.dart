@@ -86,6 +86,8 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   final persistData = _createPersistData(company1Repository, company2Repository,
       company3Repository, company4Repository, company5Repository);
 
+  final persistStatic = _createPersistStatic(staticRepository);
+
   final userLoggedIn = _createUserLoggedIn(
       authRepository,
       uiRepository,
@@ -114,6 +116,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
     TypedMiddleware<AppState, LoadAccountSuccess>(accountLoaded),
     TypedMiddleware<AppState, PersistData>(persistData),
+    TypedMiddleware<AppState, PersistStatic>(persistStatic),
     TypedMiddleware<AppState, PersistUI>(persistUI),
   ];
 }
@@ -168,6 +171,13 @@ Middleware<AppState> _createLoadState(
 
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
+
+      if (appState.staticState.isStale) {
+        store.dispatch(RefreshData(
+          loadCompanies: false,
+          platform: getPlatform(action.context),
+        ));
+      }
 
       if (uiState.currentRoute != LoginScreen.route &&
           authState.url.isNotEmpty) {
@@ -295,7 +305,18 @@ Middleware<AppState> _createAccountLoaded() {
       store.dispatch(UserLoginSuccess());
     }
 
-    action.completer.complete(null);
+    if (action.completer != null) {
+      action.completer.complete(null);
+    }
+  };
+}
+
+Middleware<AppState> _createPersistStatic(PersistenceRepository staticRepository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    // first process the action so the data is in the state
+    next(action);
+
+    staticRepository.saveStaticState(store.state.staticState);
   };
 }
 

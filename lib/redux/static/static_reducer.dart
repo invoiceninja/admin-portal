@@ -14,6 +14,7 @@ StaticState refreshData(StaticState staticState, RefreshData action) {
 StaticState staticLoadedReducer(
     StaticState staticState, LoadStaticSuccess action) {
   return StaticState().rebuild((b) => b
+    ..updatedAt = DateTime.now().millisecondsSinceEpoch
     ..currencyMap.addAll(Map.fromIterable(
       action.data.currencies,
       key: (dynamic item) => item.id,

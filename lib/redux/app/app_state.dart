@@ -11,18 +11,12 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
-
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
-
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
-
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
-
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
-
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 
 part 'app_state.g.dart';

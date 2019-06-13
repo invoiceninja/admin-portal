@@ -5,6 +5,8 @@ class PersistUI {}
 
 class PersistData {}
 
+class PersistStatic {}
+
 class RefreshClient {
   RefreshClient(this.clientId);
 
@@ -19,7 +21,7 @@ class StartSaving {}
 
 class StopSaving {}
 
-class LoadStaticSuccess {
+class LoadStaticSuccess implements PersistStatic {
   LoadStaticSuccess(this.data);
 
   final StaticData data;

@@ -80,6 +80,12 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
           specifiedType: const FullType(BuiltMap,
               const [const FullType(int), const FullType(FrequencyEntity)])),
     ];
+    if (object.updatedAt != null) {
+      result
+        ..add('updatedAt')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
 
     return result;
   }
@@ -95,6 +101,10 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'updatedAt':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'currencyMap':
           result.currencyMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -181,6 +191,8 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
 
 class _$StaticState extends StaticState {
   @override
+  final int updatedAt;
+  @override
   final BuiltMap<int, CurrencyEntity> currencyMap;
   @override
   final BuiltMap<int, SizeEntity> sizeMap;
@@ -207,7 +219,8 @@ class _$StaticState extends StaticState {
       (new StaticStateBuilder()..update(updates)).build();
 
   _$StaticState._(
-      {this.currencyMap,
+      {this.updatedAt,
+      this.currencyMap,
       this.sizeMap,
       this.industryMap,
       this.timezoneMap,
@@ -265,6 +278,7 @@ class _$StaticState extends StaticState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is StaticState &&
+        updatedAt == other.updatedAt &&
         currencyMap == other.currencyMap &&
         sizeMap == other.sizeMap &&
         industryMap == other.industryMap &&
@@ -289,7 +303,9 @@ class _$StaticState extends StaticState {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, currencyMap.hashCode),
+                                        $jc(
+                                            $jc($jc(0, updatedAt.hashCode),
+                                                currencyMap.hashCode),
                                             sizeMap.hashCode),
                                         industryMap.hashCode),
                                     timezoneMap.hashCode),
@@ -305,6 +321,7 @@ class _$StaticState extends StaticState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('StaticState')
+          ..add('updatedAt', updatedAt)
           ..add('currencyMap', currencyMap)
           ..add('sizeMap', sizeMap)
           ..add('industryMap', industryMap)
@@ -322,6 +339,10 @@ class _$StaticState extends StaticState {
 
 class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   _$StaticState _$v;
+
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
   MapBuilder<int, CurrencyEntity> _currencyMap;
   MapBuilder<int, CurrencyEntity> get currencyMap =>
@@ -393,6 +414,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
 
   StaticStateBuilder get _$this {
     if (_$v != null) {
+      _updatedAt = _$v.updatedAt;
       _currencyMap = _$v.currencyMap?.toBuilder();
       _sizeMap = _$v.sizeMap?.toBuilder();
       _industryMap = _$v.industryMap?.toBuilder();
@@ -428,6 +450,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
     try {
       _$result = _$v ??
           new _$StaticState._(
+              updatedAt: updatedAt,
               currencyMap: currencyMap.build(),
               sizeMap: sizeMap.build(),
               industryMap: industryMap.build(),
