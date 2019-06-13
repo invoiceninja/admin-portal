@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
@@ -128,37 +129,31 @@ class PaymentList extends StatelessWidget {
                             ),
                           ),
                         )
-                      : ListView.builder(
+                      : ListView.separated(
                           shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.paymentList.length,
                           itemBuilder: (BuildContext context, index) {
                             final paymentId = viewModel.paymentList[index];
                             final payment = state.paymentState.map[paymentId];
                             final client =
                                 paymentClientSelector(paymentId, state);
-                            return Column(
-                              children: <Widget>[
-                                PaymentListItem(
-                                  user: viewModel.user,
-                                  filter: viewModel.filter,
-                                  payment: payment,
-                                  onTap: () =>
-                                      viewModel.onPaymentTap(context, payment),
-                                  onEntityAction: (EntityAction action) {
-                                    if (action == EntityAction.more) {
-                                      _showMenu(context, payment, client);
-                                    } else {
-                                      viewModel.onEntityAction(
-                                          context, payment, action);
-                                    }
-                                  },
-                                  onLongPress: () =>
-                                      _showMenu(context, payment, client),
-                                ),
-                                Divider(
-                                  height: 1.0,
-                                ),
-                              ],
+                            return PaymentListItem(
+                              user: viewModel.user,
+                              filter: viewModel.filter,
+                              payment: payment,
+                              onTap: () =>
+                                  viewModel.onPaymentTap(context, payment),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  _showMenu(context, payment, client);
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, payment, action);
+                                }
+                              },
+                              onLongPress: () =>
+                                  _showMenu(context, payment, client),
                             );
                           },
                         ),

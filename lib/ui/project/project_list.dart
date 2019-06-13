@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/project_list_item.dart';
@@ -110,8 +111,9 @@ class ProjectList extends StatelessWidget {
                             ),
                           ),
                         )
-                      : ListView.builder(
+                      : ListView.separated(
                           shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.projectList.length,
                           itemBuilder: (BuildContext context, index) {
                             final projectId = viewModel.projectList[index];
@@ -119,32 +121,25 @@ class ProjectList extends StatelessWidget {
                             final client =
                                 viewModel.clientMap[project.clientId] ??
                                     ClientEntity(id: project.clientId);
-                            return Column(
-                              children: <Widget>[
-                                ProjectListItem(
-                                  user: viewModel.user,
-                                  filter: viewModel.filter,
-                                  project: project,
-                                  client:
-                                      viewModel.clientMap[project.clientId] ??
-                                          ClientEntity(),
-                                  onTap: () =>
-                                      viewModel.onProjectTap(context, project),
-                                  onEntityAction: (EntityAction action) {
-                                    if (action == EntityAction.more) {
-                                      _showMenu(context, project, client);
-                                    } else {
-                                      viewModel.onEntityAction(
-                                          context, project, action);
-                                    }
-                                  },
-                                  onLongPress: () =>
-                                      _showMenu(context, project, client),
-                                ),
-                                Divider(
-                                  height: 1.0,
-                                ),
-                              ],
+                            return ProjectListItem(
+                              user: viewModel.user,
+                              filter: viewModel.filter,
+                              project: project,
+                              client:
+                              viewModel.clientMap[project.clientId] ??
+                                  ClientEntity(),
+                              onTap: () =>
+                                  viewModel.onProjectTap(context, project),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  _showMenu(context, project, client);
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, project, action);
+                                }
+                              },
+                              onLongPress: () =>
+                                  _showMenu(context, project, client),
                             );
                           },
                         ),

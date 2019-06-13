@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
@@ -121,41 +122,35 @@ class TaskList extends StatelessWidget {
                             ),
                           ),
                         )
-                      : ListView.builder(
+                      : ListView.separated(
                           shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.taskList.length,
                           itemBuilder: (BuildContext context, index) {
                             final taskId = viewModel.taskList[index];
                             final task = viewModel.taskMap[taskId];
                             final client = viewModel.clientMap[task.clientId] ??
                                 ClientEntity();
-                            return Column(
-                              children: <Widget>[
-                                TaskListItem(
-                                  user: viewModel.user,
-                                  filter: viewModel.filter,
-                                  task: task,
-                                  client: viewModel.clientMap[task.clientId] ??
-                                      ClientEntity(),
-                                  project: viewModel
-                                      .state.projectState.map[task.projectId],
-                                  onTap: () =>
-                                      viewModel.onTaskTap(context, task),
-                                  onEntityAction: (EntityAction action) {
-                                    if (action == EntityAction.more) {
-                                      _showMenu(context, task, client);
-                                    } else {
-                                      viewModel.onEntityAction(
-                                          context, task, action);
-                                    }
-                                  },
-                                  onLongPress: () =>
-                                      _showMenu(context, task, client),
-                                ),
-                                Divider(
-                                  height: 1.0,
-                                ),
-                              ],
+                            return TaskListItem(
+                              user: viewModel.user,
+                              filter: viewModel.filter,
+                              task: task,
+                              client: viewModel.clientMap[task.clientId] ??
+                                  ClientEntity(),
+                              project: viewModel
+                                  .state.projectState.map[task.projectId],
+                              onTap: () =>
+                                  viewModel.onTaskTap(context, task),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  _showMenu(context, task, client);
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, task, action);
+                                }
+                              },
+                              onLongPress: () =>
+                                  _showMenu(context, task, client),
                             );
                           },
                         ),

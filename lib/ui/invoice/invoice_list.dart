@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
@@ -111,8 +112,9 @@ class InvoiceList extends StatelessWidget {
                             ),
                           ),
                         )
-                      : ListView.builder(
+                      : ListView.separated(
                           shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.invoiceList.length,
                           itemBuilder: (BuildContext context, index) {
                             final invoiceId = viewModel.invoiceList[index];
@@ -120,32 +122,24 @@ class InvoiceList extends StatelessWidget {
                             final client =
                                 viewModel.clientMap[invoice.clientId] ??
                                     ClientEntity();
-                            return Column(
-                              children: <Widget>[
-                                InvoiceListItem(
-                                  user: viewModel.user,
-                                  filter: viewModel.filter,
-                                  invoice: invoice,
-                                  client:
-                                      viewModel.clientMap[invoice.clientId] ??
-                                          ClientEntity(),
-                                  onTap: () =>
-                                      viewModel.onInvoiceTap(context, invoice),
-                                  onEntityAction: (EntityAction action) {
-                                    if (action == EntityAction.more) {
-                                      _showMenu(context, invoice, client);
-                                    } else {
-                                      viewModel.onEntityAction(
-                                          context, invoice, action);
-                                    }
-                                  },
-                                  onLongPress: () =>
-                                      _showMenu(context, invoice, client),
-                                ),
-                                Divider(
-                                  height: 1.0,
-                                ),
-                              ],
+                            return InvoiceListItem(
+                              user: viewModel.user,
+                              filter: viewModel.filter,
+                              invoice: invoice,
+                              client: viewModel.clientMap[invoice.clientId] ??
+                                  ClientEntity(),
+                              onTap: () =>
+                                  viewModel.onInvoiceTap(context, invoice),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  _showMenu(context, invoice, client);
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, invoice, action);
+                                }
+                              },
+                              onLongPress: () =>
+                                  _showMenu(context, invoice, client),
                             );
                           },
                         ),

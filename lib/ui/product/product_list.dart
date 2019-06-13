@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
@@ -74,30 +75,26 @@ class ProductList extends StatelessWidget {
   Widget _buildListView(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
-      child: ListView.builder(
+      child: ListView.separated(
+          separatorBuilder: (context, index) => ListDivider(),
           itemCount: viewModel.productList.length,
           itemBuilder: (BuildContext context, index) {
             final productId = viewModel.productList[index];
             final product = viewModel.productMap[productId];
-            return Column(children: <Widget>[
-              ProductListItem(
-                user: viewModel.user,
-                filter: viewModel.filter,
-                product: product,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    _showMenu(context, product);
-                  } else {
-                    viewModel.onEntityAction(context, product, action);
-                  }
-                },
-                onTap: () => viewModel.onProductTap(context, product),
-                onLongPress: () => _showMenu(context, product),
-              ),
-              Divider(
-                height: 1.0,
-              ),
-            ]);
+            return ProductListItem(
+              user: viewModel.user,
+              filter: viewModel.filter,
+              product: product,
+              onEntityAction: (EntityAction action) {
+                if (action == EntityAction.more) {
+                  _showMenu(context, product);
+                } else {
+                  viewModel.onEntityAction(context, product, action);
+                }
+              },
+              onTap: () => viewModel.onProductTap(context, product),
+              onLongPress: () => _showMenu(context, product),
+            );
           }),
     );
   }

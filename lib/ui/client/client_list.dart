@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
@@ -77,9 +78,7 @@ class ClientList extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.separated(
-          separatorBuilder: (context, index) => Divider(
-                height: 1,
-              ),
+          separatorBuilder: (context, index) => ListDivider(),
           itemCount: viewModel.clientList.length,
           itemBuilder: (BuildContext context, index) {
             final clientId = viewModel.clientList[index];

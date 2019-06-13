@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
@@ -113,8 +114,9 @@ class ExpenseList extends StatelessWidget {
                         ),
                       ),
                     )
-                  : ListView.builder(
+                  : ListView.separated(
                       shrinkWrap: true,
+                      separatorBuilder: (context, index) => ListDivider(),
                       itemCount: viewModel.expenseList.length,
                       itemBuilder: (BuildContext context, index) {
                         final expenseId = viewModel.expenseList[index];
@@ -123,30 +125,22 @@ class ExpenseList extends StatelessWidget {
                             viewModel.state.clientState.map[expense.clientId];
                         final vendor =
                             viewModel.state.vendorState.map[expense.vendorId];
-                        return Column(
-                          children: <Widget>[
-                            ExpenseListItem(
-                              user: viewModel.user,
-                              filter: viewModel.filter,
-                              expense: expense,
-                              client: client,
-                              vendor: vendor,
-                              onTap: () =>
-                                  viewModel.onExpenseTap(context, expense),
-                              onEntityAction: (EntityAction action) {
-                                if (action == EntityAction.more) {
-                                  _showMenu(context, expense);
-                                } else {
-                                  viewModel.onEntityAction(
-                                      context, expense, action);
-                                }
-                              },
-                              onLongPress: () => _showMenu(context, expense),
-                            ),
-                            Divider(
-                              height: 1.0,
-                            ),
-                          ],
+                        return ExpenseListItem(
+                          user: viewModel.user,
+                          filter: viewModel.filter,
+                          expense: expense,
+                          client: client,
+                          vendor: vendor,
+                          onTap: () => viewModel.onExpenseTap(context, expense),
+                          onEntityAction: (EntityAction action) {
+                            if (action == EntityAction.more) {
+                              _showMenu(context, expense);
+                            } else {
+                              viewModel.onEntityAction(
+                                  context, expense, action);
+                            }
+                          },
+                          onLongPress: () => _showMenu(context, expense),
                         );
                       },
                     ),
