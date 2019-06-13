@@ -40,18 +40,21 @@ class UserSettingsChanged implements PersistUI {
   final bool addDocumentsToInvoice;
 }
 
-class LoadDataSuccess {
-  LoadDataSuccess({this.loginResponse, this.completer});
+class LoadAccountSuccess {
+  LoadAccountSuccess(
+      {this.loginResponse, this.completer, this.loadCompanies = true});
 
   final Completer completer;
   final dynamic loginResponse;
+  final bool loadCompanies;
 }
 
 class RefreshData {
-  RefreshData({this.platform, this.completer});
+  RefreshData({this.platform, this.completer, this.loadCompanies = true});
 
   final String platform;
   final Completer completer;
+  final bool loadCompanies;
 }
 
 class FilterCompany {

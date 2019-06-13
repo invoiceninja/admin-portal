@@ -81,7 +81,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       company4Repository,
       company5Repository);
 
-  final dataLoaded = _createDataLoaded();
+  final accountLoaded = _createAccountLoaded();
 
   final persistData = _createPersistData(company1Repository, company2Repository,
       company3Repository, company4Repository, company5Repository);
@@ -112,7 +112,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
-    TypedMiddleware<AppState, LoadDataSuccess>(dataLoaded),
+    TypedMiddleware<AppState, LoadAccountSuccess>(accountLoaded),
     TypedMiddleware<AppState, PersistData>(persistData),
     TypedMiddleware<AppState, PersistUI>(persistUI),
   ];
@@ -275,23 +275,25 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   };
 }
 
-Middleware<AppState> _createDataLoaded() {
+Middleware<AppState> _createAccountLoaded() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     final dynamic data = action.loginResponse;
     store.dispatch(LoadStaticSuccess(data.static));
 
-    for (int i = 0; i < data.accounts.length; i++) {
-      final CompanyEntity company = data.accounts[i];
+    if (action.loadCompanies) {
+      for (int i = 0; i < data.accounts.length; i++) {
+        final CompanyEntity company = data.accounts[i];
 
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString(getCompanyTokenKey(i), company.token);
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(getCompanyTokenKey(i), company.token);
 
-      store.dispatch(SelectCompany(i + 1, company));
-      store.dispatch(LoadCompanySuccess(company));
+        store.dispatch(SelectCompany(i + 1, company));
+        store.dispatch(LoadCompanySuccess(company));
+      }
+
+      store.dispatch(SelectCompany(1, data.accounts[0]));
+      store.dispatch(UserLoginSuccess());
     }
-
-    store.dispatch(SelectCompany(1, data.accounts[0]));
-    store.dispatch(UserLoginSuccess());
 
     action.completer.complete(null);
   };

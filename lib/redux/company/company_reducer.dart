@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 
 CompanyState companyReducer(CompanyState state, dynamic action) {
-  if (action is RefreshData) {
+  if (action is RefreshData && action.loadCompanies) {
     return CompanyState();
   }
 

@@ -78,8 +78,8 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       _saveAuthLocal(action);
 
       if (_isVersionSupported(data.version)) {
-        store.dispatch(
-            LoadDataSuccess(completer: action.completer, loginResponse: data));
+        store.dispatch(LoadAccountSuccess(
+            completer: action.completer, loginResponse: data));
       } else {
         store.dispatch(UserLoginFailure(
             'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
@@ -109,8 +109,8 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
       _saveAuthLocal(action);
 
       if (_isVersionSupported(data.version)) {
-        store.dispatch(
-            LoadDataSuccess(completer: action.completer, loginResponse: data));
+        store.dispatch(LoadAccountSuccess(
+            completer: action.completer, loginResponse: data));
       } else {
         store.dispatch(UserLoginFailure(
             'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
@@ -138,8 +138,10 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     repository
         .refresh(url: url, token: token, platform: action.platform)
         .then((data) {
-      store.dispatch(
-          LoadDataSuccess(completer: action.completer, loginResponse: data));
+      store.dispatch(LoadAccountSuccess(
+          completer: action.completer,
+          loginResponse: data,
+          loadCompanies: action.loadCompanies));
     }).catchError((Object error) {
       print(error);
       store.dispatch(UserLoginFailure(error.toString()));
