@@ -71,6 +71,7 @@ The architecture is based off these two projects:
 ## Credits
 * [Hillel Coren](https://hillel.dev)
 * [David Bomba](https://github.com/turbo124)
+* [Efthymios Sarmpanis](https://github.com/esarbanis)
 * [All contributors](https://github.com/invoiceninja/flutter-mobile/graphs/contributors)
 
 **Special thanks to:**
