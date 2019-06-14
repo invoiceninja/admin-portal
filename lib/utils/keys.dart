@@ -26,4 +26,5 @@ class ProductKeys {
   static const String productKey = 'productKey';
   static const String notes = 'productNotes';
   static const String cost = 'productCost';
+  static const String filter = 'productFilter';
 }
