@@ -36,6 +36,17 @@ void main() {
       }
     });
 
+    // Create an empty product
+    test('Try to add an empty product', () async {
+      await driver.tap(find.byValueKey(ProductKeys.fab));
+
+      await driver.tap(find.byTooltip(localization.save));
+
+      await driver.waitFor(find.text(localization.pleaseEnterAProductKey));
+
+      await driver.tap(find.pageBack());
+    });
+
     // Create a new product
     test('Add a new product', () async {
       await driver.tap(find.byValueKey(ProductKeys.fab));
