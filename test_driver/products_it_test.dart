@@ -53,7 +53,7 @@ void main() {
 
       await driver.tap(find.pageBack());
 
-      //TODO: This will not work if the product is out of the scrollable view
+      await driver.scrollUntilVisible(find.byType('ListView'), find.text(productKey));
       await driver.tap(find.text(productKey));
       await driver.waitFor(find.text(productKey));
       await driver.waitFor(find.text(notes));
@@ -65,7 +65,7 @@ void main() {
 
     // Edit the newly created product
     test('Edit an existing product', () async {
-      //TODO: This will not work if the product is out of the scrollable view
+      await driver.scrollUntilVisible(find.byType('ListView'), find.text(productKey));
       await driver.tap(find.text(productKey), timeout: Duration(seconds: 3));
 
       await driver.tap(find.byValueKey(ProductKeys.productKey));
