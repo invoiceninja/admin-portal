@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceView extends StatefulWidget {
@@ -102,7 +103,7 @@ class _InvoiceViewState extends State<InvoiceView> {
           color: Theme.of(context).canvasColor,
           child: ListTile(
             title: Text(client?.displayName ?? ''),
-            leading: Icon(FontAwesomeIcons.users, size: 18.0),
+            leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onClientPressed(context),
             onLongPress: () => viewModel.onClientPressed(context, true),

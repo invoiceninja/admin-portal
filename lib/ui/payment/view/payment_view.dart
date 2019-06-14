@@ -102,8 +102,8 @@ class _PaymentViewState extends State<PaymentView> {
                 title: Text(client.displayName ?? ''),
                 leading: Icon(FontAwesomeIcons.users, size: 18.0),
                 trailing: Icon(Icons.navigate_next),
-                onTap: () => viewModel.onTapClient(context),
-                onLongPress: () => viewModel.onTapClient(context, true),
+                onTap: () => viewModel.onClientPressed(context),
+                onLongPress: () => viewModel.onClientPressed(context, true),
               ),
             ),
             Container(
@@ -116,8 +116,8 @@ class _PaymentViewState extends State<PaymentView> {
                 title: Text('${localization.invoice} ${invoice.invoiceNumber}'),
                 leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
                 trailing: Icon(Icons.navigate_next),
-                onTap: () => viewModel.onTapInvoice(context),
-                onLongPress: () => viewModel.onTapInvoice(context, true),
+                onTap: () => viewModel.onInvoicePressed(context),
+                onLongPress: () => viewModel.onInvoicePressed(context, true),
               ),
             ),
             Container(

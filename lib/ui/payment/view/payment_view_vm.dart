@@ -39,8 +39,8 @@ class PaymentViewVM {
     @required this.company,
     @required this.onActionSelected,
     @required this.onEditPressed,
-    @required this.onTapClient,
-    @required this.onTapInvoice,
+    @required this.onClientPressed,
+    @required this.onInvoicePressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -61,11 +61,11 @@ class PaymentViewVM {
         onEditPressed: (BuildContext context) {
           store.dispatch(EditPayment(payment: payment, context: context));
         },
-        onTapClient: (context, [bool longPress = false]) => store.dispatch(
+        onClientPressed: (context, [bool longPress = false]) => store.dispatch(
             longPress
                 ? EditClient(client: client, context: context)
                 : ViewClient(clientId: client.id, context: context)),
-        onTapInvoice: (context, [bool longPress = false]) => store.dispatch(
+        onInvoicePressed: (context, [bool longPress = false]) => store.dispatch(
             longPress
                 ? EditInvoice(
                     invoice: state.invoiceState.map[payment.invoiceId],
@@ -101,8 +101,8 @@ class PaymentViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext) onEditPressed;
-  final Function(BuildContext, [bool]) onTapInvoice;
-  final Function(BuildContext, [bool]) onTapClient;
+  final Function(BuildContext, [bool]) onInvoicePressed;
+  final Function(BuildContext, [bool]) onClientPressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
