@@ -28,3 +28,7 @@ class ProductKeys {
   static const String cost = 'productCost';
   static const String filter = 'productFilter';
 }
+
+class SettingsKeys {
+  static const String drawer = 'settingsDrawer';
+}

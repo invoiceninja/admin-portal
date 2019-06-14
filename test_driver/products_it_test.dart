@@ -29,6 +29,8 @@ void main() {
     });
 
     tearDownAll(() async {
+      await logout(driver, localization);
+
       if (driver != null) {
         driver.close();
       }
