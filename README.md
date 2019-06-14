@@ -73,7 +73,7 @@ The architecture is based off these two projects:
 * [David Bomba](https://github.com/turbo124)
 * [All contributors](https://github.com/invoiceninja/flutter-mobile/graphs/contributors)
 
-** Special thanks to: **
+**Special thanks to:**
 * [Efthymios Sarmpanis](https://github.com/esarbanis)
 
 ## Contributions
