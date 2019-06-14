@@ -91,6 +91,7 @@ class ClientList extends StatelessWidget {
                 if (action == EntityAction.more) {
                   _showMenu(context, client, viewModel.user);
                 } else {
+                  Navigator.of(context).pop();
                   viewModel.onEntityAction(context, client, action);
                 }
               },

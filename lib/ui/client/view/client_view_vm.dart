@@ -70,149 +70,112 @@ class ClientViewVM {
     }
 
     return ClientViewVM(
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: client.isNew,
-        client: client,
-        company: state.selectedCompany,
-        onEditPressed: (BuildContext context) {
-          final Completer<ClientEntity> completer = Completer<ClientEntity>();
-          store.dispatch(EditClient(
-              client: client, context: context, completer: completer));
-          completer.future.then((client) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).updatedClient,
-            )));
-          });
-        },
-        onEntityPressed: (BuildContext context, EntityType entityType,
-            [longPress = false]) {
-          switch (entityType) {
-            case EntityType.invoice:
-              if (longPress) {
-                store.dispatch(EditInvoice(
-                    context: context,
-                    invoice: InvoiceEntity(company: state.selectedCompany)
-                        .rebuild((b) => b..clientId = client.id)));
-              } else {
-                store.dispatch(FilterInvoicesByEntity(
-                    entityId: client.id, entityType: EntityType.client));
-                store.dispatch(ViewInvoiceList(context));
-              }
-              break;
-            case EntityType.quote:
-              if (longPress) {
-                store.dispatch(EditQuote(
-                    context: context,
-                    quote: InvoiceEntity(
-                            company: state.selectedCompany, isQuote: true)
-                        .rebuild((b) => b..clientId = client.id)));
-              } else {
-                store.dispatch(FilterQuotesByEntity(
-                    entityId: client.id, entityType: EntityType.client));
-                store.dispatch(ViewQuoteList(context));
-              }
-              break;
-            case EntityType.payment:
-              if (longPress) {
-                store.dispatch(EditPayment(
-                    context: context,
-                    payment: PaymentEntity(company: state.selectedCompany)
-                        .rebuild((b) => b..clientId = client.id)));
-              } else {
-                store.dispatch(FilterPaymentsByEntity(
-                    entityId: client.id, entityType: EntityType.client));
-                store.dispatch(ViewPaymentList(context));
-              }
-              break;
-            case EntityType.project:
-              if (longPress) {
-                store.dispatch(EditProject(
-                    context: context,
-                    project: ProjectEntity()
-                        .rebuild((b) => b..clientId = client.id)));
-              } else {
-                store.dispatch(FilterProjectsByEntity(
-                    entityId: client.id, entityType: EntityType.client));
-                store.dispatch(ViewProjectList(context));
-              }
-              break;
-            case EntityType.task:
-              if (longPress) {
-                store.dispatch(EditTask(
-                    context: context,
-                    task: TaskEntity(isRunning: state.uiState.autoStartTasks)
-                        .rebuild((b) => b..clientId = client.id)));
-              } else {
-                store.dispatch(FilterTasksByEntity(
-                    entityId: client.id, entityType: EntityType.client));
-                store.dispatch(ViewTaskList(context));
-              }
-              break;
-            case EntityType.expense:
-              if (longPress) {
-                store.dispatch(EditExpense(
-                    context: context,
-                    expense: ExpenseEntity(
-                        company: state.selectedCompany,
-                        client: client,
-                        uiState: state.uiState)));
-              } else {
-                store.dispatch(FilterExpensesByEntity(
-                    entityId: client.id, entityType: EntityType.client));
-                store.dispatch(ViewExpenseList(context));
-              }
-              break;
-          }
-        },
-        onRefreshed: (context, loadActivities) =>
-            _handleRefresh(context, loadActivities),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(ClientScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(ClientScreen.route));
-          }
-        },
-        onActionSelected: (BuildContext context, EntityAction action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.newInvoice:
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: client.isNew,
+      client: client,
+      company: state.selectedCompany,
+      onEditPressed: (BuildContext context) {
+        final Completer<ClientEntity> completer = Completer<ClientEntity>();
+        store.dispatch(
+            EditClient(client: client, context: context, completer: completer));
+        completer.future.then((client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedClient,
+          )));
+        });
+      },
+      onEntityPressed: (BuildContext context, EntityType entityType,
+          [longPress = false]) {
+        switch (entityType) {
+          case EntityType.invoice:
+            if (longPress) {
               store.dispatch(EditInvoice(
+                  context: context,
                   invoice: InvoiceEntity(company: state.selectedCompany)
-                      .rebuild((b) => b.clientId = client.id),
-                  context: context));
-              break;
-            case EntityAction.newExpense:
+                      .rebuild((b) => b..clientId = client.id)));
+            } else {
+              store.dispatch(FilterInvoicesByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewInvoiceList(context));
+            }
+            break;
+          case EntityType.quote:
+            if (longPress) {
+              store.dispatch(EditQuote(
+                  context: context,
+                  quote: InvoiceEntity(
+                          company: state.selectedCompany, isQuote: true)
+                      .rebuild((b) => b..clientId = client.id)));
+            } else {
+              store.dispatch(FilterQuotesByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewQuoteList(context));
+            }
+            break;
+          case EntityType.payment:
+            if (longPress) {
+              store.dispatch(EditPayment(
+                  context: context,
+                  payment: PaymentEntity(company: state.selectedCompany)
+                      .rebuild((b) => b..clientId = client.id)));
+            } else {
+              store.dispatch(FilterPaymentsByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewPaymentList(context));
+            }
+            break;
+          case EntityType.project:
+            if (longPress) {
+              store.dispatch(EditProject(
+                  context: context,
+                  project:
+                      ProjectEntity().rebuild((b) => b..clientId = client.id)));
+            } else {
+              store.dispatch(FilterProjectsByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewProjectList(context));
+            }
+            break;
+          case EntityType.task:
+            if (longPress) {
+              store.dispatch(EditTask(
+                  context: context,
+                  task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+                      .rebuild((b) => b..clientId = client.id)));
+            } else {
+              store.dispatch(FilterTasksByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewTaskList(context));
+            }
+            break;
+          case EntityType.expense:
+            if (longPress) {
               store.dispatch(EditExpense(
+                  context: context,
                   expense: ExpenseEntity(
                       company: state.selectedCompany,
                       client: client,
-                      uiState: state.uiState),
-                  context: context));
-              break;
-            case EntityAction.enterPayment:
-              store.dispatch(EditPayment(
-                  payment: PaymentEntity(company: state.selectedCompany)
-                      .rebuild((b) => b.clientId = client.id),
-                  context: context));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveClientRequest(
-                  popCompleter(context, localization.archivedClient),
-                  client.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteClientRequest(
-                  popCompleter(context, localization.deletedClient),
-                  client.id));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreClientRequest(
-                  snackBarCompleter(context, localization.restoredClient),
-                  client.id));
-              break;
-          }
-        });
+                      uiState: state.uiState)));
+            } else {
+              store.dispatch(FilterExpensesByEntity(
+                  entityId: client.id, entityType: EntityType.client));
+              store.dispatch(ViewExpenseList(context));
+            }
+            break;
+        }
+      },
+      onRefreshed: (context, loadActivities) =>
+          _handleRefresh(context, loadActivities),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(ClientScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(ClientScreen.route));
+        }
+      },
+      onActionSelected: (BuildContext context, EntityAction action) =>
+          handleClientAction(client, action, context),
+    );
   }
 
   final ClientEntity client;

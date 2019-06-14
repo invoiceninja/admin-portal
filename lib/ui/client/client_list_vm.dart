@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -80,50 +77,9 @@ class ClientListVM {
       onClientTap: (context, client) {
         store.dispatch(ViewClient(clientId: client.id, context: context));
       },
-      onEntityAction: (context, client, action) {
-        final localization = AppLocalization.of(context);
-        switch (action) {
-          case EntityAction.edit:
-            store.dispatch(EditClient(context: context, client: client));
-            break;
-          case EntityAction.newInvoice:
-            store.dispatch(EditInvoice(
-                invoice: InvoiceEntity(company: state.selectedCompany)
-                    .rebuild((b) => b.clientId = client.id),
-                context: context));
-            break;
-          case EntityAction.newExpense:
-            store.dispatch(EditExpense(
-                expense: ExpenseEntity(
-                    company: state.selectedCompany,
-                    client: client,
-                    uiState: state.uiState),
-                context: context));
-            break;
-          case EntityAction.enterPayment:
-            store.dispatch(EditPayment(
-                payment: PaymentEntity(company: state.selectedCompany)
-                    .rebuild((b) => b.clientId = client.id),
-                context: context));
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestoreClientRequest(
-                snackBarCompleter(context, localization.restoredClient),
-                client.id));
-            break;
-          case EntityAction.archive:
-            store.dispatch(ArchiveClientRequest(
-                snackBarCompleter(context, localization.archivedClient),
-                client.id));
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeleteClientRequest(
-                snackBarCompleter(context, localization.deletedClient),
-                client.id));
-            break;
-        }
-        return false;
-      },
+      onEntityAction:
+          (BuildContext context, ClientEntity client, EntityAction action) =>
+              handleClientAction(client, action, context),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
