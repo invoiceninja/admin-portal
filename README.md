@@ -68,6 +68,13 @@ The architecture is based off these two projects:
     - Press "Register App" button.
     - Download "google-services.json" and put it in `android/app` directory.
 
+## Credits
+* [Hillel Coren](https://hillel.dev)
+* [David Bomba](https://github.com/turbo124)
+* [All contributors](https://github.com/invoiceninja/flutter-mobile/graphs/contributors)
+
+**Special thanks to:**
+
 ## Contributions
 
 We gladly accept contributions! If you'd like to get involved with development please join our [Slack group](http://slack.invoiceninja.com/).
