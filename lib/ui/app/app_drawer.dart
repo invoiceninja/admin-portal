@@ -271,6 +271,7 @@ class AppDrawer extends StatelessWidget {
           ),
 
           DrawerTile(
+            key: Key(SettingsKeys.drawer),
             company: company,
             icon: FontAwesomeIcons.cog,
             title: localization.settings,
