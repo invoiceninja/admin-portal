@@ -54,9 +54,8 @@ abstract class CompanyEntity
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
       expenseCategoryMap: BuiltMap<int, ExpenseCategoryEntity>(),
       user: UserEntity(),
-      //userId: 0,
-      //users: BuiltList<UserEntity>(),
-      //userMap: BuiltMap<int, UserEntity>(),
+      users: BuiltList<UserEntity>(),
+      userMap: BuiltMap<int, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
@@ -201,11 +200,9 @@ abstract class CompanyEntity
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
   BuiltMap<int, ExpenseCategoryEntity> get expenseCategoryMap;
 
-  //@BuiltValueField(wireName: 'user_id')
-  //int get userId;
-  //@BuiltValueField(wireName: 'users')
-  //BuiltList<UserEntity> get users;
-  //BuiltMap<int, UserEntity> get userMap;
+  @BuiltValueField(wireName: 'users')
+  BuiltList<UserEntity> get users;
+  BuiltMap<int, UserEntity> get userMap;
 
   UserEntity get user;
 

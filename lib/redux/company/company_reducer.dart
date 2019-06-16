@@ -67,9 +67,6 @@ CompanyEntity loadCompanySuccessReducer(
       )));
   }
 
-  return company;
-
-  /*
   return action.company.rebuild((b) => b
     ..userMap.addAll(Map.fromIterable(
       action.company.users,
@@ -77,5 +74,4 @@ CompanyEntity loadCompanySuccessReducer(
       value: (dynamic item) => item,
     ))
   );
-  */
 }
