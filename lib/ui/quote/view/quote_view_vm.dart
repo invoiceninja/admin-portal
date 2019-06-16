@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
@@ -106,10 +107,19 @@ class QuoteViewVM extends EntityViewVM {
           store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
         }
       },
-      onClientPressed: (BuildContext context, [bool longPress = false]) =>
-          store.dispatch(longPress
-              ? EditClient(client: client, context: context)
-              : ViewClient(clientId: client.id, context: context)),
+      onClientPressed: (BuildContext context, [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: state.selectedCompany.user,
+              context: context,
+              entity: client,
+              onEntityAction: (BuildContext context, BaseEntity client,
+                      EntityAction action) =>
+                  handleClientAction(context, client, action));
+        } else {
+          store.dispatch(ViewClient(clientId: client.id, context: context));
+        }
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleQuoteAction(context, quote, action),
     );

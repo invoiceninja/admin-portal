@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -77,10 +78,19 @@ class ProjectViewVM {
         store.dispatch(EditProject(project: project, context: context));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onClientPressed: (BuildContext context, [bool longPress = false]) =>
-          store.dispatch(longPress
-              ? EditClient(client: client, context: context)
-              : ViewClient(clientId: project.clientId, context: context)),
+      onClientPressed: (BuildContext context, [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: state.selectedCompany.user,
+              context: context,
+              entity: client,
+              onEntityAction: (BuildContext context, BaseEntity client,
+                  EntityAction action) =>
+                  handleClientAction(context, client, action));
+        } else {
+          store.dispatch(ViewClient(clientId: client.id, context: context));
+        }
+      },
       onTasksPressed: (BuildContext context) {
         store.dispatch(FilterTasksByEntity(
             entityId: project.id, entityType: EntityType.project));
