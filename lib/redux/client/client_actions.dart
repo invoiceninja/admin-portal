@@ -253,11 +253,12 @@ class FilterClientsByCustom2 implements PersistUI {
 }
 
 void handleClientAction(
-    ClientEntity client, EntityAction action, BuildContext context) {
+BuildContext context, ClientEntity client, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+
   switch (action) {
     case EntityAction.edit:
       store.dispatch(EditClient(context: context, client: client));

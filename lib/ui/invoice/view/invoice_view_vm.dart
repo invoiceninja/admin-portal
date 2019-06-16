@@ -164,7 +164,7 @@ class InvoiceViewVM extends EntityViewVM {
                 entity: client,
                 onEntityAction: (BuildContext context, ClientEntity client,
                         EntityAction action) =>
-                    handleClientAction(client, action, context));
+                    handleClientAction(context, client, action));
           } else {
             store.dispatch(ViewClient(clientId: client.id, context: context));
           }

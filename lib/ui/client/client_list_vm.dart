@@ -77,10 +77,10 @@ class ClientListVM {
       onClientTap: (context, client) {
         store.dispatch(ViewClient(clientId: client.id, context: context));
       },
+      onRefreshed: (context) => _handleRefresh(context),
       onEntityAction:
           (BuildContext context, ClientEntity client, EntityAction action) =>
-              handleClientAction(client, action, context),
-      onRefreshed: (context) => _handleRefresh(context),
+          handleClientAction(context, client, action),
     );
   }
 }

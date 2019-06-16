@@ -174,7 +174,7 @@ class ClientViewVM {
         }
       },
       onActionSelected: (BuildContext context, EntityAction action) =>
-          handleClientAction(client, action, context),
+          handleClientAction(context, client, action),
     );
   }
 
