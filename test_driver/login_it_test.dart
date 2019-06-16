@@ -44,6 +44,10 @@ void main() {
           timeout: new Duration(seconds: 60),
         );
       });
+
+      test('Logout from a logged in user', () async {
+        await logout(driver, localization);
+      });
     });
   });
 }
