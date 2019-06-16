@@ -105,6 +105,7 @@ class ClientEditVM {
               store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
             }
             if (client.isNew) {
+              // The client was created through the entity picker
               if ([
                 InvoiceEditScreen.route,
                 QuoteEditScreen.route,
