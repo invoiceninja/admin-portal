@@ -86,7 +86,7 @@ class PaymentViewVM {
                   EntityAction action) =>
                   handleInvoiceAction(context, invoice, action));
         } else {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
