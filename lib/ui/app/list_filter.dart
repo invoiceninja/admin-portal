@@ -7,10 +7,11 @@ import 'package:redux/redux.dart';
 
 class ListFilter extends StatefulWidget {
   const ListFilter({
+    Key key,
     this.entityType,
     this.title,
     this.onFilterChanged,
-  });
+  }) : super(key: key);
 
   final EntityType entityType;
   final String title;

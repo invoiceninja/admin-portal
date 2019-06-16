@@ -104,7 +104,11 @@ ListUIState _filterClientsByState(
 }
 
 ListUIState _filterClients(ListUIState clientListState, FilterClients action) {
-  return clientListState.rebuild((b) => b..filter = action.filter);
+  return clientListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : clientListState.filterClearedAt);
 }
 
 ListUIState _sortClients(ListUIState clientListState, SortClients action) {

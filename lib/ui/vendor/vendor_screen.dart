@@ -29,6 +29,7 @@ class VendorScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.vendorListState.filterClearedAt),
             entityType: EntityType.vendor,
             onFilterChanged: (value) {
               store.dispatch(FilterVendors(value));

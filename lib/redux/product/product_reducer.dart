@@ -80,7 +80,11 @@ ListUIState _filterProductsByCustom2(
 
 ListUIState _filterProducts(
     ListUIState productListState, FilterProducts action) {
-  return productListState.rebuild((b) => b..filter = action.filter);
+  return productListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : productListState.filterClearedAt);
 }
 
 ListUIState _sortProducts(ListUIState productListState, SortProducts action) {

@@ -29,6 +29,7 @@ class PaymentScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.paymentListState.filterClearedAt),
             entityType: EntityType.payment,
             onFilterChanged: (value) {
               store.dispatch(FilterPayments(value));

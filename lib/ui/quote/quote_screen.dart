@@ -29,6 +29,7 @@ class QuoteScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.quoteListState.filterClearedAt),
             entityType: EntityType.quote,
             onFilterChanged: (value) {
               store.dispatch(FilterQuotes(value));

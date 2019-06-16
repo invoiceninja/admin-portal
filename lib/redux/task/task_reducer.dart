@@ -106,7 +106,11 @@ ListUIState _filterTasksByStatus(
 }
 
 ListUIState _filterTasks(ListUIState taskListState, FilterTasks action) {
-  return taskListState.rebuild((b) => b..filter = action.filter);
+  return taskListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : taskListState.filterClearedAt);
 }
 
 ListUIState _sortTasks(ListUIState taskListState, SortTasks action) {

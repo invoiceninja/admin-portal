@@ -29,6 +29,7 @@ class InvoiceScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.invoiceListState.filterClearedAt),
             entityType: EntityType.invoice,
             onFilterChanged: (value) {
               store.dispatch(FilterInvoices(value));

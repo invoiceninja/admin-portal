@@ -30,6 +30,7 @@ class ExpenseScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.expenseListState.filterClearedAt),
             entityType: EntityType.expense,
             onFilterChanged: (value) {
               store.dispatch(FilterExpenses(value));

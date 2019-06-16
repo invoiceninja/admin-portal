@@ -29,6 +29,7 @@ class ProjectScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.projectListState.filterClearedAt),
             entityType: EntityType.project,
             onFilterChanged: (value) {
               store.dispatch(FilterProjects(value));

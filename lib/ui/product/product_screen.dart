@@ -30,6 +30,7 @@ class ProductScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.productListState.filterClearedAt),
             entityType: EntityType.product,
             onFilterChanged: (value) {
               store.dispatch(FilterProducts(value));

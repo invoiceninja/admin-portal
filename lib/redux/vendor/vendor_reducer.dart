@@ -113,7 +113,11 @@ ListUIState _filterVendorsByState(
 }
 
 ListUIState _filterVendors(ListUIState vendorListState, FilterVendors action) {
-  return vendorListState.rebuild((b) => b..filter = action.filter);
+  return vendorListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : vendorListState.filterClearedAt);
 }
 
 ListUIState _sortVendors(ListUIState vendorListState, SortVendors action) {

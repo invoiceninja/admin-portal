@@ -158,7 +158,11 @@ ListUIState _filterInvoicesByEntity(
 
 ListUIState _filterInvoices(
     ListUIState invoiceListState, FilterInvoices action) {
-  return invoiceListState.rebuild((b) => b..filter = action.filter);
+  return invoiceListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : invoiceListState.filterClearedAt);
 }
 
 ListUIState _sortInvoices(ListUIState invoiceListState, SortInvoices action) {

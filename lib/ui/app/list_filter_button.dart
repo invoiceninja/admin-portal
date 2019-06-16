@@ -22,7 +22,6 @@ class ListFilterButton extends StatelessWidget {
       converter: (Store<AppState> store) => entityType != null
           ? store.state.getListState(entityType).filter
           : store.state.uiState.filter,
-      distinct: true,
       builder: (BuildContext context, filter) {
         return IconButton(
           icon: Icon(filter == null ? Icons.search : Icons.close),

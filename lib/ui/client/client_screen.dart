@@ -17,7 +17,8 @@ class ClientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
+    final state = store.state;
+    final company = state.selectedCompany;
     final user = company.user;
     final localization = AppLocalization.of(context);
 
@@ -29,6 +30,7 @@ class ClientScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(state.clientListState.filterClearedAt),
             entityType: EntityType.client,
             onFilterChanged: (value) {
               store.dispatch(FilterClients(value));

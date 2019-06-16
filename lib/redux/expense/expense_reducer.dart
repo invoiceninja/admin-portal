@@ -98,7 +98,11 @@ ListUIState _filterExpensesByStatus(
 
 ListUIState _filterExpenses(
     ListUIState expenseListState, FilterExpenses action) {
-  return expenseListState.rebuild((b) => b..filter = action.filter);
+  return expenseListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : expenseListState.filterClearedAt);
 }
 
 ListUIState _sortExpenses(ListUIState expenseListState, SortExpenses action) {

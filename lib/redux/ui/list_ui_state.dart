@@ -8,6 +8,7 @@ part 'list_ui_state.g.dart';
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   factory ListUIState(String sortField, {bool sortAscending = true}) {
     return _$ListUIState._(
+      filterClearedAt: 0,
       sortField: sortField,
       sortAscending: sortAscending,
       stateFilters: BuiltList<EntityState>(<EntityState>[
@@ -22,6 +23,8 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
   @nullable
   String get filter;
+
+  int get filterClearedAt;
 
   @nullable
   int get filterEntityId;

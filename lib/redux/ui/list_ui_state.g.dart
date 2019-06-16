@@ -31,6 +31,9 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
   Iterable serialize(Serializers serializers, ListUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'filterClearedAt',
+      serializers.serialize(object.filterClearedAt,
+          specifiedType: const FullType(int)),
       'sortField',
       serializers.serialize(object.sortField,
           specifiedType: const FullType(String)),
@@ -91,6 +94,10 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'filterClearedAt':
+          result.filterClearedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'filterEntityId':
           result.filterEntityId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -142,6 +149,8 @@ class _$ListUIState extends ListUIState {
   @override
   final String filter;
   @override
+  final int filterClearedAt;
+  @override
   final int filterEntityId;
   @override
   final EntityType filterEntityType;
@@ -163,6 +172,7 @@ class _$ListUIState extends ListUIState {
 
   _$ListUIState._(
       {this.filter,
+      this.filterClearedAt,
       this.filterEntityId,
       this.filterEntityType,
       this.sortField,
@@ -172,6 +182,9 @@ class _$ListUIState extends ListUIState {
       this.custom1Filters,
       this.custom2Filters})
       : super._() {
+    if (filterClearedAt == null) {
+      throw new BuiltValueNullFieldError('ListUIState', 'filterClearedAt');
+    }
     if (sortField == null) {
       throw new BuiltValueNullFieldError('ListUIState', 'sortField');
     }
@@ -204,6 +217,7 @@ class _$ListUIState extends ListUIState {
     if (identical(other, this)) return true;
     return other is ListUIState &&
         filter == other.filter &&
+        filterClearedAt == other.filterClearedAt &&
         filterEntityId == other.filterEntityId &&
         filterEntityType == other.filterEntityType &&
         sortField == other.sortField &&
@@ -223,7 +237,9 @@ class _$ListUIState extends ListUIState {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, filter.hashCode),
+                                $jc(
+                                    $jc($jc(0, filter.hashCode),
+                                        filterClearedAt.hashCode),
                                     filterEntityId.hashCode),
                                 filterEntityType.hashCode),
                             sortField.hashCode),
@@ -238,6 +254,7 @@ class _$ListUIState extends ListUIState {
   String toString() {
     return (newBuiltValueToStringHelper('ListUIState')
           ..add('filter', filter)
+          ..add('filterClearedAt', filterClearedAt)
           ..add('filterEntityId', filterEntityId)
           ..add('filterEntityType', filterEntityType)
           ..add('sortField', sortField)
@@ -256,6 +273,11 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   String _filter;
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
+
+  int _filterClearedAt;
+  int get filterClearedAt => _$this._filterClearedAt;
+  set filterClearedAt(int filterClearedAt) =>
+      _$this._filterClearedAt = filterClearedAt;
 
   int _filterEntityId;
   int get filterEntityId => _$this._filterEntityId;
@@ -305,6 +327,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   ListUIStateBuilder get _$this {
     if (_$v != null) {
       _filter = _$v.filter;
+      _filterClearedAt = _$v.filterClearedAt;
       _filterEntityId = _$v.filterEntityId;
       _filterEntityType = _$v.filterEntityType;
       _sortField = _$v.sortField;
@@ -338,6 +361,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
       _$result = _$v ??
           new _$ListUIState._(
               filter: filter,
+              filterClearedAt: filterClearedAt,
               filterEntityId: filterEntityId,
               filterEntityType: filterEntityType,
               sortField: sortField,

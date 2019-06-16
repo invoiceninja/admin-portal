@@ -87,7 +87,11 @@ ListUIState _filterProjectsByState(
 
 ListUIState _filterProjects(
     ListUIState projectListState, FilterProjects action) {
-  return projectListState.rebuild((b) => b..filter = action.filter);
+  return projectListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : projectListState.filterClearedAt);
 }
 
 ListUIState _sortProjects(ListUIState projectListState, SortProjects action) {

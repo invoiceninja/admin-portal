@@ -30,6 +30,7 @@ class TaskScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.taskListState.filterClearedAt),
             entityType: EntityType.task,
             onFilterChanged: (value) {
               store.dispatch(FilterTasks(value));
