@@ -166,11 +166,20 @@ class InvoiceViewVM extends EntityViewVM {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
       },
-      onPaymentPressed: (BuildContext context, PaymentEntity payment,
-              [bool longPress = false]) =>
-          store.dispatch(longPress
-              ? EditPayment(payment: payment, context: context)
-              : ViewPayment(paymentId: payment.id, context: context)),
+      onPaymentPressed: (BuildContext context, payment, [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: state.selectedCompany.user,
+              context: context,
+              client: client,
+              entity: payment,
+              onEntityAction: (BuildContext context, BaseEntity payment,
+                  EntityAction action) =>
+                  handlePaymentAction(context, payment, action));
+        } else {
+          store.dispatch(ViewPayment(paymentId: payment.id, context: context));
+        }
+      },
       onPaymentsPressed: (BuildContext context) {
         store.dispatch(FilterPaymentsByEntity(
             entityId: invoice.id, entityType: EntityType.invoice));
