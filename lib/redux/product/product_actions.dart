@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-
 class ViewProductList implements PersistUI {
   ViewProductList(this.context);
 
@@ -179,7 +178,6 @@ class FilterProductDropdown {
   final String filter;
 }
 
-
 void handleProductAction(
     BuildContext context, ProductEntity product, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
@@ -189,7 +187,7 @@ void handleProductAction(
   switch (action) {
     case EntityAction.newInvoice:
       final item =
-      convertProductToInvoiceItem(context: context, product: product);
+          convertProductToInvoiceItem(context: context, product: product);
       store.dispatch(EditInvoice(
           context: context,
           invoice: InvoiceEntity(company: state.selectedCompany)
@@ -199,8 +197,7 @@ void handleProductAction(
       store.dispatch(EditProduct(context: context, product: product));
       break;
     case EntityAction.clone:
-      store.dispatch(
-          EditProduct(context: context, product: product.clone));
+      store.dispatch(EditProduct(context: context, product: product.clone));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProductRequest(
@@ -214,8 +211,7 @@ void handleProductAction(
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProductRequest(
-          snackBarCompleter(context, localization.deletedProduct),
-          product.id));
+          snackBarCompleter(context, localization.deletedProduct), product.id));
       break;
   }
 }

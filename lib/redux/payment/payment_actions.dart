@@ -3,6 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewPaymentList implements PersistUI {
   ViewPaymentList(this.context);
@@ -235,4 +239,34 @@ class FilterPaymentsByEntity implements PersistUI {
 
   final int entityId;
   final EntityType entityType;
+}
+
+void handlePaymentAction(
+    BuildContext context, PaymentEntity payment, EntityAction action) {
+  final store = StoreProvider.of<AppState>(context);
+  final localization = AppLocalization.of(context);
+
+  switch (action) {
+    case EntityAction.edit:
+      store.dispatch(EditPayment(context: context, payment: payment));
+      break;
+    case EntityAction.sendEmail:
+      store.dispatch(EmailPaymentRequest(
+          snackBarCompleter(context, localization.emailedPayment), payment));
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestorePaymentRequest(
+          snackBarCompleter(context, localization.restoredPayment),
+          payment.id));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchivePaymentRequest(
+          snackBarCompleter(context, localization.archivedPayment),
+          payment.id));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeletePaymentRequest(
+          snackBarCompleter(context, localization.deletedPayment), payment.id));
+      break;
+  }
 }

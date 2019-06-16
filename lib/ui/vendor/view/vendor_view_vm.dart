@@ -40,7 +40,7 @@ class VendorViewVM {
     @required this.vendor,
     @required this.company,
     @required this.onAddExpensePressed,
-    @required this.onActionSelected,
+    @required this.onEntityAction,
     @required this.onEntityPressed,
     @required this.onEditPressed,
     @required this.onBackPressed,
@@ -107,38 +107,16 @@ class VendorViewVM {
         onAddExpensePressed: (context) => store.dispatch(EditExpense(
             expense: ExpenseEntity(company: company, vendor: vendor),
             context: context)),
-        onActionSelected: (BuildContext context, EntityAction action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.newExpense:
-              store.dispatch(EditExpense(
-                  expense: ExpenseEntity(
-                      company: state.selectedCompany, vendor: vendor),
-                  context: context));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveVendorRequest(
-                  popCompleter(context, localization.archivedVendor),
-                  vendor.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteVendorRequest(
-                  popCompleter(context, localization.deletedVendor),
-                  vendor.id));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreVendorRequest(
-                  snackBarCompleter(context, localization.restoredVendor),
-                  vendor.id));
-              break;
-          }
-        });
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handleVendorAction(context, vendor, action),
+
+        );
   }
 
   final AppState state;
   final VendorEntity vendor;
   final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function onBackPressed;

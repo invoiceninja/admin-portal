@@ -309,8 +309,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   : Container(),
               ActionMenuButton(
                 user: user,
-                entityActions:
-                    invoice.getActions(client: client, user: user),
+                entityActions: invoice.getActions(client: client, user: user),
                 isSaving: viewModel.isSaving,
                 entity: invoice,
                 onSelected: viewModel.onActionSelected,

@@ -79,34 +79,9 @@ class PaymentListVM {
       onPaymentTap: (context, payment) {
         store.dispatch(ViewPayment(paymentId: payment.id, context: context));
       },
-      onEntityAction: (context, payment, action) {
-        final localization = AppLocalization.of(context);
-        switch (action) {
-          case EntityAction.edit:
-            store.dispatch(EditPayment(context: context, payment: payment));
-            break;
-          case EntityAction.sendEmail:
-            store.dispatch(EmailPaymentRequest(
-                snackBarCompleter(context, localization.emailedPayment),
-                payment));
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestorePaymentRequest(
-                snackBarCompleter(context, localization.restoredPayment),
-                payment.id));
-            break;
-          case EntityAction.archive:
-            store.dispatch(ArchivePaymentRequest(
-                snackBarCompleter(context, localization.archivedPayment),
-                payment.id));
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeletePaymentRequest(
-                snackBarCompleter(context, localization.deletedPayment),
-                payment.id));
-            break;
-        }
-      },
+      onEntityAction:
+          (BuildContext context, BaseEntity payment, EntityAction action) =>
+              handlePaymentAction(context, payment, action),
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterPaymentsByEntity()),
       onViewClientFilterPressed: (BuildContext context) {

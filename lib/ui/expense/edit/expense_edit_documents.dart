@@ -20,8 +20,7 @@ class ExpenseEditDocumentsState extends State<ExpenseEditDocuments> {
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
-    ];
+    final List<TextEditingController> _controllers = [];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
@@ -64,15 +63,14 @@ class ExpenseEditDocumentsState extends State<ExpenseEditDocuments> {
         FormCard(
           children: <Widget>[
             SwitchListTile(
-              activeColor: Theme.of(context).accentColor,
-              title: Text(localization.addDocumentsToInvoice),
-              value: expense.invoiceDocuments,
-              onChanged: (value) {
-                viewModel.onChanged(
-                    expense.rebuild((b) => b..invoiceDocuments = value));
-                viewModel.onAddDocumentsChanged(value);
-              }
-            )
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.addDocumentsToInvoice),
+                value: expense.invoiceDocuments,
+                onChanged: (value) {
+                  viewModel.onChanged(
+                      expense.rebuild((b) => b..invoiceDocuments = value));
+                  viewModel.onAddDocumentsChanged(value);
+                })
           ],
         ),
       ],

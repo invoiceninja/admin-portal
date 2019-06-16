@@ -311,7 +311,8 @@ Middleware<AppState> _createAccountLoaded() {
   };
 }
 
-Middleware<AppState> _createPersistStatic(PersistenceRepository staticRepository) {
+Middleware<AppState> _createPersistStatic(
+    PersistenceRepository staticRepository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     // first process the action so the data is in the state
     next(action);

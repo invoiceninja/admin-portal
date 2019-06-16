@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -47,7 +45,7 @@ class TaskViewVM {
     @required this.project,
     @required this.company,
     @required this.state,
-    @required this.onActionSelected,
+    @required this.onEntityAction,
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
@@ -151,47 +149,11 @@ class TaskViewVM {
             store.dispatch(UpdateCurrentRoute(TaskScreen.route));
           }
         },
-        onActionSelected: (BuildContext context, EntityAction action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.resume:
-            case EntityAction.start:
-            case EntityAction.stop:
-              _toggleTask(context);
-              break;
-            case EntityAction.newInvoice:
-              final item =
-                  convertTaskToInvoiceItem(task: task, context: context);
-              store.dispatch(EditInvoice(
-                  invoice: InvoiceEntity(company: state.selectedCompany)
-                      .rebuild((b) => b
-                        ..hasTasks = true
-                        ..clientId = task.clientId
-                        ..invoiceItems.add(item)),
-                  context: context));
-              break;
-            case EntityAction.clone:
-              store.dispatch(EditTask(context: context, task: task.clone));
-              break;
-            case EntityAction.viewInvoice:
-              store.dispatch(
-                  ViewInvoice(invoiceId: task.invoiceId, context: context));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveTaskRequest(
-                  popCompleter(context, localization.archivedTask), task.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteTaskRequest(
-                  popCompleter(context, localization.deletedTask), task.id));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreTaskRequest(
-                  snackBarCompleter(context, localization.restoredTask),
-                  task.id));
-              break;
-          }
-        });
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handleTaskAction(context, task, action),
+
+
+        );
   }
 
   final AppState state;
@@ -199,7 +161,7 @@ class TaskViewVM {
   final ClientEntity client;
   final ProjectEntity project;
   final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, [TaskTime]) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onFabPressed;

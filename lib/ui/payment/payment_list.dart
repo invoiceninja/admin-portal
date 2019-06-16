@@ -1,16 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_vm.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentList extends StatelessWidget {
@@ -20,43 +18,6 @@ class PaymentList extends StatelessWidget {
   }) : super(key: key);
 
   final PaymentListVM viewModel;
-
-  void _showMenu(
-      BuildContext context, PaymentEntity payment, ClientEntity client) async {
-    if (payment == null || client == null) {
-      return;
-    }
-
-    final user = viewModel.user;
-    final message = await showDialog<String>(
-        context: context,
-        builder: (BuildContext dialogContext) => SimpleDialog(
-                children: payment
-                    .getActions(
-                        user: user, client: client, includeEdit: true)
-                    .map((entityAction) {
-              if (entityAction == null) {
-                return Divider();
-              } else {
-                return ListTile(
-                  leading: Icon(getEntityActionIcon(entityAction)),
-                  title: Text(AppLocalization.of(context)
-                      .lookup(entityAction.toString())),
-                  onTap: () {
-                    Navigator.of(dialogContext).pop();
-                    viewModel.onEntityAction(context, payment, entityAction);
-                  },
-                );
-              }
-            }).toList()));
-
-    if (message != null) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: SnackBarRow(
-        message: message,
-      )));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,10 +95,19 @@ class PaymentList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.paymentList.length,
                           itemBuilder: (BuildContext context, index) {
+                            final user = viewModel.user;
                             final paymentId = viewModel.paymentList[index];
                             final payment = state.paymentState.map[paymentId];
                             final client =
                                 paymentClientSelector(paymentId, state);
+
+                            void showDialog() => showEntityActionsDialog(
+                                entity: payment,
+                                context: context,
+                                user: user,
+                                client: client,
+                                onEntityAction: viewModel.onEntityAction);
+
                             return PaymentListItem(
                               user: viewModel.user,
                               filter: viewModel.filter,
@@ -146,14 +116,13 @@ class PaymentList extends StatelessWidget {
                                   viewModel.onPaymentTap(context, payment),
                               onEntityAction: (EntityAction action) {
                                 if (action == EntityAction.more) {
-                                  _showMenu(context, payment, client);
+                                  showDialog();
                                 } else {
                                   viewModel.onEntityAction(
                                       context, payment, action);
                                 }
                               },
-                              onLongPress: () =>
-                                  _showMenu(context, payment, client),
+                              onLongPress: () => showDialog(),
                             );
                           },
                         ),

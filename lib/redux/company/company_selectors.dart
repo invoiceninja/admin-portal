@@ -13,7 +13,6 @@ var memoizedDropdownExpenseCategoriesList = memo2(
 List<int> dropdownExpenseCategoriesSelector(
     BuiltMap<int, ExpenseCategoryEntity> categoryMap,
     BuiltList<ExpenseCategoryEntity> categoryList) {
-
   final list = categoryList
       //.where((category) => category.isActive)
       .map((category) => category.id)

@@ -6,18 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
   const InvoiceListBuilder({Key key}) : super(key: key);
@@ -136,63 +132,9 @@ class InvoiceListVM extends EntityListVM {
           ViewClient(
               clientId: state.invoiceListState.filterEntityId,
               context: context)),
-      onEntityAction: (context, invoice, action) async {
-        final localization = AppLocalization.of(context);
-        switch (action) {
-          case EntityAction.edit:
-            store.dispatch(EditInvoice(context: context, invoice: invoice));
-            break;
-          case EntityAction.pdf:
-            viewPdf(invoice, context);
-            break;
-          case EntityAction.clientPortal:
-            if (await canLaunch(invoice.invitationSilentLink)) {
-              await launch(invoice.invitationSilentLink,
-                  forceSafariVC: false, forceWebView: false);
-            }
-            break;
-          case EntityAction.markSent:
-            store.dispatch(MarkSentInvoiceRequest(
-                snackBarCompleter(context, localization.markedInvoiceAsSent),
-                invoice.id));
-            break;
-          case EntityAction.sendEmail:
-            store.dispatch(ShowEmailInvoice(
-                completer:
-                    snackBarCompleter(context, localization.emailedInvoice),
-                invoice: invoice,
-                context: context));
-            break;
-          case EntityAction.cloneToInvoice:
-            store.dispatch(
-                EditInvoice(context: context, invoice: invoice.cloneToInvoice));
-            break;
-          case EntityAction.cloneToQuote:
-            store.dispatch(
-                EditQuote(context: context, quote: invoice.cloneToQuote));
-            break;
-          case EntityAction.enterPayment:
-            store.dispatch(EditPayment(
-                context: context,
-                payment: invoice.createPayment(state.selectedCompany)));
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestoreInvoiceRequest(
-                snackBarCompleter(context, localization.restoredInvoice),
-                invoice.id));
-            break;
-          case EntityAction.archive:
-            store.dispatch(ArchiveInvoiceRequest(
-                snackBarCompleter(context, localization.archivedInvoice),
-                invoice.id));
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeleteInvoiceRequest(
-                snackBarCompleter(context, localization.deletedInvoice),
-                invoice.id));
-            break;
-        }
-      },
+      onEntityAction:
+          (BuildContext context, BaseEntity invoice, EntityAction action) =>
+              handleInvoiceAction(context, invoice, action),
     );
   }
 }

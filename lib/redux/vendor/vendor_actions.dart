@@ -3,6 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class ViewVendorList implements PersistUI {
   ViewVendorList(this.context);
@@ -250,4 +255,35 @@ class FilterVendorsByEntity implements PersistUI {
 
   final int entityId;
   final EntityType entityType;
+}
+
+void handleVendorAction(
+    BuildContext context, VendorEntity vendor, EntityAction action) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final CompanyEntity company = state.selectedCompany;
+  final localization = AppLocalization.of(context);
+
+  switch (action) {
+    case EntityAction.edit:
+      store.dispatch(EditVendor(context: context, vendor: vendor));
+      break;
+    case EntityAction.newExpense:
+      store.dispatch(EditExpense(
+          expense: ExpenseEntity(company: company, vendor: vendor),
+          context: context));
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreVendorRequest(
+          snackBarCompleter(context, localization.restoredVendor), vendor.id));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveVendorRequest(
+          snackBarCompleter(context, localization.archivedVendor), vendor.id));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteVendorRequest(
+          snackBarCompleter(context, localization.deletedVendor), vendor.id));
+      break;
+  }
 }

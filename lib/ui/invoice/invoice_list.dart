@@ -1,13 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceList extends StatelessWidget {
@@ -17,43 +15,6 @@ class InvoiceList extends StatelessWidget {
   }) : super(key: key);
 
   final EntityListVM viewModel;
-
-  void _showMenu(
-      BuildContext context, InvoiceEntity invoice, ClientEntity client) async {
-    if (invoice == null || client == null) {
-      return;
-    }
-
-    final user = viewModel.user;
-    final message = await showDialog<String>(
-        context: context,
-        builder: (BuildContext dialogContext) => SimpleDialog(
-                children: invoice
-                    .getActions(
-                        user: user, client: client, includeEdit: true)
-                    .map((entityAction) {
-              if (entityAction == null) {
-                return Divider();
-              } else {
-                return ListTile(
-                  leading: Icon(getEntityActionIcon(entityAction)),
-                  title: Text(AppLocalization.of(context)
-                      .lookup(entityAction.toString())),
-                  onTap: () {
-                    Navigator.of(dialogContext).pop();
-                    viewModel.onEntityAction(context, invoice, entityAction);
-                  },
-                );
-              }
-            }).toList()));
-
-    if (message != null) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: SnackBarRow(
-        message: message,
-      )));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,11 +78,20 @@ class InvoiceList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.invoiceList.length,
                           itemBuilder: (BuildContext context, index) {
+                            final user = viewModel.user;
                             final invoiceId = viewModel.invoiceList[index];
                             final invoice = viewModel.invoiceMap[invoiceId];
                             final client =
                                 viewModel.clientMap[invoice.clientId] ??
                                     ClientEntity();
+
+                            void showDialog() => showEntityActionsDialog(
+                                entity: invoice,
+                                context: context,
+                                user: user,
+                                client: client,
+                                onEntityAction: viewModel.onEntityAction);
+
                             return InvoiceListItem(
                               user: viewModel.user,
                               filter: viewModel.filter,
@@ -132,14 +102,13 @@ class InvoiceList extends StatelessWidget {
                                   viewModel.onInvoiceTap(context, invoice),
                               onEntityAction: (EntityAction action) {
                                 if (action == EntityAction.more) {
-                                  _showMenu(context, invoice, client);
+                                  showDialog();
                                 } else {
                                   viewModel.onEntityAction(
                                       context, invoice, action);
                                 }
                               },
-                              onLongPress: () =>
-                                  _showMenu(context, invoice, client),
+                              onLongPress: () => showDialog(),
                             );
                           },
                         ),

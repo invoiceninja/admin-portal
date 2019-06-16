@@ -106,8 +106,6 @@ class ExpenseStatusColors {
   };
 }
 
-
-
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
 const String kDesignCustom1 = 'Custom 1';

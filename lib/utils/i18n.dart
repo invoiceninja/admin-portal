@@ -1,7 +1,6 @@
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 abstract class LocaleCodeAware {
-
   LocaleCodeAware(this.localeCode);
 
   final String localeCode;
@@ -13,7 +12,6 @@ abstract class LocaleCodeAware {
 /// It should be used by a [LocaleCodeAware] to get the i18n strings for
 /// a specified locale.
 mixin LocalizationsProvider on LocaleCodeAware {
-
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'expense_date': 'Expense Date',
@@ -87,7 +85,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -291,7 +289,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -461,7 +459,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -472,7 +470,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -668,7 +666,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Përfundo',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Modeli i errët',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -779,7 +777,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) ka dështuar',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -839,7 +837,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -850,7 +848,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': '自訂範圍',
@@ -1046,7 +1044,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': '作業完畢',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': '黑暗模式',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -1216,7 +1214,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -1227,7 +1225,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -1423,7 +1421,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Dovršeno',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Tamni prikaz',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -1534,7 +1532,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -1594,7 +1592,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -1605,7 +1603,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -1801,7 +1799,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Hotovo',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Tmavý mód',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -1912,7 +1910,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -1972,7 +1970,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -1983,7 +1981,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -2179,7 +2177,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Færdig',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Mørk tilstand',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -2290,7 +2288,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -2350,7 +2348,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Gemiddeld',
       'unapproved': 'Afgekeurd',
       'authenticate_to_change_setting':
-      'Gelieve te authenticeren om deze instelling te wijzigen',
+          'Gelieve te authenticeren om deze instelling te wijzigen',
       'locked': 'Vergrendeld',
       'authenticate': 'Authenticeer',
       'please_authenticate': 'Gelieve te authenticeren',
@@ -2361,7 +2359,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Self-Host login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Bedankt voor uw geduld zolang we werken om deze functionaliteiten te implementeren.\\n\\nWe hopen dit in de komende maanden klaar te hebben.\\n\\nTot die tijd ondersteunen we',
+          'Bedankt voor uw geduld zolang we werken om deze functionaliteiten te implementeren.\\n\\nWe hopen dit in de komende maanden klaar te hebben.\\n\\nTot die tijd ondersteunen we',
       'legacy_mobile_app': 'oude mobiele app',
       'today': 'Vandaag',
       'custom_range': 'Aangepast bereik',
@@ -2538,7 +2536,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_at': 'Bijgewerkt',
       'tax': 'Belasting',
       'please_enter_an_invoice_number':
-      'Gelieve een factuurnummer in te voeren',
+          'Gelieve een factuurnummer in te voeren',
       'please_enter_a_quote_number': 'Gelieve een offertenummer in te voeren',
       'filtered_by': 'Gefilterd op',
       'past_due': 'Verlopen',
@@ -2556,13 +2554,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_status_6': 'Betaald',
       'mark_sent': 'Markeer als verzonden',
       'marked_invoice_as_sent':
-      'De factuur is succesvol gemarkeerd als verzonden',
+          'De factuur is succesvol gemarkeerd als verzonden',
       'done': 'Klaar',
       'please_enter_a_client_or_contact_name':
-      'Gelieve een bedrijfsnaam of contactpersoon in te voeren',
+          'Gelieve een bedrijfsnaam of contactpersoon in te voeren',
       'dark_mode': 'Donkere modus',
       'restart_app_to_apply_change':
-      'Herstart de applicatie om de wijziging toe te passen',
+          'Herstart de applicatie om de wijziging toe te passen',
       'refresh_data': 'Gegevens verversen',
       'blank_contact': 'Leeg contact',
       'activity': 'Activiteit',
@@ -2642,7 +2640,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user heeft factuur :invoice gearchiveerd',
       'activity_9': ':user heeft factuur :invoice verwijderd',
       'activity_10':
-      ':contact heeft betaling :payment ingevoerd voor factuur :invoice',
+          ':contact heeft betaling :payment ingevoerd voor factuur :invoice',
       'activity_11': ':user heeft betaling :payment bijgewerkt',
       'activity_12': ':user heeft betaling :payment gearchiveerd',
       'activity_13': ':user heeft betaling :payment verwijderd',
@@ -2671,9 +2669,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_36': ':user heeft uitgave :expense verwijderd',
       'activity_37': ':user heeft uitgave :expense hersteld',
       'activity_39':
-      ':user heeft een a :payment_amount betaling geannuleerd :payment',
+          ':user heeft een a :payment_amount betaling geannuleerd :payment',
       'activity_40':
-      ':user heeft :adjustment van een :payment_amount betaling :payment',
+          ':user heeft :adjustment van een :payment_amount betaling :payment',
       'activity_41': 'Betaling van :payment_amount mislukt (:payment)',
       'activity_42': ':user heeft taak :task aangemaakt',
       'activity_43': ':user heeft taak :task bijgewerkt',
@@ -2684,7 +2682,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'one_time_password': 'Eenmalig wachtwoord',
       'emailed_quote': 'De offerte is succesvol gemaild',
       'marked_quote_as_sent':
-      'De offerte is succesvol gemarkeerd als verzonden',
+          'De offerte is succesvol gemarkeerd als verzonden',
       'expired': 'Verlopen',
     },
     'en_AU': {
@@ -2734,7 +2732,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -2745,7 +2743,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -2941,7 +2939,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
-      'Please enter a customer or contact name',
+          'Please enter a customer or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -3052,7 +3050,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -3112,7 +3110,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -3123,7 +3121,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -3319,7 +3317,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -3430,7 +3428,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -3490,7 +3488,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -3501,7 +3499,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -3697,7 +3695,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Valmis',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Tumma tila',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -3775,7 +3773,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user loi laskun :invoice',
       'activity_5': ':user päivitti laskun :invoice',
       'activity_6':
-      ':user lähetti laskun :invoice sähköpostilla asiakkaalle :contact',
+          ':user lähetti laskun :invoice sähköpostilla asiakkaalle :contact',
       'activity_7': ':contact näki laskun :invoice',
       'activity_8': ':user arkistoi laskun :invoice',
       'activity_9': ':user poisti laskun :invoice',
@@ -3790,7 +3788,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user loi tarjouksen :quote',
       'activity_19': ':user päivitti tarjouksen :quote',
       'activity_20':
-      ':user lähetti sähköpostilla tarjouksen :quote asiakkaalle :contact',
+          ':user lähetti sähköpostilla tarjouksen :quote asiakkaalle :contact',
       'activity_21': ':contact luki tarjouksen :quote',
       'activity_22': ':user arkistoi tarjouksen :quote',
       'activity_23': ':user poisti tarjouksen :quote',
@@ -3810,7 +3808,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user palautti kulun :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user loi tehtävän :task',
       'activity_43': ':user päivitti tehtävän :task',
@@ -3870,7 +3868,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Moyenne',
       'unapproved': 'Non approuvé',
       'authenticate_to_change_setting':
-      'Veuillez vous connecter pour changer ce paramètre',
+          'Veuillez vous connecter pour changer ce paramètre',
       'locked': 'Verrouillé',
       'authenticate': 'Connexion',
       'please_authenticate': 'Veuillez vous connecter',
@@ -3881,7 +3879,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Authentification Selfhost',
       'google_login': 'Authentification Google',
       'thanks_for_patience':
-      'Merci de votre patience pendant l\'implémentation de ces fonctionnalités.\\n\\nNous espérons terminer dans les prochains mois.\\n\\nD\'ici là, nous continuerons le support de',
+          'Merci de votre patience pendant l\'implémentation de ces fonctionnalités.\\n\\nNous espérons terminer dans les prochains mois.\\n\\nD\'ici là, nous continuerons le support de',
       'legacy_mobile_app': 'Ancienne App mobile',
       'today': 'Aujourd\'hui',
       'custom_range': 'Intervalle personnalisé',
@@ -4077,10 +4075,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Facture marquee comme envoyee avec succes',
       'done': 'Terminé',
       'please_enter_a_client_or_contact_name':
-      'Veuillez introduire un nom de client',
+          'Veuillez introduire un nom de client',
       'dark_mode': 'Mode sombre',
       'restart_app_to_apply_change':
-      'Recommencer k\'app pour introduire l\'app change',
+          'Recommencer k\'app pour introduire l\'app change',
       'refresh_data': 'Rafraichier les details',
       'blank_contact': 'Details pour contacter la Banque',
       'activity': 'Activité',
@@ -4156,7 +4154,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user a créé la facture :invoice',
       'activity_5': ':user a mis à jour la facture :invoice',
       'activity_6':
-      ':user a envoyé la facture :invoice par courriel à :contact',
+          ':user a envoyé la facture :invoice par courriel à :contact',
       'activity_7': ':contact a lu la facture :invoice',
       'activity_8': ':user a archivé la facture :invoice',
       'activity_9': ':user a supprimé la facture :invoice',
@@ -4190,7 +4188,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user a restauré la dépense :expense',
       'activity_39': ':user a annulé un paiement de :payment_amount (:payment)',
       'activity_40':
-      ':user a remboursé :adjustment d\'un paiement de :payment_amount (:payment)',
+          ':user a remboursé :adjustment d\'un paiement de :payment_amount (:payment)',
       'activity_41': 'Le paiement de :payment_amount a échoué (:payment)',
       'activity_42': ':user a créé la tâche :task',
       'activity_43': ':user a mis à jour la tâche :task',
@@ -4250,7 +4248,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Moyenne',
       'unapproved': 'Non approuvé',
       'authenticate_to_change_setting':
-      'Veuillez vous connecter pour changer ce paramètre',
+          'Veuillez vous connecter pour changer ce paramètre',
       'locked': 'Verrouillé',
       'authenticate': 'Connexion',
       'please_authenticate': 'Veuillez vous connecter',
@@ -4261,7 +4259,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Connexion autohébergée',
       'google_login': 'Connexion Google',
       'thanks_for_patience':
-      'Merci de votre patience pendant que nous travaillons à l\'implémentation de ces fonctionnalités.\\n\\nNous espérons compléter cette implémentation dans les prochains mois.\\n\\nPendant ce temps, nous continuerons de supporter',
+          'Merci de votre patience pendant que nous travaillons à l\'implémentation de ces fonctionnalités.\\n\\nNous espérons compléter cette implémentation dans les prochains mois.\\n\\nPendant ce temps, nous continuerons de supporter',
       'legacy_mobile_app': 'Ancienne App mobile',
       'today': 'Aujourd\'hui',
       'custom_range': 'Personnalisé',
@@ -4457,10 +4455,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Facture marquée comme envoyée',
       'done': 'Valider',
       'please_enter_a_client_or_contact_name':
-      'Veuillez saisir un nom de client ou de contact',
+          'Veuillez saisir un nom de client ou de contact',
       'dark_mode': 'Mode foncé',
       'restart_app_to_apply_change':
-      'Redémarrez l\'app pour mettre à jour les changements',
+          'Redémarrez l\'app pour mettre à jour les changements',
       'refresh_data': 'Actualiser les données',
       'blank_contact': 'Contact vide',
       'activity': 'Activité',
@@ -4569,7 +4567,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user a restauré la dépense :expense',
       'activity_39': ':user a annulé un paiement :payment de :payment_amount',
       'activity_40':
-      ':user a remboursé :adjustment d\'un paiement :payment de :payment_amount',
+          ':user a remboursé :adjustment d\'un paiement :payment de :payment_amount',
       'activity_41': 'Le paiement de :payment_amount a échoué (:payment)',
       'activity_42': ':user a créé la tâche :task',
       'activity_43': ':user a mis à jour la tâche :task',
@@ -4629,7 +4627,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Durchschnittlich',
       'unapproved': 'Nicht genehmigt',
       'authenticate_to_change_setting':
-      'Bitte authentifizieren Sie sich, um diese Einstellung zu ändern.',
+          'Bitte authentifizieren Sie sich, um diese Einstellung zu ändern.',
       'locked': 'Gesperrt',
       'authenticate': 'Authentifizieren',
       'please_authenticate': 'Bitte authentifizieren Sie sich',
@@ -4640,7 +4638,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Vielen Dank für Ihre Geduld, während wir an der Implementierung dieser Funktionen arbeiten. Wir hoffen, dass sie in den nächsten Monaten fertiggestellt werden.... Bis dahin werden wir weiterhin die',
+          'Vielen Dank für Ihre Geduld, während wir an der Implementierung dieser Funktionen arbeiten. Wir hoffen, dass sie in den nächsten Monaten fertiggestellt werden.... Bis dahin werden wir weiterhin die',
       'legacy_mobile_app': 'legacy Mobile App',
       'today': 'Heute',
       'custom_range': 'Benutzerdefinierter Bereich',
@@ -4708,7 +4706,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_your_password': 'Bitte geben Sie Ihr Passwort ein',
       'please_enter_your_url': 'Bitte geben Sie Ihre URL ein',
       'please_enter_a_product_key':
-      'Bitte geben Sie Ihren Produkt schlüssel ein',
+          'Bitte geben Sie Ihren Produkt schlüssel ein',
       'ascending': 'Aufsteigend',
       'descending': 'Absteigend',
       'save': 'Speichern',
@@ -4801,7 +4799,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_status_id': 'Rechnungs Status',
       'quote_status': 'Angebots Status',
       'click_plus_to_add_item':
-      'Klicken Sie auf +, um ein Element hinzuzufügen.',
+          'Klicken Sie auf +, um ein Element hinzuzufügen.',
       'click_plus_to_add_time': 'Klicken Sie auf +, um die Zeit hinzuzufügen.',
       'count_selected': ':count ausgewählt',
       'total': 'Gesamt',
@@ -4819,7 +4817,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_at': 'Aktualisiert',
       'tax': 'Steuer',
       'please_enter_an_invoice_number':
-      'Bitte geben Sie eine Rechnungs Nummer ein',
+          'Bitte geben Sie eine Rechnungs Nummer ein',
       'please_enter_a_quote_number': 'Bitte geben Sie eine Angebots Nummer ein',
       'filtered_by': 'Gefiltert nach',
       'past_due': 'Überfällig',
@@ -4839,10 +4837,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Rechnung erfolgreich als versendet markiert',
       'done': 'Erledigt',
       'please_enter_a_client_or_contact_name':
-      'Bitte geben Sie einen Kunden- oder Kontaktnamen ein',
+          'Bitte geben Sie einen Kunden- oder Kontaktnamen ein',
       'dark_mode': 'Dunkler Modus',
       'restart_app_to_apply_change':
-      'Starten Sie die App neu, um die Änderung zu übernehmen.',
+          'Starten Sie die App neu, um die Änderung zu übernehmen.',
       'refresh_data': 'Daten aktualisieren',
       'blank_contact': 'Leerer Kontakt',
       'activity': 'Aktivität',
@@ -4922,7 +4920,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user archivierte Rechnung :invoice',
       'activity_9': ':user löschte Rechnung :invoice',
       'activity_10':
-      ':contact gab Zahlungsinformation :payment für :invoice ein',
+          ':contact gab Zahlungsinformation :payment für :invoice ein',
       'activity_11': ':user aktualisierte Zahlung :payment',
       'activity_12': ':user archivierte Zahlung :payment',
       'activity_13': ':user löschte Zahlung :payment',
@@ -4951,9 +4949,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_36': ':user hat Ausgabe :expense gelöscht',
       'activity_37': ':user hat Ausgabe :expense wiederhergestellt',
       'activity_39':
-      ':user brach eine Zahlung über :payment_amount ab :payment',
+          ':user brach eine Zahlung über :payment_amount ab :payment',
       'activity_40':
-      ':user hat :adjustment von :payment_amount der Zahlung :payment zurück erstattet',
+          ':user hat :adjustment von :payment_amount der Zahlung :payment zurück erstattet',
       'activity_41': ':payment_amount Zahlung (:payment) schlug fehl',
       'activity_42': ':user hat Aufgabe :task erstellt',
       'activity_43': ':user hat Aufgabe :task bearbeitet',
@@ -5007,14 +5005,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_project': 'Επιτυχής ανάκτηση project',
       'new_project': 'Νέο Project',
       'thank_you_for_using_our_app':
-      'Ευχαριστούμε που χρησιμοποιήσατε την εφαρμογή μας!',
+          'Ευχαριστούμε που χρησιμοποιήσατε την εφαρμογή μας!',
       'if_you_like_it': 'Εάν σας αρέσει παρακαλούμε',
       'click_here': 'πατήστε εδώ',
       'to_rate_it': 'για να το αξιολογήσετε.',
       'average': 'Μέσος όρος',
       'unapproved': 'Μη εγκεκριμένη',
       'authenticate_to_change_setting':
-      'Παρακαλούμε αυθεντικοποιήστε για να αλλάξετε αυτή τη ρύθμιση',
+          'Παρακαλούμε αυθεντικοποιήστε για να αλλάξετε αυτή τη ρύθμιση',
       'locked': 'Κλειδωμένη',
       'authenticate': 'Αυθεντικοποιήστε',
       'please_authenticate': 'Παρακαλούμε αυθεντικοποιήστε',
@@ -5025,7 +5023,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Εισαγωγή σε αυτο-φιλοξενούμενη έκδοση',
       'google_login': 'Εισαγωγή μέσω Google',
       'thanks_for_patience':
-      'Ευχαριστούμε για την υπομονή σας καθώς εργαζόμαστε για την ενσωμάτωση αυτών των χαρακτηριστικών.\\n\\nΕλπίζουμε να τα έχουμε ολοκληρώσει μέσα στους επόμενους μήνες.\\n\\nΜέχρι τότε θα συνεχίσουμε να υποστηρίζουμε την',
+          'Ευχαριστούμε για την υπομονή σας καθώς εργαζόμαστε για την ενσωμάτωση αυτών των χαρακτηριστικών.\\n\\nΕλπίζουμε να τα έχουμε ολοκληρώσει μέσα στους επόμενους μήνες.\\n\\nΜέχρι τότε θα συνεχίσουμε να υποστηρίζουμε την',
       'legacy_mobile_app': 'Εφαρμογή προηγούμενης γενιάς για κινητά',
       'today': 'Σήμερα',
       'custom_range': 'Προσαρμοσμένο Εύρος',
@@ -5091,7 +5089,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refresh_complete': 'Ανανέωση Ολοκληρώθηκε',
       'please_enter_your_email': 'Παρακαλώ εισάγετε το email σας',
       'please_enter_your_password':
-      'Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας',
+          'Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας',
       'please_enter_your_url': 'Παρακαλώ εισάγετε το URL σας',
       'please_enter_a_product_key': 'Παρακαλώ εισάγετε το κλειδί προϊόντος σας',
       'ascending': 'Αύξουσα σειρά',
@@ -5203,7 +5201,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_at': 'Ενημερώθηκε',
       'tax': 'Φόρος',
       'please_enter_an_invoice_number':
-      'Παρακαλώ εισάγετε ένα αριθμό τιμολογίου',
+          'Παρακαλώ εισάγετε ένα αριθμό τιμολογίου',
       'please_enter_a_quote_number': 'Παρακαλώ εισάγετε ένα αριθμό προσφοράς',
       'filtered_by': 'Φιλτράρισμα με',
       'past_due': 'Ληγμένα',
@@ -5223,10 +5221,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Επιτυχής ορισμός τιμολογίου ως απεσταλμένο',
       'done': 'Έτοιμο',
       'please_enter_a_client_or_contact_name':
-      'Παρακαλώ εισάγετε ένα πελάτη ή το όνομα μίας επαφής',
+          'Παρακαλώ εισάγετε ένα πελάτη ή το όνομα μίας επαφής',
       'dark_mode': 'Σκοτεινό Περιβάλλον',
       'restart_app_to_apply_change':
-      'Επανεκκινήστε την εφαρμογή για να εφαρμόσετε την αλλαγή',
+          'Επανεκκινήστε την εφαρμογή για να εφαρμόσετε την αλλαγή',
       'refresh_data': 'Ανανέωση Δεδομένων',
       'blank_contact': 'Κενή Επαφή',
       'activity': 'Δραστηριότητα',
@@ -5306,7 +5304,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': 'Ο χρήστης :user αρχειοθέτησε το τιμολόγιο :invoice',
       'activity_9': 'Ο χρήστης :user διέγραψε το τιμολόγιο :invoice',
       'activity_10':
-      'Η επαφή :contact καταχώρησε την πληρωμή :payment για το :Invoice',
+          'Η επαφή :contact καταχώρησε την πληρωμή :payment για το :Invoice',
       'activity_11': 'Ο χρήστης :user ενημέρωσε την πληρωμή :payment',
       'activity_12': 'Ο χρήστης :user αρχειοθέτησε την πληρωμή :payment',
       'activity_13': 'Ο χρήστης :user διέγραψε την πληρωμή :payment',
@@ -5317,7 +5315,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': 'Ο χρήστης :user δημιουργησε την προσφορά :quote',
       'activity_19': 'Ο χρήστης :user ενημέρωσε την προσφορά :quote',
       'activity_20':
-      'Ο χρήστης :user έστειλε με email την προσφορά :quote στην επαφή :contact',
+          'Ο χρήστης :user έστειλε με email την προσφορά :quote στην επαφή :contact',
       'activity_21': 'Η επαφή :contact είδε την προσφορά :quote',
       'activity_22': 'Ο χρήστης :user αρχειοθέτησε την προσφορά :quote',
       'activity_23': 'Ο χρήστης :user διέγραψε την προσφορά :quote',
@@ -5337,7 +5335,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': 'Ο χρήστης :user επανέφερε τη δαπάνη :expense',
       'activity_39': ':user ακύρωσε :payment_amount πληρωμής :payment',
       'activity_40':
-      ':user επέστρεψε :adjustment μιας :payment_amount πληρωμής :payment',
+          ':user επέστρεψε :adjustment μιας :payment_amount πληρωμής :payment',
       'activity_41': ':payment_amount πληρωμής (:payment) απέτυχε',
       'activity_42': 'Ο χρήστης :user δημιούργησε την εργασία :task',
       'activity_43': 'Ο χρήστης :user ενημέρωσε την εργασία :task',
@@ -5361,7 +5359,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'running': 'In corso',
       'resume': 'Riprendi',
       'task_errors':
-      'Si prega di correggere eventuali tempi di sovrapposizione',
+          'Si prega di correggere eventuali tempi di sovrapposizione',
       'start': 'Inizia',
       'stop': 'Ferma',
       'started_task': 'Successfully started task',
@@ -5398,7 +5396,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -5409,7 +5407,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Oggi',
       'custom_range': 'Intervallo personalizzato',
@@ -5605,7 +5603,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Fatto',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Modalità scura',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -5716,7 +5714,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': 'L\'utente :user ha ripristinato la spesa :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'pagamento di :payment_amount (:payment) fallito',
       'activity_42': 'L\'utente :user ha creato l\'attività :task',
       'activity_43': 'L\'utente :user ha aggiornato l\'attività :task',
@@ -5776,7 +5774,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -5787,7 +5785,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -5983,7 +5981,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': '完了',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'ダークモード',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -6094,7 +6092,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -6154,7 +6152,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -6165,7 +6163,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -6361,7 +6359,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Baigta',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -6472,7 +6470,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount mokėjimas (:payment) nepavyko',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -6532,7 +6530,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -6543,7 +6541,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Прилагоден опсег',
@@ -6739,7 +6737,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Завршено',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Темен режим',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -6817,7 +6815,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user ја креираше фактурата :invoice',
       'activity_5': ':user ја ажурираше фактурата :invoice',
       'activity_6':
-      ':user ја испрати по е-пошта фактурата :invoice на :contact',
+          ':user ја испрати по е-пошта фактурата :invoice на :contact',
       'activity_7': ':contact ја прегледа фактурата :invoice',
       'activity_8': ':user ја архивира фактурата :invoice',
       'activity_9': ':user ја избриша фактурата :invoice',
@@ -6851,7 +6849,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user го поврати трошокот :expense',
       'activity_39': ':user го откажа :payment_amount плаќањето :payment',
       'activity_40':
-      ':user го рефундира :adjustment на :payment_amount плаќање :payment',
+          ':user го рефундира :adjustment на :payment_amount плаќање :payment',
       'activity_41': ':payment_amount плаќање (:payment) е неуспешно',
       'activity_42': ':user ја креира задачата :task',
       'activity_43': ':user ажурира задачата :task',
@@ -6911,7 +6909,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -6922,7 +6920,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Tilpass Utvalg',
@@ -7118,7 +7116,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Ferdig',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Mørk Modus',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -7229,7 +7227,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user gjenopprettet utgift :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user opprettet oppgave :task',
       'activity_43': ':user oppdaterte oppgave :task',
@@ -7289,7 +7287,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -7300,7 +7298,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Określony okres',
@@ -7496,7 +7494,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Gotowe',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Tryb ciemny',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -7607,7 +7605,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user przywrócił wydatek :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'płatność :payment_amount (:payment) nieudana',
       'activity_42': ':user stworzył zadanie :task',
       'activity_43': ':user zaktualizował zadanie :task',
@@ -7667,7 +7665,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -7678,7 +7676,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Período Personalizado',
@@ -7874,7 +7872,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Feito',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Modo Escuro',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -7956,7 +7954,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user arquivou a fatura :invoice',
       'activity_9': ':user removeu a fatura :invoice',
       'activity_10':
-      ':contact efetuou o pagamento de :payment para a fatura :invoice',
+          ':contact efetuou o pagamento de :payment para a fatura :invoice',
       'activity_11': ':user atualizou o pagamento :payment',
       'activity_12': ':user arquivou o pagamento :payment',
       'activity_13': ':user removeu o pagamento :payment',
@@ -7986,7 +7984,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restaurou a despesa :expense',
       'activity_39': ':user cancelou :payment_amount pelo pagamento :payment',
       'activity_40':
-      ':user reembolsou :adjustment de :payment_amount do pagamento :payment',
+          ':user reembolsou :adjustment de :payment_amount do pagamento :payment',
       'activity_41': ':payment_amount payment (:payment) falhou',
       'activity_42': ':user criou a tarefa :task',
       'activity_43': ':user atualizou a tarefa :task',
@@ -8046,7 +8044,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -8057,7 +8055,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Intervalo Personalizado',
@@ -8253,7 +8251,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Feito',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Modo Escuro',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -8335,7 +8333,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user arquivou a nota de pagamento :invoice',
       'activity_9': ':user removeu a nota de pagamento :invoice',
       'activity_10':
-      ':contact introduziu o pagamento :payment para a nota de pag. :invoice',
+          ':contact introduziu o pagamento :payment para a nota de pag. :invoice',
       'activity_11': ':user atualizou o pagamento :payment',
       'activity_12': ':user arquivou o pagamento :payment',
       'activity_13': ':user removeu o pagamento :payment',
@@ -8365,7 +8363,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restaurou a despesa :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'pagamento (:payment)  de :payment_amount falhou',
       'activity_42': ':user criou a tarefa :task',
       'activity_43': ':user atualizou a tarefa :task',
@@ -8425,7 +8423,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -8436,7 +8434,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Autentificare Google',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Astăzi',
       'custom_range': 'Custom Range',
@@ -8632,7 +8630,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Gata',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -8743,7 +8741,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -8803,7 +8801,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -8814,7 +8812,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Samohostovan login',
       'google_login': 'Google login',
       'thanks_for_patience':
-      'Hvala na stpljenju dok radimo na implementaciji ovih mogućnosti.\\n\\nNadamo se da će biti završeno u sledećih par meseci.\\n\\nDo tada ćemo nastaviti da podržavamo',
+          'Hvala na stpljenju dok radimo na implementaciji ovih mogućnosti.\\n\\nNadamo se da će biti završeno u sledećih par meseci.\\n\\nDo tada ćemo nastaviti da podržavamo',
       'legacy_mobile_app': 'nasleđenu mobilnu aplikaciju',
       'today': 'Danas',
       'custom_range': 'Custom Range',
@@ -9010,10 +9008,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Račun uspešno obeležen kao poslat',
       'done': 'Završeno',
       'please_enter_a_client_or_contact_name':
-      'Unesite klijenta ili ime kontakta',
+          'Unesite klijenta ili ime kontakta',
       'dark_mode': 'Tamni prikaz',
       'restart_app_to_apply_change':
-      'Restartuje aplikaciju za aktiviranje izmene',
+          'Restartuje aplikaciju za aktiviranje izmene',
       'refresh_data': 'Osveži podatke',
       'blank_contact': 'Prazan kontakt',
       'activity': 'Aktivnost',
@@ -9122,7 +9120,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user je otkazao :payment_amount plaćanje :payment',
       'activity_40':
-      ':user vratio :adjustment od :payment_amount plaćanja :payment',
+          ':user vratio :adjustment od :payment_amount plaćanja :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -9182,7 +9180,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -9193,7 +9191,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Obseg po meri',
@@ -9389,7 +9387,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Končano',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Temen način',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -9500,7 +9498,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user je obnovil strošek :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount plačilo (:payment) ni uspelo',
       'activity_42': ':user je vnesel opravilo :task',
       'activity_43': ':user je posodobil opravilo :task',
@@ -9524,7 +9522,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'running': 'Ejecutando',
       'resume': 'Continuar',
       'task_errors':
-      'Por favor corrija cualquier tiempo que se sobreponga con otro',
+          'Por favor corrija cualquier tiempo que se sobreponga con otro',
       'start': 'Iniciar',
       'stop': 'Detener',
       'started_task': 'Tarea iniciada con éxito',
@@ -9561,7 +9559,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -9572,7 +9570,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Rango Personalizado',
@@ -9768,7 +9766,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Hecho',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Modo Oscuro',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -9807,7 +9805,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'body': 'Mensaje',
       'send_email': 'Enviar email',
       'email_receipt':
-      'Enviar por correo electrónico el recibo de pago al cliente',
+          'Enviar por correo electrónico el recibo de pago al cliente',
       'documents': 'Documents',
       'auto_billing': 'Auto billing',
       'button': 'Button',
@@ -9847,7 +9845,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user creó la factura :invoice',
       'activity_5': ':user actualizó la factura :invoice',
       'activity_6':
-      ':user envió por correo electrónico la factura :invoice to :contact',
+          ':user envió por correo electrónico la factura :invoice to :contact',
       'activity_7': ':contact vió la factura :invoice',
       'activity_8': ':user archivó la factura :invoice',
       'activity_9': ':user eliminó la factura :invoice',
@@ -9862,7 +9860,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user creó la cotización :quote',
       'activity_19': ':user actualizó la cotización :quote',
       'activity_20':
-      ':user envió por correo electrónico la cotización :quote to :contact',
+          ':user envió por correo electrónico la cotización :quote to :contact',
       'activity_21': ':contact vió la cotización :quote',
       'activity_22': ':user archivó la cotización :quote',
       'activity_23': ':user eliminó la cotización :quote',
@@ -9882,7 +9880,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restauró el gasto :expense',
       'activity_39': ':usaer canceló :payment_amount pago :payment',
       'activity_40':
-      ':user reembolsó :adjustment de un pago de :payment_amount :payment',
+          ':user reembolsó :adjustment de un pago de :payment_amount :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user creó la tarea :task',
       'activity_43': ':user actualizó la tarea :task',
@@ -9906,7 +9904,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'running': 'Ejecutando',
       'resume': 'Reanudar',
       'task_errors':
-      'Por favor corrija cualquier tiempo que se solape con otro',
+          'Por favor corrija cualquier tiempo que se solape con otro',
       'start': 'Iniciar',
       'stop': 'Parar',
       'started_task': 'Tarea empezada correctamente',
@@ -9943,7 +9941,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Promedio',
       'unapproved': 'No aprobado',
       'authenticate_to_change_setting':
-      'Por favor, autenticarse para cambiar esta configuración',
+          'Por favor, autenticarse para cambiar esta configuración',
       'locked': 'Bloqueado',
       'authenticate': 'Autenticación',
       'please_authenticate': 'Por favor, autenticarse',
@@ -9954,7 +9952,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Acceso auto alojado',
       'google_login': 'Acceso con Google',
       'thanks_for_patience':
-      'Gracias por tu paciencia mientras trabajamos en implementar esas características.\\n\\nEsperamos tenerlas completadas en los próximos meses.\\n\\nHasta entonces continuaremos soportando el',
+          'Gracias por tu paciencia mientras trabajamos en implementar esas características.\\n\\nEsperamos tenerlas completadas en los próximos meses.\\n\\nHasta entonces continuaremos soportando el',
       'legacy_mobile_app': 'app móvil heredada',
       'today': 'Hoy',
       'custom_range': 'Rango personalizado',
@@ -10131,9 +10129,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_at': 'Actualizado',
       'tax': 'Impuesto',
       'please_enter_an_invoice_number':
-      'Por favor introduce un número de factura',
+          'Por favor introduce un número de factura',
       'please_enter_a_quote_number':
-      'Por favor introduce un número de presupuesto',
+          'Por favor introduce un número de presupuesto',
       'filtered_by': 'Filtrado por',
       'past_due': 'Vencido',
       'draft': 'Borrador',
@@ -10152,7 +10150,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Factura marcada como enviada correctamente',
       'done': 'Hecho',
       'please_enter_a_client_or_contact_name':
-      'Por favor introduce un cliente o nombre de contacto',
+          'Por favor introduce un cliente o nombre de contacto',
       'dark_mode': 'Modo Oscuro',
       'restart_app_to_apply_change': 'Reinicia la app para aplicar el cambio',
       'refresh_data': 'Actualizar Datos',
@@ -10263,7 +10261,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restauró el gasto :expense',
       'activity_39': ':user cancelo :payment_amount del pago :payment',
       'activity_40':
-      ':user reembolsó :adjustment de :payment_amount del pago :payment',
+          ':user reembolsó :adjustment de :payment_amount del pago :payment',
       'activity_41': 'Fallo el pago de :payment_amount para  (:payment)',
       'activity_42': ':user creó la tarea :task',
       'activity_43': ':user actualizó la tarea :task',
@@ -10323,7 +10321,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -10334,7 +10332,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Anpassat intervall',
@@ -10530,7 +10528,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Klar',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Mörkt läge',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -10641,7 +10639,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user återställde kostnad :expense',
       'activity_39': ':user avbröt en :payment_amount betalning :payment',
       'activity_40':
-      ':user återbetalade :adjustment av en :payment_amount betalning :payment',
+          ':user återbetalade :adjustment av en :payment_amount betalning :payment',
       'activity_41': ':payment_amount betalning (:payment) misslyckad',
       'activity_42': ':user skapade uppgift :task',
       'activity_43': ':user uppdaterade uppgift :task',
@@ -10701,7 +10699,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'ค่าเฉลี่ย',
       'unapproved': 'ไม่อนุมัติ',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -10712,7 +10710,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'ระบุช่วง',
@@ -10908,7 +10906,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'เรียบร้อย',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'โหมดกลางคืน',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -11019,7 +11017,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user ได้กู้คืนค่าใช้จ่าย :expense',
       'activity_39': ':user ยกเลิก :payment_amount  การชำระเงิน :payment',
       'activity_40':
-      ':usre คืนเงิน :adjustment ของ  :payment_amount การชำระเงิน :payment',
+          ':usre คืนเงิน :adjustment ของ  :payment_amount การชำระเงิน :payment',
       'activity_41': ':payment_amount จ่ายชำระเงิน (:payment) ล้มเหลว',
       'activity_42': ':user ได้สร้างงาน :task',
       'activity_43': ':user ได้อัปเดตงาน :task',
@@ -11079,7 +11077,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-      'Please authenticate to change this setting',
+          'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -11090,7 +11088,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'thanks_for_patience':
-      'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
+          'Thank for your patience while we work to implement these features.\\n\\nWe hope to have them completed in the next few months.\\n\\nUntil then we\'ll continue to support the',
       'legacy_mobile_app': 'legacy mobile app',
       'today': 'Today',
       'custom_range': 'Custom Range',
@@ -11286,7 +11284,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'done': 'Tamam',
       'please_enter_a_client_or_contact_name':
-      'Please enter a client or contact name',
+          'Please enter a client or contact name',
       'dark_mode': 'Karanlık Mod',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -11364,12 +11362,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user :invoice nolu faturayı oluşturdu',
       'activity_5': ':user :invoice nolu faturayı güncelledi',
       'activity_6':
-      ':user :invoice nolu faturayı :contact adlı yetkiliye gönderdi',
+          ':user :invoice nolu faturayı :contact adlı yetkiliye gönderdi',
       'activity_7': ':contact adlı yetkili :invoice nolu faturayı görüntüledi',
       'activity_8': ':user :invoice nolu faturayı arşivledi',
       'activity_9': ':user :invoice nolu faturayı sildi',
       'activity_10':
-      ':contact adlı yetkili :invoice nolu fatura için :payment tutarında ödeme girdi',
+          ':contact adlı yetkili :invoice nolu fatura için :payment tutarında ödeme girdi',
       'activity_11': ':user :payment tutarlı ödemeyi güncelledi',
       'activity_12': ':user :payment tutarlı ödemeyi arşivledi',
       'activity_13': ':user :payment tutarlı ödemeyi sildi',
@@ -11380,7 +11378,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user :quote nolu teklifi oluşturdu',
       'activity_19': ':user :quote nolu teklifi güncelledi',
       'activity_20':
-      ':user :quote nolu teklifi :contact adlı yetkiliye gönderdi',
+          ':user :quote nolu teklifi :contact adlı yetkiliye gönderdi',
       'activity_21': ':contact adlı yetkili :quote nolu teklifi görüntüledi',
       'activity_22': ':user :quote nolu teklifi arşivledi',
       'activity_23': ':user :quote nolu teklifi sildi',
@@ -11400,7 +11398,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user masraf geri yükledi :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-      ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user :task görevini oluşturdu',
       'activity_43': ':user :task görevini güncelledi',
@@ -11415,28 +11413,24 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
   };
 
-  String get createdProject =>
-    _localizedValues[localeCode]['created_project'];
+  String get createdProject => _localizedValues[localeCode]['created_project'];
 
-  String get updatedProject =>
-    _localizedValues[localeCode]['updated_project'];
+  String get updatedProject => _localizedValues[localeCode]['updated_project'];
 
   String get archivedProject =>
-    _localizedValues[localeCode]['archived_project'];
+      _localizedValues[localeCode]['archived_project'];
 
-  String get deletedProject =>
-    _localizedValues[localeCode]['deleted_project'];
+  String get deletedProject => _localizedValues[localeCode]['deleted_project'];
 
   String get restoredProject =>
-    _localizedValues[localeCode]['restored_project'];
+      _localizedValues[localeCode]['restored_project'];
 
   String get newProject => _localizedValues[localeCode]['new_project'];
 
   String get thankYouForUsingOurApp =>
-    _localizedValues[localeCode]['thank_you_for_using_our_app'];
+      _localizedValues[localeCode]['thank_you_for_using_our_app'];
 
-  String get ifYouLikeIt =>
-    _localizedValues[localeCode]['if_you_like_it'];
+  String get ifYouLikeIt => _localizedValues[localeCode]['if_you_like_it'];
 
   String get clickHere => _localizedValues[localeCode]['click_here'];
 
@@ -11447,18 +11441,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get unapproved => _localizedValues[localeCode]['unapproved'];
 
   String get authenticateToChangeSetting =>
-    _localizedValues[localeCode]['authenticate_to_change_setting'];
+      _localizedValues[localeCode]['authenticate_to_change_setting'];
 
   String get locked => _localizedValues[localeCode]['locked'];
 
-  String get authenticate =>
-    _localizedValues[localeCode]['authenticate'];
+  String get authenticate => _localizedValues[localeCode]['authenticate'];
 
   String get pleaseAuthenticate =>
-    _localizedValues[localeCode]['please_authenticate'];
+      _localizedValues[localeCode]['please_authenticate'];
 
   String get biometricAuthentication =>
-    _localizedValues[localeCode]['biometric_authentication'];
+      _localizedValues[localeCode]['biometric_authentication'];
 
   String get footer => _localizedValues[localeCode]['footer'];
 
@@ -11466,8 +11459,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get hostedLogin => _localizedValues[localeCode]['hosted_login'];
 
-  String get selfhostLogin =>
-    _localizedValues[localeCode]['selfhost_login'];
+  String get selfhostLogin => _localizedValues[localeCode]['selfhost_login'];
 
   String get googleLogin => _localizedValues[localeCode]['google_login'];
 
@@ -11481,17 +11473,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get previous => _localizedValues[localeCode]['previous'];
 
-  String get currentPeriod =>
-    _localizedValues[localeCode]['current_period'];
+  String get currentPeriod => _localizedValues[localeCode]['current_period'];
 
   String get comparisonPeriod =>
-    _localizedValues[localeCode]['comparison_period'];
+      _localizedValues[localeCode]['comparison_period'];
 
-  String get previousPeriod =>
-    _localizedValues[localeCode]['previous_period'];
+  String get previousPeriod => _localizedValues[localeCode]['previous_period'];
 
-  String get previousYear =>
-    _localizedValues[localeCode]['previous_year'];
+  String get previousYear => _localizedValues[localeCode]['previous_year'];
 
   String get compareTo => _localizedValues[localeCode]['compare_to'];
 
@@ -11511,11 +11500,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get custom => _localizedValues[localeCode]['custom'];
 
-  String get cloneToInvoice =>
-    _localizedValues[localeCode]['clone_to_invoice'];
+  String get cloneToInvoice => _localizedValues[localeCode]['clone_to_invoice'];
 
-  String get cloneToQuote =>
-    _localizedValues[localeCode]['clone_to_quote'];
+  String get cloneToQuote => _localizedValues[localeCode]['clone_to_quote'];
 
   String get viewInvoice => _localizedValues[localeCode]['view_invoice'];
 
@@ -11544,33 +11531,28 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get editCredit => _localizedValues[localeCode]['edit_credit'];
 
   String get editRecurringInvoice =>
-    _localizedValues[localeCode]['edit_recurring_invoice'];
+      _localizedValues[localeCode]['edit_recurring_invoice'];
 
   String get editRecurringExpense =>
-    _localizedValues[localeCode]['edit_recurring_expense'];
+      _localizedValues[localeCode]['edit_recurring_expense'];
 
   String get editRecurringQuote =>
-    _localizedValues[localeCode]['edit_recurring_quote'];
+      _localizedValues[localeCode]['edit_recurring_quote'];
 
-  String get billingAddress =>
-    _localizedValues[localeCode]['billing_address'];
+  String get billingAddress => _localizedValues[localeCode]['billing_address'];
 
   String get shippingAddress =>
-    _localizedValues[localeCode]['shipping_address'];
+      _localizedValues[localeCode]['shipping_address'];
 
-  String get totalRevenue =>
-    _localizedValues[localeCode]['total_revenue'];
+  String get totalRevenue => _localizedValues[localeCode]['total_revenue'];
 
-  String get averageInvoice =>
-    _localizedValues[localeCode]['average_invoice'];
+  String get averageInvoice => _localizedValues[localeCode]['average_invoice'];
 
   String get outstanding => _localizedValues[localeCode]['outstanding'];
 
-  String get invoicesSent =>
-    _localizedValues[localeCode]['invoices_sent'];
+  String get invoicesSent => _localizedValues[localeCode]['invoices_sent'];
 
-  String get activeClients =>
-    _localizedValues[localeCode]['active_clients'];
+  String get activeClients => _localizedValues[localeCode]['active_clients'];
 
   String get close => _localizedValues[localeCode]['close'];
 
@@ -11609,19 +11591,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restore => _localizedValues[localeCode]['restore'];
 
   String get refreshComplete =>
-    _localizedValues[localeCode]['refresh_complete'];
+      _localizedValues[localeCode]['refresh_complete'];
 
   String get pleaseEnterYourEmail =>
-    _localizedValues[localeCode]['please_enter_your_email'];
+      _localizedValues[localeCode]['please_enter_your_email'];
 
   String get pleaseEnterYourPassword =>
-    _localizedValues[localeCode]['please_enter_your_password'];
+      _localizedValues[localeCode]['please_enter_your_password'];
 
   String get pleaseEnterYourUrl =>
-    _localizedValues[localeCode]['please_enter_your_url'];
+      _localizedValues[localeCode]['please_enter_your_url'];
 
   String get pleaseEnterAProductKey =>
-    _localizedValues[localeCode]['please_enter_a_product_key'];
+      _localizedValues[localeCode]['please_enter_a_product_key'];
 
   String get ascending => _localizedValues[localeCode]['ascending'];
 
@@ -11630,7 +11612,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get save => _localizedValues[localeCode]['save'];
 
   String get anErrorOccurred =>
-    _localizedValues[localeCode]['an_error_occurred'];
+      _localizedValues[localeCode]['an_error_occurred'];
 
   String get paidToDate => _localizedValues[localeCode]['paid_to_date'];
 
@@ -11653,12 +11635,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get create => _localizedValues[localeCode]['create'];
 
   String get copiedToClipboard =>
-    _localizedValues[localeCode]['copied_to_clipboard'];
+      _localizedValues[localeCode]['copied_to_clipboard'];
 
   String get error => _localizedValues[localeCode]['error'];
 
-  String get couldNotLaunch =>
-    _localizedValues[localeCode]['could_not_launch'];
+  String get couldNotLaunch => _localizedValues[localeCode]['could_not_launch'];
 
   String get contacts => _localizedValues[localeCode]['contacts'];
 
@@ -11678,8 +11659,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get remove => _localizedValues[localeCode]['remove'];
 
-  String get emailIsInvalid =>
-    _localizedValues[localeCode]['email_is_invalid'];
+  String get emailIsInvalid => _localizedValues[localeCode]['email_is_invalid'];
 
   String get product => _localizedValues[localeCode]['product'];
 
@@ -11687,54 +11667,43 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get newProduct => _localizedValues[localeCode]['new_product'];
 
-  String get createdProduct =>
-    _localizedValues[localeCode]['created_product'];
+  String get createdProduct => _localizedValues[localeCode]['created_product'];
 
-  String get updatedProduct =>
-    _localizedValues[localeCode]['updated_product'];
+  String get updatedProduct => _localizedValues[localeCode]['updated_product'];
 
   String get archivedProduct =>
-    _localizedValues[localeCode]['archived_product'];
+      _localizedValues[localeCode]['archived_product'];
 
-  String get deletedProduct =>
-    _localizedValues[localeCode]['deleted_product'];
+  String get deletedProduct => _localizedValues[localeCode]['deleted_product'];
 
   String get restoredProduct =>
-    _localizedValues[localeCode]['restored_product'];
+      _localizedValues[localeCode]['restored_product'];
 
   String get newVendor => _localizedValues[localeCode]['new_vendor'];
 
-  String get createdVendor =>
-    _localizedValues[localeCode]['created_vendor'];
+  String get createdVendor => _localizedValues[localeCode]['created_vendor'];
 
-  String get updatedVendor =>
-    _localizedValues[localeCode]['updated_vendor'];
+  String get updatedVendor => _localizedValues[localeCode]['updated_vendor'];
 
-  String get archivedVendor =>
-    _localizedValues[localeCode]['archived_vendor'];
+  String get archivedVendor => _localizedValues[localeCode]['archived_vendor'];
 
-  String get deletedVendor =>
-    _localizedValues[localeCode]['deleted_vendor'];
+  String get deletedVendor => _localizedValues[localeCode]['deleted_vendor'];
 
-  String get restoredVendor =>
-    _localizedValues[localeCode]['restored_vendor'];
+  String get restoredVendor => _localizedValues[localeCode]['restored_vendor'];
 
   String get newExpense => _localizedValues[localeCode]['new_expense'];
 
-  String get createdExpense =>
-    _localizedValues[localeCode]['created_expense'];
+  String get createdExpense => _localizedValues[localeCode]['created_expense'];
 
-  String get updatedExpense =>
-    _localizedValues[localeCode]['updated_expense'];
+  String get updatedExpense => _localizedValues[localeCode]['updated_expense'];
 
   String get archivedExpense =>
-    _localizedValues[localeCode]['archived_expense'];
+      _localizedValues[localeCode]['archived_expense'];
 
-  String get deletedExpense =>
-    _localizedValues[localeCode]['deleted_expense'];
+  String get deletedExpense => _localizedValues[localeCode]['deleted_expense'];
 
   String get restoredExpense =>
-    _localizedValues[localeCode]['restored_expense'];
+      _localizedValues[localeCode]['restored_expense'];
 
   String get productKey => _localizedValues[localeCode]['product_key'];
 
@@ -11748,20 +11717,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get newClient => _localizedValues[localeCode]['new_client'];
 
-  String get createdClient =>
-    _localizedValues[localeCode]['created_client'];
+  String get createdClient => _localizedValues[localeCode]['created_client'];
 
-  String get updatedClient =>
-    _localizedValues[localeCode]['updated_client'];
+  String get updatedClient => _localizedValues[localeCode]['updated_client'];
 
-  String get archivedClient =>
-    _localizedValues[localeCode]['archived_client'];
+  String get archivedClient => _localizedValues[localeCode]['archived_client'];
 
-  String get deletedClient =>
-    _localizedValues[localeCode]['deleted_client'];
+  String get deletedClient => _localizedValues[localeCode]['deleted_client'];
 
-  String get restoredClient =>
-    _localizedValues[localeCode]['restored_client'];
+  String get restoredClient => _localizedValues[localeCode]['restored_client'];
 
   String get address1 => _localizedValues[localeCode]['address1'];
 
@@ -11781,31 +11745,25 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get newInvoice => _localizedValues[localeCode]['new_invoice'];
 
-  String get createdInvoice =>
-    _localizedValues[localeCode]['created_invoice'];
+  String get createdInvoice => _localizedValues[localeCode]['created_invoice'];
 
-  String get updatedInvoice =>
-    _localizedValues[localeCode]['updated_invoice'];
+  String get updatedInvoice => _localizedValues[localeCode]['updated_invoice'];
 
   String get archivedInvoice =>
-    _localizedValues[localeCode]['archived_invoice'];
+      _localizedValues[localeCode]['archived_invoice'];
 
-  String get deletedInvoice =>
-    _localizedValues[localeCode]['deleted_invoice'];
+  String get deletedInvoice => _localizedValues[localeCode]['deleted_invoice'];
 
   String get restoredInvoice =>
-    _localizedValues[localeCode]['restored_invoice'];
+      _localizedValues[localeCode]['restored_invoice'];
 
-  String get emailedInvoice =>
-    _localizedValues[localeCode]['emailed_invoice'];
+  String get emailedInvoice => _localizedValues[localeCode]['emailed_invoice'];
 
-  String get emailedPayment =>
-    _localizedValues[localeCode]['emailed_payment'];
+  String get emailedPayment => _localizedValues[localeCode]['emailed_payment'];
 
   String get amount => _localizedValues[localeCode]['amount'];
 
-  String get invoiceNumber =>
-    _localizedValues[localeCode]['invoice_number'];
+  String get invoiceNumber => _localizedValues[localeCode]['invoice_number'];
 
   String get invoiceDate => _localizedValues[localeCode]['invoice_date'];
 
@@ -11817,8 +11775,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get publicNotes => _localizedValues[localeCode]['public_notes'];
 
-  String get privateNotes =>
-    _localizedValues[localeCode]['private_notes'];
+  String get privateNotes => _localizedValues[localeCode]['private_notes'];
 
   String get frequency => _localizedValues[localeCode]['frequency'];
 
@@ -11834,8 +11791,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get items => _localizedValues[localeCode]['items'];
 
-  String get partialDeposit =>
-    _localizedValues[localeCode]['partial_deposit'];
+  String get partialDeposit => _localizedValues[localeCode]['partial_deposit'];
 
   String get description => _localizedValues[localeCode]['description'];
 
@@ -11855,25 +11811,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get dueDate => _localizedValues[localeCode]['due_date'];
 
-  String get partialDueDate =>
-    _localizedValues[localeCode]['partial_due_date'];
+  String get partialDueDate => _localizedValues[localeCode]['partial_due_date'];
 
   String get status => _localizedValues[localeCode]['status'];
 
   String get invoiceStatusId =>
-    _localizedValues[localeCode]['invoice_status_id'];
+      _localizedValues[localeCode]['invoice_status_id'];
 
-  String get quoteStatusId =>
-    _localizedValues[localeCode]['quote_status'];
+  String get quoteStatusId => _localizedValues[localeCode]['quote_status'];
 
   String get clickPlusToAddItem =>
-    _localizedValues[localeCode]['click_plus_to_add_item'];
+      _localizedValues[localeCode]['click_plus_to_add_item'];
 
   String get clickPlusToAddTime =>
-    _localizedValues[localeCode]['click_plus_to_add_time'];
+      _localizedValues[localeCode]['click_plus_to_add_time'];
 
-  String get countSelected =>
-    _localizedValues[localeCode]['count_selected'];
+  String get countSelected => _localizedValues[localeCode]['count_selected'];
 
   String get total => _localizedValues[localeCode]['total'];
 
@@ -11884,13 +11837,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get dismiss => _localizedValues[localeCode]['dismiss'];
 
   String get pleaseSelectADate =>
-    _localizedValues[localeCode]['please_select_a_date'];
+      _localizedValues[localeCode]['please_select_a_date'];
 
   String get pleaseSelectAClient =>
-    _localizedValues[localeCode]['please_select_a_client'];
+      _localizedValues[localeCode]['please_select_a_client'];
 
   String get pleaseSelectAnInvoice =>
-    _localizedValues[localeCode]['please_select_an_invoice'];
+      _localizedValues[localeCode]['please_select_an_invoice'];
 
   String get taskRate => _localizedValues[localeCode]['task_rate'];
 
@@ -11907,10 +11860,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get tax => _localizedValues[localeCode]['tax'];
 
   String get pleaseEnterAnInvoiceNumber =>
-    _localizedValues[localeCode]['please_enter_an_invoice_number'];
+      _localizedValues[localeCode]['please_enter_an_invoice_number'];
 
   String get pleaseEnterAQuoteNumber =>
-    _localizedValues[localeCode]['please_enter_a_quote_number'];
+      _localizedValues[localeCode]['please_enter_a_quote_number'];
 
   String get filteredBy => _localizedValues[localeCode]['filtered_by'];
 
@@ -11928,49 +11881,40 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get paid => _localizedValues[localeCode]['paid'];
 
-  String get invoiceStatus1 =>
-    _localizedValues[localeCode]['invoice_status_1'];
+  String get invoiceStatus1 => _localizedValues[localeCode]['invoice_status_1'];
 
-  String get invoiceStatus2 =>
-    _localizedValues[localeCode]['invoice_status_2'];
+  String get invoiceStatus2 => _localizedValues[localeCode]['invoice_status_2'];
 
-  String get invoiceStatus3 =>
-    _localizedValues[localeCode]['invoice_status_3'];
+  String get invoiceStatus3 => _localizedValues[localeCode]['invoice_status_3'];
 
-  String get invoiceStatus4 =>
-    _localizedValues[localeCode]['invoice_status_4'];
+  String get invoiceStatus4 => _localizedValues[localeCode]['invoice_status_4'];
 
-  String get invoiceStatus5 =>
-    _localizedValues[localeCode]['invoice_status_5'];
+  String get invoiceStatus5 => _localizedValues[localeCode]['invoice_status_5'];
 
-  String get invoiceStatus6 =>
-    _localizedValues[localeCode]['invoice_status_6'];
+  String get invoiceStatus6 => _localizedValues[localeCode]['invoice_status_6'];
 
   String get markSent => _localizedValues[localeCode]['mark_sent'];
 
   String get markedInvoiceAsSent =>
-    _localizedValues[localeCode]['marked_invoice_as_sent'];
+      _localizedValues[localeCode]['marked_invoice_as_sent'];
 
   String get done => _localizedValues[localeCode]['done'];
 
   String get pleaseEnterAClientOrContactName =>
-    _localizedValues[localeCode]
-    ['please_enter_a_client_or_contact_name'];
+      _localizedValues[localeCode]['please_enter_a_client_or_contact_name'];
 
   String get darkMode => _localizedValues[localeCode]['dark_mode'];
 
   String get restartAppToApplyChange =>
-    _localizedValues[localeCode]['restart_app_to_apply_change'];
+      _localizedValues[localeCode]['restart_app_to_apply_change'];
 
   String get refreshData => _localizedValues[localeCode]['refresh_data'];
 
-  String get blankContact =>
-    _localizedValues[localeCode]['blank_contact'];
+  String get blankContact => _localizedValues[localeCode]['blank_contact'];
 
   String get activity => _localizedValues[localeCode]['activity'];
 
-  String get noRecordsFound =>
-    _localizedValues[localeCode]['no_records_found'];
+  String get noRecordsFound => _localizedValues[localeCode]['no_records_found'];
 
   String get clone => _localizedValues[localeCode]['clone'];
 
@@ -11980,39 +11924,31 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get size => _localizedValues[localeCode]['size'];
 
-  String get paymentTerms =>
-    _localizedValues[localeCode]['payment_terms'];
+  String get paymentTerms => _localizedValues[localeCode]['payment_terms'];
 
   String get paymentDate => _localizedValues[localeCode]['payment_date'];
 
-  String get paymentStatus =>
-    _localizedValues[localeCode]['payment_status'];
+  String get paymentStatus => _localizedValues[localeCode]['payment_status'];
 
   String get net => _localizedValues[localeCode]['net'];
 
-  String get clientPortal =>
-    _localizedValues[localeCode]['client_portal'];
+  String get clientPortal => _localizedValues[localeCode]['client_portal'];
 
   String get showTasks => _localizedValues[localeCode]['show_tasks'];
 
-  String get emailReminders =>
-    _localizedValues[localeCode]['email_reminders'];
+  String get emailReminders => _localizedValues[localeCode]['email_reminders'];
 
   String get enabled => _localizedValues[localeCode]['enabled'];
 
   String get recipients => _localizedValues[localeCode]['recipients'];
 
-  String get initialEmail =>
-    _localizedValues[localeCode]['initial_email'];
+  String get initialEmail => _localizedValues[localeCode]['initial_email'];
 
-  String get firstReminder =>
-    _localizedValues[localeCode]['first_reminder'];
+  String get firstReminder => _localizedValues[localeCode]['first_reminder'];
 
-  String get secondReminder =>
-    _localizedValues[localeCode]['second_reminder'];
+  String get secondReminder => _localizedValues[localeCode]['second_reminder'];
 
-  String get thirdReminder =>
-    _localizedValues[localeCode]['third_reminder'];
+  String get thirdReminder => _localizedValues[localeCode]['third_reminder'];
 
   String get template => _localizedValues[localeCode]['template'];
 
@@ -12024,8 +11960,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get sendEmail => _localizedValues[localeCode]['send_email'];
 
-  String get emailReceipt =>
-    _localizedValues[localeCode]['email_receipt'];
+  String get emailReceipt => _localizedValues[localeCode]['email_receipt'];
 
   String get documents => _localizedValues[localeCode]['documents'];
 
@@ -12048,25 +11983,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get paymentType => _localizedValues[localeCode]['payment_type'];
 
   String get transactionReference =>
-    _localizedValues[localeCode]['transaction_reference'];
+      _localizedValues[localeCode]['transaction_reference'];
 
-  String get enterPayment =>
-    _localizedValues[localeCode]['enter_payment'];
+  String get enterPayment => _localizedValues[localeCode]['enter_payment'];
 
-  String get createdPayment =>
-    _localizedValues[localeCode]['created_payment'];
+  String get createdPayment => _localizedValues[localeCode]['created_payment'];
 
-  String get updatedPayment =>
-    _localizedValues[localeCode]['updated_payment'];
+  String get updatedPayment => _localizedValues[localeCode]['updated_payment'];
 
   String get archivedPayment =>
-    _localizedValues[localeCode]['archived_payment'];
+      _localizedValues[localeCode]['archived_payment'];
 
-  String get deletedPayment =>
-    _localizedValues[localeCode]['deleted_payment'];
+  String get deletedPayment => _localizedValues[localeCode]['deleted_payment'];
 
   String get restoredPayment =>
-    _localizedValues[localeCode]['restored_payment'];
+      _localizedValues[localeCode]['restored_payment'];
 
   String get quote => _localizedValues[localeCode]['quote'];
 
@@ -12074,20 +12005,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get newQuote => _localizedValues[localeCode]['new_quote'];
 
-  String get createdQuote =>
-    _localizedValues[localeCode]['created_quote'];
+  String get createdQuote => _localizedValues[localeCode]['created_quote'];
 
-  String get updatedQuote =>
-    _localizedValues[localeCode]['updated_quote'];
+  String get updatedQuote => _localizedValues[localeCode]['updated_quote'];
 
-  String get archivedQuote =>
-    _localizedValues[localeCode]['archived_quote'];
+  String get archivedQuote => _localizedValues[localeCode]['archived_quote'];
 
-  String get deletedQuote =>
-    _localizedValues[localeCode]['deleted_quote'];
+  String get deletedQuote => _localizedValues[localeCode]['deleted_quote'];
 
-  String get restoredQuote =>
-    _localizedValues[localeCode]['restored_quote'];
+  String get restoredQuote => _localizedValues[localeCode]['restored_quote'];
 
   String get expense => _localizedValues[localeCode]['expense'];
 
@@ -12200,33 +12126,29 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get activity_47 => _localizedValues[localeCode]['activity_47'];
 
   String get oneTimePassword =>
-    _localizedValues[localeCode]['one_time_password'];
+      _localizedValues[localeCode]['one_time_password'];
 
-  String get emailedQuote =>
-    _localizedValues[localeCode]['emailed_quote'];
+  String get emailedQuote => _localizedValues[localeCode]['emailed_quote'];
 
   String get markedQuoteAsSent =>
-    _localizedValues[localeCode]['marked_quote_as_sent'];
+      _localizedValues[localeCode]['marked_quote_as_sent'];
 
   String get expired => _localizedValues[localeCode]['expired'];
 
-  String get budgetedHours =>
-    _localizedValues[localeCode]['budgeted_hours'];
+  String get budgetedHours => _localizedValues[localeCode]['budgeted_hours'];
 
   String get pleaseEnterAName =>
-    _localizedValues[localeCode]['please_enter_a_name'];
+      _localizedValues[localeCode]['please_enter_a_name'];
 
   String get createdTask => _localizedValues[localeCode]['created_task'];
 
   String get updatedTask => _localizedValues[localeCode]['updated_task'];
 
-  String get archivedTask =>
-    _localizedValues[localeCode]['archived_task'];
+  String get archivedTask => _localizedValues[localeCode]['archived_task'];
 
   String get deletedTask => _localizedValues[localeCode]['deleted_task'];
 
-  String get restoredTask =>
-    _localizedValues[localeCode]['restored_task'];
+  String get restoredTask => _localizedValues[localeCode]['restored_task'];
 
   String get newTask => _localizedValues[localeCode]['new_task'];
 
@@ -12246,8 +12168,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get manual => _localizedValues[localeCode]['manual'];
 
-  String get autoStartTasks =>
-    _localizedValues[localeCode]['auto_start_tasks'];
+  String get autoStartTasks => _localizedValues[localeCode]['auto_start_tasks'];
 
   String get now => _localizedValues[localeCode]['now'];
 
@@ -12272,15 +12193,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get logged => _localizedValues[localeCode]['logged'];
 
   String get failedToFindRecord =>
-    _localizedValues[localeCode]['failed_to_find_record'];
+      _localizedValues[localeCode]['failed_to_find_record'];
 
   String get passwordIsTooShort =>
-    _localizedValues[localeCode]['password_is_too_short'];
+      _localizedValues[localeCode]['password_is_too_short'];
 
   String get design => _localizedValues[localeCode]['design'];
 
-  String get copyShipping =>
-    _localizedValues[localeCode]['copy_shipping'];
+  String get copyShipping => _localizedValues[localeCode]['copy_shipping'];
 
   String get copyBilling => _localizedValues[localeCode]['copy_billing'];
 
@@ -12288,44 +12208,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get category => _localizedValues[localeCode]['category'];
 
-  String get markBillable =>
-    _localizedValues[localeCode]['mark_billable'];
+  String get markBillable => _localizedValues[localeCode]['mark_billable'];
 
   String get markPaid => _localizedValues[localeCode]['mark_paid'];
 
   String get convertCurrency =>
-    _localizedValues[localeCode]['convert_currency'];
+      _localizedValues[localeCode]['convert_currency'];
 
-  String get exchangeRate =>
-    _localizedValues[localeCode]['exchange_rate'];
+  String get exchangeRate => _localizedValues[localeCode]['exchange_rate'];
 
   String get addDocumentsToInvoice =>
-    _localizedValues[localeCode]['add_documents_to_invoice'];
+      _localizedValues[localeCode]['add_documents_to_invoice'];
 
-  String get pending =>
-    _localizedValues[localeCode]['pending'];
+  String get pending => _localizedValues[localeCode]['pending'];
 
-  String get converted =>
-    _localizedValues[localeCode]['converted'];
+  String get converted => _localizedValues[localeCode]['converted'];
 
-  String get expenseStatus1 =>
-    _localizedValues[localeCode]['expense_status_1'];
+  String get expenseStatus1 => _localizedValues[localeCode]['expense_status_1'];
 
-  String get expenseStatus2 =>
-    _localizedValues[localeCode]['expense_status_2'];
+  String get expenseStatus2 => _localizedValues[localeCode]['expense_status_2'];
 
-  String get expenseStatus3 =>
-    _localizedValues[localeCode]['expense_status_3'];
+  String get expenseStatus3 => _localizedValues[localeCode]['expense_status_3'];
 
-  String get expenseDate =>
-    _localizedValues[localeCode]['expense_date'];
-
+  String get expenseDate => _localizedValues[localeCode]['expense_date'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
     return _localizedValues[localeCode][lookupKey] ??
-      _localizedValues[localeCode]
-      [lookupKey.replaceFirst('_id', '')] ??
-      key;
+        _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
+        key;
   }
 }

@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -99,73 +96,9 @@ class TaskListVM {
       onTaskTap: (context, task) {
         store.dispatch(ViewTask(taskId: task.id, context: context));
       },
-      onEntityAction: (context, task, action) {
-        switch (action) {
-          case EntityAction.edit:
-            store.dispatch(EditTask(context: context, task: task));
-            break;
-          case EntityAction.start:
-          case EntityAction.stop:
-          case EntityAction.resume:
-            final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-            final localization = AppLocalization.of(context);
-            store.dispatch(
-                SaveTaskRequest(completer: completer, task: task.toggle()));
-            completer.future.then((savedTask) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  content: SnackBarRow(
-                message: savedTask.isRunning
-                    ? (savedTask.duration > 0
-                        ? localization.resumedTask
-                        : localization.startedTask)
-                    : localization.stoppedTask,
-              )));
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
-
-            break;
-          case EntityAction.newInvoice:
-            final item = convertTaskToInvoiceItem(task: task, context: context);
-            store.dispatch(EditInvoice(
-                invoice: InvoiceEntity(company: state.selectedCompany)
-                    .rebuild((b) => b
-                      ..hasTasks = true
-                      ..clientId = task.clientId
-                      ..invoiceItems.add(item)),
-                context: context));
-            break;
-          case EntityAction.viewInvoice:
-            store.dispatch(
-                ViewInvoice(invoiceId: task.invoiceId, context: context));
-            break;
-          case EntityAction.clone:
-            store.dispatch(EditTask(context: context, task: task.clone));
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestoreTaskRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).restoredTask),
-                task.id));
-            break;
-          case EntityAction.archive:
-            store.dispatch(ArchiveTaskRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).archivedTask),
-                task.id));
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeleteTaskRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).deletedTask),
-                task.id));
-            break;
-        }
-      },
+      onEntityAction:
+          (BuildContext context, BaseEntity task, EntityAction action) =>
+              handleTaskAction(context, task, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }

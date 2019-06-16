@@ -44,7 +44,7 @@ class ClientViewVM {
   ClientViewVM({
     @required this.client,
     @required this.company,
-    @required this.onActionSelected,
+    @required this.onEntityAction,
     @required this.onEntityPressed,
     @required this.onEditPressed,
     @required this.onBackPressed,
@@ -173,14 +173,14 @@ class ClientViewVM {
           store.dispatch(UpdateCurrentRoute(ClientScreen.route));
         }
       },
-      onActionSelected: (BuildContext context, EntityAction action) =>
+      onEntityAction: (BuildContext context, EntityAction action) =>
           handleClientAction(context, client, action),
     );
   }
 
   final ClientEntity client;
   final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;

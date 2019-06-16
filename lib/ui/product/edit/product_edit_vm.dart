@@ -71,8 +71,18 @@ class ProductEditVM {
                     : AppLocalization.of(context).updatedProduct),
             product: product));
       },
-      onEntityAction: (BuildContext context, EntityAction action) =>
-          handleProductAction(context, product, action),
+      onEntityAction: (BuildContext context, EntityAction action) {
+        // TODO Add view page for products
+        // Prevent duplicate global key error
+        if (action == EntityAction.clone) {
+          Navigator.pop(context);
+          WidgetsBinding.instance.addPostFrameCallback((duration) {
+            handleProductAction(context, product, action);
+          });
+        } else {
+          handleProductAction(context, product, action);
+        }
+      },
     );
   }
 

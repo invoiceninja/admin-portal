@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
@@ -16,41 +17,6 @@ class VendorList extends StatelessWidget {
   }) : super(key: key);
 
   final VendorListVM viewModel;
-
-  void _showMenu(BuildContext context, VendorEntity vendor) async {
-    if (vendor == null) {
-      return;
-    }
-
-    final user = viewModel.user;
-    final message = await showDialog<String>(
-        context: context,
-        builder: (BuildContext dialogContext) => SimpleDialog(
-                children: vendor
-                    .getActions(user: user, includeEdit: true)
-                    .map((entityAction) {
-              if (entityAction == null) {
-                return Divider();
-              } else {
-                return ListTile(
-                  leading: Icon(getEntityActionIcon(entityAction)),
-                  title: Text(AppLocalization.of(context)
-                      .lookup(entityAction.toString())),
-                  onTap: () {
-                    Navigator.of(dialogContext).pop();
-                    viewModel.onEntityAction(context, vendor, entityAction);
-                  },
-                );
-              }
-            }).toList()));
-
-    if (message != null) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: SnackBarRow(
-        message: message,
-      )));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +44,16 @@ class VendorList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.vendorList.length,
                           itemBuilder: (BuildContext context, index) {
+                            final user = viewModel.user;
                             final vendorId = viewModel.vendorList[index];
                             final vendor = viewModel.vendorMap[vendorId];
+
+                            void showDialog() => showEntityActionsDialog(
+                                entity: vendor,
+                                context: context,
+                                user: user,
+                                onEntityAction: viewModel.onEntityAction);
+
                             return VendorListItem(
                               user: viewModel.user,
                               filter: viewModel.filter,
@@ -88,13 +62,13 @@ class VendorList extends StatelessWidget {
                                   viewModel.onVendorTap(context, vendor),
                               onEntityAction: (EntityAction action) {
                                 if (action == EntityAction.more) {
-                                  _showMenu(context, vendor);
+                                  showDialog();
                                 } else {
                                   viewModel.onEntityAction(
                                       context, vendor, action);
                                 }
                               },
-                              onLongPress: () => _showMenu(context, vendor),
+                              onLongPress: () => showDialog(),
                             );
                           },
                         ),

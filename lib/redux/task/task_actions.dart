@@ -3,6 +3,15 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 
 class ViewTaskList implements PersistUI {
   ViewTaskList(this.context);
@@ -258,4 +267,74 @@ class FilterTasksByEntity implements PersistUI {
 
   final int entityId;
   final EntityType entityType;
+}
+
+void handleTaskAction(
+    BuildContext context, TaskEntity task, EntityAction action) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final CompanyEntity company = state.selectedCompany;
+  final localization = AppLocalization.of(context);
+
+  switch (action) {
+    case EntityAction.edit:
+      store.dispatch(EditTask(context: context, task: task));
+      break;
+    case EntityAction.start:
+    case EntityAction.stop:
+    case EntityAction.resume:
+      final Completer<TaskEntity> completer = new Completer<TaskEntity>();
+      final localization = AppLocalization.of(context);
+      store
+          .dispatch(SaveTaskRequest(completer: completer, task: task.toggle()));
+      completer.future.then((savedTask) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+            content: SnackBarRow(
+          message: savedTask.isRunning
+              ? (savedTask.duration > 0
+                  ? localization.resumedTask
+                  : localization.startedTask)
+              : localization.stoppedTask,
+        )));
+      }).catchError((Object error) {
+        showDialog<ErrorDialog>(
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            });
+      });
+
+      break;
+    case EntityAction.newInvoice:
+      final item = convertTaskToInvoiceItem(task: task, context: context);
+      store.dispatch(EditInvoice(
+          invoice:
+              InvoiceEntity(company: company).rebuild((b) => b
+                ..hasTasks = true
+                ..clientId = task.clientId
+                ..invoiceItems.add(item)),
+          context: context));
+      break;
+    case EntityAction.viewInvoice:
+      store.dispatch(ViewInvoice(invoiceId: task.invoiceId, context: context));
+      break;
+    case EntityAction.clone:
+      store.dispatch(EditTask(context: context, task: task.clone));
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreTaskRequest(
+          snackBarCompleter(context, localization.restoredTask),
+          task.id));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveTaskRequest(
+          snackBarCompleter(context, localization.archivedTask),
+          task.id));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteTaskRequest(
+          snackBarCompleter(context, localization.deletedTask),
+          task.id));
+      break;
+  }
 }

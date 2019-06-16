@@ -68,7 +68,11 @@ abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity(
-      {int id, CompanyEntity company, UIState uiState, VendorEntity vendor, ClientEntity client}) {
+      {int id,
+      CompanyEntity company,
+      UIState uiState,
+      VendorEntity vendor,
+      ClientEntity client}) {
     return _$ExpenseEntity._(
       id: id ?? --ExpenseEntity.counter,
       privateNotes: '',

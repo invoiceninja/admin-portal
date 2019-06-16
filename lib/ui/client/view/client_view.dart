@@ -290,7 +290,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 user: viewModel.company.user,
                 isSaving: viewModel.isSaving,
                 entity: client,
-                onSelected: viewModel.onActionSelected,
+                onSelected: viewModel.onEntityAction,
                 entityActions: viewModel.client.getActions(user: user),
               )
             ],

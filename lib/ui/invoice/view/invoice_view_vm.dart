@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/foundation.dart';
@@ -11,13 +10,11 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
   const InvoiceViewScreen({Key key}) : super(key: key);
@@ -93,7 +90,7 @@ class InvoiceViewVM extends EntityViewVM {
     ClientEntity client,
     bool isSaving,
     bool isDirty,
-    Function(BuildContext, EntityAction) onActionSelected,
+    Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
     Function(BuildContext, [bool]) onClientPressed,
     Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
@@ -106,7 +103,7 @@ class InvoiceViewVM extends EntityViewVM {
           client: client,
           isSaving: isSaving,
           isDirty: isDirty,
-          onActionSelected: onActionSelected,
+          onActionSelected: onEntityAction,
           onEditPressed: onEditPressed,
           onClientPressed: onClientPressed,
           onPaymentPressed: onPaymentPressed,
@@ -130,110 +127,57 @@ class InvoiceViewVM extends EntityViewVM {
     }
 
     return InvoiceViewVM(
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isDirty: invoice.isNew,
-        invoice: invoice,
-        client: client,
-        onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
-          final Completer<InvoiceEntity> completer =
-              new Completer<InvoiceEntity>();
-          store.dispatch(EditInvoice(
-              invoice: invoice,
-              context: context,
-              completer: completer,
-              invoiceItem: invoiceItem));
-          completer.future.then((invoice) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).updatedInvoice,
-            )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
-          }
-        },
-        onClientPressed: (BuildContext context, [bool longPress = false]) {
-          if (longPress) {
-            showEntityActionsDialog(
-                user: state.selectedCompany.user,
-                context: context,
-                entity: client,
-                onEntityAction: (BuildContext context, BaseEntity client,
-                        EntityAction action) =>
-                    handleClientAction(context, client, action));
-          } else {
-            store.dispatch(ViewClient(clientId: client.id, context: context));
-          }
-        },
-        onPaymentPressed: (BuildContext context, PaymentEntity payment,
-                [bool longPress = false]) =>
-            store.dispatch(longPress
-                ? EditPayment(payment: payment, context: context)
-                : ViewPayment(paymentId: payment.id, context: context)),
-        onPaymentsPressed: (BuildContext context) {
-          store.dispatch(FilterPaymentsByEntity(
-              entityId: invoice.id, entityType: EntityType.invoice));
-          store.dispatch(ViewPaymentList(context));
-        },
-        onActionSelected: (BuildContext context, EntityAction action) async {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.pdf:
-              viewPdf(invoice, context);
-              break;
-            case EntityAction.clientPortal:
-              if (await canLaunch(invoice.invitationSilentLink)) {
-                await launch(invoice.invitationSilentLink,
-                    forceSafariVC: false, forceWebView: false);
-              }
-              break;
-            case EntityAction.markSent:
-              store.dispatch(MarkSentInvoiceRequest(
-                  snackBarCompleter(context, localization.markedInvoiceAsSent),
-                  invoice.id));
-              break;
-            case EntityAction.sendEmail:
-              store.dispatch(ShowEmailInvoice(
-                  completer:
-                      snackBarCompleter(context, localization.emailedInvoice),
-                  invoice: invoice,
-                  context: context));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveInvoiceRequest(
-                  popCompleter(context, localization.archivedInvoice),
-                  invoice.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteInvoiceRequest(
-                  popCompleter(context, localization.deletedInvoice),
-                  invoice.id));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreInvoiceRequest(
-                  snackBarCompleter(context, localization.restoredInvoice),
-                  invoice.id));
-              break;
-            case EntityAction.cloneToInvoice:
-              Navigator.of(context).pop();
-              store.dispatch(EditInvoice(
-                  context: context, invoice: invoice.cloneToInvoice));
-              break;
-            case EntityAction.cloneToQuote:
-              Navigator.of(context).pop();
-              store.dispatch(
-                  EditQuote(context: context, quote: invoice.cloneToQuote));
-              break;
-            case EntityAction.enterPayment:
-              store.dispatch(EditPayment(
-                  context: context,
-                  payment: invoice.createPayment(state.selectedCompany)));
-              break;
-          }
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isDirty: invoice.isNew,
+      invoice: invoice,
+      client: client,
+      onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
+        final Completer<InvoiceEntity> completer =
+            new Completer<InvoiceEntity>();
+        store.dispatch(EditInvoice(
+            invoice: invoice,
+            context: context,
+            completer: completer,
+            invoiceItem: invoiceItem));
+        completer.future.then((invoice) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedInvoice,
+          )));
         });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
+        }
+      },
+      onClientPressed: (BuildContext context, [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: state.selectedCompany.user,
+              context: context,
+              entity: client,
+              onEntityAction: (BuildContext context, BaseEntity client,
+                      EntityAction action) =>
+                  handleClientAction(context, client, action));
+        } else {
+          store.dispatch(ViewClient(clientId: client.id, context: context));
+        }
+      },
+      onPaymentPressed: (BuildContext context, PaymentEntity payment,
+              [bool longPress = false]) =>
+          store.dispatch(longPress
+              ? EditPayment(payment: payment, context: context)
+              : ViewPayment(paymentId: payment.id, context: context)),
+      onPaymentsPressed: (BuildContext context) {
+        store.dispatch(FilterPaymentsByEntity(
+            entityId: invoice.id, entityType: EntityType.invoice));
+        store.dispatch(ViewPaymentList(context));
+      },
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handleInvoiceAction(context, invoice, action),
+    );
   }
 }

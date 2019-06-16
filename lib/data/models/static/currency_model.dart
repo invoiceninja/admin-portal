@@ -120,8 +120,6 @@ abstract class CurrencyEntity extends Object
   @override
   double get listDisplayAmount => null;
 
-  
-
   static Serializer<CurrencyEntity> get serializer =>
       _$currencyEntitySerializer;
 }

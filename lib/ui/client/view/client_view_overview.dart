@@ -145,8 +145,8 @@ class ClientOverview extends StatelessWidget {
                 title: localization.expenses,
                 onTap: () =>
                     viewModel.onEntityPressed(context, EntityType.expense),
-                onLongPress: () =>
-                    viewModel.onEntityPressed(context, EntityType.expense, true),
+                onLongPress: () => viewModel.onEntityPressed(
+                    context, EntityType.expense, true),
                 subtitle: memoizedExpenseStatsForClient(
                     client.id,
                     state.expenseState.map,

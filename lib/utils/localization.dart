@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'i18n.dart';
 
 class AppLocalization extends LocaleCodeAware with LocalizationsProvider {
-  AppLocalization(this.locale): super(locale.toString());
+  AppLocalization(this.locale) : super(locale.toString());
 
   final Locale locale;
 
@@ -18,8 +18,6 @@ class AppLocalization extends LocaleCodeAware with LocalizationsProvider {
   static AppLocalization of(BuildContext context) {
     return Localizations.of<AppLocalization>(context, AppLocalization);
   }
-
-
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

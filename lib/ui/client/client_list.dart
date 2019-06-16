@@ -47,27 +47,26 @@ class ClientList extends StatelessWidget {
             final clientId = viewModel.clientList[index];
             final client = viewModel.clientMap[clientId];
             final user = viewModel.user;
+
+            void showDialog() => showEntityActionsDialog(
+                entity: client,
+                context: context,
+                user: user,
+                onEntityAction: viewModel.onEntityAction);
+
             return ClientListItem(
               user: viewModel.user,
               filter: viewModel.filter,
               client: client,
               onEntityAction: (EntityAction action) {
                 if (action == EntityAction.more) {
-                  showEntityActionsDialog(
-                      entity: client,
-                      context: context,
-                      user: user,
-                      onEntityAction: viewModel.onEntityAction);
+                  showDialog();
                 } else {
                   viewModel.onEntityAction(context, client, action);
                 }
               },
               onTap: () => viewModel.onClientTap(context, client),
-              onLongPress: () => showEntityActionsDialog(
-                  entity: client,
-                  context: context,
-                  user: user,
-                  onEntityAction: viewModel.onEntityAction),
+              onLongPress: () => showDialog(),
             );
           }),
     );

@@ -46,27 +46,26 @@ class ProductList extends StatelessWidget {
           itemBuilder: (BuildContext context, index) {
             final productId = viewModel.productList[index];
             final product = viewModel.productMap[productId];
+
+            void showDialog() => showEntityActionsDialog(
+                entity: product,
+                context: context,
+                user: viewModel.user,
+                onEntityAction: viewModel.onEntityAction);
+
             return ProductListItem(
               user: viewModel.user,
               filter: viewModel.filter,
               product: product,
               onEntityAction: (EntityAction action) {
                 if (action == EntityAction.more) {
-                  showEntityActionsDialog(
-                      entity: product,
-                      context: context,
-                      user: viewModel.user,
-                      onEntityAction: viewModel.onEntityAction);
+                  showDialog();
                 } else {
                   viewModel.onEntityAction(context, product, action);
                 }
               },
               onTap: () => viewModel.onProductTap(context, product),
-              onLongPress: () => showEntityActionsDialog(
-                  entity: product,
-                  context: context,
-                  user: viewModel.user,
-                  onEntityAction: viewModel.onEntityAction),
+              onLongPress: () => showDialog(),
             );
           }),
     );

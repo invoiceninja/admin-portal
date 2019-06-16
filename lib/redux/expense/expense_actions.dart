@@ -3,6 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 
 class ViewExpenseList implements PersistUI {
   ViewExpenseList(this.context);
@@ -226,4 +233,48 @@ class FilterExpensesByEntity implements PersistUI {
 
   final int entityId;
   final EntityType entityType;
+}
+
+void handleExpenseAction(
+    BuildContext context, ExpenseEntity expense, EntityAction action) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final CompanyEntity company = state.selectedCompany;
+  final localization = AppLocalization.of(context);
+
+  switch (action) {
+    case EntityAction.edit:
+      store.dispatch(EditExpense(context: context, expense: expense));
+      break;
+    case EntityAction.clone:
+      store.dispatch(EditExpense(context: context, expense: expense.clone));
+      break;
+    case EntityAction.newInvoice:
+      final item = convertExpenseToInvoiceItem(expense: expense);
+      store.dispatch(EditInvoice(
+          invoice: InvoiceEntity(company: company).rebuild((b) => b
+            ..hasExpenses = true
+            ..clientId = expense.clientId
+            ..invoiceItems.add(item)),
+          context: context));
+      break;
+    case EntityAction.viewInvoice:
+      store.dispatch(
+          ViewInvoice(invoiceId: expense.invoiceId, context: context));
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreExpenseRequest(
+          snackBarCompleter(context, localization.restoredExpense),
+          expense.id));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveExpenseRequest(
+          snackBarCompleter(context, localization.archivedExpense),
+          expense.id));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteExpenseRequest(
+          snackBarCompleter(context, localization.deletedExpense), expense.id));
+      break;
+  }
 }

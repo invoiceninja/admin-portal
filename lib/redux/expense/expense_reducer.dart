@@ -89,12 +89,12 @@ ListUIState _filterExpensesByState(
 ListUIState _filterExpensesByStatus(
     ListUIState expenseListState, FilterExpensesByStatus action) {
   if (expenseListState.statusFilters.contains(action.status)) {
-    return expenseListState.rebuild((b) => b..statusFilters.remove(action.status));
+    return expenseListState
+        .rebuild((b) => b..statusFilters.remove(action.status));
   } else {
     return expenseListState.rebuild((b) => b..statusFilters.add(action.status));
   }
 }
-
 
 ListUIState _filterExpenses(
     ListUIState expenseListState, FilterExpenses action) {

@@ -77,7 +77,8 @@ InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
 InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
   return invoice.rebuild((b) => b
     ..hasTasks = action.invoiceItems.where((item) => item.isTask).isNotEmpty
-    ..hasExpenses = action.invoiceItems.where((item) => item.isExpense).isNotEmpty
+    ..hasExpenses =
+        action.invoiceItems.where((item) => item.isExpense).isNotEmpty
     ..invoiceItems.addAll(action.invoiceItems));
 }
 

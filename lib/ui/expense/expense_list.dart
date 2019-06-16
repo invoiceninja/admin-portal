@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
@@ -16,41 +17,6 @@ class ExpenseList extends StatelessWidget {
   }) : super(key: key);
 
   final ExpenseListVM viewModel;
-
-  void _showMenu(BuildContext context, ExpenseEntity expense) async {
-    if (expense == null) {
-      return;
-    }
-
-    final user = viewModel.user;
-    final message = await showDialog<String>(
-        context: context,
-        builder: (BuildContext dialogContext) => SimpleDialog(
-                children: expense
-                    .getActions(user: user, includeEdit: true)
-                    .map((entityAction) {
-              if (entityAction == null) {
-                return Divider();
-              } else {
-                return ListTile(
-                  leading: Icon(getEntityActionIcon(entityAction)),
-                  title: Text(AppLocalization.of(context)
-                      .lookup(entityAction.toString())),
-                  onTap: () {
-                    Navigator.of(dialogContext).pop();
-                    viewModel.onEntityAction(context, expense, entityAction);
-                  },
-                );
-              }
-            }).toList()));
-
-    if (message != null) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: SnackBarRow(
-        message: message,
-      )));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,12 +85,21 @@ class ExpenseList extends StatelessWidget {
                       separatorBuilder: (context, index) => ListDivider(),
                       itemCount: viewModel.expenseList.length,
                       itemBuilder: (BuildContext context, index) {
+                        final user = viewModel.user;
                         final expenseId = viewModel.expenseList[index];
                         final expense = viewModel.expenseMap[expenseId];
                         final client =
                             viewModel.state.clientState.map[expense.clientId];
                         final vendor =
                             viewModel.state.vendorState.map[expense.vendorId];
+
+                        void showDialog() => showEntityActionsDialog(
+                            entity: expense,
+                            context: context,
+                            user: user,
+                            client: client,
+                            onEntityAction: viewModel.onEntityAction);
+
                         return ExpenseListItem(
                           user: viewModel.user,
                           filter: viewModel.filter,
@@ -134,13 +109,13 @@ class ExpenseList extends StatelessWidget {
                           onTap: () => viewModel.onExpenseTap(context, expense),
                           onEntityAction: (EntityAction action) {
                             if (action == EntityAction.more) {
-                              _showMenu(context, expense);
+                              showDialog();
                             } else {
                               viewModel.onEntityAction(
                                   context, expense, action);
                             }
                           },
-                          onLongPress: () => _showMenu(context, expense),
+                          onLongPress: () => showDialog(),
                         );
                       },
                     ),

@@ -101,8 +101,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
   void _updateClientId() {
     final selected = _selected.firstWhere(
-            (entity) =>
-        entity is BelongsToClient &&
+        (entity) =>
+            entity is BelongsToClient &&
             (((entity as BelongsToClient).clientId ?? 0) > 0),
         orElse: () => null);
 

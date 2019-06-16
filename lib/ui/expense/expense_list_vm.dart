@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
@@ -92,49 +91,9 @@ class ExpenseListVM {
       onExpenseTap: (context, expense) {
         store.dispatch(ViewExpense(expenseId: expense.id, context: context));
       },
-      onEntityAction: (context, expense, action) {
-        switch (action) {
-          case EntityAction.edit:
-            store.dispatch(EditExpense(context: context, expense: expense));
-            break;
-          case EntityAction.clone:
-            store.dispatch(
-                EditExpense(context: context, expense: expense.clone));
-            break;
-          case EntityAction.newInvoice:
-            final item = convertExpenseToInvoiceItem(expense: expense);
-            store.dispatch(EditInvoice(
-                invoice: InvoiceEntity(company: state.selectedCompany)
-                    .rebuild((b) => b
-                      ..hasExpenses = true
-                      ..clientId = expense.clientId
-                      ..invoiceItems.add(item)),
-                context: context));
-            break;
-          case EntityAction.viewInvoice:
-            store.dispatch(
-                ViewInvoice(invoiceId: expense.invoiceId, context: context));
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestoreExpenseRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).restoredExpense),
-                expense.id));
-            break;
-          case EntityAction.archive:
-            store.dispatch(ArchiveExpenseRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).archivedExpense),
-                expense.id));
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeleteExpenseRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).deletedExpense),
-                expense.id));
-            break;
-        }
-      },
+      onEntityAction:
+          (BuildContext context, BaseEntity expense, EntityAction action) =>
+              handleExpenseAction(context, expense, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
