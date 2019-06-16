@@ -20,17 +20,11 @@ class ProgressButton extends StatelessWidget {
     return Padding(
       padding: padding ?? EdgeInsets.only(left: 16.0, right: 16.0, top: 2.0),
       child: isLoading
-          ? SizedBox(
-              width: 100.0,
-              child: Center(
-                child: SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: CircularProgressIndicator(
-                      //valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      //strokeWidth: 2.0,
-                      ),
-                ),
+          ? Center(
+              child: SizedBox(
+                height: 48,
+                width: 48,
+                child: CircularProgressIndicator(),
               ),
             )
           : ElevatedButton(
