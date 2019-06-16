@@ -4,11 +4,13 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-void showEntityActionsDialog(
-    {@required BuildContext context,
-    @required BaseEntity entity,
-    @required UserEntity user,
-    @required Function onEntityAction}) async {
+void showEntityActionsDialog({
+  @required BuildContext context,
+  @required BaseEntity entity,
+  @required UserEntity user,
+  @required Function(BuildContext, BaseEntity, EntityAction) onEntityAction,
+  ClientEntity client,
+}) async {
   if (entity == null) {
     return;
   }
@@ -18,7 +20,7 @@ void showEntityActionsDialog(
       builder: (BuildContext dialogContext) {
         final actions = <Widget>[];
         actions.addAll(entity
-            .getActions(user: user, includeEdit: true)
+            .getActions(user: user, includeEdit: true, client: client)
             .map((entityAction) {
           if (entityAction == null) {
             return Divider();
@@ -43,7 +45,7 @@ class EntityActionListTile extends StatelessWidget {
   final BaseEntity entity;
   final EntityAction entityAction;
   final BuildContext mainContext;
-  final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, BaseEntity, EntityAction) onEntityAction;
 
   @override
   Widget build(BuildContext context) {

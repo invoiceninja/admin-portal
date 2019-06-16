@@ -136,7 +136,7 @@ class _ProductEditState extends State<ProductEdit> {
                 : ActionMenuButton(
                     user: viewModel.company.user,
                     entity: viewModel.product,
-                    onSelected: viewModel.onActionSelected,
+                    onSelected: viewModel.onEntityAction,
                     entityActions: product.getActions(user: user),
                   )
           ],

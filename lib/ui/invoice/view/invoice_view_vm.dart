@@ -162,7 +162,7 @@ class InvoiceViewVM extends EntityViewVM {
                 user: state.selectedCompany.user,
                 context: context,
                 entity: client,
-                onEntityAction: (BuildContext context, ClientEntity client,
+                onEntityAction: (BuildContext context, BaseEntity client,
                         EntityAction action) =>
                     handleClientAction(context, client, action));
           } else {

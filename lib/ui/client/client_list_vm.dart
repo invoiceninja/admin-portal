@@ -79,7 +79,7 @@ class ClientListVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction:
-          (BuildContext context, ClientEntity client, EntityAction action) =>
+          (BuildContext context, BaseEntity client, EntityAction action) =>
           handleClientAction(context, client, action),
     );
   }
