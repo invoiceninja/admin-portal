@@ -43,7 +43,7 @@ class _InvoiceViewState extends State<InvoiceView> {
     final payments = memoizedPaymentsByInvoice(
         invoice.id, state.paymentState.map, state.paymentState.list);
 
-    List<Widget> _buildView() {
+    List<Widget> _buildView(BuildContext context) {
       final user = widget.viewModel.company.user;
       final color = invoice.isPastDue
           ? Colors.red
@@ -267,7 +267,7 @@ class _InvoiceViewState extends State<InvoiceView> {
               child: Container(
                 color: Theme.of(context).backgroundColor,
                 child: ListView(
-                  children: _buildView(),
+                  children: _buildView(context),
                 ),
               ),
             );

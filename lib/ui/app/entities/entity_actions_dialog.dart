@@ -12,6 +12,7 @@ void showEntityActionsDialog(
   if (entity == null) {
     return;
   }
+  final mainContext = context;
   showDialog<String>(
       context: context,
       builder: (BuildContext dialogContext) {
@@ -25,7 +26,7 @@ void showEntityActionsDialog(
             return EntityActionListTile(
               entity: entity,
               entityAction: entityAction,
-              mainContext: context,
+              mainContext: mainContext,
               onEntityAction: onEntityAction,
             );
           }
