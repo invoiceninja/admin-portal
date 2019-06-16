@@ -59,7 +59,6 @@ class ClientList extends StatelessWidget {
                       user: user,
                       onEntityAction: viewModel.onEntityAction);
                 } else {
-                  Navigator.of(context).pop();
                   viewModel.onEntityAction(context, client, action);
                 }
               },
