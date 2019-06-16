@@ -114,6 +114,7 @@ class InvoiceViewVM extends EntityViewVM {
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
+    final user = state.user;
     final invoice = state.invoiceState.map[state.invoiceUIState.selectedId] ??
         InvoiceEntity(id: state.invoiceUIState.selectedId);
     final client = store.state.clientState.map[invoice.clientId] ??
@@ -169,7 +170,7 @@ class InvoiceViewVM extends EntityViewVM {
       onPaymentPressed: (BuildContext context, payment, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: state.selectedCompany.user,
+              user: user,
               context: context,
               client: client,
               entity: payment,

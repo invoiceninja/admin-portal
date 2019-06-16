@@ -79,6 +79,12 @@ class ExpenseOverview extends StatelessWidget {
                 onLongPress: () =>
                     viewModel.onEntityPressed(context, EntityType.vendor, true),
               ),
+        vendor == null
+            ? SizedBox()
+            : Container(
+                color: Theme.of(context).backgroundColor,
+                height: 12.0,
+              ),
         client == null
             ? SizedBox()
             : EntityListTile(
@@ -89,6 +95,12 @@ class ExpenseOverview extends StatelessWidget {
                 onLongPress: () =>
                     viewModel.onEntityPressed(context, EntityType.client, true),
               ),
+        client == null
+            ? SizedBox()
+            : Container(
+                color: Theme.of(context).backgroundColor,
+                height: 12.0,
+              ),
         invoice == null
             ? SizedBox()
             : EntityListTile(
@@ -98,6 +110,12 @@ class ExpenseOverview extends StatelessWidget {
                     viewModel.onEntityPressed(context, EntityType.invoice),
                 onLongPress: () => viewModel.onEntityPressed(
                     context, EntityType.invoice, true),
+              ),
+        invoice == null
+            ? SizedBox()
+            : Container(
+                color: Theme.of(context).backgroundColor,
+                height: 12.0,
               ),
       ],
     );

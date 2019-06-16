@@ -27,7 +27,7 @@ class EntityListTile extends StatelessWidget {
             onLongPress: onLongPress,
           ),
         ),
-        Divider(height: 10),
+        Divider(height: 1),
       ],
     );
   }

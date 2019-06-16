@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ class ExpenseViewVM {
 
   factory ExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
+    final user = state.user;
     final expense = state.expenseState.map[state.expenseUIState.selectedId] ??
         ExpenseEntity(id: state.expenseUIState.selectedId);
     final vendor = state.vendorState.map[expense.vendorId];
@@ -102,17 +104,30 @@ class ExpenseViewVM {
             break;
           case EntityType.client:
             if (longPress) {
-              store.dispatch(EditClient(context: context, client: client));
+              showEntityActionsDialog(
+                  user: user,
+                  context: context,
+                  entity: client,
+                  onEntityAction: (BuildContext context, BaseEntity client,
+                          EntityAction action) =>
+                      handleClientAction(context, client, action));
             } else {
-              store.dispatch(ViewClient(context: context, clientId: client.id));
+              store.dispatch(ViewClient(clientId: client.id, context: context));
             }
             break;
           case EntityType.invoice:
             if (longPress) {
-              store.dispatch(EditInvoice(context: context, invoice: invoice));
+              showEntityActionsDialog(
+                  user: user,
+                  context: context,
+                  entity: invoice,
+                  client: client,
+                  onEntityAction: (BuildContext context, BaseEntity invoice,
+                          EntityAction action) =>
+                      handleInvoiceAction(context, invoice, action));
             } else {
               store.dispatch(
-                  ViewInvoice(context: context, invoiceId: invoice.id));
+                  ViewInvoice(invoiceId: invoice.id, context: context));
             }
             break;
         }
