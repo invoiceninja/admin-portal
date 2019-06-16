@@ -24,8 +24,8 @@ class ProgressButton extends StatelessWidget {
               width: 100.0,
               child: Center(
                 child: SizedBox(
-                  height: 32.0,
-                  width: 32.0,
+                  height: 40,
+                  width: 40,
                   child: CircularProgressIndicator(
                       //valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       //strokeWidth: 2.0,
