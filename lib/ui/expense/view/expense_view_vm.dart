@@ -97,9 +97,15 @@ class ExpenseViewVM {
         switch (entityType) {
           case EntityType.vendor:
             if (longPress) {
-              store.dispatch(EditVendor(context: context, vendor: vendor));
+              showEntityActionsDialog(
+                  user: user,
+                  context: context,
+                  entity: vendor,
+                  onEntityAction: (BuildContext context, BaseEntity vendor,
+                      EntityAction action) =>
+                      handleVendorAction(context, vendor, action));
             } else {
-              store.dispatch(ViewVendor(context: context, vendorId: vendor.id));
+              store.dispatch(ViewClient(clientId: client.id, context: context));
             }
             break;
           case EntityType.client:
