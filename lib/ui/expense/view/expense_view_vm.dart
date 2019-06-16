@@ -67,63 +67,59 @@ class ExpenseViewVM {
     }
 
     return ExpenseViewVM(
-        state: state,
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: expense.isNew,
-        expense: expense,
-        onEditPressed: (BuildContext context) {
-          final Completer<ExpenseEntity> completer = Completer<ExpenseEntity>();
-          store.dispatch(EditExpense(
-              expense: expense, context: context, completer: completer));
-          completer.future.then((expense) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).updatedExpense,
-            )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(ExpenseScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
-          }
-        },
-        onEntityPressed: (BuildContext context, EntityType entityType,
-            [longPress = false]) {
-          switch (entityType) {
-            case EntityType.vendor:
-              if (longPress) {
-                store.dispatch(EditVendor(context: context, vendor: vendor));
-              } else {
-                store.dispatch(
-                    ViewVendor(context: context, vendorId: vendor.id));
-              }
-              break;
-            case EntityType.client:
-              if (longPress) {
-                store.dispatch(EditClient(context: context, client: client));
-              } else {
-                store.dispatch(
-                    ViewClient(context: context, clientId: client.id));
-              }
-              break;
-            case EntityType.invoice:
-              if (longPress) {
-                store.dispatch(EditInvoice(context: context, invoice: invoice));
-              } else {
-                store.dispatch(
-                    ViewInvoice(context: context, invoiceId: invoice.id));
-              }
-              break;
-          }
-        },
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: expense.isNew,
+      expense: expense,
+      onEditPressed: (BuildContext context) {
+        final Completer<ExpenseEntity> completer = Completer<ExpenseEntity>();
+        store.dispatch(EditExpense(
+            expense: expense, context: context, completer: completer));
+        completer.future.then((expense) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedExpense,
+          )));
+        });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(ExpenseScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
+        }
+      },
+      onEntityPressed: (BuildContext context, EntityType entityType,
+          [longPress = false]) {
+        switch (entityType) {
+          case EntityType.vendor:
+            if (longPress) {
+              store.dispatch(EditVendor(context: context, vendor: vendor));
+            } else {
+              store.dispatch(ViewVendor(context: context, vendorId: vendor.id));
+            }
+            break;
+          case EntityType.client:
+            if (longPress) {
+              store.dispatch(EditClient(context: context, client: client));
+            } else {
+              store.dispatch(ViewClient(context: context, clientId: client.id));
+            }
+            break;
+          case EntityType.invoice:
+            if (longPress) {
+              store.dispatch(EditInvoice(context: context, invoice: invoice));
+            } else {
+              store.dispatch(
+                  ViewInvoice(context: context, invoiceId: invoice.id));
+            }
+            break;
+        }
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleExpenseAction(context, expense, action),
-
-
-        );
+    );
   }
 
   final AppState state;

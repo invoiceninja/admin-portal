@@ -66,41 +66,40 @@ class ProjectViewVM {
     }
 
     return ProjectViewVM(
-        state: state,
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: project.isNew,
-        project: project,
-        client: client,
-        onEditPressed: (BuildContext context) {
-          store.dispatch(EditProject(project: project, context: context));
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onClientPressed: (BuildContext context, [bool longPress = false]) =>
-            store.dispatch(longPress
-                ? EditClient(client: client, context: context)
-                : ViewClient(clientId: project.clientId, context: context)),
-        onTasksPressed: (BuildContext context) {
-          store.dispatch(FilterTasksByEntity(
-              entityId: project.id, entityType: EntityType.project));
-          store.dispatch(ViewTaskList(context));
-        },
-        onAddTaskPressed: (context) => store.dispatch(EditTask(
-            context: context,
-            task: TaskEntity(isRunning: state.uiState.autoStartTasks)
-                .rebuild((b) => b
-                  ..projectId = project.id
-                  ..clientId = project.clientId))),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
-          }
-        },
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: project.isNew,
+      project: project,
+      client: client,
+      onEditPressed: (BuildContext context) {
+        store.dispatch(EditProject(project: project, context: context));
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onClientPressed: (BuildContext context, [bool longPress = false]) =>
+          store.dispatch(longPress
+              ? EditClient(client: client, context: context)
+              : ViewClient(clientId: project.clientId, context: context)),
+      onTasksPressed: (BuildContext context) {
+        store.dispatch(FilterTasksByEntity(
+            entityId: project.id, entityType: EntityType.project));
+        store.dispatch(ViewTaskList(context));
+      },
+      onAddTaskPressed: (context) => store.dispatch(EditTask(
+          context: context,
+          task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+              .rebuild((b) => b
+                ..projectId = project.id
+                ..clientId = project.clientId))),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
+        }
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleProjectAction(context, project, action),
-
-        );
+    );
   }
 
   final AppState state;

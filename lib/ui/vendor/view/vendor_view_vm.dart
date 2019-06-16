@@ -64,53 +64,52 @@ class VendorViewVM {
     }
 
     return VendorViewVM(
-        state: state,
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: vendor.isNew,
-        vendor: vendor,
-        onEditPressed: (BuildContext context) {
-          final Completer<VendorEntity> completer = Completer<VendorEntity>();
-          store.dispatch(EditVendor(
-              vendor: vendor, context: context, completer: completer));
-          completer.future.then((client) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).updatedVendor,
-            )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(VendorScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(VendorScreen.route));
-          }
-        },
-        onEntityPressed: (BuildContext context, EntityType entityType,
-            [longPress = false]) {
-          switch (entityType) {
-            case EntityType.expense:
-              if (longPress) {
-                store.dispatch(EditExpense(
-                    context: context,
-                    expense: ExpenseEntity(
-                        company: state.selectedCompany, vendor: vendor)));
-              } else {
-                store.dispatch(FilterExpensesByEntity(
-                    entityId: vendor.id, entityType: EntityType.vendor));
-                store.dispatch(ViewExpenseList(context));
-              }
-              break;
-          }
-        },
-        onAddExpensePressed: (context) => store.dispatch(EditExpense(
-            expense: ExpenseEntity(company: company, vendor: vendor),
-            context: context)),
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: vendor.isNew,
+      vendor: vendor,
+      onEditPressed: (BuildContext context) {
+        final Completer<VendorEntity> completer = Completer<VendorEntity>();
+        store.dispatch(
+            EditVendor(vendor: vendor, context: context, completer: completer));
+        completer.future.then((client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedVendor,
+          )));
+        });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(VendorScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(VendorScreen.route));
+        }
+      },
+      onEntityPressed: (BuildContext context, EntityType entityType,
+          [longPress = false]) {
+        switch (entityType) {
+          case EntityType.expense:
+            if (longPress) {
+              store.dispatch(EditExpense(
+                  context: context,
+                  expense: ExpenseEntity(
+                      company: state.selectedCompany, vendor: vendor)));
+            } else {
+              store.dispatch(FilterExpensesByEntity(
+                  entityId: vendor.id, entityType: EntityType.vendor));
+              store.dispatch(ViewExpenseList(context));
+            }
+            break;
+        }
+      },
+      onAddExpensePressed: (context) => store.dispatch(EditExpense(
+          expense: ExpenseEntity(company: company, vendor: vendor),
+          context: context)),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleVendorAction(context, vendor, action),
-
-        );
+    );
   }
 
   final AppState state;

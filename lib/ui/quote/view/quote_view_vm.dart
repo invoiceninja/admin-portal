@@ -80,39 +80,38 @@ class QuoteViewVM extends EntityViewVM {
     }
 
     return QuoteViewVM(
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isDirty: quote.isNew,
-        invoice: quote,
-        client: client,
-        onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
-          final Completer<InvoiceEntity> completer =
-              new Completer<InvoiceEntity>();
-          store.dispatch(EditQuote(
-              quote: quote,
-              context: context,
-              completer: completer,
-              quoteItem: invoiceItem));
-          completer.future.then((invoice) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).updatedQuote,
-            )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
-          }
-        },
-        onClientPressed: (BuildContext context, [bool longPress = false]) =>
-            store.dispatch(longPress
-                ? EditClient(client: client, context: context)
-                : ViewClient(clientId: client.id, context: context)),
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isDirty: quote.isNew,
+      invoice: quote,
+      client: client,
+      onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
+        final Completer<InvoiceEntity> completer =
+            new Completer<InvoiceEntity>();
+        store.dispatch(EditQuote(
+            quote: quote,
+            context: context,
+            completer: completer,
+            quoteItem: invoiceItem));
+        completer.future.then((invoice) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedQuote,
+          )));
+        });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
+        }
+      },
+      onClientPressed: (BuildContext context, [bool longPress = false]) =>
+          store.dispatch(longPress
+              ? EditClient(client: client, context: context)
+              : ViewClient(clientId: client.id, context: context)),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleQuoteAction(context, quote, action),
-
-        );
+    );
   }
 }

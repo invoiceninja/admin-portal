@@ -308,11 +308,10 @@ void handleTaskAction(
     case EntityAction.newInvoice:
       final item = convertTaskToInvoiceItem(task: task, context: context);
       store.dispatch(EditInvoice(
-          invoice:
-              InvoiceEntity(company: company).rebuild((b) => b
-                ..hasTasks = true
-                ..clientId = task.clientId
-                ..invoiceItems.add(item)),
+          invoice: InvoiceEntity(company: company).rebuild((b) => b
+            ..hasTasks = true
+            ..clientId = task.clientId
+            ..invoiceItems.add(item)),
           context: context));
       break;
     case EntityAction.viewInvoice:
@@ -323,18 +322,15 @@ void handleTaskAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTaskRequest(
-          snackBarCompleter(context, localization.restoredTask),
-          task.id));
+          snackBarCompleter(context, localization.restoredTask), task.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTaskRequest(
-          snackBarCompleter(context, localization.archivedTask),
-          task.id));
+          snackBarCompleter(context, localization.archivedTask), task.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTaskRequest(
-          snackBarCompleter(context, localization.deletedTask),
-          task.id));
+          snackBarCompleter(context, localization.deletedTask), task.id));
       break;
   }
 }

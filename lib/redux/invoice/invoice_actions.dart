@@ -351,8 +351,7 @@ void handleInvoiceAction(
       break;
     case EntityAction.enterPayment:
       store.dispatch(EditPayment(
-          context: context,
-          payment: invoice.createPayment(company)));
+          context: context, payment: invoice.createPayment(company)));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreInvoiceRequest(

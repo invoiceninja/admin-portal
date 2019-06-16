@@ -96,64 +96,60 @@ class TaskViewVM {
     }
 
     return TaskViewVM(
-        state: state,
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: task.isNew,
-        task: task,
-        client: client,
-        project: project,
-        onFabPressed: (BuildContext context) => _toggleTask(context),
-        onClientPressed: (context, [longPress = false]) {
-          if (longPress) {
-            store.dispatch(EditClient(client: client, context: context));
-          } else {
-            store.dispatch(ViewClient(clientId: client.id, context: context));
-          }
-        },
-        onProjectPressed: (context, [longPress = false]) {
-          if (longPress) {
-            store.dispatch(EditProject(project: project, context: context));
-          } else {
-            store
-                .dispatch(ViewProject(projectId: project.id, context: context));
-          }
-        },
-        onInvoicePressed: (context, [longPress = false]) {
-          if (longPress) {
-            store.dispatch(EditInvoice(invoice: invoice, context: context));
-          } else {
-            store
-                .dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
-          }
-        },
-        onEditPressed: (BuildContext context, [TaskTime taskTime]) {
-          final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-          store.dispatch(EditTask(
-            task: task,
-            taskTime: taskTime,
-            context: context,
-            completer: completer,
-          ));
-          completer.future.then((task) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).updatedTask,
-            )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(TaskScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(TaskScreen.route));
-          }
-        },
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: task.isNew,
+      task: task,
+      client: client,
+      project: project,
+      onFabPressed: (BuildContext context) => _toggleTask(context),
+      onClientPressed: (context, [longPress = false]) {
+        if (longPress) {
+          store.dispatch(EditClient(client: client, context: context));
+        } else {
+          store.dispatch(ViewClient(clientId: client.id, context: context));
+        }
+      },
+      onProjectPressed: (context, [longPress = false]) {
+        if (longPress) {
+          store.dispatch(EditProject(project: project, context: context));
+        } else {
+          store.dispatch(ViewProject(projectId: project.id, context: context));
+        }
+      },
+      onInvoicePressed: (context, [longPress = false]) {
+        if (longPress) {
+          store.dispatch(EditInvoice(invoice: invoice, context: context));
+        } else {
+          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+        }
+      },
+      onEditPressed: (BuildContext context, [TaskTime taskTime]) {
+        final Completer<TaskEntity> completer = new Completer<TaskEntity>();
+        store.dispatch(EditTask(
+          task: task,
+          taskTime: taskTime,
+          context: context,
+          completer: completer,
+        ));
+        completer.future.then((task) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedTask,
+          )));
+        });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(TaskScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(TaskScreen.route));
+        }
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleTaskAction(context, task, action),
-
-
-        );
+    );
   }
 
   final AppState state;
