@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -155,10 +156,19 @@ class InvoiceViewVM extends EntityViewVM {
             store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
           }
         },
-        onClientPressed: (BuildContext context, [bool longPress = false]) =>
-            store.dispatch(longPress
-                ? EditClient(client: client, context: context)
-                : ViewClient(clientId: client.id, context: context)),
+        onClientPressed: (BuildContext context, [bool longPress = false]) {
+          if (longPress) {
+            showEntityActionsDialog(
+                user: state.selectedCompany.user,
+                context: context,
+                entity: client,
+                onEntityAction: (BuildContext context, ClientEntity client,
+                        EntityAction action) =>
+                    handleClientAction(client, action, context));
+          } else {
+            store.dispatch(ViewClient(clientId: client.id, context: context));
+          }
+        },
         onPaymentPressed: (BuildContext context, PaymentEntity payment,
                 [bool longPress = false]) =>
             store.dispatch(longPress

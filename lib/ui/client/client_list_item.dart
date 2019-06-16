@@ -59,11 +59,11 @@ class ClientListItem extends StatelessWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
+                  filterMatch != null ? Text(
                     filterMatch,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                  ),
+                  ) : SizedBox(),
                   EntityStateLabel(client),
                 ],
               ),
