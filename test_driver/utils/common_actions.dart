@@ -17,16 +17,16 @@ Future<void> login(FlutterDriver driver,
     await driver.tap(find.byValueKey(LoginKeys.loginSelfHost));
   }
 
-  await driver.tap(find.byValueKey(LoginKeys.email));
-  await driver.enterText(loginEmail);
-  await driver.tap(find.byValueKey(LoginKeys.password));
-  await driver.enterText(loginPassword);
+  await fillTextFields(driver, <String, dynamic>{
+    LoginKeys.email: loginEmail,
+    LoginKeys.password: loginPassword,
+  });
 
   if (selfHosted) {
-    await driver.tap(find.byValueKey(LoginKeys.url));
-    await driver.enterText(loginUrl);
-    await driver.tap(find.byValueKey(LoginKeys.secret));
-    await driver.enterText(loginSecret);
+    await fillTextFields(driver, <String, dynamic>{
+      LoginKeys.url: loginUrl,
+      LoginKeys.secret: loginSecret,
+    });
   }
 
   await driver.tap(find.text(LoginKeys.loginButton.toUpperCase()));
@@ -55,4 +55,19 @@ Future<void> loginAndOpenProducts(FlutterDriver driver) async {
   await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
   await driver.tap(find.byValueKey(ProductKeys.drawer));
   await driver.waitFor(find.byType(ProductKeys.screen));
+}
+
+Future<void> loginAndOpenClients(FlutterDriver driver) async {
+  login(driver);
+  await driver.waitFor(find.byType(AppKeys.dashboardScreen));
+  await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
+  await driver.tap(find.byValueKey(ClientKeys.drawer));
+  await driver.waitFor(find.byType(ClientKeys.screen));
+}
+
+Future<void> fillTextFields(FlutterDriver driver, Map<String, dynamic> values) async {
+  for (var entry in values.entries) {
+    await driver.tap(find.byValueKey(entry.key));
+    await driver.enterText(entry.value);
+  }
 }
