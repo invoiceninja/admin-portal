@@ -29,7 +29,7 @@ class InvoiceList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: invoice
-                    .getEntityActions(
+                    .getActions(
                         user: user, client: client, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {

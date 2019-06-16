@@ -47,7 +47,7 @@ class ProductList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: product
-                    .getEntityActions(user: user, includeEdit: true)
+                    .getActions(user: user, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {
                 return Divider();

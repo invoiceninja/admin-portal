@@ -389,7 +389,8 @@ abstract class InvoiceEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions(
+  @override
+  List<EntityAction> getActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
@@ -437,7 +438,7 @@ abstract class InvoiceEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   InvoiceEntity applyTax(TaxRateEntity taxRate, {bool isSecond = false}) {

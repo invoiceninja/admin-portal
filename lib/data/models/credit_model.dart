@@ -98,10 +98,12 @@ abstract class CreditEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   int get clientId;
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  @override
+  List<EntityAction> getActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   int compareTo(CreditEntity credit, String sortField, bool sortAscending) {

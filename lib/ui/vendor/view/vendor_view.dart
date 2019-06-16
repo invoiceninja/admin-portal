@@ -148,7 +148,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 isSaving: viewModel.isSaving,
                 entity: vendor,
                 onSelected: viewModel.onActionSelected,
-                entityActions: viewModel.vendor.getEntityActions(user: user),
+                entityActions: viewModel.vendor.getActions(user: user),
               )
             ],
     );

@@ -205,7 +205,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                   label: localization.remove,
                   onPressed: () {
                     widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
-                    Navigator.pop(context);
+                    Navigator.of(context).pop();
                   },
                 ),
                 SizedBox(

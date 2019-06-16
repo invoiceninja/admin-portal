@@ -354,7 +354,8 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'task_status_sort_order')
   int get taskStatusSortOrder;
 
-  List<EntityAction> getEntityActions(
+  @override
+  List<EntityAction> getActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
@@ -386,7 +387,7 @@ abstract class TaskEntity extends Object
 
     actions.add(null);
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   int compareTo(TaskEntity task, String sortField, bool sortAscending) {

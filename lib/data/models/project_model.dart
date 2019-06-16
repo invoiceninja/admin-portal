@@ -104,7 +104,8 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  List<EntityAction> getEntityActions(
+  @override
+  List<EntityAction> getActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
@@ -118,7 +119,7 @@ abstract class ProjectEntity extends Object
       null,
     ]);
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   int compareTo(ProjectEntity project, String sortField, bool sortAscending) {

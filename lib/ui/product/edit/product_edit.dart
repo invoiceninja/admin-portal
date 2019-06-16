@@ -137,7 +137,7 @@ class _ProductEditState extends State<ProductEdit> {
                     user: viewModel.company.user,
                     entity: viewModel.product,
                     onSelected: viewModel.onActionSelected,
-                    entityActions: product.getEntityActions(user: user),
+                    entityActions: product.getActions(user: user),
                   )
           ],
         ),

@@ -28,7 +28,7 @@ class TaskList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: task
-                    .getEntityActions(
+                    .getActions(
                         user: user, client: client, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {

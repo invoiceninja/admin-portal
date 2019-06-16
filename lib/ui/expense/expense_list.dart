@@ -27,7 +27,7 @@ class ExpenseList extends StatelessWidget {
         context: context,
         builder: (BuildContext dialogContext) => SimpleDialog(
                 children: expense
-                    .getEntityActions(user: user, includeEdit: true)
+                    .getActions(user: user, includeEdit: true)
                     .map((entityAction) {
               if (entityAction == null) {
                 return Divider();

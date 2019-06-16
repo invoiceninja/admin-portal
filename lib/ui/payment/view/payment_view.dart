@@ -71,7 +71,7 @@ class _PaymentViewState extends State<PaymentView> {
                     isSaving: viewModel.isSaving,
                     entity: payment,
                     onSelected: viewModel.onActionSelected,
-                    entityActions: viewModel.payment.getEntityActions(
+                    entityActions: viewModel.payment.getActions(
                         user: viewModel.company.user, client: client),
                   )
                 ],

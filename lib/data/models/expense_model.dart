@@ -196,8 +196,9 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  List<EntityAction> getEntityActions(
-      {UserEntity user, bool includeEdit = false}) {
+  @override
+  List<EntityAction> getActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (includeEdit && user.canEditEntity(this)) {
@@ -218,7 +219,7 @@ abstract class ExpenseEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {

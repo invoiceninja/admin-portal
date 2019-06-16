@@ -156,7 +156,8 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'vendor_contacts')
   BuiltList<VendorContactEntity> get contacts;
 
-  List<EntityAction> getEntityActions(
+  @override
+  List<EntityAction> getActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
@@ -172,7 +173,7 @@ abstract class VendorEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   int compareTo(VendorEntity vendor, String sortField, bool sortAscending) {

@@ -141,8 +141,10 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
-  List<EntityAction> getBaseActions({UserEntity user}) {
+  List<EntityAction> getActions({UserEntity user, bool includeEdit = false}) {
     final actions = <EntityAction>[];
+
+
 
     if (user.canEditEntity(this) && (isArchived || isDeleted)) {
       actions.add(EntityAction.restore);
