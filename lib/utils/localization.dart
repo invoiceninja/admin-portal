@@ -11,6 +11,10 @@ class AppLocalization extends LocaleCodeAware with LocalizationsProvider {
   final Locale locale;
 
   static Locale createLocale(String locale) {
+    if (!kLanguages.contains(locale)) {
+      return Locale('en');
+    }
+
     final parts = locale.split('_');
     return Locale(parts[0], parts.length > 1 ? parts[1] : null);
   }

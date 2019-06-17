@@ -40,21 +40,17 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
-
-//import 'package:quick_actions/quick_actions.dart';
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
