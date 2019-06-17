@@ -78,37 +78,9 @@ class StubListVM {
         onStubTap: (context, stub) {
           store.dispatch(ViewStub(stubId: stub.id, context: context));
         },
-        onEntityAction: (context, stub, action) {
-          switch (action) {
-          case EntityAction.edit:
-              store.dispatch(
-                  EditStub(context: context, stub: stub));
-              break;
-            case EntityAction.clone:
-              Navigator.of(context).pop();
-              store.dispatch(
-                  EditStub(context: context, stub: stub.clone));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreStubRequest(
-                  snackBarCompleter(
-                      context, AppLocalization.of(context).restoredStub),
-                  stub.id));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveStubRequest(
-                  snackBarCompleter(
-                      context, AppLocalization.of(context).archivedStub),
-                  stub.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteStubRequest(
-                  snackBarCompleter(
-                      context, AppLocalization.of(context).deletedStub),
-                  stub.id));
-              break;
-          }
-        },
+      onEntityAction:
+          (BuildContext context, BaseEntity stub, EntityAction action) =>
+          handleStubAction(context, stub, action),
         onRefreshed: (context) => _handleRefresh(context),
     );
   }

@@ -86,7 +86,10 @@ ListUIState _filterStubsByState(
 }
 
 ListUIState _filterStubs(ListUIState stubListState, FilterStubs action) {
-  return stubListState.rebuild((b) => b..filter = action.filter);
+  return stubListState.rebuild((b) => b..filter = action.filter
+  ..filterClearedAt = action.filter == null
+       ? DateTime.now().millisecondsSinceEpoch
+       : stubListState.filterClearedAt);
 }
 
 ListUIState _sortStubs(ListUIState stubListState, SortStubs action) {

@@ -3,6 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class ViewStubList implements PersistUI {
   ViewStubList(this.context);
@@ -223,4 +227,31 @@ class FilterStubsByEntity implements PersistUI {
 
   final int entityId;
   final EntityType entityType;
+}
+
+
+void handleStubAction(
+    BuildContext context, StubEntity entity, EntityAction action) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final CompanyEntity company = state.selectedCompany;
+  final localization = AppLocalization.of(context);
+
+  switch (action) {
+    case EntityAction.edit:
+      store.dispatch(EditStub(context: context, stub: stub));
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreStubRequest(
+          snackBarCompleter(context, localization.restoredStub), stub.id));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveStubRequest(
+          snackBarCompleter(context, localization.archivedStub), stub.id));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteStubRequest(
+          snackBarCompleter(context, localization.deletedStub), stub.id));
+      break;
+  }
 }
