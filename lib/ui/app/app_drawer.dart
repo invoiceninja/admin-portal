@@ -155,6 +155,7 @@ class AppDrawer extends StatelessWidget {
                 )
               : Container(),
           DrawerTile(
+            key: Key(ClientKeys.drawer),
             company: company,
             entityType: EntityType.client,
             icon: getEntityIcon(EntityType.client),

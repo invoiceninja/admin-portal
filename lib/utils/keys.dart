@@ -29,6 +29,12 @@ class ProductKeys {
   static const String filter = 'productFilter';
 }
 
+class ClientKeys {
+  static const String screen = 'ClientScreen';
+  static const String fab = 'clientFab';
+  static const String drawer = 'clientDrawer';
+}
+
 class SettingsKeys {
   static const String drawer = 'settingsDrawer';
 }

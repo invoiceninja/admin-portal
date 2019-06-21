@@ -13,10 +13,6 @@ Future<void> login(FlutterDriver driver,
     String loginUrl = Config.TEST_URL,
     String loginSecret = Config.TEST_SECRET
   }) async {
-  if (selfHosted && !retype) {
-    await driver.tap(find.byValueKey(LoginKeys.loginSelfHost));
-  }
-
   await fillTextFields(driver, <String, dynamic>{
     LoginKeys.email: loginEmail,
     LoginKeys.password: loginPassword,
