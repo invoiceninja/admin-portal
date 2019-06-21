@@ -51,12 +51,11 @@ void main() {
     test('Add a new product', () async {
       await driver.tap(find.byValueKey(ProductKeys.fab));
 
-      await driver.tap(find.byValueKey(ProductKeys.productKey));
-      await driver.enterText(productKey);
-      await driver.tap(find.byValueKey(ProductKeys.notes));
-      await driver.enterText(notes);
-      await driver.tap(find.byValueKey(ProductKeys.cost));
-      await driver.enterText(cost);
+      await fillTextFields(driver, <String, dynamic>{
+        ProductKeys.productKey: productKey,
+        ProductKeys.notes: notes,
+        ProductKeys.cost: cost,
+      });
 
       await driver.tap(find.byTooltip(localization.save));
 
@@ -79,12 +78,11 @@ void main() {
       await driver.scrollUntilVisible(find.byType('ListView'), find.text(productKey));
       await driver.tap(find.text(productKey), timeout: Duration(seconds: 3));
 
-      await driver.tap(find.byValueKey(ProductKeys.productKey));
-      await driver.enterText(updatedProductKey);
-      await driver.tap(find.byValueKey(ProductKeys.notes));
-      await driver.enterText(updatedNotes);
-      await driver.tap(find.byValueKey(ProductKeys.cost));
-      await driver.enterText(updatedCost);
+      await fillTextFields(driver, <String, dynamic>{
+        ProductKeys.productKey: updatedProductKey,
+        ProductKeys.notes: updatedNotes,
+        ProductKeys.cost: updatedCost,
+      });
 
       await driver.tap(find.byTooltip(localization.save));
 
