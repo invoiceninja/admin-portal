@@ -146,14 +146,12 @@ class AppDrawer extends StatelessWidget {
               ],
             )),
           ),
-          user.isAdmin
-              ? DrawerTile(
-                  company: company,
-                  icon: FontAwesomeIcons.tachometerAlt,
-                  title: localization.dashboard,
-                  onTap: () => store.dispatch(ViewDashboard(context)),
-                )
-              : Container(),
+          DrawerTile(
+            company: company,
+            icon: FontAwesomeIcons.tachometerAlt,
+            title: localization.dashboard,
+            onTap: () => store.dispatch(ViewDashboard(context)),
+          ),
           DrawerTile(
             key: Key(ClientKeys.drawer),
             company: company,
