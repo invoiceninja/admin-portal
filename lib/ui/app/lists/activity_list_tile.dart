@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -100,12 +99,6 @@ class ActivityListTile extends StatelessWidget {
               showTime: true)),
           (activity.notes ?? '').isNotEmpty
               ? Text(' • ${localization.lookup(activity.notes)}')
-              : Container(),
-          (activity.isSystem ?? false)
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Icon(FontAwesomeIcons.server),
-                )
               : Container(),
         ],
       ),

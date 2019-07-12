@@ -88,7 +88,6 @@ class AppDrawer extends StatelessWidget {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
     final state = store.state;
-    final user = state.user;
     final enableDarkMode = state.uiState.enableDarkMode;
     final company = viewModel.selectedCompany;
     final localization = AppLocalization.of(context);
