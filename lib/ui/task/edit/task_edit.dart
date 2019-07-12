@@ -43,7 +43,7 @@ class _TaskEditState extends State<TaskEdit>
     final index =
         task.taskTimes.contains(taskTime) ? kTimesScreen : kDetailsScreen;
 
-    _controller = TabController(vsync: this, length: 3, initialIndex: index);
+    _controller = TabController(vsync: this, length: 2, initialIndex: index);
   }
 
   @override

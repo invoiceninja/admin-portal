@@ -26,7 +26,7 @@ class _ExpenseViewState extends State<ExpenseView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override

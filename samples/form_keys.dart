@@ -130,6 +130,7 @@ class ClientPageState extends State<ClientPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FormCard(
       children: <Widget>[
         TextFormField(
@@ -200,6 +201,7 @@ class ContactsPageState extends State<ContactsPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final List<Widget> items = [];
 
     for (var i = 0; i < _contacts.length; i++) {
