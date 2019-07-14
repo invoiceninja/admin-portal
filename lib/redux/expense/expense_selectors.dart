@@ -41,31 +41,46 @@ List<int> dropdownExpensesSelector(BuiltMap<int, ExpenseEntity> expenseMap,
   return list;
 }
 
-var memoizedFilteredExpenseList = memo3(
-    (BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList,
+var memoizedFilteredExpenseList = memo5(
+    (BuiltMap<int, ExpenseEntity> expenseMap,
+            BuiltMap<int, ClientEntity> clientMap,
+            BuiltMap<int, VendorEntity> vendorMap,
+            BuiltList<int> expenseList,
             ListUIState expenseListState) =>
-        filteredExpensesSelector(expenseMap, expenseList, expenseListState));
+        filteredExpensesSelector(
+            expenseMap, clientMap, vendorMap, expenseList, expenseListState));
 
-List<int> filteredExpensesSelector(BuiltMap<int, ExpenseEntity> expenseMap,
-    BuiltList<int> expenseList, ListUIState expenseListState) {
+List<int> filteredExpensesSelector(
+    BuiltMap<int, ExpenseEntity> expenseMap,
+    BuiltMap<int, ClientEntity> clientMap,
+    BuiltMap<int, VendorEntity> vendorMap,
+    BuiltList<int> expenseList,
+    ListUIState expenseListState) {
   final list = expenseList.where((expenseId) {
     final expense = expenseMap[expenseId];
+    final vendor =
+        vendorMap[expense.vendorId] ?? VendorEntity(id: expense.vendorId);
+    final client =
+        clientMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
+
+    if (expenseListState.filterEntityType != null) {
+      if (expenseListState.filterEntityType == EntityType.client &&
+          expense.clientId != expenseListState.filterEntityId) {
+        return false;
+      } else if (expenseListState.filterEntityType == EntityType.vendor &&
+          expense.vendorId != expenseListState.filterEntityId) {
+        return false;
+      }
+    } else if (expense.vendorId != null && !vendor.isActive) {
+      return false;
+    } else if (expense.clientId != null && !client.isActive) {
+      return false;
+    }
+
     if (!expense.matchesStates(expenseListState.stateFilters)) {
       return false;
     }
     if (!expense.matchesStatuses(expenseListState.statusFilters)) {
-      return false;
-    }
-
-    if (expenseListState.filterEntityId != null &&
-        expenseListState.filterEntityType == EntityType.client &&
-        expense.clientId != expenseListState.filterEntityId) {
-      return false;
-    }
-
-    if (expenseListState.filterEntityId != null &&
-        expenseListState.filterEntityType == EntityType.vendor &&
-        expense.vendorId != expenseListState.filterEntityId) {
       return false;
     }
 
@@ -77,12 +92,6 @@ List<int> filteredExpensesSelector(BuiltMap<int, ExpenseEntity> expenseMap,
         !expenseListState.custom2Filters.contains(expense.customValue2)) {
       return false;
     }
-    /*
-    if (expenseListState.filterEntityId != null &&
-        expense.entityId != expenseListState.filterEntityId) {
-      return false;
-    }
-    */
     return expense.matchesFilter(expenseListState.filter);
   }).toList();
 

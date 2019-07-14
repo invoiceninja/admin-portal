@@ -67,6 +67,7 @@ class ExpenseListVM {
       user: state.user,
       listState: state.expenseListState,
       expenseList: memoizedFilteredExpenseList(state.expenseState.map,
+          state.clientState.map, state.vendorState.map,
           state.expenseState.list, state.expenseListState),
       expenseMap: state.expenseState.map,
       isLoading: state.isLoading,

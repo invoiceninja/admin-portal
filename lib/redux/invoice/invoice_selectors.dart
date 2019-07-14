@@ -58,9 +58,15 @@ List<int> filteredInvoicesSelector(
     final invoice = invoiceMap[invoiceId];
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    if (client == null || !client.isActive) {
+
+    if (invoiceListState.filterEntityId != null) {
+      if (!invoiceListState.entityMatchesFilter(client)) {
+        return false;
+      }
+    } else if (!client.isActive) {
       return false;
     }
+
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
       return false;
     }
@@ -69,10 +75,6 @@ List<int> filteredInvoicesSelector(
     }
     if (!invoice.matchesFilter(invoiceListState.filter) &&
         !client.matchesFilter(invoiceListState.filter)) {
-      return false;
-    }
-    if (invoiceListState.filterEntityId != null &&
-        invoice.clientId != invoiceListState.filterEntityId) {
       return false;
     }
     if (invoiceListState.custom1Filters.isNotEmpty &&

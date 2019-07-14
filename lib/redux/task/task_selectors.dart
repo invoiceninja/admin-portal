@@ -107,7 +107,12 @@ List<int> filteredTasksSelector(
           task.projectId != taskListState.filterEntityId) {
         return false;
       }
+    } else if (task.clientId != null && !client.isActive) {
+      return false;
+    } else if (task.projectId != null && !project.isActive) {
+      return false;
     }
+
     if (taskListState.custom1Filters.isNotEmpty &&
         !taskListState.custom1Filters.contains(task.customValue1)) {
       return false;

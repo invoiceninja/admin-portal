@@ -31,29 +31,21 @@ List<int> filteredVendorsSelector(BuiltMap<int, VendorEntity> vendorMap,
     BuiltList<int> vendorList, ListUIState vendorListState) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
+
     if (!vendor.matchesStates(vendorListState.stateFilters)) {
       return false;
     }
-    /*
-    if (vendorListState.filterEntityId != null &&
-        vendor.clientId != vendorListState.filterEntityId) {
-      return false;
-    }
-    */
+
     if (vendorListState.custom1Filters.isNotEmpty &&
         !vendorListState.custom1Filters.contains(vendor.customValue1)) {
       return false;
     }
+
     if (vendorListState.custom2Filters.isNotEmpty &&
         !vendorListState.custom2Filters.contains(vendor.customValue2)) {
       return false;
     }
-    /*
-    if (vendorListState.filterEntityId != null &&
-        vendor.entityId != vendorListState.filterEntityId) {
-      return false;
-    }
-    */
+
     return vendor.matchesFilter(vendorListState.filter);
   }).toList();
 

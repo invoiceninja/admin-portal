@@ -20,6 +20,7 @@ class VendorListItem extends StatelessWidget {
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
+
   //final ValueChanged<bool> onCheckboxChanged;
   final VendorEntity vendor;
   final String filter;
@@ -70,11 +71,12 @@ class VendorListItem extends StatelessWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    filterMatch,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  if (filterMatch != null)
+                    Text(
+                      filterMatch,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   EntityStateLabel(vendor),
                 ],
               ),

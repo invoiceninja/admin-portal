@@ -22,9 +22,15 @@ List<int> filteredQuotesSelector(
   final list = quoteList.where((quoteId) {
     final quote = quoteMap[quoteId];
     final client = clientMap[quote.clientId];
-    if (client == null || !client.isActive) {
+
+    if (quoteListState.filterEntityId != null) {
+      if (!quoteListState.entityMatchesFilter(client)) {
+        return false;
+      }
+    } else if (!client.isActive) {
       return false;
     }
+
     if (!quote.matchesStates(quoteListState.stateFilters)) {
       return false;
     }
@@ -33,10 +39,6 @@ List<int> filteredQuotesSelector(
     }
     if (!quote.matchesFilter(quoteListState.filter) &&
         !client.matchesFilter(quoteListState.filter)) {
-      return false;
-    }
-    if (quoteListState.filterEntityId != null &&
-        quote.clientId != quoteListState.filterEntityId) {
       return false;
     }
     if (quoteListState.custom1Filters.isNotEmpty &&

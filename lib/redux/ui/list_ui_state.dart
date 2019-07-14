@@ -19,6 +19,7 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
       custom2Filters: BuiltList<String>(),
     );
   }
+
   ListUIState._();
 
   @nullable
@@ -32,17 +33,29 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   @nullable
   EntityType get filterEntityType;
 
+  bool entityMatchesFilter(BaseEntity entity) {
+    return filterEntityId == entity.id && filterEntityType == entity.entityType;
+  }
+
   String get sortField;
+
   bool get sortAscending;
+
   BuiltList<EntityState> get stateFilters;
+
   BuiltList<EntityStatus> get statusFilters;
+
   BuiltList<String> get custom1Filters;
+
   BuiltList<String> get custom2Filters;
 
   bool get hasStateFilters =>
       stateFilters.length != 1 || stateFilters.first != EntityState.active;
+
   bool get hasStatusFilters => statusFilters.isNotEmpty;
+
   bool get hasCustom1Filters => custom1Filters.isNotEmpty;
+
   bool get hasCustom2Filters => custom2Filters.isNotEmpty;
 
   //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;

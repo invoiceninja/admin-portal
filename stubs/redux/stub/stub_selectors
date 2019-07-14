@@ -37,15 +37,16 @@ List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
     BuiltList<int> stubList, ListUIState stubListState) {
   final list = stubList.where((stubId) {
     final stub = stubMap[stubId];
+    if (stubListState.filterEntityId != null &&
+        stub.entityId != stubListState.filterEntityId) {
+      return false;
+    } else {
+
+    }
+    
     if (!stub.matchesStates(stubListState.stateFilters)) {
       return false;
     }
-    /*
-    if (stubListState.filterEntityId != null &&
-        stub.clientId != stubListState.filterEntityId) {
-      return false;
-    }
-    */
     if (stubListState.custom1Filters.isNotEmpty &&
         !stubListState.custom1Filters.contains(stub.customValue1)) {
       return false;
@@ -54,12 +55,6 @@ List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
         !stubListState.custom2Filters.contains(stub.customValue2)) {
       return false;
     }
-    /*
-    if (stubListState.filterEntityId != null &&
-        stub.entityId != stubListState.filterEntityId) {
-      return false;
-    }
-    */
     return stub.matchesFilter(stubListState.filter);
   }).toList();
 
