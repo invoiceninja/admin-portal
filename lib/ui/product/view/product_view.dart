@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
@@ -117,7 +115,6 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final user = viewModel.company.user;
     final product = viewModel.product;
 
