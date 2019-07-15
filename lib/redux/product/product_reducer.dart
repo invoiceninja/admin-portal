@@ -9,7 +9,8 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 EntityUIState productUIReducer(ProductUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)));
+    ..editing.replace(editingReducer(state.editing, action))
+    ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
 Reducer<String> dropdownFilterReducer = combineReducers([
@@ -39,6 +40,13 @@ ProductEntity _clearEditing(ProductEntity client, dynamic action) {
 ProductEntity _updateEditing(ProductEntity client, dynamic action) {
   return action.product;
 }
+
+Reducer<int> selectedIdReducer = combineReducers([
+  TypedReducer<int, ViewProduct>(
+          (int selectedId, dynamic action) => action.productId),
+  TypedReducer<int, AddProductSuccess>(
+          (int selectedId, dynamic action) => action.product.id),
+]);
 
 final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortProducts>(_sortProducts),
