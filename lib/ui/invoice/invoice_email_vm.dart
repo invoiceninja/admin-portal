@@ -21,8 +21,7 @@ class InvoiceEmailScreen extends StatelessWidget {
         final state = store.state;
         final invoiceId = state.uiState.invoiceUIState.selectedId;
         final invoice = state.invoiceState.map[invoiceId];
-        final client = state.clientState.map[invoice.clientId] ??
-            ClientEntity(id: invoice.clientId);
+        final client = state.clientState.get(invoice.clientId);
         if (client.areActivitiesStale) {
           store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
         }

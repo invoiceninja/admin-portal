@@ -24,6 +24,14 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   BuiltMap<int, ClientEntity> get map;
   BuiltList<int> get list;
 
+  ClientEntity get(int clientId) {
+    if (map.containsKey(clientId)) {
+      return map[clientId];
+    } else {
+      return ClientEntity(id: clientId);
+    }
+  }
+
   bool get isStale {
     if (!isLoaded) {
       return true;

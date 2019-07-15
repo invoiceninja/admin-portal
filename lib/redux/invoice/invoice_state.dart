@@ -25,6 +25,14 @@ abstract class InvoiceState
 
   BuiltMap<int, InvoiceEntity> get map;
 
+  InvoiceEntity get(int invoiceId) {
+    if (map.containsKey(invoiceId)) {
+      return map[invoiceId];
+    } else {
+      return InvoiceEntity(id: invoiceId);
+    }
+  }
+
   BuiltList<int> get list;
 
   bool get isStale {

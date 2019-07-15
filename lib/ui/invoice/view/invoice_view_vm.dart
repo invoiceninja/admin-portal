@@ -115,10 +115,8 @@ class InvoiceViewVM extends EntityViewVM {
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final user = state.user;
-    final invoice = state.invoiceState.map[state.invoiceUIState.selectedId] ??
-        InvoiceEntity(id: state.invoiceUIState.selectedId);
-    final client = store.state.clientState.map[invoice.clientId] ??
-        ClientEntity(id: invoice.clientId);
+    final invoice = state.invoiceState.get(state.invoiceUIState.selectedId);
+    final client = state.clientState.get(invoice.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -167,7 +165,8 @@ class InvoiceViewVM extends EntityViewVM {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
       },
-      onPaymentPressed: (BuildContext context, payment, [bool longPress = false]) {
+      onPaymentPressed: (BuildContext context, payment,
+          [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
               user: user,
@@ -175,7 +174,7 @@ class InvoiceViewVM extends EntityViewVM {
               client: client,
               entity: payment,
               onEntityAction: (BuildContext context, BaseEntity payment,
-                  EntityAction action) =>
+                      EntityAction action) =>
                   handlePaymentAction(context, payment, action));
         } else {
           store.dispatch(ViewPayment(paymentId: payment.id, context: context));
