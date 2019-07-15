@@ -67,7 +67,7 @@ CompanyEntity loadCompanySuccessReducer(
       )));
   }
 
-  return action.company.rebuild((b) => b
+  return company.rebuild((b) => b
     ..userMap.addAll(Map.fromIterable(
       action.company.users,
       key: (dynamic item) => item.id,

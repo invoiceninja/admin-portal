@@ -1,3 +1,5 @@
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -36,6 +38,10 @@ class TaskListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
+    final CompanyEntity company = state.selectedCompany;
+    final taskStatus = company.taskStatusMap[task.taskStatusId];
+
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? task.matchesFilterValue(filter)
@@ -107,7 +113,9 @@ class TaskListItem extends StatelessWidget {
                         ? localization.invoiced
                         : task.isRunning
                             ? localization.running
-                            : localization.logged,
+                            : taskStatus != null
+                                ? taskStatus.name
+                                : localization.logged,
                     style: TextStyle(
                       color: task.isInvoiced
                           ? Colors.green
