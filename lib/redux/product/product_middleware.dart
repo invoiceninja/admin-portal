@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
+import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -13,6 +14,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   ProductRepository repository = const ProductRepository(),
 ]) {
   final viewProductList = _viewProductList();
+  final viewProduct = _viewProduct();
   final editProduct = _editProduct();
   final loadProducts = _loadProducts(repository);
   final saveProduct = _saveProduct(repository);
@@ -22,6 +24,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 
   return [
     TypedMiddleware<AppState, ViewProductList>(viewProductList),
+    TypedMiddleware<AppState, ViewProduct>(viewProduct),
     TypedMiddleware<AppState, EditProduct>(editProduct),
     TypedMiddleware<AppState, LoadProducts>(loadProducts),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
@@ -37,6 +40,15 @@ Middleware<AppState> _editProduct() {
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
     Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+  };
+}
+
+Middleware<AppState> _viewProduct() {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
+    Navigator.of(action.context).pushNamed(ProductViewScreen.route);
   };
 }
 

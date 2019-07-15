@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:sentry/sentry.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -290,6 +291,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
               }
               return ProductScreen();
             },
+            ProductViewScreen.route: (context) => ProductViewScreen(),
             ProductEditScreen.route: (context) => ProductEditScreen(),
             ClientScreen.route: (context) {
               if (widget.store.state.clientState.isStale) {

@@ -16,11 +16,20 @@ class ViewProductList implements PersistUI {
   final BuildContext context;
 }
 
+class ViewProduct implements PersistUI {
+  ViewProduct({this.productId, this.context});
+
+  final int productId;
+  final BuildContext context;
+}
+
 class EditProduct implements PersistUI {
-  EditProduct({this.product, this.context});
+  EditProduct({this.product, this.context, this.completer});
 
   final ProductEntity product;
   final BuildContext context;
+  final Completer completer;
+
 }
 
 class UpdateProduct implements PersistUI {

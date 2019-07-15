@@ -64,7 +64,7 @@ class ProductListVM {
       isLoaded: state.productState.isLoaded,
       filter: state.productUIState.listUIState.filter,
       onProductTap: (context, product) {
-        store.dispatch(EditProduct(product: product, context: context));
+        store.dispatch(ViewProduct(productId: product.id, context: context));
       },
       onEntityAction:
           (BuildContext context, BaseEntity product, EntityAction action) =>

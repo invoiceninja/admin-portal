@@ -47,9 +47,9 @@ class ProductFields {
 abstract class ProductEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ProductEntity, ProductEntityBuilder> {
-  factory ProductEntity() {
+  factory ProductEntity({int id}) {
     return _$ProductEntity._(
-      id: --ProductEntity.counter,
+      id: id ?? --ProductEntity.counter,
       productKey: '',
       notes: '',
       cost: 0.0,
