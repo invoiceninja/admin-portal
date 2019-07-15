@@ -99,7 +99,7 @@ class _ProjectViewState extends State<ProjectView> {
           title: localization.tasks,
           onTap: () => viewModel.onTasksPressed(context),
           subtitle: memoizedTaskStatsForProject(
-              client.id,
+              project.id,
               viewModel.state.taskState.map,
               localization.active,
               localization.archived),
