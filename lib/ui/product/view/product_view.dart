@@ -94,7 +94,10 @@ class _ProductViewState extends State<ProductView>
             ),
             Padding(
               padding: EdgeInsets.all(16),
-              child: Text(product.notes),
+              child: Text(
+                product.notes,
+                style: TextStyle(fontSize: 16),
+              ),
             ),
           ],
         ),
