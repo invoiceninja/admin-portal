@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductView extends StatefulWidget {
@@ -38,11 +42,38 @@ class _ProductViewState extends State<ProductView>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final product = viewModel.product;
     final company = viewModel.company;
-    final user = company.user;
+
+    String tax = '';
+    if (product.taxName1.isNotEmpty) {
+      tax += formatNumber(product.taxRate1, context,
+              formatNumberType: FormatNumberType.percent) +
+          ' ' +
+          product.taxName1;
+    }
+    if (product.taxName2.isNotEmpty) {
+      tax += ' ' +
+          formatNumber(product.taxRate2, context,
+              formatNumberType: FormatNumberType.percent) +
+          ' ' +
+          product.taxName2;
+    }
+
+    final fields = <String, String>{
+      localization.tax: tax,
+    };
+
+    if (product.customValue1.isNotEmpty) {
+      final label1 = company.getCustomFieldLabel(CustomFieldType.product1);
+      fields[label1] = product.customValue1;
+    }
+
+    if (product.customValue2.isNotEmpty) {
+      final label2 = company.getCustomFieldLabel(CustomFieldType.product2);
+      fields[label2] = product.customValue2;
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -53,7 +84,22 @@ class _ProductViewState extends State<ProductView>
         appBar: _CustomAppBar(
           viewModel: viewModel,
         ),
-        body: Text('test'),
+        body: ListView(
+          children: <Widget>[
+            OneValueHeader(
+              label: localization.cost,
+              value: formatNumber(product.cost, context),
+            ),
+            FieldGrid(fields),
+            Divider(
+              height: 1.0,
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(product.notes),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
+import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -63,13 +67,27 @@ class ProductEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        store.dispatch(SaveProductRequest(
-            completer: snackBarCompleter(
-                context,
-                product.isNew
-                    ? AppLocalization.of(context).createdProduct
-                    : AppLocalization.of(context).updatedProduct),
-            product: product));
+        final Completer<ProductEntity> completer =
+        new Completer<ProductEntity>();
+        store.dispatch(
+            SaveProductRequest(completer: completer, product: product));
+        return completer.future.then((_) {
+          return completer.future.then((savedProduct) {
+            store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
+            if (product.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(ProductViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedProduct);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
+        });
       },
       onEntityAction: (BuildContext context, EntityAction action) {
         // TODO Add view page for products
