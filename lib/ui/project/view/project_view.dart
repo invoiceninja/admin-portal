@@ -98,6 +98,7 @@ class _ProjectViewState extends State<ProjectView> {
           icon: getEntityIcon(EntityType.task),
           title: localization.tasks,
           onTap: () => viewModel.onTasksPressed(context),
+          onLongPress: () => viewModel.onTasksPressed(context, longPress: true),
           subtitle: memoizedTaskStatsForProject(
               project.id,
               viewModel.state.taskState.map,

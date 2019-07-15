@@ -184,7 +184,10 @@ class EntityListTile extends StatelessWidget {
             onLongPress: onLongPress,
           ),
         ),
-        Divider(),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
+        ),
       ],
     );
   }

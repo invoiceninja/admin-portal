@@ -85,16 +85,24 @@ class ProjectViewVM {
               context: context,
               entity: client,
               onEntityAction: (BuildContext context, BaseEntity client,
-                  EntityAction action) =>
+                      EntityAction action) =>
                   handleClientAction(context, client, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
       },
-      onTasksPressed: (BuildContext context) {
-        store.dispatch(FilterTasksByEntity(
-            entityId: project.id, entityType: EntityType.project));
-        store.dispatch(ViewTaskList(context));
+      onTasksPressed: (BuildContext context, {bool longPress = false}) {
+        if (longPress) {
+          store.dispatch(EditTask(
+              task: TaskEntity().rebuild((b) => b
+                ..projectId = project.id
+                ..clientId = project.clientId),
+              context: context));
+        } else {
+          store.dispatch(FilterTasksByEntity(
+              entityId: project.id, entityType: EntityType.project));
+          store.dispatch(ViewTaskList(context));
+        }
       },
       onAddTaskPressed: (context) => store.dispatch(EditTask(
           context: context,
@@ -121,7 +129,7 @@ class ProjectViewVM {
   final Function(BuildContext, [bool]) onClientPressed;
   final Function onBackPressed;
   final Function(BuildContext) onAddTaskPressed;
-  final Function(BuildContext) onTasksPressed;
+  final Function(BuildContext, {bool longPress}) onTasksPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;
