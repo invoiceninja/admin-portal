@@ -203,7 +203,7 @@ abstract class ErrorMessage
 abstract class LoginResponse
     implements Built<LoginResponse, LoginResponseBuilder> {
   factory LoginResponse([void updates(LoginResponseBuilder b)]) =
-      _$LoginResponse;
+  _$LoginResponse;
 
   LoginResponse._();
 
@@ -218,7 +218,7 @@ abstract class LoginResponse
 abstract class LoginResponseData
     implements Built<LoginResponseData, LoginResponseDataBuilder> {
   factory LoginResponseData([void updates(LoginResponseDataBuilder b)]) =
-      _$LoginResponseData;
+  _$LoginResponseData;
 
   LoginResponseData._();
 
@@ -265,7 +265,7 @@ abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
 abstract class DashboardResponse
     implements Built<DashboardResponse, DashboardResponseBuilder> {
   factory DashboardResponse([void updates(DashboardResponseBuilder b)]) =
-      _$DashboardResponse;
+  _$DashboardResponse;
 
   DashboardResponse._();
 
@@ -299,7 +299,7 @@ class CustomFieldType {
 abstract class DashboardEntity
     implements Built<DashboardEntity, DashboardEntityBuilder> {
   factory DashboardEntity([void updates(DashboardEntityBuilder b)]) =
-      _$DashboardEntity;
+  _$DashboardEntity;
 
   DashboardEntity._();
 
@@ -312,7 +312,7 @@ abstract class DashboardEntity
 abstract class ActivityEntity
     implements Built<ActivityEntity, ActivityEntityBuilder> {
   factory ActivityEntity([void updates(ActivityEntityBuilder b)]) =
-      _$ActivityEntity;
+  _$ActivityEntity;
 
   ActivityEntity._();
 
@@ -384,8 +384,7 @@ abstract class ActivityEntity
     }
   }
 
-  String getDescription(
-    String activity, {
+  String getDescription(String activity, {
     UserEntity user,
     ClientEntity client,
     InvoiceEntity invoice,
@@ -397,6 +396,11 @@ abstract class ActivityEntity
     ExpenseEntity expense,
     VendorEntity vendor,
   }) {
+    // TODO remove this in v2
+    if (activityTypeId == 10 && contactId == null) {
+      activity = activity.replaceFirst(':contact', ':user');
+    }
+
     activity = activity.replaceFirst(':user', user?.fullName ?? '');
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
