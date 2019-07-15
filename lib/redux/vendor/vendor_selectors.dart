@@ -59,19 +59,22 @@ List<int> filteredVendorsSelector(BuiltMap<int, VendorEntity> vendorMap,
   return list;
 }
 
-var memoizedCalculateVendorBalance = memo3((int vendorId,
+var memoizedCalculateVendorBalance = memo4((int vendorId, int currencyId,
         BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList) =>
-    calculateVendorBalance(vendorId, expenseMap, expenseList));
+    calculateVendorBalance(vendorId, currencyId, expenseMap, expenseList));
 
-double calculateVendorBalance(int vendorId,
+double calculateVendorBalance(int vendorId, int currencyId,
     BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList) {
   double total = 0;
 
   expenseList.forEach((expenseId) {
     final expense = expenseMap[expenseId] ?? ExpenseEntity();
-    if (expense.vendorId == vendorId && expense.isActive) {
+    if (expense.vendorId == vendorId &&
+        expense.isActive &&
+        (currencyId == 0 || expense.expenseCurrencyId == currencyId)) {
       total += expense.amountWithTax;
     }
   });
+
   return total;
 }

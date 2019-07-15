@@ -48,12 +48,12 @@ class VendorOverview extends StatelessWidget {
     return ListView(
       children: <Widget>[
         OneValueHeader(
-          label: localization.balance,
+          label: localization.total,
           value: formatNumber(
-              memoizedCalculateVendorBalance(
-                  vendor.id, state.expenseState.map, state.expenseState.list),
+              memoizedCalculateVendorBalance(vendor.id, vendor.currencyId,
+                  state.expenseState.map, state.expenseState.list),
               context,
-              currencyId: vendor.currencyId),
+              currencyId: vendor.currencyId ?? company.currencyId),
         ),
         vendor.privateNotes != null && vendor.privateNotes.isNotEmpty
             ? IconMessage(vendor.privateNotes)
