@@ -43,7 +43,7 @@ List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
     } else {
 
     }
-    
+
     if (!stub.matchesStates(stubListState.stateFilters)) {
       return false;
     }
