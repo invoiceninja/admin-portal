@@ -131,14 +131,6 @@ class _ProductEditState extends State<ProductEdit> {
                 },
               );
             }),
-            product.isNew || !user.canCreate(EntityType.product)
-                ? Container()
-                : ActionMenuButton(
-                    user: viewModel.company.user,
-                    entity: viewModel.product,
-                    onSelected: viewModel.onEntityAction,
-                    entityActions: product.getActions(user: user),
-                  )
           ],
         ),
         body: Form(
