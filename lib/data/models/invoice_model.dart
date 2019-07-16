@@ -394,7 +394,7 @@ abstract class InvoiceEntity extends Object
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this)) {
+    if (includeEdit && user.canEditEntity(this) && !isDeleted) {
       actions.add(EntityAction.edit);
     }
 
