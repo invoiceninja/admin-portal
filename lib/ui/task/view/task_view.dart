@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
@@ -93,7 +94,10 @@ class _TaskViewState extends State<TaskView> {
           Material(
             color: Theme.of(context).canvasColor,
             child: ListTile(
-              title: Text(client.displayName),
+              title: EntityStateTitle(
+                title: client.displayName,
+                state: client.entityState,
+              ),
               leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onClientPressed(context),
@@ -112,7 +116,10 @@ class _TaskViewState extends State<TaskView> {
           Material(
             color: Theme.of(context).canvasColor,
             child: ListTile(
-              title: Text(project.name),
+              title: EntityStateTitle(
+                title: project.name,
+                state: project.entityState,
+              ),
               leading: Icon(getEntityIcon(EntityType.project), size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onProjectPressed(context),
@@ -131,7 +138,10 @@ class _TaskViewState extends State<TaskView> {
           Material(
             color: Theme.of(context).canvasColor,
             child: ListTile(
-              title: Text(invoice.invoiceNumber),
+              title: EntityStateTitle(
+                title: invoice.invoiceNumber,
+                state: invoice.entityState,
+              ),
               leading: Icon(getEntityIcon(EntityType.invoice), size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onInvoicePressed(context),
@@ -234,7 +244,10 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text(AppLocalization.of(context).task),
+      title: EntityStateTitle(
+        title: AppLocalization.of(context).task,
+        state: task.entityState,
+      ),
       actions: task.isNew
           ? []
           : [

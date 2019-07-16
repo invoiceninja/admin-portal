@@ -1,7 +1,7 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
@@ -71,13 +71,20 @@ class ExpenseOverview extends StatelessWidget {
         ),
         vendor == null
             ? SizedBox()
-            : EntityListTile(
-                icon: getEntityIcon(EntityType.vendor),
-                title: vendor.name,
-                onTap: () =>
-                    viewModel.onEntityPressed(context, EntityType.vendor),
-                onLongPress: () =>
-                    viewModel.onEntityPressed(context, EntityType.vendor, true),
+            : Material(
+                color: Theme.of(context).canvasColor,
+                child: ListTile(
+                  title: EntityStateTitle(
+                    title: vendor.name,
+                    state: vendor.entityState,
+                  ),
+                  leading: Icon(getEntityIcon(EntityType.vendor), size: 18),
+                  trailing: Icon(Icons.navigate_next),
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.vendor),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.vendor, true),
+                ),
               ),
         vendor == null
             ? SizedBox()
@@ -87,13 +94,20 @@ class ExpenseOverview extends StatelessWidget {
               ),
         client == null
             ? SizedBox()
-            : EntityListTile(
-                icon: getEntityIcon(EntityType.client),
-                title: client.listDisplayName,
-                onTap: () =>
-                    viewModel.onEntityPressed(context, EntityType.client),
-                onLongPress: () =>
-                    viewModel.onEntityPressed(context, EntityType.client, true),
+            : Material(
+                color: Theme.of(context).canvasColor,
+                child: ListTile(
+                  title: EntityStateTitle(
+                    title: client.listDisplayName,
+                    state: client.entityState,
+                  ),
+                  leading: Icon(getEntityIcon(EntityType.client), size: 18),
+                  trailing: Icon(Icons.navigate_next),
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.client),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.client, true),
+                ),
               ),
         client == null
             ? SizedBox()
@@ -103,13 +117,20 @@ class ExpenseOverview extends StatelessWidget {
               ),
         invoice == null
             ? SizedBox()
-            : EntityListTile(
-                icon: getEntityIcon(EntityType.invoice),
-                title: '${localization.invoice} ${invoice.invoiceNumber}',
-                onTap: () =>
-                    viewModel.onEntityPressed(context, EntityType.invoice),
-                onLongPress: () => viewModel.onEntityPressed(
-                    context, EntityType.invoice, true),
+            : Material(
+                color: Theme.of(context).canvasColor,
+                child: ListTile(
+                  title: EntityStateTitle(
+                    title: '${localization.invoice} ${invoice.invoiceNumber}',
+                    state: invoice.entityState,
+                  ),
+                  leading: Icon(getEntityIcon(EntityType.invoice), size: 18),
+                  trailing: Icon(Icons.navigate_next),
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.invoice),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.invoice, true),
+                ),
               ),
         invoice == null
             ? SizedBox()

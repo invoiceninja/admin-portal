@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
@@ -83,7 +84,8 @@ class _ProjectViewState extends State<ProjectView> {
         Material(
           color: Theme.of(context).canvasColor,
           child: ListTile(
-            title: Text(client.displayName),
+            title: EntityStateTitle(
+                title: client.displayName, state: client.entityState),
             leading: Icon(FontAwesomeIcons.users, size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onClientPressed(context),
@@ -176,7 +178,10 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text(project.name),
+      title: EntityStateTitle(
+        title: project.name,
+        state: project.entityState,
+      ),
       actions: project.isNew
           ? []
           : [

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
@@ -54,9 +55,12 @@ class _PaymentViewState extends State<PaymentView> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(payment.transactionReference.isNotEmpty
-              ? payment.transactionReference
-              : localization.payment),
+          title: EntityStateTitle(
+            title: payment.transactionReference.isNotEmpty
+                ? payment.transactionReference
+                : localization.payment,
+            state: payment.entityState,
+          ),
           actions: payment.isNew
               ? []
               : [
@@ -99,7 +103,10 @@ class _PaymentViewState extends State<PaymentView> {
             Material(
               color: Theme.of(context).canvasColor,
               child: ListTile(
-                title: Text(client.displayName ?? ''),
+                title: EntityStateTitle(
+                  title: client.displayName,
+                  state: client.entityState,
+                ),
                 leading: Icon(FontAwesomeIcons.users, size: 18.0),
                 trailing: Icon(Icons.navigate_next),
                 onTap: () => viewModel.onClientPressed(context),
@@ -113,7 +120,10 @@ class _PaymentViewState extends State<PaymentView> {
             Material(
               color: Theme.of(context).canvasColor,
               child: ListTile(
-                title: Text('${localization.invoice} ${invoice.invoiceNumber}'),
+                title: EntityStateTitle(
+                  title: '${localization.invoice} ${invoice.invoiceNumber}',
+                  state: invoice.entityState,
+                ),
                 leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
                 trailing: Icon(Icons.navigate_next),
                 onTap: () => viewModel.onInvoicePressed(context),

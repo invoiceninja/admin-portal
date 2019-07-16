@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/stub/view/stub_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 
 class StubView extends StatefulWidget {
 
@@ -25,7 +26,7 @@ class _StubViewState extends State<StubView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(stub.name),
+        title: EntityStateTitle(stub.name),
         actions: stub.isNew
             ? []
             : [

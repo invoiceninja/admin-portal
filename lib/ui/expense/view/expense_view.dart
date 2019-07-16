@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
@@ -130,9 +131,13 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text(expense.publicNotes.isNotEmpty
-          ? expense.publicNotes
-          : localization.expense), // Text(localizations.expenseDetails),
+      title: EntityStateTitle(
+        title: expense.publicNotes.isNotEmpty
+            ? expense.publicNotes
+            : localization.expense,
+        state: expense.entityState,
+      ),
+      // Text(localizations.expenseDetails),
       bottom: TabBar(
         controller: controller,
         tabs: [

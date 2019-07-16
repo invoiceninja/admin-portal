@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_status_title.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 
 class InvoiceView extends StatefulWidget {
   const InvoiceView({
