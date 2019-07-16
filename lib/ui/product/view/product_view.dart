@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_title.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -122,7 +123,10 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final product = viewModel.product;
 
     return AppBar(
-      title: Text(product.productKey),
+      title: EntityStateTitle(
+        title: product.productKey,
+        state: product.entityState,
+      ),
       actions: [
         user.canEditEntity(product)
             ? EditIconButton(

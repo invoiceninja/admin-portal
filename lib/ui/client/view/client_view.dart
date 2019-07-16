@@ -261,7 +261,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: EntityStatusTitle(
+      title: EntityStateTitle(
           title: client.displayName, state: client.entityState),
       bottom: TabBar(
         controller: controller,

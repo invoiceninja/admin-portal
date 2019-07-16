@@ -103,7 +103,7 @@ class _InvoiceViewState extends State<InvoiceView> {
         Material(
           color: Theme.of(context).canvasColor,
           child: ListTile(
-            title: EntityStatusTitle(
+            title: EntityStateTitle(
                 title: client?.displayName, state: client.entityState),
             leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
             trailing: Icon(Icons.navigate_next),
@@ -124,7 +124,10 @@ class _InvoiceViewState extends State<InvoiceView> {
             Material(
               color: Theme.of(context).canvasColor,
               child: ListTile(
-                title: Text(localization.payment),
+                title: EntityStateTitle(
+                  title: localization.payment,
+                  state: payment.entityState,
+                ),
                 subtitle: Text(
                     formatNumber(payment.amount, context, clientId: client.id) +
                         ' • ' +
@@ -298,8 +301,11 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text(
-          '${invoice.isQuote ? localization.quote : localization.invoice} ${invoice.invoiceNumber}'),
+      title: EntityStateTitle(
+        title:
+            '${invoice.isQuote ? localization.quote : localization.invoice} ${invoice.invoiceNumber}',
+        state: invoice.entityState,
+      ),
       actions: invoice.isNew
           ? []
           : [
