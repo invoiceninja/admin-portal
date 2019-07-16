@@ -105,7 +105,7 @@ class ExpenseViewVM {
                       EntityAction action) =>
                       handleVendorAction(context, vendor, action));
             } else {
-              store.dispatch(ViewClient(clientId: client.id, context: context));
+              store.dispatch(ViewVendor(vendorId: vendor.id, context: context));
             }
             break;
           case EntityType.client:

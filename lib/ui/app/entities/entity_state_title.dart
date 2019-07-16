@@ -20,7 +20,7 @@ class EntityStateTitle extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        Expanded(child: Text(title ?? '')),
+        Expanded(child: Text(title ?? entity.listDisplayName)),
         SizedBox(width: 20),
         Container(
           height: 35,
