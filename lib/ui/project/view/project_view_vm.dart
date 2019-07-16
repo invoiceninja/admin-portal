@@ -92,7 +92,7 @@ class ProjectViewVM {
         }
       },
       onTasksPressed: (BuildContext context, {bool longPress = false}) {
-        if (longPress) {
+        if (longPress && project.isActive && client.isActive) {
           store.dispatch(EditTask(
               task: TaskEntity(isRunning: state.uiState.autoStartTasks)
                   .rebuild((b) => b

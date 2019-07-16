@@ -91,7 +91,7 @@ class VendorViewVM {
           [longPress = false]) {
         switch (entityType) {
           case EntityType.expense:
-            if (longPress) {
+            if (longPress && vendor.isActive) {
               store.dispatch(EditExpense(
                   context: context,
                   expense: ExpenseEntity(

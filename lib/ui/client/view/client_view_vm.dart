@@ -90,7 +90,7 @@ class ClientViewVM {
           [longPress = false]) {
         switch (entityType) {
           case EntityType.invoice:
-            if (longPress) {
+            if (longPress && client.isActive) {
               store.dispatch(EditInvoice(
                   context: context,
                   invoice: InvoiceEntity(company: state.selectedCompany)
@@ -102,7 +102,7 @@ class ClientViewVM {
             }
             break;
           case EntityType.quote:
-            if (longPress) {
+            if (longPress && client.isActive) {
               store.dispatch(EditQuote(
                   context: context,
                   quote: InvoiceEntity(
@@ -115,7 +115,7 @@ class ClientViewVM {
             }
             break;
           case EntityType.payment:
-            if (longPress) {
+            if (longPress && client.isActive) {
               store.dispatch(EditPayment(
                   context: context,
                   payment: PaymentEntity(company: state.selectedCompany)
@@ -127,7 +127,7 @@ class ClientViewVM {
             }
             break;
           case EntityType.project:
-            if (longPress) {
+            if (longPress && client.isActive) {
               store.dispatch(EditProject(
                   context: context,
                   project:
@@ -139,7 +139,7 @@ class ClientViewVM {
             }
             break;
           case EntityType.task:
-            if (longPress) {
+            if (longPress && client.isActive) {
               store.dispatch(EditTask(
                   context: context,
                   task: TaskEntity(isRunning: state.uiState.autoStartTasks)
@@ -151,7 +151,7 @@ class ClientViewVM {
             }
             break;
           case EntityType.expense:
-            if (longPress) {
+            if (longPress && client.isActive) {
               store.dispatch(EditExpense(
                   context: context,
                   expense: ExpenseEntity(
