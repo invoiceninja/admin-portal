@@ -71,60 +71,6 @@ class _ProjectViewState extends State<ProjectView> {
       fields[label2] = project.customValue2;
     }
 
-    List<Widget> _buildView() {
-      final widgets = <Widget>[
-        TwoValueHeader(
-          label1: localization.total,
-          value1: formatDuration(
-              taskDurationForProject(project, viewModel.state.taskState.map)),
-          label2: localization.budgeted,
-          value2: formatDuration(Duration(hours: project.budgetedHours.toInt()),
-              showSeconds: false),
-        ),
-        Material(
-          color: Theme.of(context).canvasColor,
-          child: ListTile(
-            title: EntityStateTitle(entity: client),
-            leading: Icon(FontAwesomeIcons.users, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () => viewModel.onClientPressed(context),
-            onLongPress: () => viewModel.onClientPressed(context, true),
-          ),
-        ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
-        EntityListTile(
-          icon: getEntityIcon(EntityType.task),
-          title: localization.tasks,
-          onTap: () => viewModel.onTasksPressed(context),
-          onLongPress: () => viewModel.onTasksPressed(context, longPress: true),
-          subtitle: memoizedTaskStatsForProject(
-              project.id,
-              viewModel.state.taskState.map,
-              localization.active,
-              localization.archived),
-        ),
-      ];
-
-      if (project.privateNotes != null && project.privateNotes.isNotEmpty) {
-        widgets.addAll([
-          IconMessage(project.privateNotes),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
-        ]);
-      }
-
-      widgets.addAll([
-        FieldGrid(fields),
-      ]);
-
-      return widgets;
-    }
-
     return WillPopScope(
       onWillPop: () async {
         viewModel.onBackPressed();
@@ -136,6 +82,63 @@ class _ProjectViewState extends State<ProjectView> {
         ),
         body: Builder(
           builder: (BuildContext context) {
+            List<Widget> _buildView() {
+              final widgets = <Widget>[
+                TwoValueHeader(
+                  label1: localization.total,
+                  value1: formatDuration(taskDurationForProject(
+                      project, viewModel.state.taskState.map)),
+                  label2: localization.budgeted,
+                  value2: formatDuration(
+                      Duration(hours: project.budgetedHours.toInt()),
+                      showSeconds: false),
+                ),
+                Material(
+                  color: Theme.of(context).canvasColor,
+                  child: ListTile(
+                    title: EntityStateTitle(entity: client),
+                    leading: Icon(FontAwesomeIcons.users, size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onClientPressed(context),
+                    onLongPress: () => viewModel.onClientPressed(context, true),
+                  ),
+                ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+                EntityListTile(
+                  icon: getEntityIcon(EntityType.task),
+                  title: localization.tasks,
+                  onTap: () => viewModel.onTasksPressed(context),
+                  onLongPress: () =>
+                      viewModel.onTasksPressed(context, longPress: true),
+                  subtitle: memoizedTaskStatsForProject(
+                      project.id,
+                      viewModel.state.taskState.map,
+                      localization.active,
+                      localization.archived),
+                ),
+              ];
+
+              if (project.privateNotes != null &&
+                  project.privateNotes.isNotEmpty) {
+                widgets.addAll([
+                  IconMessage(project.privateNotes),
+                  Container(
+                    color: Theme.of(context).backgroundColor,
+                    height: 12.0,
+                  ),
+                ]);
+              }
+
+              widgets.addAll([
+                FieldGrid(fields),
+              ]);
+
+              return widgets;
+            }
+
             return RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
               child: Container(
