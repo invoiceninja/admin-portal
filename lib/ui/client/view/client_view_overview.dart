@@ -70,6 +70,7 @@ class ClientOverview extends StatelessWidget {
           height: 1.0,
         ),
         EntityListTile(
+          bottomPadding: 1,
           icon: getEntityIcon(EntityType.invoice),
           title: localization.invoices,
           onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
@@ -82,6 +83,7 @@ class ClientOverview extends StatelessWidget {
               localization.archived),
         ),
         EntityListTile(
+          bottomPadding: 1,
           icon: getEntityIcon(EntityType.payment),
           title: localization.payments,
           onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
@@ -96,6 +98,7 @@ class ClientOverview extends StatelessWidget {
         ),
         company.isModuleEnabled(EntityType.quote)
             ? EntityListTile(
+                bottomPadding: 1,
                 icon: getEntityIcon(EntityType.quote),
                 title: localization.quotes,
                 onTap: () =>
@@ -111,6 +114,7 @@ class ClientOverview extends StatelessWidget {
             : Container(),
         company.isModuleEnabled(EntityType.project)
             ? EntityListTile(
+                bottomPadding: 1,
                 icon: getEntityIcon(EntityType.project),
                 title: localization.projects,
                 onTap: () =>
@@ -126,6 +130,7 @@ class ClientOverview extends StatelessWidget {
             : Container(),
         company.isModuleEnabled(EntityType.task)
             ? EntityListTile(
+                bottomPadding: 1,
                 icon: getEntityIcon(EntityType.task),
                 title: localization.tasks,
                 onTap: () =>
@@ -141,6 +146,7 @@ class ClientOverview extends StatelessWidget {
             : Container(),
         company.isModuleEnabled(EntityType.expense)
             ? EntityListTile(
+                bottomPadding: 1,
                 icon: getEntityIcon(EntityType.expense),
                 title: localization.expenses,
                 onTap: () =>
@@ -161,13 +167,19 @@ class ClientOverview extends StatelessWidget {
 
 class EntityListTile extends StatelessWidget {
   const EntityListTile(
-      {this.icon, this.onTap, this.onLongPress, this.title, this.subtitle});
+      {this.icon,
+      this.onTap,
+      this.onLongPress,
+      this.title,
+      this.subtitle,
+      this.bottomPadding = 12});
 
   final Function onTap;
   final Function onLongPress;
   final IconData icon;
   final String title;
   final String subtitle;
+  final double bottomPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +198,7 @@ class EntityListTile extends StatelessWidget {
         ),
         Container(
           color: Theme.of(context).backgroundColor,
-          height: 12.0,
+          height: bottomPadding,
         ),
       ],
     );
