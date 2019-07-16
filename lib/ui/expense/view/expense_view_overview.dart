@@ -74,10 +74,7 @@ class ExpenseOverview extends StatelessWidget {
             : Material(
                 color: Theme.of(context).canvasColor,
                 child: ListTile(
-                  title: EntityStateTitle(
-                    title: vendor.name,
-                    state: vendor.entityState,
-                  ),
+                  title: EntityStateTitle(entity: vendor),
                   leading: Icon(getEntityIcon(EntityType.vendor), size: 18),
                   trailing: Icon(Icons.navigate_next),
                   onTap: () =>
@@ -97,10 +94,7 @@ class ExpenseOverview extends StatelessWidget {
             : Material(
                 color: Theme.of(context).canvasColor,
                 child: ListTile(
-                  title: EntityStateTitle(
-                    title: client.listDisplayName,
-                    state: client.entityState,
-                  ),
+                  title: EntityStateTitle(entity: client),
                   leading: Icon(getEntityIcon(EntityType.client), size: 18),
                   trailing: Icon(Icons.navigate_next),
                   onTap: () =>
@@ -121,8 +115,8 @@ class ExpenseOverview extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 child: ListTile(
                   title: EntityStateTitle(
-                    title: '${localization.invoice} ${invoice.invoiceNumber}',
-                    state: invoice.entityState,
+                    entity: invoice,
+                    title: '${localization.invoice} ${invoice.invoiceNumber}'
                   ),
                   leading: Icon(getEntityIcon(EntityType.invoice), size: 18),
                   trailing: Icon(Icons.navigate_next),

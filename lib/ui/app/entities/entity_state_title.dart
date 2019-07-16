@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityStateTitle extends StatelessWidget {
-  const EntityStateTitle({this.title, this.state});
+  const EntityStateTitle({@required this.entity, this.title});
 
+  final BaseEntity entity;
   final String title;
-  final String state;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = entity.entityState;
 
     if (state == kEntityStateActive) {
-      return Text(title ?? '');
+      return Text(title ?? entity.listDisplayName);
     }
 
     return Row(

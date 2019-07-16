@@ -132,10 +132,10 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: EntityStateTitle(
+        entity: expense,
         title: expense.publicNotes.isNotEmpty
             ? expense.publicNotes
             : localization.expense,
-        state: expense.entityState,
       ),
       // Text(localizations.expenseDetails),
       bottom: TabBar(

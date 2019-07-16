@@ -94,10 +94,7 @@ class _TaskViewState extends State<TaskView> {
           Material(
             color: Theme.of(context).canvasColor,
             child: ListTile(
-              title: EntityStateTitle(
-                title: client.displayName,
-                state: client.entityState,
-              ),
+              title: EntityStateTitle(entity: client),
               leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onClientPressed(context),
@@ -116,10 +113,7 @@ class _TaskViewState extends State<TaskView> {
           Material(
             color: Theme.of(context).canvasColor,
             child: ListTile(
-              title: EntityStateTitle(
-                title: project.name,
-                state: project.entityState,
-              ),
+              title: EntityStateTitle(entity: project),
               leading: Icon(getEntityIcon(EntityType.project), size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onProjectPressed(context),
@@ -138,10 +132,7 @@ class _TaskViewState extends State<TaskView> {
           Material(
             color: Theme.of(context).canvasColor,
             child: ListTile(
-              title: EntityStateTitle(
-                title: invoice.invoiceNumber,
-                state: invoice.entityState,
-              ),
+              title: EntityStateTitle(entity: invoice),
               leading: Icon(getEntityIcon(EntityType.invoice), size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onInvoicePressed(context),
@@ -245,8 +236,8 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: EntityStateTitle(
+        entity: task,
         title: AppLocalization.of(context).task,
-        state: task.entityState,
       ),
       actions: task.isNew
           ? []

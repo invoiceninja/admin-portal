@@ -56,10 +56,10 @@ class _PaymentViewState extends State<PaymentView> {
     return Scaffold(
         appBar: AppBar(
           title: EntityStateTitle(
+            entity: payment,
             title: payment.transactionReference.isNotEmpty
                 ? payment.transactionReference
                 : localization.payment,
-            state: payment.entityState,
           ),
           actions: payment.isNew
               ? []
@@ -103,10 +103,7 @@ class _PaymentViewState extends State<PaymentView> {
             Material(
               color: Theme.of(context).canvasColor,
               child: ListTile(
-                title: EntityStateTitle(
-                  title: client.displayName,
-                  state: client.entityState,
-                ),
+                title: EntityStateTitle(entity: client),
                 leading: Icon(FontAwesomeIcons.users, size: 18.0),
                 trailing: Icon(Icons.navigate_next),
                 onTap: () => viewModel.onClientPressed(context),
@@ -121,8 +118,8 @@ class _PaymentViewState extends State<PaymentView> {
               color: Theme.of(context).canvasColor,
               child: ListTile(
                 title: EntityStateTitle(
+                  entity: invoice,
                   title: '${localization.invoice} ${invoice.invoiceNumber}',
-                  state: invoice.entityState,
                 ),
                 leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
                 trailing: Icon(Icons.navigate_next),

@@ -84,8 +84,7 @@ class _ProjectViewState extends State<ProjectView> {
         Material(
           color: Theme.of(context).canvasColor,
           child: ListTile(
-            title: EntityStateTitle(
-                title: client.displayName, state: client.entityState),
+            title: EntityStateTitle(entity: client),
             leading: Icon(FontAwesomeIcons.users, size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onClientPressed(context),
@@ -178,10 +177,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: EntityStateTitle(
-        title: project.name,
-        state: project.entityState,
-      ),
+      title: EntityStateTitle(entity: project),
       actions: project.isNew
           ? []
           : [

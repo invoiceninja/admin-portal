@@ -103,8 +103,7 @@ class _InvoiceViewState extends State<InvoiceView> {
         Material(
           color: Theme.of(context).canvasColor,
           child: ListTile(
-            title: EntityStateTitle(
-                title: client?.displayName, state: client.entityState),
+            title: EntityStateTitle(entity: client),
             leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
             trailing: Icon(Icons.navigate_next),
             onTap: () => viewModel.onClientPressed(context),
@@ -124,10 +123,7 @@ class _InvoiceViewState extends State<InvoiceView> {
             Material(
               color: Theme.of(context).canvasColor,
               child: ListTile(
-                title: EntityStateTitle(
-                  title: localization.payment,
-                  state: payment.entityState,
-                ),
+                title: EntityStateTitle(entity: payment),
                 subtitle: Text(
                     formatNumber(payment.amount, context, clientId: client.id) +
                         ' • ' +
@@ -302,9 +298,9 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: EntityStateTitle(
+        entity: invoice,
         title:
             '${invoice.isQuote ? localization.quote : localization.invoice} ${invoice.invoiceNumber}',
-        state: invoice.entityState,
       ),
       actions: invoice.isNew
           ? []

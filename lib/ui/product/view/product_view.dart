@@ -123,10 +123,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final product = viewModel.product;
 
     return AppBar(
-      title: EntityStateTitle(
-        title: product.productKey,
-        state: product.entityState,
-      ),
+      title: EntityStateTitle(entity: product),
       actions: [
         user.canEditEntity(product)
             ? EditIconButton(
