@@ -1,3 +1,5 @@
+import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_reducer.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -21,6 +23,7 @@ AppState appReducer(AppState state, dynamic action) {
   return state.rebuild((b) => b
     ..isLoading = loadingReducer(state.isLoading, action)
     ..isSaving = savingReducer(state.isSaving, action)
+    ..serverVersion = serverVersionReducer(state.serverVersion, action)
     ..authState.replace(authReducer(state.authState, action))
     ..staticState.replace(staticReducer(state.staticState, action))
     ..companyState1.replace(state.uiState.selectedCompanyIndex == 1
@@ -41,3 +44,11 @@ AppState appReducer(AppState state, dynamic action) {
     ..uiState.replace(uiReducer(state.uiState, action)));
 }
 
+
+final serverVersionReducer = combineReducers<String>([
+  TypedReducer<String, LoadStaticSuccess>(_loadStaticSuccess),
+]);
+
+String _loadStaticSuccess(String state, LoadStaticSuccess action) {
+  return action.version;
+}

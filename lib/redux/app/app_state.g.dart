@@ -24,6 +24,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'isSaving',
       serializers.serialize(object.isSaving,
           specifiedType: const FullType(bool)),
+      'serverVersion',
+      serializers.serialize(object.serverVersion,
+          specifiedType: const FullType(String)),
       'authState',
       serializers.serialize(object.authState,
           specifiedType: const FullType(AuthState)),
@@ -72,6 +75,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.isSaving = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'serverVersion':
+          result.serverVersion = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'authState':
           result.authState.replace(serializers.deserialize(value,
               specifiedType: const FullType(AuthState)) as AuthState);
@@ -117,6 +124,8 @@ class _$AppState extends AppState {
   @override
   final bool isSaving;
   @override
+  final String serverVersion;
+  @override
   final AuthState authState;
   @override
   final StaticState staticState;
@@ -139,6 +148,7 @@ class _$AppState extends AppState {
   _$AppState._(
       {this.isLoading,
       this.isSaving,
+      this.serverVersion,
       this.authState,
       this.staticState,
       this.uiState,
@@ -153,6 +163,9 @@ class _$AppState extends AppState {
     }
     if (isSaving == null) {
       throw new BuiltValueNullFieldError('AppState', 'isSaving');
+    }
+    if (serverVersion == null) {
+      throw new BuiltValueNullFieldError('AppState', 'serverVersion');
     }
     if (authState == null) {
       throw new BuiltValueNullFieldError('AppState', 'authState');
@@ -193,6 +206,7 @@ class _$AppState extends AppState {
     return other is AppState &&
         isLoading == other.isLoading &&
         isSaving == other.isSaving &&
+        serverVersion == other.serverVersion &&
         authState == other.authState &&
         staticState == other.staticState &&
         uiState == other.uiState &&
@@ -213,8 +227,10 @@ class _$AppState extends AppState {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, isLoading.hashCode),
-                                        isSaving.hashCode),
+                                    $jc(
+                                        $jc($jc(0, isLoading.hashCode),
+                                            isSaving.hashCode),
+                                        serverVersion.hashCode),
                                     authState.hashCode),
                                 staticState.hashCode),
                             uiState.hashCode),
@@ -236,6 +252,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   bool _isSaving;
   bool get isSaving => _$this._isSaving;
   set isSaving(bool isSaving) => _$this._isSaving = isSaving;
+
+  String _serverVersion;
+  String get serverVersion => _$this._serverVersion;
+  set serverVersion(String serverVersion) =>
+      _$this._serverVersion = serverVersion;
 
   AuthStateBuilder _authState;
   AuthStateBuilder get authState =>
@@ -288,6 +309,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
       _isSaving = _$v.isSaving;
+      _serverVersion = _$v.serverVersion;
       _authState = _$v.authState?.toBuilder();
       _staticState = _$v.staticState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
@@ -322,6 +344,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               isLoading: isLoading,
               isSaving: isSaving,
+              serverVersion: serverVersion,
               authState: authState.build(),
               staticState: staticState.build(),
               uiState: uiState.build(),

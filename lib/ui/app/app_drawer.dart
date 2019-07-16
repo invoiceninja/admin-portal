@@ -240,33 +240,35 @@ class AppDrawer extends StatelessWidget {
                   context: context));
             },
           ),
-          DrawerTile(
-            company: company,
-            entityType: EntityType.vendor,
-            icon: getEntityIcon(EntityType.vendor),
-            title: localization.vendors,
-            onTap: () => store.dispatch(ViewVendorList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(
-                  EditVendor(vendor: VendorEntity(), context: context));
-            },
-          ),
+          if (state.supportsVersion('4.5.9'))
+            DrawerTile(
+              company: company,
+              entityType: EntityType.vendor,
+              icon: getEntityIcon(EntityType.vendor),
+              title: localization.vendors,
+              onTap: () => store.dispatch(ViewVendorList(context)),
+              onCreateTap: () {
+                navigator.pop();
+                store.dispatch(
+                    EditVendor(vendor: VendorEntity(), context: context));
+              },
+            ),
           // STARTER: menu - do not remove comment
-          DrawerTile(
-            company: company,
-            entityType: EntityType.expense,
-            icon: getEntityIcon(EntityType.expense),
-            title: localization.expenses,
-            onTap: () => store.dispatch(ViewExpenseList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(EditExpense(
-                  expense:
-                      ExpenseEntity(company: company, uiState: state.uiState),
-                  context: context));
-            },
-          ),
+          if (state.supportsVersion('4.5.9'))
+            DrawerTile(
+              company: company,
+              entityType: EntityType.expense,
+              icon: getEntityIcon(EntityType.expense),
+              title: localization.expenses,
+              onTap: () => store.dispatch(ViewExpenseList(context)),
+              onCreateTap: () {
+                navigator.pop();
+                store.dispatch(EditExpense(
+                    expense:
+                        ExpenseEntity(company: company, uiState: state.uiState),
+                    context: context));
+              },
+            ),
 
           DrawerTile(
             key: Key(SettingsKeys.drawer),

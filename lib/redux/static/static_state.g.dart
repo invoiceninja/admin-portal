@@ -18,9 +18,6 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
   Iterable<Object> serialize(Serializers serializers, StaticState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'serverVersion',
-      serializers.serialize(object.serverVersion,
-          specifiedType: const FullType(String)),
       'currencyMap',
       serializers.serialize(object.currencyMap,
           specifiedType: const FullType(BuiltMap,
@@ -90,10 +87,6 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'serverVersion':
-          result.serverVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'updatedAt':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -184,8 +177,6 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
 
 class _$StaticState extends StaticState {
   @override
-  final String serverVersion;
-  @override
   final int updatedAt;
   @override
   final BuiltMap<int, CurrencyEntity> currencyMap;
@@ -214,8 +205,7 @@ class _$StaticState extends StaticState {
       (new StaticStateBuilder()..update(updates)).build();
 
   _$StaticState._(
-      {this.serverVersion,
-      this.updatedAt,
+      {this.updatedAt,
       this.currencyMap,
       this.sizeMap,
       this.industryMap,
@@ -228,9 +218,6 @@ class _$StaticState extends StaticState {
       this.invoiceStatusMap,
       this.frequencyMap})
       : super._() {
-    if (serverVersion == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'serverVersion');
-    }
     if (currencyMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'currencyMap');
     }
@@ -277,7 +264,6 @@ class _$StaticState extends StaticState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is StaticState &&
-        serverVersion == other.serverVersion &&
         updatedAt == other.updatedAt &&
         currencyMap == other.currencyMap &&
         sizeMap == other.sizeMap &&
@@ -304,11 +290,7 @@ class _$StaticState extends StaticState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(0,
-                                                        serverVersion.hashCode),
-                                                    updatedAt.hashCode),
+                                            $jc($jc(0, updatedAt.hashCode),
                                                 currencyMap.hashCode),
                                             sizeMap.hashCode),
                                         industryMap.hashCode),
@@ -325,7 +307,6 @@ class _$StaticState extends StaticState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('StaticState')
-          ..add('serverVersion', serverVersion)
           ..add('updatedAt', updatedAt)
           ..add('currencyMap', currencyMap)
           ..add('sizeMap', sizeMap)
@@ -344,11 +325,6 @@ class _$StaticState extends StaticState {
 
 class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   _$StaticState _$v;
-
-  String _serverVersion;
-  String get serverVersion => _$this._serverVersion;
-  set serverVersion(String serverVersion) =>
-      _$this._serverVersion = serverVersion;
 
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
@@ -424,7 +400,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
 
   StaticStateBuilder get _$this {
     if (_$v != null) {
-      _serverVersion = _$v.serverVersion;
       _updatedAt = _$v.updatedAt;
       _currencyMap = _$v.currencyMap?.toBuilder();
       _sizeMap = _$v.sizeMap?.toBuilder();
@@ -461,7 +436,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
     try {
       _$result = _$v ??
           new _$StaticState._(
-              serverVersion: serverVersion,
               updatedAt: updatedAt,
               currencyMap: currencyMap.build(),
               sizeMap: sizeMap.build(),

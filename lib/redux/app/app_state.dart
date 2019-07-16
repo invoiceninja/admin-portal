@@ -28,6 +28,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
+      serverVersion: '',
       authState: AuthState(),
       staticState: StaticState(),
       companyState1: CompanyState(),
@@ -46,6 +47,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isLoading;
 
   bool get isSaving;
+
+  String get serverVersion;
 
   AuthState get authState;
 
@@ -183,11 +186,29 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   QuoteUIState get quoteUIState => uiState.quoteUIState;
 
+  bool supportsVersion(String version) {
+    final parts = version.split('.');
+    final int major = int.parse(parts[0]);
+    final int minor = int.parse(parts[1]);
+    final int patch = int.parse(parts[2]);
+
+    try {
+      final serverParts = serverVersion.split('.');
+      final int serverMajor = int.parse(serverParts[0]);
+      final int serverMinor = int.parse(serverParts[1]);
+      final int serverPatch = int.parse(serverParts[2]);
+
+      return serverMajor >= major && serverMinor >= minor && serverPatch >= patch;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Expense Categories: ${selectedCompany.expenseCategories}';
 
-    return 'Route: ${uiState.currentRoute}: Server Version: ${staticState.serverVersion}';
+    return 'Route: ${uiState.currentRoute}: Server Version: $serverVersion';
   }
 }
