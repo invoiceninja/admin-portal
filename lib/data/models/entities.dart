@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -141,6 +142,10 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
+  String get entityState => isActive
+      ? kEntityStateActive
+      : (isArchived ? kEntityStateArchived : kEntityStateDeleted);
+
   List<EntityAction> getActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
@@ -203,7 +208,7 @@ abstract class ErrorMessage
 abstract class LoginResponse
     implements Built<LoginResponse, LoginResponseBuilder> {
   factory LoginResponse([void updates(LoginResponseBuilder b)]) =
-  _$LoginResponse;
+      _$LoginResponse;
 
   LoginResponse._();
 
@@ -218,7 +223,7 @@ abstract class LoginResponse
 abstract class LoginResponseData
     implements Built<LoginResponseData, LoginResponseDataBuilder> {
   factory LoginResponseData([void updates(LoginResponseDataBuilder b)]) =
-  _$LoginResponseData;
+      _$LoginResponseData;
 
   LoginResponseData._();
 
@@ -265,7 +270,7 @@ abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
 abstract class DashboardResponse
     implements Built<DashboardResponse, DashboardResponseBuilder> {
   factory DashboardResponse([void updates(DashboardResponseBuilder b)]) =
-  _$DashboardResponse;
+      _$DashboardResponse;
 
   DashboardResponse._();
 
@@ -299,7 +304,7 @@ class CustomFieldType {
 abstract class DashboardEntity
     implements Built<DashboardEntity, DashboardEntityBuilder> {
   factory DashboardEntity([void updates(DashboardEntityBuilder b)]) =
-  _$DashboardEntity;
+      _$DashboardEntity;
 
   DashboardEntity._();
 
@@ -312,7 +317,7 @@ abstract class DashboardEntity
 abstract class ActivityEntity
     implements Built<ActivityEntity, ActivityEntityBuilder> {
   factory ActivityEntity([void updates(ActivityEntityBuilder b)]) =
-  _$ActivityEntity;
+      _$ActivityEntity;
 
   ActivityEntity._();
 
@@ -384,7 +389,8 @@ abstract class ActivityEntity
     }
   }
 
-  String getDescription(String activity, {
+  String getDescription(
+    String activity, {
     UserEntity user,
     ClientEntity client,
     InvoiceEntity invoice,

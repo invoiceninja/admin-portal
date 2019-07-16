@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_title.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -75,99 +76,99 @@ class _ClientViewState extends State<ClientView>
               context: context,
               builder: (BuildContext context) =>
                   SimpleDialog(children: <Widget>[
-                    user.canCreate(EntityType.client)
-                        ? ListTile(
-                            //dense: true,
-                            leading: Icon(Icons.add_circle_outline),
-                            title: Text(localization.invoice),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              store.dispatch(EditInvoice(
-                                  invoice: InvoiceEntity(company: company)
-                                      .rebuild((b) => b.clientId = client.id),
-                                  context: context));
-                            },
-                          )
-                        : Container(),
-                    user.canCreate(EntityType.payment)
-                        ? ListTile(
-                            //dense: true,
-                            leading: Icon(Icons.add_circle_outline),
-                            title: Text(localization.payment),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              store.dispatch(EditPayment(
-                                  payment: PaymentEntity(company: company)
-                                      .rebuild((b) => b.clientId = client.id),
-                                  context: context));
-                            },
-                          )
-                        : Container(),
-                    company.isModuleEnabled(EntityType.quote) &&
-                            user.canCreate(EntityType.quote)
-                        ? ListTile(
-                            //dense: true,
-                            leading: Icon(Icons.add_circle_outline),
-                            title: Text(localization.quote),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              store.dispatch(EditQuote(
-                                  quote: InvoiceEntity(isQuote: true)
-                                      .rebuild((b) => b.clientId = client.id),
-                                  context: context));
-                            },
-                          )
-                        : Container(),
-                    company.isModuleEnabled(EntityType.project) &&
-                            user.canCreate(EntityType.project)
-                        ? ListTile(
-                            //dense: true,
-                            leading: Icon(Icons.add_circle_outline),
-                            title: Text(localization.project),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              store.dispatch(EditProject(
-                                  project: ProjectEntity()
-                                      .rebuild((b) => b.clientId = client.id),
-                                  context: context));
-                            },
-                          )
-                        : Container(),
-                    company.isModuleEnabled(EntityType.task) &&
-                            user.canCreate(EntityType.task)
-                        ? ListTile(
-                            //dense: true,
-                            leading: Icon(Icons.add_circle_outline),
-                            title: Text(localization.task),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              store.dispatch(EditTask(
-                                  task: TaskEntity(
-                                          isRunning: store
-                                              .state.uiState.autoStartTasks)
-                                      .rebuild((b) => b.clientId = client.id),
-                                  context: context));
-                            },
-                          )
-                        : Container(),
-                    company.isModuleEnabled(EntityType.expense) &&
-                            user.canCreate(EntityType.expense)
-                        ? ListTile(
-                            //dense: true,
-                            leading: Icon(Icons.add_circle_outline),
-                            title: Text(localization.expense),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              store.dispatch(EditExpense(
-                                  expense: ExpenseEntity(
-                                      company: company,
-                                      client: client,
-                                      uiState: store.state.uiState),
-                                  context: context));
-                            },
-                          )
-                        : Container(),
-                  ]),
+                user.canCreate(EntityType.client)
+                    ? ListTile(
+                        //dense: true,
+                        leading: Icon(Icons.add_circle_outline),
+                        title: Text(localization.invoice),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          store.dispatch(EditInvoice(
+                              invoice: InvoiceEntity(company: company)
+                                  .rebuild((b) => b.clientId = client.id),
+                              context: context));
+                        },
+                      )
+                    : Container(),
+                user.canCreate(EntityType.payment)
+                    ? ListTile(
+                        //dense: true,
+                        leading: Icon(Icons.add_circle_outline),
+                        title: Text(localization.payment),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          store.dispatch(EditPayment(
+                              payment: PaymentEntity(company: company)
+                                  .rebuild((b) => b.clientId = client.id),
+                              context: context));
+                        },
+                      )
+                    : Container(),
+                company.isModuleEnabled(EntityType.quote) &&
+                        user.canCreate(EntityType.quote)
+                    ? ListTile(
+                        //dense: true,
+                        leading: Icon(Icons.add_circle_outline),
+                        title: Text(localization.quote),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          store.dispatch(EditQuote(
+                              quote: InvoiceEntity(isQuote: true)
+                                  .rebuild((b) => b.clientId = client.id),
+                              context: context));
+                        },
+                      )
+                    : Container(),
+                company.isModuleEnabled(EntityType.project) &&
+                        user.canCreate(EntityType.project)
+                    ? ListTile(
+                        //dense: true,
+                        leading: Icon(Icons.add_circle_outline),
+                        title: Text(localization.project),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          store.dispatch(EditProject(
+                              project: ProjectEntity()
+                                  .rebuild((b) => b.clientId = client.id),
+                              context: context));
+                        },
+                      )
+                    : Container(),
+                company.isModuleEnabled(EntityType.task) &&
+                        user.canCreate(EntityType.task)
+                    ? ListTile(
+                        //dense: true,
+                        leading: Icon(Icons.add_circle_outline),
+                        title: Text(localization.task),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          store.dispatch(EditTask(
+                              task: TaskEntity(
+                                      isRunning:
+                                          store.state.uiState.autoStartTasks)
+                                  .rebuild((b) => b.clientId = client.id),
+                              context: context));
+                        },
+                      )
+                    : Container(),
+                company.isModuleEnabled(EntityType.expense) &&
+                        user.canCreate(EntityType.expense)
+                    ? ListTile(
+                        //dense: true,
+                        leading: Icon(Icons.add_circle_outline),
+                        title: Text(localization.expense),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          store.dispatch(EditExpense(
+                              expense: ExpenseEntity(
+                                  company: company,
+                                  client: client,
+                                  uiState: store.state.uiState),
+                              context: context));
+                        },
+                      )
+                    : Container(),
+              ]),
             );
           },
           child: Icon(
@@ -260,8 +261,8 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title:
-          Text(client.displayName ?? ''), // Text(localizations.clientDetails),
+      title: EntityStatusTitle(
+          title: client.displayName, state: client.entityState),
       bottom: TabBar(
         controller: controller,
         //isScrollable: true,

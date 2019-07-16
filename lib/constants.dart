@@ -46,6 +46,10 @@ const int kInvoiceStatusApproved = 4;
 const int kInvoiceStatusPartial = 5;
 const int kInvoiceStatusPaid = 6;
 
+const String kEntityStateActive = 'active';
+const String kEntityStateArchived = 'archived';
+const String kEntityStateDeleted = 'deleted';
+
 const int kTaskStatusLogged = -1;
 const int kTaskStatusRunning = -2;
 const int kTaskStatusInvoiced = -3;
