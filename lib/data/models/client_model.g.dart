@@ -6,19 +6,6 @@ part of 'client_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<ClientListResponse> _$clientListResponseSerializer =
     new _$ClientListResponseSerializer();
 Serializer<ClientItemResponse> _$clientItemResponseSerializer =
@@ -36,7 +23,7 @@ class _$ClientListResponseSerializer
   final String wireName = 'ClientListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ClientListResponse object,
+  Iterable<Object> serialize(Serializers serializers, ClientListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -49,7 +36,8 @@ class _$ClientListResponseSerializer
   }
 
   @override
-  ClientListResponse deserialize(Serializers serializers, Iterable serialized,
+  ClientListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientListResponseBuilder();
 
@@ -63,7 +51,7 @@ class _$ClientListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ClientEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -80,7 +68,7 @@ class _$ClientItemResponseSerializer
   final String wireName = 'ClientItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ClientItemResponse object,
+  Iterable<Object> serialize(Serializers serializers, ClientItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -92,7 +80,8 @@ class _$ClientItemResponseSerializer
   }
 
   @override
-  ClientItemResponse deserialize(Serializers serializers, Iterable serialized,
+  ClientItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientItemResponseBuilder();
 
@@ -120,7 +109,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   final String wireName = 'ClientEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ClientEntity object,
+  Iterable<Object> serialize(Serializers serializers, ClientEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -276,12 +265,11 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ClientEntity deserialize(Serializers serializers, Iterable serialized,
+  ClientEntity deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientEntityBuilder();
 
@@ -439,13 +427,13 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ContactEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -485,7 +473,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
   final String wireName = 'ContactEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ContactEntity object,
+  Iterable<Object> serialize(Serializers serializers, ContactEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'first_name',
@@ -558,12 +546,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ContactEntity deserialize(Serializers serializers, Iterable serialized,
+  ContactEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ContactEntityBuilder();
 
@@ -648,7 +636,8 @@ class _$ClientListResponse extends ClientListResponse {
   @override
   final BuiltList<ClientEntity> data;
 
-  factory _$ClientListResponse([void updates(ClientListResponseBuilder b)]) =>
+  factory _$ClientListResponse(
+          [void Function(ClientListResponseBuilder) updates]) =>
       (new ClientListResponseBuilder()..update(updates)).build();
 
   _$ClientListResponse._({this.data}) : super._() {
@@ -658,7 +647,8 @@ class _$ClientListResponse extends ClientListResponse {
   }
 
   @override
-  ClientListResponse rebuild(void updates(ClientListResponseBuilder b)) =>
+  ClientListResponse rebuild(
+          void Function(ClientListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -712,7 +702,7 @@ class ClientListResponseBuilder
   }
 
   @override
-  void update(void updates(ClientListResponseBuilder b)) {
+  void update(void Function(ClientListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -741,7 +731,8 @@ class _$ClientItemResponse extends ClientItemResponse {
   @override
   final ClientEntity data;
 
-  factory _$ClientItemResponse([void updates(ClientItemResponseBuilder b)]) =>
+  factory _$ClientItemResponse(
+          [void Function(ClientItemResponseBuilder) updates]) =>
       (new ClientItemResponseBuilder()..update(updates)).build();
 
   _$ClientItemResponse._({this.data}) : super._() {
@@ -751,7 +742,8 @@ class _$ClientItemResponse extends ClientItemResponse {
   }
 
   @override
-  ClientItemResponse rebuild(void updates(ClientItemResponseBuilder b)) =>
+  ClientItemResponse rebuild(
+          void Function(ClientItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -804,7 +796,7 @@ class ClientItemResponseBuilder
   }
 
   @override
-  void update(void updates(ClientItemResponseBuilder b)) {
+  void update(void Function(ClientItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -919,7 +911,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final int id;
 
-  factory _$ClientEntity([void updates(ClientEntityBuilder b)]) =>
+  factory _$ClientEntity([void Function(ClientEntityBuilder) updates]) =>
       (new ClientEntityBuilder()..update(updates)).build();
 
   _$ClientEntity._(
@@ -1083,7 +1075,7 @@ class _$ClientEntity extends ClientEntity {
   }
 
   @override
-  ClientEntity rebuild(void updates(ClientEntityBuilder b)) =>
+  ClientEntity rebuild(void Function(ClientEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1489,7 +1481,7 @@ class ClientEntityBuilder
   }
 
   @override
-  void update(void updates(ClientEntityBuilder b)) {
+  void update(void Function(ClientEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1595,7 +1587,7 @@ class _$ContactEntity extends ContactEntity {
   @override
   final int id;
 
-  factory _$ContactEntity([void updates(ContactEntityBuilder b)]) =>
+  factory _$ContactEntity([void Function(ContactEntityBuilder) updates]) =>
       (new ContactEntityBuilder()..update(updates)).build();
 
   _$ContactEntity._(
@@ -1646,7 +1638,7 @@ class _$ContactEntity extends ContactEntity {
   }
 
   @override
-  ContactEntity rebuild(void updates(ContactEntityBuilder b)) =>
+  ContactEntity rebuild(void Function(ContactEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1838,7 +1830,7 @@ class ContactEntityBuilder
   }
 
   @override
-  void update(void updates(ContactEntityBuilder b)) {
+  void update(void Function(ContactEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1866,3 +1858,5 @@ class ContactEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

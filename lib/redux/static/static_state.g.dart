@@ -6,19 +6,6 @@ part of 'static_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<StaticState> _$staticStateSerializer = new _$StaticStateSerializer();
 
 class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
@@ -28,9 +15,12 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
   final String wireName = 'StaticState';
 
   @override
-  Iterable serialize(Serializers serializers, StaticState object,
+  Iterable<Object> serialize(Serializers serializers, StaticState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'serverVersion',
+      serializers.serialize(object.serverVersion,
+          specifiedType: const FullType(String)),
       'currencyMap',
       serializers.serialize(object.currencyMap,
           specifiedType: const FullType(BuiltMap,
@@ -86,12 +76,11 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
         ..add(serializers.serialize(object.updatedAt,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  StaticState deserialize(Serializers serializers, Iterable serialized,
+  StaticState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new StaticStateBuilder();
 
@@ -101,6 +90,10 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'serverVersion':
+          result.serverVersion = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'updatedAt':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -110,77 +103,77 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(CurrencyEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'sizeMap':
           result.sizeMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(SizeEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'industryMap':
           result.industryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(IndustryEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'timezoneMap':
           result.timezoneMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(TimezoneEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'dateFormatMap':
           result.dateFormatMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(DateFormatEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'datetimeFormatMap':
           result.datetimeFormatMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(DatetimeFormatEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'languageMap':
           result.languageMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(LanguageEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'paymentTypeMap':
           result.paymentTypeMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(PaymentTypeEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'countryMap':
           result.countryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(CountryEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'invoiceStatusMap':
           result.invoiceStatusMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(InvoiceStatusEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'frequencyMap':
           result.frequencyMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(FrequencyEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
       }
     }
@@ -190,6 +183,8 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
 }
 
 class _$StaticState extends StaticState {
+  @override
+  final String serverVersion;
   @override
   final int updatedAt;
   @override
@@ -215,11 +210,12 @@ class _$StaticState extends StaticState {
   @override
   final BuiltMap<int, FrequencyEntity> frequencyMap;
 
-  factory _$StaticState([void updates(StaticStateBuilder b)]) =>
+  factory _$StaticState([void Function(StaticStateBuilder) updates]) =>
       (new StaticStateBuilder()..update(updates)).build();
 
   _$StaticState._(
-      {this.updatedAt,
+      {this.serverVersion,
+      this.updatedAt,
       this.currencyMap,
       this.sizeMap,
       this.industryMap,
@@ -232,6 +228,9 @@ class _$StaticState extends StaticState {
       this.invoiceStatusMap,
       this.frequencyMap})
       : super._() {
+    if (serverVersion == null) {
+      throw new BuiltValueNullFieldError('StaticState', 'serverVersion');
+    }
     if (currencyMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'currencyMap');
     }
@@ -268,7 +267,7 @@ class _$StaticState extends StaticState {
   }
 
   @override
-  StaticState rebuild(void updates(StaticStateBuilder b)) =>
+  StaticState rebuild(void Function(StaticStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -278,6 +277,7 @@ class _$StaticState extends StaticState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is StaticState &&
+        serverVersion == other.serverVersion &&
         updatedAt == other.updatedAt &&
         currencyMap == other.currencyMap &&
         sizeMap == other.sizeMap &&
@@ -304,7 +304,11 @@ class _$StaticState extends StaticState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, updatedAt.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc(0,
+                                                        serverVersion.hashCode),
+                                                    updatedAt.hashCode),
                                                 currencyMap.hashCode),
                                             sizeMap.hashCode),
                                         industryMap.hashCode),
@@ -321,6 +325,7 @@ class _$StaticState extends StaticState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('StaticState')
+          ..add('serverVersion', serverVersion)
           ..add('updatedAt', updatedAt)
           ..add('currencyMap', currencyMap)
           ..add('sizeMap', sizeMap)
@@ -339,6 +344,11 @@ class _$StaticState extends StaticState {
 
 class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   _$StaticState _$v;
+
+  String _serverVersion;
+  String get serverVersion => _$this._serverVersion;
+  set serverVersion(String serverVersion) =>
+      _$this._serverVersion = serverVersion;
 
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
@@ -414,6 +424,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
 
   StaticStateBuilder get _$this {
     if (_$v != null) {
+      _serverVersion = _$v.serverVersion;
       _updatedAt = _$v.updatedAt;
       _currencyMap = _$v.currencyMap?.toBuilder();
       _sizeMap = _$v.sizeMap?.toBuilder();
@@ -440,7 +451,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   }
 
   @override
-  void update(void updates(StaticStateBuilder b)) {
+  void update(void Function(StaticStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -450,6 +461,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
     try {
       _$result = _$v ??
           new _$StaticState._(
+              serverVersion: serverVersion,
               updatedAt: updatedAt,
               currencyMap: currencyMap.build(),
               sizeMap: sizeMap.build(),
@@ -497,3 +509,5 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -40,3 +40,4 @@ AppState appReducer(AppState state, dynamic action) {
         : state.companyState5)
     ..uiState.replace(uiReducer(state.uiState, action)));
 }
+

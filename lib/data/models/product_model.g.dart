@@ -6,19 +6,6 @@ part of 'product_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<ProductListResponse> _$productListResponseSerializer =
     new _$ProductListResponseSerializer();
 Serializer<ProductItemResponse> _$productItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$ProductListResponseSerializer
   final String wireName = 'ProductListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ProductListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, ProductListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -50,7 +38,8 @@ class _$ProductListResponseSerializer
   }
 
   @override
-  ProductListResponse deserialize(Serializers serializers, Iterable serialized,
+  ProductListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductListResponseBuilder();
 
@@ -64,7 +53,7 @@ class _$ProductListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ProductEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -84,7 +73,8 @@ class _$ProductItemResponseSerializer
   final String wireName = 'ProductItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ProductItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, ProductItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -96,7 +86,8 @@ class _$ProductItemResponseSerializer
   }
 
   @override
-  ProductItemResponse deserialize(Serializers serializers, Iterable serialized,
+  ProductItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductItemResponseBuilder();
 
@@ -124,7 +115,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
   final String wireName = 'ProductEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ProductEntity object,
+  Iterable<Object> serialize(Serializers serializers, ProductEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'product_key',
@@ -190,12 +181,12 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ProductEntity deserialize(Serializers serializers, Iterable serialized,
+  ProductEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductEntityBuilder();
 
@@ -276,7 +267,8 @@ class _$ProductListResponse extends ProductListResponse {
   @override
   final BuiltList<ProductEntity> data;
 
-  factory _$ProductListResponse([void updates(ProductListResponseBuilder b)]) =>
+  factory _$ProductListResponse(
+          [void Function(ProductListResponseBuilder) updates]) =>
       (new ProductListResponseBuilder()..update(updates)).build();
 
   _$ProductListResponse._({this.data}) : super._() {
@@ -286,7 +278,8 @@ class _$ProductListResponse extends ProductListResponse {
   }
 
   @override
-  ProductListResponse rebuild(void updates(ProductListResponseBuilder b)) =>
+  ProductListResponse rebuild(
+          void Function(ProductListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -340,7 +333,7 @@ class ProductListResponseBuilder
   }
 
   @override
-  void update(void updates(ProductListResponseBuilder b)) {
+  void update(void Function(ProductListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -369,7 +362,8 @@ class _$ProductItemResponse extends ProductItemResponse {
   @override
   final ProductEntity data;
 
-  factory _$ProductItemResponse([void updates(ProductItemResponseBuilder b)]) =>
+  factory _$ProductItemResponse(
+          [void Function(ProductItemResponseBuilder) updates]) =>
       (new ProductItemResponseBuilder()..update(updates)).build();
 
   _$ProductItemResponse._({this.data}) : super._() {
@@ -379,7 +373,8 @@ class _$ProductItemResponse extends ProductItemResponse {
   }
 
   @override
-  ProductItemResponse rebuild(void updates(ProductItemResponseBuilder b)) =>
+  ProductItemResponse rebuild(
+          void Function(ProductItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -432,7 +427,7 @@ class ProductItemResponseBuilder
   }
 
   @override
-  void update(void updates(ProductItemResponseBuilder b)) {
+  void update(void Function(ProductItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -489,7 +484,7 @@ class _$ProductEntity extends ProductEntity {
   @override
   final int id;
 
-  factory _$ProductEntity([void updates(ProductEntityBuilder b)]) =>
+  factory _$ProductEntity([void Function(ProductEntityBuilder) updates]) =>
       (new ProductEntityBuilder()..update(updates)).build();
 
   _$ProductEntity._(
@@ -539,7 +534,7 @@ class _$ProductEntity extends ProductEntity {
   }
 
   @override
-  ProductEntity rebuild(void updates(ProductEntityBuilder b)) =>
+  ProductEntity rebuild(void Function(ProductEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -721,7 +716,7 @@ class ProductEntityBuilder
   }
 
   @override
-  void update(void updates(ProductEntityBuilder b)) {
+  void update(void Function(ProductEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -748,3 +743,5 @@ class ProductEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

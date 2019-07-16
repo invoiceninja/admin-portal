@@ -6,19 +6,6 @@ part of 'expense_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<ExpenseState> _$expenseStateSerializer =
     new _$ExpenseStateSerializer();
 Serializer<ExpenseUIState> _$expenseUIStateSerializer =
@@ -31,7 +18,7 @@ class _$ExpenseStateSerializer implements StructuredSerializer<ExpenseState> {
   final String wireName = 'ExpenseState';
 
   @override
-  Iterable serialize(Serializers serializers, ExpenseState object,
+  Iterable<Object> serialize(Serializers serializers, ExpenseState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'map',
@@ -49,12 +36,11 @@ class _$ExpenseStateSerializer implements StructuredSerializer<ExpenseState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ExpenseState deserialize(Serializers serializers, Iterable serialized,
+  ExpenseState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseStateBuilder();
 
@@ -73,13 +59,13 @@ class _$ExpenseStateSerializer implements StructuredSerializer<ExpenseState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(ExpenseEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -96,7 +82,7 @@ class _$ExpenseUIStateSerializer
   final String wireName = 'ExpenseUIState';
 
   @override
-  Iterable serialize(Serializers serializers, ExpenseUIState object,
+  Iterable<Object> serialize(Serializers serializers, ExpenseUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'selectedId',
@@ -112,12 +98,12 @@ class _$ExpenseUIStateSerializer
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(ExpenseEntity)));
     }
-
     return result;
   }
 
   @override
-  ExpenseUIState deserialize(Serializers serializers, Iterable serialized,
+  ExpenseUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseUIStateBuilder();
 
@@ -154,7 +140,7 @@ class _$ExpenseState extends ExpenseState {
   @override
   final BuiltList<int> list;
 
-  factory _$ExpenseState([void updates(ExpenseStateBuilder b)]) =>
+  factory _$ExpenseState([void Function(ExpenseStateBuilder) updates]) =>
       (new ExpenseStateBuilder()..update(updates)).build();
 
   _$ExpenseState._({this.lastUpdated, this.map, this.list}) : super._() {
@@ -167,7 +153,7 @@ class _$ExpenseState extends ExpenseState {
   }
 
   @override
-  ExpenseState rebuild(void updates(ExpenseStateBuilder b)) =>
+  ExpenseState rebuild(void Function(ExpenseStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -236,7 +222,7 @@ class ExpenseStateBuilder
   }
 
   @override
-  void update(void updates(ExpenseStateBuilder b)) {
+  void update(void Function(ExpenseStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -273,7 +259,7 @@ class _$ExpenseUIState extends ExpenseUIState {
   @override
   final ListUIState listUIState;
 
-  factory _$ExpenseUIState([void updates(ExpenseUIStateBuilder b)]) =>
+  factory _$ExpenseUIState([void Function(ExpenseUIStateBuilder) updates]) =>
       (new ExpenseUIStateBuilder()..update(updates)).build();
 
   _$ExpenseUIState._({this.editing, this.selectedId, this.listUIState})
@@ -287,7 +273,7 @@ class _$ExpenseUIState extends ExpenseUIState {
   }
 
   @override
-  ExpenseUIState rebuild(void updates(ExpenseUIStateBuilder b)) =>
+  ExpenseUIState rebuild(void Function(ExpenseUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -359,7 +345,7 @@ class ExpenseUIStateBuilder
   }
 
   @override
-  void update(void updates(ExpenseUIStateBuilder b)) {
+  void update(void Function(ExpenseUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -390,3 +376,5 @@ class ExpenseUIStateBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -22,8 +22,9 @@ class StartSaving {}
 class StopSaving {}
 
 class LoadStaticSuccess implements PersistStatic {
-  LoadStaticSuccess(this.data);
+  LoadStaticSuccess({this.data, this.version});
 
+  final String version;
   final StaticData data;
 }
 

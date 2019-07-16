@@ -6,19 +6,6 @@ part of 'entities.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 const EntityType _$invoice = const EntityType._('invoice');
 const EntityType _$recurringInvoice = const EntityType._('recurringInvoice');
 const EntityType _$invoiceItem = const EntityType._('invoiceItem');
@@ -291,7 +278,7 @@ class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
   final String wireName = 'ErrorMessage';
 
   @override
-  Iterable serialize(Serializers serializers, ErrorMessage object,
+  Iterable<Object> serialize(Serializers serializers, ErrorMessage object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'message',
@@ -303,7 +290,7 @@ class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
   }
 
   @override
-  ErrorMessage deserialize(Serializers serializers, Iterable serialized,
+  ErrorMessage deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ErrorMessageBuilder();
 
@@ -331,7 +318,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
   final String wireName = 'LoginResponse';
 
   @override
-  Iterable serialize(Serializers serializers, LoginResponse object,
+  Iterable<Object> serialize(Serializers serializers, LoginResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -344,12 +331,12 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
         ..add(serializers.serialize(object.error,
             specifiedType: const FullType(ErrorMessage)));
     }
-
     return result;
   }
 
   @override
-  LoginResponse deserialize(Serializers serializers, Iterable serialized,
+  LoginResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new LoginResponseBuilder();
 
@@ -383,7 +370,7 @@ class _$LoginResponseDataSerializer
   final String wireName = 'LoginResponseData';
 
   @override
-  Iterable serialize(Serializers serializers, LoginResponseData object,
+  Iterable<Object> serialize(Serializers serializers, LoginResponseData object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'accounts',
@@ -402,7 +389,8 @@ class _$LoginResponseDataSerializer
   }
 
   @override
-  LoginResponseData deserialize(Serializers serializers, Iterable serialized,
+  LoginResponseData deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new LoginResponseDataBuilder();
 
@@ -416,7 +404,7 @@ class _$LoginResponseDataSerializer
           result.accounts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CompanyEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'version':
           result.version = serializers.deserialize(value,
@@ -440,7 +428,7 @@ class _$StaticDataSerializer implements StructuredSerializer<StaticData> {
   final String wireName = 'StaticData';
 
   @override
-  Iterable serialize(Serializers serializers, StaticData object,
+  Iterable<Object> serialize(Serializers serializers, StaticData object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'currencies',
@@ -493,7 +481,7 @@ class _$StaticDataSerializer implements StructuredSerializer<StaticData> {
   }
 
   @override
-  StaticData deserialize(Serializers serializers, Iterable serialized,
+  StaticData deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new StaticDataBuilder();
 
@@ -507,66 +495,67 @@ class _$StaticDataSerializer implements StructuredSerializer<StaticData> {
           result.currencies.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CurrencyEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'sizes':
           result.sizes.replace(serializers.deserialize(value,
-              specifiedType: const FullType(
-                  BuiltList, const [const FullType(SizeEntity)])) as BuiltList);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(SizeEntity)]))
+              as BuiltList<dynamic>);
           break;
         case 'industries':
           result.industries.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(IndustryEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'timezones':
           result.timezones.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TimezoneEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'dateFormats':
           result.dateFormats.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DateFormatEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'datetimeFormats':
           result.datetimeFormats.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DatetimeFormatEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'languages':
           result.languages.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(LanguageEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'paymentTypes':
           result.paymentTypes.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTypeEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'countries':
           result.countries.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CountryEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'invoiceStatus':
           result.invoiceStatus.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceStatusEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'frequencies':
           result.frequencies.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(FrequencyEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -583,7 +572,7 @@ class _$DashboardResponseSerializer
   final String wireName = 'DashboardResponse';
 
   @override
-  Iterable serialize(Serializers serializers, DashboardResponse object,
+  Iterable<Object> serialize(Serializers serializers, DashboardResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -595,7 +584,8 @@ class _$DashboardResponseSerializer
   }
 
   @override
-  DashboardResponse deserialize(Serializers serializers, Iterable serialized,
+  DashboardResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DashboardResponseBuilder();
 
@@ -625,7 +615,7 @@ class _$DashboardEntitySerializer
   final String wireName = 'DashboardEntity';
 
   @override
-  Iterable serialize(Serializers serializers, DashboardEntity object,
+  Iterable<Object> serialize(Serializers serializers, DashboardEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'activities',
@@ -638,7 +628,8 @@ class _$DashboardEntitySerializer
   }
 
   @override
-  DashboardEntity deserialize(Serializers serializers, Iterable serialized,
+  DashboardEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DashboardEntityBuilder();
 
@@ -652,7 +643,7 @@ class _$DashboardEntitySerializer
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -669,7 +660,7 @@ class _$ActivityEntitySerializer
   final String wireName = 'ActivityEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ActivityEntity object,
+  Iterable<Object> serialize(Serializers serializers, ActivityEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'notes',
@@ -734,12 +725,12 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(object.taskId,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ActivityEntity deserialize(Serializers serializers, Iterable serialized,
+  ActivityEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ActivityEntityBuilder();
 
@@ -812,7 +803,7 @@ class _$ErrorMessage extends ErrorMessage {
   @override
   final String message;
 
-  factory _$ErrorMessage([void updates(ErrorMessageBuilder b)]) =>
+  factory _$ErrorMessage([void Function(ErrorMessageBuilder) updates]) =>
       (new ErrorMessageBuilder()..update(updates)).build();
 
   _$ErrorMessage._({this.message}) : super._() {
@@ -822,7 +813,7 @@ class _$ErrorMessage extends ErrorMessage {
   }
 
   @override
-  ErrorMessage rebuild(void updates(ErrorMessageBuilder b)) =>
+  ErrorMessage rebuild(void Function(ErrorMessageBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -874,7 +865,7 @@ class ErrorMessageBuilder
   }
 
   @override
-  void update(void updates(ErrorMessageBuilder b)) {
+  void update(void Function(ErrorMessageBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -892,7 +883,7 @@ class _$LoginResponse extends LoginResponse {
   @override
   final ErrorMessage error;
 
-  factory _$LoginResponse([void updates(LoginResponseBuilder b)]) =>
+  factory _$LoginResponse([void Function(LoginResponseBuilder) updates]) =>
       (new LoginResponseBuilder()..update(updates)).build();
 
   _$LoginResponse._({this.data, this.error}) : super._() {
@@ -902,7 +893,7 @@ class _$LoginResponse extends LoginResponse {
   }
 
   @override
-  LoginResponse rebuild(void updates(LoginResponseBuilder b)) =>
+  LoginResponse rebuild(void Function(LoginResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -961,7 +952,7 @@ class LoginResponseBuilder
   }
 
   @override
-  void update(void updates(LoginResponseBuilder b)) {
+  void update(void Function(LoginResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -997,7 +988,8 @@ class _$LoginResponseData extends LoginResponseData {
   @override
   final StaticData static;
 
-  factory _$LoginResponseData([void updates(LoginResponseDataBuilder b)]) =>
+  factory _$LoginResponseData(
+          [void Function(LoginResponseDataBuilder) updates]) =>
       (new LoginResponseDataBuilder()..update(updates)).build();
 
   _$LoginResponseData._({this.accounts, this.version, this.static})
@@ -1014,7 +1006,7 @@ class _$LoginResponseData extends LoginResponseData {
   }
 
   @override
-  LoginResponseData rebuild(void updates(LoginResponseDataBuilder b)) =>
+  LoginResponseData rebuild(void Function(LoginResponseDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1085,7 +1077,7 @@ class LoginResponseDataBuilder
   }
 
   @override
-  void update(void updates(LoginResponseDataBuilder b)) {
+  void update(void Function(LoginResponseDataBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1141,7 +1133,7 @@ class _$StaticData extends StaticData {
   @override
   final BuiltList<FrequencyEntity> frequencies;
 
-  factory _$StaticData([void updates(StaticDataBuilder b)]) =>
+  factory _$StaticData([void Function(StaticDataBuilder) updates]) =>
       (new StaticDataBuilder()..update(updates)).build();
 
   _$StaticData._(
@@ -1193,7 +1185,7 @@ class _$StaticData extends StaticData {
   }
 
   @override
-  StaticData rebuild(void updates(StaticDataBuilder b)) =>
+  StaticData rebuild(void Function(StaticDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1355,7 +1347,7 @@ class StaticDataBuilder implements Builder<StaticData, StaticDataBuilder> {
   }
 
   @override
-  void update(void updates(StaticDataBuilder b)) {
+  void update(void Function(StaticDataBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1416,7 +1408,8 @@ class _$DashboardResponse extends DashboardResponse {
   @override
   final DashboardEntity data;
 
-  factory _$DashboardResponse([void updates(DashboardResponseBuilder b)]) =>
+  factory _$DashboardResponse(
+          [void Function(DashboardResponseBuilder) updates]) =>
       (new DashboardResponseBuilder()..update(updates)).build();
 
   _$DashboardResponse._({this.data}) : super._() {
@@ -1426,7 +1419,7 @@ class _$DashboardResponse extends DashboardResponse {
   }
 
   @override
-  DashboardResponse rebuild(void updates(DashboardResponseBuilder b)) =>
+  DashboardResponse rebuild(void Function(DashboardResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1479,7 +1472,7 @@ class DashboardResponseBuilder
   }
 
   @override
-  void update(void updates(DashboardResponseBuilder b)) {
+  void update(void Function(DashboardResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1508,7 +1501,7 @@ class _$DashboardEntity extends DashboardEntity {
   @override
   final BuiltList<ActivityEntity> activities;
 
-  factory _$DashboardEntity([void updates(DashboardEntityBuilder b)]) =>
+  factory _$DashboardEntity([void Function(DashboardEntityBuilder) updates]) =>
       (new DashboardEntityBuilder()..update(updates)).build();
 
   _$DashboardEntity._({this.activities}) : super._() {
@@ -1518,7 +1511,7 @@ class _$DashboardEntity extends DashboardEntity {
   }
 
   @override
-  DashboardEntity rebuild(void updates(DashboardEntityBuilder b)) =>
+  DashboardEntity rebuild(void Function(DashboardEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1573,7 +1566,7 @@ class DashboardEntityBuilder
   }
 
   @override
-  void update(void updates(DashboardEntityBuilder b)) {
+  void update(void Function(DashboardEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1626,7 +1619,7 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final int taskId;
 
-  factory _$ActivityEntity([void updates(ActivityEntityBuilder b)]) =>
+  factory _$ActivityEntity([void Function(ActivityEntityBuilder) updates]) =>
       (new ActivityEntityBuilder()..update(updates)).build();
 
   _$ActivityEntity._(
@@ -1662,7 +1655,7 @@ class _$ActivityEntity extends ActivityEntity {
   }
 
   @override
-  ActivityEntity rebuild(void updates(ActivityEntityBuilder b)) =>
+  ActivityEntity rebuild(void Function(ActivityEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1824,7 +1817,7 @@ class ActivityEntityBuilder
   }
 
   @override
-  void update(void updates(ActivityEntityBuilder b)) {
+  void update(void Function(ActivityEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1849,3 +1842,5 @@ class ActivityEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

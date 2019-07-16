@@ -6,19 +6,6 @@ part of 'task_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<TaskListResponse> _$taskListResponseSerializer =
     new _$TaskListResponseSerializer();
 Serializer<TaskItemResponse> _$taskItemResponseSerializer =
@@ -36,7 +23,7 @@ class _$TaskListResponseSerializer
   final String wireName = 'TaskListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, TaskListResponse object,
+  Iterable<Object> serialize(Serializers serializers, TaskListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -49,7 +36,8 @@ class _$TaskListResponseSerializer
   }
 
   @override
-  TaskListResponse deserialize(Serializers serializers, Iterable serialized,
+  TaskListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskListResponseBuilder();
 
@@ -61,8 +49,9 @@ class _$TaskListResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(
-                  BuiltList, const [const FullType(TaskEntity)])) as BuiltList);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(TaskEntity)]))
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -79,7 +68,7 @@ class _$TaskItemResponseSerializer
   final String wireName = 'TaskItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, TaskItemResponse object,
+  Iterable<Object> serialize(Serializers serializers, TaskItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -91,7 +80,8 @@ class _$TaskItemResponseSerializer
   }
 
   @override
-  TaskItemResponse deserialize(Serializers serializers, Iterable serialized,
+  TaskItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskItemResponseBuilder();
 
@@ -119,7 +109,7 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
   final String wireName = 'TaskTime';
 
   @override
-  Iterable serialize(Serializers serializers, TaskTime object,
+  Iterable<Object> serialize(Serializers serializers, TaskTime object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'startDate',
@@ -132,12 +122,11 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
         ..add(serializers.serialize(object.endDate,
             specifiedType: const FullType(DateTime)));
     }
-
     return result;
   }
 
   @override
-  TaskTime deserialize(Serializers serializers, Iterable serialized,
+  TaskTime deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskTimeBuilder();
 
@@ -169,7 +158,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
   final String wireName = 'TaskEntity';
 
   @override
-  Iterable serialize(Serializers serializers, TaskEntity object,
+  Iterable<Object> serialize(Serializers serializers, TaskEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'description',
@@ -257,12 +246,11 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  TaskEntity deserialize(Serializers serializers, Iterable serialized,
+  TaskEntity deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskEntityBuilder();
 
@@ -355,7 +343,7 @@ class _$TaskStatusEntitySerializer
   final String wireName = 'TaskStatusEntity';
 
   @override
-  Iterable serialize(Serializers serializers, TaskStatusEntity object,
+  Iterable<Object> serialize(Serializers serializers, TaskStatusEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'sort_order',
@@ -371,7 +359,8 @@ class _$TaskStatusEntitySerializer
   }
 
   @override
-  TaskStatusEntity deserialize(Serializers serializers, Iterable serialized,
+  TaskStatusEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskStatusEntityBuilder();
 
@@ -404,7 +393,8 @@ class _$TaskListResponse extends TaskListResponse {
   @override
   final BuiltList<TaskEntity> data;
 
-  factory _$TaskListResponse([void updates(TaskListResponseBuilder b)]) =>
+  factory _$TaskListResponse(
+          [void Function(TaskListResponseBuilder) updates]) =>
       (new TaskListResponseBuilder()..update(updates)).build();
 
   _$TaskListResponse._({this.data}) : super._() {
@@ -414,7 +404,7 @@ class _$TaskListResponse extends TaskListResponse {
   }
 
   @override
-  TaskListResponse rebuild(void updates(TaskListResponseBuilder b)) =>
+  TaskListResponse rebuild(void Function(TaskListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -467,7 +457,7 @@ class TaskListResponseBuilder
   }
 
   @override
-  void update(void updates(TaskListResponseBuilder b)) {
+  void update(void Function(TaskListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -496,7 +486,8 @@ class _$TaskItemResponse extends TaskItemResponse {
   @override
   final TaskEntity data;
 
-  factory _$TaskItemResponse([void updates(TaskItemResponseBuilder b)]) =>
+  factory _$TaskItemResponse(
+          [void Function(TaskItemResponseBuilder) updates]) =>
       (new TaskItemResponseBuilder()..update(updates)).build();
 
   _$TaskItemResponse._({this.data}) : super._() {
@@ -506,7 +497,7 @@ class _$TaskItemResponse extends TaskItemResponse {
   }
 
   @override
-  TaskItemResponse rebuild(void updates(TaskItemResponseBuilder b)) =>
+  TaskItemResponse rebuild(void Function(TaskItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -558,7 +549,7 @@ class TaskItemResponseBuilder
   }
 
   @override
-  void update(void updates(TaskItemResponseBuilder b)) {
+  void update(void Function(TaskItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -589,7 +580,7 @@ class _$TaskTime extends TaskTime {
   @override
   final DateTime endDate;
 
-  factory _$TaskTime([void updates(TaskTimeBuilder b)]) =>
+  factory _$TaskTime([void Function(TaskTimeBuilder) updates]) =>
       (new TaskTimeBuilder()..update(updates)).build();
 
   _$TaskTime._({this.startDate, this.endDate}) : super._() {
@@ -599,7 +590,7 @@ class _$TaskTime extends TaskTime {
   }
 
   @override
-  TaskTime rebuild(void updates(TaskTimeBuilder b)) =>
+  TaskTime rebuild(void Function(TaskTimeBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -658,7 +649,7 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
   }
 
   @override
-  void update(void updates(TaskTimeBuilder b)) {
+  void update(void Function(TaskTimeBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -707,7 +698,7 @@ class _$TaskEntity extends TaskEntity {
   @override
   final int id;
 
-  factory _$TaskEntity([void updates(TaskEntityBuilder b)]) =>
+  factory _$TaskEntity([void Function(TaskEntityBuilder) updates]) =>
       (new TaskEntityBuilder()..update(updates)).build();
 
   _$TaskEntity._(
@@ -750,7 +741,7 @@ class _$TaskEntity extends TaskEntity {
   }
 
   @override
-  TaskEntity rebuild(void updates(TaskEntityBuilder b)) =>
+  TaskEntity rebuild(void Function(TaskEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -952,7 +943,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   }
 
   @override
-  void update(void updates(TaskEntityBuilder b)) {
+  void update(void Function(TaskEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -990,7 +981,8 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   @override
   final String name;
 
-  factory _$TaskStatusEntity([void updates(TaskStatusEntityBuilder b)]) =>
+  factory _$TaskStatusEntity(
+          [void Function(TaskStatusEntityBuilder) updates]) =>
       (new TaskStatusEntityBuilder()..update(updates)).build();
 
   _$TaskStatusEntity._({this.sortOrder, this.id, this.name}) : super._() {
@@ -1006,7 +998,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   }
 
   @override
-  TaskStatusEntity rebuild(void updates(TaskStatusEntityBuilder b)) =>
+  TaskStatusEntity rebuild(void Function(TaskStatusEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1075,7 +1067,7 @@ class TaskStatusEntityBuilder
   }
 
   @override
-  void update(void updates(TaskStatusEntityBuilder b)) {
+  void update(void Function(TaskStatusEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1087,3 +1079,5 @@ class TaskStatusEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

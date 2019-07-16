@@ -6,19 +6,6 @@ part of 'invoice_status_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<InvoiceStatusListResponse> _$invoiceStatusListResponseSerializer =
     new _$InvoiceStatusListResponseSerializer();
 Serializer<InvoiceStatusItemResponse> _$invoiceStatusItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$InvoiceStatusListResponseSerializer
   final String wireName = 'InvoiceStatusListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, InvoiceStatusListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, InvoiceStatusListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -51,7 +39,7 @@ class _$InvoiceStatusListResponseSerializer
 
   @override
   InvoiceStatusListResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceStatusListResponseBuilder();
 
@@ -65,7 +53,7 @@ class _$InvoiceStatusListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceStatusEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -85,7 +73,8 @@ class _$InvoiceStatusItemResponseSerializer
   final String wireName = 'InvoiceStatusItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, InvoiceStatusItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, InvoiceStatusItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -98,7 +87,7 @@ class _$InvoiceStatusItemResponseSerializer
 
   @override
   InvoiceStatusItemResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceStatusItemResponseBuilder();
 
@@ -131,7 +120,8 @@ class _$InvoiceStatusEntitySerializer
   final String wireName = 'InvoiceStatusEntity';
 
   @override
-  Iterable serialize(Serializers serializers, InvoiceStatusEntity object,
+  Iterable<Object> serialize(
+      Serializers serializers, InvoiceStatusEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
@@ -144,7 +134,8 @@ class _$InvoiceStatusEntitySerializer
   }
 
   @override
-  InvoiceStatusEntity deserialize(Serializers serializers, Iterable serialized,
+  InvoiceStatusEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceStatusEntityBuilder();
 
@@ -174,7 +165,7 @@ class _$InvoiceStatusListResponse extends InvoiceStatusListResponse {
   final BuiltList<InvoiceStatusEntity> data;
 
   factory _$InvoiceStatusListResponse(
-          [void updates(InvoiceStatusListResponseBuilder b)]) =>
+          [void Function(InvoiceStatusListResponseBuilder) updates]) =>
       (new InvoiceStatusListResponseBuilder()..update(updates)).build();
 
   _$InvoiceStatusListResponse._({this.data}) : super._() {
@@ -185,7 +176,7 @@ class _$InvoiceStatusListResponse extends InvoiceStatusListResponse {
 
   @override
   InvoiceStatusListResponse rebuild(
-          void updates(InvoiceStatusListResponseBuilder b)) =>
+          void Function(InvoiceStatusListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -240,7 +231,7 @@ class InvoiceStatusListResponseBuilder
   }
 
   @override
-  void update(void updates(InvoiceStatusListResponseBuilder b)) {
+  void update(void Function(InvoiceStatusListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -270,7 +261,7 @@ class _$InvoiceStatusItemResponse extends InvoiceStatusItemResponse {
   final InvoiceStatusEntity data;
 
   factory _$InvoiceStatusItemResponse(
-          [void updates(InvoiceStatusItemResponseBuilder b)]) =>
+          [void Function(InvoiceStatusItemResponseBuilder) updates]) =>
       (new InvoiceStatusItemResponseBuilder()..update(updates)).build();
 
   _$InvoiceStatusItemResponse._({this.data}) : super._() {
@@ -281,7 +272,7 @@ class _$InvoiceStatusItemResponse extends InvoiceStatusItemResponse {
 
   @override
   InvoiceStatusItemResponse rebuild(
-          void updates(InvoiceStatusItemResponseBuilder b)) =>
+          void Function(InvoiceStatusItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -336,7 +327,7 @@ class InvoiceStatusItemResponseBuilder
   }
 
   @override
-  void update(void updates(InvoiceStatusItemResponseBuilder b)) {
+  void update(void Function(InvoiceStatusItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -367,7 +358,8 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
   @override
   final String name;
 
-  factory _$InvoiceStatusEntity([void updates(InvoiceStatusEntityBuilder b)]) =>
+  factory _$InvoiceStatusEntity(
+          [void Function(InvoiceStatusEntityBuilder) updates]) =>
       (new InvoiceStatusEntityBuilder()..update(updates)).build();
 
   _$InvoiceStatusEntity._({this.id, this.name}) : super._() {
@@ -380,7 +372,8 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
   }
 
   @override
-  InvoiceStatusEntity rebuild(void updates(InvoiceStatusEntityBuilder b)) =>
+  InvoiceStatusEntity rebuild(
+          void Function(InvoiceStatusEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -439,7 +432,7 @@ class InvoiceStatusEntityBuilder
   }
 
   @override
-  void update(void updates(InvoiceStatusEntityBuilder b)) {
+  void update(void Function(InvoiceStatusEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -450,3 +443,5 @@ class InvoiceStatusEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

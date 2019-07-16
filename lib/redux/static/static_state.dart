@@ -9,6 +9,7 @@ part 'static_state.g.dart';
 abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   factory StaticState() {
     return _$StaticState._(
+      serverVersion: '',
       currencyMap: BuiltMap<int, CurrencyEntity>(),
       sizeMap: BuiltMap<int, SizeEntity>(),
       industryMap: BuiltMap<int, IndustryEntity>(),
@@ -23,6 +24,8 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
     );
   }
   StaticState._();
+
+  String get serverVersion;
 
   @nullable
   int get updatedAt;

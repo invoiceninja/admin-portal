@@ -6,19 +6,6 @@ part of 'language_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<LanguageListResponse> _$languageListResponseSerializer =
     new _$LanguageListResponseSerializer();
 Serializer<LanguageItemResponse> _$languageItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$LanguageListResponseSerializer
   final String wireName = 'LanguageListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, LanguageListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, LanguageListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -50,7 +38,8 @@ class _$LanguageListResponseSerializer
   }
 
   @override
-  LanguageListResponse deserialize(Serializers serializers, Iterable serialized,
+  LanguageListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new LanguageListResponseBuilder();
 
@@ -64,7 +53,7 @@ class _$LanguageListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(LanguageEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -84,7 +73,8 @@ class _$LanguageItemResponseSerializer
   final String wireName = 'LanguageItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, LanguageItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, LanguageItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -96,7 +86,8 @@ class _$LanguageItemResponseSerializer
   }
 
   @override
-  LanguageItemResponse deserialize(Serializers serializers, Iterable serialized,
+  LanguageItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new LanguageItemResponseBuilder();
 
@@ -125,7 +116,7 @@ class _$LanguageEntitySerializer
   final String wireName = 'LanguageEntity';
 
   @override
-  Iterable serialize(Serializers serializers, LanguageEntity object,
+  Iterable<Object> serialize(Serializers serializers, LanguageEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -140,12 +131,12 @@ class _$LanguageEntitySerializer
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  LanguageEntity deserialize(Serializers serializers, Iterable serialized,
+  LanguageEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new LanguageEntityBuilder();
 
@@ -179,7 +170,7 @@ class _$LanguageListResponse extends LanguageListResponse {
   final BuiltList<LanguageEntity> data;
 
   factory _$LanguageListResponse(
-          [void updates(LanguageListResponseBuilder b)]) =>
+          [void Function(LanguageListResponseBuilder) updates]) =>
       (new LanguageListResponseBuilder()..update(updates)).build();
 
   _$LanguageListResponse._({this.data}) : super._() {
@@ -189,7 +180,8 @@ class _$LanguageListResponse extends LanguageListResponse {
   }
 
   @override
-  LanguageListResponse rebuild(void updates(LanguageListResponseBuilder b)) =>
+  LanguageListResponse rebuild(
+          void Function(LanguageListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -243,7 +235,7 @@ class LanguageListResponseBuilder
   }
 
   @override
-  void update(void updates(LanguageListResponseBuilder b)) {
+  void update(void Function(LanguageListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -273,7 +265,7 @@ class _$LanguageItemResponse extends LanguageItemResponse {
   final LanguageEntity data;
 
   factory _$LanguageItemResponse(
-          [void updates(LanguageItemResponseBuilder b)]) =>
+          [void Function(LanguageItemResponseBuilder) updates]) =>
       (new LanguageItemResponseBuilder()..update(updates)).build();
 
   _$LanguageItemResponse._({this.data}) : super._() {
@@ -283,7 +275,8 @@ class _$LanguageItemResponse extends LanguageItemResponse {
   }
 
   @override
-  LanguageItemResponse rebuild(void updates(LanguageItemResponseBuilder b)) =>
+  LanguageItemResponse rebuild(
+          void Function(LanguageItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -337,7 +330,7 @@ class LanguageItemResponseBuilder
   }
 
   @override
-  void update(void updates(LanguageItemResponseBuilder b)) {
+  void update(void Function(LanguageItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -370,7 +363,7 @@ class _$LanguageEntity extends LanguageEntity {
   @override
   final int id;
 
-  factory _$LanguageEntity([void updates(LanguageEntityBuilder b)]) =>
+  factory _$LanguageEntity([void Function(LanguageEntityBuilder) updates]) =>
       (new LanguageEntityBuilder()..update(updates)).build();
 
   _$LanguageEntity._({this.name, this.locale, this.id}) : super._() {
@@ -383,7 +376,7 @@ class _$LanguageEntity extends LanguageEntity {
   }
 
   @override
-  LanguageEntity rebuild(void updates(LanguageEntityBuilder b)) =>
+  LanguageEntity rebuild(void Function(LanguageEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -451,7 +444,7 @@ class LanguageEntityBuilder
   }
 
   @override
-  void update(void updates(LanguageEntityBuilder b)) {
+  void update(void Function(LanguageEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -463,3 +456,5 @@ class LanguageEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

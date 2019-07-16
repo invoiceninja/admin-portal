@@ -6,19 +6,6 @@ part of 'vendor_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<VendorListResponse> _$vendorListResponseSerializer =
     new _$VendorListResponseSerializer();
 Serializer<VendorItemResponse> _$vendorItemResponseSerializer =
@@ -36,7 +23,7 @@ class _$VendorListResponseSerializer
   final String wireName = 'VendorListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, VendorListResponse object,
+  Iterable<Object> serialize(Serializers serializers, VendorListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -49,7 +36,8 @@ class _$VendorListResponseSerializer
   }
 
   @override
-  VendorListResponse deserialize(Serializers serializers, Iterable serialized,
+  VendorListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorListResponseBuilder();
 
@@ -63,7 +51,7 @@ class _$VendorListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -80,7 +68,7 @@ class _$VendorItemResponseSerializer
   final String wireName = 'VendorItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, VendorItemResponse object,
+  Iterable<Object> serialize(Serializers serializers, VendorItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -92,7 +80,8 @@ class _$VendorItemResponseSerializer
   }
 
   @override
-  VendorItemResponse deserialize(Serializers serializers, Iterable serialized,
+  VendorItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorItemResponseBuilder();
 
@@ -120,7 +109,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
   final String wireName = 'VendorEntity';
 
   @override
-  Iterable serialize(Serializers serializers, VendorEntity object,
+  Iterable<Object> serialize(Serializers serializers, VendorEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -216,12 +205,11 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  VendorEntity deserialize(Serializers serializers, Iterable serialized,
+  VendorEntity deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorEntityBuilder();
 
@@ -307,7 +295,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorContactEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -351,7 +339,8 @@ class _$VendorContactEntitySerializer
   final String wireName = 'VendorContactEntity';
 
   @override
-  Iterable serialize(Serializers serializers, VendorContactEntity object,
+  Iterable<Object> serialize(
+      Serializers serializers, VendorContactEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'first_name',
@@ -406,12 +395,12 @@ class _$VendorContactEntitySerializer
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  VendorContactEntity deserialize(Serializers serializers, Iterable serialized,
+  VendorContactEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorContactEntityBuilder();
 
@@ -476,7 +465,8 @@ class _$VendorListResponse extends VendorListResponse {
   @override
   final BuiltList<VendorEntity> data;
 
-  factory _$VendorListResponse([void updates(VendorListResponseBuilder b)]) =>
+  factory _$VendorListResponse(
+          [void Function(VendorListResponseBuilder) updates]) =>
       (new VendorListResponseBuilder()..update(updates)).build();
 
   _$VendorListResponse._({this.data}) : super._() {
@@ -486,7 +476,8 @@ class _$VendorListResponse extends VendorListResponse {
   }
 
   @override
-  VendorListResponse rebuild(void updates(VendorListResponseBuilder b)) =>
+  VendorListResponse rebuild(
+          void Function(VendorListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -540,7 +531,7 @@ class VendorListResponseBuilder
   }
 
   @override
-  void update(void updates(VendorListResponseBuilder b)) {
+  void update(void Function(VendorListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -569,7 +560,8 @@ class _$VendorItemResponse extends VendorItemResponse {
   @override
   final VendorEntity data;
 
-  factory _$VendorItemResponse([void updates(VendorItemResponseBuilder b)]) =>
+  factory _$VendorItemResponse(
+          [void Function(VendorItemResponseBuilder) updates]) =>
       (new VendorItemResponseBuilder()..update(updates)).build();
 
   _$VendorItemResponse._({this.data}) : super._() {
@@ -579,7 +571,8 @@ class _$VendorItemResponse extends VendorItemResponse {
   }
 
   @override
-  VendorItemResponse rebuild(void updates(VendorItemResponseBuilder b)) =>
+  VendorItemResponse rebuild(
+          void Function(VendorItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -632,7 +625,7 @@ class VendorItemResponseBuilder
   }
 
   @override
-  void update(void updates(VendorItemResponseBuilder b)) {
+  void update(void Function(VendorItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -709,7 +702,7 @@ class _$VendorEntity extends VendorEntity {
   @override
   final int id;
 
-  factory _$VendorEntity([void updates(VendorEntityBuilder b)]) =>
+  factory _$VendorEntity([void Function(VendorEntityBuilder) updates]) =>
       (new VendorEntityBuilder()..update(updates)).build();
 
   _$VendorEntity._(
@@ -799,7 +792,7 @@ class _$VendorEntity extends VendorEntity {
   }
 
   @override
-  VendorEntity rebuild(void updates(VendorEntityBuilder b)) =>
+  VendorEntity rebuild(void Function(VendorEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1059,7 +1052,7 @@ class VendorEntityBuilder
   }
 
   @override
-  void update(void updates(VendorEntityBuilder b)) {
+  void update(void Function(VendorEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1134,7 +1127,8 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final int id;
 
-  factory _$VendorContactEntity([void updates(VendorContactEntityBuilder b)]) =>
+  factory _$VendorContactEntity(
+          [void Function(VendorContactEntityBuilder) updates]) =>
       (new VendorContactEntityBuilder()..update(updates)).build();
 
   _$VendorContactEntity._(
@@ -1168,7 +1162,8 @@ class _$VendorContactEntity extends VendorContactEntity {
   }
 
   @override
-  VendorContactEntity rebuild(void updates(VendorContactEntityBuilder b)) =>
+  VendorContactEntity rebuild(
+          void Function(VendorContactEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1311,7 +1306,7 @@ class VendorContactEntityBuilder
   }
 
   @override
-  void update(void updates(VendorContactEntityBuilder b)) {
+  void update(void Function(VendorContactEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1334,3 +1329,5 @@ class VendorContactEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

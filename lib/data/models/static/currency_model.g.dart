@@ -6,19 +6,6 @@ part of 'currency_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<CurrencyListResponse> _$currencyListResponseSerializer =
     new _$CurrencyListResponseSerializer();
 Serializer<CurrencyItemResponse> _$currencyItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$CurrencyListResponseSerializer
   final String wireName = 'CurrencyListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, CurrencyListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, CurrencyListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -50,7 +38,8 @@ class _$CurrencyListResponseSerializer
   }
 
   @override
-  CurrencyListResponse deserialize(Serializers serializers, Iterable serialized,
+  CurrencyListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CurrencyListResponseBuilder();
 
@@ -64,7 +53,7 @@ class _$CurrencyListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CurrencyEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -84,7 +73,8 @@ class _$CurrencyItemResponseSerializer
   final String wireName = 'CurrencyItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, CurrencyItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, CurrencyItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -96,7 +86,8 @@ class _$CurrencyItemResponseSerializer
   }
 
   @override
-  CurrencyItemResponse deserialize(Serializers serializers, Iterable serialized,
+  CurrencyItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CurrencyItemResponseBuilder();
 
@@ -125,7 +116,7 @@ class _$CurrencyEntitySerializer
   final String wireName = 'CurrencyEntity';
 
   @override
-  Iterable serialize(Serializers serializers, CurrencyEntity object,
+  Iterable<Object> serialize(Serializers serializers, CurrencyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -160,12 +151,12 @@ class _$CurrencyEntitySerializer
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  CurrencyEntity deserialize(Serializers serializers, Iterable serialized,
+  CurrencyEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CurrencyEntityBuilder();
 
@@ -223,7 +214,7 @@ class _$CurrencyListResponse extends CurrencyListResponse {
   final BuiltList<CurrencyEntity> data;
 
   factory _$CurrencyListResponse(
-          [void updates(CurrencyListResponseBuilder b)]) =>
+          [void Function(CurrencyListResponseBuilder) updates]) =>
       (new CurrencyListResponseBuilder()..update(updates)).build();
 
   _$CurrencyListResponse._({this.data}) : super._() {
@@ -233,7 +224,8 @@ class _$CurrencyListResponse extends CurrencyListResponse {
   }
 
   @override
-  CurrencyListResponse rebuild(void updates(CurrencyListResponseBuilder b)) =>
+  CurrencyListResponse rebuild(
+          void Function(CurrencyListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -287,7 +279,7 @@ class CurrencyListResponseBuilder
   }
 
   @override
-  void update(void updates(CurrencyListResponseBuilder b)) {
+  void update(void Function(CurrencyListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -317,7 +309,7 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
   final CurrencyEntity data;
 
   factory _$CurrencyItemResponse(
-          [void updates(CurrencyItemResponseBuilder b)]) =>
+          [void Function(CurrencyItemResponseBuilder) updates]) =>
       (new CurrencyItemResponseBuilder()..update(updates)).build();
 
   _$CurrencyItemResponse._({this.data}) : super._() {
@@ -327,7 +319,8 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
   }
 
   @override
-  CurrencyItemResponse rebuild(void updates(CurrencyItemResponseBuilder b)) =>
+  CurrencyItemResponse rebuild(
+          void Function(CurrencyItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -381,7 +374,7 @@ class CurrencyItemResponseBuilder
   }
 
   @override
-  void update(void updates(CurrencyItemResponseBuilder b)) {
+  void update(void Function(CurrencyItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -426,7 +419,7 @@ class _$CurrencyEntity extends CurrencyEntity {
   @override
   final int id;
 
-  factory _$CurrencyEntity([void updates(CurrencyEntityBuilder b)]) =>
+  factory _$CurrencyEntity([void Function(CurrencyEntityBuilder) updates]) =>
       (new CurrencyEntityBuilder()..update(updates)).build();
 
   _$CurrencyEntity._(
@@ -465,7 +458,7 @@ class _$CurrencyEntity extends CurrencyEntity {
   }
 
   @override
-  CurrencyEntity rebuild(void updates(CurrencyEntityBuilder b)) =>
+  CurrencyEntity rebuild(void Function(CurrencyEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -591,7 +584,7 @@ class CurrencyEntityBuilder
   }
 
   @override
-  void update(void updates(CurrencyEntityBuilder b)) {
+  void update(void Function(CurrencyEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -612,3 +605,5 @@ class CurrencyEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -6,19 +6,6 @@ part of 'task_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<TaskState> _$taskStateSerializer = new _$TaskStateSerializer();
 Serializer<TaskUIState> _$taskUIStateSerializer = new _$TaskUIStateSerializer();
 
@@ -29,7 +16,7 @@ class _$TaskStateSerializer implements StructuredSerializer<TaskState> {
   final String wireName = 'TaskState';
 
   @override
-  Iterable serialize(Serializers serializers, TaskState object,
+  Iterable<Object> serialize(Serializers serializers, TaskState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'map',
@@ -47,12 +34,11 @@ class _$TaskStateSerializer implements StructuredSerializer<TaskState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  TaskState deserialize(Serializers serializers, Iterable serialized,
+  TaskState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskStateBuilder();
 
@@ -71,13 +57,13 @@ class _$TaskStateSerializer implements StructuredSerializer<TaskState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(TaskEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -93,7 +79,7 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
   final String wireName = 'TaskUIState';
 
   @override
-  Iterable serialize(Serializers serializers, TaskUIState object,
+  Iterable<Object> serialize(Serializers serializers, TaskUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'selectedId',
@@ -115,12 +101,11 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         ..add(serializers.serialize(object.editingTime,
             specifiedType: const FullType(TaskTime)));
     }
-
     return result;
   }
 
   @override
-  TaskUIState deserialize(Serializers serializers, Iterable serialized,
+  TaskUIState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskUIStateBuilder();
 
@@ -161,7 +146,7 @@ class _$TaskState extends TaskState {
   @override
   final BuiltList<int> list;
 
-  factory _$TaskState([void updates(TaskStateBuilder b)]) =>
+  factory _$TaskState([void Function(TaskStateBuilder) updates]) =>
       (new TaskStateBuilder()..update(updates)).build();
 
   _$TaskState._({this.lastUpdated, this.map, this.list}) : super._() {
@@ -174,7 +159,7 @@ class _$TaskState extends TaskState {
   }
 
   @override
-  TaskState rebuild(void updates(TaskStateBuilder b)) =>
+  TaskState rebuild(void Function(TaskStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -242,7 +227,7 @@ class TaskStateBuilder implements Builder<TaskState, TaskStateBuilder> {
   }
 
   @override
-  void update(void updates(TaskStateBuilder b)) {
+  void update(void Function(TaskStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -281,7 +266,7 @@ class _$TaskUIState extends TaskUIState {
   @override
   final ListUIState listUIState;
 
-  factory _$TaskUIState([void updates(TaskUIStateBuilder b)]) =>
+  factory _$TaskUIState([void Function(TaskUIStateBuilder) updates]) =>
       (new TaskUIStateBuilder()..update(updates)).build();
 
   _$TaskUIState._(
@@ -296,7 +281,7 @@ class _$TaskUIState extends TaskUIState {
   }
 
   @override
-  TaskUIState rebuild(void updates(TaskUIStateBuilder b)) =>
+  TaskUIState rebuild(void Function(TaskUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -376,7 +361,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   }
 
   @override
-  void update(void updates(TaskUIStateBuilder b)) {
+  void update(void Function(TaskUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -410,3 +395,5 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

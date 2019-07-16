@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
@@ -186,6 +187,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Expense Categories: ${selectedCompany.expenseCategories}';
-    return 'Route: ${uiState.currentRoute}';
+
+    return 'Route: ${uiState.currentRoute}: Server Version: ${staticState.serverVersion}';
   }
 }

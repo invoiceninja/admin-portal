@@ -6,19 +6,6 @@ part of 'credit_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<CreditListResponse> _$creditListResponseSerializer =
     new _$CreditListResponseSerializer();
 Serializer<CreditItemResponse> _$creditItemResponseSerializer =
@@ -34,7 +21,7 @@ class _$CreditListResponseSerializer
   final String wireName = 'CreditListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, CreditListResponse object,
+  Iterable<Object> serialize(Serializers serializers, CreditListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -47,7 +34,8 @@ class _$CreditListResponseSerializer
   }
 
   @override
-  CreditListResponse deserialize(Serializers serializers, Iterable serialized,
+  CreditListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CreditListResponseBuilder();
 
@@ -61,7 +49,7 @@ class _$CreditListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CreditEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -78,7 +66,7 @@ class _$CreditItemResponseSerializer
   final String wireName = 'CreditItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, CreditItemResponse object,
+  Iterable<Object> serialize(Serializers serializers, CreditItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -90,7 +78,8 @@ class _$CreditItemResponseSerializer
   }
 
   @override
-  CreditItemResponse deserialize(Serializers serializers, Iterable serialized,
+  CreditItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CreditItemResponseBuilder();
 
@@ -118,7 +107,7 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
   final String wireName = 'CreditEntity';
 
   @override
-  Iterable serialize(Serializers serializers, CreditEntity object,
+  Iterable<Object> serialize(Serializers serializers, CreditEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'amount',
@@ -179,12 +168,11 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  CreditEntity deserialize(Serializers serializers, Iterable serialized,
+  CreditEntity deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CreditEntityBuilder();
 
@@ -257,7 +245,8 @@ class _$CreditListResponse extends CreditListResponse {
   @override
   final BuiltList<CreditEntity> data;
 
-  factory _$CreditListResponse([void updates(CreditListResponseBuilder b)]) =>
+  factory _$CreditListResponse(
+          [void Function(CreditListResponseBuilder) updates]) =>
       (new CreditListResponseBuilder()..update(updates)).build();
 
   _$CreditListResponse._({this.data}) : super._() {
@@ -267,7 +256,8 @@ class _$CreditListResponse extends CreditListResponse {
   }
 
   @override
-  CreditListResponse rebuild(void updates(CreditListResponseBuilder b)) =>
+  CreditListResponse rebuild(
+          void Function(CreditListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -321,7 +311,7 @@ class CreditListResponseBuilder
   }
 
   @override
-  void update(void updates(CreditListResponseBuilder b)) {
+  void update(void Function(CreditListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -350,7 +340,8 @@ class _$CreditItemResponse extends CreditItemResponse {
   @override
   final CreditEntity data;
 
-  factory _$CreditItemResponse([void updates(CreditItemResponseBuilder b)]) =>
+  factory _$CreditItemResponse(
+          [void Function(CreditItemResponseBuilder) updates]) =>
       (new CreditItemResponseBuilder()..update(updates)).build();
 
   _$CreditItemResponse._({this.data}) : super._() {
@@ -360,7 +351,8 @@ class _$CreditItemResponse extends CreditItemResponse {
   }
 
   @override
-  CreditItemResponse rebuild(void updates(CreditItemResponseBuilder b)) =>
+  CreditItemResponse rebuild(
+          void Function(CreditItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -413,7 +405,7 @@ class CreditItemResponseBuilder
   }
 
   @override
-  void update(void updates(CreditItemResponseBuilder b)) {
+  void update(void Function(CreditItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -466,7 +458,7 @@ class _$CreditEntity extends CreditEntity {
   @override
   final int id;
 
-  factory _$CreditEntity([void updates(CreditEntityBuilder b)]) =>
+  factory _$CreditEntity([void Function(CreditEntityBuilder) updates]) =>
       (new CreditEntityBuilder()..update(updates)).build();
 
   _$CreditEntity._(
@@ -508,7 +500,7 @@ class _$CreditEntity extends CreditEntity {
   }
 
   @override
-  CreditEntity rebuild(void updates(CreditEntityBuilder b)) =>
+  CreditEntity rebuild(void Function(CreditEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -668,7 +660,7 @@ class CreditEntityBuilder
   }
 
   @override
-  void update(void updates(CreditEntityBuilder b)) {
+  void update(void Function(CreditEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -693,3 +685,5 @@ class CreditEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

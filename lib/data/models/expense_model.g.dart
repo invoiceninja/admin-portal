@@ -6,19 +6,6 @@ part of 'expense_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<ExpenseListResponse> _$expenseListResponseSerializer =
     new _$ExpenseListResponseSerializer();
 Serializer<ExpenseItemResponse> _$expenseItemResponseSerializer =
@@ -41,7 +28,8 @@ class _$ExpenseListResponseSerializer
   final String wireName = 'ExpenseListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ExpenseListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, ExpenseListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -54,7 +42,8 @@ class _$ExpenseListResponseSerializer
   }
 
   @override
-  ExpenseListResponse deserialize(Serializers serializers, Iterable serialized,
+  ExpenseListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseListResponseBuilder();
 
@@ -68,7 +57,7 @@ class _$ExpenseListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ExpenseEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -88,7 +77,8 @@ class _$ExpenseItemResponseSerializer
   final String wireName = 'ExpenseItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ExpenseItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, ExpenseItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -100,7 +90,8 @@ class _$ExpenseItemResponseSerializer
   }
 
   @override
-  ExpenseItemResponse deserialize(Serializers serializers, Iterable serialized,
+  ExpenseItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseItemResponseBuilder();
 
@@ -128,7 +119,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
   final String wireName = 'ExpenseEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ExpenseEntity object,
+  Iterable<Object> serialize(Serializers serializers, ExpenseEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'private_notes',
@@ -242,12 +233,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ExpenseEntity deserialize(Serializers serializers, Iterable serialized,
+  ExpenseEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseEntityBuilder();
 
@@ -395,7 +386,8 @@ class _$ExpenseCategoryEntitySerializer
   final String wireName = 'ExpenseCategoryEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ExpenseCategoryEntity object,
+  Iterable<Object> serialize(
+      Serializers serializers, ExpenseCategoryEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -437,13 +429,12 @@ class _$ExpenseCategoryEntitySerializer
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
   ExpenseCategoryEntity deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseCategoryEntityBuilder();
 
@@ -499,7 +490,8 @@ class _$ExpenseStatusEntitySerializer
   final String wireName = 'ExpenseStatusEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ExpenseStatusEntity object,
+  Iterable<Object> serialize(
+      Serializers serializers, ExpenseStatusEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
@@ -512,7 +504,8 @@ class _$ExpenseStatusEntitySerializer
   }
 
   @override
-  ExpenseStatusEntity deserialize(Serializers serializers, Iterable serialized,
+  ExpenseStatusEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseStatusEntityBuilder();
 
@@ -541,7 +534,8 @@ class _$ExpenseListResponse extends ExpenseListResponse {
   @override
   final BuiltList<ExpenseEntity> data;
 
-  factory _$ExpenseListResponse([void updates(ExpenseListResponseBuilder b)]) =>
+  factory _$ExpenseListResponse(
+          [void Function(ExpenseListResponseBuilder) updates]) =>
       (new ExpenseListResponseBuilder()..update(updates)).build();
 
   _$ExpenseListResponse._({this.data}) : super._() {
@@ -551,7 +545,8 @@ class _$ExpenseListResponse extends ExpenseListResponse {
   }
 
   @override
-  ExpenseListResponse rebuild(void updates(ExpenseListResponseBuilder b)) =>
+  ExpenseListResponse rebuild(
+          void Function(ExpenseListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -605,7 +600,7 @@ class ExpenseListResponseBuilder
   }
 
   @override
-  void update(void updates(ExpenseListResponseBuilder b)) {
+  void update(void Function(ExpenseListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -634,7 +629,8 @@ class _$ExpenseItemResponse extends ExpenseItemResponse {
   @override
   final ExpenseEntity data;
 
-  factory _$ExpenseItemResponse([void updates(ExpenseItemResponseBuilder b)]) =>
+  factory _$ExpenseItemResponse(
+          [void Function(ExpenseItemResponseBuilder) updates]) =>
       (new ExpenseItemResponseBuilder()..update(updates)).build();
 
   _$ExpenseItemResponse._({this.data}) : super._() {
@@ -644,7 +640,8 @@ class _$ExpenseItemResponse extends ExpenseItemResponse {
   }
 
   @override
-  ExpenseItemResponse rebuild(void updates(ExpenseItemResponseBuilder b)) =>
+  ExpenseItemResponse rebuild(
+          void Function(ExpenseItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -697,7 +694,7 @@ class ExpenseItemResponseBuilder
   }
 
   @override
-  void update(void updates(ExpenseItemResponseBuilder b)) {
+  void update(void Function(ExpenseItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -784,7 +781,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final int id;
 
-  factory _$ExpenseEntity([void updates(ExpenseEntityBuilder b)]) =>
+  factory _$ExpenseEntity([void Function(ExpenseEntityBuilder) updates]) =>
       (new ExpenseEntityBuilder()..update(updates)).build();
 
   _$ExpenseEntity._(
@@ -892,7 +889,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   }
 
   @override
-  ExpenseEntity rebuild(void updates(ExpenseEntityBuilder b)) =>
+  ExpenseEntity rebuild(void Function(ExpenseEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1191,7 +1188,7 @@ class ExpenseEntityBuilder
   }
 
   @override
-  void update(void updates(ExpenseEntityBuilder b)) {
+  void update(void Function(ExpenseEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1251,7 +1248,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   final int id;
 
   factory _$ExpenseCategoryEntity(
-          [void updates(ExpenseCategoryEntityBuilder b)]) =>
+          [void Function(ExpenseCategoryEntityBuilder) updates]) =>
       (new ExpenseCategoryEntityBuilder()..update(updates)).build();
 
   _$ExpenseCategoryEntity._(
@@ -1269,7 +1266,8 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   }
 
   @override
-  ExpenseCategoryEntity rebuild(void updates(ExpenseCategoryEntityBuilder b)) =>
+  ExpenseCategoryEntity rebuild(
+          void Function(ExpenseCategoryEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1374,7 +1372,7 @@ class ExpenseCategoryEntityBuilder
   }
 
   @override
-  void update(void updates(ExpenseCategoryEntityBuilder b)) {
+  void update(void Function(ExpenseCategoryEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1400,7 +1398,8 @@ class _$ExpenseStatusEntity extends ExpenseStatusEntity {
   @override
   final String name;
 
-  factory _$ExpenseStatusEntity([void updates(ExpenseStatusEntityBuilder b)]) =>
+  factory _$ExpenseStatusEntity(
+          [void Function(ExpenseStatusEntityBuilder) updates]) =>
       (new ExpenseStatusEntityBuilder()..update(updates)).build();
 
   _$ExpenseStatusEntity._({this.id, this.name}) : super._() {
@@ -1413,7 +1412,8 @@ class _$ExpenseStatusEntity extends ExpenseStatusEntity {
   }
 
   @override
-  ExpenseStatusEntity rebuild(void updates(ExpenseStatusEntityBuilder b)) =>
+  ExpenseStatusEntity rebuild(
+          void Function(ExpenseStatusEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1472,7 +1472,7 @@ class ExpenseStatusEntityBuilder
   }
 
   @override
-  void update(void updates(ExpenseStatusEntityBuilder b)) {
+  void update(void Function(ExpenseStatusEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1483,3 +1483,5 @@ class ExpenseStatusEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -6,19 +6,6 @@ part of 'list_ui_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<ListUIState> _$listUIStateSerializer = new _$ListUIStateSerializer();
 
 class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
@@ -28,7 +15,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
   final String wireName = 'ListUIState';
 
   @override
-  Iterable serialize(Serializers serializers, ListUIState object,
+  Iterable<Object> serialize(Serializers serializers, ListUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'filterClearedAt',
@@ -75,12 +62,11 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
         ..add(serializers.serialize(object.filterEntityType,
             specifiedType: const FullType(EntityType)));
     }
-
     return result;
   }
 
   @override
-  ListUIState deserialize(Serializers serializers, Iterable serialized,
+  ListUIState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ListUIStateBuilder();
 
@@ -118,25 +104,25 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           result.stateFilters.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(EntityState)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'statusFilters':
           result.statusFilters.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(EntityStatus)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'custom1Filters':
           result.custom1Filters.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'custom2Filters':
           result.custom2Filters.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -167,7 +153,7 @@ class _$ListUIState extends ListUIState {
   @override
   final BuiltList<String> custom2Filters;
 
-  factory _$ListUIState([void updates(ListUIStateBuilder b)]) =>
+  factory _$ListUIState([void Function(ListUIStateBuilder) updates]) =>
       (new ListUIStateBuilder()..update(updates)).build();
 
   _$ListUIState._(
@@ -206,7 +192,7 @@ class _$ListUIState extends ListUIState {
   }
 
   @override
-  ListUIState rebuild(void updates(ListUIStateBuilder b)) =>
+  ListUIState rebuild(void Function(ListUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -350,7 +336,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   }
 
   @override
-  void update(void updates(ListUIStateBuilder b)) {
+  void update(void Function(ListUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -391,3 +377,5 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -6,19 +6,6 @@ part of 'timezone_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<TimezoneListResponse> _$timezoneListResponseSerializer =
     new _$TimezoneListResponseSerializer();
 Serializer<TimezoneItemResponse> _$timezoneItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$TimezoneListResponseSerializer
   final String wireName = 'TimezoneListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, TimezoneListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, TimezoneListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -50,7 +38,8 @@ class _$TimezoneListResponseSerializer
   }
 
   @override
-  TimezoneListResponse deserialize(Serializers serializers, Iterable serialized,
+  TimezoneListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TimezoneListResponseBuilder();
 
@@ -64,7 +53,7 @@ class _$TimezoneListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TimezoneEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -84,7 +73,8 @@ class _$TimezoneItemResponseSerializer
   final String wireName = 'TimezoneItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, TimezoneItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, TimezoneItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -96,7 +86,8 @@ class _$TimezoneItemResponseSerializer
   }
 
   @override
-  TimezoneItemResponse deserialize(Serializers serializers, Iterable serialized,
+  TimezoneItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TimezoneItemResponseBuilder();
 
@@ -125,7 +116,7 @@ class _$TimezoneEntitySerializer
   final String wireName = 'TimezoneEntity';
 
   @override
-  Iterable serialize(Serializers serializers, TimezoneEntity object,
+  Iterable<Object> serialize(Serializers serializers, TimezoneEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
@@ -141,7 +132,8 @@ class _$TimezoneEntitySerializer
   }
 
   @override
-  TimezoneEntity deserialize(Serializers serializers, Iterable serialized,
+  TimezoneEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TimezoneEntityBuilder();
 
@@ -175,7 +167,7 @@ class _$TimezoneListResponse extends TimezoneListResponse {
   final BuiltList<TimezoneEntity> data;
 
   factory _$TimezoneListResponse(
-          [void updates(TimezoneListResponseBuilder b)]) =>
+          [void Function(TimezoneListResponseBuilder) updates]) =>
       (new TimezoneListResponseBuilder()..update(updates)).build();
 
   _$TimezoneListResponse._({this.data}) : super._() {
@@ -185,7 +177,8 @@ class _$TimezoneListResponse extends TimezoneListResponse {
   }
 
   @override
-  TimezoneListResponse rebuild(void updates(TimezoneListResponseBuilder b)) =>
+  TimezoneListResponse rebuild(
+          void Function(TimezoneListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -239,7 +232,7 @@ class TimezoneListResponseBuilder
   }
 
   @override
-  void update(void updates(TimezoneListResponseBuilder b)) {
+  void update(void Function(TimezoneListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -269,7 +262,7 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
   final TimezoneEntity data;
 
   factory _$TimezoneItemResponse(
-          [void updates(TimezoneItemResponseBuilder b)]) =>
+          [void Function(TimezoneItemResponseBuilder) updates]) =>
       (new TimezoneItemResponseBuilder()..update(updates)).build();
 
   _$TimezoneItemResponse._({this.data}) : super._() {
@@ -279,7 +272,8 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
   }
 
   @override
-  TimezoneItemResponse rebuild(void updates(TimezoneItemResponseBuilder b)) =>
+  TimezoneItemResponse rebuild(
+          void Function(TimezoneItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -333,7 +327,7 @@ class TimezoneItemResponseBuilder
   }
 
   @override
-  void update(void updates(TimezoneItemResponseBuilder b)) {
+  void update(void Function(TimezoneItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -366,7 +360,7 @@ class _$TimezoneEntity extends TimezoneEntity {
   @override
   final String location;
 
-  factory _$TimezoneEntity([void updates(TimezoneEntityBuilder b)]) =>
+  factory _$TimezoneEntity([void Function(TimezoneEntityBuilder) updates]) =>
       (new TimezoneEntityBuilder()..update(updates)).build();
 
   _$TimezoneEntity._({this.id, this.name, this.location}) : super._() {
@@ -382,7 +376,7 @@ class _$TimezoneEntity extends TimezoneEntity {
   }
 
   @override
-  TimezoneEntity rebuild(void updates(TimezoneEntityBuilder b)) =>
+  TimezoneEntity rebuild(void Function(TimezoneEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -450,7 +444,7 @@ class TimezoneEntityBuilder
   }
 
   @override
-  void update(void updates(TimezoneEntityBuilder b)) {
+  void update(void Function(TimezoneEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -462,3 +456,5 @@ class TimezoneEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

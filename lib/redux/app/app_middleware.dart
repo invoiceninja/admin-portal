@@ -288,7 +288,7 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 Middleware<AppState> _createAccountLoaded() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     final dynamic data = action.loginResponse;
-    store.dispatch(LoadStaticSuccess(data.static));
+    store.dispatch(LoadStaticSuccess(data: data.static, version: data.version));
 
     if (action.loadCompanies) {
       for (int i = 0; i < data.accounts.length; i++) {

@@ -6,19 +6,6 @@ part of 'industry_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<IndustryListResponse> _$industryListResponseSerializer =
     new _$IndustryListResponseSerializer();
 Serializer<IndustryItemResponse> _$industryItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$IndustryListResponseSerializer
   final String wireName = 'IndustryListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, IndustryListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, IndustryListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -50,7 +38,8 @@ class _$IndustryListResponseSerializer
   }
 
   @override
-  IndustryListResponse deserialize(Serializers serializers, Iterable serialized,
+  IndustryListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new IndustryListResponseBuilder();
 
@@ -64,7 +53,7 @@ class _$IndustryListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(IndustryEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -84,7 +73,8 @@ class _$IndustryItemResponseSerializer
   final String wireName = 'IndustryItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, IndustryItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, IndustryItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -96,7 +86,8 @@ class _$IndustryItemResponseSerializer
   }
 
   @override
-  IndustryItemResponse deserialize(Serializers serializers, Iterable serialized,
+  IndustryItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new IndustryItemResponseBuilder();
 
@@ -125,7 +116,7 @@ class _$IndustryEntitySerializer
   final String wireName = 'IndustryEntity';
 
   @override
-  Iterable serialize(Serializers serializers, IndustryEntity object,
+  Iterable<Object> serialize(Serializers serializers, IndustryEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -137,12 +128,12 @@ class _$IndustryEntitySerializer
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  IndustryEntity deserialize(Serializers serializers, Iterable serialized,
+  IndustryEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new IndustryEntityBuilder();
 
@@ -172,7 +163,7 @@ class _$IndustryListResponse extends IndustryListResponse {
   final BuiltList<IndustryEntity> data;
 
   factory _$IndustryListResponse(
-          [void updates(IndustryListResponseBuilder b)]) =>
+          [void Function(IndustryListResponseBuilder) updates]) =>
       (new IndustryListResponseBuilder()..update(updates)).build();
 
   _$IndustryListResponse._({this.data}) : super._() {
@@ -182,7 +173,8 @@ class _$IndustryListResponse extends IndustryListResponse {
   }
 
   @override
-  IndustryListResponse rebuild(void updates(IndustryListResponseBuilder b)) =>
+  IndustryListResponse rebuild(
+          void Function(IndustryListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -236,7 +228,7 @@ class IndustryListResponseBuilder
   }
 
   @override
-  void update(void updates(IndustryListResponseBuilder b)) {
+  void update(void Function(IndustryListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -266,7 +258,7 @@ class _$IndustryItemResponse extends IndustryItemResponse {
   final IndustryEntity data;
 
   factory _$IndustryItemResponse(
-          [void updates(IndustryItemResponseBuilder b)]) =>
+          [void Function(IndustryItemResponseBuilder) updates]) =>
       (new IndustryItemResponseBuilder()..update(updates)).build();
 
   _$IndustryItemResponse._({this.data}) : super._() {
@@ -276,7 +268,8 @@ class _$IndustryItemResponse extends IndustryItemResponse {
   }
 
   @override
-  IndustryItemResponse rebuild(void updates(IndustryItemResponseBuilder b)) =>
+  IndustryItemResponse rebuild(
+          void Function(IndustryItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -330,7 +323,7 @@ class IndustryItemResponseBuilder
   }
 
   @override
-  void update(void updates(IndustryItemResponseBuilder b)) {
+  void update(void Function(IndustryItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -361,7 +354,7 @@ class _$IndustryEntity extends IndustryEntity {
   @override
   final int id;
 
-  factory _$IndustryEntity([void updates(IndustryEntityBuilder b)]) =>
+  factory _$IndustryEntity([void Function(IndustryEntityBuilder) updates]) =>
       (new IndustryEntityBuilder()..update(updates)).build();
 
   _$IndustryEntity._({this.name, this.id}) : super._() {
@@ -371,7 +364,7 @@ class _$IndustryEntity extends IndustryEntity {
   }
 
   @override
-  IndustryEntity rebuild(void updates(IndustryEntityBuilder b)) =>
+  IndustryEntity rebuild(void Function(IndustryEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -430,7 +423,7 @@ class IndustryEntityBuilder
   }
 
   @override
-  void update(void updates(IndustryEntityBuilder b)) {
+  void update(void Function(IndustryEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -441,3 +434,5 @@ class IndustryEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -6,19 +6,6 @@ part of 'static_data_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<StaticDataListResponse> _$staticDataListResponseSerializer =
     new _$StaticDataListResponseSerializer();
 Serializer<StaticDataItemResponse> _$staticDataItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$StaticDataListResponseSerializer
   final String wireName = 'StaticDataListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, StaticDataListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, StaticDataListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -51,7 +39,7 @@ class _$StaticDataListResponseSerializer
 
   @override
   StaticDataListResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new StaticDataListResponseBuilder();
 
@@ -65,7 +53,7 @@ class _$StaticDataListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(StaticDataEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -85,7 +73,8 @@ class _$StaticDataItemResponseSerializer
   final String wireName = 'StaticDataItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, StaticDataItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, StaticDataItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -98,7 +87,7 @@ class _$StaticDataItemResponseSerializer
 
   @override
   StaticDataItemResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new StaticDataItemResponseBuilder();
 
@@ -128,7 +117,7 @@ class _$StaticDataEntitySerializer
   final String wireName = 'StaticDataEntity';
 
   @override
-  Iterable serialize(Serializers serializers, StaticDataEntity object,
+  Iterable<Object> serialize(Serializers serializers, StaticDataEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'currencies',
@@ -185,7 +174,8 @@ class _$StaticDataEntitySerializer
   }
 
   @override
-  StaticDataEntity deserialize(Serializers serializers, Iterable serialized,
+  StaticDataEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new StaticDataEntityBuilder();
 
@@ -199,72 +189,73 @@ class _$StaticDataEntitySerializer
           result.currencies.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CurrencyEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'sizes':
           result.sizes.replace(serializers.deserialize(value,
-              specifiedType: const FullType(
-                  BuiltList, const [const FullType(SizeEntity)])) as BuiltList);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(SizeEntity)]))
+              as BuiltList<dynamic>);
           break;
         case 'industries':
           result.industries.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(IndustryEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'timezones':
           result.timezones.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TimezoneEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'dateFormats':
           result.dateFormats.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DateFormatEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'datetimeFormats':
           result.datetimeFormats.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DatetimeFormatEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'languages':
           result.languages.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(LanguageEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'paymentTypes':
           result.paymentTypes.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTypeEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'countries':
           result.countries.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CountryEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'invoiceDesigns':
           result.invoiceDesigns.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceDesignEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'invoiceStatus':
           result.invoiceStatus.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceStatusEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'frequencies':
           result.frequencies.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(FrequencyEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -278,7 +269,7 @@ class _$StaticDataListResponse extends StaticDataListResponse {
   final BuiltList<StaticDataEntity> data;
 
   factory _$StaticDataListResponse(
-          [void updates(StaticDataListResponseBuilder b)]) =>
+          [void Function(StaticDataListResponseBuilder) updates]) =>
       (new StaticDataListResponseBuilder()..update(updates)).build();
 
   _$StaticDataListResponse._({this.data}) : super._() {
@@ -289,7 +280,7 @@ class _$StaticDataListResponse extends StaticDataListResponse {
 
   @override
   StaticDataListResponse rebuild(
-          void updates(StaticDataListResponseBuilder b)) =>
+          void Function(StaticDataListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -343,7 +334,7 @@ class StaticDataListResponseBuilder
   }
 
   @override
-  void update(void updates(StaticDataListResponseBuilder b)) {
+  void update(void Function(StaticDataListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -373,7 +364,7 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
   final StaticDataEntity data;
 
   factory _$StaticDataItemResponse(
-          [void updates(StaticDataItemResponseBuilder b)]) =>
+          [void Function(StaticDataItemResponseBuilder) updates]) =>
       (new StaticDataItemResponseBuilder()..update(updates)).build();
 
   _$StaticDataItemResponse._({this.data}) : super._() {
@@ -384,7 +375,7 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
 
   @override
   StaticDataItemResponse rebuild(
-          void updates(StaticDataItemResponseBuilder b)) =>
+          void Function(StaticDataItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -438,7 +429,7 @@ class StaticDataItemResponseBuilder
   }
 
   @override
-  void update(void updates(StaticDataItemResponseBuilder b)) {
+  void update(void Function(StaticDataItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -489,7 +480,8 @@ class _$StaticDataEntity extends StaticDataEntity {
   @override
   final BuiltList<FrequencyEntity> frequencies;
 
-  factory _$StaticDataEntity([void updates(StaticDataEntityBuilder b)]) =>
+  factory _$StaticDataEntity(
+          [void Function(StaticDataEntityBuilder) updates]) =>
       (new StaticDataEntityBuilder()..update(updates)).build();
 
   _$StaticDataEntity._(
@@ -545,7 +537,7 @@ class _$StaticDataEntity extends StaticDataEntity {
   }
 
   @override
-  StaticDataEntity rebuild(void updates(StaticDataEntityBuilder b)) =>
+  StaticDataEntity rebuild(void Function(StaticDataEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -720,7 +712,7 @@ class StaticDataEntityBuilder
   }
 
   @override
-  void update(void updates(StaticDataEntityBuilder b)) {
+  void update(void Function(StaticDataEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -779,3 +771,5 @@ class StaticDataEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

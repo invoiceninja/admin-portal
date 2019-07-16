@@ -6,19 +6,6 @@ part of 'product_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<ProductState> _$productStateSerializer =
     new _$ProductStateSerializer();
 Serializer<ProductUIState> _$productUIStateSerializer =
@@ -31,7 +18,7 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
   final String wireName = 'ProductState';
 
   @override
-  Iterable serialize(Serializers serializers, ProductState object,
+  Iterable<Object> serialize(Serializers serializers, ProductState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'map',
@@ -49,12 +36,11 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ProductState deserialize(Serializers serializers, Iterable serialized,
+  ProductState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductStateBuilder();
 
@@ -73,13 +59,13 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(ProductEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -96,7 +82,7 @@ class _$ProductUIStateSerializer
   final String wireName = 'ProductUIState';
 
   @override
-  Iterable serialize(Serializers serializers, ProductUIState object,
+  Iterable<Object> serialize(Serializers serializers, ProductUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'selectedId',
@@ -112,12 +98,12 @@ class _$ProductUIStateSerializer
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(ProductEntity)));
     }
-
     return result;
   }
 
   @override
-  ProductUIState deserialize(Serializers serializers, Iterable serialized,
+  ProductUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductUIStateBuilder();
 
@@ -154,7 +140,7 @@ class _$ProductState extends ProductState {
   @override
   final BuiltList<int> list;
 
-  factory _$ProductState([void updates(ProductStateBuilder b)]) =>
+  factory _$ProductState([void Function(ProductStateBuilder) updates]) =>
       (new ProductStateBuilder()..update(updates)).build();
 
   _$ProductState._({this.lastUpdated, this.map, this.list}) : super._() {
@@ -167,7 +153,7 @@ class _$ProductState extends ProductState {
   }
 
   @override
-  ProductState rebuild(void updates(ProductStateBuilder b)) =>
+  ProductState rebuild(void Function(ProductStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -236,7 +222,7 @@ class ProductStateBuilder
   }
 
   @override
-  void update(void updates(ProductStateBuilder b)) {
+  void update(void Function(ProductStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -273,7 +259,7 @@ class _$ProductUIState extends ProductUIState {
   @override
   final ListUIState listUIState;
 
-  factory _$ProductUIState([void updates(ProductUIStateBuilder b)]) =>
+  factory _$ProductUIState([void Function(ProductUIStateBuilder) updates]) =>
       (new ProductUIStateBuilder()..update(updates)).build();
 
   _$ProductUIState._({this.editing, this.selectedId, this.listUIState})
@@ -287,7 +273,7 @@ class _$ProductUIState extends ProductUIState {
   }
 
   @override
-  ProductUIState rebuild(void updates(ProductUIStateBuilder b)) =>
+  ProductUIState rebuild(void Function(ProductUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -359,7 +345,7 @@ class ProductUIStateBuilder
   }
 
   @override
-  void update(void updates(ProductUIStateBuilder b)) {
+  void update(void Function(ProductUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -390,3 +376,5 @@ class ProductUIStateBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

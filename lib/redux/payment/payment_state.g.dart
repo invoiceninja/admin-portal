@@ -6,19 +6,6 @@ part of 'payment_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<PaymentState> _$paymentStateSerializer =
     new _$PaymentStateSerializer();
 Serializer<PaymentUIState> _$paymentUIStateSerializer =
@@ -31,7 +18,7 @@ class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
   final String wireName = 'PaymentState';
 
   @override
-  Iterable serialize(Serializers serializers, PaymentState object,
+  Iterable<Object> serialize(Serializers serializers, PaymentState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'map',
@@ -49,12 +36,11 @@ class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  PaymentState deserialize(Serializers serializers, Iterable serialized,
+  PaymentState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentStateBuilder();
 
@@ -73,13 +59,13 @@ class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(PaymentEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -96,7 +82,7 @@ class _$PaymentUIStateSerializer
   final String wireName = 'PaymentUIState';
 
   @override
-  Iterable serialize(Serializers serializers, PaymentUIState object,
+  Iterable<Object> serialize(Serializers serializers, PaymentUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'selectedId',
@@ -112,12 +98,12 @@ class _$PaymentUIStateSerializer
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(PaymentEntity)));
     }
-
     return result;
   }
 
   @override
-  PaymentUIState deserialize(Serializers serializers, Iterable serialized,
+  PaymentUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentUIStateBuilder();
 
@@ -154,7 +140,7 @@ class _$PaymentState extends PaymentState {
   @override
   final BuiltList<int> list;
 
-  factory _$PaymentState([void updates(PaymentStateBuilder b)]) =>
+  factory _$PaymentState([void Function(PaymentStateBuilder) updates]) =>
       (new PaymentStateBuilder()..update(updates)).build();
 
   _$PaymentState._({this.lastUpdated, this.map, this.list}) : super._() {
@@ -167,7 +153,7 @@ class _$PaymentState extends PaymentState {
   }
 
   @override
-  PaymentState rebuild(void updates(PaymentStateBuilder b)) =>
+  PaymentState rebuild(void Function(PaymentStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -236,7 +222,7 @@ class PaymentStateBuilder
   }
 
   @override
-  void update(void updates(PaymentStateBuilder b)) {
+  void update(void Function(PaymentStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -273,7 +259,7 @@ class _$PaymentUIState extends PaymentUIState {
   @override
   final ListUIState listUIState;
 
-  factory _$PaymentUIState([void updates(PaymentUIStateBuilder b)]) =>
+  factory _$PaymentUIState([void Function(PaymentUIStateBuilder) updates]) =>
       (new PaymentUIStateBuilder()..update(updates)).build();
 
   _$PaymentUIState._({this.editing, this.selectedId, this.listUIState})
@@ -287,7 +273,7 @@ class _$PaymentUIState extends PaymentUIState {
   }
 
   @override
-  PaymentUIState rebuild(void updates(PaymentUIStateBuilder b)) =>
+  PaymentUIState rebuild(void Function(PaymentUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -359,7 +345,7 @@ class PaymentUIStateBuilder
   }
 
   @override
-  void update(void updates(PaymentUIStateBuilder b)) {
+  void update(void Function(PaymentUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -390,3 +376,5 @@ class PaymentUIStateBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

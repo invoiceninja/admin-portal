@@ -6,19 +6,6 @@ part of 'vendor_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<VendorState> _$vendorStateSerializer = new _$VendorStateSerializer();
 Serializer<VendorUIState> _$vendorUIStateSerializer =
     new _$VendorUIStateSerializer();
@@ -30,7 +17,7 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
   final String wireName = 'VendorState';
 
   @override
-  Iterable serialize(Serializers serializers, VendorState object,
+  Iterable<Object> serialize(Serializers serializers, VendorState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'map',
@@ -48,12 +35,11 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  VendorState deserialize(Serializers serializers, Iterable serialized,
+  VendorState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorStateBuilder();
 
@@ -72,13 +58,13 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(VendorEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -94,7 +80,7 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
   final String wireName = 'VendorUIState';
 
   @override
-  Iterable serialize(Serializers serializers, VendorUIState object,
+  Iterable<Object> serialize(Serializers serializers, VendorUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'selectedId',
@@ -116,12 +102,12 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
         ..add(serializers.serialize(object.editingContact,
             specifiedType: const FullType(VendorContactEntity)));
     }
-
     return result;
   }
 
   @override
-  VendorUIState deserialize(Serializers serializers, Iterable serialized,
+  VendorUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorUIStateBuilder();
 
@@ -163,7 +149,7 @@ class _$VendorState extends VendorState {
   @override
   final BuiltList<int> list;
 
-  factory _$VendorState([void updates(VendorStateBuilder b)]) =>
+  factory _$VendorState([void Function(VendorStateBuilder) updates]) =>
       (new VendorStateBuilder()..update(updates)).build();
 
   _$VendorState._({this.lastUpdated, this.map, this.list}) : super._() {
@@ -176,7 +162,7 @@ class _$VendorState extends VendorState {
   }
 
   @override
-  VendorState rebuild(void updates(VendorStateBuilder b)) =>
+  VendorState rebuild(void Function(VendorStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -244,7 +230,7 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
   }
 
   @override
-  void update(void updates(VendorStateBuilder b)) {
+  void update(void Function(VendorStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -283,7 +269,7 @@ class _$VendorUIState extends VendorUIState {
   @override
   final ListUIState listUIState;
 
-  factory _$VendorUIState([void updates(VendorUIStateBuilder b)]) =>
+  factory _$VendorUIState([void Function(VendorUIStateBuilder) updates]) =>
       (new VendorUIStateBuilder()..update(updates)).build();
 
   _$VendorUIState._(
@@ -298,7 +284,7 @@ class _$VendorUIState extends VendorUIState {
   }
 
   @override
-  VendorUIState rebuild(void updates(VendorUIStateBuilder b)) =>
+  VendorUIState rebuild(void Function(VendorUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -380,7 +366,7 @@ class VendorUIStateBuilder
   }
 
   @override
-  void update(void updates(VendorUIStateBuilder b)) {
+  void update(void Function(VendorUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -414,3 +400,5 @@ class VendorUIStateBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
