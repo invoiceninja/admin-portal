@@ -113,11 +113,21 @@ abstract class ProjectEntity extends Object
       actions.add(EntityAction.edit);
     }
 
-    actions.addAll([
-      EntityAction.clone,
-      EntityAction.newInvoice,
-      null,
-    ]);
+    if (user.canCreate(EntityType.project)) {
+      actions.add(EntityAction.clone);
+    }
+
+    if (user.canCreate(EntityType.task)) {
+      actions.add(EntityAction.newTask);
+    }
+
+    if (user.canCreate(EntityType.invoice)) {
+      actions.add(EntityAction.newInvoice);
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
 
     return actions..addAll(super.getActions(user: user));
   }

@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -238,6 +239,14 @@ void handleProjectAction(
   switch (action) {
     case EntityAction.edit:
       store.dispatch(EditProject(context: context, project: project));
+      break;
+    case EntityAction.newTask:
+      store.dispatch(EditTask(
+          task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+              .rebuild((b) => b
+                ..projectId = project.id
+                ..clientId = project.clientId),
+          context: context));
       break;
     case EntityAction.newInvoice:
       final items =

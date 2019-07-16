@@ -94,9 +94,10 @@ class ProjectViewVM {
       onTasksPressed: (BuildContext context, {bool longPress = false}) {
         if (longPress) {
           store.dispatch(EditTask(
-              task: TaskEntity().rebuild((b) => b
-                ..projectId = project.id
-                ..clientId = project.clientId),
+              task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+                  .rebuild((b) => b
+                    ..projectId = project.id
+                    ..clientId = project.clientId),
               context: context));
         } else {
           store.dispatch(FilterTasksByEntity(
