@@ -49,21 +49,26 @@ class AppDrawer extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        SizedBox(width: 14, height: 50),
-        company.logoUrl != null && company.logoUrl.isNotEmpty
-            ? CachedNetworkImage(
-                width: 30,
-                height: 30,
-                key: ValueKey(company.logoUrl),
-                imageUrl: company.logoUrl,
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Image.asset(
-                    'assets/images/logo.png',
-                    width: 30,
-                    height: 30),
+        viewModel.isLoading
+            ? SizedBox(
+                child: CircularProgressIndicator(),
+                width: 20,
+                height: 20,
               )
-            : Image.asset('assets/images/logo.png', width: 30, height: 30),
-        SizedBox(width: 28),
+            : company.logoUrl != null && company.logoUrl.isNotEmpty
+                ? CachedNetworkImage(
+                    width: 30,
+                    height: 30,
+                    key: ValueKey(company.logoUrl),
+                    imageUrl: company.logoUrl,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Image.asset(
+                        'assets/images/logo.png',
+                        width: 30,
+                        height: 30),
+                  )
+                : Image.asset('assets/images/logo.png', width: 30, height: 30),
+        SizedBox(width: 28, height: 50),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -86,7 +91,6 @@ class AppDrawer extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(width: 14),
                     company.logoUrl != null && company.logoUrl.isNotEmpty
                         ? CachedNetworkImage(
                             width: 30,
@@ -141,30 +145,11 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Container(
-            color: enableDarkMode ? Colors.white10 : Colors.grey[200],
-            child: Container(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: viewModel.companies.length > 1 &&
-                                !viewModel.isLoading
-                            ? _multipleCompanies
-                            : _singleCompany),
-                    SizedBox(
-                      child: viewModel.isLoading
-                          ? CircularProgressIndicator()
-                          : null,
-                      width: 20.0,
-                      height: 20.0,
-                    ),
-                  ],
-                ),
-              ],
-            )),
-          ),
+              padding: EdgeInsets.symmetric(horizontal: 14),
+              color: enableDarkMode ? Colors.white10 : Colors.grey[200],
+              child: viewModel.companies.length > 1 && !viewModel.isLoading
+                  ? _multipleCompanies
+                  : _singleCompany),
           DrawerTile(
             company: company,
             icon: FontAwesomeIcons.tachometerAlt,

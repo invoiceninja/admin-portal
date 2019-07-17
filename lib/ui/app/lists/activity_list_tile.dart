@@ -38,6 +38,8 @@ class ActivityListTile extends StatelessWidget {
       invoice: state.invoiceState.map[activity.invoiceId],
       quote: state.quoteState.map[activity.invoiceId],
       payment: state.paymentState.map[activity.paymentId],
+      task: state.taskState.map[activity.taskId],
+      expense: state.expenseState.map[activity.expenseId],
     );
 
     return ListTile(
