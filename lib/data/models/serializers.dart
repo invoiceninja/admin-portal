@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:invoiceninja_flutter/data/models/credit_model.dart';
+import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -21,14 +22,13 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
-
-// STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+// STARTER: import - do not remove comment
 
 part 'serializers.g.dart';
 
@@ -54,6 +54,8 @@ part 'serializers.g.dart';
   TaskItemResponse,
   VendorListResponse,
   VendorItemResponse,
+  DocumentListResponse,
+  DocumentItemResponse,
   StaticDataItemResponse,
   CountryItemResponse,
   CountryListResponse,
@@ -77,7 +79,6 @@ part 'serializers.g.dart';
   SizeListResponse,
   TimezoneItemResponse,
   TimezoneListResponse,
-  // STARTER: serializers - do not remove comment
   ExpenseEntity,
   VendorEntity,
   TaskEntity,
@@ -85,6 +86,7 @@ part 'serializers.g.dart';
   PaymentEntity,
   TaskStatusEntity,
   ExpenseStatusEntity,
+  // STARTER: serializers - do not remove comment
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

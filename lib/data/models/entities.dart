@@ -34,6 +34,7 @@ class EntityType extends EnumClass {
   static const EntityType size = _$size;
   static const EntityType paymentType = _$paymentType;
   static const EntityType taskStatus = _$taskStatus;
+  static const EntityType document = _$document;
 
   String get plural {
     return toString() + 's';

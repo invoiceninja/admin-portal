@@ -28,6 +28,7 @@ const EntityType _$industry = const EntityType._('industry');
 const EntityType _$size = const EntityType._('size');
 const EntityType _$paymentType = const EntityType._('paymentType');
 const EntityType _$taskStatus = const EntityType._('taskStatus');
+const EntityType _$document = const EntityType._('document');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
@@ -75,6 +76,8 @@ EntityType _$typeValueOf(String name) {
       return _$paymentType;
     case 'taskStatus':
       return _$taskStatus;
+    case 'document':
+      return _$document;
     default:
       throw new ArgumentError(name);
   }
@@ -104,6 +107,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$size,
   _$paymentType,
   _$taskStatus,
+  _$document,
 ]);
 
 const EntityState _$active = const EntityState._('active');
