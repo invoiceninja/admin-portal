@@ -39,57 +39,94 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (viewModel.selectedCompany == null) {
+    final company = viewModel.selectedCompany;
+
+    if (company == null) {
       return Container();
     }
 
-    final _singleCompany = Align(
-      alignment: FractionalOffset.bottomLeft,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(viewModel.selectedCompany.name),
-          Text(viewModel.selectedCompany.user.email,
-              style: Theme.of(context).textTheme.caption)
-        ],
-      ),
+    final _singleCompany = Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        company.logoUrl != null && company.logoUrl.isNotEmpty
+            ? CachedNetworkImage(
+                width: 50,
+                height: 50,
+                key: ValueKey(company.logoUrl),
+                imageUrl: company.logoUrl,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Image.asset(
+                    'assets/images/logo.png',
+                    width: 50,
+                    height: 50),
+              )
+            : Image.asset('assets/images/logo.png', width: 50, height: 50),
+        SizedBox(width: 22),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(company.name, style: Theme.of(context).textTheme.subhead),
+            Text(company.user.email, style: Theme.of(context).textTheme.caption)
+          ],
+        ),
+      ],
     );
 
-    final _multipleCompanies = Align(
-      alignment: FractionalOffset.bottomLeft,
-      child: viewModel.companies.isNotEmpty
-          ? DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: viewModel.selectedCompanyIndex,
-                items: viewModel.companies
-                    .map((CompanyEntity company) => DropdownMenuItem<String>(
-                          value: (viewModel.companies.indexOf(company) + 1)
-                              .toString(),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(company.name),
-                              Text(company.user.email,
-                                  style: Theme.of(context).textTheme.caption),
-                            ],
+    final _multipleCompanies = DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+      isExpanded: true,
+      value: viewModel.selectedCompanyIndex,
+      items: viewModel.companies
+          .map((CompanyEntity company) => DropdownMenuItem<String>(
+                value: (viewModel.companies.indexOf(company) + 1).toString(),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    company.logoUrl != null && company.logoUrl.isNotEmpty
+                        ? CachedNetworkImage(
+                            width: 50,
+                            height: 50,
+                            key: ValueKey(company.logoUrl),
+                            imageUrl: company.logoUrl,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Image.asset(
+                                'assets/images/logo.png',
+                                width: 50,
+                                height: 50),
+                          )
+                        : Image.asset('assets/images/logo.png',
+                            width: 50, height: 50),
+                    SizedBox(width: 22),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(company.name),
+                          Flexible(
+                            child: Text(company.user.email,
+                                style: Theme.of(context).textTheme.caption),
                           ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  viewModel.onCompanyChanged(context, value,
-                      viewModel.companies[int.parse(value) - 1]);
-                },
-              ),
-            )
-          : Container(),
-    );
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ))
+          .toList(),
+      onChanged: (value) {
+        viewModel.onCompanyChanged(
+            context, value, viewModel.companies[int.parse(value) - 1]);
+      },
+    ));
 
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
     final state = store.state;
     final enableDarkMode = state.uiState.enableDarkMode;
-    final company = viewModel.selectedCompany;
     final localization = AppLocalization.of(context);
 
     final ThemeData themeData = Theme.of(context);
@@ -102,30 +139,10 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           Container(
             color: enableDarkMode ? Colors.white10 : Colors.grey[200],
-            child: DrawerHeader(
+            child: Container(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Expanded(
-                  child: Center(
-                      child: viewModel.selectedCompany.logoUrl != null &&
-                              viewModel.selectedCompany.logoUrl.isNotEmpty
-                          ? CachedNetworkImage(
-                              key: ValueKey(viewModel.selectedCompany.logoUrl),
-                              imageUrl: viewModel.selectedCompany.logoUrl,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) => Image.asset(
-                                  'assets/images/logo.png',
-                                  width: 100.0,
-                                  height: 100.0),
-                            )
-                          : Image.asset('assets/images/logo.png',
-                              width: 100.0, height: 100.0)),
-                ),
-                SizedBox(
-                  height: 18.0,
-                ),
                 Row(
                   children: <Widget>[
                     Expanded(
