@@ -55,6 +55,10 @@ abstract class DocumentEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      preview: '',
+      width: 0,
+      height: 0,
+      size: 0,
     );
   }
 
@@ -67,6 +71,14 @@ abstract class DocumentEntity extends Object
   String get type;
 
   String get path;
+
+  int get width;
+
+  int get height;
+
+  int get size;
+
+  String get preview;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
@@ -90,7 +102,7 @@ abstract class DocumentEntity extends Object
 
   @override
   String get listDisplayName {
-    return null;
+    return name;
   }
 
   @override

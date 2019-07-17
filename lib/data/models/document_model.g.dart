@@ -125,6 +125,15 @@ class _$DocumentEntitySerializer
       serializers.serialize(object.type, specifiedType: const FullType(String)),
       'path',
       serializers.serialize(object.path, specifiedType: const FullType(String)),
+      'width',
+      serializers.serialize(object.width, specifiedType: const FullType(int)),
+      'height',
+      serializers.serialize(object.height, specifiedType: const FullType(int)),
+      'size',
+      serializers.serialize(object.size, specifiedType: const FullType(int)),
+      'preview',
+      serializers.serialize(object.preview,
+          specifiedType: const FullType(String)),
       'is_default',
       serializers.serialize(object.isDefault,
           specifiedType: const FullType(bool)),
@@ -202,6 +211,22 @@ class _$DocumentEntitySerializer
           break;
         case 'path':
           result.path = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'width':
+          result.width = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'height':
+          result.height = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'size':
+          result.size = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'preview':
+          result.preview = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
@@ -445,6 +470,14 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String path;
   @override
+  final int width;
+  @override
+  final int height;
+  @override
+  final int size;
+  @override
+  final String preview;
+  @override
   final int invoiceId;
   @override
   final int expenseId;
@@ -470,6 +503,10 @@ class _$DocumentEntity extends DocumentEntity {
       {this.name,
       this.type,
       this.path,
+      this.width,
+      this.height,
+      this.size,
+      this.preview,
       this.invoiceId,
       this.expenseId,
       this.isDefault,
@@ -488,6 +525,18 @@ class _$DocumentEntity extends DocumentEntity {
     }
     if (path == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'path');
+    }
+    if (width == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'width');
+    }
+    if (height == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'height');
+    }
+    if (size == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'size');
+    }
+    if (preview == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'preview');
     }
     if (isDefault == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'isDefault');
@@ -509,6 +558,10 @@ class _$DocumentEntity extends DocumentEntity {
         name == other.name &&
         type == other.type &&
         path == other.path &&
+        width == other.width &&
+        height == other.height &&
+        size == other.size &&
+        preview == other.preview &&
         invoiceId == other.invoiceId &&
         expenseId == other.expenseId &&
         isDefault == other.isDefault &&
@@ -532,9 +585,19 @@ class _$DocumentEntity extends DocumentEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, name.hashCode),
-                                                type.hashCode),
-                                            path.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(0,
+                                                                    name.hashCode),
+                                                                type.hashCode),
+                                                            path.hashCode),
+                                                        width.hashCode),
+                                                    height.hashCode),
+                                                size.hashCode),
+                                            preview.hashCode),
                                         invoiceId.hashCode),
                                     expenseId.hashCode),
                                 isDefault.hashCode),
@@ -552,6 +615,10 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('name', name)
           ..add('type', type)
           ..add('path', path)
+          ..add('width', width)
+          ..add('height', height)
+          ..add('size', size)
+          ..add('preview', preview)
           ..add('invoiceId', invoiceId)
           ..add('expenseId', expenseId)
           ..add('isDefault', isDefault)
@@ -580,6 +647,22 @@ class DocumentEntityBuilder
   String _path;
   String get path => _$this._path;
   set path(String path) => _$this._path = path;
+
+  int _width;
+  int get width => _$this._width;
+  set width(int width) => _$this._width = width;
+
+  int _height;
+  int get height => _$this._height;
+  set height(int height) => _$this._height = height;
+
+  int _size;
+  int get size => _$this._size;
+  set size(int size) => _$this._size = size;
+
+  String _preview;
+  String get preview => _$this._preview;
+  set preview(String preview) => _$this._preview = preview;
 
   int _invoiceId;
   int get invoiceId => _$this._invoiceId;
@@ -624,6 +707,10 @@ class DocumentEntityBuilder
       _name = _$v.name;
       _type = _$v.type;
       _path = _$v.path;
+      _width = _$v.width;
+      _height = _$v.height;
+      _size = _$v.size;
+      _preview = _$v.preview;
       _invoiceId = _$v.invoiceId;
       _expenseId = _$v.expenseId;
       _isDefault = _$v.isDefault;
@@ -658,6 +745,10 @@ class DocumentEntityBuilder
             name: name,
             type: type,
             path: path,
+            width: width,
+            height: height,
+            size: size,
+            preview: preview,
             invoiceId: invoiceId,
             expenseId: expenseId,
             isDefault: isDefault,
