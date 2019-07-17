@@ -69,14 +69,18 @@ class AppDrawer extends StatelessWidget {
                   )
                 : Image.asset('assets/images/logo.png', width: 30, height: 30),
         SizedBox(width: 28, height: 50),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(company.name, style: Theme.of(context).textTheme.subhead),
-            Text(company.user.email, style: Theme.of(context).textTheme.caption)
-          ],
-        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(company.name, style: Theme.of(context).textTheme.subhead),
+              Text(company.user.email,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.caption),
+            ],
+          ),
+        )
       ],
     );
 
@@ -113,10 +117,9 @@ class AppDrawer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(company.name),
-                          Flexible(
-                            child: Text(company.user.email,
-                                style: Theme.of(context).textTheme.caption),
-                          ),
+                          Text(company.user.email,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.caption)
                         ],
                       ),
                     ),
