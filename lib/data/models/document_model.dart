@@ -128,11 +128,15 @@ abstract class DocumentEntity extends Object
         break;
     }
 
+    /*
     if (response == 0) {
       return documentA.createdAt.compareTo(documentB.createdAt);
     } else {
       return response;
     }
+    */
+    
+    return response;
   }
 
   @override
