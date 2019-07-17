@@ -51,9 +51,15 @@ class AppDrawer extends StatelessWidget {
       children: <Widget>[
         viewModel.isLoading
             ? SizedBox(
-                child: CircularProgressIndicator(),
-                width: 20,
-                height: 20,
+                child: Center(
+                  child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+                width: 30,
+                height: 30,
               )
             : company.logoUrl != null && company.logoUrl.isNotEmpty
                 ? CachedNetworkImage(
@@ -148,7 +154,7 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Container(
-              padding: EdgeInsets.symmetric(horizontal: 14),
+              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               color: enableDarkMode ? Colors.white10 : Colors.grey[200],
               child: viewModel.companies.length > 1 && !viewModel.isLoading
                   ? _multipleCompanies
