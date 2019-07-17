@@ -48,20 +48,21 @@ class AppDrawer extends StatelessWidget {
     final _singleCompany = Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        SizedBox(width: 14, height: 50),
         company.logoUrl != null && company.logoUrl.isNotEmpty
             ? CachedNetworkImage(
-                width: 50,
-                height: 50,
+                width: 30,
+                height: 30,
                 key: ValueKey(company.logoUrl),
                 imageUrl: company.logoUrl,
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Image.asset(
                     'assets/images/logo.png',
-                    width: 50,
-                    height: 50),
+                    width: 30,
+                    height: 30),
               )
-            : Image.asset('assets/images/logo.png', width: 50, height: 50),
-        SizedBox(width: 22),
+            : Image.asset('assets/images/logo.png', width: 30, height: 30),
+        SizedBox(width: 28),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -84,22 +85,23 @@ class AppDrawer extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
+                    SizedBox(width: 14),
                     company.logoUrl != null && company.logoUrl.isNotEmpty
                         ? CachedNetworkImage(
-                            width: 50,
-                            height: 50,
+                            width: 30,
+                            height: 30,
                             key: ValueKey(company.logoUrl),
                             imageUrl: company.logoUrl,
                             placeholder: (context, url) =>
                                 CircularProgressIndicator(),
                             errorWidget: (context, url, error) => Image.asset(
                                 'assets/images/logo.png',
-                                width: 50,
-                                height: 50),
+                                width: 30,
+                                height: 30),
                           )
                         : Image.asset('assets/images/logo.png',
-                            width: 50, height: 50),
-                    SizedBox(width: 22),
+                            width: 30, height: 30),
+                    SizedBox(width: 28),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
