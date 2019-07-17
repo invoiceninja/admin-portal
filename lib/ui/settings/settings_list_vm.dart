@@ -69,23 +69,23 @@ class SettingsListVM {
       showDialog<AlertDialog>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-              semanticLabel: localization.areYouSure,
-              title: Text(localization.areYouSure),
-              actions: <Widget>[
-                new FlatButton(
-                    child: Text(localization.cancel.toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                new FlatButton(
-                    child: Text(localization.ok.toUpperCase()),
-                    onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          LoginScreen.route, (Route<dynamic> route) => false);
-                      store.dispatch(UserLogout());
-                    })
-              ],
-            ),
+          semanticLabel: localization.areYouSure,
+          title: Text(localization.areYouSure),
+          actions: <Widget>[
+            new FlatButton(
+                child: Text(localization.cancel.toUpperCase()),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            new FlatButton(
+                child: Text(localization.ok.toUpperCase()),
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      LoginScreen.route, (Route<dynamic> route) => false);
+                  store.dispatch(UserLogout());
+                })
+          ],
+        ),
       );
     }
 

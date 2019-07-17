@@ -50,7 +50,8 @@ class PaymentViewVM {
     final payment = state.paymentState.map[state.paymentUIState.selectedId] ??
         PaymentEntity(id: state.paymentUIState.selectedId);
     final client = paymentClientSelector(payment.id, state) ?? ClientEntity();
-    final invoice = paymentInvoiceSelector(payment.id, state) ?? InvoiceEntity();
+    final invoice =
+        paymentInvoiceSelector(payment.id, state) ?? InvoiceEntity();
     final user = state.user;
 
     return PaymentViewVM(
@@ -69,7 +70,7 @@ class PaymentViewVM {
               context: context,
               entity: client,
               onEntityAction: (BuildContext context, BaseEntity client,
-                  EntityAction action) =>
+                      EntityAction action) =>
                   handleClientAction(context, client, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
@@ -83,7 +84,7 @@ class PaymentViewVM {
               entity: invoice,
               client: client,
               onEntityAction: (BuildContext context, BaseEntity invoice,
-                  EntityAction action) =>
+                      EntityAction action) =>
                   handleInvoiceAction(context, invoice, action));
         } else {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));

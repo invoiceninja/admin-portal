@@ -115,9 +115,9 @@ class ExpenseOverview extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 child: ListTile(
                   title: EntityStateTitle(
-                    entity: invoice,
-                    title: '${localization.invoice} ${invoice.invoiceNumber}'
-                  ),
+                      entity: invoice,
+                      title:
+                          '${localization.invoice} ${invoice.invoiceNumber}'),
                   leading: Icon(getEntityIcon(EntityType.invoice), size: 18),
                   trailing: Icon(Icons.navigate_next),
                   onTap: () =>

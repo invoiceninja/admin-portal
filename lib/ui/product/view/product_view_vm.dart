@@ -71,13 +71,13 @@ class ProductViewVM {
       company: state.selectedCompany,
       onEditPressed: (BuildContext context) {
         final Completer<ProductEntity> completer = Completer<ProductEntity>();
-        store.dispatch(
-            EditProduct(product: product, context: context, completer: completer));
+        store.dispatch(EditProduct(
+            product: product, context: context, completer: completer));
         completer.future.then((product) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-                message: AppLocalization.of(context).updatedProduct,
-              )));
+            message: AppLocalization.of(context).updatedProduct,
+          )));
         });
       },
       onRefreshed: null,

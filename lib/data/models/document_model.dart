@@ -10,7 +10,7 @@ part 'document_model.g.dart';
 abstract class DocumentListResponse
     implements Built<DocumentListResponse, DocumentListResponseBuilder> {
   factory DocumentListResponse([void updates(DocumentListResponseBuilder b)]) =
-  _$DocumentListResponse;
+      _$DocumentListResponse;
 
   DocumentListResponse._();
 
@@ -23,7 +23,7 @@ abstract class DocumentListResponse
 abstract class DocumentItemResponse
     implements Built<DocumentItemResponse, DocumentItemResponseBuilder> {
   factory DocumentItemResponse([void updates(DocumentItemResponseBuilder b)]) =
-  _$DocumentItemResponse;
+      _$DocumentItemResponse;
 
   DocumentItemResponse._();
 
@@ -37,6 +37,7 @@ class DocumentFields {
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
+  static const String name = 'name';
 }
 
 abstract class DocumentEntity extends Object
@@ -86,7 +87,6 @@ abstract class DocumentEntity extends Object
   EntityType get entityType {
     return EntityType.document;
   }
-
 
   @override
   String get listDisplayName {
@@ -197,5 +197,6 @@ abstract class DocumentEntity extends Object
     return actions..addAll(super.getActions(user: user));
   }
 
-  static Serializer<DocumentEntity> get serializer => _$documentEntitySerializer;
+  static Serializer<DocumentEntity> get serializer =>
+      _$documentEntitySerializer;
 }

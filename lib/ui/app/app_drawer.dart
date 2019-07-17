@@ -19,6 +19,8 @@ import 'package:redux/redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
@@ -281,6 +283,19 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
+          DrawerTile(
+            company: company,
+            entityType: EntityType.document,
+            icon: getEntityIcon(EntityType.document),
+            title: localization.documents,
+            onTap: () => store.dispatch(ViewDocumentList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(
+                  EditDocument(document: DocumentEntity(), context: context));
+            },
+          ),
+
           DrawerTile(
             key: Key(SettingsKeys.drawer),
             company: company,

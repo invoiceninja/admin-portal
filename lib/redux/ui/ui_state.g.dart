@@ -51,6 +51,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'documentUIState',
+      serializers.serialize(object.documentUIState,
+          specifiedType: const FullType(DocumentUIState)),
       'expenseUIState',
       serializers.serialize(object.expenseUIState,
           specifiedType: const FullType(ExpenseUIState)),
@@ -139,6 +142,11 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
           break;
+        case 'documentUIState':
+          result.documentUIState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(DocumentUIState))
+              as DocumentUIState);
+          break;
         case 'expenseUIState':
           result.expenseUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ExpenseUIState)) as ExpenseUIState);
@@ -196,6 +204,8 @@ class _$UIState extends UIState {
   @override
   final InvoiceUIState invoiceUIState;
   @override
+  final DocumentUIState documentUIState;
+  @override
   final ExpenseUIState expenseUIState;
   @override
   final VendorUIState vendorUIState;
@@ -224,6 +234,7 @@ class _$UIState extends UIState {
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
+      this.documentUIState,
       this.expenseUIState,
       this.vendorUIState,
       this.taskUIState,
@@ -263,6 +274,9 @@ class _$UIState extends UIState {
     }
     if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    }
+    if (documentUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'documentUIState');
     }
     if (expenseUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'expenseUIState');
@@ -307,6 +321,7 @@ class _$UIState extends UIState {
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
+        documentUIState == other.documentUIState &&
         expenseUIState == other.expenseUIState &&
         vendorUIState == other.vendorUIState &&
         taskUIState == other.taskUIState &&
@@ -335,26 +350,28 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            selectedCompanyIndex
+                                                                            $jc(
+                                                                                0,
+                                                                                selectedCompanyIndex
+                                                                                    .hashCode),
+                                                                            currentRoute
                                                                                 .hashCode),
-                                                                        currentRoute
+                                                                        enableDarkMode
                                                                             .hashCode),
-                                                                    enableDarkMode
+                                                                    requireAuthentication
                                                                         .hashCode),
-                                                                requireAuthentication
+                                                                emailPayment
                                                                     .hashCode),
-                                                            emailPayment
+                                                            autoStartTasks
                                                                 .hashCode),
-                                                        autoStartTasks
+                                                        addDocumentsToInvoice
                                                             .hashCode),
-                                                    addDocumentsToInvoice
-                                                        .hashCode),
-                                                filter.hashCode),
-                                            dashboardUIState.hashCode),
-                                        productUIState.hashCode),
-                                    clientUIState.hashCode),
-                                invoiceUIState.hashCode),
+                                                    filter.hashCode),
+                                                dashboardUIState.hashCode),
+                                            productUIState.hashCode),
+                                        clientUIState.hashCode),
+                                    invoiceUIState.hashCode),
+                                documentUIState.hashCode),
                             expenseUIState.hashCode),
                         vendorUIState.hashCode),
                     taskUIState.hashCode),
@@ -378,6 +395,7 @@ class _$UIState extends UIState {
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
+          ..add('documentUIState', documentUIState)
           ..add('expenseUIState', expenseUIState)
           ..add('vendorUIState', vendorUIState)
           ..add('taskUIState', taskUIState)
@@ -452,6 +470,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
 
+  DocumentUIStateBuilder _documentUIState;
+  DocumentUIStateBuilder get documentUIState =>
+      _$this._documentUIState ??= new DocumentUIStateBuilder();
+  set documentUIState(DocumentUIStateBuilder documentUIState) =>
+      _$this._documentUIState = documentUIState;
+
   ExpenseUIStateBuilder _expenseUIState;
   ExpenseUIStateBuilder get expenseUIState =>
       _$this._expenseUIState ??= new ExpenseUIStateBuilder();
@@ -504,6 +528,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
+      _documentUIState = _$v.documentUIState?.toBuilder();
       _expenseUIState = _$v.expenseUIState?.toBuilder();
       _vendorUIState = _$v.vendorUIState?.toBuilder();
       _taskUIState = _$v.taskUIState?.toBuilder();
@@ -546,6 +571,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
+              documentUIState: documentUIState.build(),
               expenseUIState: expenseUIState.build(),
               vendorUIState: vendorUIState.build(),
               taskUIState: taskUIState.build(),
@@ -563,6 +589,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
+        _$failedField = 'documentUIState';
+        documentUIState.build();
         _$failedField = 'expenseUIState';
         expenseUIState.build();
         _$failedField = 'vendorUIState';

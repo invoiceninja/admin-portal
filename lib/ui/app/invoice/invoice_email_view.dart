@@ -236,10 +236,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     if (activities.isEmpty) {
       return Center(
         child: Text(localization.noHistory,
-            style: TextStyle(
-              fontSize: 26,
-              color: Colors.grey
-            )),
+            style: TextStyle(fontSize: 26, color: Colors.grey)),
       );
     }
 

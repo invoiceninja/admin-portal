@@ -7,6 +7,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/document/document_state.dart';
+
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
 
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
@@ -31,6 +33,8 @@ abstract class CompanyState
       clientState: ClientState(),
       invoiceState: InvoiceState(),
       // STARTER: constructor - do not remove comment
+      documentState: DocumentState(),
+
       expenseState: ExpenseState(),
       vendorState: VendorState(),
       taskState: TaskState(),
@@ -54,6 +58,8 @@ abstract class CompanyState
   InvoiceState get invoiceState;
 
   // STARTER: fields - do not remove comment
+  DocumentState get documentState;
+
   ExpenseState get expenseState;
 
   VendorState get vendorState;

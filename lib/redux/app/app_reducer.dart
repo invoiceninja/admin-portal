@@ -44,7 +44,6 @@ AppState appReducer(AppState state, dynamic action) {
     ..uiState.replace(uiReducer(state.uiState, action)));
 }
 
-
 final serverVersionReducer = combineReducers<String>([
   TypedReducer<String, LoadStaticSuccess>(_loadStaticSuccess),
 ]);

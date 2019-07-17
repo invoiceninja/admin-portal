@@ -5,18 +5,18 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_list_item.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/document/document_list_item.dart';
+import 'package:invoiceninja_flutter/ui/document/document_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class StubList extends StatelessWidget {
-  const StubList({
+class DocumentList extends StatelessWidget {
+  const DocumentList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final StubListVM viewModel;
+  final DocumentListVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -30,63 +30,59 @@ class StubList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-      
-              Expanded(
-                child: !viewModel.isLoaded
-                    ? LoadingIndicator()
-                    : RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
-                        child: viewModel.stubList.isEmpty
-                            ? Opacity(
-                                opacity: 0.5,
-                                child: Center(
-                                  child: Text(
-                                    AppLocalization.of(context).noRecordsFound,
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : ListView.separated(
-                                shrinkWrap: true,
-                                separatorBuilder: (context, index) => ListDivider(),
-                                itemCount: viewModel.stubList.length,
-                                itemBuilder: (BuildContext context, index) {
-                                  final stubId = viewModel.stubList[index];
-                                  final stub = viewModel.stubMap[stubId];
-                                  final user = viewModel.user;
-
-                              void showDialog() => showEntityActionsDialog(
-                                  entity: stub,
-                                  context: context,
-                                  user: user,
-                                  onEntityAction: viewModel.onEntityAction);
-
-
-                                  return StubListItem(
-                                     user: viewModel.user,
-                                     filter: viewModel.filter,
-                                     stub: stub,
-                                     onTap: () =>
-                                         viewModel.onStubTap(context, stub),
-                                     onEntityAction: (EntityAction action) {
-                                       if (action == EntityAction.more) {
-                                         showDialog();
-                                       } else {
-                                         viewModel.onEntityAction(
-                                             context, stub, action);
-                                       }
-                                     },
-                                     onLongPress: () =>
-                                         showDialog(),
-                                   );
-                                },
+        Expanded(
+          child: !viewModel.isLoaded
+              ? LoadingIndicator()
+              : RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: viewModel.documentList.isEmpty
+                      ? Opacity(
+                          opacity: 0.5,
+                          child: Center(
+                            child: Text(
+                              AppLocalization.of(context).noRecordsFound,
+                              style: TextStyle(
+                                fontSize: 18.0,
                               ),
-                      ),
-              ),
+                            ),
+                          ),
+                        )
+                      : ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
+                          itemCount: viewModel.documentList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            final documentId = viewModel.documentList[index];
+                            final document = viewModel.documentMap[documentId];
+                            final user = viewModel.user;
 
-      
+                            void showDialog() => showEntityActionsDialog(
+                                entity: document,
+                                context: context,
+                                user: user,
+                                onEntityAction: viewModel.onEntityAction);
+
+                            return DocumentListItem(
+                              user: viewModel.user,
+                              filter: viewModel.filter,
+                              document: document,
+                              onTap: () =>
+                                  viewModel.onDocumentTap(context, document),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  showDialog();
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, document, action);
+                                }
+                              },
+                              onLongPress: () => showDialog(),
+                            );
+                          },
+                        ),
+                ),
+        ),
+
         /*
         filteredClient != null
             ? Material(
@@ -123,7 +119,7 @@ class StubList extends StatelessWidget {
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
-                  child: viewModel.stubList.isEmpty
+                  child: viewModel.documentList.isEmpty
                       ? Opacity(
                           opacity: 0.5,
                           child: Center(
@@ -138,39 +134,39 @@ class StubList extends StatelessWidget {
                       : ListView.separated(
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => ListDivider(),
-                          itemCount: viewModel.stubList.length,
+                          itemCount: viewModel.documentList.length,
                           itemBuilder: (BuildContext context, index) {
                             final user = viewModel.user;
-                            final stubId = viewModel.stubList[index];
-                            final stub = viewModel.stubMap[stubId];
+                            final documentId = viewModel.documentList[index];
+                            final document = viewModel.documentMap[documentId];
                             final client =
-                                viewModel.clientMap[stub.clientId] ??
+                                viewModel.clientMap[document.clientId] ??
                                     ClientEntity();
 
 
                               void showDialog() => showEntityActionsDialog(
-                                  entity: stub,
+                                  entity: document,
                                   context: context,
                                   user: user,
                                   onEntityAction: viewModel.onEntityAction);
 
 
 
-                            return StubListItem(
+                            return DocumentListItem(
                                  user: viewModel.user,
                                  filter: viewModel.filter,
-                                 stub: stub,
+                                 document: document,
                                  client:
-                                     viewModel.clientMap[stub.clientId] ??
+                                     viewModel.clientMap[document.clientId] ??
                                          ClientEntity(),
                                  onTap: () =>
-                                     viewModel.onStubTap(context, stub),
+                                     viewModel.onDocumentTap(context, document),
                                  onEntityAction: (EntityAction action) {
                                    if (action == EntityAction.more) {
                                      showDialog();
                                    } else {
                                      viewModel.onEntityAction(
-                                         context, stub, action);
+                                         context, document, action);
                                    }
                                  },
                                  onLongPress: () =>

@@ -48,7 +48,7 @@ class _LoginState extends State<LoginView> {
     _passwordController.text = state.password;
     _urlController.text = formatApiUrlReadable(state.url);
     _secretController.text = state.secret;
-  
+
     if (state.url.isNotEmpty) {
       _isSelfHosted = true;
     }

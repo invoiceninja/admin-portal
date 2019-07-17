@@ -13,6 +13,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/document/document_state.dart';
+
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
@@ -109,6 +111,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.document:
+        return documentUIState;
+
       case EntityType.expense:
         return expenseUIState;
       case EntityType.vendor:
@@ -150,6 +155,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  DocumentState get documentState => selectedCompanyState.documentState;
+  ListUIState get documentListState => uiState.documentUIState.listUIState;
+  DocumentUIState get documentUIState => uiState.documentUIState;
+
   ExpenseState get expenseState => selectedCompanyState.expenseState;
 
   ListUIState get expenseListState => uiState.expenseUIState.listUIState;
@@ -198,7 +207,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       final int serverMinor = int.parse(serverParts[1]);
       final int serverPatch = int.parse(serverParts[2]);
 
-      return serverMajor >= major && serverMinor >= minor && serverPatch >= patch;
+      return serverMajor >= major &&
+          serverMinor >= minor &&
+          serverPatch >= patch;
     } catch (e) {
       return false;
     }

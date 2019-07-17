@@ -55,8 +55,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             copyValue: contact.email,
             subtitle: localization.email,
             onTap: () => setState(() {
-                  _launched = _launchURL(context, 'mailto:' + contact.email);
-                }),
+              _launched = _launchURL(context, 'mailto:' + contact.email);
+            }),
           ));
         }
 
@@ -67,10 +67,10 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             copyValue: contact.phone,
             subtitle: localization.phone,
             onTap: () => setState(() {
-                  _launched = _launchURL(
-                      context, 'sms:' + cleanPhoneNumber(contact.phone));
-                  //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
-                }),
+              _launched =
+                  _launchURL(context, 'sms:' + cleanPhoneNumber(contact.phone));
+              //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
+            }),
           ));
         }
       });
@@ -81,8 +81,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           title: client.website,
           subtitle: localization.website,
           onTap: () => setState(() {
-                _launched = _launchURL(context, formatURL(client.website));
-              }),
+            _launched = _launchURL(context, formatURL(client.website));
+          }),
         ));
       }
 
@@ -92,10 +92,10 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           title: client.workPhone,
           subtitle: localization.phone,
           onTap: () => setState(() {
-                _launched = _launchURL(
-                    context, 'sms:' + cleanPhoneNumber(client.workPhone));
-                //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
-              }),
+            _launched = _launchURL(
+                context, 'sms:' + cleanPhoneNumber(client.workPhone));
+            //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
+          }),
         ));
       }
 

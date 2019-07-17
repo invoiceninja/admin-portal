@@ -39,6 +39,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(DatetimeFormatEntity.serializer)
       ..add(DatetimeFormatItemResponse.serializer)
       ..add(DatetimeFormatListResponse.serializer)
+      ..add(DocumentEntity.serializer)
+      ..add(DocumentItemResponse.serializer)
+      ..add(DocumentListResponse.serializer)
+      ..add(DocumentState.serializer)
+      ..add(DocumentUIState.serializer)
       ..add(EntityState.serializer)
       ..add(EntityType.serializer)
       ..add(ErrorMessage.serializer)
@@ -225,6 +230,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(DatetimeFormatEntity)]),
           () => new ListBuilder<DatetimeFormatEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DocumentEntity)]),
+          () => new ListBuilder<DocumentEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => new ListBuilder<EntityState>())
       ..addBuilderFactory(
@@ -326,8 +334,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltMap, const [const FullType(String), const FullType(bool)]),
           () => new MapBuilder<String, bool>())
       ..addBuilderFactory(
-          const FullType(BuiltMap, const [const FullType(int), const FullType(ClientEntity)]),
-          () => new MapBuilder<int, ClientEntity>())
+          const FullType(BuiltMap, const [const FullType(int), const FullType(ClientEntity)]), () => new MapBuilder<int, ClientEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(int)]), () => new ListBuilder<int>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(CurrencyEntity)]), () => new MapBuilder<int, CurrencyEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(SizeEntity)]), () => new MapBuilder<int, SizeEntity>())
@@ -340,6 +347,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(CountryEntity)]), () => new MapBuilder<int, CountryEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(InvoiceStatusEntity)]), () => new MapBuilder<int, InvoiceStatusEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(FrequencyEntity)]), () => new MapBuilder<int, FrequencyEntity>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(DocumentEntity)]), () => new MapBuilder<int, DocumentEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(int)]), () => new ListBuilder<int>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(ExpenseEntity)]), () => new MapBuilder<int, ExpenseEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(int)]), () => new ListBuilder<int>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(InvoiceEntity)]), () => new MapBuilder<int, InvoiceEntity>())

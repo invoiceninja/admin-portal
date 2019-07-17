@@ -231,7 +231,7 @@ class FilterStubsByEntity implements PersistUI {
 
 
 void handleStubAction(
-    BuildContext context, StubEntity entity, EntityAction action) {
+    BuildContext context, StubEntity stub, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;

@@ -65,7 +65,7 @@ class ProductEditVM {
       },
       onSavePressed: (BuildContext context) {
         final Completer<ProductEntity> completer =
-        new Completer<ProductEntity>();
+            new Completer<ProductEntity>();
         store.dispatch(
             SaveProductRequest(completer: completer, product: product));
         return completer.future.then((_) {

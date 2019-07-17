@@ -1,33 +1,32 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/stub/view/stub_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 
-class StubView extends StatefulWidget {
-
-  const StubView({
+class DocumentView extends StatefulWidget {
+  const DocumentView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final StubViewVM viewModel;
+  final DocumentViewVM viewModel;
 
   @override
-  _StubViewState createState() => new _StubViewState();
+  _DocumentViewState createState() => new _DocumentViewState();
 }
 
-class _StubViewState extends State<StubView> {
+class _DocumentViewState extends State<DocumentView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final stub = viewModel.stub;
+    final document = viewModel.document;
 
     return Scaffold(
       appBar: AppBar(
-        title: EntityStateTitle(entity: stub),
-        actions: stub.isNew
+        title: EntityStateTitle(entity: document),
+        actions: document.isNew
             ? []
             : [
                 IconButton(
@@ -39,16 +38,14 @@ class _StubViewState extends State<StubView> {
                 ActionMenuButton(
                   user: viewModel.company.user,
                   isSaving: viewModel.isSaving,
-                  entity: stub,
+                  entity: document,
                   onSelected: viewModel.onEntityAction,
                 ),
               ],
       ),
-      body: FormCard(
-        children: [
-          // STARTER: widgets - do not remove comment
-        ]
-      ),
+      body: FormCard(children: [
+        // STARTER: widgets - do not remove comment
+      ]),
     );
   }
 }

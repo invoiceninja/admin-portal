@@ -29,6 +29,7 @@ import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 
 part 'serializers.g.dart';
 
@@ -87,6 +88,7 @@ part 'serializers.g.dart';
   TaskStatusEntity,
   ExpenseStatusEntity,
   // STARTER: serializers - do not remove comment
+  DocumentEntity,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

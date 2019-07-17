@@ -14,6 +14,15 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'document': 'Document',
+      'documents': 'Documents',
+      'new_document': 'New Document',
+      'edit_document': 'Edit Document',
+      'created_document': 'Successfully created document',
+      'updated_document': 'Successfully updated document',
+      'archived_document': 'Successfully archived document',
+      'deleted_document': 'Successfully deleted document',
+      'restored_document': 'Successfully restored document',
       'no_history': 'No History',
       'expense_date': 'Expense Date',
       'pending': 'Pending',
@@ -329,7 +338,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'body': 'Body',
       'send_email': 'Send Email',
       'email_receipt': 'Email payment receipt to the client',
-      'documents': 'Documents',
       'auto_billing': 'Auto billing',
       'button': 'Button',
       'preview': 'Preview',
@@ -11692,6 +11700,29 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredVendor => _localizedValues[localeCode]['restored_vendor'];
 
+  String get document => _localizedValues[localeCode]['document'];
+
+  String get documents => _localizedValues[localeCode]['documents'];
+
+  String get newDocument => _localizedValues[localeCode]['new_document'];
+
+  String get editDocument => _localizedValues[localeCode]['edit_document'];
+
+  String get createdVDocument =>
+      _localizedValues[localeCode]['created_document'];
+
+  String get updatedDocument =>
+      _localizedValues[localeCode]['updated_document'];
+
+  String get archivedDocument =>
+      _localizedValues[localeCode]['archived_document'];
+
+  String get deletedDocument =>
+      _localizedValues[localeCode]['deleted_document'];
+
+  String get restoredDocument =>
+      _localizedValues[localeCode]['restored_document'];
+
   String get newExpense => _localizedValues[localeCode]['new_expense'];
 
   String get createdExpense => _localizedValues[localeCode]['created_expense'];
@@ -11962,8 +11993,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get sendEmail => _localizedValues[localeCode]['send_email'];
 
   String get emailReceipt => _localizedValues[localeCode]['email_receipt'];
-
-  String get documents => _localizedValues[localeCode]['documents'];
 
   String get autoBilling => _localizedValues[localeCode]['auto_billing'];
 

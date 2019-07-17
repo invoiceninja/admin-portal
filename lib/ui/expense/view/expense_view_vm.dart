@@ -102,7 +102,7 @@ class ExpenseViewVM {
                   context: context,
                   entity: vendor,
                   onEntityAction: (BuildContext context, BaseEntity vendor,
-                      EntityAction action) =>
+                          EntityAction action) =>
                       handleVendorAction(context, vendor, action));
             } else {
               store.dispatch(ViewVendor(vendorId: vendor.id, context: context));

@@ -29,7 +29,6 @@ class EditProduct implements PersistUI {
   final ProductEntity product;
   final BuildContext context;
   final Completer completer;
-
 }
 
 class UpdateProduct implements PersistUI {
