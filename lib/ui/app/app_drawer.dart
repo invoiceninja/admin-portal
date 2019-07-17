@@ -46,6 +46,7 @@ class AppDrawer extends StatelessWidget {
     }
 
     final _singleCompany = Row(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         SizedBox(width: 14, height: 50),
