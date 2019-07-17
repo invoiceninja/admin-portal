@@ -32,7 +32,7 @@ class _DocumentEditState extends State<DocumentEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final document = widget.viewModel.document;
+    //final document = widget.viewModel.document;
     // STARTER: read value - do not remove comment
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));

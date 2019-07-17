@@ -229,8 +229,6 @@ class FilterDocumentsByEntity implements PersistUI {
 void handleDocumentAction(
     BuildContext context, DocumentEntity document, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
 
   switch (action) {

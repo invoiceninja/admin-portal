@@ -17,19 +17,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
+// STARTER: import - do not remove comment
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -283,19 +278,6 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // STARTER: menu - do not remove comment
-          DrawerTile(
-            company: company,
-            entityType: EntityType.document,
-            icon: getEntityIcon(EntityType.document),
-            title: localization.documents,
-            onTap: () => store.dispatch(ViewDocumentList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(
-                  EditDocument(document: DocumentEntity(), context: context));
-            },
-          ),
-
           DrawerTile(
             key: Key(SettingsKeys.drawer),
             company: company,

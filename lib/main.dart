@@ -41,13 +41,11 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
-// STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
 import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
@@ -78,6 +76,7 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+// STARTER: import - do not remove comment
 
 void main() async {
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
@@ -324,7 +323,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             },
             DocumentViewScreen.route: (context) => DocumentViewScreen(),
             DocumentEditScreen.route: (context) => DocumentEditScreen(),
-
             ExpenseScreen.route: (context) {
               widget.store.dispatch(LoadExpenses());
               return ExpenseScreen();
@@ -337,7 +335,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             },
             VendorViewScreen.route: (context) => VendorViewScreen(),
             VendorEditScreen.route: (context) => VendorEditScreen(),
-
             TaskScreen.route: (context) {
               widget.store.dispatch(LoadTasks());
               return TaskScreen();
