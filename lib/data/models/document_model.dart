@@ -105,12 +105,11 @@ abstract class DocumentEntity extends Object
     final DocumentEntity documentA = sortAscending ? this : document;
     final DocumentEntity documentB = sortAscending ? document : this;
 
-    return null;
-
-    /*
     switch (sortField) {
-      case DocumentFields.cost:
-        response = documentA.cost.compareTo(documentB.cost);
+      case DocumentFields.name:
+        response = documentA.name
+            .toLowerCase()
+            .compareTo(documentB.name.toLowerCase());
         break;
       case DocumentFields.updatedAt:
         response = documentA.updatedAt.compareTo(documentB.updatedAt);
@@ -118,13 +117,10 @@ abstract class DocumentEntity extends Object
     }
 
     if (response == 0) {
-      return documentA.documentKey
-          .toLowerCase()
-          .compareTo(documentB.documentKey.toLowerCase());
+      return documentA.createdAt.compareTo(documentB.createdAt);
     } else {
       return response;
     }
-    */
   }
 
   @override
@@ -147,7 +143,7 @@ abstract class DocumentEntity extends Object
       return true;
     }
     */
-    return false;
+    return true;
   }
 
   @override
