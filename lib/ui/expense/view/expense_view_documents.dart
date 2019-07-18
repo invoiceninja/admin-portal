@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/document_tile.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseViewDocuments extends StatefulWidget {
@@ -59,7 +60,7 @@ class _ExpenseViewDocumentsState extends State<ExpenseViewDocuments> {
               ),
               Expanded(
                 child: ElevatedButton(
-                  icon: Icons.attach_file,
+                  icon: Icons.insert_drive_file,
                   label: localization.uploadFile,
                   onPressed: () async {
                     final image = await ImagePicker.pickImage(
@@ -72,6 +73,7 @@ class _ExpenseViewDocumentsState extends State<ExpenseViewDocuments> {
             ],
           ),
         ),
+        ListDivider(),
         GridView.count(
           physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.all(6),

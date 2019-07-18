@@ -73,6 +73,7 @@ class DocumentTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(4),
             child: Card(
+              elevation: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
