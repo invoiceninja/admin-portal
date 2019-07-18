@@ -312,21 +312,11 @@ abstract class CompanyEntity
     }
   }
 
-  bool get isProPlan {
-    if (appUrl != kAppUrl) {
-      return true;
-    }
+  bool get isSelfHost => appUrl != kAppUrl;
 
-    return plan.isNotEmpty;
-  }
+  bool get isProPlan => isSelfHost || plan == kPlanPro;
 
-  bool get isEnterprisePlan {
-    if (appUrl != kAppUrl) {
-      return true;
-    }
-
-    return plan == kPlanEnterprise;
-  }
+  bool get isEnterprisePlan => isProPlan || plan == kPlanEnterprise;
 
   bool isModuleEnabled(EntityType entityType) {
     if (entityType == EntityType.recurringInvoice &&
