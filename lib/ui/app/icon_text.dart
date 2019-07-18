@@ -10,7 +10,7 @@ class IconText extends StatelessWidget {
     return Row(
       children: <Widget>[
         Icon(icon),
-        SizedBox(width: 6.0),
+        SizedBox(width: 8),
         Text(text),
       ],
     );

@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentTile extends StatelessWidget {
@@ -69,22 +70,35 @@ class DocumentTile extends StatelessWidget {
       children: <Widget>[
         InkWell(
           onTap: () => showDocumentModal(context),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
+          child: Card(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, top: 16, right: 16, bottom: 28),
-                  child: Text(document.name ?? '',
-                      style: Theme.of(context).textTheme.subhead),
-                ),
                 DocumentPreview(document),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        document.name ?? '',
+                        style: Theme.of(context).textTheme.subhead,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        formatDate(
+                            convertTimestampToDateString(document.updatedAt),
+                            context),
+                        style: Theme.of(context).textTheme.caption,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

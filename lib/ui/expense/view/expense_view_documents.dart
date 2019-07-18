@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/document_tile.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -36,9 +37,29 @@ class _ExpenseViewDocumentsState extends State<ExpenseViewDocuments> {
 
     return ListView(
       children: [
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
+        Padding(
+          padding: const EdgeInsets.all(14),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ElevatedButton(
+                  icon: Icons.camera_alt,
+                  label: localization.takePicture,
+                  //onPressed: _confirmDelete,
+                ),
+              ),
+              SizedBox(
+                width: 14,
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  icon: Icons.attach_file,
+                  label: localization.uploadFile,
+                  //onPressed: _confirmDelete,
+                ),
+              ),
+            ],
+          ),
         ),
         GridView.count(
           physics: NeverScrollableScrollPhysics(),
