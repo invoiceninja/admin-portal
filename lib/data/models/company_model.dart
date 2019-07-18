@@ -320,6 +320,14 @@ abstract class CompanyEntity
     return plan.isNotEmpty;
   }
 
+  bool get isEnterprisePlan {
+    if (appUrl != kAppUrl) {
+      return true;
+    }
+
+    return plan == kPlanEnterprise;
+  }
+
   bool isModuleEnabled(EntityType entityType) {
     if (entityType == EntityType.recurringInvoice &&
         enabledModules & kModuleRecurringInvoice == 0) {
