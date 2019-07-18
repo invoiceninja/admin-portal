@@ -4,26 +4,25 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 
-class ExpenseViewDocuments extends StatefulWidget {
-  const ExpenseViewDocuments({this.expense});
+class ExpenseViewDocuments extends StatelessWidget {
+  const ExpenseViewDocuments(
+      {@required this.expense, @required this.viewModel});
 
+  final ExpenseViewVM viewModel;
   final ExpenseEntity expense;
 
   @override
-  _ExpenseViewDocumentsState createState() => _ExpenseViewDocumentsState();
-}
-
-class _ExpenseViewDocumentsState extends State<ExpenseViewDocuments> {
-  @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    final expense = widget.expense;
     final documentState = state.documentState;
     final documents = memoizedDocumentsSelector(
-            documentState.map, documentState.list, expense)
-        .toList();
+        documentState.map, documentState.list, expense);
 
-    return DocumentGrid(documents);
+    return DocumentGrid(
+      documents: documents,
+      onFileUpload: (path) => viewModel.onFileUpload(context, path),
+    );
   }
 }

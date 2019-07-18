@@ -87,5 +87,5 @@ List<int> documentsSelector(BuiltMap<int, DocumentEntity> documentMap,
     return documentA.compareTo(documentB, DocumentFields.name, true);
   });
 
-  return list;
+  return list.toList();
 }

@@ -110,7 +110,7 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
         ),
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
-          child: ExpenseViewDocuments(expense: viewModel.expense),
+          child: ExpenseViewDocuments(viewModel: viewModel, expense: viewModel.expense),
         ),
       ],
     );

@@ -11,9 +11,10 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentGrid extends StatelessWidget {
-  const DocumentGrid(this.documents);
+  const DocumentGrid({@required this.documents, @required this.onFileUpload});
 
   final List<int> documents;
+  final Function(String) onFileUpload;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,7 @@ class DocumentGrid extends StatelessWidget {
                   onPressed: () async {
                     final image =
                         await ImagePicker.pickImage(source: ImageSource.camera);
-                    print('image: ${image.path}');
-                    //viewModel.onUpdateImage(context, type, image.path);
+                    onFileUpload(image.path);
                   },
                 ),
               ),
@@ -48,8 +48,7 @@ class DocumentGrid extends StatelessWidget {
                   onPressed: () async {
                     final image = await ImagePicker.pickImage(
                         source: ImageSource.gallery);
-                    print('image: ${image.path}');
-                    //viewModel.onUpdateImage(context, type, image.path);
+                    onFileUpload(image.path);
                   },
                 ),
               ),

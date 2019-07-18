@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -47,6 +48,7 @@ class ExpenseViewVM {
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
+    @required this.onFileUpload,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -140,6 +142,14 @@ class ExpenseViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleExpenseAction(context, expense, action),
+      onFileUpload: (BuildContext context, String path) {
+        print('image: $path');
+        final document = DocumentEntity().rebuild((b) => b
+          ..expenseId = expense.id
+          ..path = path);
+        store.dispatch(SaveDocumentRequest(
+            document: document, completer: snackBarCompleter(context, 'test')));
+      },
     );
   }
 
@@ -151,6 +161,7 @@ class ExpenseViewVM {
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, String) onFileUpload;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
