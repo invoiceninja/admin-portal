@@ -61,3 +61,31 @@ List<int> filteredDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
 
   return list;
 }
+
+var memoizedDocumentsSelector = memo3(
+    (BuiltMap<int, DocumentEntity> documentMap, BuiltList<int> documentList,
+            BaseEntity entity) =>
+        documentsSelector(documentMap, documentList, entity));
+
+List<int> documentsSelector(BuiltMap<int, DocumentEntity> documentMap,
+    BuiltList<int> documentList, BaseEntity entity) {
+  final list = documentList.where((documentId) {
+    final document = documentMap[documentId];
+    if (entity.entityType == EntityType.expense &&
+        document.expenseId != entity.id) {
+      return false;
+    } else if (entity.entityType == EntityType.invoice &&
+        document.invoiceId != entity.id) {
+      return false;
+    }
+    return document.isActive;
+  }).toList();
+
+  list.sort((documentAId, documentBId) {
+    final documentA = documentMap[documentAId];
+    final documentB = documentMap[documentBId];
+    return documentA.compareTo(documentB, DocumentFields.name, true);
+  });
+
+  return list;
+}

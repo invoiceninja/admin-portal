@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -55,6 +57,49 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
             ? state.staticState.currencyMap[expense.invoiceCurrencyId]?.name
             : null,
       };
+      final documentState = state.documentState;
+      final documents = memoizedDocumentsSelector(
+              documentState.map, documentState.list, expense)
+          .map(
+        (documentId) {
+          final document =
+              documentState.map[documentId] ?? DocumentEntity(id: documentId);
+
+          return Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 16, top: 16, right: 16, bottom: 28),
+                      child: Text(document.name ?? '',
+                          style: Theme.of(context).textTheme.subhead),
+                    ),
+                    document.preview != null && document.preview.isNotEmpty
+                        ? CachedNetworkImage(
+                            key: ValueKey(document.preview),
+                            imageUrl: document.previewUrl(state.authState.url),
+                            httpHeaders: {
+                              'X-Ninja-Token': state.selectedCompany.token
+                            },
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Text(
+                                  '$error: $url',
+                                  maxLines: 6,
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                        : Icon(Icons.insert_drive_file)
+                  ],
+                ),
+              )
+            ],
+          );
+        },
+      ).toList();
 
       final listTiles = <Widget>[
         Container(
@@ -65,9 +110,16 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
         Divider(
           height: 1.0,
         ),
-        expense.publicNotes != null && expense.publicNotes.isNotEmpty
-            ? IconMessage(expense.publicNotes)
-            : Container(),
+        if (expense.publicNotes != null && expense.publicNotes.isNotEmpty)
+          IconMessage(expense.publicNotes),
+        GridView.count(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          primary: true,
+          crossAxisCount: 2,
+          children: documents,
+          //childAspectRatio: 3.5,
+        ),
       ];
 
       return listTiles;

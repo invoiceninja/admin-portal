@@ -36,11 +36,6 @@ List<int> dropdownInvoiceSelector(
   return list;
 }
 
-ClientEntity invoiceClientSelector(
-    InvoiceEntity invoice, BuiltMap<int, ClientEntity> clientMap) {
-  return clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-}
-
 var memoizedFilteredInvoiceList = memo4(
     (BuiltMap<int, InvoiceEntity> invoiceMap,
             BuiltList<int> invoiceList,
