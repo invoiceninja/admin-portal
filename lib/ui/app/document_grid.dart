@@ -1,15 +1,81 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+class DocumentGrid extends StatelessWidget {
+  const DocumentGrid(this.documents);
+
+  final List<int> documents;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
+
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(14),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ElevatedButton(
+                  icon: Icons.camera_alt,
+                  label: localization.takePicture,
+                  onPressed: () async {
+                    final image =
+                        await ImagePicker.pickImage(source: ImageSource.camera);
+                    print('image: ${image.path}');
+                    //viewModel.onUpdateImage(context, type, image.path);
+                  },
+                ),
+              ),
+              SizedBox(
+                width: 14,
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  icon: Icons.insert_drive_file,
+                  label: localization.uploadFile,
+                  onPressed: () async {
+                    final image = await ImagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    print('image: ${image.path}');
+                    //viewModel.onUpdateImage(context, type, image.path);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        ListDivider(),
+        GridView.count(
+          physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.all(6),
+          shrinkWrap: true,
+          primary: true,
+          crossAxisCount: 2,
+          children: documents
+              .map((documentId) =>
+                  DocumentTile(state.documentState.map[documentId]))
+              .toList(),
+        ),
+      ],
+    );
+  }
+}
+
 class DocumentTile extends StatelessWidget {
   const DocumentTile(this.document);
+
   final DocumentEntity document;
 
   void showDocumentModal(BuildContext context) {
@@ -77,7 +143,10 @@ class DocumentTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  DocumentPreview(document, height: 120,),
+                  DocumentPreview(
+                    document,
+                    height: 120,
+                  ),
                   Padding(
                     padding: EdgeInsets.all(8),
                     child: Column(
@@ -110,6 +179,7 @@ class DocumentTile extends StatelessWidget {
 
 class DocumentPreview extends StatelessWidget {
   const DocumentPreview(this.document, {this.height});
+
   final DocumentEntity document;
   final double height;
 
@@ -119,6 +189,7 @@ class DocumentPreview extends StatelessWidget {
     return document.preview != null && document.preview.isNotEmpty
         ? CachedNetworkImage(
             height: height,
+            width: double.infinity,
             fit: BoxFit.cover,
             key: ValueKey(document.preview),
             imageUrl: document.previewUrl(state.authState.url),
