@@ -63,6 +63,7 @@ class _ExpenseViewDocumentsState extends State<ExpenseViewDocuments> {
         ),
         GridView.count(
           physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.all(6),
           shrinkWrap: true,
           primary: true,
           crossAxisCount: 2,

@@ -16,6 +16,7 @@ class DocumentTile extends StatelessWidget {
   void showDocumentModal(BuildContext context) {
     showDialog<Column>(
         context: context,
+        barrierDismissible: true,
         builder: (BuildContext context) {
           final localization = AppLocalization.of(context);
 
@@ -70,32 +71,35 @@ class DocumentTile extends StatelessWidget {
       children: <Widget>[
         InkWell(
           onTap: () => showDocumentModal(context),
-          child: Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                DocumentPreview(document),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        document.name ?? '',
-                        style: Theme.of(context).textTheme.subhead,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        formatDate(
-                            convertTimestampToDateString(document.updatedAt),
-                            context),
-                        style: Theme.of(context).textTheme.caption,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                )
-              ],
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  DocumentPreview(document, height: 120,),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          document.name ?? '',
+                          style: Theme.of(context).textTheme.subhead,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          formatDate(
+                              convertTimestampToDateString(document.updatedAt),
+                              context),
+                          style: Theme.of(context).textTheme.caption,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -105,15 +109,17 @@ class DocumentTile extends StatelessWidget {
 }
 
 class DocumentPreview extends StatelessWidget {
-  const DocumentPreview(this.document);
-
+  const DocumentPreview(this.document, {this.height});
   final DocumentEntity document;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     return document.preview != null && document.preview.isNotEmpty
         ? CachedNetworkImage(
+            height: height,
+            fit: BoxFit.cover,
             key: ValueKey(document.preview),
             imageUrl: document.previewUrl(state.authState.url),
             httpHeaders: {'X-Ninja-Token': state.selectedCompany.token},
