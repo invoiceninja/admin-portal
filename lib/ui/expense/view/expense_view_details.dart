@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/document_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -65,39 +65,7 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
           final document =
               documentState.map[documentId] ?? DocumentEntity(id: documentId);
 
-          return Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 16, top: 16, right: 16, bottom: 28),
-                      child: Text(document.name ?? '',
-                          style: Theme.of(context).textTheme.subhead),
-                    ),
-                    document.preview != null && document.preview.isNotEmpty
-                        ? CachedNetworkImage(
-                            key: ValueKey(document.preview),
-                            imageUrl: document.previewUrl(state.authState.url),
-                            httpHeaders: {
-                              'X-Ninja-Token': state.selectedCompany.token
-                            },
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Text(
-                                  '$error: $url',
-                                  maxLines: 6,
-                                  overflow: TextOverflow.ellipsis,
-                                ))
-                        : Icon(Icons.insert_drive_file)
-                  ],
-                ),
-              )
-            ],
-          );
+          return DocumentTile(document);
         },
       ).toList();
 
