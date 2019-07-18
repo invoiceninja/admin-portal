@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
-import 'package:invoiceninja_flutter/ui/app/document_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -57,17 +55,6 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
             ? state.staticState.currencyMap[expense.invoiceCurrencyId]?.name
             : null,
       };
-      final documentState = state.documentState;
-      final documents = memoizedDocumentsSelector(
-              documentState.map, documentState.list, expense)
-          .map(
-        (documentId) {
-          final document =
-              documentState.map[documentId] ?? DocumentEntity(id: documentId);
-
-          return DocumentTile(document);
-        },
-      ).toList();
 
       final listTiles = <Widget>[
         Container(
@@ -80,14 +67,6 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
         ),
         if (expense.publicNotes != null && expense.publicNotes.isNotEmpty)
           IconMessage(expense.publicNotes),
-        GridView.count(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          primary: true,
-          crossAxisCount: 2,
-          children: documents,
-          //childAspectRatio: 3.5,
-        ),
       ];
 
       return listTiles;

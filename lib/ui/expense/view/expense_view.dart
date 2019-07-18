@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_details.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -27,7 +28,7 @@ class _ExpenseViewState extends State<ExpenseView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -107,6 +108,10 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
           onRefresh: () => viewModel.onRefreshed(context),
           child: ExpenseViewDetails(expense: viewModel.expense),
         ),
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: ExpenseViewDocuments(expense: viewModel.expense),
+        ),
       ],
     );
   }
@@ -146,6 +151,9 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Tab(
             text: localization.details,
+          ),
+          Tab(
+            text: localization.documents,
           ),
         ],
       ),
