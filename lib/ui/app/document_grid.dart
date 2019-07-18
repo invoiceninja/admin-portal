@@ -84,14 +84,10 @@ class DocumentTile extends StatelessWidget {
         builder: (BuildContext context) {
           final localization = AppLocalization.of(context);
 
-          return Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context)
-                  .viewInsets
-                  .bottom, // stay clear of the keyboard
-            ),
-            child: SingleChildScrollView(
-              child: FormCard(
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FormCard(
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -106,7 +102,7 @@ class DocumentTile extends StatelessWidget {
                         },
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 16,
                       ),
                       ElevatedButton(
                         icon: Icons.check_circle,
@@ -122,8 +118,8 @@ class DocumentTile extends StatelessWidget {
                   ),
                   DocumentPreview(document),
                 ],
-              ),
-            ),
+              )
+            ],
           );
         });
   }
