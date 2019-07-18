@@ -87,6 +87,7 @@ class DocumentTile extends StatelessWidget {
           return ListView(
             shrinkWrap: true,
             children: <Widget>[
+              SizedBox(height: 10),
               FormCard(
                 children: <Widget>[
                   Row(
