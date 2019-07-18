@@ -143,12 +143,18 @@ class ExpenseViewVM {
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleExpenseAction(context, expense, action),
       onFileUpload: (BuildContext context, String path) {
-        print('image: $path');
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         final document = DocumentEntity().rebuild((b) => b
           ..expenseId = expense.id
           ..path = path);
-        store.dispatch(SaveDocumentRequest(
-            document: document, completer: snackBarCompleter(context, 'test')));
+        store.dispatch(
+            SaveDocumentRequest(document: document, completer: completer));
+        completer.future.then((client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).uploadedDocument,
+          )));
+        });
       },
     );
   }

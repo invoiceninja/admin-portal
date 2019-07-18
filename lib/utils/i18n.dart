@@ -20,7 +20,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'documents': 'Documents',
       'new_document': 'New Document',
       'edit_document': 'Edit Document',
-      'created_document': 'Successfully created document',
+      'uploaded_document': 'Successfully uploaded document',
       'updated_document': 'Successfully updated document',
       'archived_document': 'Successfully archived document',
       'deleted_document': 'Successfully deleted document',
@@ -11710,8 +11710,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get editDocument => _localizedValues[localeCode]['edit_document'];
 
-  String get createdVDocument =>
-      _localizedValues[localeCode]['created_document'];
+  String get uploadedDocument =>
+      _localizedValues[localeCode]['uploaded_document'];
 
   String get updatedDocument =>
       _localizedValues[localeCode]['updated_document'];

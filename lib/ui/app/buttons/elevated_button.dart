@@ -20,6 +20,7 @@ class ElevatedButton extends StatelessWidget {
     return SizedBox(
       width: width,
       child: RaisedButton(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         color: color ?? Theme.of(context).buttonColor,
         child: icon != null
             ? IconText(

@@ -51,8 +51,6 @@ abstract class DocumentEntity extends Object
       path: '',
       type: '',
       isDefault: false,
-      invoiceId: 0,
-      expenseId: 0,
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,

@@ -45,18 +45,27 @@ class DocumentRepository {
   Future<DocumentEntity> saveData(
       CompanyEntity company, AuthState auth, DocumentEntity document,
       [EntityAction action]) async {
-    final data = serializers.serializeWith(DocumentEntity.serializer, document);
+    //final data = serializers.serializeWith(DocumentEntity.serializer, document);
     dynamic response;
 
     if (document.isNew) {
-      response = await webClient.post(
-          auth.url + '/documents', company.token, json.encode(data));
+      final fields = <String, String>{};
+      if (document.expenseId != null && document.expenseId > 0) {
+        fields['expense_id'] = '${document.expenseId}';
+      } else {
+        fields['invoice_id'] = '${document.invoiceId}';
+      }
+
+      response = await webClient.post(auth.url + '/documents', company.token,
+          fields, document.path);
     } else {
+      /*
       var url = auth.url + '/documents/' + document.id.toString();
       if (action != null) {
         url += '?action=' + action.toString();
       }
       response = await webClient.put(url, company.token, json.encode(data));
+      */
     }
 
     final DocumentItemResponse documentResponse =
