@@ -84,8 +84,8 @@ class DocumentTile extends StatelessWidget {
         builder: (BuildContext context) {
           final localization = AppLocalization.of(context);
 
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          return ListView(
+            shrinkWrap: true,
             children: <Widget>[
               FormCard(
                 children: <Widget>[
