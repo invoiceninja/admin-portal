@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
@@ -39,7 +40,7 @@ class _ExpenseViewState extends State<ExpenseView>
 
   @override
   Widget build(BuildContext context) {
-    //final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
 
     return WillPopScope(
@@ -56,24 +57,21 @@ class _ExpenseViewState extends State<ExpenseView>
           viewModel: viewModel,
           controller: _controller,
         ),
-        /*
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: () {
-            showDialog<SimpleDialog>(
-              context: context,
-              builder: (BuildContext context) =>
-                  SimpleDialog(children: <Widget>[
-                  ]),
-            );
-          },
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          tooltip: localization.create,
-        ),
-        */
+        floatingActionButton: Builder(builder: (BuildContext context) {
+          return FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColorDark,
+            onPressed: () async {
+              final image =
+                  await ImagePicker.pickImage(source: ImageSource.camera);
+              viewModel.onFileUpload(context, image.path);
+            },
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            tooltip: localization.create,
+          );
+        }),
       ),
     );
   }
@@ -110,7 +108,8 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
         ),
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
-          child: ExpenseViewDocuments(viewModel: viewModel, expense: viewModel.expense),
+          child: ExpenseViewDocuments(
+              viewModel: viewModel, expense: viewModel.expense),
         ),
       ],
     );
