@@ -29,6 +29,7 @@ dependencies:
   firebase_auth: ^0.6.2+1
   local_auth: ^0.3.0
   sentry: ^2.2.0
+  image_picker: ^0.4.12+1
   #flutter_plugin_pdf_viewer: any
   #quick_actions: ^0.2.1
   #flutter_html_view: ^0.5.8

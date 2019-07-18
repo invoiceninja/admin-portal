@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
@@ -45,7 +46,12 @@ class _ExpenseViewDocumentsState extends State<ExpenseViewDocuments> {
                 child: ElevatedButton(
                   icon: Icons.camera_alt,
                   label: localization.takePicture,
-                  //onPressed: _confirmDelete,
+                  onPressed: () async {
+                    final image =
+                        await ImagePicker.pickImage(source: ImageSource.camera);
+                    print('image: ${image.path}');
+                    //viewModel.onUpdateImage(context, type, image.path);
+                  },
                 ),
               ),
               SizedBox(
@@ -55,7 +61,12 @@ class _ExpenseViewDocumentsState extends State<ExpenseViewDocuments> {
                 child: ElevatedButton(
                   icon: Icons.attach_file,
                   label: localization.uploadFile,
-                  //onPressed: _confirmDelete,
+                  onPressed: () async {
+                    final image = await ImagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    print('image: ${image.path}');
+                    //viewModel.onUpdateImage(context, type, image.path);
+                  },
                 ),
               ),
             ],

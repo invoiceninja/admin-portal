@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentTile extends StatelessWidget {
   const DocumentTile(this.document);
-
   final DocumentEntity document;
 
   void showDocumentModal(BuildContext context) {
