@@ -22,7 +22,7 @@ class InvoiceViewDocuments extends StatelessWidget {
 
     return DocumentGrid(
       documents: documents,
-      onFileUpload: (path) => viewModel.onUploadDocument(context, path),
+      onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
       onDeleteDocument: (document) =>
           viewModel.onDeleteDocument(context, document),
     );

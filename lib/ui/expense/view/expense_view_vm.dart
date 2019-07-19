@@ -48,7 +48,7 @@ class ExpenseViewVM {
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
-    @required this.onFileUpload,
+    @required this.onUploadDocument,
     @required this.onDeleteDocument,
     @required this.isSaving,
     @required this.isLoading,
@@ -145,7 +145,7 @@ class ExpenseViewVM {
         },
         onEntityAction: (BuildContext context, EntityAction action) =>
             handleExpenseAction(context, expense, action),
-        onFileUpload: (BuildContext context, String path) {
+        onUploadDocument: (BuildContext context, String path) {
           final Completer<DocumentEntity> completer =
               Completer<DocumentEntity>();
           final document = DocumentEntity().rebuild((b) => b
@@ -176,7 +176,7 @@ class ExpenseViewVM {
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, String) onFileUpload;
+  final Function(BuildContext, String) onUploadDocument;
   final Function(BuildContext, DocumentEntity) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;

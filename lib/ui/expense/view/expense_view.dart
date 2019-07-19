@@ -64,7 +64,7 @@ class _ExpenseViewState extends State<ExpenseView>
             onPressed: () async {
               final image =
                   await ImagePicker.pickImage(source: ImageSource.camera);
-              viewModel.onFileUpload(context, image.path);
+              viewModel.onUploadDocument(context, image.path);
             },
             child: Icon(
               Icons.camera_alt,
