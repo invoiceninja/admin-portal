@@ -186,8 +186,8 @@ class DocumentTile extends StatelessWidget {
                         ),
                         Text(
                           formatDate(
-                              convertTimestampToDateString(document.updatedAt),
-                              context),
+                              convertTimestampToDateString(document.createdAt),
+                              context) + ' • ' + document.prettySize,
                           style: Theme.of(context).textTheme.caption,
                           overflow: TextOverflow.ellipsis,
                         ),
