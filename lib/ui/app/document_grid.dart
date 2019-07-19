@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentGrid extends StatelessWidget {
@@ -146,10 +147,10 @@ class DocumentTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
+                  Padding(
+                    padding: const EdgeInsets.all(40),
+                    child: DocumentPreview(document),
                   ),
-                  DocumentPreview(document),
                 ],
               )
             ],
@@ -233,6 +234,10 @@ class DocumentPreview extends StatelessWidget {
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ))
-        : Icon(Icons.insert_drive_file);
+        : SizedBox(
+            height: height,
+            width: double.infinity,
+            child: Icon(getFileTypeIcon(document.type), size: 40),
+          );
   }
 }

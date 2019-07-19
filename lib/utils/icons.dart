@@ -69,3 +69,25 @@ IconData getEntityIcon(EntityType entityType) {
       return null;
   }
 }
+
+IconData getFileTypeIcon(String type) {
+  switch (type) {
+    case 'pdf':
+      return FontAwesomeIcons.solidFilePdf;
+    case 'psd':
+      return FontAwesomeIcons.adobe;
+    case 'txt':
+      return FontAwesomeIcons.solidFileAlt;
+    case 'doc':
+    case 'docx':
+      return FontAwesomeIcons.solidFileWord;
+    case 'xls':
+    case 'xlsx':
+      return FontAwesomeIcons.solidFileExcel;
+    case 'ppt':
+    case 'pptt':
+      return FontAwesomeIcons.solidFilePowerpoint;
+    default:
+      return null;
+  }
+}
