@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
@@ -51,6 +52,8 @@ class QuoteViewVM extends EntityViewVM {
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
     Function onBackPressed,
+    Function(BuildContext, String) onUploadDocument,
+    Function(BuildContext, DocumentEntity) onDeleteDocument,
   }) : super(
           company: company,
           invoice: invoice,
@@ -64,6 +67,8 @@ class QuoteViewVM extends EntityViewVM {
           onPaymentPressed: onPaymentPressed,
           onRefreshed: onRefreshed,
           onBackPressed: onBackPressed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
         );
 
   factory QuoteViewVM.fromStore(Store<AppState> store) {
@@ -122,6 +127,26 @@ class QuoteViewVM extends EntityViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleQuoteAction(context, quote, action),
+      onUploadDocument: (BuildContext context, String path) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final document = DocumentEntity().rebuild((b) => b
+          ..invoiceId = quote.id
+          ..path = path);
+        store.dispatch(
+            SaveDocumentRequest(document: document, completer: completer));
+        completer.future.then((client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).uploadedDocument,
+          )));
+        });
+      },
+      onDeleteDocument: (BuildContext context, DocumentEntity document) {
+        store.dispatch(DeleteDocumentRequest(
+            snackBarCompleter(
+                context, AppLocalization.of(context).deletedDocument),
+            document.id));
+      },
     );
   }
 }
