@@ -23,7 +23,7 @@ class InvoiceOverview extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final InvoiceViewVM viewModel;
+  final EntityViewVM viewModel;
 
   @override
   Widget build(BuildContext context) {
