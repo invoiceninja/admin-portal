@@ -101,6 +101,7 @@ class DocumentTile extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 10),
               FormCard(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -147,7 +148,15 @@ class DocumentTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 25),
+                  Text(document.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline),
+                  Text(
+                    '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                  SizedBox(height: 20),
                   DocumentPreview(document),
                 ],
               )
@@ -185,9 +194,7 @@ class DocumentTile extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          formatDate(
-                              convertTimestampToDateString(document.createdAt),
-                              context) + ' • ' + document.prettySize,
+                          '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
                           style: Theme.of(context).textTheme.caption,
                           overflow: TextOverflow.ellipsis,
                         ),
