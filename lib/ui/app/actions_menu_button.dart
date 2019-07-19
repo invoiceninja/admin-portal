@@ -26,9 +26,7 @@ class ActionMenuButton extends StatelessWidget {
       return IconButton(
         onPressed: null,
         icon: SizedBox(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          ),
+          child: CircularProgressIndicator(),
         ),
       );
     }
