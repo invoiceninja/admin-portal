@@ -66,7 +66,7 @@ class _ExpenseViewState extends State<ExpenseView>
               viewModel.onFileUpload(context, image.path);
             },
             child: Icon(
-              Icons.add,
+              Icons.camera_alt,
               color: Colors.white,
             ),
             tooltip: localization.create,
