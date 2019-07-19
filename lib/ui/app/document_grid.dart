@@ -147,10 +147,8 @@ class DocumentTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(40),
-                    child: DocumentPreview(document),
-                  ),
+                  SizedBox(height: 30),
+                  DocumentPreview(document),
                 ],
               )
             ],
