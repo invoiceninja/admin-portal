@@ -28,19 +28,18 @@ abstract class CompanyState
   factory CompanyState() {
     return _$CompanyState._(
       company: CompanyEntity(),
+      documentState: DocumentState(),
       dashboardState: DashboardState(),
       productState: ProductState(),
       clientState: ClientState(),
       invoiceState: InvoiceState(),
-      // STARTER: constructor - do not remove comment
-      documentState: DocumentState(),
-
       expenseState: ExpenseState(),
       vendorState: VendorState(),
       taskState: TaskState(),
       projectState: ProjectState(),
       paymentState: PaymentState(),
       quoteState: QuoteState(),
+      // STARTER: constructor - do not remove comment
     );
   }
 
@@ -49,6 +48,8 @@ abstract class CompanyState
   @nullable
   CompanyEntity get company;
 
+  DocumentState get documentState;
+
   DashboardState get dashboardState;
 
   ProductState get productState;
@@ -56,9 +57,6 @@ abstract class CompanyState
   ClientState get clientState;
 
   InvoiceState get invoiceState;
-
-  // STARTER: fields - do not remove comment
-  DocumentState get documentState;
 
   ExpenseState get expenseState;
 
@@ -71,6 +69,8 @@ abstract class CompanyState
   PaymentState get paymentState;
 
   QuoteState get quoteState;
+
+  // STARTER: fields - do not remove comment
 
   //factory CompanyState([void updates(CompanyStateBuilder b)]) = _$CompanyState;
   static Serializer<CompanyState> get serializer => _$companyStateSerializer;

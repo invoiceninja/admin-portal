@@ -77,7 +77,8 @@ class InvoiceListItem extends StatelessWidget {
                               invoice.dueDate.isNotEmpty
                                   ? invoice.dueDate
                                   : invoice.invoiceDate,
-                              context))
+                              context) +
+                          (invoice.hasDocuments ?? false ? '  📎' : ''))
                       : Text(
                           filterMatch,
                           maxLines: 3,

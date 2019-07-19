@@ -99,19 +99,19 @@ void main() async {
           requireAuthentication: requireAuthentication),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
+        ..addAll(createStoreDocumentsMiddleware())
         ..addAll(createStoreDashboardMiddleware())
         ..addAll(createStoreProductsMiddleware())
         ..addAll(createStoreClientsMiddleware())
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
-        // STARTER: middleware - do not remove comment
-        ..addAll(createStoreDocumentsMiddleware())
         ..addAll(createStoreExpensesMiddleware())
         ..addAll(createStoreVendorsMiddleware())
         ..addAll(createStoreTasksMiddleware())
         ..addAll(createStoreProjectsMiddleware())
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
+        // STARTER: middleware - do not remove comment
         ..addAll([
           LoggingMiddleware<dynamic>.printer(),
         ]));

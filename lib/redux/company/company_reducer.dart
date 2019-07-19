@@ -30,18 +30,18 @@ CompanyState companyReducer(CompanyState state, dynamic action) {
 
   return state.rebuild((b) => b
     ..company.replace(companyEntityReducer(state.company, action))
+    ..documentState.replace(documentsReducer(state.documentState, action))
     ..clientState.replace(clientsReducer(state.clientState, action))
     ..dashboardState.replace(dashboardReducer(state.dashboardState, action))
     ..productState.replace(productsReducer(state.productState, action))
     ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
-    // STARTER: reducer - do not remove comment
-    ..documentState.replace(documentsReducer(state.documentState, action))
     ..expenseState.replace(expensesReducer(state.expenseState, action))
     ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     ..projectState.replace(projectsReducer(state.projectState, action))
     ..paymentState.replace(paymentsReducer(state.paymentState, action))
     ..quoteState.replace(quotesReducer(state.quoteState, action)));
+  // STARTER: reducer - do not remove comment
 }
 
 Reducer<CompanyEntity> companyEntityReducer = combineReducers([

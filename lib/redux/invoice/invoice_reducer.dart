@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -187,6 +188,7 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, RestoreInvoiceSuccess>(_restoreInvoiceSuccess),
   TypedReducer<InvoiceState, RestoreInvoiceFailure>(_restoreInvoiceFailure),
   TypedReducer<InvoiceState, ConvertQuoteSuccess>(_convertQuoteSuccess),
+  TypedReducer<InvoiceState, LoadDocumentsSuccess>(_setLoadedDocuments),
 ]);
 
 InvoiceState _markSentInvoiceSuccess(
@@ -293,4 +295,13 @@ InvoiceState _setLoadedInvoices(
     )));
 
   return state.rebuild((b) => b..list.replace(state.map.keys));
+}
+
+InvoiceState _setLoadedDocuments(
+    InvoiceState invoiceState, LoadDocumentsSuccess action) {
+  print('Document reducer - INVOICE');
+
+  return invoiceState.rebuild((b) => b
+    ..map.updateAllValues((invoiceId, invoice) =>
+        invoice.rebuild((b) => b..hasDocuments = true)));
 }

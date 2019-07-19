@@ -67,6 +67,9 @@ class ExpenseListItem extends StatelessWidget {
         subtitle += client.displayName;
       }
     }
+    if (expense.hasDocuments ?? false) {
+      subtitle += '  📎';
+    }
 
     return DismissibleEntity(
       user: user,

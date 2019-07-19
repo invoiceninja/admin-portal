@@ -200,6 +200,10 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @nullable
+  @BuiltValueField(serialize: false)
+  bool get hasDocuments;
+
   @override
   List<EntityAction> getActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
