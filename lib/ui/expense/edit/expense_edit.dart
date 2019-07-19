@@ -28,7 +28,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 4);
+    _controller = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -81,9 +81,6 @@ class _ExpenseEditState extends State<ExpenseEdit>
               Tab(
                 text: localization.notes,
               ),
-              Tab(
-                text: localization.documents,
-              ),
             ],
           ),
         ),
@@ -99,9 +96,6 @@ class _ExpenseEditState extends State<ExpenseEdit>
                 viewModel: widget.viewModel,
               ),
               ExpenseEditNotes(
-                viewModel: widget.viewModel,
-              ),
-              ExpenseEditDocuments(
                 viewModel: widget.viewModel,
               ),
             ],

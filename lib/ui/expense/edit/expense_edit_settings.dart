@@ -78,7 +78,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _setCurrency(CurrencyEntity currency) {
-    print('set currency: $currency');
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
     final exchangeRate = currency == null
@@ -244,6 +243,15 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     ],
                   )
                 : SizedBox(),
+            SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.addDocumentsToInvoice),
+                value: expense.invoiceDocuments,
+                onChanged: (value) {
+                  viewModel.onChanged(
+                      expense.rebuild((b) => b..invoiceDocuments = value));
+                  viewModel.onAddDocumentsChanged(value);
+                })
           ],
         ),
       ],
