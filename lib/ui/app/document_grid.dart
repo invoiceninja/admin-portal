@@ -117,7 +117,8 @@ class DocumentTile extends StatelessWidget {
                               title: Text(localization.areYouSure),
                               actions: <Widget>[
                                 FlatButton(
-                                    child: Text(localization.cancel.toUpperCase()),
+                                    child:
+                                        Text(localization.cancel.toUpperCase()),
                                     onPressed: () {
                                       Navigator.pop(context);
                                     }),
@@ -222,11 +223,11 @@ class DocumentPreview extends StatelessWidget {
             imageUrl: document.previewUrl(state.authState.url),
             httpHeaders: {'X-Ninja-Token': state.selectedCompany.token},
             placeholder: (context, url) => Container(
-              height: height,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+                  height: height,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
             errorWidget: (context, url, error) => Text(
                   '$error: $url',
                   maxLines: 6,
