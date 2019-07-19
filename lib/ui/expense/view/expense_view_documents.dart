@@ -23,6 +23,8 @@ class ExpenseViewDocuments extends StatelessWidget {
     return DocumentGrid(
       documents: documents,
       onFileUpload: (path) => viewModel.onFileUpload(context, path),
+      onDeleteDocument: (document) =>
+          viewModel.onDeleteDocument(context, document),
     );
   }
 }

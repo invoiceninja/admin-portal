@@ -11,10 +11,15 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentGrid extends StatelessWidget {
-  const DocumentGrid({@required this.documents, @required this.onFileUpload});
+  const DocumentGrid({
+    @required this.documents,
+    @required this.onFileUpload,
+    @required this.onDeleteDocument,
+  });
 
   final List<int> documents;
   final Function(String) onFileUpload;
+  final Function(DocumentEntity) onDeleteDocument;
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +68,10 @@ class DocumentGrid extends StatelessWidget {
           primary: true,
           crossAxisCount: 2,
           children: documents
-              .map((documentId) =>
-                  DocumentTile(state.documentState.map[documentId]))
+              .map((documentId) => DocumentTile(
+                    document: state.documentState.map[documentId],
+                    onDeleteDocument: onDeleteDocument,
+                  ))
               .toList(),
         ),
       ],
@@ -73,9 +80,13 @@ class DocumentGrid extends StatelessWidget {
 }
 
 class DocumentTile extends StatelessWidget {
-  const DocumentTile(this.document);
+  const DocumentTile({
+    @required this.document,
+    @required this.onDeleteDocument,
+  });
 
   final DocumentEntity document;
+  final Function(DocumentEntity) onDeleteDocument;
 
   void showDocumentModal(BuildContext context) {
     showDialog<Column>(
