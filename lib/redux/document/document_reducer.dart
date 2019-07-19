@@ -152,8 +152,8 @@ DocumentState _deleteDocumentRequest(
 
 DocumentState _deleteDocumentSuccess(
     DocumentState documentState, DeleteDocumentSuccess action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) =>
+      b..map.remove(action.document.id)..list.remove(action.document.id));
 }
 
 DocumentState _deleteDocumentFailure(

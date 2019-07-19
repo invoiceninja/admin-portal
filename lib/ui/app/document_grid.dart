@@ -110,6 +110,7 @@ class DocumentTile extends StatelessWidget {
                         icon: Icons.delete,
                         label: localization.delete,
                         onPressed: () {
+                          onDeleteDocument(document);
                           Navigator.of(context).pop();
                         },
                       ),
@@ -198,10 +199,15 @@ class DocumentPreview extends StatelessWidget {
             height: height,
             width: double.infinity,
             fit: BoxFit.cover,
-            key: ValueKey(document.preview),
+            key: ValueKey(document.id),
             imageUrl: document.previewUrl(state.authState.url),
             httpHeaders: {'X-Ninja-Token': state.selectedCompany.token},
-            placeholder: (context, url) => CircularProgressIndicator(),
+            placeholder: (context, url) => Container(
+              height: height,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
             errorWidget: (context, url, error) => Text(
                   '$error: $url',
                   maxLines: 6,
