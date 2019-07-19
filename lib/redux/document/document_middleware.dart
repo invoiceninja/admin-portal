@@ -142,21 +142,27 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
 
 Middleware<AppState> _saveDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.document)
-        .then((DocumentEntity document) {
-      if (action.document.isNew) {
-        store.dispatch(AddDocumentSuccess(document));
-      } else {
-        store.dispatch(SaveDocumentSuccess(document));
-      }
-      action.completer.complete(document);
-    }).catchError((Object error) {
-      print(error);
+    if (store.state.selectedCompany.isEnterprisePlan) {
+      repository
+          .saveData(store.state.selectedCompany, store.state.authState,
+              action.document)
+          .then((DocumentEntity document) {
+        if (action.document.isNew) {
+          store.dispatch(AddDocumentSuccess(document));
+        } else {
+          store.dispatch(SaveDocumentSuccess(document));
+        }
+        action.completer.complete(document);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan.\n\nUse the \'Refresh Data\' option in the app settings to check for a new plan.';
       store.dispatch(SaveDocumentFailure(error));
       action.completer.completeError(error);
-    });
+    }
 
     next(action);
   };
