@@ -110,8 +110,27 @@ class DocumentTile extends StatelessWidget {
                         icon: Icons.delete,
                         label: localization.delete,
                         onPressed: () {
-                          onDeleteDocument(document);
-                          Navigator.of(context).pop();
+                          showDialog<AlertDialog>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              semanticLabel: localization.areYouSure,
+                              title: Text(localization.areYouSure),
+                              actions: <Widget>[
+                                FlatButton(
+                                    child: Text(localization.cancel.toUpperCase()),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }),
+                                FlatButton(
+                                    child: Text(localization.ok.toUpperCase()),
+                                    onPressed: () {
+                                      onDeleteDocument(document);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    })
+                              ],
+                            ),
+                          );
                         },
                       ),
                       SizedBox(
@@ -199,7 +218,7 @@ class DocumentPreview extends StatelessWidget {
             height: height,
             width: double.infinity,
             fit: BoxFit.cover,
-            key: ValueKey(document.id),
+            key: ValueKey(document.preview),
             imageUrl: document.previewUrl(state.authState.url),
             httpHeaders: {'X-Ninja-Token': state.selectedCompany.token},
             placeholder: (context, url) => Container(
