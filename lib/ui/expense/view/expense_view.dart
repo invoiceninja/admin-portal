@@ -43,6 +43,7 @@ class _ExpenseViewState extends State<ExpenseView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final company = viewModel.state.selectedCompany;
 
     return WillPopScope(
       onWillPop: () async {
@@ -58,21 +59,23 @@ class _ExpenseViewState extends State<ExpenseView>
           viewModel: viewModel,
           controller: _controller,
         ),
-        floatingActionButton: Builder(builder: (BuildContext context) {
-          return FloatingActionButton(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            onPressed: () async {
-              final image =
-                  await ImagePicker.pickImage(source: ImageSource.camera);
-              viewModel.onUploadDocument(context, image.path);
-            },
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.white,
-            ),
-            tooltip: localization.create,
-          );
-        }),
+        floatingActionButton: company.isEnterprisePlan
+            ? Builder(builder: (BuildContext context) {
+                return FloatingActionButton(
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () async {
+                    final image =
+                        await ImagePicker.pickImage(source: ImageSource.camera);
+                    viewModel.onUploadDocument(context, image.path);
+                  },
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.create,
+                );
+              })
+            : null,
       ),
     );
   }

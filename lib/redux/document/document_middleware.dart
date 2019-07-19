@@ -159,7 +159,7 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
         action.completer.completeError(error);
       });
     } else {
-      const error = 'Uploading documents requires an enterprise plan.\n\nUse the \'Refresh Data\' option in the app settings to check for a new plan.';
+      const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveDocumentFailure(error));
       action.completer.completeError(error);
     }

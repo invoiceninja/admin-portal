@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
       'document': 'Document',
@@ -12269,6 +12270,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get takePicture => _localizedValues[localeCode]['take_picture'];
 
   String get uploadFile => _localizedValues[localeCode]['upload_file'];
+
+  String get requiresAnEnterprisePlan =>
+      _localizedValues[localeCode]['requires_an_enterprise_plan'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

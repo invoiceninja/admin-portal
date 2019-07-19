@@ -26,41 +26,53 @@ class DocumentGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
+    final company = state.selectedCompany;
 
     return ListView(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(14),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: ElevatedButton(
-                  icon: Icons.camera_alt,
-                  label: localization.takePicture,
-                  onPressed: () async {
-                    final image =
-                        await ImagePicker.pickImage(source: ImageSource.camera);
-                    onUploadDocument(image.path);
-                  },
+        if (company.isEnterprisePlan)
+          Padding(
+            padding: const EdgeInsets.all(14),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: ElevatedButton(
+                    icon: Icons.camera_alt,
+                    label: localization.takePicture,
+                    onPressed: () async {
+                      final image = await ImagePicker.pickImage(
+                          source: ImageSource.camera);
+                      onUploadDocument(image.path);
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 14,
-              ),
-              Expanded(
-                child: ElevatedButton(
-                  icon: Icons.insert_drive_file,
-                  label: localization.uploadFile,
-                  onPressed: () async {
-                    final image = await ImagePicker.pickImage(
-                        source: ImageSource.gallery);
-                    onUploadDocument(image.path);
-                  },
+                SizedBox(
+                  width: 14,
                 ),
+                Expanded(
+                  child: ElevatedButton(
+                    icon: Icons.insert_drive_file,
+                    label: localization.uploadFile,
+                    onPressed: () async {
+                      final image = await ImagePicker.pickImage(
+                          source: ImageSource.gallery);
+                      onUploadDocument(image.path);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          )
+        else
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 30),
+            child: Center(
+              child: Text(
+                localization.requiresAnEnterprisePlan,
+                style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
-            ],
+            ),
           ),
-        ),
         ListDivider(),
         GridView.count(
           physics: NeverScrollableScrollPhysics(),
