@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -119,12 +120,15 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final invoice = viewModel.invoice;
     final user = viewModel.company.user;
     final client = viewModel.client;
+    final documentState = viewModel.state.documentState;
+    final documents = memoizedDocumentsSelector(
+        documentState.map, documentState.list, invoice);
 
     return AppBar(
       title: EntityStateTitle(
         entity: invoice,
         title:
-        '${invoice.isQuote ? localization.quote : localization.invoice} ${invoice.invoiceNumber}',
+            '${invoice.isQuote ? localization.quote : localization.invoice} ${invoice.invoiceNumber}',
       ),
       bottom: TabBar(
         controller: controller,
@@ -133,27 +137,29 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             text: localization.overview,
           ),
           Tab(
-            text: localization.documents,
+            text: documents.isEmpty
+                ? localization.documents
+                : '${localization.documents} (${documents.length})',
           ),
         ],
       ),
       actions: invoice.isNew
           ? []
           : [
-        user.canEditEntity(invoice)
-            ? EditIconButton(
-          isVisible: !invoice.isDeleted,
-          onPressed: () => viewModel.onEditPressed(context),
-        )
-            : Container(),
-        ActionMenuButton(
-          user: user,
-          entityActions: invoice.getActions(client: client, user: user),
-          isSaving: viewModel.isSaving,
-          entity: invoice,
-          onSelected: viewModel.onActionSelected,
-        )
-      ],
+              user.canEditEntity(invoice)
+                  ? EditIconButton(
+                      isVisible: !invoice.isDeleted,
+                      onPressed: () => viewModel.onEditPressed(context),
+                    )
+                  : Container(),
+              ActionMenuButton(
+                user: user,
+                entityActions: invoice.getActions(client: client, user: user),
+                isSaving: viewModel.isSaving,
+                entity: invoice,
+                onSelected: viewModel.onActionSelected,
+              )
+            ],
     );
   }
 }

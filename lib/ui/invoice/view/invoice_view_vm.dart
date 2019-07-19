@@ -40,6 +40,7 @@ class InvoiceViewScreen extends StatelessWidget {
 
 class EntityViewVM {
   EntityViewVM({
+    @required this.state,
     @required this.company,
     @required this.invoice,
     @required this.client,
@@ -56,6 +57,7 @@ class EntityViewVM {
     @required this.onRefreshed,
   });
 
+  final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
@@ -74,10 +76,10 @@ class EntityViewVM {
   @override
   bool operator ==(dynamic other) =>
       client == other.client &&
-          company == other.company &&
-          invoice == other.invoice &&
-          isSaving == other.isSaving &&
-          isDirty == other.isDirty;
+      company == other.company &&
+      invoice == other.invoice &&
+      isSaving == other.isSaving &&
+      isDirty == other.isDirty;
 
   @override
   int get hashCode =>
@@ -90,6 +92,7 @@ class EntityViewVM {
 
 class InvoiceViewVM extends EntityViewVM {
   InvoiceViewVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
@@ -105,21 +108,22 @@ class InvoiceViewVM extends EntityViewVM {
     Function(BuildContext, String) onUploadDocument,
     Function(BuildContext, DocumentEntity) onDeleteDocument,
   }) : super(
-    company: company,
-    invoice: invoice,
-    client: client,
-    isSaving: isSaving,
-    isDirty: isDirty,
-    onActionSelected: onEntityAction,
-    onEditPressed: onEditPressed,
-    onClientPressed: onClientPressed,
-    onPaymentPressed: onPaymentPressed,
-    onPaymentsPressed: onPaymentsPressed,
-    onRefreshed: onRefreshed,
-    onBackPressed: onBackPressed,
-    onUploadDocument: onUploadDocument,
-    onDeleteDocument: onDeleteDocument,
-  );
+          state: state,
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onEntityAction,
+          onEditPressed: onEditPressed,
+          onClientPressed: onClientPressed,
+          onPaymentPressed: onPaymentPressed,
+          onPaymentsPressed: onPaymentsPressed,
+          onRefreshed: onRefreshed,
+          onBackPressed: onBackPressed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
+        );
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -129,104 +133,94 @@ class InvoiceViewVM extends EntityViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
-          context, AppLocalization
-          .of(context)
-          .refreshComplete);
+          context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
       return completer.future;
     }
 
     return InvoiceViewVM(
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isDirty: invoice.isNew,
-        invoice: invoice,
-        client: client,
-        onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
-          final Completer<InvoiceEntity> completer =
-          new Completer<InvoiceEntity>();
-          store.dispatch(EditInvoice(
-              invoice: invoice,
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isDirty: invoice.isNew,
+      invoice: invoice,
+      client: client,
+      onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
+        final Completer<InvoiceEntity> completer =
+            new Completer<InvoiceEntity>();
+        store.dispatch(EditInvoice(
+            invoice: invoice,
+            context: context,
+            completer: completer,
+            invoiceItem: invoiceItem));
+        completer.future.then((invoice) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedInvoice,
+          )));
+        });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
+        }
+      },
+      onClientPressed: (BuildContext context, [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: state.selectedCompany.user,
               context: context,
-              completer: completer,
-              invoiceItem: invoiceItem));
-          completer.future.then((invoice) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization
-                      .of(context)
-                      .updatedInvoice,
-                )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
-          }
-        },
-        onClientPressed: (BuildContext context, [bool longPress = false]) {
-          if (longPress) {
-            showEntityActionsDialog(
-                user: state.selectedCompany.user,
-                context: context,
-                entity: client,
-                onEntityAction: (BuildContext context, BaseEntity client,
-                    EntityAction action) =>
-                    handleClientAction(context, client, action));
-          } else {
-            store.dispatch(ViewClient(clientId: client.id, context: context));
-          }
-        },
-        onPaymentPressed: (BuildContext context, payment,
-            [bool longPress = false]) {
-          if (longPress) {
-            showEntityActionsDialog(
-                user: user,
-                context: context,
-                client: client,
-                entity: payment,
-                onEntityAction: (BuildContext context, BaseEntity payment,
-                    EntityAction action) =>
-                    handlePaymentAction(context, payment, action));
-          } else {
-            store.dispatch(
-                ViewPayment(paymentId: payment.id, context: context));
-          }
-        },
-        onPaymentsPressed: (BuildContext context) {
-          store.dispatch(FilterPaymentsByEntity(
-              entityId: invoice.id, entityType: EntityType.invoice));
-          store.dispatch(ViewPaymentList(context));
-        },
-        onEntityAction: (BuildContext context, EntityAction action) =>
-            handleInvoiceAction(context, invoice, action),
-        onUploadDocument: (BuildContext context, String path) {
-          final Completer<DocumentEntity> completer =
-          Completer<DocumentEntity>();
-          final document = DocumentEntity().rebuild((b) =>
-          b
-            ..invoiceId = invoice.id
-            ..path = path);
-          store.dispatch(
-              SaveDocumentRequest(document: document, completer: completer));
-          completer.future.then((client) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization
-                      .of(context)
-                      .uploadedDocument,
-                )));
-          });
-        },
-        onDeleteDocument: (BuildContext context, DocumentEntity document) {
-          store.dispatch(DeleteDocumentRequest(
-              snackBarCompleter(
-                  context, AppLocalization
-                  .of(context)
-                  .deletedDocument),
-              document.id));
-        },
+              entity: client,
+              onEntityAction: (BuildContext context, BaseEntity client,
+                      EntityAction action) =>
+                  handleClientAction(context, client, action));
+        } else {
+          store.dispatch(ViewClient(clientId: client.id, context: context));
+        }
+      },
+      onPaymentPressed: (BuildContext context, payment,
+          [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: user,
+              context: context,
+              client: client,
+              entity: payment,
+              onEntityAction: (BuildContext context, BaseEntity payment,
+                      EntityAction action) =>
+                  handlePaymentAction(context, payment, action));
+        } else {
+          store.dispatch(ViewPayment(paymentId: payment.id, context: context));
+        }
+      },
+      onPaymentsPressed: (BuildContext context) {
+        store.dispatch(FilterPaymentsByEntity(
+            entityId: invoice.id, entityType: EntityType.invoice));
+        store.dispatch(ViewPaymentList(context));
+      },
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handleInvoiceAction(context, invoice, action),
+      onUploadDocument: (BuildContext context, String path) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final document = DocumentEntity().rebuild((b) => b
+          ..invoiceId = invoice.id
+          ..path = path);
+        store.dispatch(
+            SaveDocumentRequest(document: document, completer: completer));
+        completer.future.then((client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).uploadedDocument,
+          )));
+        });
+      },
+      onDeleteDocument: (BuildContext context, DocumentEntity document) {
+        store.dispatch(DeleteDocumentRequest(
+            snackBarCompleter(
+                context, AppLocalization.of(context).deletedDocument),
+            document.id));
+      },
     );
   }
 }

@@ -40,6 +40,7 @@ class QuoteViewScreen extends StatelessWidget {
 
 class QuoteViewVM extends EntityViewVM {
   QuoteViewVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
@@ -55,6 +56,7 @@ class QuoteViewVM extends EntityViewVM {
     Function(BuildContext, String) onUploadDocument,
     Function(BuildContext, DocumentEntity) onDeleteDocument,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           client: client,

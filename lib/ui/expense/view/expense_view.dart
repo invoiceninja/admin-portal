@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
@@ -133,6 +134,9 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final localization = AppLocalization.of(context);
     final expense = viewModel.expense;
     final user = viewModel.company.user;
+    final documentState = viewModel.state.documentState;
+    final documents = memoizedDocumentsSelector(
+        documentState.map, documentState.list, viewModel.expense);
 
     return AppBar(
       title: EntityStateTitle(
@@ -141,7 +145,6 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ? expense.publicNotes
             : localization.expense,
       ),
-      // Text(localizations.expenseDetails),
       bottom: TabBar(
         controller: controller,
         tabs: [
@@ -152,7 +155,9 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             text: localization.details,
           ),
           Tab(
-            text: localization.documents,
+            text: documents.isEmpty
+                ? localization.documents
+                : '${localization.documents} (${documents.length})',
           ),
         ],
       ),
