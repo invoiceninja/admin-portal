@@ -59,6 +59,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   void _onItemsSelected(BuildContext context) {
     final List<InvoiceItemEntity> items = [];
     final state = StoreProvider.of<AppState>(context).state;
+    final company = state.selectedCompany;
 
     _selected.forEach((entity) {
       if (entity.entityType == EntityType.product) {
@@ -76,7 +77,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         items.add(convertTaskToInvoiceItem(task: task, context: context));
       } else if (entity.entityType == EntityType.expense) {
         final expense = entity as ExpenseEntity;
-        items.add(convertExpenseToInvoiceItem(expense: expense));
+        items.add(convertExpenseToInvoiceItem(
+            expense: expense, categoryMap: company.expenseCategoryMap));
       }
     });
 

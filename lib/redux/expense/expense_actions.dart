@@ -250,7 +250,8 @@ void handleExpenseAction(
       store.dispatch(EditExpense(context: context, expense: expense.clone));
       break;
     case EntityAction.newInvoice:
-      final item = convertExpenseToInvoiceItem(expense: expense);
+      final item = convertExpenseToInvoiceItem(
+          expense: expense, categoryMap: company.expenseCategoryMap);
       store.dispatch(EditInvoice(
           invoice: InvoiceEntity(company: company).rebuild((b) => b
             ..hasExpenses = true

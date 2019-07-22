@@ -1,11 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-InvoiceItemEntity convertExpenseToInvoiceItem({ExpenseEntity expense}) {
+InvoiceItemEntity convertExpenseToInvoiceItem(
+    {@required ExpenseEntity expense,
+    @required BuiltMap<int, ExpenseCategoryEntity> categoryMap}) {
   return InvoiceItemEntity().rebuild((b) => b
     ..expenseId = expense.id
+    ..productKey = categoryMap[expense.categoryId]?.name ?? ''
     ..notes = expense.publicNotes
     ..qty = 1
     ..cost = expense.convertedAmount
