@@ -261,8 +261,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         return expense.matchesFilter(_filter);
       }).toList();
 
-      final documentMap = memoizedInvoiceDocumentMap(
-          EntityType.expense, state.documentState.map);
+      final documentMap = memoizedEntityDocumentMap(
+          EntityType.expense, state.documentState.map, state.expenseState.map);
 
       return ListView.builder(
         shrinkWrap: true,

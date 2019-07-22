@@ -121,8 +121,8 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
     final client = viewModel.client;
     final documentState = viewModel.state.documentState;
-    final documents = memoizedDocumentsSelector(
-        documentState.map, documentState.list, invoice);
+    final documents = memoizedInvoiceDocumentsSelector(
+        documentState.map, viewModel.state.expenseState.map, invoice);
 
     return AppBar(
       title: EntityStateTitle(

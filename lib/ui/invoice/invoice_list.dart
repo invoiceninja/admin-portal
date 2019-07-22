@@ -19,14 +19,15 @@ class InvoiceList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
     final filteredClientId = listState.filterEntityId;
     final filteredClient =
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
 
-    final documentMap = memoizedInvoiceDocumentMap(
-        EntityType.invoice, viewModel.state.documentState.map);
+    final documentMap = memoizedEntityDocumentMap(
+        EntityType.invoice, state.documentState.map, state.expenseState.map);
 
     return Column(
       children: <Widget>[

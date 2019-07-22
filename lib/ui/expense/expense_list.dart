@@ -31,8 +31,8 @@ class ExpenseList extends StatelessWidget {
       filteredEntity = state.clientState.map[listState.filterEntityId];
     }
 
-    final documentMap = memoizedInvoiceDocumentMap(
-        EntityType.expense, viewModel.state.documentState.map);
+    final documentMap = memoizedEntityDocumentMap(
+        EntityType.expense, state.documentState.map, state.expenseState.map);
 
     if (filteredEntity != null) {
       widgets.add(Material(

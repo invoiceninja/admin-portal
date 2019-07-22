@@ -71,7 +71,7 @@ Middleware<AppState> _editInvoice() {
 
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
     final invoice =
-        await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
+    await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
 
     if (action.completer != null && invoice != null) {
       action.completer.complete(invoice);
@@ -84,7 +84,7 @@ Middleware<AppState> _showEmailInvoice() {
     next(action);
 
     final emailWasSent =
-        await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
+    await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
 
     if (action.completer != null && emailWasSent != null && emailWasSent) {
       action.completer.complete(null);
@@ -97,7 +97,7 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.archive)
+        origInvoice, EntityAction.archive)
         .then((InvoiceEntity invoice) {
       store.dispatch(ArchiveInvoiceSuccess(invoice));
       if (action.completer != null) {
@@ -120,7 +120,7 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.delete)
+        origInvoice, EntityAction.delete)
         .then((InvoiceEntity invoice) {
       store.dispatch(DeleteInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -144,7 +144,7 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.restore)
+        origInvoice, EntityAction.restore)
         .then((InvoiceEntity invoice) {
       store.dispatch(RestoreInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -168,7 +168,7 @@ Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.markSent)
+        origInvoice, EntityAction.markSent)
         .then((InvoiceEntity invoice) {
       store.dispatch(MarkSentInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -192,7 +192,7 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .emailInvoice(store.state.selectedCompany, store.state.authState,
-            origInvoice, action.template, action.subject, action.body)
+        origInvoice, action.template, action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailInvoiceSuccess());
       store.dispatch(LoadClient(clientId: origInvoice.clientId));
@@ -215,7 +215,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     repository
         .saveData(
-            store.state.selectedCompany, store.state.authState, action.invoice)
+        store.state.selectedCompany, store.state.authState, action.invoice)
         .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));

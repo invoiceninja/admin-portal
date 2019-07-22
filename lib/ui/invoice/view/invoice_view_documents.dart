@@ -17,8 +17,8 @@ class InvoiceViewDocuments extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final documentState = state.documentState;
-    final documents = memoizedDocumentsSelector(
-        documentState.map, documentState.list, invoice);
+    final documents = memoizedInvoiceDocumentsSelector(
+        documentState.map, state.expenseState.map, invoice);
 
     return DocumentGrid(
       documents: documents,

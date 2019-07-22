@@ -17,8 +17,8 @@ class ExpenseViewDocuments extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final documentState = state.documentState;
-    final documents = memoizedDocumentsSelector(
-        documentState.map, documentState.list, expense);
+    final documents =
+        memoizedExpenseDocumentsSelector(documentState.map, expense);
 
     return DocumentGrid(
       documents: documents,

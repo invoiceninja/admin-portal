@@ -3,18 +3,34 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedInvoiceDocumentMap = memo2(
-    (EntityType entityType, BuiltMap<int, DocumentEntity> documentMap) =>
-        entityDocumentMap(entityType, documentMap));
+var memoizedEntityDocumentMap = memo3((EntityType entityType,
+        BuiltMap<int, DocumentEntity> documentMap,
+        BuiltMap<int, ExpenseEntity> expenseMap) =>
+    entityDocumentMap(entityType, documentMap, expenseMap));
 
 Map<int, bool> entityDocumentMap(
-    EntityType entityType, BuiltMap<int, DocumentEntity> documentMap) {
+    EntityType entityType,
+    BuiltMap<int, DocumentEntity> documentMap,
+    BuiltMap<int, ExpenseEntity> expenseMap) {
+  final invoiceMap = <int, int>{};
+  expenseMap.forEach((int, expense) {
+    if (expense.invoiceDocuments && expense.isInvoiced) {
+      invoiceMap[expense.id] = expense.invoiceId;
+    }
+  });
+
   final Map<int, bool> map = {};
   documentMap.forEach((documentId, document) {
     if (entityType == EntityType.invoice) {
       map[document.invoiceId] = true;
     } else if (entityType == EntityType.expense) {
       map[document.expenseId] = true;
+    }
+
+    if (entityType == EntityType.invoice) {
+      if (invoiceMap.containsKey(document.expenseId)) {
+        map[invoiceMap[document.expenseId]] = true;
+      }
     }
   });
 
@@ -80,29 +96,74 @@ List<int> filteredDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
   return list;
 }
 
-var memoizedDocumentsSelector = memo3(
-    (BuiltMap<int, DocumentEntity> documentMap, BuiltList<int> documentList,
-            BaseEntity entity) =>
-        documentsSelector(documentMap, documentList, entity));
+var memoizedInvoiceDocumentsSelector = memo3(
+    (BuiltMap<int, DocumentEntity> documentMap,
+            BuiltMap<int, ExpenseEntity> expenseMap, InvoiceEntity entity) =>
+        invoiceDocumentsSelector(documentMap, expenseMap, entity));
 
-List<int> documentsSelector(BuiltMap<int, DocumentEntity> documentMap,
-    BuiltList<int> documentList, BaseEntity entity) {
-  final list = documentList.where((documentId) {
+List<int> invoiceDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
+    BuiltMap<int, ExpenseEntity> expenseMap, InvoiceEntity entity) {
+  final map = <int, List<int>>{};
+  expenseMap.forEach((int, expense) {
+    if (expense.invoiceDocuments) {
+      if (map.containsKey(expense.invoiceId)) {
+        map[expense.invoiceId].add(expense.id);
+      } else {
+        map[expense.invoiceId] = [expense.id];
+      }
+    }
+  });
+
+  final list = documentMap.keys.where((documentId) {
     final document = documentMap[documentId];
-    if (entity.entityType == EntityType.expense &&
-        document.expenseId != entity.id) {
-      return false;
-    } else if (entity.entityType == EntityType.invoice &&
-        document.invoiceId != entity.id) {
+
+    if (!document.isActive) {
       return false;
     }
-    return document.isActive;
+
+    if (document.invoiceId == entity.id) {
+      return true;
+    } else if (map.containsKey(entity.id) &&
+        map[entity.id].contains(document.expenseId)) {
+      return true;
+    }
+
+    return false;
   }).toList();
 
   list.sort((documentAId, documentBId) {
     final documentA = documentMap[documentAId];
     final documentB = documentMap[documentBId];
-    return documentA.compareTo(documentB, DocumentFields.name, true);
+    return documentA.compareTo(documentB, DocumentFields.id, true);
+  });
+
+  return list.toList();
+}
+
+var memoizedExpenseDocumentsSelector = memo2(
+    (BuiltMap<int, DocumentEntity> documentMap, BaseEntity entity) =>
+        expenseDocumentsSelector(documentMap, entity));
+
+List<int> expenseDocumentsSelector(
+    BuiltMap<int, DocumentEntity> documentMap, ExpenseEntity entity) {
+  final list = documentMap.keys.where((documentId) {
+    final document = documentMap[documentId];
+
+    if (!document.isActive) {
+      return false;
+    }
+
+    if (document.expenseId == entity.id) {
+      return true;
+    }
+
+    return false;
+  }).toList();
+
+  list.sort((documentAId, documentBId) {
+    final documentA = documentMap[documentAId];
+    final documentB = documentMap[documentBId];
+    return documentA.compareTo(documentB, DocumentFields.id, true);
   });
 
   return list.toList();
