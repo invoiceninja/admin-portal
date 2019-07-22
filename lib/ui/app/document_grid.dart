@@ -252,6 +252,7 @@ class DocumentPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
+
     return document.preview != null && document.preview.isNotEmpty
         ? CachedNetworkImage(
             height: height,
