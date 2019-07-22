@@ -1,4 +1,3 @@
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -126,7 +125,6 @@ final expensesReducer = combineReducers<ExpenseState>([
   TypedReducer<ExpenseState, RestoreExpenseRequest>(_restoreExpenseRequest),
   TypedReducer<ExpenseState, RestoreExpenseSuccess>(_restoreExpenseSuccess),
   TypedReducer<ExpenseState, RestoreExpenseFailure>(_restoreExpenseFailure),
-  TypedReducer<ExpenseState, LoadDocumentsSuccess>(_setLoadedDocuments),
 ]);
 
 ExpenseState _archiveExpenseRequest(
@@ -219,10 +217,4 @@ ExpenseState _setLoadedExpenses(
     )));
 
   return state.rebuild((b) => b..list.replace(state.map.keys));
-}
-
-ExpenseState _setLoadedDocuments(
-    ExpenseState expenseState, LoadDocumentsSuccess action) {
-  print('Document reducer - EXPENSE');
-  return expenseState;
 }

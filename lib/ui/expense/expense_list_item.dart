@@ -17,6 +17,7 @@ class ExpenseListItem extends StatelessWidget {
     @required this.client,
     @required this.vendor,
     @required this.filter,
+    @required this.hasDocuments,
     this.onEntityAction,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -33,6 +34,7 @@ class ExpenseListItem extends StatelessWidget {
   final bool isChecked;
   final VendorEntity vendor;
   final String filter;
+  final bool hasDocuments;
 
   static final expenseItemKey = (int id) => Key('__expense_item_${id}__');
 
@@ -67,7 +69,7 @@ class ExpenseListItem extends StatelessWidget {
         subtitle += client.displayName;
       }
     }
-    if (expense.hasDocuments ?? false) {
+    if (hasDocuments) {
       subtitle += '  📎';
     }
 

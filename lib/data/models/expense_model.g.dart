@@ -769,8 +769,6 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String customValue2;
   @override
-  final bool hasDocuments;
-  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -811,7 +809,6 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.vendorId,
       this.customValue1,
       this.customValue2,
-      this.hasDocuments,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -926,7 +923,6 @@ class _$ExpenseEntity extends ExpenseEntity {
         vendorId == other.vendorId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        hasDocuments == other.hasDocuments &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -955,20 +951,20 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode),
-                                                                                exchangeRate.hashCode),
-                                                                            invoiceCurrencyId.hashCode),
-                                                                        paymentTypeId.hashCode),
-                                                                    taxName1.hashCode),
-                                                                taxName2.hashCode),
-                                                            taxRate1.hashCode),
-                                                        taxRate2.hashCode),
-                                                    clientId.hashCode),
-                                                invoiceId.hashCode),
-                                            vendorId.hashCode),
-                                        customValue1.hashCode),
-                                    customValue2.hashCode),
-                                hasDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode),
+                                                                                paymentDate.hashCode),
+                                                                            exchangeRate.hashCode),
+                                                                        invoiceCurrencyId.hashCode),
+                                                                    paymentTypeId.hashCode),
+                                                                taxName1.hashCode),
+                                                            taxName2.hashCode),
+                                                        taxRate1.hashCode),
+                                                    taxRate2.hashCode),
+                                                clientId.hashCode),
+                                            invoiceId.hashCode),
+                                        vendorId.hashCode),
+                                    customValue1.hashCode),
+                                customValue2.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -1004,7 +1000,6 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('vendorId', vendorId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('hasDocuments', hasDocuments)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1121,10 +1116,6 @@ class ExpenseEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  bool _hasDocuments;
-  bool get hasDocuments => _$this._hasDocuments;
-  set hasDocuments(bool hasDocuments) => _$this._hasDocuments = hasDocuments;
-
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1177,7 +1168,6 @@ class ExpenseEntityBuilder
       _vendorId = _$v.vendorId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _hasDocuments = _$v.hasDocuments;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1230,7 +1220,6 @@ class ExpenseEntityBuilder
             vendorId: vendorId,
             customValue1: customValue1,
             customValue2: customValue2,
-            hasDocuments: hasDocuments,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -23,6 +24,9 @@ class InvoiceList extends StatelessWidget {
     final filteredClientId = listState.filterEntityId;
     final filteredClient =
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
+
+    final documentMap = memoizedInvoiceDocumentMap(
+        EntityType.invoice, viewModel.state.documentState.map);
 
     return Column(
       children: <Widget>[
@@ -95,6 +99,7 @@ class InvoiceList extends StatelessWidget {
                             return InvoiceListItem(
                               user: viewModel.user,
                               filter: viewModel.filter,
+                              hasDocuments: documentMap[invoice.id] == true,
                               invoice: invoice,
                               client: viewModel.clientMap[invoice.clientId] ??
                                   ClientEntity(),

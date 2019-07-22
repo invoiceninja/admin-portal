@@ -303,10 +303,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'invoice_design_id')
   int get designId;
 
-  @nullable
-  @BuiltValueField(serialize: false)
-  bool get hasDocuments;
-
   bool get isApproved =>
       invoiceStatusId == kInvoiceStatusApproved || quoteInvoiceId > 0;
 

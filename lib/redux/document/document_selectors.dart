@@ -3,6 +3,24 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+var memoizedInvoiceDocumentMap = memo2(
+    (EntityType entityType, BuiltMap<int, DocumentEntity> documentMap) =>
+        entityDocumentMap(entityType, documentMap));
+
+Map<int, bool> entityDocumentMap(
+    EntityType entityType, BuiltMap<int, DocumentEntity> documentMap) {
+  final Map<int, bool> map = {};
+  documentMap.forEach((documentId, document) {
+    if (entityType == EntityType.invoice) {
+      map[document.invoiceId] = true;
+    } else if (entityType == EntityType.expense) {
+      map[document.expenseId] = true;
+    }
+  });
+
+  return map;
+}
+
 var memoizedDropdownDocumentList = memo3(
     (BuiltMap<int, DocumentEntity> documentMap, BuiltList<int> documentList,
             int clientId) =>

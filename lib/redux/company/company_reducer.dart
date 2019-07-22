@@ -7,21 +7,14 @@ import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-
-// STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+// STARTER: import - do not remove comment
 
 CompanyState companyReducer(CompanyState state, dynamic action) {
   if (action is RefreshData && action.loadCompanies) {

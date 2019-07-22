@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -29,6 +30,9 @@ class ExpenseList extends StatelessWidget {
     } else if (listState.filterEntityType == EntityType.client) {
       filteredEntity = state.clientState.map[listState.filterEntityId];
     }
+
+    final documentMap = memoizedInvoiceDocumentMap(
+        EntityType.expense, viewModel.state.documentState.map);
 
     if (filteredEntity != null) {
       widgets.add(Material(
@@ -101,6 +105,7 @@ class ExpenseList extends StatelessWidget {
                         return ExpenseListItem(
                           user: viewModel.user,
                           filter: viewModel.filter,
+                          hasDocuments: documentMap[expense.id] == true,
                           expense: expense,
                           client: client,
                           vendor: vendor,

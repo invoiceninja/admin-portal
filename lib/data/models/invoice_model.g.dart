@@ -1108,8 +1108,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final int designId;
   @override
-  final bool hasDocuments;
-  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -1169,7 +1167,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.invoiceItems,
       this.invitations,
       this.designId,
-      this.hasDocuments,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -1359,7 +1356,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         invoiceItems == other.invoiceItems &&
         invitations == other.invitations &&
         designId == other.designId &&
-        hasDocuments == other.hasDocuments &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1388,20 +1384,20 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), isQuote.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), invoiceTypeId.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode),
-                                                                                customValue2.hashCode),
-                                                                            customTaxes1.hashCode),
-                                                                        customTaxes2.hashCode),
-                                                                    hasExpenses.hashCode),
-                                                                quoteInvoiceId.hashCode),
-                                                            customTextValue1.hashCode),
-                                                        customTextValue2.hashCode),
-                                                    isPublic.hashCode),
-                                                filename.hashCode),
-                                            invoiceItems.hashCode),
-                                        invitations.hashCode),
-                                    designId.hashCode),
-                                hasDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), isQuote.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), invoiceTypeId.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode),
+                                                                                customValue1.hashCode),
+                                                                            customValue2.hashCode),
+                                                                        customTaxes1.hashCode),
+                                                                    customTaxes2.hashCode),
+                                                                hasExpenses.hashCode),
+                                                            quoteInvoiceId.hashCode),
+                                                        customTextValue1.hashCode),
+                                                    customTextValue2.hashCode),
+                                                isPublic.hashCode),
+                                            filename.hashCode),
+                                        invoiceItems.hashCode),
+                                    invitations.hashCode),
+                                designId.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -1456,7 +1452,6 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('invoiceItems', invoiceItems)
           ..add('invitations', invitations)
           ..add('designId', designId)
-          ..add('hasDocuments', hasDocuments)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1656,10 +1651,6 @@ class InvoiceEntityBuilder
   int get designId => _$this._designId;
   set designId(int designId) => _$this._designId = designId;
 
-  bool _hasDocuments;
-  bool get hasDocuments => _$this._hasDocuments;
-  set hasDocuments(bool hasDocuments) => _$this._hasDocuments = hasDocuments;
-
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1731,7 +1722,6 @@ class InvoiceEntityBuilder
       _invoiceItems = _$v.invoiceItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
       _designId = _$v.designId;
-      _hasDocuments = _$v.hasDocuments;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1805,7 +1795,6 @@ class InvoiceEntityBuilder
               invoiceItems: invoiceItems.build(),
               invitations: invitations.build(),
               designId: designId,
-              hasDocuments: hasDocuments,
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,

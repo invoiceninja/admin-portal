@@ -2,6 +2,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
@@ -258,6 +259,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         return expense.matchesFilter(_filter);
       }).toList();
 
+      final documentMap = memoizedInvoiceDocumentMap(
+          EntityType.expense, state.documentState.map);
+
       return ListView.builder(
         shrinkWrap: true,
         itemCount: matches.length,
@@ -269,6 +273,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           return ExpenseListItem(
             onCheckboxChanged: (checked) => _toggleEntity(expense),
             isChecked: _selected.contains(expense),
+            hasDocuments: documentMap[expense.id] == true,
             expense: expense,
             vendor: vendor,
             client: client,

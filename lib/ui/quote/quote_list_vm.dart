@@ -36,6 +36,7 @@ class QuoteListBuilder extends StatelessWidget {
 
 class QuoteListVM extends EntityListVM {
   QuoteListVM({
+    AppState state,
     UserEntity user,
     ListUIState listState,
     List<int> invoiceList,
@@ -50,6 +51,7 @@ class QuoteListVM extends EntityListVM {
     Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
   }) : super(
+          state: state,
           user: user,
           listState: listState,
           invoiceList: invoiceList,
