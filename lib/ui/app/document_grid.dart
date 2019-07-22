@@ -16,11 +16,13 @@ class DocumentGrid extends StatelessWidget {
     @required this.documents,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
+    @required this.onViewExpense,
   });
 
   final List<int> documents;
   final Function(String) onUploadDocument;
   final Function(DocumentEntity) onDeleteDocument;
+  final Function(DocumentEntity) onViewExpense;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +86,9 @@ class DocumentGrid extends StatelessWidget {
               .map((documentId) => DocumentTile(
                     document: state.documentState.map[documentId],
                     onDeleteDocument: onDeleteDocument,
+                    onViewExpense: onViewExpense,
+                    isFromExpense: onViewExpense != null &&
+                        state.documentState.map[documentId].isExpenseDocument,
                   ))
               .toList(),
         ),
@@ -96,10 +101,14 @@ class DocumentTile extends StatelessWidget {
   const DocumentTile({
     @required this.document,
     @required this.onDeleteDocument,
+    @required this.onViewExpense,
+    @required this.isFromExpense,
   });
 
   final DocumentEntity document;
   final Function(DocumentEntity) onDeleteDocument;
+  final Function(DocumentEntity) onViewExpense;
+  final bool isFromExpense;
 
   void showDocumentModal(BuildContext context) {
     showDialog<Column>(
@@ -119,35 +128,46 @@ class DocumentTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      ElevatedButton(
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        label: localization.delete,
-                        onPressed: () {
-                          showDialog<AlertDialog>(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              semanticLabel: localization.areYouSure,
-                              title: Text(localization.areYouSure),
-                              actions: <Widget>[
-                                FlatButton(
-                                    child:
-                                        Text(localization.cancel.toUpperCase()),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    }),
-                                FlatButton(
-                                    child: Text(localization.ok.toUpperCase()),
-                                    onPressed: () {
-                                      onDeleteDocument(document);
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                    })
-                              ],
+                      isFromExpense
+                          ? ElevatedButton(
+                              icon: getEntityIcon(EntityType.expense),
+                              label: localization.expense,
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                onViewExpense(document);
+                              },
+                            )
+                          : ElevatedButton(
+                              color: Colors.red,
+                              icon: Icons.delete,
+                              label: localization.delete,
+                              onPressed: () {
+                                showDialog<AlertDialog>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    semanticLabel: localization.areYouSure,
+                                    title: Text(localization.areYouSure),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                          child: Text(localization.cancel
+                                              .toUpperCase()),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          }),
+                                      FlatButton(
+                                          child: Text(
+                                              localization.ok.toUpperCase()),
+                                          onPressed: () {
+                                            onDeleteDocument(document);
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          })
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                       SizedBox(
                         width: 16,
                       ),

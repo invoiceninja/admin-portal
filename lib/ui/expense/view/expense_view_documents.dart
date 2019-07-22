@@ -25,6 +25,7 @@ class ExpenseViewDocuments extends StatelessWidget {
       onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
       onDeleteDocument: (document) =>
           viewModel.onDeleteDocument(context, document),
+      onViewExpense: null,
     );
   }
 }

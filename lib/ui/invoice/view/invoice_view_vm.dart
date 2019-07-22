@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -56,6 +57,7 @@ class EntityViewVM {
     @required this.onPaymentsPressed,
     @required this.onPaymentPressed,
     @required this.onRefreshed,
+    @required this.onViewExpense,
   });
 
   final AppState state;
@@ -73,6 +75,7 @@ class EntityViewVM {
   final Function onBackPressed;
   final Function(BuildContext, String) onUploadDocument;
   final Function(BuildContext, DocumentEntity) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity) onViewExpense;
 
   @override
   bool operator ==(dynamic other) =>
@@ -108,23 +111,24 @@ class InvoiceViewVM extends EntityViewVM {
     Function onBackPressed,
     Function(BuildContext, String) onUploadDocument,
     Function(BuildContext, DocumentEntity) onDeleteDocument,
+    Function(BuildContext, DocumentEntity) onViewExpense,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          client: client,
-          isSaving: isSaving,
-          isDirty: isDirty,
-          onActionSelected: onEntityAction,
-          onEditPressed: onEditPressed,
-          onClientPressed: onClientPressed,
-          onPaymentPressed: onPaymentPressed,
-          onPaymentsPressed: onPaymentsPressed,
-          onRefreshed: onRefreshed,
-          onBackPressed: onBackPressed,
-          onUploadDocument: onUploadDocument,
-          onDeleteDocument: onDeleteDocument,
-        );
+            state: state,
+            company: company,
+            invoice: invoice,
+            client: client,
+            isSaving: isSaving,
+            isDirty: isDirty,
+            onActionSelected: onEntityAction,
+            onEditPressed: onEditPressed,
+            onClientPressed: onClientPressed,
+            onPaymentPressed: onPaymentPressed,
+            onPaymentsPressed: onPaymentsPressed,
+            onRefreshed: onRefreshed,
+            onBackPressed: onBackPressed,
+            onUploadDocument: onUploadDocument,
+            onDeleteDocument: onDeleteDocument,
+            onViewExpense: onViewExpense);
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -227,6 +231,10 @@ class InvoiceViewVM extends EntityViewVM {
             snackBarCompleter(
                 context, AppLocalization.of(context).deletedDocument),
             document.id));
+      },
+      onViewExpense: (BuildContext context, DocumentEntity document) {
+        store.dispatch(
+            ViewExpense(expenseId: document.expenseId, context: context));
       },
     );
   }

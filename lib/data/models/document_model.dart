@@ -111,6 +111,10 @@ abstract class DocumentEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  bool get isInvoiceDocument => invoiceId != null && invoiceId > 0;
+
+  bool get isExpenseDocument => expenseId != null && expenseId > 0;
+
   String get prettySize => size > 1000000
       ? '${round(size / 1000000, 1).toInt()} MB'
       : '${round(size / 1000, 0).toInt()} KB';

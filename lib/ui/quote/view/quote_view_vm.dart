@@ -56,6 +56,7 @@ class QuoteViewVM extends EntityViewVM {
     Function onBackPressed,
     Function(BuildContext, String) onUploadDocument,
     Function(BuildContext, DocumentEntity) onDeleteDocument,
+    Function(BuildContext, DocumentEntity) onViewExpense,
   }) : super(
           state: state,
           company: company,
@@ -72,6 +73,7 @@ class QuoteViewVM extends EntityViewVM {
           onBackPressed: onBackPressed,
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
+          onViewExpense: onViewExpense,
         );
 
   factory QuoteViewVM.fromStore(Store<AppState> store) {

@@ -25,6 +25,7 @@ class InvoiceViewDocuments extends StatelessWidget {
       onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
       onDeleteDocument: (document) =>
           viewModel.onDeleteDocument(context, document),
+      onViewExpense: (document) => viewModel.onViewExpense(context, document),
     );
   }
 }
