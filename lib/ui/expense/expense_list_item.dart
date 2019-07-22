@@ -70,7 +70,10 @@ class ExpenseListItem extends StatelessWidget {
       }
     }
     if (hasDocuments) {
-      subtitle += '  📎';
+      if (subtitle.isNotEmpty) {
+        subtitle += '  ';
+      }
+      subtitle += '📎';
     }
 
     return DismissibleEntity(

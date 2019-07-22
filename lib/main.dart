@@ -227,6 +227,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
               .map((String locale) => AppLocalization.createLocale(locale))
               .toList(),
           //debugShowCheckedModeBanner: false,
+          //showPerformanceOverlay: true,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
