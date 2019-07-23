@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -196,10 +197,7 @@ class EntityListTile extends StatelessWidget {
             onLongPress: onLongPress,
           ),
         ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: bottomPadding,
-        ),
+        ListDivider(),
       ],
     );
   }
