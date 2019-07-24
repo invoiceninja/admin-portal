@@ -18,10 +18,11 @@ class EditIconButton extends StatelessWidget {
       return Container();
     }
 
-    return IconButton(
+    return FlatButton(
+      child: Text(
+        localization.edit,
+      ),
       onPressed: onPressed,
-      tooltip: localization.edit,
-      icon: const Icon(Icons.edit),
     );
   }
 }

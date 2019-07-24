@@ -36,17 +36,18 @@ class ActionIconButton extends StatelessWidget {
 
     final state = StoreProvider.of<AppState>(context).state;
 
-    return IconButton(
-      onPressed: onPressed,
-      tooltip: tooltip,
-      icon: Icon(
-        icon,
-        color: isDirty
-            ? (state.uiState.enableDarkMode
+    return FlatButton(
+      child: Text(
+        tooltip,
+        style: TextStyle(
+            color: isDirty
+                ? (state.uiState.enableDarkMode
                 ? Theme.of(context).accentColor
                 : Colors.yellowAccent)
-            : Colors.white,
+                : Colors.white
+        ),
       ),
+      onPressed: onPressed,
     );
   }
 }
