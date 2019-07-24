@@ -395,7 +395,6 @@ abstract class ActivityEntity
     UserEntity user,
     ClientEntity client,
     InvoiceEntity invoice,
-    //ContactEntity contact,
     PaymentEntity payment,
     CreditEntity credit,
     InvoiceEntity quote,
@@ -408,12 +407,18 @@ abstract class ActivityEntity
       activity = activity.replaceFirst(':contact', ':user');
     }
 
+    ContactEntity contact;
+    if (contactId != null && contactId > 0) {
+      contact = client.contacts
+          .firstWhere((contact) => contact.id == contactId, orElse: () => null);
+    }
+
     activity = activity.replaceFirst(':user', user?.fullName ?? '');
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
     activity = activity.replaceFirst(':quote', quote?.invoiceNumber ?? '');
-    activity = activity.replaceFirst(
-        ':contact', client?.displayName ?? user?.fullName ?? '');
+    activity = activity.replaceFirst(':contact',
+        contact?.fullName ?? client?.displayName ?? user?.fullName ?? '');
     activity =
         activity.replaceFirst(':payment', payment?.transactionReference ?? '');
     activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');
