@@ -27,7 +27,6 @@ class InvoiceViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceViewVM>(
-      distinct: true,
       converter: (Store<AppState> store) {
         return InvoiceViewVM.fromStore(store);
       },
@@ -76,22 +75,6 @@ class EntityViewVM {
   final Function(BuildContext, String) onUploadDocument;
   final Function(BuildContext, DocumentEntity) onDeleteDocument;
   final Function(BuildContext, DocumentEntity) onViewExpense;
-
-  @override
-  bool operator ==(dynamic other) =>
-      client == other.client &&
-      company == other.company &&
-      invoice == other.invoice &&
-      isSaving == other.isSaving &&
-      isDirty == other.isDirty;
-
-  @override
-  int get hashCode =>
-      client.hashCode ^
-      company.hashCode ^
-      invoice.hashCode ^
-      isSaving.hashCode ^
-      isDirty.hashCode;
 }
 
 class InvoiceViewVM extends EntityViewVM {
