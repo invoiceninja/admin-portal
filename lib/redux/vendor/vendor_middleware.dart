@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -188,6 +189,12 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
       store.dispatch(LoadVendorFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
+      }
+
+      // Support selfhost users with older versions
+      // TODO remove this in v2
+      if (state.dashboardState.isStale) {
+        store.dispatch(LoadDashboard());
       }
     });
 

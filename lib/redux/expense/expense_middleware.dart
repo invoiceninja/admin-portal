@@ -233,6 +233,12 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
       if (action.completer != null) {
         action.completer.completeError(error);
       }
+
+      // Support selfhost users with older versions
+      // TODO remove this in v2
+      if (state.dashboardState.isStale) {
+        store.dispatch(LoadDashboard());
+      }
     });
 
     next(action);

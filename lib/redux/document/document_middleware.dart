@@ -223,7 +223,7 @@ Middleware<AppState> _loadDocuments(DocumentRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.productState.isStale) {
+      if (state.dashboardState.isStale) {
         store.dispatch(LoadDashboard());
       }
     }).catchError((Object error) {
