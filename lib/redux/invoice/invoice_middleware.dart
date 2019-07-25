@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
@@ -224,9 +225,11 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       }
       if (invoice.hasTasks) {
         store.dispatch(LoadTasks(force: true));
-      }
-      if (invoice.hasExpenses) {
+      } else if (invoice.hasExpenses) {
         store.dispatch(LoadExpenses(force: true));
+      } else {
+        // TODO add check if auto-update is enabled
+        store.dispatch(LoadProducts(force: true));
       }
       action.completer.complete(invoice);
     }).catchError((Object error) {

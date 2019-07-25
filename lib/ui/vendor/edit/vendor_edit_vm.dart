@@ -69,30 +69,28 @@ class VendorEditVM {
       onSavePressed: (BuildContext context) {
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();
         store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
-        return completer.future.then((_) {
-          return completer.future.then((savedVendor) {
-            if (state.uiState.currentRoute.contains(VendorScreen.route)) {
-              store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
-            }
-            if (vendor.isNew) {
-              if ([
-                ExpenseEditScreen.route,
-              ].contains(store.state.uiState.currentRoute)) {
-                Navigator.of(context).pop(savedVendor);
-              } else {
-                Navigator.of(context)
-                    .pushReplacementNamed(VendorViewScreen.route);
-              }
-            } else {
+        return completer.future.then((savedVendor) {
+          if (state.uiState.currentRoute.contains(VendorScreen.route)) {
+            store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
+          }
+          if (vendor.isNew) {
+            if ([
+              ExpenseEditScreen.route,
+            ].contains(store.state.uiState.currentRoute)) {
               Navigator.of(context).pop(savedVendor);
+            } else {
+              Navigator.of(context)
+                  .pushReplacementNamed(VendorViewScreen.route);
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          } else {
+            Navigator.of(context).pop(savedVendor);
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
     );
