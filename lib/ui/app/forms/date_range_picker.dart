@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -155,6 +156,34 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             ElevatedButton(
                               label: localization.done,
                               onPressed: () {
+                                // TODO replace with form validation 
+                                if (_settings.dateRange == DateRange.custom &&
+                                    _settings.startDate
+                                            .compareTo(_settings.endDate) ==
+                                        1) {
+                                  showDialog<ErrorDialog>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ErrorDialog(
+                                            'Date range is not valid');
+                                      });
+                                  return;
+                                }
+
+                                if (_settings.compareDateRange ==
+                                        DateRange.custom &&
+                                    _settings.compareStartDate.compareTo(
+                                            _settings.compareEndDate) ==
+                                        1) {
+                                  showDialog<ErrorDialog>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ErrorDialog(
+                                            'Comparison date range is not valid');
+                                      });
+                                  return;
+                                }
+
                                 widget.onSettingsChanged(_settings);
                                 Navigator.of(context).pop();
                               },
