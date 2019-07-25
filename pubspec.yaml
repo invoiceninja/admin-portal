@@ -24,7 +24,7 @@ dependencies:
   share: ^0.5.3
   intl: ^0.15.7
   flutter_slidable: ^0.4.6
-  charts_flutter: ^0.4.0
+  charts_flutter: ^0.6.0
   google_sign_in: ^4.0.4
   firebase_auth: ^0.11.1+11
   local_auth: ^0.3.0

@@ -70,7 +70,7 @@ class _DashboardChartState extends State<DashboardChart> {
       selectionModels: [
         charts.SelectionModelConfig(
           type: charts.SelectionModelType.info,
-          listener: _onSelectionChanged,
+          changedListener: _onSelectionChanged,
         )
       ],
       behaviors: [

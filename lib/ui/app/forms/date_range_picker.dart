@@ -156,7 +156,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                             ElevatedButton(
                               label: localization.done,
                               onPressed: () {
-                                // TODO replace with form validation 
+                                // TODO replace with form validation
                                 if (_settings.dateRange == DateRange.custom &&
                                     _settings.startDate
                                             .compareTo(_settings.endDate) ==
