@@ -394,38 +394,40 @@ abstract class InvoiceEntity extends Object
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this) && !isDeleted) {
-      actions.add(EntityAction.edit);
-    }
-
-    if (user.canCreate(EntityType.invoice)) {
-      if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {
-        actions.add(EntityAction.convert);
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
       }
-    }
 
-    if (user.canEditEntity(this) && !isPublic) {
-      actions.add(EntityAction.markSent);
-    }
+      if (user.canCreate(EntityType.invoice)) {
+        if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {
+          actions.add(EntityAction.convert);
+        }
+      }
 
-    if (user.canEditEntity(this) && client.hasEmailAddress) {
-      actions.add(EntityAction.sendEmail);
-    }
+      if (user.canEditEntity(this) && !isPublic) {
+        actions.add(EntityAction.markSent);
+      }
 
-    if (user.canEditEntity(this) &&
-        user.canCreate(EntityType.payment) &&
-        isUnpaid &&
-        !isQuote) {
-      actions.add(EntityAction.enterPayment);
-    }
+      if (user.canEditEntity(this) && client.hasEmailAddress) {
+        actions.add(EntityAction.sendEmail);
+      }
 
-    if (isQuote && quoteInvoiceId > 0) {
-      actions.add(EntityAction.viewInvoice);
-    }
+      if (user.canEditEntity(this) &&
+          user.canCreate(EntityType.payment) &&
+          isUnpaid &&
+          !isQuote) {
+        actions.add(EntityAction.enterPayment);
+      }
 
-    if (invitations.isNotEmpty) {
-      actions.add(EntityAction.pdf);
-      actions.add(EntityAction.clientPortal);
+      if (isQuote && quoteInvoiceId > 0) {
+        actions.add(EntityAction.viewInvoice);
+      }
+
+      if (invitations.isNotEmpty) {
+        actions.add(EntityAction.pdf);
+        actions.add(EntityAction.clientPortal);
+      }
     }
 
     if (actions.isNotEmpty) {

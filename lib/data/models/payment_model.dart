@@ -180,12 +180,14 @@ abstract class PaymentEntity extends Object
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this) && !isDeleted) {
-      actions.add(EntityAction.edit);
-    }
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
 
-    if (user.canEditEntity(this) && client.hasEmailAddress) {
-      actions.add(EntityAction.sendEmail);
+      if (user.canEditEntity(this) && client.hasEmailAddress) {
+        actions.add(EntityAction.sendEmail);
+      }
     }
 
     if (actions.isNotEmpty) {

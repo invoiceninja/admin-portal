@@ -362,20 +362,22 @@ abstract class ClientEntity extends Object
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this) && !isDeleted) {
-      actions.add(EntityAction.edit);
-    }
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
 
-    if (user.canCreate(EntityType.client) && isActive) {
-      actions.add(EntityAction.newInvoice);
-    }
+      if (user.canCreate(EntityType.client)) {
+        actions.add(EntityAction.newInvoice);
+      }
 
-    if (user.canCreate(EntityType.expense) && isActive) {
-      actions.add(EntityAction.newExpense);
-    }
+      if (user.canCreate(EntityType.expense)) {
+        actions.add(EntityAction.newExpense);
+      }
 
-    if (user.canCreate(EntityType.payment) && isActive) {
-      actions.add(EntityAction.enterPayment);
+      if (user.canCreate(EntityType.payment)) {
+        actions.add(EntityAction.enterPayment);
+      }
     }
 
     if (actions.isNotEmpty) {

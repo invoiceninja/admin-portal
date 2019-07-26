@@ -203,16 +203,18 @@ abstract class DocumentEntity extends Object
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this) && !isDeleted) {
-      actions.add(EntityAction.edit);
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
+
+      if (user.canCreate(EntityType.invoice)) {
+        actions.add(EntityAction.newInvoice);
+      }
     }
 
     if (user.canCreate(EntityType.document)) {
       actions.add(EntityAction.clone);
-    }
-
-    if (user.canCreate(EntityType.invoice)) {
-      actions.add(EntityAction.newInvoice);
     }
 
     if (actions.isNotEmpty) {

@@ -205,14 +205,18 @@ abstract class ExpenseEntity extends Object
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this) && !isDeleted) {
-      actions.add(EntityAction.edit);
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
+
+      if (user.canCreate(EntityType.invoice)) {
+        actions.add(EntityAction.newInvoice);
+      }
     }
 
     if (isInvoiced) {
       actions.add(EntityAction.viewInvoice);
-    } else if (user.canCreate(EntityType.invoice)) {
-      actions.add(EntityAction.newInvoice);
     }
 
     if (user.canCreate(EntityType.task)) {

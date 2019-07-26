@@ -359,26 +359,30 @@ abstract class TaskEntity extends Object
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this) && !isDeleted) {
-      actions.add(EntityAction.edit);
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this) && !isDeleted) {
+        actions.add(EntityAction.edit);
+      }
+
+      if (!isInvoiced) {
+        if (isRunning) {
+          actions.add(EntityAction.stop);
+        } else {
+          if (duration > 0) {
+            actions.add(EntityAction.resume);
+          } else {
+            actions.add(EntityAction.start);
+          }
+
+          if (user.canCreate(EntityType.invoice)) {
+            actions.add(EntityAction.newInvoice);
+          }
+        }
+      }
     }
 
     if (isInvoiced) {
       actions.add(EntityAction.viewInvoice);
-    } else {
-      if (isRunning) {
-        actions.add(EntityAction.stop);
-      } else {
-        if (duration > 0) {
-          actions.add(EntityAction.resume);
-        } else {
-          actions.add(EntityAction.start);
-        }
-
-        if (user.canCreate(EntityType.invoice)) {
-          actions.add(EntityAction.newInvoice);
-        }
-      }
     }
 
     if (user.canCreate(EntityType.task)) {
