@@ -154,6 +154,7 @@ const List<String> kLanguages = [
   'it',
   'ja',
   'lt',
+  'mk_MK',
   'nb_NO',
   'nl',
   'pl',
