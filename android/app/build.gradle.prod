@@ -19,7 +19,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     lintOptions {
         disable 'InvalidPackage'
@@ -28,7 +28,7 @@ android {
     defaultConfig {
         applicationId "com.invoiceninja.flutter"
         minSdkVersion 18
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 44
         versionName "0.1.44"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
