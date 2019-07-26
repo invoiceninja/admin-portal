@@ -90,7 +90,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       if (message.contains('No host specified in URI')) {
         message = 'Please check the URL is correct';
       }
-      message += ', you may need to add /public to the URL';
+      message += ', you may need to add /public';
       store.dispatch(UserLoginFailure(message));
     });
 
