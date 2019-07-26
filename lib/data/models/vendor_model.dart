@@ -184,6 +184,10 @@ abstract class VendorEntity extends Object
     switch (sortField) {
       case VendorFields.name:
         response = vendorA.name.compareTo(vendorB.name);
+        break;
+      case VendorFields.updatedAt:
+        response = vendorA.updatedAt.compareTo(vendorB.updatedAt);
+        break;
     }
 
     return response;
@@ -197,7 +201,23 @@ abstract class VendorEntity extends Object
 
     filter = filter.toLowerCase();
 
-    return name.toLowerCase().contains(filter);
+    if (name.toLowerCase().contains(filter)) {
+      return true;
+    }
+    if (vatNumber.toLowerCase().contains(filter)) {
+      return true;
+    }
+    if (idNumber.toLowerCase().contains(filter)) {
+      return true;
+    }
+    if (workPhone.toLowerCase().contains(filter)) {
+      return true;
+    }
+    if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
+      return true;
+    }
+
+    return false;
   }
 
   @override
@@ -207,6 +227,22 @@ abstract class VendorEntity extends Object
     }
 
     filter = filter.toLowerCase();
+    if (vatNumber.toLowerCase().contains(filter)) {
+      return vatNumber;
+    }
+    if (idNumber.toLowerCase().contains(filter)) {
+      return idNumber;
+    }
+    if (workPhone.toLowerCase().contains(filter)) {
+      return workPhone;
+    }
+    final contact = contacts.firstWhere(
+            (contact) => contact.matchesFilter(filter),
+        orElse: () => null);
+    if (contact != null) {
+      final match = contact.matchesFilterValue(filter);
+      return match == name ? null : match;
+    }
 
     return null;
   }
@@ -281,6 +317,15 @@ abstract class VendorContactEntity extends Object
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    }
+
+    filter = filter.toLowerCase();
+    if (fullName.toLowerCase().contains(filter)) {
+      return fullName;
+    } else if (email.toLowerCase().contains(filter)) {
+      return email;
+    } else if (phone.toLowerCase().contains(filter)) {
+      return phone;
     }
 
     return null;

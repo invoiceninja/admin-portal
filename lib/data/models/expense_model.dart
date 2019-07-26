@@ -228,12 +228,21 @@ abstract class ExpenseEntity extends Object
 
   int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {
     int response = 0;
-    final ExpenseEntity creditA = sortAscending ? this : expense;
-    final ExpenseEntity creditB = sortAscending ? expense : this;
+    final ExpenseEntity expenseA = sortAscending ? this : expense;
+    final ExpenseEntity expenseB = sortAscending ? expense : this;
 
     switch (sortField) {
       case ExpenseFields.amount:
-        response = creditA.amount.compareTo(creditB.amount);
+        response = expenseA.amount.compareTo(expenseB.amount);
+        break;
+      case ExpenseFields.publicNotes:
+        response = expenseA.publicNotes
+            .toLowerCase()
+            .compareTo(expenseB.publicNotes.toLowerCase());
+        break;
+      case ExpenseFields.updatedAt:
+        response = expenseA.updatedAt.compareTo(expenseB.updatedAt);
+        break;
     }
 
     return response;
@@ -249,7 +258,13 @@ abstract class ExpenseEntity extends Object
 
     if (publicNotes.toLowerCase().contains(filter)) {
       return true;
-    } else if (privateNotes.toLowerCase().contains(filter)) {
+    }
+
+    if (privateNotes.toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    if (transactionReference.toLowerCase().contains(transactionReference)) {
       return true;
     }
 
@@ -263,8 +278,17 @@ abstract class ExpenseEntity extends Object
     }
 
     filter = filter.toLowerCase();
+
     if (privateNotes.toLowerCase().contains(filter)) {
       return privateNotes;
+    }
+
+    if (publicNotes.toLowerCase().contains(filter)) {
+      return publicNotes;
+    } else if (publicNotes.toLowerCase().contains(filter)) {
+      return transactionReference;
+    } else if (transactionReference.toLowerCase().contains(filter)) {
+      return transactionReference;
     }
 
     return null;
