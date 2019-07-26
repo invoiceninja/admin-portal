@@ -56,7 +56,7 @@ packages:
       name: build_daemon
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "2.0.0"
   build_resolvers:
     dependency: transitive
     description:
@@ -70,7 +70,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.1"
+    version: "1.6.4"
   build_runner_core:
     dependency: transitive
     description:
@@ -189,14 +189,14 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.1+11"
+    version: "0.11.1+12"
   firebase_core:
     dependency: transitive
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+6"
+    version: "0.4.0+8"
   fixnum:
     dependency: transitive
     description:
@@ -424,7 +424,7 @@ packages:
       name: node_preamble
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.4"
+    version: "1.4.5"
   package_config:
     dependency: transitive
     description:
@@ -576,7 +576,7 @@ packages:
       name: source_gen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.4+2"
+    version: "0.9.4+3"
   source_map_stack_trace:
     dependency: transitive
     description:
