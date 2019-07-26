@@ -312,21 +312,23 @@ abstract class ClientEntity extends Object
       return true;
     }
     filter = filter.toLowerCase();
+
     if (displayName.toLowerCase().contains(filter)) {
       return true;
-    }
-    if (vatNumber.toLowerCase().contains(filter)) {
+    } else if (vatNumber.toLowerCase().contains(filter)) {
+      return true;
+    } else if (idNumber.toLowerCase().contains(filter)) {
+      return true;
+    } else if (workPhone.toLowerCase().contains(filter)) {
+      return true;
+    } else if (address1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (city.toLowerCase().contains(filter)) {
+      return true;
+    } else if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
       return true;
     }
-    if (idNumber.toLowerCase().contains(filter)) {
-      return true;
-    }
-    if (workPhone.toLowerCase().contains(filter)) {
-      return true;
-    }
-    if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
-      return true;
-    }
+
     return false;
   }
 
@@ -337,19 +339,21 @@ abstract class ClientEntity extends Object
     }
 
     filter = filter.toLowerCase();
+    final contact = contacts.firstWhere(
+            (contact) => contact.matchesFilter(filter),
+        orElse: () => null);
+
     if (vatNumber.toLowerCase().contains(filter)) {
       return vatNumber;
-    }
-    if (idNumber.toLowerCase().contains(filter)) {
+    } else if (idNumber.toLowerCase().contains(filter)) {
       return idNumber;
-    }
-    if (workPhone.toLowerCase().contains(filter)) {
+    } else if (workPhone.toLowerCase().contains(filter)) {
       return workPhone;
-    }
-    final contact = contacts.firstWhere(
-        (contact) => contact.matchesFilter(filter),
-        orElse: () => null);
-    if (contact != null) {
+    } else if (address1.toLowerCase().contains(filter)) {
+      return address1;
+    } else if (city.toLowerCase().contains(filter)) {
+      return city;
+    } else if (contact != null) {
       final match = contact.matchesFilterValue(filter);
       return match == displayName ? null : match;
     }

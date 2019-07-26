@@ -205,17 +205,17 @@ abstract class VendorEntity extends Object
 
     if (name.toLowerCase().contains(filter)) {
       return true;
-    }
-    if (vatNumber.toLowerCase().contains(filter)) {
+    } else if (vatNumber.toLowerCase().contains(filter)) {
       return true;
-    }
-    if (idNumber.toLowerCase().contains(filter)) {
+    } else if (idNumber.toLowerCase().contains(filter)) {
       return true;
-    }
-    if (workPhone.toLowerCase().contains(filter)) {
+    } else if (workPhone.toLowerCase().contains(filter)) {
       return true;
-    }
-    if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
+    } else if (address1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (city.toLowerCase().contains(filter)) {
+      return true;
+    } else if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
       return true;
     }
 
@@ -229,19 +229,21 @@ abstract class VendorEntity extends Object
     }
 
     filter = filter.toLowerCase();
-    if (vatNumber.toLowerCase().contains(filter)) {
-      return vatNumber;
-    }
-    if (idNumber.toLowerCase().contains(filter)) {
-      return idNumber;
-    }
-    if (workPhone.toLowerCase().contains(filter)) {
-      return workPhone;
-    }
     final contact = contacts.firstWhere(
             (contact) => contact.matchesFilter(filter),
         orElse: () => null);
-    if (contact != null) {
+
+    if (vatNumber.toLowerCase().contains(filter)) {
+      return vatNumber;
+    } else if (idNumber.toLowerCase().contains(filter)) {
+      return idNumber;
+    } else if (workPhone.toLowerCase().contains(filter)) {
+      return workPhone;
+    } else if (address1.toLowerCase().contains(filter)) {
+      return address1;
+    } else if (city.toLowerCase().contains(filter)) {
+      return city;
+    } else if (contact != null) {
       final match = contact.matchesFilterValue(filter);
       return match == name ? null : match;
     }
