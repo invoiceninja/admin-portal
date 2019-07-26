@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '0.1.41';
+const String kAppVersion = '0.1.44';
 const String kAppUrl = 'https://app.invoiceninja.com';
 
 const String kAppleStoreUrl =
@@ -166,4 +166,5 @@ const List<String> kLanguages = [
   'sv',
   'th',
   'tr_TR',
+  'bg',
 ];
