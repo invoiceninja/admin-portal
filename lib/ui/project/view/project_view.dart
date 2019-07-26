@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
@@ -31,7 +32,6 @@ class ProjectView extends StatefulWidget {
 }
 
 class _ProjectViewState extends State<ProjectView> {
-
   Timer _timer;
 
   @override
@@ -71,59 +71,6 @@ class _ProjectViewState extends State<ProjectView> {
       fields[label2] = project.customValue2;
     }
 
-    List<Widget> _buildView() {
-      final widgets = <Widget>[
-        TwoValueHeader(
-          label1: localization.total,
-          value1: formatDuration(
-              taskDurationForProject(project, viewModel.state.taskState.map)),
-          label2: localization.budgeted,
-          value2: formatDuration(Duration(hours: project.budgetedHours.toInt()),
-              showSeconds: false),
-        ),
-        Material(
-          color: Theme.of(context).canvasColor,
-          child: ListTile(
-            title: Text(client.displayName),
-            leading: Icon(FontAwesomeIcons.users, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () => viewModel.onClientPressed(context),
-            onLongPress: () => viewModel.onClientPressed(context, true),
-          ),
-        ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
-        EntityListTile(
-          icon: getEntityIcon(EntityType.task),
-          title: localization.tasks,
-          onTap: () => viewModel.onTasksPressed(context),
-          subtitle: memoizedTaskStatsForProject(
-              client.id,
-              viewModel.state.taskState.map,
-              localization.active,
-              localization.archived),
-        ),
-      ];
-
-      if (project.privateNotes != null && project.privateNotes.isNotEmpty) {
-        widgets.addAll([
-          IconMessage(project.privateNotes),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
-        ]);
-      }
-
-      widgets.addAll([
-        FieldGrid(fields),
-      ]);
-
-      return widgets;
-    }
-
     return WillPopScope(
       onWillPop: () async {
         viewModel.onBackPressed();
@@ -135,6 +82,63 @@ class _ProjectViewState extends State<ProjectView> {
         ),
         body: Builder(
           builder: (BuildContext context) {
+            List<Widget> _buildView() {
+              final widgets = <Widget>[
+                TwoValueHeader(
+                  label1: localization.total,
+                  value1: formatDuration(taskDurationForProject(
+                      project, viewModel.state.taskState.map)),
+                  label2: localization.budgeted,
+                  value2: formatDuration(
+                      Duration(hours: project.budgetedHours.toInt()),
+                      showSeconds: false),
+                ),
+                Material(
+                  color: Theme.of(context).canvasColor,
+                  child: ListTile(
+                    title: EntityStateTitle(entity: client),
+                    leading: Icon(FontAwesomeIcons.users, size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onClientPressed(context),
+                    onLongPress: () => viewModel.onClientPressed(context, true),
+                  ),
+                ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+                EntityListTile(
+                  icon: getEntityIcon(EntityType.task),
+                  title: localization.tasks,
+                  onTap: () => viewModel.onTasksPressed(context),
+                  onLongPress: () =>
+                      viewModel.onTasksPressed(context, longPress: true),
+                  subtitle: memoizedTaskStatsForProject(
+                      project.id,
+                      viewModel.state.taskState.map,
+                      localization.active,
+                      localization.archived),
+                ),
+              ];
+
+              if (project.privateNotes != null &&
+                  project.privateNotes.isNotEmpty) {
+                widgets.addAll([
+                  IconMessage(project.privateNotes),
+                  Container(
+                    color: Theme.of(context).backgroundColor,
+                    height: 12.0,
+                  ),
+                ]);
+              }
+
+              widgets.addAll([
+                FieldGrid(fields),
+              ]);
+
+              return widgets;
+            }
+
             return RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
               child: Container(
@@ -176,7 +180,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
-      title: Text(project.name),
+      title: EntityStateTitle(entity: project),
       actions: project.isNew
           ? []
           : [
@@ -188,11 +192,11 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   : Container(),
               ActionMenuButton(
                 user: user,
-                entityActions: project.getEntityActions(
-                    client: viewModel.client, user: user),
+                entityActions:
+                    project.getActions(client: viewModel.client, user: user),
                 isSaving: viewModel.isSaving,
                 entity: project,
-                onSelected: viewModel.onActionSelected,
+                onSelected: viewModel.onEntityAction,
               )
             ],
     );

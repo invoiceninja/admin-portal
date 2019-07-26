@@ -320,14 +320,6 @@ List<ChartDataGroup> chartPayments(
   return data;
 }
 
-var memoizedChartTasks = memo6((CompanyEntity company,
-        DashboardUIState settings,
-        BuiltMap<int, TaskEntity> taskMap,
-        BuiltMap<int, InvoiceEntity> invoiceMap,
-        BuiltMap<int, ProjectEntity> projectMap,
-        BuiltMap<int, ClientEntity> clientMap) =>
-    chartTasks(company, settings, taskMap, invoiceMap, projectMap, clientMap));
-
 List<ChartDataGroup> chartTasks(
     CompanyEntity company,
     DashboardUIState settings,
@@ -436,3 +428,129 @@ List<ChartDataGroup> chartTasks(
 
   return data;
 }
+
+var memoizedChartTasks = memo6((CompanyEntity company,
+        DashboardUIState settings,
+        BuiltMap<int, TaskEntity> taskMap,
+        BuiltMap<int, InvoiceEntity> invoiceMap,
+        BuiltMap<int, ProjectEntity> projectMap,
+        BuiltMap<int, ClientEntity> clientMap) =>
+    chartTasks(company, settings, taskMap, invoiceMap, projectMap, clientMap));
+
+List<ChartDataGroup> chartExpenses(
+    CompanyEntity company,
+    DashboardUIState settings,
+    BuiltMap<int, InvoiceEntity> invoiceMap,
+    BuiltMap<int, ExpenseEntity> expenseMap) {
+  const STATUS_LOGGED = 'logged';
+  const STATUS_PENDING = 'pending';
+  const STATUS_INVOICED = 'invoiced';
+  const STATUS_PAID = 'paid';
+
+  final Map<String, int> counts = {
+    STATUS_LOGGED: 0,
+    STATUS_PENDING: 0,
+    STATUS_INVOICED: 0,
+    STATUS_PAID: 0,
+  };
+
+  final Map<String, Map<String, double>> totals = {
+    STATUS_LOGGED: {},
+    STATUS_PENDING: {},
+    STATUS_INVOICED: {},
+    STATUS_PAID: {},
+  };
+
+  expenseMap.forEach((int, expense) {
+    final currencyId = expense.expenseCurrencyId;
+    final date = expense.expenseDate;
+    final amount = expense.amountWithTax;
+
+    if (expense.isDeleted) {
+      // skip it
+    } else if (!expense.isBetween(
+        settings.startDate(company), settings.endDate(company))) {
+      // skip it
+    } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
+      // skip it
+    } else {
+      if (totals[STATUS_LOGGED][date] == null) {
+        totals[STATUS_LOGGED][date] = 0.0;
+        totals[STATUS_PENDING][date] = 0.0;
+        totals[STATUS_INVOICED][date] = 0.0;
+        totals[STATUS_PAID][date] = 0.0;
+      }
+
+      if (expense.isInvoiced) {
+        final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
+        if (invoice.isPaid) {
+          totals[STATUS_PAID][date] += amount;
+          counts[STATUS_PAID]++;
+        } else {
+          totals[STATUS_INVOICED][date] += amount;
+          counts[STATUS_INVOICED]++;
+        }
+      } else if (expense.isPending) {
+        totals[STATUS_PENDING][date] += amount;
+        counts[STATUS_PENDING]++;
+      } else {
+        totals[STATUS_LOGGED][date] += amount;
+        counts[STATUS_LOGGED]++;
+      }
+    }
+  });
+
+  final ChartDataGroup loggedData = ChartDataGroup(STATUS_LOGGED);
+  final ChartDataGroup pendingData = ChartDataGroup(STATUS_PENDING);
+  final ChartDataGroup invoicedData = ChartDataGroup(STATUS_INVOICED);
+  final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
+
+  var date = DateTime.parse(settings.startDate(company));
+  final endDate = DateTime.parse(settings.endDate(company));
+
+  while (!date.isAfter(endDate)) {
+    final key = convertDateTimeToSqlDate(date);
+    if (totals[STATUS_LOGGED].containsKey(key)) {
+      loggedData.rawSeries
+          .add(ChartMoneyData(date, totals[STATUS_LOGGED][key]));
+      loggedData.total += totals[STATUS_LOGGED][key];
+      pendingData.rawSeries
+          .add(ChartMoneyData(date, totals[STATUS_PENDING][key]));
+      pendingData.total += totals[STATUS_PENDING][key];
+      invoicedData.rawSeries
+          .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
+      invoicedData.total += totals[STATUS_INVOICED][key];
+      paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
+      paidData.total += totals[STATUS_PAID][key];
+    } else {
+      loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
+      pendingData.rawSeries.add(ChartMoneyData(date, 0.0));
+      invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
+      paidData.rawSeries.add(ChartMoneyData(date, 0.0));
+    }
+    date = date.add(Duration(days: 1));
+  }
+
+  loggedData.average =
+      round(loggedData.total ?? 0 / counts[STATUS_LOGGED] ?? 0, 2);
+  pendingData.average =
+      round(pendingData.total ?? 0 / counts[STATUS_PENDING] ?? 0, 2);
+  invoicedData.average =
+      round(invoicedData.total ?? 0 / counts[STATUS_INVOICED] ?? 0, 2);
+  paidData.average = round(paidData.total ?? 0 / counts[STATUS_PAID] ?? 0, 2);
+
+  final List<ChartDataGroup> data = [
+    loggedData,
+    pendingData,
+    invoicedData,
+    paidData,
+  ];
+
+  return data;
+}
+
+var memoizedChartExpenses = memo4((CompanyEntity company,
+        DashboardUIState settings,
+        BuiltMap<int, InvoiceEntity> invoiceMap,
+        BuiltMap<int, ExpenseEntity> expenseMap) =>
+    chartExpenses(company, settings, invoiceMap, expenseMap));

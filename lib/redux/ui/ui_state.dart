@@ -8,6 +8,12 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/document/document_state.dart';
+
+import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
+
+import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
+
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
@@ -28,11 +34,16 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
       autoStartTasks: false,
+      addDocumentsToInvoice: false,
       dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
+      documentUIState: DocumentUIState(),
+
+      expenseUIState: ExpenseUIState(),
+      vendorUIState: VendorUIState(),
       taskUIState: TaskUIState(),
       projectUIState: ProjectUIState(),
       paymentUIState: PaymentUIState(),
@@ -54,6 +65,11 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   bool get autoStartTasks;
 
+  bool get addDocumentsToInvoice;
+
+  @nullable
+  String get filter;
+
   DashboardUIState get dashboardUIState;
 
   ProductUIState get productUIState;
@@ -62,10 +78,13 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   InvoiceUIState get invoiceUIState;
 
-  @nullable
-  String get filter;
-
   // STARTER: properties - do not remove comment
+  DocumentUIState get documentUIState;
+
+  ExpenseUIState get expenseUIState;
+
+  VendorUIState get vendorUIState;
+
   TaskUIState get taskUIState;
 
   ProjectUIState get projectUIState;

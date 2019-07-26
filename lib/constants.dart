@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '0.1.41';
+const String kAppVersion = '0.1.44';
 const String kAppUrl = 'https://app.invoiceninja.com';
 
 const String kAppleStoreUrl =
@@ -12,19 +12,20 @@ const String kGoogleStoreUrl =
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefSecret = 'secret';
+const String kSharedPrefToken = 'api_token';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
 const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefRequireAuthentication = 'require_authentication';
+const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
 
-const String kKeychainToken = 'api_token';
-const String kKeychainEmail = 'email';
-const String kKeychainUrl = 'url';
-const String kKeychainSecret = 'secret';
+const String kPlanFree = '';
+const String kPlanPro = 'pro';
+const String kPlanEnterprise = 'enterprise';
 
-String getKeychainTokenKey([int companyIndex = 0]) =>
-    '${kKeychainToken}_$companyIndex';
+String getCompanyTokenKey([int companyIndex = 0]) =>
+    '${kSharedPrefToken}_$companyIndex';
 
 const int kMinMajorAppVersion = 4;
 const int kMinMinorAppVersion = 5;
@@ -33,8 +34,8 @@ const int kMinPatchAppVersion = 4;
 const int kMaxRecordsPerApiPage = 5000;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
+const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
 const int kUpdatedAtBufferSeconds = 600;
-//const int kMillisecondsToRefreshActivities = 1000 * 15; // 15 seconds
 
 const int kCurrencyUSDollar = 1;
 const int kCurrencyEuro = 3;
@@ -49,6 +50,10 @@ const int kInvoiceStatusApproved = 4;
 const int kInvoiceStatusPartial = 5;
 const int kInvoiceStatusPaid = 6;
 
+const String kEntityStateActive = 'active';
+const String kEntityStateArchived = 'archived';
+const String kEntityStateDeleted = 'deleted';
+
 const int kTaskStatusLogged = -1;
 const int kTaskStatusRunning = -2;
 const int kTaskStatusInvoiced = -3;
@@ -59,6 +64,10 @@ const int kPaymentStatusFailed = 3;
 const int kPaymentStatusCompleted = 4;
 const int kPaymentStatusPartiallyRefunded = 5;
 const int kPaymentStatusRefunded = 6;
+
+const int kExpenseStatusLogged = 1;
+const int kExpenseStatusPending = 2;
+const int kExpenseStatusInvoiced = 3;
 
 const int kDefaultCurrencyId = 1;
 const int kDefaultDateFormat = 5;
@@ -94,6 +103,14 @@ class PaymentStatusColors {
     kPaymentStatusCompleted: Colors.green,
     kPaymentStatusPartiallyRefunded: Colors.purple,
     kPaymentStatusRefunded: Colors.red,
+  };
+}
+
+class ExpenseStatusColors {
+  static const colors = {
+    kExpenseStatusLogged: Colors.grey,
+    kExpenseStatusPending: Colors.orange,
+    kExpenseStatusInvoiced: Colors.green,
   };
 }
 
@@ -137,6 +154,7 @@ const List<String> kLanguages = [
   'it',
   'ja',
   'lt',
+  'mk_MK',
   'nb_NO',
   'nl',
   'pl',
@@ -149,4 +167,5 @@ const List<String> kLanguages = [
   'sv',
   'th',
   'tr_TR',
+  'bg',
 ];

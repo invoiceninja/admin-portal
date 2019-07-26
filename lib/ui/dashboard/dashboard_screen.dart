@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 
 class DashboardScreen extends StatelessWidget {
-
   static const String route = '/dashboard';
 
   @override

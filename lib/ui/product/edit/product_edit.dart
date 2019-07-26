@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -131,14 +130,6 @@ class _ProductEditState extends State<ProductEdit> {
                 },
               );
             }),
-            product.isNew || !user.canCreate(EntityType.product)
-                ? Container()
-                : ActionMenuButton(
-                    user: viewModel.company.user,
-                    entity: viewModel.product,
-                    onSelected: viewModel.onActionSelected,
-                    entityActions: product.getEntityActions(user: user),
-                  )
           ],
         ),
         body: Form(
@@ -184,7 +175,8 @@ class _ProductEditState extends State<ProductEdit> {
                   TextFormField(
                     key: Key(ProductKeys.cost),
                     controller: _costController,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: localization.cost,
                     ),

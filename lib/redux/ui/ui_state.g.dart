@@ -6,19 +6,6 @@ part of 'ui_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<UIState> _$uIStateSerializer = new _$UIStateSerializer();
 
 class _$UIStateSerializer implements StructuredSerializer<UIState> {
@@ -28,7 +15,7 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   final String wireName = 'UIState';
 
   @override
-  Iterable serialize(Serializers serializers, UIState object,
+  Iterable<Object> serialize(Serializers serializers, UIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'selectedCompanyIndex',
@@ -49,6 +36,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'autoStartTasks',
       serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
+      'addDocumentsToInvoice',
+      serializers.serialize(object.addDocumentsToInvoice,
+          specifiedType: const FullType(bool)),
       'dashboardUIState',
       serializers.serialize(object.dashboardUIState,
           specifiedType: const FullType(DashboardUIState)),
@@ -61,6 +51,15 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'documentUIState',
+      serializers.serialize(object.documentUIState,
+          specifiedType: const FullType(DocumentUIState)),
+      'expenseUIState',
+      serializers.serialize(object.expenseUIState,
+          specifiedType: const FullType(ExpenseUIState)),
+      'vendorUIState',
+      serializers.serialize(object.vendorUIState,
+          specifiedType: const FullType(VendorUIState)),
       'taskUIState',
       serializers.serialize(object.taskUIState,
           specifiedType: const FullType(TaskUIState)),
@@ -80,12 +79,11 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         ..add(serializers.serialize(object.filter,
             specifiedType: const FullType(String)));
     }
-
     return result;
   }
 
   @override
-  UIState deserialize(Serializers serializers, Iterable serialized,
+  UIState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UIStateBuilder();
 
@@ -119,6 +117,14 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.autoStartTasks = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'addDocumentsToInvoice':
+          result.addDocumentsToInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'filter':
+          result.filter = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(serializers.deserialize(value,
                   specifiedType: const FullType(DashboardUIState))
@@ -136,9 +142,18 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
           break;
-        case 'filter':
-          result.filter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+        case 'documentUIState':
+          result.documentUIState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(DocumentUIState))
+              as DocumentUIState);
+          break;
+        case 'expenseUIState':
+          result.expenseUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ExpenseUIState)) as ExpenseUIState);
+          break;
+        case 'vendorUIState':
+          result.vendorUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(VendorUIState)) as VendorUIState);
           break;
         case 'taskUIState':
           result.taskUIState.replace(serializers.deserialize(value,
@@ -177,6 +192,10 @@ class _$UIState extends UIState {
   @override
   final bool autoStartTasks;
   @override
+  final bool addDocumentsToInvoice;
+  @override
+  final String filter;
+  @override
   final DashboardUIState dashboardUIState;
   @override
   final ProductUIState productUIState;
@@ -185,7 +204,11 @@ class _$UIState extends UIState {
   @override
   final InvoiceUIState invoiceUIState;
   @override
-  final String filter;
+  final DocumentUIState documentUIState;
+  @override
+  final ExpenseUIState expenseUIState;
+  @override
+  final VendorUIState vendorUIState;
   @override
   final TaskUIState taskUIState;
   @override
@@ -195,7 +218,7 @@ class _$UIState extends UIState {
   @override
   final QuoteUIState quoteUIState;
 
-  factory _$UIState([void updates(UIStateBuilder b)]) =>
+  factory _$UIState([void Function(UIStateBuilder) updates]) =>
       (new UIStateBuilder()..update(updates)).build();
 
   _$UIState._(
@@ -205,11 +228,15 @@ class _$UIState extends UIState {
       this.requireAuthentication,
       this.emailPayment,
       this.autoStartTasks,
+      this.addDocumentsToInvoice,
+      this.filter,
       this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
-      this.filter,
+      this.documentUIState,
+      this.expenseUIState,
+      this.vendorUIState,
       this.taskUIState,
       this.projectUIState,
       this.paymentUIState,
@@ -233,6 +260,9 @@ class _$UIState extends UIState {
     if (autoStartTasks == null) {
       throw new BuiltValueNullFieldError('UIState', 'autoStartTasks');
     }
+    if (addDocumentsToInvoice == null) {
+      throw new BuiltValueNullFieldError('UIState', 'addDocumentsToInvoice');
+    }
     if (dashboardUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
     }
@@ -244,6 +274,15 @@ class _$UIState extends UIState {
     }
     if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    }
+    if (documentUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'documentUIState');
+    }
+    if (expenseUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'expenseUIState');
+    }
+    if (vendorUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'vendorUIState');
     }
     if (taskUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'taskUIState');
@@ -260,7 +299,7 @@ class _$UIState extends UIState {
   }
 
   @override
-  UIState rebuild(void updates(UIStateBuilder b)) =>
+  UIState rebuild(void Function(UIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -276,11 +315,15 @@ class _$UIState extends UIState {
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
         autoStartTasks == other.autoStartTasks &&
+        addDocumentsToInvoice == other.addDocumentsToInvoice &&
+        filter == other.filter &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
-        filter == other.filter &&
+        documentUIState == other.documentUIState &&
+        expenseUIState == other.expenseUIState &&
+        vendorUIState == other.vendorUIState &&
         taskUIState == other.taskUIState &&
         projectUIState == other.projectUIState &&
         paymentUIState == other.paymentUIState &&
@@ -304,22 +347,33 @@ class _$UIState extends UIState {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                selectedCompanyIndex
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc(
+                                                                                0,
+                                                                                selectedCompanyIndex
+                                                                                    .hashCode),
+                                                                            currentRoute
+                                                                                .hashCode),
+                                                                        enableDarkMode
+                                                                            .hashCode),
+                                                                    requireAuthentication
+                                                                        .hashCode),
+                                                                emailPayment
                                                                     .hashCode),
-                                                            currentRoute
+                                                            autoStartTasks
                                                                 .hashCode),
-                                                        enableDarkMode
+                                                        addDocumentsToInvoice
                                                             .hashCode),
-                                                    requireAuthentication
-                                                        .hashCode),
-                                                emailPayment.hashCode),
-                                            autoStartTasks.hashCode),
-                                        dashboardUIState.hashCode),
-                                    productUIState.hashCode),
-                                clientUIState.hashCode),
-                            invoiceUIState.hashCode),
-                        filter.hashCode),
+                                                    filter.hashCode),
+                                                dashboardUIState.hashCode),
+                                            productUIState.hashCode),
+                                        clientUIState.hashCode),
+                                    invoiceUIState.hashCode),
+                                documentUIState.hashCode),
+                            expenseUIState.hashCode),
+                        vendorUIState.hashCode),
                     taskUIState.hashCode),
                 projectUIState.hashCode),
             paymentUIState.hashCode),
@@ -335,11 +389,15 @@ class _$UIState extends UIState {
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
           ..add('autoStartTasks', autoStartTasks)
+          ..add('addDocumentsToInvoice', addDocumentsToInvoice)
+          ..add('filter', filter)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
-          ..add('filter', filter)
+          ..add('documentUIState', documentUIState)
+          ..add('expenseUIState', expenseUIState)
+          ..add('vendorUIState', vendorUIState)
           ..add('taskUIState', taskUIState)
           ..add('projectUIState', projectUIState)
           ..add('paymentUIState', paymentUIState)
@@ -379,6 +437,15 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set autoStartTasks(bool autoStartTasks) =>
       _$this._autoStartTasks = autoStartTasks;
 
+  bool _addDocumentsToInvoice;
+  bool get addDocumentsToInvoice => _$this._addDocumentsToInvoice;
+  set addDocumentsToInvoice(bool addDocumentsToInvoice) =>
+      _$this._addDocumentsToInvoice = addDocumentsToInvoice;
+
+  String _filter;
+  String get filter => _$this._filter;
+  set filter(String filter) => _$this._filter = filter;
+
   DashboardUIStateBuilder _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
       _$this._dashboardUIState ??= new DashboardUIStateBuilder();
@@ -403,9 +470,23 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
 
-  String _filter;
-  String get filter => _$this._filter;
-  set filter(String filter) => _$this._filter = filter;
+  DocumentUIStateBuilder _documentUIState;
+  DocumentUIStateBuilder get documentUIState =>
+      _$this._documentUIState ??= new DocumentUIStateBuilder();
+  set documentUIState(DocumentUIStateBuilder documentUIState) =>
+      _$this._documentUIState = documentUIState;
+
+  ExpenseUIStateBuilder _expenseUIState;
+  ExpenseUIStateBuilder get expenseUIState =>
+      _$this._expenseUIState ??= new ExpenseUIStateBuilder();
+  set expenseUIState(ExpenseUIStateBuilder expenseUIState) =>
+      _$this._expenseUIState = expenseUIState;
+
+  VendorUIStateBuilder _vendorUIState;
+  VendorUIStateBuilder get vendorUIState =>
+      _$this._vendorUIState ??= new VendorUIStateBuilder();
+  set vendorUIState(VendorUIStateBuilder vendorUIState) =>
+      _$this._vendorUIState = vendorUIState;
 
   TaskUIStateBuilder _taskUIState;
   TaskUIStateBuilder get taskUIState =>
@@ -441,11 +522,15 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
       _autoStartTasks = _$v.autoStartTasks;
+      _addDocumentsToInvoice = _$v.addDocumentsToInvoice;
+      _filter = _$v.filter;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
-      _filter = _$v.filter;
+      _documentUIState = _$v.documentUIState?.toBuilder();
+      _expenseUIState = _$v.expenseUIState?.toBuilder();
+      _vendorUIState = _$v.vendorUIState?.toBuilder();
       _taskUIState = _$v.taskUIState?.toBuilder();
       _projectUIState = _$v.projectUIState?.toBuilder();
       _paymentUIState = _$v.paymentUIState?.toBuilder();
@@ -464,7 +549,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   }
 
   @override
-  void update(void updates(UIStateBuilder b)) {
+  void update(void Function(UIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -480,11 +565,15 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
               autoStartTasks: autoStartTasks,
+              addDocumentsToInvoice: addDocumentsToInvoice,
+              filter: filter,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
-              filter: filter,
+              documentUIState: documentUIState.build(),
+              expenseUIState: expenseUIState.build(),
+              vendorUIState: vendorUIState.build(),
               taskUIState: taskUIState.build(),
               projectUIState: projectUIState.build(),
               paymentUIState: paymentUIState.build(),
@@ -500,7 +589,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
-
+        _$failedField = 'documentUIState';
+        documentUIState.build();
+        _$failedField = 'expenseUIState';
+        expenseUIState.build();
+        _$failedField = 'vendorUIState';
+        vendorUIState.build();
         _$failedField = 'taskUIState';
         taskUIState.build();
         _$failedField = 'projectUIState';
@@ -519,3 +613,5 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
@@ -54,9 +55,12 @@ class _PaymentViewState extends State<PaymentView> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(payment.transactionReference.isNotEmpty
-              ? payment.transactionReference
-              : localization.payment),
+          title: EntityStateTitle(
+            entity: payment,
+            title: payment.transactionReference.isNotEmpty
+                ? payment.transactionReference
+                : localization.payment,
+          ),
           actions: payment.isNew
               ? []
               : [
@@ -70,73 +74,81 @@ class _PaymentViewState extends State<PaymentView> {
                     user: viewModel.company.user,
                     isSaving: viewModel.isSaving,
                     entity: payment,
-                    onSelected: viewModel.onActionSelected,
-                    entityActions: viewModel.payment.getEntityActions(
+                    onSelected: viewModel.onEntityAction,
+                    entityActions: viewModel.payment.getActions(
                         user: viewModel.company.user, client: client),
                   )
                 ],
         ),
-        body: ListView(
-          children: <Widget>[
-            payment.refunded > 0
-                ? TwoValueHeader(
-                    backgroundColor:
-                        PaymentStatusColors.colors[payment.paymentStatusId],
-                    label1: localization.amount,
-                    value1: formatNumber(payment.amount, context,
-                        clientId: client.id),
-                    label2: localization.refunded,
-                    value2: formatNumber(payment.refunded, context,
-                        clientId: client.id),
-                  )
-                : OneValueHeader(
-                    backgroundColor:
-                        PaymentStatusColors.colors[payment.paymentStatusId],
-                    label: localization.amount,
-                    value: formatNumber(payment.amount, context,
-                        clientId: client.id),
-                  ),
-            Material(
-              color: Theme.of(context).canvasColor,
-              child: ListTile(
-                title: Text(client.displayName ?? ''),
-                leading: Icon(FontAwesomeIcons.users, size: 18.0),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => viewModel.onTapClient(context),
-                onLongPress: () => viewModel.onTapClient(context, true),
-              ),
-            ),
-            Container(
-              color: Theme.of(context).backgroundColor,
-              height: 12.0,
-            ),
-            Material(
-              color: Theme.of(context).canvasColor,
-              child: ListTile(
-                title: Text('${localization.invoice} ${invoice.invoiceNumber}'),
-                leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => viewModel.onTapInvoice(context),
-                onLongPress: () => viewModel.onTapInvoice(context, true),
-              ),
-            ),
-            Container(
-              color: Theme.of(context).backgroundColor,
-              height: 12.0,
-            ),
-            payment.privateNotes != null && payment.privateNotes.isNotEmpty
-                ? Column(
-                    children: <Widget>[
-                      IconMessage(payment.privateNotes),
-                      Container(
-                        color: Theme.of(context).backgroundColor,
-                        height: 12.0,
+        body: Builder(
+          builder: (BuildContext context) {
+            return ListView(
+              children: <Widget>[
+                payment.refunded > 0
+                    ? TwoValueHeader(
+                        backgroundColor:
+                            PaymentStatusColors.colors[payment.paymentStatusId],
+                        label1: localization.amount,
+                        value1: formatNumber(payment.amount, context,
+                            clientId: client.id),
+                        label2: localization.refunded,
+                        value2: formatNumber(payment.refunded, context,
+                            clientId: client.id),
+                      )
+                    : OneValueHeader(
+                        backgroundColor:
+                            PaymentStatusColors.colors[payment.paymentStatusId],
+                        label: localization.amount,
+                        value: formatNumber(payment.amount, context,
+                            clientId: client.id),
                       ),
-                    ],
-                  )
-                : Container(),
-            FieldGrid(fields),
-          ],
+                Material(
+                  color: Theme.of(context).canvasColor,
+                  child: ListTile(
+                    title: EntityStateTitle(entity: client),
+                    leading: Icon(FontAwesomeIcons.users, size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onClientPressed(context),
+                    onLongPress: () => viewModel.onClientPressed(context, true),
+                  ),
+                ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+                Material(
+                  color: Theme.of(context).canvasColor,
+                  child: ListTile(
+                    title: EntityStateTitle(
+                      entity: invoice,
+                      title: '${localization.invoice} ${invoice.invoiceNumber}',
+                    ),
+                    leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onInvoicePressed(context),
+                    onLongPress: () =>
+                        viewModel.onInvoicePressed(context, true),
+                  ),
+                ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+                payment.privateNotes != null && payment.privateNotes.isNotEmpty
+                    ? Column(
+                        children: <Widget>[
+                          IconMessage(payment.privateNotes),
+                          Container(
+                            color: Theme.of(context).backgroundColor,
+                            height: 12.0,
+                          ),
+                        ],
+                      )
+                    : Container(),
+                FieldGrid(fields),
+              ],
+            );
+          },
         ));
   }
 }

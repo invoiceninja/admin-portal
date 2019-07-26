@@ -2,9 +2,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
@@ -34,13 +37,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
   final _textController = TextEditingController();
 
-  //EntityType _selectedEntityType = EntityType.product;
-
   @override
   void initState() {
     super.initState();
     _filterClientId = widget.clientId;
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -58,6 +59,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   void _onItemsSelected(BuildContext context) {
     final List<InvoiceItemEntity> items = [];
     final state = StoreProvider.of<AppState>(context).state;
+    final company = state.selectedCompany;
 
     _selected.forEach((entity) {
       if (entity.entityType == EntityType.product) {
@@ -73,8 +75,14 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       } else if (entity.entityType == EntityType.task) {
         final task = entity as TaskEntity;
         items.add(convertTaskToInvoiceItem(task: task, context: context));
+      } else if (entity.entityType == EntityType.expense) {
+        final expense = entity as ExpenseEntity;
+        items.add(convertExpenseToInvoiceItem(
+            expense: expense, categoryMap: company.expenseCategoryMap));
       }
     });
+
+    _updateClientId();
 
     widget.onItemsSelected(items, _filterClientId);
     Navigator.pop(context);
@@ -90,22 +98,31 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         _selected.add(entity);
       }
 
-      final selected = _selected.firstWhere(
-          (entity) =>
-              entity is BelongsToClient &&
-              (((entity as BelongsToClient).clientId ?? 0) > 0),
-          orElse: () => null);
-      if (selected != null) {
-        _filterClientId = (selected as BelongsToClient).clientId;
-      } else if ((widget.clientId ?? 0) == 0) {
-        _filterClientId = 0;
-      }
+      _updateClientId();
     });
+  }
+
+  void _updateClientId() {
+    final selected = _selected.firstWhere(
+        (entity) =>
+            entity is BelongsToClient &&
+            (((entity as BelongsToClient).clientId ?? 0) > 0),
+        orElse: () => null);
+
+    if (selected != null) {
+      _filterClientId = (selected as BelongsToClient).clientId;
+    } else if ((widget.clientId ?? 0) == 0) {
+      _filterClientId = 0;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
+    final company = state.selectedCompany;
+    final showTabBar = company.isModuleEnabled(EntityType.task) ||
+        company.isModuleEnabled(EntityType.expense);
 
     Widget _headerRow() {
       return Row(
@@ -163,7 +180,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     }
 
     Widget _productList() {
-      final state = StoreProvider.of<AppState>(context).state;
       final matches =
           memoizedProductList(state.productState.map).where((entityId) {
         final entity = state.productState.map[entityId];
@@ -196,7 +212,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     }
 
     Widget _taskList() {
-      final state = StoreProvider.of<AppState>(context).state;
       final matches = memoizedTaskList(state.taskState.map, _filterClientId)
           .where((entityId) {
         final task = state.taskState.map[entityId];
@@ -235,10 +250,49 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       );
     }
 
-    final state = StoreProvider.of<AppState>(context).state;
-    final company = state.selectedCompany;
-    final showTabBar = company.isModuleEnabled(EntityType.task) ||
-        company.isModuleEnabled(EntityType.expense);
+    Widget _expenseList() {
+      final matches =
+          memoizedClientExpenseList(state.expenseState.map, _filterClientId)
+              .where((entityId) {
+        final expense = state.expenseState.map[entityId];
+        if (widget.excluded != null && widget.excluded.contains(expense)) {
+          return false;
+        }
+        return expense.matchesFilter(_filter);
+      }).toList();
+
+      final documentMap = memoizedEntityDocumentMap(
+          EntityType.expense, state.documentState.map, state.expenseState.map);
+
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: matches.length,
+        itemBuilder: (BuildContext context, int index) {
+          final int entityId = matches[index];
+          final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
+          final vendor = state.vendorState.map[expense.vendorId];
+          final client = state.clientState.map[expense.clientId];
+          return ExpenseListItem(
+            onCheckboxChanged: (checked) => _toggleEntity(expense),
+            isChecked: _selected.contains(expense),
+            hasDocuments: documentMap[expense.id] == true,
+            expense: expense,
+            vendor: vendor,
+            client: client,
+            onTap: () {
+              if (_selected.isNotEmpty) {
+                _toggleEntity(expense);
+              } else {
+                _selected.add(expense);
+                _onItemsSelected(context);
+              }
+            },
+            filter: _filter,
+            user: state.selectedCompany.user,
+          );
+        },
+      );
+    }
 
     final List<Widget> tabs = [
       Tab(text: localization.products),
@@ -252,12 +306,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       tabViews.add(_taskList());
     }
 
-    /*
     if (company.isModuleEnabled(EntityType.expense)) {
       tabs.add(Tab(text: localization.expenses));
-      tabs.add(_expenseList);
+      tabViews.add(_expenseList());
     }
-    */
 
     return Padding(
       padding: const EdgeInsets.all(16.0),

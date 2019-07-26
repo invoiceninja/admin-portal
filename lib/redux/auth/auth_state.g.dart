@@ -6,19 +6,6 @@ part of 'auth_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<AuthState> _$authStateSerializer = new _$AuthStateSerializer();
 
 class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
@@ -28,7 +15,7 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
   final String wireName = 'AuthState';
 
   @override
-  Iterable serialize(Serializers serializers, AuthState object,
+  Iterable<Object> serialize(Serializers serializers, AuthState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'email',
@@ -55,12 +42,11 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
         ..add(serializers.serialize(object.error,
             specifiedType: const FullType(String)));
     }
-
     return result;
   }
 
   @override
-  AuthState deserialize(Serializers serializers, Iterable serialized,
+  AuthState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new AuthStateBuilder();
 
@@ -121,7 +107,7 @@ class _$AuthState extends AuthState {
   @override
   final String error;
 
-  factory _$AuthState([void updates(AuthStateBuilder b)]) =>
+  factory _$AuthState([void Function(AuthStateBuilder) updates]) =>
       (new AuthStateBuilder()..update(updates)).build();
 
   _$AuthState._(
@@ -154,7 +140,7 @@ class _$AuthState extends AuthState {
   }
 
   @override
-  AuthState rebuild(void updates(AuthStateBuilder b)) =>
+  AuthState rebuild(void Function(AuthStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -259,7 +245,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   }
 
   @override
-  void update(void updates(AuthStateBuilder b)) {
+  void update(void Function(AuthStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -278,3 +264,5 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

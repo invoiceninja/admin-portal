@@ -94,6 +94,6 @@ class StubEditVM {
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
-  final TaskEntity origStub;
+  final StubEntity origStub;
   final AppState state;
 }

@@ -59,7 +59,7 @@ class DismissibleEntity extends StatelessWidget {
         ),
       ],
       secondaryActions: <Widget>[
-        entity.isDeleted
+        entity.isDeleted ?? false
             ? IconSlideAction(
                 caption: localization.restore,
                 color: Colors.blue,

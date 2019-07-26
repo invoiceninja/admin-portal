@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -37,10 +36,10 @@ class PaymentViewVM {
   PaymentViewVM({
     @required this.payment,
     @required this.company,
-    @required this.onActionSelected,
+    @required this.onEntityAction,
     @required this.onEditPressed,
-    @required this.onTapClient,
-    @required this.onTapInvoice,
+    @required this.onClientPressed,
+    @required this.onInvoicePressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -51,58 +50,57 @@ class PaymentViewVM {
     final payment = state.paymentState.map[state.paymentUIState.selectedId] ??
         PaymentEntity(id: state.paymentUIState.selectedId);
     final client = paymentClientSelector(payment.id, state) ?? ClientEntity();
+    final invoice =
+        paymentInvoiceSelector(payment.id, state) ?? InvoiceEntity();
+    final user = state.user;
 
     return PaymentViewVM(
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isDirty: payment.isNew,
-        isLoading: state.isLoading,
-        payment: payment,
-        onEditPressed: (BuildContext context) {
-          store.dispatch(EditPayment(payment: payment, context: context));
-        },
-        onTapClient: (context, [bool longPress = false]) => store.dispatch(
-            longPress
-                ? EditClient(client: client, context: context)
-                : ViewClient(clientId: client.id, context: context)),
-        onTapInvoice: (context, [bool longPress = false]) => store.dispatch(
-            longPress
-                ? EditInvoice(
-                    invoice: state.invoiceState.map[payment.invoiceId],
-                    context: context)
-                : ViewInvoice(invoiceId: payment.invoiceId, context: context)),
-        onActionSelected: (BuildContext context, EntityAction action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.sendEmail:
-              store.dispatch(EmailPaymentRequest(
-                  popCompleter(context, localization.emailedPayment), payment));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchivePaymentRequest(
-                  popCompleter(context, localization.archivedClient),
-                  payment.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeletePaymentRequest(
-                  popCompleter(context, localization.deletedClient),
-                  payment.id));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestorePaymentRequest(
-                  snackBarCompleter(context, localization.restoredClient),
-                  payment.id));
-              break;
-          }
-        });
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isDirty: payment.isNew,
+      isLoading: state.isLoading,
+      payment: payment,
+      onEditPressed: (BuildContext context) {
+        store.dispatch(EditPayment(payment: payment, context: context));
+      },
+      onClientPressed: (context, [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: user,
+              context: context,
+              entity: client,
+              onEntityAction: (BuildContext context, BaseEntity client,
+                      EntityAction action) =>
+                  handleClientAction(context, client, action));
+        } else {
+          store.dispatch(ViewClient(clientId: client.id, context: context));
+        }
+      },
+      onInvoicePressed: (context, [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: user,
+              context: context,
+              entity: invoice,
+              client: client,
+              onEntityAction: (BuildContext context, BaseEntity invoice,
+                      EntityAction action) =>
+                  handleInvoiceAction(context, invoice, action));
+        } else {
+          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+        }
+      },
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handlePaymentAction(context, payment, action),
+    );
   }
 
   final PaymentEntity payment;
   final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
-  final Function(BuildContext, [bool]) onTapInvoice;
-  final Function(BuildContext, [bool]) onTapClient;
+  final Function(BuildContext, [bool]) onInvoicePressed;
+  final Function(BuildContext, [bool]) onClientPressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

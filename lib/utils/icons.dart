@@ -29,6 +29,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.viewInvoice:
       return Icons.insert_drive_file;
     case EntityAction.newInvoice:
+    case EntityAction.newExpense:
+    case EntityAction.newTask:
     case EntityAction.enterPayment:
       return Icons.add_circle_outline;
     case EntityAction.resume:
@@ -63,6 +65,28 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.fileImage;
     case EntityType.task:
       return FontAwesomeIcons.clock;
+    default:
+      return null;
+  }
+}
+
+IconData getFileTypeIcon(String type) {
+  switch (type) {
+    case 'pdf':
+      return FontAwesomeIcons.solidFilePdf;
+    case 'psd':
+      return FontAwesomeIcons.adobe;
+    case 'txt':
+      return FontAwesomeIcons.solidFileAlt;
+    case 'doc':
+    case 'docx':
+      return FontAwesomeIcons.solidFileWord;
+    case 'xls':
+    case 'xlsx':
+      return FontAwesomeIcons.solidFileExcel;
+    case 'ppt':
+    case 'pptt':
+      return FontAwesomeIcons.solidFilePowerpoint;
     default:
       return null;
   }

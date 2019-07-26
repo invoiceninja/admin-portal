@@ -7,10 +7,11 @@ import 'package:redux/redux.dart';
 
 class ListFilter extends StatefulWidget {
   const ListFilter({
+    Key key,
     this.entityType,
     this.title,
     this.onFilterChanged,
-  });
+  }) : super(key: key);
 
   final EntityType entityType;
   final String title;
@@ -21,7 +22,6 @@ class ListFilter extends StatefulWidget {
 }
 
 class _ListFilterState extends State<ListFilter> {
-
   final _filterController = TextEditingController();
 
   @override
@@ -55,7 +55,8 @@ class _ListFilterState extends State<ListFilter> {
             : state.uiState.filter;
         final bool enableDarkMode = state.uiState.enableDarkMode;
         return filter == null
-            ? Text(widget.title ?? localization.lookup(entityType.plural.toString()))
+            ? Text(widget.title ??
+                localization.lookup(entityType.plural.toString()))
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 height: 38.0,

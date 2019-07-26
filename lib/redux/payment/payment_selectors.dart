@@ -72,20 +72,19 @@ List<int> filteredPaymentsSelector(
         invoiceMap[payment.invoiceId] ?? InvoiceEntity(id: payment.invoiceId);
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    if (invoice.isDeleted || !client.isActive) {
-      return false;
-    }
 
     if (paymentListState.filterEntityId != null) {
       if (paymentListState.filterEntityType == EntityType.client &&
-          invoiceMap[payment.invoiceId].clientId !=
-              paymentListState.filterEntityId) {
+          invoice.clientId != paymentListState.filterEntityId) {
         return false;
       } else if (paymentListState.filterEntityType == EntityType.invoice &&
           payment.invoiceId != paymentListState.filterEntityId) {
         return false;
       }
+    } else if (invoice.isDeleted || !client.isActive) {
+      return false;
     }
+
     return payment.matchesFilter(paymentListState.filter);
   }).toList();
 

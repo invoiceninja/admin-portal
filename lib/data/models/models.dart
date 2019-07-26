@@ -13,6 +13,7 @@ export 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 export 'package:invoiceninja_flutter/data/models/task_model.dart';
 export 'package:invoiceninja_flutter/data/models/expense_model.dart';
 export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
+export 'package:invoiceninja_flutter/data/models/document_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/size_model.dart';
@@ -30,7 +31,6 @@ export 'package:invoiceninja_flutter/data/models/static/frequency_model.dart';
 part 'models.g.dart';
 
 class EntityAction extends EnumClass {
-
   const EntityAction._(String name) : super(name);
 
   static Serializer<EntityAction> get serializer => _$entityActionSerializer;
@@ -47,6 +47,8 @@ class EntityAction extends EnumClass {
   static const EntityAction sendEmail = _$sendEmail;
   static const EntityAction markSent = _$markSent;
   static const EntityAction newInvoice = _$newInvoice;
+  static const EntityAction newExpense = _$newExpense;
+  static const EntityAction newTask = _$newTask;
   static const EntityAction viewInvoice = _$viewInvoice;
   static const EntityAction clientPortal = _$clientPortal;
   static const EntityAction enterPayment = _$enterPayment;
@@ -59,4 +61,3 @@ class EntityAction extends EnumClass {
   static BuiltSet<EntityAction> get values => _$values;
   static EntityAction valueOf(String name) => _$valueOf(name);
 }
-

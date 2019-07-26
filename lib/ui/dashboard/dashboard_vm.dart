@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_view.dart';
@@ -35,6 +37,7 @@ class DashboardVM {
     @required this.state,
     @required this.dashboardUIState,
     @required this.dashboardState,
+    @required this.currencyMap,
     @required this.isLoading,
     @required this.isNextEnabled,
     @required this.filter,
@@ -63,6 +66,7 @@ class DashboardVM {
       state: state,
       dashboardUIState: state.dashboardUIState,
       dashboardState: state.dashboardState,
+      currencyMap: state.staticState.currencyMap,
       isLoading: state.isLoading,
       isNextEnabled:
           DateTime.parse(state.dashboardUIState.endDate(state.selectedCompany))
@@ -83,6 +87,7 @@ class DashboardVM {
   final AppState state;
   final DashboardState dashboardState;
   final DashboardUIState dashboardUIState;
+  final BuiltMap<int, CurrencyEntity> currencyMap;
   final String filter;
   final List<BaseEntity> filteredList;
   final bool isLoading;
@@ -96,6 +101,7 @@ class DashboardVM {
   bool operator ==(dynamic other) =>
       dashboardState == other.dashboardState &&
       dashboardUIState == other.dashboardUIState &&
+      currencyMap == other.currencyMap &&
       isLoading == other.isLoading &&
       filter == other.filter &&
       filteredList == other.filteredList;
@@ -104,6 +110,7 @@ class DashboardVM {
   int get hashCode =>
       dashboardState.hashCode ^
       dashboardUIState.hashCode ^
+      currencyMap.hashCode ^
       isLoading.hashCode ^
       filter.hashCode ^
       filteredList.hashCode;

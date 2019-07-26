@@ -61,9 +61,9 @@ class VendorFields {
 abstract class VendorEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<VendorEntity, VendorEntityBuilder> {
-  factory VendorEntity() {
+  factory VendorEntity({int id}) {
     return _$VendorEntity._(
-      id: --VendorEntity.counter,
+      id: id ?? --VendorEntity.counter,
       name: '',
       balance: 0.0,
       paidToDate: 0.0,
@@ -82,7 +82,11 @@ abstract class VendorEntity extends Object
       currencyId: 0,
       customValue1: '',
       customValue2: '',
-      vendorContacts: BuiltList<VendorContactEntity>(),
+      contacts: BuiltList<VendorContactEntity>(
+        <VendorContactEntity>[
+          VendorContactEntity().rebuild((b) => b..isPrimary = true)
+        ],
+      ),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -150,12 +154,28 @@ abstract class VendorEntity extends Object
   String get customValue2;
 
   @BuiltValueField(wireName: 'vendor_contacts')
-  BuiltList<VendorContactEntity> get vendorContacts;
+  BuiltList<VendorContactEntity> get contacts;
 
-  List<EntityAction> getEntityActions({UserEntity user, ClientEntity client}) {
+  @override
+  List<EntityAction> getActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    return actions..addAll(getBaseActions(user: user));
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
+
+      if (user.canCreate(EntityType.expense)) {
+        actions.add(EntityAction.newExpense);
+      }
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(super.getActions(user: user));
   }
 
   int compareTo(VendorEntity vendor, String sortField, bool sortAscending) {
@@ -166,6 +186,10 @@ abstract class VendorEntity extends Object
     switch (sortField) {
       case VendorFields.name:
         response = vendorA.name.compareTo(vendorB.name);
+        break;
+      case VendorFields.updatedAt:
+        response = vendorA.updatedAt.compareTo(vendorB.updatedAt);
+        break;
     }
 
     return response;
@@ -177,13 +201,51 @@ abstract class VendorEntity extends Object
       return true;
     }
 
-    return name.toLowerCase().contains(filter);
+    filter = filter.toLowerCase();
+
+    if (name.toLowerCase().contains(filter)) {
+      return true;
+    } else if (vatNumber.toLowerCase().contains(filter)) {
+      return true;
+    } else if (idNumber.toLowerCase().contains(filter)) {
+      return true;
+    } else if (workPhone.toLowerCase().contains(filter)) {
+      return true;
+    } else if (address1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (city.toLowerCase().contains(filter)) {
+      return true;
+    } else if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
+      return true;
+    }
+
+    return false;
   }
 
   @override
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    }
+
+    filter = filter.toLowerCase();
+    final contact = contacts.firstWhere(
+            (contact) => contact.matchesFilter(filter),
+        orElse: () => null);
+
+    if (vatNumber.toLowerCase().contains(filter)) {
+      return vatNumber;
+    } else if (idNumber.toLowerCase().contains(filter)) {
+      return idNumber;
+    } else if (workPhone.toLowerCase().contains(filter)) {
+      return workPhone;
+    } else if (address1.toLowerCase().contains(filter)) {
+      return address1;
+    } else if (city.toLowerCase().contains(filter)) {
+      return city;
+    } else if (contact != null) {
+      final match = contact.matchesFilterValue(filter);
+      return match == name ? null : match;
     }
 
     return null;
@@ -222,6 +284,11 @@ abstract class VendorContactEntity extends Object
 
   VendorContactEntity._();
 
+  @override
+  EntityType get entityType {
+    return EntityType.vendorContact;
+  }
+
   static int counter = 0;
 
   @BuiltValueField(wireName: 'first_name')
@@ -237,6 +304,10 @@ abstract class VendorContactEntity extends Object
 
   String get phone;
 
+  String get fullName {
+    return (firstName + ' ' + lastName).trim();
+  }
+
   @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
@@ -250,6 +321,15 @@ abstract class VendorContactEntity extends Object
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    }
+
+    filter = filter.toLowerCase();
+    if (fullName.toLowerCase().contains(filter)) {
+      return fullName;
+    } else if (email.toLowerCase().contains(filter)) {
+      return email;
+    } else if (phone.toLowerCase().contains(filter)) {
+      return phone;
     }
 
     return null;

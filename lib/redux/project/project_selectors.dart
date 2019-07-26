@@ -71,7 +71,11 @@ List<int> filteredProjectsSelector(
     final client =
         clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
 
-    if (!client.isActive) {
+    if (projectListState.filterEntityId != null) {
+      if (!projectListState.entityMatchesFilter(client)) {
+        return false;
+      }
+    } else if (!client.isActive) {
       return false;
     }
 
@@ -83,14 +87,12 @@ List<int> filteredProjectsSelector(
     if (!project.matchesStates(projectListState.stateFilters)) {
       return false;
     }
-    if (projectListState.filterEntityId != null &&
-        project.clientId != projectListState.filterEntityId) {
-      return false;
-    }
+
     if (projectListState.custom1Filters.isNotEmpty &&
         !projectListState.custom1Filters.contains(project.customValue1)) {
       return false;
     }
+
     if (projectListState.custom2Filters.isNotEmpty &&
         !projectListState.custom2Filters.contains(project.customValue2)) {
       return false;

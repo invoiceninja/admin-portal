@@ -76,7 +76,7 @@ String formatNumber(
     countryId = kCountryUnitedStates;
   }
 
-  if (currencyId != null) {
+  if (currencyId != null && currencyId > 0) {
     // do nothing
   } else if (client != null && client.currencyId > 0) {
     currencyId = client.currencyId;
@@ -242,6 +242,10 @@ String formatDate(String value, BuildContext context,
 
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.selectedCompany;
+
+  if (state.staticState.dateFormatMap.isEmpty) {
+    return '';
+  }
 
   if (showTime) {
     String format;

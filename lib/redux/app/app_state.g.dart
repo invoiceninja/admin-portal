@@ -6,19 +6,6 @@ part of 'app_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<AppState> _$appStateSerializer = new _$AppStateSerializer();
 
 class _$AppStateSerializer implements StructuredSerializer<AppState> {
@@ -28,7 +15,7 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   final String wireName = 'AppState';
 
   @override
-  Iterable serialize(Serializers serializers, AppState object,
+  Iterable<Object> serialize(Serializers serializers, AppState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'isLoading',
@@ -37,6 +24,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'isSaving',
       serializers.serialize(object.isSaving,
           specifiedType: const FullType(bool)),
+      'serverVersion',
+      serializers.serialize(object.serverVersion,
+          specifiedType: const FullType(String)),
       'authState',
       serializers.serialize(object.authState,
           specifiedType: const FullType(AuthState)),
@@ -67,7 +57,7 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   }
 
   @override
-  AppState deserialize(Serializers serializers, Iterable serialized,
+  AppState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new AppStateBuilder();
 
@@ -84,6 +74,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
         case 'isSaving':
           result.isSaving = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'serverVersion':
+          result.serverVersion = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'authState':
           result.authState.replace(serializers.deserialize(value,
@@ -130,6 +124,8 @@ class _$AppState extends AppState {
   @override
   final bool isSaving;
   @override
+  final String serverVersion;
+  @override
   final AuthState authState;
   @override
   final StaticState staticState;
@@ -146,12 +142,13 @@ class _$AppState extends AppState {
   @override
   final CompanyState companyState5;
 
-  factory _$AppState([void updates(AppStateBuilder b)]) =>
+  factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
   _$AppState._(
       {this.isLoading,
       this.isSaving,
+      this.serverVersion,
       this.authState,
       this.staticState,
       this.uiState,
@@ -166,6 +163,9 @@ class _$AppState extends AppState {
     }
     if (isSaving == null) {
       throw new BuiltValueNullFieldError('AppState', 'isSaving');
+    }
+    if (serverVersion == null) {
+      throw new BuiltValueNullFieldError('AppState', 'serverVersion');
     }
     if (authState == null) {
       throw new BuiltValueNullFieldError('AppState', 'authState');
@@ -194,7 +194,7 @@ class _$AppState extends AppState {
   }
 
   @override
-  AppState rebuild(void updates(AppStateBuilder b)) =>
+  AppState rebuild(void Function(AppStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -206,6 +206,7 @@ class _$AppState extends AppState {
     return other is AppState &&
         isLoading == other.isLoading &&
         isSaving == other.isSaving &&
+        serverVersion == other.serverVersion &&
         authState == other.authState &&
         staticState == other.staticState &&
         uiState == other.uiState &&
@@ -226,8 +227,10 @@ class _$AppState extends AppState {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, isLoading.hashCode),
-                                        isSaving.hashCode),
+                                    $jc(
+                                        $jc($jc(0, isLoading.hashCode),
+                                            isSaving.hashCode),
+                                        serverVersion.hashCode),
                                     authState.hashCode),
                                 staticState.hashCode),
                             uiState.hashCode),
@@ -249,6 +252,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   bool _isSaving;
   bool get isSaving => _$this._isSaving;
   set isSaving(bool isSaving) => _$this._isSaving = isSaving;
+
+  String _serverVersion;
+  String get serverVersion => _$this._serverVersion;
+  set serverVersion(String serverVersion) =>
+      _$this._serverVersion = serverVersion;
 
   AuthStateBuilder _authState;
   AuthStateBuilder get authState =>
@@ -301,6 +309,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
       _isSaving = _$v.isSaving;
+      _serverVersion = _$v.serverVersion;
       _authState = _$v.authState?.toBuilder();
       _staticState = _$v.staticState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
@@ -323,7 +332,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   }
 
   @override
-  void update(void updates(AppStateBuilder b)) {
+  void update(void Function(AppStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -335,6 +344,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               isLoading: isLoading,
               isSaving: isSaving,
+              serverVersion: serverVersion,
               authState: authState.build(),
               staticState: staticState.build(),
               uiState: uiState.build(),
@@ -372,3 +382,5 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

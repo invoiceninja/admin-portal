@@ -10,7 +10,6 @@ class ClientViewActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final activities = client.activities;
 
     if (activities.isEmpty) {
@@ -24,6 +23,5 @@ class ClientViewActivity extends StatelessWidget {
         return ActivityListTile(activity: activity);
       },
     );
-
   }
 }

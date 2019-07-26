@@ -4,24 +4,30 @@ import 'package:built_value/serializer.dart';
 
 part 'date_format_model.g.dart';
 
-abstract class DateFormatListResponse implements Built<DateFormatListResponse, DateFormatListResponseBuilder> {
-
-  factory DateFormatListResponse([void updates(DateFormatListResponseBuilder b)]) = _$DateFormatListResponse;
+abstract class DateFormatListResponse
+    implements Built<DateFormatListResponse, DateFormatListResponseBuilder> {
+  factory DateFormatListResponse(
+          [void updates(DateFormatListResponseBuilder b)]) =
+      _$DateFormatListResponse;
   DateFormatListResponse._();
 
   BuiltList<DateFormatEntity> get data;
 
-  static Serializer<DateFormatListResponse> get serializer => _$dateFormatListResponseSerializer;
+  static Serializer<DateFormatListResponse> get serializer =>
+      _$dateFormatListResponseSerializer;
 }
 
-abstract class DateFormatItemResponse implements Built<DateFormatItemResponse, DateFormatItemResponseBuilder> {
-
-  factory DateFormatItemResponse([void updates(DateFormatItemResponseBuilder b)]) = _$DateFormatItemResponse;
+abstract class DateFormatItemResponse
+    implements Built<DateFormatItemResponse, DateFormatItemResponseBuilder> {
+  factory DateFormatItemResponse(
+          [void updates(DateFormatItemResponseBuilder b)]) =
+      _$DateFormatItemResponse;
   DateFormatItemResponse._();
 
   DateFormatEntity get data;
 
-  static Serializer<DateFormatItemResponse> get serializer => _$dateFormatItemResponseSerializer;
+  static Serializer<DateFormatItemResponse> get serializer =>
+      _$dateFormatItemResponseSerializer;
 }
 
 class DateFormatFields {
@@ -30,8 +36,8 @@ class DateFormatFields {
   static const String formatMoment = 'formatMoment';
 }
 
-abstract class DateFormatEntity implements Built<DateFormatEntity, DateFormatEntityBuilder> {
-  
+abstract class DateFormatEntity
+    implements Built<DateFormatEntity, DateFormatEntityBuilder> {
   factory DateFormatEntity() {
     return _$DateFormatEntity._(
       id: 0,
@@ -45,5 +51,6 @@ abstract class DateFormatEntity implements Built<DateFormatEntity, DateFormatEnt
   @BuiltValueField(wireName: 'format_dart')
   String get format;
 
-  static Serializer<DateFormatEntity> get serializer => _$dateFormatEntitySerializer;
+  static Serializer<DateFormatEntity> get serializer =>
+      _$dateFormatEntitySerializer;
 }

@@ -14,7 +14,6 @@ bool _setLoaded(bool state, StopLoading action) {
   return false;
 }
 
-
 final savingReducer = combineReducers<bool>([
   TypedReducer<bool, StartSaving>(_setSaving),
   TypedReducer<bool, StopSaving>(_setSaved),

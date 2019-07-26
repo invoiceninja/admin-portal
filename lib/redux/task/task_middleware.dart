@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
@@ -66,7 +66,8 @@ Middleware<AppState> _viewTaskList() {
 
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(TaskScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        TaskScreen.route, (Route<dynamic> route) => false);
   };
 }
 
@@ -74,8 +75,8 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origTask, EntityAction.archive)
+        .saveData(store.state.selectedCompany, store.state.authState, origTask,
+            EntityAction.archive)
         .then((TaskEntity task) {
       store.dispatch(ArchiveTaskSuccess(task));
       if (action.completer != null) {
@@ -97,8 +98,8 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origTask, EntityAction.delete)
+        .saveData(store.state.selectedCompany, store.state.authState, origTask,
+            EntityAction.delete)
         .then((TaskEntity task) {
       store.dispatch(DeleteTaskSuccess(task));
       if (action.completer != null) {
@@ -120,8 +121,8 @@ Middleware<AppState> _restoreTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origTask, EntityAction.restore)
+        .saveData(store.state.selectedCompany, store.state.authState, origTask,
+            EntityAction.restore)
         .then((TaskEntity task) {
       store.dispatch(RestoreTaskSuccess(task));
       if (action.completer != null) {
@@ -216,8 +217,8 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.productState.isStale) {
-        store.dispatch(LoadProducts());
+      if (state.vendorState.isStale) {
+        store.dispatch(LoadVendors());
       }
     }).catchError((Object error) {
       print(error);

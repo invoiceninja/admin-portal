@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:sentry/sentry.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -40,9 +41,21 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
-
-//import 'package:quick_actions/quick_actions.dart';
-// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
+import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
@@ -63,14 +76,18 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+// STARTER: import - do not remove comment
 
 void main() async {
-  final SentryClient _sentry = SentryClient(
-      dsn: Config.SENTRY_DNS,
-      environmentAttributes: Event(
-        release: kAppVersion,
-        environment: Config.PLATFORM,
-      ));
+  final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
+      ? null
+      : SentryClient(
+          dsn: Config.SENTRY_DNS,
+          environmentAttributes: Event(
+            release: kAppVersion,
+            environment: Config.PLATFORM,
+          ));
+
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
   final requireAuthentication =
@@ -82,16 +99,19 @@ void main() async {
           requireAuthentication: requireAuthentication),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
+        ..addAll(createStoreDocumentsMiddleware())
         ..addAll(createStoreDashboardMiddleware())
         ..addAll(createStoreProductsMiddleware())
         ..addAll(createStoreClientsMiddleware())
         ..addAll(createStoreInvoicesMiddleware())
         ..addAll(createStorePersistenceMiddleware())
-        // STARTER: middleware - do not remove comment
+        ..addAll(createStoreExpensesMiddleware())
+        ..addAll(createStoreVendorsMiddleware())
         ..addAll(createStoreTasksMiddleware())
         ..addAll(createStoreProjectsMiddleware())
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
+        // STARTER: middleware - do not remove comment
         ..addAll([
           LoggingMiddleware<dynamic>.printer(),
         ]));
@@ -109,11 +129,15 @@ void main() async {
     }
   }
 
-  runZoned<Future<void>>(() async {
+  if (_sentry == null) {
     runApp(InvoiceNinjaApp(store: store));
-  }, onError: (dynamic error, dynamic stackTrace) {
-    _reportError(error, stackTrace);
-  });
+  } else {
+    runZoned<Future<void>>(() async {
+      runApp(InvoiceNinjaApp(store: store));
+    }, onError: (dynamic error, dynamic stackTrace) {
+      _reportError(error, stackTrace);
+    });
+  }
 
   FlutterError.onError = (FlutterErrorDetails details) {
     if (isInDebugMode) {
@@ -203,6 +227,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
               .map((String locale) => AppLocalization.createLocale(locale))
               .toList(),
           //debugShowCheckedModeBanner: false,
+          //showPerformanceOverlay: true,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
@@ -273,6 +298,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
               }
               return ProductScreen();
             },
+            ProductViewScreen.route: (context) => ProductViewScreen(),
             ProductEditScreen.route: (context) => ProductEditScreen(),
             ClientScreen.route: (context) {
               if (widget.store.state.clientState.isStale) {
@@ -292,6 +318,24 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
+            DocumentScreen.route: (context) {
+              widget.store.dispatch(LoadDocuments());
+              return DocumentScreen();
+            },
+            DocumentViewScreen.route: (context) => DocumentViewScreen(),
+            DocumentEditScreen.route: (context) => DocumentEditScreen(),
+            ExpenseScreen.route: (context) {
+              widget.store.dispatch(LoadExpenses());
+              return ExpenseScreen();
+            },
+            ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
+            ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
+            VendorScreen.route: (context) {
+              widget.store.dispatch(LoadVendors());
+              return VendorScreen();
+            },
+            VendorViewScreen.route: (context) => VendorViewScreen(),
+            VendorEditScreen.route: (context) => VendorEditScreen(),
             TaskScreen.route: (context) {
               widget.store.dispatch(LoadTasks());
               return TaskScreen();

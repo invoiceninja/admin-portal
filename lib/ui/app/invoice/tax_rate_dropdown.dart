@@ -53,8 +53,7 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
   }
 
   String _formatTaxRate(TaxRateEntity taxRate) {
-    return '${formatNumber(taxRate.rate, context,
-        formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
+    return '${formatNumber(taxRate.rate, context, formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
   }
 
   @override

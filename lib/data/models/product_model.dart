@@ -47,9 +47,9 @@ class ProductFields {
 abstract class ProductEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ProductEntity, ProductEntityBuilder> {
-  factory ProductEntity() {
+  factory ProductEntity({int id}) {
     return _$ProductEntity._(
-      id: --ProductEntity.counter,
+      id: id ?? --ProductEntity.counter,
       productKey: '',
       notes: '',
       cost: 0.0,
@@ -180,26 +180,30 @@ abstract class ProductEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions({UserEntity user, bool includeEdit = false}) {
+  @override
+  List<EntityAction> getActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this)) {
-      actions.add(EntityAction.edit);
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
+
+      if (user.canCreate(EntityType.invoice) && !isDeleted) {
+        actions.add(EntityAction.newInvoice);
+      }
     }
 
     if (user.canCreate(EntityType.product)) {
       actions.add(EntityAction.clone);
     }
 
-    if (user.canCreate(EntityType.invoice)) {
-      actions.add(EntityAction.newInvoice);
-    }
-
     if (actions.isNotEmpty) {
       actions.add(null);
     }
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;

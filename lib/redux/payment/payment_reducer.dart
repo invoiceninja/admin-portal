@@ -87,7 +87,11 @@ ListUIState _filterPaymentsByState(
 
 ListUIState _filterPayments(
     ListUIState paymentListState, FilterPayments action) {
-  return paymentListState.rebuild((b) => b..filter = action.filter);
+  return paymentListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : paymentListState.filterClearedAt);
 }
 
 ListUIState _sortPayments(ListUIState paymentListState, SortPayments action) {

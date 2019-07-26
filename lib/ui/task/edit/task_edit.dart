@@ -22,7 +22,6 @@ class TaskEdit extends StatefulWidget {
 
 class _TaskEditState extends State<TaskEdit>
     with SingleTickerProviderStateMixin {
-
   Timer _timer;
   TabController _controller;
 
@@ -44,7 +43,7 @@ class _TaskEditState extends State<TaskEdit>
     final index =
         task.taskTimes.contains(taskTime) ? kTimesScreen : kDetailsScreen;
 
-    _controller = TabController(vsync: this, length: 3, initialIndex: index);
+    _controller = TabController(vsync: this, length: 2, initialIndex: index);
   }
 
   @override
@@ -127,14 +126,15 @@ class _TaskEditState extends State<TaskEdit>
         floatingActionButton: task.isInvoiced || task.isDeleted
             ? SizedBox()
             : FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: () => viewModel.onFabPressed(),
-          child: Icon(
-            task.isRunning ? Icons.stop : Icons.play_arrow,
-            color: Colors.white,
-          ),
-          tooltip: task.isRunning ? localization.stop : localization.start,
-        ),
+                backgroundColor: Theme.of(context).primaryColorDark,
+                onPressed: () => viewModel.onFabPressed(),
+                child: Icon(
+                  task.isRunning ? Icons.stop : Icons.play_arrow,
+                  color: Colors.white,
+                ),
+                tooltip:
+                    task.isRunning ? localization.stop : localization.start,
+              ),
       ),
     );
   }

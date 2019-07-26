@@ -17,8 +17,8 @@ class ProjectRepository {
 
   Future<ProjectEntity> loadItem(
       CompanyEntity company, AuthState auth, int entityId) async {
-    final dynamic response = await webClient.get(
-        '${auth.url}/projects/$entityId', company.token);
+    final dynamic response =
+        await webClient.get('${auth.url}/projects/$entityId', company.token);
 
     final ProjectItemResponse projectResponse =
         serializers.deserializeWith(ProjectItemResponse.serializer, response);
@@ -41,7 +41,7 @@ class ProjectRepository {
 
     return projectResponse.data;
   }
-  
+
   Future<ProjectEntity> saveData(
       CompanyEntity company, AuthState auth, ProjectEntity project,
       [EntityAction action]) async {
@@ -50,9 +50,7 @@ class ProjectRepository {
 
     if (project.isNew) {
       response = await webClient.post(
-          auth.url + '/projects',
-          company.token,
-          json.encode(data));
+          auth.url + '/projects', company.token, json.encode(data));
     } else {
       var url = auth.url + '/projects/' + project.id.toString();
       if (action != null) {
@@ -62,7 +60,7 @@ class ProjectRepository {
     }
 
     final ProjectItemResponse projectResponse =
-    serializers.deserializeWith(ProjectItemResponse.serializer, response);
+        serializers.deserializeWith(ProjectItemResponse.serializer, response);
 
     return projectResponse.data;
   }

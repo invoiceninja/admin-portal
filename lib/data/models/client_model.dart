@@ -312,21 +312,23 @@ abstract class ClientEntity extends Object
       return true;
     }
     filter = filter.toLowerCase();
+
     if (displayName.toLowerCase().contains(filter)) {
       return true;
-    }
-    if (vatNumber.toLowerCase().contains(filter)) {
+    } else if (vatNumber.toLowerCase().contains(filter)) {
+      return true;
+    } else if (idNumber.toLowerCase().contains(filter)) {
+      return true;
+    } else if (workPhone.toLowerCase().contains(filter)) {
+      return true;
+    } else if (address1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (city.toLowerCase().contains(filter)) {
+      return true;
+    } else if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
       return true;
     }
-    if (idNumber.toLowerCase().contains(filter)) {
-      return true;
-    }
-    if (workPhone.toLowerCase().contains(filter)) {
-      return true;
-    }
-    if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
-      return true;
-    }
+
     return false;
   }
 
@@ -337,19 +339,21 @@ abstract class ClientEntity extends Object
     }
 
     filter = filter.toLowerCase();
+    final contact = contacts.firstWhere(
+            (contact) => contact.matchesFilter(filter),
+        orElse: () => null);
+
     if (vatNumber.toLowerCase().contains(filter)) {
       return vatNumber;
-    }
-    if (idNumber.toLowerCase().contains(filter)) {
+    } else if (idNumber.toLowerCase().contains(filter)) {
       return idNumber;
-    }
-    if (workPhone.toLowerCase().contains(filter)) {
+    } else if (workPhone.toLowerCase().contains(filter)) {
       return workPhone;
-    }
-    final contact = contacts.firstWhere(
-        (contact) => contact.matchesFilter(filter),
-        orElse: () => null);
-    if (contact != null) {
+    } else if (address1.toLowerCase().contains(filter)) {
+      return address1;
+    } else if (city.toLowerCase().contains(filter)) {
+      return city;
+    } else if (contact != null) {
       final match = contact.matchesFilterValue(filter);
       return match == displayName ? null : match;
     }
@@ -357,23 +361,34 @@ abstract class ClientEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions(
-      {UserEntity user, bool includeCreate = false, bool includeEdit = false}) {
+  @override
+  List<EntityAction> getActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this)) {
-      actions.add(EntityAction.edit);
-    }
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
 
-    if (includeCreate && user.canCreate(EntityType.client) && isActive) {
-      actions.add(EntityAction.newInvoice);
+      if (user.canCreate(EntityType.client)) {
+        actions.add(EntityAction.newInvoice);
+      }
+
+      if (user.canCreate(EntityType.expense)) {
+        actions.add(EntityAction.newExpense);
+      }
+
+      if (user.canCreate(EntityType.payment)) {
+        actions.add(EntityAction.enterPayment);
+      }
     }
 
     if (actions.isNotEmpty) {
       actions.add(null);
     }
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   @override

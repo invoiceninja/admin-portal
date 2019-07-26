@@ -13,12 +13,13 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/document/document_state.dart';
+
+import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
-
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
-
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
-
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 
 part 'app_state.g.dart';
@@ -29,6 +30,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
+      serverVersion: '',
       authState: AuthState(),
       staticState: StaticState(),
       companyState1: CompanyState(),
@@ -47,6 +49,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isLoading;
 
   bool get isSaving;
+
+  String get serverVersion;
 
   AuthState get authState;
 
@@ -107,9 +111,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.document:
+        return documentUIState;
+
+      case EntityType.expense:
+        return expenseUIState;
+      case EntityType.vendor:
+        return vendorUIState;
       case EntityType.task:
         return taskUIState;
-
       case EntityType.project:
         return projectUIState;
       case EntityType.payment:
@@ -145,6 +155,22 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  DocumentState get documentState => selectedCompanyState.documentState;
+  ListUIState get documentListState => uiState.documentUIState.listUIState;
+  DocumentUIState get documentUIState => uiState.documentUIState;
+
+  ExpenseState get expenseState => selectedCompanyState.expenseState;
+
+  ListUIState get expenseListState => uiState.expenseUIState.listUIState;
+
+  ExpenseUIState get expenseUIState => uiState.expenseUIState;
+
+  VendorState get vendorState => selectedCompanyState.vendorState;
+
+  ListUIState get vendorListState => uiState.vendorUIState.listUIState;
+
+  VendorUIState get vendorUIState => uiState.vendorUIState;
+
   TaskState get taskState => selectedCompanyState.taskState;
 
   ListUIState get taskListState => uiState.taskUIState.listUIState;
@@ -169,10 +195,30 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   QuoteUIState get quoteUIState => uiState.quoteUIState;
 
+  bool supportsVersion(String version) {
+    final parts = version.split('.');
+    final int major = int.parse(parts[0]);
+    final int minor = int.parse(parts[1]);
+    final int patch = int.parse(parts[2]);
+
+    try {
+      final serverParts = serverVersion.split('.');
+      final int serverMajor = int.parse(serverParts[0]);
+      final int serverMinor = int.parse(serverParts[1]);
+      final int serverPatch = int.parse(serverParts[2]);
+
+      return serverMajor >= major &&
+          serverMinor >= minor &&
+          serverPatch >= patch;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
-    //return 'Date Formats: ${staticState.dateFormatMap}';
-    return 'Route: ${uiState.currentRoute}';
+    //return 'Expense Categories: ${selectedCompany.expenseCategories}';
+    return 'Route: ${uiState.currentRoute}: Server Version: $serverVersion';
   }
 }

@@ -5,6 +5,28 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:memoize/memoize.dart';
 
+var memoizedDropdownExpenseCategoriesList = memo2(
+    (BuiltMap<int, ExpenseCategoryEntity> categoryMap,
+            BuiltList<ExpenseCategoryEntity> categoryList) =>
+        dropdownExpenseCategoriesSelector(categoryMap, categoryList));
+
+List<int> dropdownExpenseCategoriesSelector(
+    BuiltMap<int, ExpenseCategoryEntity> categoryMap,
+    BuiltList<ExpenseCategoryEntity> categoryList) {
+  final list = categoryList
+      //.where((category) => category.isActive)
+      .map((category) => category.id)
+      .toList();
+
+  list.sort((categoryAId, categoryBId) {
+    final categoryA = categoryMap[categoryAId];
+    final categoryB = categoryMap[categoryBId];
+    return categoryA.compareTo(categoryB, ExpenseCategoryFields.name, true);
+  });
+
+  return list;
+}
+
 var memoizedHasMultipleCurrencies = memo2(
     (CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
         hasMultipleCurrencies(company, clientMap));

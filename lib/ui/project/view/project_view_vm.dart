@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -41,7 +40,7 @@ class ProjectViewVM {
     @required this.project,
     @required this.client,
     @required this.company,
-    @required this.onActionSelected,
+    @required this.onEntityAction,
     @required this.onTasksPressed,
     @required this.onEditPressed,
     @required this.onBackPressed,
@@ -68,84 +67,70 @@ class ProjectViewVM {
     }
 
     return ProjectViewVM(
-        state: state,
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: project.isNew,
-        project: project,
-        client: client,
-        onEditPressed: (BuildContext context) {
-          store.dispatch(EditProject(project: project, context: context));
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onClientPressed: (BuildContext context, [bool longPress = false]) =>
-            store.dispatch(longPress
-                ? EditClient(client: client, context: context)
-                : ViewClient(clientId: project.clientId, context: context)),
-        onTasksPressed: (BuildContext context) {
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: project.isNew,
+      project: project,
+      client: client,
+      onEditPressed: (BuildContext context) {
+        store.dispatch(EditProject(project: project, context: context));
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onClientPressed: (BuildContext context, [bool longPress = false]) {
+        if (longPress) {
+          showEntityActionsDialog(
+              user: state.selectedCompany.user,
+              context: context,
+              entity: client,
+              onEntityAction: (BuildContext context, BaseEntity client,
+                      EntityAction action) =>
+                  handleClientAction(context, client, action));
+        } else {
+          store.dispatch(ViewClient(clientId: client.id, context: context));
+        }
+      },
+      onTasksPressed: (BuildContext context, {bool longPress = false}) {
+        if (longPress && project.isActive && client.isActive) {
+          store.dispatch(EditTask(
+              task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+                  .rebuild((b) => b
+                    ..projectId = project.id
+                    ..clientId = project.clientId),
+              context: context));
+        } else {
           store.dispatch(FilterTasksByEntity(
               entityId: project.id, entityType: EntityType.project));
           store.dispatch(ViewTaskList(context));
-        },
-        onAddTaskPressed: (context) => store.dispatch(EditTask(
-            context: context,
-            task: TaskEntity(isRunning: state.uiState.autoStartTasks)
-                .rebuild((b) => b
-                  ..projectId = project.id
-                  ..clientId = project.clientId))),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
-          }
-        },
-        onActionSelected: (BuildContext context, EntityAction action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.newInvoice:
-              final items = convertProjectToInvoiceItem(
-                  project: project, context: context);
-              store.dispatch(EditInvoice(
-                  invoice: InvoiceEntity(company: state.selectedCompany)
-                      .rebuild((b) => b
-                        ..hasTasks = true
-                        ..clientId = project.clientId
-                        ..invoiceItems.addAll(items)),
-                  context: context));
-              break;
-            case EntityAction.clone:
-              store.dispatch(
-                  EditProject(context: context, project: project.clone));
-              break;
-            case EntityAction.archive:
-              store.dispatch(ArchiveProjectRequest(
-                  popCompleter(context, localization.archivedProject),
-                  project.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteProjectRequest(
-                  popCompleter(context, localization.deletedProject),
-                  project.id));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreProjectRequest(
-                  snackBarCompleter(context, localization.restoredProject),
-                  project.id));
-              break;
-          }
-        });
+        }
+      },
+      onAddTaskPressed: (context) => store.dispatch(EditTask(
+          context: context,
+          task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+              .rebuild((b) => b
+                ..projectId = project.id
+                ..clientId = project.clientId))),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
+        }
+      },
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handleProjectAction(context, project, action),
+    );
   }
 
   final AppState state;
   final ProjectEntity project;
   final ClientEntity client;
   final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
   final Function(BuildContext, [bool]) onClientPressed;
   final Function onBackPressed;
   final Function(BuildContext) onAddTaskPressed;
-  final Function(BuildContext) onTasksPressed;
+  final Function(BuildContext, {bool longPress}) onTasksPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

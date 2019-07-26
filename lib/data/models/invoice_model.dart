@@ -109,10 +109,10 @@ abstract class InvoiceEntity extends Object
       endDate: '',
       lastSentDate: '',
       recurringInvoiceId: 0,
-      taxName1: '',
-      taxRate1: 0.0,
-      taxName2: '',
-      taxRate2: 0.0,
+      taxName1: company?.defaultTaxName1 ?? '',
+      taxRate1: company?.defaultTaxRate1 ?? 0.0,
+      taxName2: company?.defaultTaxName2 ?? '',
+      taxRate2: company?.defaultTaxRate2 ?? 0.0,
       isAmountDiscount: false,
       invoiceFooter: '',
       partial: 0.0,
@@ -389,42 +389,45 @@ abstract class InvoiceEntity extends Object
     return null;
   }
 
-  List<EntityAction> getEntityActions(
+  @override
+  List<EntityAction> getActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this)) {
-      actions.add(EntityAction.edit);
-    }
-
-    if (user.canCreate(EntityType.invoice)) {
-      if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {
-        actions.add(EntityAction.convert);
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
       }
-    }
 
-    if (user.canEditEntity(this) && !isPublic) {
-      actions.add(EntityAction.markSent);
-    }
+      if (user.canCreate(EntityType.invoice)) {
+        if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {
+          actions.add(EntityAction.convert);
+        }
+      }
 
-    if (user.canEditEntity(this) && client.hasEmailAddress) {
-      actions.add(EntityAction.sendEmail);
-    }
+      if (user.canEditEntity(this) && !isPublic) {
+        actions.add(EntityAction.markSent);
+      }
 
-    if (user.canEditEntity(this) &&
-        user.canCreate(EntityType.payment) &&
-        isUnpaid &&
-        !isQuote) {
-      actions.add(EntityAction.enterPayment);
-    }
+      if (user.canEditEntity(this) && client.hasEmailAddress) {
+        actions.add(EntityAction.sendEmail);
+      }
 
-    if (isQuote && quoteInvoiceId > 0) {
-      actions.add(EntityAction.viewInvoice);
-    }
+      if (user.canEditEntity(this) &&
+          user.canCreate(EntityType.payment) &&
+          isUnpaid &&
+          !isQuote) {
+        actions.add(EntityAction.enterPayment);
+      }
 
-    if (invitations.isNotEmpty) {
-      actions.add(EntityAction.pdf);
-      actions.add(EntityAction.clientPortal);
+      if (isQuote && quoteInvoiceId > 0) {
+        actions.add(EntityAction.viewInvoice);
+      }
+
+      if (invitations.isNotEmpty) {
+        actions.add(EntityAction.pdf);
+        actions.add(EntityAction.clientPortal);
+      }
     }
 
     if (actions.isNotEmpty) {
@@ -437,11 +440,10 @@ abstract class InvoiceEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(getBaseActions(user: user));
+    return actions..addAll(super.getActions(user: user));
   }
 
   InvoiceEntity applyTax(TaxRateEntity taxRate, {bool isSecond = false}) {
-
     InvoiceEntity invoice;
 
     if (isSecond) {

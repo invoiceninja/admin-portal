@@ -31,7 +31,7 @@ class PersistenceRepository {
   Future<CompanyState> loadCompanyState(int index) async {
     final String data = await fileStorage.load();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString(getKeychainTokenKey(index - 1)) ?? '';
+    final token = prefs.getString(getCompanyTokenKey(index - 1)) ?? '';
     final companyState =
         serializers.deserializeWith(CompanyState.serializer, json.decode(data));
     return companyState.rebuild((b) => b

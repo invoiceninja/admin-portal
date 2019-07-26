@@ -6,19 +6,6 @@ part of 'company_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<CompanyState> _$companyStateSerializer =
     new _$CompanyStateSerializer();
 
@@ -29,9 +16,12 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
   final String wireName = 'CompanyState';
 
   @override
-  Iterable serialize(Serializers serializers, CompanyState object,
+  Iterable<Object> serialize(Serializers serializers, CompanyState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'documentState',
+      serializers.serialize(object.documentState,
+          specifiedType: const FullType(DocumentState)),
       'dashboardState',
       serializers.serialize(object.dashboardState,
           specifiedType: const FullType(DashboardState)),
@@ -44,6 +34,12 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
       'invoiceState',
       serializers.serialize(object.invoiceState,
           specifiedType: const FullType(InvoiceState)),
+      'expenseState',
+      serializers.serialize(object.expenseState,
+          specifiedType: const FullType(ExpenseState)),
+      'vendorState',
+      serializers.serialize(object.vendorState,
+          specifiedType: const FullType(VendorState)),
       'taskState',
       serializers.serialize(object.taskState,
           specifiedType: const FullType(TaskState)),
@@ -63,12 +59,11 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
         ..add(serializers.serialize(object.company,
             specifiedType: const FullType(CompanyEntity)));
     }
-
     return result;
   }
 
   @override
-  CompanyState deserialize(Serializers serializers, Iterable serialized,
+  CompanyState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CompanyStateBuilder();
 
@@ -81,6 +76,10 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
         case 'company':
           result.company.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+          break;
+        case 'documentState':
+          result.documentState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(DocumentState)) as DocumentState);
           break;
         case 'dashboardState':
           result.dashboardState.replace(serializers.deserialize(value,
@@ -97,6 +96,14 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
         case 'invoiceState':
           result.invoiceState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceState)) as InvoiceState);
+          break;
+        case 'expenseState':
+          result.expenseState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ExpenseState)) as ExpenseState);
+          break;
+        case 'vendorState':
+          result.vendorState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(VendorState)) as VendorState);
           break;
         case 'taskState':
           result.taskState.replace(serializers.deserialize(value,
@@ -125,6 +132,8 @@ class _$CompanyState extends CompanyState {
   @override
   final CompanyEntity company;
   @override
+  final DocumentState documentState;
+  @override
   final DashboardState dashboardState;
   @override
   final ProductState productState;
@@ -132,6 +141,10 @@ class _$CompanyState extends CompanyState {
   final ClientState clientState;
   @override
   final InvoiceState invoiceState;
+  @override
+  final ExpenseState expenseState;
+  @override
+  final VendorState vendorState;
   @override
   final TaskState taskState;
   @override
@@ -141,20 +154,26 @@ class _$CompanyState extends CompanyState {
   @override
   final QuoteState quoteState;
 
-  factory _$CompanyState([void updates(CompanyStateBuilder b)]) =>
+  factory _$CompanyState([void Function(CompanyStateBuilder) updates]) =>
       (new CompanyStateBuilder()..update(updates)).build();
 
   _$CompanyState._(
       {this.company,
+      this.documentState,
       this.dashboardState,
       this.productState,
       this.clientState,
       this.invoiceState,
+      this.expenseState,
+      this.vendorState,
       this.taskState,
       this.projectState,
       this.paymentState,
       this.quoteState})
       : super._() {
+    if (documentState == null) {
+      throw new BuiltValueNullFieldError('CompanyState', 'documentState');
+    }
     if (dashboardState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'dashboardState');
     }
@@ -166,6 +185,12 @@ class _$CompanyState extends CompanyState {
     }
     if (invoiceState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'invoiceState');
+    }
+    if (expenseState == null) {
+      throw new BuiltValueNullFieldError('CompanyState', 'expenseState');
+    }
+    if (vendorState == null) {
+      throw new BuiltValueNullFieldError('CompanyState', 'vendorState');
     }
     if (taskState == null) {
       throw new BuiltValueNullFieldError('CompanyState', 'taskState');
@@ -182,7 +207,7 @@ class _$CompanyState extends CompanyState {
   }
 
   @override
-  CompanyState rebuild(void updates(CompanyStateBuilder b)) =>
+  CompanyState rebuild(void Function(CompanyStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -193,10 +218,13 @@ class _$CompanyState extends CompanyState {
     if (identical(other, this)) return true;
     return other is CompanyState &&
         company == other.company &&
+        documentState == other.documentState &&
         dashboardState == other.dashboardState &&
         productState == other.productState &&
         clientState == other.clientState &&
         invoiceState == other.invoiceState &&
+        expenseState == other.expenseState &&
+        vendorState == other.vendorState &&
         taskState == other.taskState &&
         projectState == other.projectState &&
         paymentState == other.paymentState &&
@@ -212,11 +240,17 @@ class _$CompanyState extends CompanyState {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, company.hashCode),
-                                    dashboardState.hashCode),
-                                productState.hashCode),
-                            clientState.hashCode),
-                        invoiceState.hashCode),
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, company.hashCode),
+                                                documentState.hashCode),
+                                            dashboardState.hashCode),
+                                        productState.hashCode),
+                                    clientState.hashCode),
+                                invoiceState.hashCode),
+                            expenseState.hashCode),
+                        vendorState.hashCode),
                     taskState.hashCode),
                 projectState.hashCode),
             paymentState.hashCode),
@@ -227,10 +261,13 @@ class _$CompanyState extends CompanyState {
   String toString() {
     return (newBuiltValueToStringHelper('CompanyState')
           ..add('company', company)
+          ..add('documentState', documentState)
           ..add('dashboardState', dashboardState)
           ..add('productState', productState)
           ..add('clientState', clientState)
           ..add('invoiceState', invoiceState)
+          ..add('expenseState', expenseState)
+          ..add('vendorState', vendorState)
           ..add('taskState', taskState)
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
@@ -247,6 +284,12 @@ class CompanyStateBuilder
   CompanyEntityBuilder get company =>
       _$this._company ??= new CompanyEntityBuilder();
   set company(CompanyEntityBuilder company) => _$this._company = company;
+
+  DocumentStateBuilder _documentState;
+  DocumentStateBuilder get documentState =>
+      _$this._documentState ??= new DocumentStateBuilder();
+  set documentState(DocumentStateBuilder documentState) =>
+      _$this._documentState = documentState;
 
   DashboardStateBuilder _dashboardState;
   DashboardStateBuilder get dashboardState =>
@@ -271,6 +314,18 @@ class CompanyStateBuilder
       _$this._invoiceState ??= new InvoiceStateBuilder();
   set invoiceState(InvoiceStateBuilder invoiceState) =>
       _$this._invoiceState = invoiceState;
+
+  ExpenseStateBuilder _expenseState;
+  ExpenseStateBuilder get expenseState =>
+      _$this._expenseState ??= new ExpenseStateBuilder();
+  set expenseState(ExpenseStateBuilder expenseState) =>
+      _$this._expenseState = expenseState;
+
+  VendorStateBuilder _vendorState;
+  VendorStateBuilder get vendorState =>
+      _$this._vendorState ??= new VendorStateBuilder();
+  set vendorState(VendorStateBuilder vendorState) =>
+      _$this._vendorState = vendorState;
 
   TaskStateBuilder _taskState;
   TaskStateBuilder get taskState =>
@@ -300,10 +355,13 @@ class CompanyStateBuilder
   CompanyStateBuilder get _$this {
     if (_$v != null) {
       _company = _$v.company?.toBuilder();
+      _documentState = _$v.documentState?.toBuilder();
       _dashboardState = _$v.dashboardState?.toBuilder();
       _productState = _$v.productState?.toBuilder();
       _clientState = _$v.clientState?.toBuilder();
       _invoiceState = _$v.invoiceState?.toBuilder();
+      _expenseState = _$v.expenseState?.toBuilder();
+      _vendorState = _$v.vendorState?.toBuilder();
       _taskState = _$v.taskState?.toBuilder();
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
@@ -322,7 +380,7 @@ class CompanyStateBuilder
   }
 
   @override
-  void update(void updates(CompanyStateBuilder b)) {
+  void update(void Function(CompanyStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -333,10 +391,13 @@ class CompanyStateBuilder
       _$result = _$v ??
           new _$CompanyState._(
               company: _company?.build(),
+              documentState: documentState.build(),
               dashboardState: dashboardState.build(),
               productState: productState.build(),
               clientState: clientState.build(),
               invoiceState: invoiceState.build(),
+              expenseState: expenseState.build(),
+              vendorState: vendorState.build(),
               taskState: taskState.build(),
               projectState: projectState.build(),
               paymentState: paymentState.build(),
@@ -346,6 +407,8 @@ class CompanyStateBuilder
       try {
         _$failedField = 'company';
         _company?.build();
+        _$failedField = 'documentState';
+        documentState.build();
         _$failedField = 'dashboardState';
         dashboardState.build();
         _$failedField = 'productState';
@@ -354,6 +417,10 @@ class CompanyStateBuilder
         clientState.build();
         _$failedField = 'invoiceState';
         invoiceState.build();
+        _$failedField = 'expenseState';
+        expenseState.build();
+        _$failedField = 'vendorState';
+        vendorState.build();
         _$failedField = 'taskState';
         taskState.build();
         _$failedField = 'projectState';
@@ -372,3 +439,5 @@ class CompanyStateBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

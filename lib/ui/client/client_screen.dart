@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class ClientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
+    final state = store.state;
+    final company = state.selectedCompany;
     final user = company.user;
     final localization = AppLocalization.of(context);
 
@@ -29,6 +31,7 @@ class ClientScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(state.clientListState.filterClearedAt),
             entityType: EntityType.client,
             onFilterChanged: (value) {
               store.dispatch(FilterClients(value));
@@ -70,6 +73,7 @@ class ClientScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: user.canCreate(EntityType.client)
             ? FloatingActionButton(
+                key: Key(ClientKeys.fab),
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () => store.dispatch(
                     EditClient(client: ClientEntity(), context: context)),

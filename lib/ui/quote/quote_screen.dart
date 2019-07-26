@@ -29,6 +29,7 @@ class QuoteScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: ListFilter(
+            key: ValueKey(store.state.quoteListState.filterClearedAt),
             entityType: EntityType.quote,
             onFilterChanged: (value) {
               store.dispatch(FilterQuotes(value));
@@ -105,8 +106,7 @@ class QuoteScreen extends StatelessWidget {
                       quote: InvoiceEntity(company: company, isQuote: true)
                           .rebuild((b) => b
                             ..clientId =
-                                store.state.quoteListState.filterEntityId ??
-                                    0),
+                                store.state.quoteListState.filterEntityId ?? 0),
                       context: context));
                 },
                 child: Icon(

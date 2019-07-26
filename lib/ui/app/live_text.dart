@@ -18,7 +18,7 @@ class _LiveTextState extends State<LiveText> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 1),
-            (Timer timer) => mounted ? setState(() => false) : false);
+        (Timer timer) => mounted ? setState(() => false) : false);
   }
 
   @override

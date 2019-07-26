@@ -226,23 +226,23 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       showDialog<AlertDialog>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-              semanticLabel: localization.areYouSure,
-              title: Text(localization.areYouSure),
-              actions: <Widget>[
-                FlatButton(
-                    child: Text(localization.cancel.toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                FlatButton(
-                    child: Text(localization.ok.toUpperCase()),
-                    onPressed: () {
-                      widget.viewModel.onRemoveContactPressed(widget.index);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    })
-              ],
-            ),
+          semanticLabel: localization.areYouSure,
+          title: Text(localization.areYouSure),
+          actions: <Widget>[
+            FlatButton(
+                child: Text(localization.cancel.toUpperCase()),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            FlatButton(
+                child: Text(localization.ok.toUpperCase()),
+                onPressed: () {
+                  widget.viewModel.onRemoveContactPressed(widget.index);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                })
+          ],
+        ),
       );
     }
 

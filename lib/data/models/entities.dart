@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -21,7 +22,9 @@ class EntityType extends EnumClass {
   static const EntityType task = _$task;
   static const EntityType project = _$project;
   static const EntityType expense = _$expense;
+  static const EntityType expenseCategory = _$expenseCategory;
   static const EntityType vendor = _$vendor;
+  static const EntityType vendorContact = _$vendorContact;
   static const EntityType credit = _$credit;
   static const EntityType payment = _$payment;
   static const EntityType country = _$country;
@@ -31,6 +34,7 @@ class EntityType extends EnumClass {
   static const EntityType size = _$size;
   static const EntityType paymentType = _$paymentType;
   static const EntityType taskStatus = _$taskStatus;
+  static const EntityType document = _$document;
 
   String get plural {
     return toString() + 's';
@@ -133,11 +137,18 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isNew => id == null || id < 0;
 
+  bool get isOld => !isNew;
+
   bool get isActive => archivedAt == null || archivedAt == 0;
 
   bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
-  List<EntityAction> getBaseActions({UserEntity user}) {
+  String get entityState => isActive
+      ? kEntityStateActive
+      : (isArchived ? kEntityStateArchived : kEntityStateDeleted);
+
+  List<EntityAction> getActions(
+      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (user.canEditEntity(this) && (isArchived || isDeleted)) {
@@ -384,7 +395,6 @@ abstract class ActivityEntity
     UserEntity user,
     ClientEntity client,
     InvoiceEntity invoice,
-    //ContactEntity contact,
     PaymentEntity payment,
     CreditEntity credit,
     InvoiceEntity quote,
@@ -392,11 +402,23 @@ abstract class ActivityEntity
     ExpenseEntity expense,
     VendorEntity vendor,
   }) {
+    // TODO remove this in v2
+    if (activityTypeId == 10 && contactId == null) {
+      activity = activity.replaceFirst(':contact', ':user');
+    }
+
+    ContactEntity contact;
+    if (contactId != null && contactId > 0) {
+      contact = client.contacts
+          .firstWhere((contact) => contact.id == contactId, orElse: () => null);
+    }
+
     activity = activity.replaceFirst(':user', user?.fullName ?? '');
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
     activity = activity.replaceFirst(':quote', quote?.invoiceNumber ?? '');
-    activity = activity.replaceFirst(':contact', client?.displayName ?? '');
+    activity = activity.replaceFirst(':contact',
+        contact?.fullName ?? client?.displayName ?? user?.fullName ?? '');
     activity =
         activity.replaceFirst(':payment', payment?.transactionReference ?? '');
     activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');

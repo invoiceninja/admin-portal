@@ -23,16 +23,16 @@ class TaskTimeListTile extends StatelessWidget {
     final startDateString = formatDate(
         taskTime.startDate.toIso8601String(), context,
         showTime: true, showDate: false);
-    final endDateString = taskTime.endDate != null ? formatDate(
-        taskTime.endDate.toIso8601String(), context,
-        showTime: true, showDate: false) : AppLocalization.of(context).now;
+    final endDateString = taskTime.endDate != null
+        ? formatDate(taskTime.endDate.toIso8601String(), context,
+            showTime: true, showDate: false)
+        : AppLocalization.of(context).now;
 
     final state = StoreProvider.of<AppState>(context).state;
     final title = DateFormat('EEE MMM d, yyy', localeSelector(state))
         .format(taskTime.startDate);
     final subtitle = '$startDateString - $endDateString';
-    final duration =
-        formatDuration(taskTime.duration);
+    final duration = formatDuration(taskTime.duration);
 
     return Material(
         color: Theme.of(context).canvasColor,

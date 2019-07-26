@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_vm.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskList extends StatelessWidget {
@@ -15,43 +15,6 @@ class TaskList extends StatelessWidget {
   }) : super(key: key);
 
   final TaskListVM viewModel;
-
-  void _showMenu(
-      BuildContext context, TaskEntity task, ClientEntity client) async {
-    if (task == null || client == null) {
-      return;
-    }
-
-    final user = viewModel.user;
-    final message = await showDialog<String>(
-        context: context,
-        builder: (BuildContext dialogContext) => SimpleDialog(
-                children: task
-                    .getEntityActions(
-                        user: user, client: client, includeEdit: true)
-                    .map((entityAction) {
-              if (entityAction == null) {
-                return Divider();
-              } else {
-                return ListTile(
-                  leading: Icon(getEntityActionIcon(entityAction)),
-                  title: Text(AppLocalization.of(context)
-                      .lookup(entityAction.toString())),
-                  onTap: () {
-                    Navigator.of(dialogContext).pop();
-                    viewModel.onEntityAction(context, task, entityAction);
-                  },
-                );
-              }
-            }).toList()));
-
-    if (message != null) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: SnackBarRow(
-        message: message,
-      )));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,41 +84,42 @@ class TaskList extends StatelessWidget {
                             ),
                           ),
                         )
-                      : ListView.builder(
+                      : ListView.separated(
                           shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.taskList.length,
                           itemBuilder: (BuildContext context, index) {
+                            final user = viewModel.user;
                             final taskId = viewModel.taskList[index];
                             final task = viewModel.taskMap[taskId];
                             final client = viewModel.clientMap[task.clientId] ??
                                 ClientEntity();
-                            return Column(
-                              children: <Widget>[
-                                TaskListItem(
-                                  user: viewModel.user,
-                                  filter: viewModel.filter,
-                                  task: task,
-                                  client: viewModel.clientMap[task.clientId] ??
-                                      ClientEntity(),
-                                  project: viewModel
-                                      .state.projectState.map[task.projectId],
-                                  onTap: () =>
-                                      viewModel.onTaskTap(context, task),
-                                  onEntityAction: (EntityAction action) {
-                                    if (action == EntityAction.more) {
-                                      _showMenu(context, task, client);
-                                    } else {
-                                      viewModel.onEntityAction(
-                                          context, task, action);
-                                    }
-                                  },
-                                  onLongPress: () =>
-                                      _showMenu(context, task, client),
-                                ),
-                                Divider(
-                                  height: 1.0,
-                                ),
-                              ],
+
+                            void showDialog() => showEntityActionsDialog(
+                                entity: task,
+                                context: context,
+                                user: user,
+                                client: client,
+                                onEntityAction: viewModel.onEntityAction);
+
+                            return TaskListItem(
+                              user: viewModel.user,
+                              filter: viewModel.filter,
+                              task: task,
+                              client: viewModel.clientMap[task.clientId] ??
+                                  ClientEntity(),
+                              project: viewModel
+                                  .state.projectState.map[task.projectId],
+                              onTap: () => viewModel.onTaskTap(context, task),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  showDialog();
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, task, action);
+                                }
+                              },
+                              onLongPress: () => showDialog(),
                             );
                           },
                         ),

@@ -6,19 +6,6 @@ part of 'client_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<ClientState> _$clientStateSerializer = new _$ClientStateSerializer();
 Serializer<ClientUIState> _$clientUIStateSerializer =
     new _$ClientUIStateSerializer();
@@ -30,7 +17,7 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
   final String wireName = 'ClientState';
 
   @override
-  Iterable serialize(Serializers serializers, ClientState object,
+  Iterable<Object> serialize(Serializers serializers, ClientState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'map',
@@ -48,12 +35,11 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ClientState deserialize(Serializers serializers, Iterable serialized,
+  ClientState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientStateBuilder();
 
@@ -72,13 +58,13 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(ClientEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -94,7 +80,7 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
   final String wireName = 'ClientUIState';
 
   @override
-  Iterable serialize(Serializers serializers, ClientUIState object,
+  Iterable<Object> serialize(Serializers serializers, ClientUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'selectedId',
@@ -116,12 +102,12 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
         ..add(serializers.serialize(object.editingContact,
             specifiedType: const FullType(ContactEntity)));
     }
-
     return result;
   }
 
   @override
-  ClientUIState deserialize(Serializers serializers, Iterable serialized,
+  ClientUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientUIStateBuilder();
 
@@ -162,7 +148,7 @@ class _$ClientState extends ClientState {
   @override
   final BuiltList<int> list;
 
-  factory _$ClientState([void updates(ClientStateBuilder b)]) =>
+  factory _$ClientState([void Function(ClientStateBuilder) updates]) =>
       (new ClientStateBuilder()..update(updates)).build();
 
   _$ClientState._({this.lastUpdated, this.map, this.list}) : super._() {
@@ -175,7 +161,7 @@ class _$ClientState extends ClientState {
   }
 
   @override
-  ClientState rebuild(void updates(ClientStateBuilder b)) =>
+  ClientState rebuild(void Function(ClientStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -243,7 +229,7 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
   }
 
   @override
-  void update(void updates(ClientStateBuilder b)) {
+  void update(void Function(ClientStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -282,7 +268,7 @@ class _$ClientUIState extends ClientUIState {
   @override
   final ListUIState listUIState;
 
-  factory _$ClientUIState([void updates(ClientUIStateBuilder b)]) =>
+  factory _$ClientUIState([void Function(ClientUIStateBuilder) updates]) =>
       (new ClientUIStateBuilder()..update(updates)).build();
 
   _$ClientUIState._(
@@ -297,7 +283,7 @@ class _$ClientUIState extends ClientUIState {
   }
 
   @override
-  ClientUIState rebuild(void updates(ClientUIStateBuilder b)) =>
+  ClientUIState rebuild(void Function(ClientUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -379,7 +365,7 @@ class ClientUIStateBuilder
   }
 
   @override
-  void update(void updates(ClientUIStateBuilder b)) {
+  void update(void Function(ClientUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -413,3 +399,5 @@ class ClientUIStateBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

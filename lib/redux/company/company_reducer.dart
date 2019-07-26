@@ -7,32 +7,34 @@ import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-
-// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+// STARTER: import - do not remove comment
 
 CompanyState companyReducer(CompanyState state, dynamic action) {
-  if (action is RefreshData) {
+  if (action is RefreshData && action.loadCompanies) {
     return CompanyState();
   }
 
   return state.rebuild((b) => b
     ..company.replace(companyEntityReducer(state.company, action))
+    ..documentState.replace(documentsReducer(state.documentState, action))
     ..clientState.replace(clientsReducer(state.clientState, action))
     ..dashboardState.replace(dashboardReducer(state.dashboardState, action))
     ..productState.replace(productsReducer(state.productState, action))
     ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
-    // STARTER: reducer - do not remove comment
+    ..expenseState.replace(expensesReducer(state.expenseState, action))
+    ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     ..projectState.replace(projectsReducer(state.projectState, action))
     ..paymentState.replace(paymentsReducer(state.paymentState, action))
     ..quoteState.replace(quotesReducer(state.quoteState, action)));
+  // STARTER: reducer - do not remove comment
 }
 
 Reducer<CompanyEntity> companyEntityReducer = combineReducers([
@@ -41,26 +43,30 @@ Reducer<CompanyEntity> companyEntityReducer = combineReducers([
 
 CompanyEntity loadCompanySuccessReducer(
     CompanyEntity company, LoadCompanySuccess action) {
+  var company = action.company;
 
-  if (action.company.taskStatuses == null) {
-    return action.company;
-  } else {
-    return action.company.rebuild((b) => b
+  if (company.taskStatuses != null) {
+    company = company.rebuild((b) => b
       ..taskStatusMap.addAll(Map.fromIterable(
-        action.company.taskStatuses,
+        company.taskStatuses,
         key: (dynamic item) => item.id,
         value: (dynamic item) => item,
-      ))
-    );
+      )));
   }
 
-  /*
-  return action.company.rebuild((b) => b
+  if (company.expenseCategories != null) {
+    company = company.rebuild((b) => b
+      ..expenseCategoryMap.addAll(Map.fromIterable(
+        company.expenseCategories,
+        key: (dynamic item) => item.id,
+        value: (dynamic item) => item,
+      )));
+  }
+
+  return company.rebuild((b) => b
     ..userMap.addAll(Map.fromIterable(
       action.company.users,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
-    ))
-  );
-  */
+    )));
 }

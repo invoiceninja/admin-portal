@@ -145,7 +145,11 @@ ListUIState _filterQuotesByEntity(
 }
 
 ListUIState _filterQuotes(ListUIState quoteListState, FilterQuotes action) {
-  return quoteListState.rebuild((b) => b..filter = action.filter);
+  return quoteListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : quoteListState.filterClearedAt);
 }
 
 ListUIState _sortQuotes(ListUIState quoteListState, SortQuotes action) {

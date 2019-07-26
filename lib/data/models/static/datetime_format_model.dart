@@ -4,24 +4,32 @@ import 'package:built_value/serializer.dart';
 
 part 'datetime_format_model.g.dart';
 
-abstract class DatetimeFormatListResponse implements Built<DatetimeFormatListResponse, DatetimeFormatListResponseBuilder> {
-
-  factory DatetimeFormatListResponse([void updates(DatetimeFormatListResponseBuilder b)]) = _$DatetimeFormatListResponse;
+abstract class DatetimeFormatListResponse
+    implements
+        Built<DatetimeFormatListResponse, DatetimeFormatListResponseBuilder> {
+  factory DatetimeFormatListResponse(
+          [void updates(DatetimeFormatListResponseBuilder b)]) =
+      _$DatetimeFormatListResponse;
   DatetimeFormatListResponse._();
 
   BuiltList<DatetimeFormatEntity> get data;
 
-  static Serializer<DatetimeFormatListResponse> get serializer => _$datetimeFormatListResponseSerializer;
+  static Serializer<DatetimeFormatListResponse> get serializer =>
+      _$datetimeFormatListResponseSerializer;
 }
 
-abstract class DatetimeFormatItemResponse implements Built<DatetimeFormatItemResponse, DatetimeFormatItemResponseBuilder> {
-
-  factory DatetimeFormatItemResponse([void updates(DatetimeFormatItemResponseBuilder b)]) = _$DatetimeFormatItemResponse;
+abstract class DatetimeFormatItemResponse
+    implements
+        Built<DatetimeFormatItemResponse, DatetimeFormatItemResponseBuilder> {
+  factory DatetimeFormatItemResponse(
+          [void updates(DatetimeFormatItemResponseBuilder b)]) =
+      _$DatetimeFormatItemResponse;
   DatetimeFormatItemResponse._();
 
   DatetimeFormatEntity get data;
 
-  static Serializer<DatetimeFormatItemResponse> get serializer => _$datetimeFormatItemResponseSerializer;
+  static Serializer<DatetimeFormatItemResponse> get serializer =>
+      _$datetimeFormatItemResponseSerializer;
 }
 
 class DatetimeFormatFields {
@@ -29,8 +37,8 @@ class DatetimeFormatFields {
   static const String formatMoment = 'formatMoment';
 }
 
-abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, DatetimeFormatEntityBuilder> {
-
+abstract class DatetimeFormatEntity
+    implements Built<DatetimeFormatEntity, DatetimeFormatEntityBuilder> {
   factory DatetimeFormatEntity() {
     return _$DatetimeFormatEntity._(
       id: 0,
@@ -44,5 +52,6 @@ abstract class DatetimeFormatEntity implements Built<DatetimeFormatEntity, Datet
   @BuiltValueField(wireName: 'format_dart')
   String get format;
 
-  static Serializer<DatetimeFormatEntity> get serializer => _$datetimeFormatEntitySerializer;
+  static Serializer<DatetimeFormatEntity> get serializer =>
+      _$datetimeFormatEntitySerializer;
 }

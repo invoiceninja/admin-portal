@@ -32,7 +32,7 @@ class StubListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? stub.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ?? stub.notes;
+    final subtitle = filterMatch;
 
     return DismissibleEntity(
       user: user,

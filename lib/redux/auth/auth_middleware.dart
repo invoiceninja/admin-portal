@@ -28,34 +28,30 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 
 void _saveAuthLocal(dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kKeychainEmail, action.email ?? '');
+  prefs.setString(kSharedPrefEmail, action.email ?? '');
 
   if (formatApiUrlReadable(action.url) != kAppUrl) {
-    prefs.setString(kKeychainUrl, formatApiUrlMachine(action.url));
-    prefs.setString(kKeychainSecret, action.secret);
+    prefs.setString(kSharedPrefUrl, formatApiUrlMachine(action.url));
+    prefs.setString(kSharedPrefSecret, action.secret);
   }
 }
 
 void _loadAuthLocal(Store<AppState> store, dynamic action) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String email = prefs.getString(kSharedPrefEmail) ?? '';
-  final String url =
-      formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? '');
-  final String secret =
-      prefs.getString(kSharedPrefSecret) ?? '';
+  final String url = formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? '');
+  final String secret = prefs.getString(kSharedPrefSecret) ?? '';
   store.dispatch(UserLoginLoaded(email, url, secret));
 
-  final bool enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
-  final bool emailPayment = prefs.getBool(kSharedPrefEmailPayment) ?? false;
-  final bool autoStartTasks = prefs.getBool(kSharedPrefAutoStartTasks) ?? false;
-  final bool requireAuthentication =
-      prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
-
   store.dispatch(UserSettingsChanged(
-      enableDarkMode: enableDarkMode,
-      emailPayment: emailPayment,
-      requireAuthentication: requireAuthentication,
-      autoStartTasks: autoStartTasks));
+    enableDarkMode: prefs.getBool(kSharedPrefEnableDarkMode) ?? false,
+    emailPayment: prefs.getBool(kSharedPrefEmailPayment) ?? false,
+    requireAuthentication:
+        prefs.getBool(kSharedPrefRequireAuthentication) ?? false,
+    autoStartTasks: prefs.getBool(kSharedPrefAutoStartTasks) ?? false,
+    addDocumentsToInvoice:
+        prefs.getBool(kSharedPrefAddDocumentsToInvoice) ?? false,
+  ));
 }
 
 Middleware<AppState> _createLoginInit() {
@@ -82,19 +78,20 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       _saveAuthLocal(action);
 
       if (_isVersionSupported(data.version)) {
-        store.dispatch(
-            LoadDataSuccess(completer: action.completer, loginResponse: data));
+        store.dispatch(LoadAccountSuccess(
+            completer: action.completer, loginResponse: data));
       } else {
         store.dispatch(UserLoginFailure(
             'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
       }
     }).catchError((Object error) {
       print(error);
-      if (error.toString().contains('No host specified in URI')) {
-        store.dispatch(UserLoginFailure('Please check the URL is correct'));
-      } else {
-        store.dispatch(UserLoginFailure(error.toString()));
+      var message = error.toString();
+      if (message.contains('No host specified in URI')) {
+        message = 'Please check the URL is correct';
       }
+      message += ', you may need to add /public';
+      store.dispatch(UserLoginFailure(message));
     });
 
     next(action);
@@ -113,8 +110,8 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
       _saveAuthLocal(action);
 
       if (_isVersionSupported(data.version)) {
-        store.dispatch(
-            LoadDataSuccess(completer: action.completer, loginResponse: data));
+        store.dispatch(LoadAccountSuccess(
+            completer: action.completer, loginResponse: data));
       } else {
         store.dispatch(UserLoginFailure(
             'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
@@ -135,15 +132,17 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     _loadAuthLocal(store, action);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String url = formatApiUrlMachine(
-        prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
-    final String token = prefs.getString(getKeychainTokenKey());
+    final String url =
+        formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
+    final String token = prefs.getString(getCompanyTokenKey());
 
     repository
         .refresh(url: url, token: token, platform: action.platform)
         .then((data) {
-      store.dispatch(
-          LoadDataSuccess(completer: action.completer, loginResponse: data));
+      store.dispatch(LoadAccountSuccess(
+          completer: action.completer,
+          loginResponse: data,
+          loadCompanies: action.loadCompanies));
     }).catchError((Object error) {
       print(error);
       store.dispatch(UserLoginFailure(error.toString()));

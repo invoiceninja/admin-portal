@@ -5,34 +5,38 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'language_model.g.dart';
 
-abstract class LanguageListResponse implements Built<LanguageListResponse, LanguageListResponseBuilder> {
-
-  factory LanguageListResponse([void updates(LanguageListResponseBuilder b)]) = _$LanguageListResponse;
+abstract class LanguageListResponse
+    implements Built<LanguageListResponse, LanguageListResponseBuilder> {
+  factory LanguageListResponse([void updates(LanguageListResponseBuilder b)]) =
+      _$LanguageListResponse;
   LanguageListResponse._();
 
   BuiltList<LanguageEntity> get data;
 
-  static Serializer<LanguageListResponse> get serializer => _$languageListResponseSerializer;
+  static Serializer<LanguageListResponse> get serializer =>
+      _$languageListResponseSerializer;
 }
 
-abstract class LanguageItemResponse implements Built<LanguageItemResponse, LanguageItemResponseBuilder> {
-
-  factory LanguageItemResponse([void updates(LanguageItemResponseBuilder b)]) = _$LanguageItemResponse;
+abstract class LanguageItemResponse
+    implements Built<LanguageItemResponse, LanguageItemResponseBuilder> {
+  factory LanguageItemResponse([void updates(LanguageItemResponseBuilder b)]) =
+      _$LanguageItemResponse;
   LanguageItemResponse._();
 
   LanguageEntity get data;
 
-  static Serializer<LanguageItemResponse> get serializer => _$languageItemResponseSerializer;
+  static Serializer<LanguageItemResponse> get serializer =>
+      _$languageItemResponseSerializer;
 }
 
 class LanguageFields {
   static const String name = 'name';
   static const String locale = 'locale';
-  
 }
 
-abstract class LanguageEntity extends Object with SelectableEntity implements Built<LanguageEntity, LanguageEntityBuilder> {
-
+abstract class LanguageEntity extends Object
+    with SelectableEntity
+    implements Built<LanguageEntity, LanguageEntityBuilder> {
   factory LanguageEntity() {
     return _$LanguageEntity._(
       id: 0,
@@ -83,6 +87,6 @@ abstract class LanguageEntity extends Object with SelectableEntity implements Bu
   @override
   double get listDisplayAmount => null;
 
-  static Serializer<LanguageEntity> get serializer => _$languageEntitySerializer;
+  static Serializer<LanguageEntity> get serializer =>
+      _$languageEntitySerializer;
 }
-

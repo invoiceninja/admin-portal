@@ -6,19 +6,6 @@ part of 'company_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
 Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
@@ -34,7 +21,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   final String wireName = 'CompanyEntity';
 
   @override
-  Iterable serialize(Serializers serializers, CompanyEntity object,
+  Iterable<Object> serialize(Serializers serializers, CompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -151,6 +138,20 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.taskStatusMap,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(int), const FullType(TaskStatusEntity)])),
+      'expenseCategoryMap',
+      serializers.serialize(object.expenseCategoryMap,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(int),
+            const FullType(ExpenseCategoryEntity)
+          ])),
+      'users',
+      serializers.serialize(object.users,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(UserEntity)])),
+      'userMap',
+      serializers.serialize(object.userMap,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(int), const FullType(UserEntity)])),
       'user',
       serializers.serialize(object.user,
           specifiedType: const FullType(UserEntity)),
@@ -212,6 +213,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
             specifiedType: const FullType(
                 BuiltList, const [const FullType(TaskStatusEntity)])));
     }
+    if (object.expenseCategories != null) {
+      result
+        ..add('expense_categories')
+        ..add(serializers.serialize(object.expenseCategories,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(ExpenseCategoryEntity)])));
+    }
     if (object.fillProducts != null) {
       result
         ..add('fill_products')
@@ -242,12 +250,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.hasCustomDesign3,
             specifiedType: const FullType(bool)));
     }
-
     return result;
   }
 
   @override
-  CompanyEntity deserialize(Serializers serializers, Iterable serialized,
+  CompanyEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CompanyEntityBuilder();
 
@@ -405,20 +413,46 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.taxRates.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TaxRateEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'task_statuses':
           result.taskStatuses.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TaskStatusEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'taskStatusMap':
           result.taskStatusMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(TaskStatusEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
+          break;
+        case 'expense_categories':
+          result.expenseCategories.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ExpenseCategoryEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'expenseCategoryMap':
+          result.expenseCategoryMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(ExpenseCategoryEntity)
+              ])) as BuiltMap<dynamic, dynamic>);
+          break;
+        case 'users':
+          result.users.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(UserEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'userMap':
+          result.userMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(int),
+                const FullType(UserEntity)
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'user':
           result.user.replace(serializers.deserialize(value,
@@ -429,13 +463,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(String)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'custom_payment_terms':
           result.customPaymentTerms.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTermEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
         case 'invoice_fields':
           result.invoiceFields = serializers.deserialize(value,
@@ -528,7 +562,7 @@ class _$PaymentTermEntitySerializer
   final String wireName = 'PaymentTermEntity';
 
   @override
-  Iterable serialize(Serializers serializers, PaymentTermEntity object,
+  Iterable<Object> serialize(Serializers serializers, PaymentTermEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
     if (object.numDays != null) {
@@ -549,12 +583,12 @@ class _$PaymentTermEntitySerializer
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  PaymentTermEntity deserialize(Serializers serializers, Iterable serialized,
+  PaymentTermEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentTermEntityBuilder();
 
@@ -590,7 +624,7 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
   final String wireName = 'TaxRateEntity';
 
   @override
-  Iterable serialize(Serializers serializers, TaxRateEntity object,
+  Iterable<Object> serialize(Serializers serializers, TaxRateEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -613,12 +647,12 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  TaxRateEntity deserialize(Serializers serializers, Iterable serialized,
+  TaxRateEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaxRateEntityBuilder();
 
@@ -662,7 +696,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
   final String wireName = 'UserEntity';
 
   @override
-  Iterable serialize(Serializers serializers, UserEntity object,
+  Iterable<Object> serialize(Serializers serializers, UserEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
@@ -689,7 +723,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
   }
 
   @override
-  UserEntity deserialize(Serializers serializers, Iterable serialized,
+  UserEntity deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UserEntityBuilder();
 
@@ -724,7 +758,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(bool)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
       }
     }
@@ -813,6 +847,14 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltMap<int, TaskStatusEntity> taskStatusMap;
   @override
+  final BuiltList<ExpenseCategoryEntity> expenseCategories;
+  @override
+  final BuiltMap<int, ExpenseCategoryEntity> expenseCategoryMap;
+  @override
+  final BuiltList<UserEntity> users;
+  @override
+  final BuiltMap<int, UserEntity> userMap;
+  @override
   final UserEntity user;
   @override
   final BuiltMap<String, String> customFields;
@@ -857,7 +899,7 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool hasCustomDesign3;
 
-  factory _$CompanyEntity([void updates(CompanyEntityBuilder b)]) =>
+  factory _$CompanyEntity([void Function(CompanyEntityBuilder) updates]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
 
   _$CompanyEntity._(
@@ -900,6 +942,10 @@ class _$CompanyEntity extends CompanyEntity {
       this.taxRates,
       this.taskStatuses,
       this.taskStatusMap,
+      this.expenseCategories,
+      this.expenseCategoryMap,
+      this.users,
+      this.userMap,
       this.user,
       this.customFields,
       this.customPaymentTerms,
@@ -1050,6 +1096,15 @@ class _$CompanyEntity extends CompanyEntity {
     if (taskStatusMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatusMap');
     }
+    if (expenseCategoryMap == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategoryMap');
+    }
+    if (users == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'users');
+    }
+    if (userMap == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
+    }
     if (user == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'user');
     }
@@ -1109,7 +1164,7 @@ class _$CompanyEntity extends CompanyEntity {
   }
 
   @override
-  CompanyEntity rebuild(void updates(CompanyEntityBuilder b)) =>
+  CompanyEntity rebuild(void Function(CompanyEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1158,6 +1213,10 @@ class _$CompanyEntity extends CompanyEntity {
         taxRates == other.taxRates &&
         taskStatuses == other.taskStatuses &&
         taskStatusMap == other.taskStatusMap &&
+        expenseCategories == other.expenseCategories &&
+        expenseCategoryMap == other.expenseCategoryMap &&
+        users == other.users &&
+        userMap == other.userMap &&
         user == other.user &&
         customFields == other.customFields &&
         customPaymentTerms == other.customPaymentTerms &&
@@ -1202,7 +1261,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), user.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), userMap.hashCode), user.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -1266,6 +1325,10 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('taxRates', taxRates)
           ..add('taskStatuses', taskStatuses)
           ..add('taskStatusMap', taskStatusMap)
+          ..add('expenseCategories', expenseCategories)
+          ..add('expenseCategoryMap', expenseCategoryMap)
+          ..add('users', users)
+          ..add('userMap', userMap)
           ..add('user', user)
           ..add('customFields', customFields)
           ..add('customPaymentTerms', customPaymentTerms)
@@ -1484,6 +1547,30 @@ class CompanyEntityBuilder
   set taskStatusMap(MapBuilder<int, TaskStatusEntity> taskStatusMap) =>
       _$this._taskStatusMap = taskStatusMap;
 
+  ListBuilder<ExpenseCategoryEntity> _expenseCategories;
+  ListBuilder<ExpenseCategoryEntity> get expenseCategories =>
+      _$this._expenseCategories ??= new ListBuilder<ExpenseCategoryEntity>();
+  set expenseCategories(ListBuilder<ExpenseCategoryEntity> expenseCategories) =>
+      _$this._expenseCategories = expenseCategories;
+
+  MapBuilder<int, ExpenseCategoryEntity> _expenseCategoryMap;
+  MapBuilder<int, ExpenseCategoryEntity> get expenseCategoryMap =>
+      _$this._expenseCategoryMap ??=
+          new MapBuilder<int, ExpenseCategoryEntity>();
+  set expenseCategoryMap(
+          MapBuilder<int, ExpenseCategoryEntity> expenseCategoryMap) =>
+      _$this._expenseCategoryMap = expenseCategoryMap;
+
+  ListBuilder<UserEntity> _users;
+  ListBuilder<UserEntity> get users =>
+      _$this._users ??= new ListBuilder<UserEntity>();
+  set users(ListBuilder<UserEntity> users) => _$this._users = users;
+
+  MapBuilder<int, UserEntity> _userMap;
+  MapBuilder<int, UserEntity> get userMap =>
+      _$this._userMap ??= new MapBuilder<int, UserEntity>();
+  set userMap(MapBuilder<int, UserEntity> userMap) => _$this._userMap = userMap;
+
   UserEntityBuilder _user;
   UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
   set user(UserEntityBuilder user) => _$this._user = user;
@@ -1636,6 +1723,10 @@ class CompanyEntityBuilder
       _taxRates = _$v.taxRates?.toBuilder();
       _taskStatuses = _$v.taskStatuses?.toBuilder();
       _taskStatusMap = _$v.taskStatusMap?.toBuilder();
+      _expenseCategories = _$v.expenseCategories?.toBuilder();
+      _expenseCategoryMap = _$v.expenseCategoryMap?.toBuilder();
+      _users = _$v.users?.toBuilder();
+      _userMap = _$v.userMap?.toBuilder();
       _user = _$v.user?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
@@ -1672,7 +1763,7 @@ class CompanyEntityBuilder
   }
 
   @override
-  void update(void updates(CompanyEntityBuilder b)) {
+  void update(void Function(CompanyEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1721,6 +1812,10 @@ class CompanyEntityBuilder
               taxRates: taxRates.build(),
               taskStatuses: _taskStatuses?.build(),
               taskStatusMap: taskStatusMap.build(),
+              expenseCategories: _expenseCategories?.build(),
+              expenseCategoryMap: expenseCategoryMap.build(),
+              users: users.build(),
+              userMap: userMap.build(),
               user: user.build(),
               customFields: customFields.build(),
               customPaymentTerms: customPaymentTerms.build(),
@@ -1752,6 +1847,14 @@ class CompanyEntityBuilder
         _taskStatuses?.build();
         _$failedField = 'taskStatusMap';
         taskStatusMap.build();
+        _$failedField = 'expenseCategories';
+        _expenseCategories?.build();
+        _$failedField = 'expenseCategoryMap';
+        expenseCategoryMap.build();
+        _$failedField = 'users';
+        users.build();
+        _$failedField = 'userMap';
+        userMap.build();
         _$failedField = 'user';
         user.build();
         _$failedField = 'customFields';
@@ -1777,13 +1880,14 @@ class _$PaymentTermEntity extends PaymentTermEntity {
   @override
   final int id;
 
-  factory _$PaymentTermEntity([void updates(PaymentTermEntityBuilder b)]) =>
+  factory _$PaymentTermEntity(
+          [void Function(PaymentTermEntityBuilder) updates]) =>
       (new PaymentTermEntityBuilder()..update(updates)).build();
 
   _$PaymentTermEntity._({this.numDays, this.archivedAt, this.id}) : super._();
 
   @override
-  PaymentTermEntity rebuild(void updates(PaymentTermEntityBuilder b)) =>
+  PaymentTermEntity rebuild(void Function(PaymentTermEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1852,7 +1956,7 @@ class PaymentTermEntityBuilder
   }
 
   @override
-  void update(void updates(PaymentTermEntityBuilder b)) {
+  void update(void Function(PaymentTermEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -1878,7 +1982,7 @@ class _$TaxRateEntity extends TaxRateEntity {
   @override
   final int id;
 
-  factory _$TaxRateEntity([void updates(TaxRateEntityBuilder b)]) =>
+  factory _$TaxRateEntity([void Function(TaxRateEntityBuilder) updates]) =>
       (new TaxRateEntityBuilder()..update(updates)).build();
 
   _$TaxRateEntity._(
@@ -1896,7 +2000,7 @@ class _$TaxRateEntity extends TaxRateEntity {
   }
 
   @override
-  TaxRateEntity rebuild(void updates(TaxRateEntityBuilder b)) =>
+  TaxRateEntity rebuild(void Function(TaxRateEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -1982,7 +2086,7 @@ class TaxRateEntityBuilder
   }
 
   @override
-  void update(void updates(TaxRateEntityBuilder b)) {
+  void update(void Function(TaxRateEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -2014,7 +2118,7 @@ class _$UserEntity extends UserEntity {
   @override
   final BuiltMap<String, bool> permissionsMap;
 
-  factory _$UserEntity([void updates(UserEntityBuilder b)]) =>
+  factory _$UserEntity([void Function(UserEntityBuilder) updates]) =>
       (new UserEntityBuilder()..update(updates)).build();
 
   _$UserEntity._(
@@ -2046,7 +2150,7 @@ class _$UserEntity extends UserEntity {
   }
 
   @override
-  UserEntity rebuild(void updates(UserEntityBuilder b)) =>
+  UserEntity rebuild(void Function(UserEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -2142,7 +2246,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   }
 
   @override
-  void update(void updates(UserEntityBuilder b)) {
+  void update(void Function(UserEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -2173,3 +2277,5 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

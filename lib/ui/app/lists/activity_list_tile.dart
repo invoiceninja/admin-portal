@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
@@ -32,11 +33,13 @@ class ActivityListTile extends StatelessWidget {
     String title = localization.lookup('activity_${activity.activityTypeId}');
     title = activity.getDescription(
       title,
-      user: state.selectedCompany.user,
+      user: state.selectedCompany.userMap[activity.userId] ?? UserEntity(),
       client: state.clientState.map[activity.clientId],
       invoice: state.invoiceState.map[activity.invoiceId],
       quote: state.quoteState.map[activity.invoiceId],
       payment: state.paymentState.map[activity.paymentId],
+      task: state.taskState.map[activity.taskId],
+      expense: state.expenseState.map[activity.expenseId],
     );
 
     return ListTile(
@@ -76,6 +79,12 @@ class ActivityListTile extends StatelessWidget {
                         paymentId: activity.paymentId, context: context));
                   }
                   break;
+                case EntityType.expense:
+                  if (state.expenseState.map.containsKey(activity.expenseId)) {
+                    return store.dispatch(ViewExpense(
+                        expenseId: activity.expenseId, context: context));
+                  }
+                  break;
               }
               showDialog<ErrorDialog>(
                   context: context,
@@ -92,12 +101,6 @@ class ActivityListTile extends StatelessWidget {
               showTime: true)),
           (activity.notes ?? '').isNotEmpty
               ? Text(' • ${localization.lookup(activity.notes)}')
-              : Container(),
-          (activity.isSystem ?? false)
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Icon(FontAwesomeIcons.server),
-                )
               : Container(),
         ],
       ),

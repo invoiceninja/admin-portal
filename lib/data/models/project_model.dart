@@ -104,21 +104,34 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  List<EntityAction> getEntityActions(
+  @override
+  List<EntityAction> getActions(
       {UserEntity user, ClientEntity client, bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (includeEdit && user.canEditEntity(this)) {
-      actions.add(EntityAction.edit);
+    if (!isDeleted) {
+      if (includeEdit && user.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
+
+      if (user.canCreate(EntityType.task) && isActive) {
+        actions.add(EntityAction.newTask);
+      }
+
+      if (user.canCreate(EntityType.invoice) && isActive) {
+        actions.add(EntityAction.newInvoice);
+      }
     }
 
-    actions.addAll([
-      EntityAction.clone,
-      EntityAction.newInvoice,
-      null,
-    ]);
+    if (user.canCreate(EntityType.project)) {
+      actions.add(EntityAction.clone);
+    }
 
-    return actions..addAll(getBaseActions(user: user));
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(super.getActions(user: user));
   }
 
   int compareTo(ProjectEntity project, String sortField, bool sortAscending) {

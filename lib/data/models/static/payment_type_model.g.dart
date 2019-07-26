@@ -6,19 +6,6 @@ part of 'payment_type_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<PaymentTypeListResponse> _$paymentTypeListResponseSerializer =
     new _$PaymentTypeListResponseSerializer();
 Serializer<PaymentTypeItemResponse> _$paymentTypeItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$PaymentTypeListResponseSerializer
   final String wireName = 'PaymentTypeListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, PaymentTypeListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, PaymentTypeListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -51,7 +39,7 @@ class _$PaymentTypeListResponseSerializer
 
   @override
   PaymentTypeListResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentTypeListResponseBuilder();
 
@@ -65,7 +53,7 @@ class _$PaymentTypeListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTypeEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -85,7 +73,8 @@ class _$PaymentTypeItemResponseSerializer
   final String wireName = 'PaymentTypeItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, PaymentTypeItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, PaymentTypeItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -98,7 +87,7 @@ class _$PaymentTypeItemResponseSerializer
 
   @override
   PaymentTypeItemResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentTypeItemResponseBuilder();
 
@@ -128,7 +117,7 @@ class _$PaymentTypeEntitySerializer
   final String wireName = 'PaymentTypeEntity';
 
   @override
-  Iterable serialize(Serializers serializers, PaymentTypeEntity object,
+  Iterable<Object> serialize(Serializers serializers, PaymentTypeEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -140,12 +129,12 @@ class _$PaymentTypeEntitySerializer
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  PaymentTypeEntity deserialize(Serializers serializers, Iterable serialized,
+  PaymentTypeEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentTypeEntityBuilder();
 
@@ -175,7 +164,7 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
   final BuiltList<PaymentTypeEntity> data;
 
   factory _$PaymentTypeListResponse(
-          [void updates(PaymentTypeListResponseBuilder b)]) =>
+          [void Function(PaymentTypeListResponseBuilder) updates]) =>
       (new PaymentTypeListResponseBuilder()..update(updates)).build();
 
   _$PaymentTypeListResponse._({this.data}) : super._() {
@@ -186,7 +175,7 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
 
   @override
   PaymentTypeListResponse rebuild(
-          void updates(PaymentTypeListResponseBuilder b)) =>
+          void Function(PaymentTypeListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -241,7 +230,7 @@ class PaymentTypeListResponseBuilder
   }
 
   @override
-  void update(void updates(PaymentTypeListResponseBuilder b)) {
+  void update(void Function(PaymentTypeListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -271,7 +260,7 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
   final PaymentTypeEntity data;
 
   factory _$PaymentTypeItemResponse(
-          [void updates(PaymentTypeItemResponseBuilder b)]) =>
+          [void Function(PaymentTypeItemResponseBuilder) updates]) =>
       (new PaymentTypeItemResponseBuilder()..update(updates)).build();
 
   _$PaymentTypeItemResponse._({this.data}) : super._() {
@@ -282,7 +271,7 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
 
   @override
   PaymentTypeItemResponse rebuild(
-          void updates(PaymentTypeItemResponseBuilder b)) =>
+          void Function(PaymentTypeItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -337,7 +326,7 @@ class PaymentTypeItemResponseBuilder
   }
 
   @override
-  void update(void updates(PaymentTypeItemResponseBuilder b)) {
+  void update(void Function(PaymentTypeItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -368,7 +357,8 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   @override
   final int id;
 
-  factory _$PaymentTypeEntity([void updates(PaymentTypeEntityBuilder b)]) =>
+  factory _$PaymentTypeEntity(
+          [void Function(PaymentTypeEntityBuilder) updates]) =>
       (new PaymentTypeEntityBuilder()..update(updates)).build();
 
   _$PaymentTypeEntity._({this.name, this.id}) : super._() {
@@ -378,7 +368,7 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   }
 
   @override
-  PaymentTypeEntity rebuild(void updates(PaymentTypeEntityBuilder b)) =>
+  PaymentTypeEntity rebuild(void Function(PaymentTypeEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -437,7 +427,7 @@ class PaymentTypeEntityBuilder
   }
 
   @override
-  void update(void updates(PaymentTypeEntityBuilder b)) {
+  void update(void Function(PaymentTypeEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -448,3 +438,5 @@ class PaymentTypeEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

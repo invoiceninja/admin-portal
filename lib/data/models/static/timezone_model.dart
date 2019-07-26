@@ -4,24 +4,28 @@ import 'package:built_value/serializer.dart';
 
 part 'timezone_model.g.dart';
 
-abstract class TimezoneListResponse implements Built<TimezoneListResponse, TimezoneListResponseBuilder> {
-
-  factory TimezoneListResponse([void updates(TimezoneListResponseBuilder b)]) = _$TimezoneListResponse;
+abstract class TimezoneListResponse
+    implements Built<TimezoneListResponse, TimezoneListResponseBuilder> {
+  factory TimezoneListResponse([void updates(TimezoneListResponseBuilder b)]) =
+      _$TimezoneListResponse;
   TimezoneListResponse._();
 
   BuiltList<TimezoneEntity> get data;
 
-  static Serializer<TimezoneListResponse> get serializer => _$timezoneListResponseSerializer;
+  static Serializer<TimezoneListResponse> get serializer =>
+      _$timezoneListResponseSerializer;
 }
 
-abstract class TimezoneItemResponse implements Built<TimezoneItemResponse, TimezoneItemResponseBuilder> {
-
-  factory TimezoneItemResponse([void updates(TimezoneItemResponseBuilder b)]) = _$TimezoneItemResponse;
+abstract class TimezoneItemResponse
+    implements Built<TimezoneItemResponse, TimezoneItemResponseBuilder> {
+  factory TimezoneItemResponse([void updates(TimezoneItemResponseBuilder b)]) =
+      _$TimezoneItemResponse;
   TimezoneItemResponse._();
 
   TimezoneEntity get data;
 
-  static Serializer<TimezoneItemResponse> get serializer => _$timezoneItemResponseSerializer;
+  static Serializer<TimezoneItemResponse> get serializer =>
+      _$timezoneItemResponseSerializer;
 }
 
 class TimezoneFields {
@@ -29,8 +33,8 @@ class TimezoneFields {
   static const String location = 'location';
 }
 
-abstract class TimezoneEntity implements Built<TimezoneEntity, TimezoneEntityBuilder> {
-  
+abstract class TimezoneEntity
+    implements Built<TimezoneEntity, TimezoneEntityBuilder> {
   factory TimezoneEntity() {
     return _$TimezoneEntity._(
       id: 0,
@@ -45,6 +49,7 @@ abstract class TimezoneEntity implements Built<TimezoneEntity, TimezoneEntityBui
   String get name;
 
   String get location;
-  
-  static Serializer<TimezoneEntity> get serializer => _$timezoneEntitySerializer;
+
+  static Serializer<TimezoneEntity> get serializer =>
+      _$timezoneEntitySerializer;
 }

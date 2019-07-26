@@ -6,19 +6,6 @@ part of 'quote_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<QuoteState> _$quoteStateSerializer = new _$QuoteStateSerializer();
 Serializer<QuoteUIState> _$quoteUIStateSerializer =
     new _$QuoteUIStateSerializer();
@@ -30,7 +17,7 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
   final String wireName = 'QuoteState';
 
   @override
-  Iterable serialize(Serializers serializers, QuoteState object,
+  Iterable<Object> serialize(Serializers serializers, QuoteState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'map',
@@ -48,12 +35,11 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
         ..add(serializers.serialize(object.lastUpdated,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  QuoteState deserialize(Serializers serializers, Iterable serialized,
+  QuoteState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new QuoteStateBuilder();
 
@@ -72,13 +58,13 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(int),
                 const FullType(InvoiceEntity)
-              ])) as BuiltMap);
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -94,7 +80,7 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
   final String wireName = 'QuoteUIState';
 
   @override
-  Iterable serialize(Serializers serializers, QuoteUIState object,
+  Iterable<Object> serialize(Serializers serializers, QuoteUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'selectedId',
@@ -116,12 +102,11 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
         ..add(serializers.serialize(object.editingItem,
             specifiedType: const FullType(InvoiceItemEntity)));
     }
-
     return result;
   }
 
   @override
-  QuoteUIState deserialize(Serializers serializers, Iterable serialized,
+  QuoteUIState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new QuoteUIStateBuilder();
 
@@ -163,7 +148,7 @@ class _$QuoteState extends QuoteState {
   @override
   final BuiltList<int> list;
 
-  factory _$QuoteState([void updates(QuoteStateBuilder b)]) =>
+  factory _$QuoteState([void Function(QuoteStateBuilder) updates]) =>
       (new QuoteStateBuilder()..update(updates)).build();
 
   _$QuoteState._({this.lastUpdated, this.map, this.list}) : super._() {
@@ -176,7 +161,7 @@ class _$QuoteState extends QuoteState {
   }
 
   @override
-  QuoteState rebuild(void updates(QuoteStateBuilder b)) =>
+  QuoteState rebuild(void Function(QuoteStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -244,7 +229,7 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
   }
 
   @override
-  void update(void updates(QuoteStateBuilder b)) {
+  void update(void Function(QuoteStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -283,7 +268,7 @@ class _$QuoteUIState extends QuoteUIState {
   @override
   final ListUIState listUIState;
 
-  factory _$QuoteUIState([void updates(QuoteUIStateBuilder b)]) =>
+  factory _$QuoteUIState([void Function(QuoteUIStateBuilder) updates]) =>
       (new QuoteUIStateBuilder()..update(updates)).build();
 
   _$QuoteUIState._(
@@ -298,7 +283,7 @@ class _$QuoteUIState extends QuoteUIState {
   }
 
   @override
-  QuoteUIState rebuild(void updates(QuoteUIStateBuilder b)) =>
+  QuoteUIState rebuild(void Function(QuoteUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -380,7 +365,7 @@ class QuoteUIStateBuilder
   }
 
   @override
-  void update(void updates(QuoteUIStateBuilder b)) {
+  void update(void Function(QuoteUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -414,3 +399,5 @@ class QuoteUIStateBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

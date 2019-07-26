@@ -5,34 +5,40 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'payment_type_model.g.dart';
 
-abstract class PaymentTypeListResponse implements Built<PaymentTypeListResponse, PaymentTypeListResponseBuilder> {
-
-  factory PaymentTypeListResponse([void updates(PaymentTypeListResponseBuilder b)]) = _$PaymentTypeListResponse;
+abstract class PaymentTypeListResponse
+    implements Built<PaymentTypeListResponse, PaymentTypeListResponseBuilder> {
+  factory PaymentTypeListResponse(
+          [void updates(PaymentTypeListResponseBuilder b)]) =
+      _$PaymentTypeListResponse;
   PaymentTypeListResponse._();
 
   BuiltList<PaymentTypeEntity> get data;
 
-  static Serializer<PaymentTypeListResponse> get serializer => _$paymentTypeListResponseSerializer;
+  static Serializer<PaymentTypeListResponse> get serializer =>
+      _$paymentTypeListResponseSerializer;
 }
 
-abstract class PaymentTypeItemResponse implements Built<PaymentTypeItemResponse, PaymentTypeItemResponseBuilder> {
-
-  factory PaymentTypeItemResponse([void updates(PaymentTypeItemResponseBuilder b)]) = _$PaymentTypeItemResponse;
+abstract class PaymentTypeItemResponse
+    implements Built<PaymentTypeItemResponse, PaymentTypeItemResponseBuilder> {
+  factory PaymentTypeItemResponse(
+          [void updates(PaymentTypeItemResponseBuilder b)]) =
+      _$PaymentTypeItemResponse;
   PaymentTypeItemResponse._();
 
   PaymentTypeEntity get data;
 
-  static Serializer<PaymentTypeItemResponse> get serializer => _$paymentTypeItemResponseSerializer;
+  static Serializer<PaymentTypeItemResponse> get serializer =>
+      _$paymentTypeItemResponseSerializer;
 }
 
 class PaymentTypeFields {
   static const String name = 'name';
   static const String gatewayTypeId = 'gatewayTypeId';
-  
 }
 
-abstract class PaymentTypeEntity extends Object with SelectableEntity implements Built<PaymentTypeEntity, PaymentTypeEntityBuilder> {
-
+abstract class PaymentTypeEntity extends Object
+    with SelectableEntity
+    implements Built<PaymentTypeEntity, PaymentTypeEntityBuilder> {
   factory PaymentTypeEntity() {
     return _$PaymentTypeEntity._(
       id: 0,
@@ -75,6 +81,6 @@ abstract class PaymentTypeEntity extends Object with SelectableEntity implements
   @override
   double get listDisplayAmount => null;
 
-  static Serializer<PaymentTypeEntity> get serializer => _$paymentTypeEntitySerializer;
+  static Serializer<PaymentTypeEntity> get serializer =>
+      _$paymentTypeEntitySerializer;
 }
-

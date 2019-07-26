@@ -108,6 +108,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
+  TaxRateEntity _taxRate1;
+  TaxRateEntity _taxRate2;
+
   List<TextEditingController> _controllers = [];
 
   @override
@@ -155,7 +158,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   }
 
   void _onChanged() {
-    final invoiceItem = widget.invoiceItem.rebuild((b) => b
+    var invoiceItem = widget.invoiceItem.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text
       ..cost = parseDouble(_costController.text)
@@ -163,6 +166,14 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..discount = parseDouble(_discountController.text)
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim());
+
+    if (_taxRate1 != null) {
+      invoiceItem = invoiceItem.applyTax(_taxRate1);
+    }
+    if (_taxRate2 != null) {
+      invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
+    }
+
     if (invoiceItem != widget.invoiceItem) {
       widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
     }
@@ -194,7 +205,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                   label: localization.remove,
                   onPressed: () {
                     widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
-                    Navigator.pop(context);
+                    Navigator.of(context).pop();
                   },
                 ),
                 SizedBox(
@@ -245,7 +256,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             company.hasInvoiceField('quantity')
                 ? TextFormField(
                     controller: _qtyController,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: localization.quantity,
                     ),
@@ -254,27 +266,32 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             company.hasInvoiceField('discount')
                 ? TextFormField(
                     controller: _discountController,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       labelText: localization.discount,
                     ),
                   )
                 : Container(),
-            company.enableInvoiceTaxes
+            company.enableInvoiceItemTaxes
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
-                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        invoiceItem.applyTax(taxRate), widget.index),
+                    onSelected: (taxRate) {
+                      _taxRate1 = taxRate;
+                      _onChanged();
+                    },
                     labelText: localization.tax,
                     initialTaxName: invoiceItem.taxName1,
                     initialTaxRate: invoiceItem.taxRate1,
                   )
                 : Container(),
-            company.enableInvoiceTaxes && company.enableSecondTaxRate
+            company.enableInvoiceItemTaxes && company.enableSecondTaxRate
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
-                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        invoiceItem.applyTax(taxRate, isSecond: true), widget.index),
+                    onSelected: (taxRate) {
+                      _taxRate2 = taxRate;
+                      _onChanged();
+                    },
                     labelText: localization.tax,
                     initialTaxName: invoiceItem.taxName2,
                     initialTaxRate: invoiceItem.taxRate2,

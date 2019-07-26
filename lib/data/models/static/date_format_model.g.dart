@@ -6,19 +6,6 @@ part of 'date_format_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<DateFormatListResponse> _$dateFormatListResponseSerializer =
     new _$DateFormatListResponseSerializer();
 Serializer<DateFormatItemResponse> _$dateFormatItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$DateFormatListResponseSerializer
   final String wireName = 'DateFormatListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, DateFormatListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, DateFormatListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -51,7 +39,7 @@ class _$DateFormatListResponseSerializer
 
   @override
   DateFormatListResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DateFormatListResponseBuilder();
 
@@ -65,7 +53,7 @@ class _$DateFormatListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DateFormatEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -85,7 +73,8 @@ class _$DateFormatItemResponseSerializer
   final String wireName = 'DateFormatItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, DateFormatItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, DateFormatItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -98,7 +87,7 @@ class _$DateFormatItemResponseSerializer
 
   @override
   DateFormatItemResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DateFormatItemResponseBuilder();
 
@@ -128,7 +117,7 @@ class _$DateFormatEntitySerializer
   final String wireName = 'DateFormatEntity';
 
   @override
-  Iterable serialize(Serializers serializers, DateFormatEntity object,
+  Iterable<Object> serialize(Serializers serializers, DateFormatEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
@@ -142,7 +131,8 @@ class _$DateFormatEntitySerializer
   }
 
   @override
-  DateFormatEntity deserialize(Serializers serializers, Iterable serialized,
+  DateFormatEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DateFormatEntityBuilder();
 
@@ -172,7 +162,7 @@ class _$DateFormatListResponse extends DateFormatListResponse {
   final BuiltList<DateFormatEntity> data;
 
   factory _$DateFormatListResponse(
-          [void updates(DateFormatListResponseBuilder b)]) =>
+          [void Function(DateFormatListResponseBuilder) updates]) =>
       (new DateFormatListResponseBuilder()..update(updates)).build();
 
   _$DateFormatListResponse._({this.data}) : super._() {
@@ -183,7 +173,7 @@ class _$DateFormatListResponse extends DateFormatListResponse {
 
   @override
   DateFormatListResponse rebuild(
-          void updates(DateFormatListResponseBuilder b)) =>
+          void Function(DateFormatListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -237,7 +227,7 @@ class DateFormatListResponseBuilder
   }
 
   @override
-  void update(void updates(DateFormatListResponseBuilder b)) {
+  void update(void Function(DateFormatListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -267,7 +257,7 @@ class _$DateFormatItemResponse extends DateFormatItemResponse {
   final DateFormatEntity data;
 
   factory _$DateFormatItemResponse(
-          [void updates(DateFormatItemResponseBuilder b)]) =>
+          [void Function(DateFormatItemResponseBuilder) updates]) =>
       (new DateFormatItemResponseBuilder()..update(updates)).build();
 
   _$DateFormatItemResponse._({this.data}) : super._() {
@@ -278,7 +268,7 @@ class _$DateFormatItemResponse extends DateFormatItemResponse {
 
   @override
   DateFormatItemResponse rebuild(
-          void updates(DateFormatItemResponseBuilder b)) =>
+          void Function(DateFormatItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -332,7 +322,7 @@ class DateFormatItemResponseBuilder
   }
 
   @override
-  void update(void updates(DateFormatItemResponseBuilder b)) {
+  void update(void Function(DateFormatItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -363,7 +353,8 @@ class _$DateFormatEntity extends DateFormatEntity {
   @override
   final String format;
 
-  factory _$DateFormatEntity([void updates(DateFormatEntityBuilder b)]) =>
+  factory _$DateFormatEntity(
+          [void Function(DateFormatEntityBuilder) updates]) =>
       (new DateFormatEntityBuilder()..update(updates)).build();
 
   _$DateFormatEntity._({this.id, this.format}) : super._() {
@@ -376,7 +367,7 @@ class _$DateFormatEntity extends DateFormatEntity {
   }
 
   @override
-  DateFormatEntity rebuild(void updates(DateFormatEntityBuilder b)) =>
+  DateFormatEntity rebuild(void Function(DateFormatEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -437,7 +428,7 @@ class DateFormatEntityBuilder
   }
 
   @override
-  void update(void updates(DateFormatEntityBuilder b)) {
+  void update(void Function(DateFormatEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -448,3 +439,5 @@ class DateFormatEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

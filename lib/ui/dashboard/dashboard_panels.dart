@@ -37,7 +37,6 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final company = state.selectedCompany;
     final clientMap = state.clientState.map;
-    final currencyMap = state.staticState.currencyMap;
 
     return Material(
       color: Theme.of(context).backgroundColor,
@@ -88,7 +87,8 @@ class DashboardPanels extends StatelessWidget {
                       child: DropdownButton<int>(
                         items: memoizedGetCurrencyIds(company, clientMap)
                             .map((currencyId) => DropdownMenuItem<int>(
-                                  child: Text(currencyMap[currencyId].code),
+                                  child: Text(
+                                      viewModel.currencyMap[currencyId].code),
                                   value: currencyId,
                                 ))
                             .toList(),
@@ -280,10 +280,38 @@ class DashboardPanels extends StatelessWidget {
         title: AppLocalization.of(context).tasks);
   }
 
+  Widget _expenseChart(BuildContext context) {
+    final settings = viewModel.dashboardUIState;
+    final state = viewModel.state;
+    final isLoaded = state.expenseState.isLoaded;
+    final currentData = memoizedChartExpenses(state.selectedCompany, settings,
+        state.invoiceState.map, state.expenseState.map);
+
+    List<ChartDataGroup> previousData;
+    if (settings.enableComparison) {
+      previousData = memoizedChartExpenses(
+          state.selectedCompany,
+          settings.rebuild((b) => b..offset += 1),
+          state.invoiceState.map,
+          state.expenseState.map);
+    }
+
+    return _buildChart(
+        context: context,
+        currentData: currentData,
+        previousData: previousData,
+        isLoaded: isLoaded,
+        title: AppLocalization.of(context).expenses);
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = viewModel.state;
     final company = state.selectedCompany;
+
+    if (!state.staticState.isLoaded) {
+      return LoadingIndicator();
+    }
 
     return Stack(
       children: <Widget>[
@@ -299,6 +327,9 @@ class DashboardPanels extends StatelessWidget {
                 : SizedBox(),
             company.isModuleEnabled(EntityType.task)
                 ? _taskChart(context)
+                : SizedBox(),
+            company.isModuleEnabled(EntityType.expense)
+                ? _expenseChart(context)
                 : SizedBox(),
           ],
         ),

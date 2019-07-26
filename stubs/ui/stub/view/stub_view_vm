@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -37,7 +39,7 @@ class StubViewVM {
     @required this.state,
     @required this.stub,
     @required this.company,
-    @required this.onActionSelected,
+    @required this.onEntityAction,
     @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
@@ -48,7 +50,8 @@ class StubViewVM {
 
   factory StubViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final stub = state.stubState.map[state.stubUIState.selectedId];
+    final stub = state.stubState.map[state.stubUIState.selectedId] ??
+        StubEntity(id: state.stubUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
@@ -65,7 +68,15 @@ class StubViewVM {
         isDirty: stub.isNew,
         stub: stub,
         onEditPressed: (BuildContext context) {
-          store.dispatch(EditStub(stub: stub, context: context));
+          final Completer<StubEntity> completer = Completer<StubEntity>();
+          store.dispatch(EditStub(
+              stub: stub, context: context, completer: completer));
+          completer.future.then((stub) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+                  message: AppLocalization.of(context).updatedStub,
+                )));
+          });
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {
@@ -73,32 +84,15 @@ class StubViewVM {
             store.dispatch(UpdateCurrentRoute(StubScreen.route));
           }
         },
-        onActionSelected: (BuildContext context, EntityAction action) {
-          final localization = AppLocalization.of(context);
-          switch (action) {
-            case EntityAction.archive:
-              store.dispatch(ArchiveStubRequest(
-                  popCompleter(context, localization.archivedStub),
-                  stub.id));
-              break;
-            case EntityAction.delete:
-              store.dispatch(DeleteStubRequest(
-                  popCompleter(context, localization.deletedStub),
-                  stub.id));
-              break;
-            case EntityAction.restore:
-              store.dispatch(RestoreStubRequest(
-                  snackBarCompleter(context, localization.restoredStub),
-                  stub.id));
-              break;
-          }
-        });
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handleStubAction(context, stub, action),
+        );
   }
 
   final AppState state;
   final StubEntity stub;
   final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onActionSelected;
+  final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;

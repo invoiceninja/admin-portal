@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
@@ -84,47 +83,9 @@ class ProjectListVM {
       onProjectTap: (context, project) {
         store.dispatch(ViewProject(projectId: project.id, context: context));
       },
-      onEntityAction: (context, project, action) {
-        switch (action) {
-          case EntityAction.edit:
-            store.dispatch(
-                EditProject(context: context, project: project));
-            break;
-          case EntityAction.newInvoice:
-            final items =
-                convertProjectToInvoiceItem(project: project, context: context);
-            store.dispatch(EditInvoice(
-                invoice: InvoiceEntity(company: state.selectedCompany)
-                    .rebuild((b) => b
-                      ..hasTasks = true
-                      ..clientId = project.clientId
-                      ..invoiceItems.addAll(items)),
-                context: context));
-            break;
-          case EntityAction.clone:
-            store.dispatch(
-                EditProject(context: context, project: project.clone));
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestoreProjectRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).restoredProject),
-                project.id));
-            break;
-          case EntityAction.archive:
-            store.dispatch(ArchiveProjectRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).archivedProject),
-                project.id));
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeleteProjectRequest(
-                snackBarCompleter(
-                    context, AppLocalization.of(context).deletedProject),
-                project.id));
-            break;
-        }
-      },
+      onEntityAction:
+          (BuildContext context, BaseEntity project, EntityAction action) =>
+              handleProjectAction(context, project, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }

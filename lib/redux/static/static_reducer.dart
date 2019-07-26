@@ -11,8 +11,10 @@ StaticState refreshData(StaticState staticState, RefreshData action) {
   return StaticState();
 }
 
-StaticState staticLoadedReducer(StaticState staticState, LoadStaticSuccess action) {
+StaticState staticLoadedReducer(
+    StaticState staticState, LoadStaticSuccess action) {
   return StaticState().rebuild((b) => b
+    ..updatedAt = DateTime.now().millisecondsSinceEpoch
     ..currencyMap.addAll(Map.fromIterable(
       action.data.currencies,
       key: (dynamic item) => item.id,
@@ -67,7 +69,5 @@ StaticState staticLoadedReducer(StaticState staticState, LoadStaticSuccess actio
       action.data.frequencies,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
-    ))
-  );
+    )));
 }
-

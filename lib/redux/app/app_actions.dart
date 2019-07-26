@@ -5,6 +5,8 @@ class PersistUI {}
 
 class PersistData {}
 
+class PersistStatic {}
+
 class RefreshClient {
   RefreshClient(this.clientId);
 
@@ -19,9 +21,10 @@ class StartSaving {}
 
 class StopSaving {}
 
-class LoadStaticSuccess {
-  LoadStaticSuccess(this.data);
+class LoadStaticSuccess implements PersistStatic {
+  LoadStaticSuccess({this.data, this.version});
 
+  final String version;
   final StaticData data;
 }
 
@@ -30,26 +33,31 @@ class UserSettingsChanged implements PersistUI {
       {this.enableDarkMode,
       this.emailPayment,
       this.requireAuthentication,
-      this.autoStartTasks});
+      this.autoStartTasks,
+      this.addDocumentsToInvoice});
 
   final bool enableDarkMode;
   final bool emailPayment;
   final bool requireAuthentication;
   final bool autoStartTasks;
+  final bool addDocumentsToInvoice;
 }
 
-class LoadDataSuccess {
-  LoadDataSuccess({this.loginResponse, this.completer});
+class LoadAccountSuccess {
+  LoadAccountSuccess(
+      {this.loginResponse, this.completer, this.loadCompanies = true});
 
   final Completer completer;
   final dynamic loginResponse;
+  final bool loadCompanies;
 }
 
 class RefreshData {
-  RefreshData({this.platform, this.completer});
+  RefreshData({this.platform, this.completer, this.loadCompanies = true});
 
   final String platform;
   final Completer completer;
+  final bool loadCompanies;
 }
 
 class FilterCompany {

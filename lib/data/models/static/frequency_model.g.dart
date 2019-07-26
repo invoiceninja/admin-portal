@@ -6,19 +6,6 @@ part of 'frequency_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<FrequencyListResponse> _$frequencyListResponseSerializer =
     new _$FrequencyListResponseSerializer();
 Serializer<FrequencyItemResponse> _$frequencyItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$FrequencyListResponseSerializer
   final String wireName = 'FrequencyListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, FrequencyListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, FrequencyListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -51,7 +39,7 @@ class _$FrequencyListResponseSerializer
 
   @override
   FrequencyListResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new FrequencyListResponseBuilder();
 
@@ -65,7 +53,7 @@ class _$FrequencyListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(FrequencyEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -85,7 +73,8 @@ class _$FrequencyItemResponseSerializer
   final String wireName = 'FrequencyItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, FrequencyItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, FrequencyItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -98,7 +87,7 @@ class _$FrequencyItemResponseSerializer
 
   @override
   FrequencyItemResponse deserialize(
-      Serializers serializers, Iterable serialized,
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new FrequencyItemResponseBuilder();
 
@@ -128,7 +117,7 @@ class _$FrequencyEntitySerializer
   final String wireName = 'FrequencyEntity';
 
   @override
-  Iterable serialize(Serializers serializers, FrequencyEntity object,
+  Iterable<Object> serialize(Serializers serializers, FrequencyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
@@ -144,7 +133,8 @@ class _$FrequencyEntitySerializer
   }
 
   @override
-  FrequencyEntity deserialize(Serializers serializers, Iterable serialized,
+  FrequencyEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new FrequencyEntityBuilder();
 
@@ -178,7 +168,7 @@ class _$FrequencyListResponse extends FrequencyListResponse {
   final BuiltList<FrequencyEntity> data;
 
   factory _$FrequencyListResponse(
-          [void updates(FrequencyListResponseBuilder b)]) =>
+          [void Function(FrequencyListResponseBuilder) updates]) =>
       (new FrequencyListResponseBuilder()..update(updates)).build();
 
   _$FrequencyListResponse._({this.data}) : super._() {
@@ -188,7 +178,8 @@ class _$FrequencyListResponse extends FrequencyListResponse {
   }
 
   @override
-  FrequencyListResponse rebuild(void updates(FrequencyListResponseBuilder b)) =>
+  FrequencyListResponse rebuild(
+          void Function(FrequencyListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -242,7 +233,7 @@ class FrequencyListResponseBuilder
   }
 
   @override
-  void update(void updates(FrequencyListResponseBuilder b)) {
+  void update(void Function(FrequencyListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -272,7 +263,7 @@ class _$FrequencyItemResponse extends FrequencyItemResponse {
   final FrequencyEntity data;
 
   factory _$FrequencyItemResponse(
-          [void updates(FrequencyItemResponseBuilder b)]) =>
+          [void Function(FrequencyItemResponseBuilder) updates]) =>
       (new FrequencyItemResponseBuilder()..update(updates)).build();
 
   _$FrequencyItemResponse._({this.data}) : super._() {
@@ -282,7 +273,8 @@ class _$FrequencyItemResponse extends FrequencyItemResponse {
   }
 
   @override
-  FrequencyItemResponse rebuild(void updates(FrequencyItemResponseBuilder b)) =>
+  FrequencyItemResponse rebuild(
+          void Function(FrequencyItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -336,7 +328,7 @@ class FrequencyItemResponseBuilder
   }
 
   @override
-  void update(void updates(FrequencyItemResponseBuilder b)) {
+  void update(void Function(FrequencyItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -369,7 +361,7 @@ class _$FrequencyEntity extends FrequencyEntity {
   @override
   final String dateInterval;
 
-  factory _$FrequencyEntity([void updates(FrequencyEntityBuilder b)]) =>
+  factory _$FrequencyEntity([void Function(FrequencyEntityBuilder) updates]) =>
       (new FrequencyEntityBuilder()..update(updates)).build();
 
   _$FrequencyEntity._({this.id, this.name, this.dateInterval}) : super._() {
@@ -385,7 +377,7 @@ class _$FrequencyEntity extends FrequencyEntity {
   }
 
   @override
-  FrequencyEntity rebuild(void updates(FrequencyEntityBuilder b)) =>
+  FrequencyEntity rebuild(void Function(FrequencyEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -454,7 +446,7 @@ class FrequencyEntityBuilder
   }
 
   @override
-  void update(void updates(FrequencyEntityBuilder b)) {
+  void update(void Function(FrequencyEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -466,3 +458,5 @@ class FrequencyEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -6,9 +6,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 part 'list_ui_state.g.dart';
 
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
-
   factory ListUIState(String sortField, {bool sortAscending = true}) {
     return _$ListUIState._(
+      filterClearedAt: 0,
       sortField: sortField,
       sortAscending: sortAscending,
       stateFilters: BuiltList<EntityState>(<EntityState>[
@@ -19,10 +19,13 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
       custom2Filters: BuiltList<String>(),
     );
   }
+
   ListUIState._();
 
   @nullable
   String get filter;
+
+  int get filterClearedAt;
 
   @nullable
   int get filterEntityId;
@@ -30,16 +33,29 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   @nullable
   EntityType get filterEntityType;
 
+  bool entityMatchesFilter(BaseEntity entity) {
+    return filterEntityId == entity.id && filterEntityType == entity.entityType;
+  }
+
   String get sortField;
+
   bool get sortAscending;
+
   BuiltList<EntityState> get stateFilters;
+
   BuiltList<EntityStatus> get statusFilters;
+
   BuiltList<String> get custom1Filters;
+
   BuiltList<String> get custom2Filters;
 
-  bool get hasStateFilters => stateFilters.length != 1 || stateFilters.first != EntityState.active;
+  bool get hasStateFilters =>
+      stateFilters.length != 1 || stateFilters.first != EntityState.active;
+
   bool get hasStatusFilters => statusFilters.isNotEmpty;
+
   bool get hasCustom1Filters => custom1Filters.isNotEmpty;
+
   bool get hasCustom2Filters => custom2Filters.isNotEmpty;
 
   //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;

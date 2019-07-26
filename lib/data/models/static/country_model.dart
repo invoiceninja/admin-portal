@@ -5,24 +5,28 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'country_model.g.dart';
 
-abstract class CountryListResponse implements Built<CountryListResponse, CountryListResponseBuilder> {
-
-  factory CountryListResponse([void updates(CountryListResponseBuilder b)]) = _$CountryListResponse;
+abstract class CountryListResponse
+    implements Built<CountryListResponse, CountryListResponseBuilder> {
+  factory CountryListResponse([void updates(CountryListResponseBuilder b)]) =
+      _$CountryListResponse;
   CountryListResponse._();
 
   BuiltList<CountryEntity> get data;
 
-  static Serializer<CountryListResponse> get serializer => _$countryListResponseSerializer;
+  static Serializer<CountryListResponse> get serializer =>
+      _$countryListResponseSerializer;
 }
 
-abstract class CountryItemResponse implements Built<CountryItemResponse, CountryItemResponseBuilder> {
-
-  factory CountryItemResponse([void updates(CountryItemResponseBuilder b)]) = _$CountryItemResponse;
+abstract class CountryItemResponse
+    implements Built<CountryItemResponse, CountryItemResponseBuilder> {
+  factory CountryItemResponse([void updates(CountryItemResponseBuilder b)]) =
+      _$CountryItemResponse;
   CountryItemResponse._();
 
   CountryEntity get data;
 
-  static Serializer<CountryItemResponse> get serializer => _$countryItemResponseSerializer;
+  static Serializer<CountryItemResponse> get serializer =>
+      _$countryItemResponseSerializer;
 }
 
 class CountryFields {
@@ -46,9 +50,9 @@ class CountryFields {
   */
 }
 
-
-abstract class CountryEntity extends Object with SelectableEntity implements Built<CountryEntity, CountryEntityBuilder> {
-
+abstract class CountryEntity extends Object
+    with SelectableEntity
+    implements Built<CountryEntity, CountryEntityBuilder> {
   factory CountryEntity() {
     return _$CountryEntity._(
       id: 0,
@@ -86,7 +90,6 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
 
   @BuiltValueField(wireName: 'iso_3166_3')
   String get iso3;
-
 
   /*
   factory CountryEntity() {
@@ -186,4 +189,3 @@ abstract class CountryEntity extends Object with SelectableEntity implements Bui
 
   static Serializer<CountryEntity> get serializer => _$countryEntitySerializer;
 }
-

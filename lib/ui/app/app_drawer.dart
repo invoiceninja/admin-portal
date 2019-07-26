@@ -17,13 +17,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
-// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
+// STARTER: import - do not remove comment
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -35,58 +36,118 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (viewModel.selectedCompany == null) {
+    final company = viewModel.selectedCompany;
+
+    if (company == null) {
       return Container();
     }
 
-    final _singleCompany = Align(
-      alignment: FractionalOffset.bottomLeft,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(viewModel.selectedCompany.name),
-          Text(viewModel.selectedCompany.user.email,
-              style: Theme.of(context).textTheme.caption)
-        ],
-      ),
+    final _singleCompany = Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        viewModel.isLoading
+            ? SizedBox(
+                child: Center(
+                  child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+                width: 30,
+                height: 30,
+              )
+            : company.logoUrl != null && company.logoUrl.isNotEmpty
+                ? CachedNetworkImage(
+                    width: 30,
+                    height: 30,
+                    key: ValueKey(company.logoUrl),
+                    imageUrl: company.logoUrl,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Image.asset(
+                        'assets/images/logo.png',
+                        width: 30,
+                        height: 30),
+                  )
+                : Image.asset('assets/images/logo.png', width: 30, height: 30),
+        SizedBox(width: 28, height: 50),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                company.name,
+                style: Theme.of(context).textTheme.subhead,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(company.user.email,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.caption),
+            ],
+          ),
+        )
+      ],
     );
 
-    final _multipleCompanies = Align(
-      alignment: FractionalOffset.bottomLeft,
-      child: viewModel.companies.isNotEmpty
-          ? DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: viewModel.selectedCompanyIndex,
-                items: viewModel.companies
-                    .map((CompanyEntity company) => DropdownMenuItem<String>(
-                          value: (viewModel.companies.indexOf(company) + 1)
-                              .toString(),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(company.name),
-                              Text(company.user.email,
-                                  style: Theme.of(context).textTheme.caption),
-                            ],
+    final _multipleCompanies = DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+      isExpanded: true,
+      value: viewModel.selectedCompanyIndex,
+      items: viewModel.companies
+          .map((CompanyEntity company) => DropdownMenuItem<String>(
+                value: (viewModel.companies.indexOf(company) + 1).toString(),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    company.logoUrl != null && company.logoUrl.isNotEmpty
+                        ? CachedNetworkImage(
+                            width: 30,
+                            height: 30,
+                            key: ValueKey(company.logoUrl),
+                            imageUrl: company.logoUrl,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Image.asset(
+                                'assets/images/logo.png',
+                                width: 30,
+                                height: 30),
+                          )
+                        : Image.asset('assets/images/logo.png',
+                            width: 30, height: 30),
+                    SizedBox(width: 28),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            company.name,
+                            style: Theme.of(context).textTheme.subhead,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  viewModel.onCompanyChanged(context, value,
-                      viewModel.companies[int.parse(value) - 1]);
-                },
-              ),
-            )
-          : Container(),
-    );
+                          Text(company.user.email,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.caption)
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ))
+          .toList(),
+      onChanged: (value) {
+        viewModel.onCompanyChanged(
+            context, value, viewModel.companies[int.parse(value) - 1]);
+      },
+    ));
 
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
     final state = store.state;
-    final user = state.user;
     final enableDarkMode = state.uiState.enableDarkMode;
-    final company = viewModel.selectedCompany;
     final localization = AppLocalization.of(context);
 
     final ThemeData themeData = Theme.of(context);
@@ -98,56 +159,19 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Container(
-            color: enableDarkMode ? Colors.white10 : Colors.grey[200],
-            child: DrawerHeader(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Center(
-                      child: viewModel.selectedCompany.logoUrl != null &&
-                              viewModel.selectedCompany.logoUrl.isNotEmpty
-                          ? CachedNetworkImage(
-                              key: ValueKey(viewModel.selectedCompany.logoUrl),
-                              imageUrl: viewModel.selectedCompany.logoUrl,
-                              placeholder: CircularProgressIndicator(),
-                              errorWidget: Image.asset('assets/images/logo.png',
-                                  width: 100.0, height: 100.0),
-                            )
-                          : Image.asset('assets/images/logo.png',
-                              width: 100.0, height: 100.0)),
-                ),
-                SizedBox(
-                  height: 18.0,
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: viewModel.companies.length > 1 &&
-                                !viewModel.isLoading
-                            ? _multipleCompanies
-                            : _singleCompany),
-                    SizedBox(
-                      child: viewModel.isLoading
-                          ? CircularProgressIndicator()
-                          : null,
-                      width: 20.0,
-                      height: 20.0,
-                    ),
-                  ],
-                ),
-              ],
-            )),
-          ),
-          user.isAdmin
-              ? DrawerTile(
-                  company: company,
-                  icon: FontAwesomeIcons.tachometerAlt,
-                  title: localization.dashboard,
-                  onTap: () => store.dispatch(ViewDashboard(context)),
-                )
-              : Container(),
+              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              color: enableDarkMode ? Colors.white10 : Colors.grey[200],
+              child: viewModel.companies.length > 1 && !viewModel.isLoading
+                  ? _multipleCompanies
+                  : _singleCompany),
           DrawerTile(
+            company: company,
+            icon: FontAwesomeIcons.tachometerAlt,
+            title: localization.dashboard,
+            onTap: () => store.dispatch(ViewDashboard(context)),
+          ),
+          DrawerTile(
+            key: Key(ClientKeys.drawer),
             company: company,
             entityType: EntityType.client,
             icon: getEntityIcon(EntityType.client),
@@ -210,7 +234,6 @@ class AppDrawer extends StatelessWidget {
                   quote: InvoiceEntity(isQuote: true), context: context));
             },
           ),
-          // STARTER: menu - do not remove comment
           DrawerTile(
             company: company,
             entityType: EntityType.project,
@@ -236,46 +259,35 @@ class AppDrawer extends StatelessWidget {
                   context: context));
             },
           ),
-          ListTile(
-            dense: true,
-            leading: Icon(FontAwesomeIcons.building, size: 22.0),
-            title: Text('Vendors & Expenses'),
-            onTap: () {
-              showDialog<AlertDialog>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                      semanticLabel: 'Vendors & Expenses',
-                      title: Text('Vendors & Expenses'),
-                      content: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              style: aboutTextStyle,
-                              text: localization.thanksForPatience + ' ',
-                            ),
-                            _LinkTextSpan(
-                              style: linkStyle,
-                              url: getLegacyAppURL(context),
-                              text: localization.legacyMobileApp,
-                            ),
-                            TextSpan(
-                              style: aboutTextStyle,
-                              text: '.',
-                            ),
-                          ],
-                        ),
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(localization.ok.toUpperCase()),
-                          onPressed: () => Navigator.pop(context),
-                        )
-                      ],
-                    ),
-              );
+          DrawerTile(
+            company: company,
+            entityType: EntityType.vendor,
+            icon: getEntityIcon(EntityType.vendor),
+            title: localization.vendors,
+            onTap: () => store.dispatch(ViewVendorList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(
+                  EditVendor(vendor: VendorEntity(), context: context));
             },
           ),
           DrawerTile(
+            company: company,
+            entityType: EntityType.expense,
+            icon: getEntityIcon(EntityType.expense),
+            title: localization.expenses,
+            onTap: () => store.dispatch(ViewExpenseList(context)),
+            onCreateTap: () {
+              navigator.pop();
+              store.dispatch(EditExpense(
+                  expense:
+                      ExpenseEntity(company: company, uiState: state.uiState),
+                  context: context));
+            },
+          ),
+          // STARTER: menu - do not remove comment
+          DrawerTile(
+            key: Key(SettingsKeys.drawer),
             company: company,
             icon: FontAwesomeIcons.cog,
             title: localization.settings,
@@ -292,7 +304,8 @@ class AppDrawer extends StatelessWidget {
               width: 40.0,
               height: 40.0,
             ),
-            applicationVersion: 'Version ' + kAppVersion,
+            applicationVersion:
+                'Version: $kAppVersion',
             applicationLegalese: '© 2018 Invoice Ninja',
             aboutBoxChildren: <Widget>[
               Padding(

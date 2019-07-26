@@ -81,10 +81,12 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       company4Repository,
       company5Repository);
 
-  final dataLoaded = _createDataLoaded();
+  final accountLoaded = _createAccountLoaded();
 
   final persistData = _createPersistData(company1Repository, company2Repository,
       company3Repository, company4Repository, company5Repository);
+
+  final persistStatic = _createPersistStatic(staticRepository);
 
   final userLoggedIn = _createUserLoggedIn(
       authRepository,
@@ -112,8 +114,9 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
-    TypedMiddleware<AppState, LoadDataSuccess>(dataLoaded),
+    TypedMiddleware<AppState, LoadAccountSuccess>(accountLoaded),
     TypedMiddleware<AppState, PersistData>(persistData),
+    TypedMiddleware<AppState, PersistStatic>(persistStatic),
     TypedMiddleware<AppState, PersistUI>(persistUI),
   ];
 }
@@ -169,6 +172,13 @@ Middleware<AppState> _createLoadState(
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
 
+      if (appState.staticState.isStale) {
+        store.dispatch(RefreshData(
+          loadCompanies: false,
+          platform: getPlatform(action.context),
+        ));
+      }
+
       if (uiState.currentRoute != LoginScreen.route &&
           authState.url.isNotEmpty) {
         final NavigatorState navigator = Navigator.of(action.context);
@@ -186,7 +196,7 @@ Middleware<AppState> _createLoadState(
       print(error);
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(getKeychainTokenKey()) ?? '';
+      final token = prefs.getString(getCompanyTokenKey()) ?? '';
 
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
@@ -275,25 +285,39 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   };
 }
 
-Middleware<AppState> _createDataLoaded() {
+Middleware<AppState> _createAccountLoaded() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     final dynamic data = action.loginResponse;
-    store.dispatch(LoadStaticSuccess(data.static));
+    store.dispatch(LoadStaticSuccess(data: data.static, version: data.version));
 
-    for (int i = 0; i < data.accounts.length; i++) {
-      final CompanyEntity company = data.accounts[i];
+    if (action.loadCompanies) {
+      for (int i = 0; i < data.accounts.length; i++) {
+        final CompanyEntity company = data.accounts[i];
 
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString(getKeychainTokenKey(i), company.token);
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(getCompanyTokenKey(i), company.token);
 
-      store.dispatch(SelectCompany(i + 1, company));
-      store.dispatch(LoadCompanySuccess(company));
+        store.dispatch(SelectCompany(i + 1, company));
+        store.dispatch(LoadCompanySuccess(company));
+      }
+
+      store.dispatch(SelectCompany(1, data.accounts[0]));
+      store.dispatch(UserLoginSuccess());
     }
 
-    store.dispatch(SelectCompany(1, data.accounts[0]));
-    store.dispatch(UserLoginSuccess());
+    if (action.completer != null) {
+      action.completer.complete(null);
+    }
+  };
+}
 
-    action.completer.complete(null);
+Middleware<AppState> _createPersistStatic(
+    PersistenceRepository staticRepository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    // first process the action so the data is in the state
+    next(action);
+
+    staticRepository.saveStaticState(store.state.staticState);
   };
 }
 
@@ -352,8 +376,8 @@ Middleware<AppState> _createDeleteState(
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    for (int i=0; i<5; i++) {
-      prefs.setString(getKeychainTokenKey(i), '');
+    for (int i = 0; i < 5; i++) {
+      prefs.setString(getCompanyTokenKey(i), '');
     }
 
     next(action);

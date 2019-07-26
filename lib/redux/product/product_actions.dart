@@ -3,6 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewProductList implements PersistUI {
   ViewProductList(this.context);
@@ -10,11 +16,19 @@ class ViewProductList implements PersistUI {
   final BuildContext context;
 }
 
+class ViewProduct implements PersistUI {
+  ViewProduct({this.productId, this.context});
+
+  final int productId;
+  final BuildContext context;
+}
+
 class EditProduct implements PersistUI {
-  EditProduct({this.product, this.context});
+  EditProduct({this.product, this.context, this.completer});
 
   final ProductEntity product;
   final BuildContext context;
+  final Completer completer;
 }
 
 class UpdateProduct implements PersistUI {
@@ -170,4 +184,42 @@ class FilterProductDropdown {
   FilterProductDropdown(this.filter);
 
   final String filter;
+}
+
+void handleProductAction(
+    BuildContext context, ProductEntity product, EntityAction action) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final localization = AppLocalization.of(context);
+
+  switch (action) {
+    case EntityAction.newInvoice:
+      final item =
+          convertProductToInvoiceItem(context: context, product: product);
+      store.dispatch(EditInvoice(
+          context: context,
+          invoice: InvoiceEntity(company: state.selectedCompany)
+              .rebuild((b) => b..invoiceItems.add(item))));
+      break;
+    case EntityAction.edit:
+      store.dispatch(EditProduct(context: context, product: product));
+      break;
+    case EntityAction.clone:
+      store.dispatch(EditProduct(context: context, product: product.clone));
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreProductRequest(
+          snackBarCompleter(context, localization.restoredProduct),
+          product.id));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveProductRequest(
+          snackBarCompleter(context, localization.archivedProduct),
+          product.id));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteProductRequest(
+          snackBarCompleter(context, localization.deletedProduct), product.id));
+      break;
+  }
 }

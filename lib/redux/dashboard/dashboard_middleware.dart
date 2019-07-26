@@ -19,7 +19,6 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
   ];
 }
 
-
 Middleware<AppState> _createViewDashboard() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     store.dispatch(LoadDashboard());

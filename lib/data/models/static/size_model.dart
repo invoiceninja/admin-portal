@@ -5,32 +5,37 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'size_model.g.dart';
 
-abstract class SizeListResponse implements Built<SizeListResponse, SizeListResponseBuilder> {
-
-  factory SizeListResponse([void updates(SizeListResponseBuilder b)]) = _$SizeListResponse;
+abstract class SizeListResponse
+    implements Built<SizeListResponse, SizeListResponseBuilder> {
+  factory SizeListResponse([void updates(SizeListResponseBuilder b)]) =
+      _$SizeListResponse;
   SizeListResponse._();
 
   BuiltList<SizeEntity> get data;
 
-  static Serializer<SizeListResponse> get serializer => _$sizeListResponseSerializer;
+  static Serializer<SizeListResponse> get serializer =>
+      _$sizeListResponseSerializer;
 }
 
-abstract class SizeItemResponse implements Built<SizeItemResponse, SizeItemResponseBuilder> {
-
-  factory SizeItemResponse([void updates(SizeItemResponseBuilder b)]) = _$SizeItemResponse;
+abstract class SizeItemResponse
+    implements Built<SizeItemResponse, SizeItemResponseBuilder> {
+  factory SizeItemResponse([void updates(SizeItemResponseBuilder b)]) =
+      _$SizeItemResponse;
   SizeItemResponse._();
 
   SizeEntity get data;
 
-  static Serializer<SizeItemResponse> get serializer => _$sizeItemResponseSerializer;
+  static Serializer<SizeItemResponse> get serializer =>
+      _$sizeItemResponseSerializer;
 }
 
 class SizeFields {
   static const String name = 'name';
 }
 
-abstract class SizeEntity extends Object with SelectableEntity implements Built<SizeEntity, SizeEntityBuilder> {
-
+abstract class SizeEntity extends Object
+    with SelectableEntity
+    implements Built<SizeEntity, SizeEntityBuilder> {
   factory SizeEntity() {
     return _$SizeEntity._(
       id: 0,

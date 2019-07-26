@@ -6,19 +6,6 @@ part of 'country_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<CountryListResponse> _$countryListResponseSerializer =
     new _$CountryListResponseSerializer();
 Serializer<CountryItemResponse> _$countryItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$CountryListResponseSerializer
   final String wireName = 'CountryListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, CountryListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, CountryListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -50,7 +38,8 @@ class _$CountryListResponseSerializer
   }
 
   @override
-  CountryListResponse deserialize(Serializers serializers, Iterable serialized,
+  CountryListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryListResponseBuilder();
 
@@ -64,7 +53,7 @@ class _$CountryListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CountryEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -84,7 +73,8 @@ class _$CountryItemResponseSerializer
   final String wireName = 'CountryItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, CountryItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, CountryItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -96,7 +86,8 @@ class _$CountryItemResponseSerializer
   }
 
   @override
-  CountryItemResponse deserialize(Serializers serializers, Iterable serialized,
+  CountryItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryItemResponseBuilder();
 
@@ -124,7 +115,7 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
   final String wireName = 'CountryEntity';
 
   @override
-  Iterable serialize(Serializers serializers, CountryEntity object,
+  Iterable<Object> serialize(Serializers serializers, CountryEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -158,12 +149,12 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  CountryEntity deserialize(Serializers serializers, Iterable serialized,
+  CountryEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryEntityBuilder();
 
@@ -216,7 +207,8 @@ class _$CountryListResponse extends CountryListResponse {
   @override
   final BuiltList<CountryEntity> data;
 
-  factory _$CountryListResponse([void updates(CountryListResponseBuilder b)]) =>
+  factory _$CountryListResponse(
+          [void Function(CountryListResponseBuilder) updates]) =>
       (new CountryListResponseBuilder()..update(updates)).build();
 
   _$CountryListResponse._({this.data}) : super._() {
@@ -226,7 +218,8 @@ class _$CountryListResponse extends CountryListResponse {
   }
 
   @override
-  CountryListResponse rebuild(void updates(CountryListResponseBuilder b)) =>
+  CountryListResponse rebuild(
+          void Function(CountryListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -280,7 +273,7 @@ class CountryListResponseBuilder
   }
 
   @override
-  void update(void updates(CountryListResponseBuilder b)) {
+  void update(void Function(CountryListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -309,7 +302,8 @@ class _$CountryItemResponse extends CountryItemResponse {
   @override
   final CountryEntity data;
 
-  factory _$CountryItemResponse([void updates(CountryItemResponseBuilder b)]) =>
+  factory _$CountryItemResponse(
+          [void Function(CountryItemResponseBuilder) updates]) =>
       (new CountryItemResponseBuilder()..update(updates)).build();
 
   _$CountryItemResponse._({this.data}) : super._() {
@@ -319,7 +313,8 @@ class _$CountryItemResponse extends CountryItemResponse {
   }
 
   @override
-  CountryItemResponse rebuild(void updates(CountryItemResponseBuilder b)) =>
+  CountryItemResponse rebuild(
+          void Function(CountryItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -372,7 +367,7 @@ class CountryItemResponseBuilder
   }
 
   @override
-  void update(void updates(CountryItemResponseBuilder b)) {
+  void update(void Function(CountryItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -415,7 +410,7 @@ class _$CountryEntity extends CountryEntity {
   @override
   final int id;
 
-  factory _$CountryEntity([void updates(CountryEntityBuilder b)]) =>
+  factory _$CountryEntity([void Function(CountryEntityBuilder) updates]) =>
       (new CountryEntityBuilder()..update(updates)).build();
 
   _$CountryEntity._(
@@ -446,7 +441,7 @@ class _$CountryEntity extends CountryEntity {
   }
 
   @override
-  CountryEntity rebuild(void updates(CountryEntityBuilder b)) =>
+  CountryEntity rebuild(void Function(CountryEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -563,7 +558,7 @@ class CountryEntityBuilder
   }
 
   @override
-  void update(void updates(CountryEntityBuilder b)) {
+  void update(void Function(CountryEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -583,3 +578,5 @@ class CountryEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

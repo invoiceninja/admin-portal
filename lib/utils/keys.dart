@@ -26,4 +26,15 @@ class ProductKeys {
   static const String productKey = 'productKey';
   static const String notes = 'productNotes';
   static const String cost = 'productCost';
+  static const String filter = 'productFilter';
+}
+
+class ClientKeys {
+  static const String screen = 'ClientScreen';
+  static const String fab = 'clientFab';
+  static const String drawer = 'clientDrawer';
+}
+
+class SettingsKeys {
+  static const String drawer = 'settingsDrawer';
 }

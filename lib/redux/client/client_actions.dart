@@ -1,8 +1,15 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewClientList implements PersistUI {
   ViewClientList(this.context);
@@ -243,4 +250,48 @@ class FilterClientsByCustom2 implements PersistUI {
   FilterClientsByCustom2(this.value);
 
   final String value;
+}
+
+void handleClientAction(
+    BuildContext context, ClientEntity client, EntityAction action) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final CompanyEntity company = state.selectedCompany;
+  final localization = AppLocalization.of(context);
+
+  switch (action) {
+    case EntityAction.edit:
+      store.dispatch(EditClient(context: context, client: client));
+      break;
+    case EntityAction.newInvoice:
+      store.dispatch(EditInvoice(
+          invoice: InvoiceEntity(company: company)
+              .rebuild((b) => b.clientId = client.id),
+          context: context));
+      break;
+    case EntityAction.newExpense:
+      store.dispatch(EditExpense(
+          expense: ExpenseEntity(
+              company: company, client: client, uiState: state.uiState),
+          context: context));
+      break;
+    case EntityAction.enterPayment:
+      store.dispatch(EditPayment(
+          payment: PaymentEntity(company: company)
+              .rebuild((b) => b.clientId = client.id),
+          context: context));
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreClientRequest(
+          snackBarCompleter(context, localization.restoredClient), client.id));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveClientRequest(
+          snackBarCompleter(context, localization.archivedClient), client.id));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteClientRequest(
+          snackBarCompleter(context, localization.deletedClient), client.id));
+      break;
+  }
 }

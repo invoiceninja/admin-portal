@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 
 part 'company_model.g.dart';
@@ -50,10 +51,11 @@ abstract class CompanyEntity
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
       taskStatusMap: BuiltMap<int, TaskStatusEntity>(),
+      expenseCategories: BuiltList<ExpenseCategoryEntity>(),
+      expenseCategoryMap: BuiltMap<int, ExpenseCategoryEntity>(),
       user: UserEntity(),
-      //userId: 0,
-      //users: BuiltList<UserEntity>(),
-      //userMap: BuiltMap<int, UserEntity>(),
+      users: BuiltList<UserEntity>(),
+      userMap: BuiltMap<int, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
@@ -193,11 +195,14 @@ abstract class CompanyEntity
   BuiltList<TaskStatusEntity> get taskStatuses;
   BuiltMap<int, TaskStatusEntity> get taskStatusMap;
 
-  //@BuiltValueField(wireName: 'user_id')
-  //int get userId;
-  //@BuiltValueField(wireName: 'users')
-  //BuiltList<UserEntity> get users;
-  //BuiltMap<int, UserEntity> get userMap;
+  @nullable
+  @BuiltValueField(wireName: 'expense_categories')
+  BuiltList<ExpenseCategoryEntity> get expenseCategories;
+  BuiltMap<int, ExpenseCategoryEntity> get expenseCategoryMap;
+
+  @BuiltValueField(wireName: 'users')
+  BuiltList<UserEntity> get users;
+  BuiltMap<int, UserEntity> get userMap;
 
   UserEntity get user;
 
@@ -269,7 +274,6 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'has_custom_design3')
   bool get hasCustomDesign3;
 
-
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')
 
@@ -308,13 +312,11 @@ abstract class CompanyEntity
     }
   }
 
-  bool get isProPlan {
-    if (appUrl != kAppUrl) {
-      return true;
-    }
+  bool get isSelfHost => appUrl != kAppUrl;
 
-    return plan.isNotEmpty;
-  }
+  bool get isProPlan => isSelfHost || plan == kPlanPro;
+
+  bool get isEnterprisePlan => isProPlan || plan == kPlanEnterprise;
 
   bool isModuleEnabled(EntityType entityType) {
     if (entityType == EntityType.recurringInvoice &&
@@ -341,7 +343,8 @@ abstract class CompanyEntity
       companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
 
   // Handle bug in earlier version of API
-  int get firstMonthOfYear => financialYearStart == 2000 ? 1 : financialYearStart;
+  int get firstMonthOfYear =>
+      financialYearStart == 2000 ? 1 : financialYearStart;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

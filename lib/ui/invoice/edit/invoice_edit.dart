@@ -146,9 +146,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   return InvoiceItemSelector(
                     excluded: invoice.invoiceItems
                         .where((item) => item.isTask || item.isExpense)
-                        //.map((item) => item.isTask ? viewModel.state.taskState.map[item.taskId] : viewModel.expenseState)
-                        .map((item) =>
-                            viewModel.state.taskState.map[item.taskId])
+                        .map((item) => item.isTask
+                            ? viewModel.state.taskState.map[item.taskId]
+                            : viewModel.state.expenseState.map[item.expenseId])
                         .toList(),
                     clientId: invoice.clientId,
                     onItemsSelected: (items, [clientId]) {

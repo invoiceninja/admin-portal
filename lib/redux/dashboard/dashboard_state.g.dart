@@ -6,19 +6,6 @@ part of 'dashboard_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<DashboardState> _$dashboardStateSerializer =
     new _$DashboardStateSerializer();
 Serializer<DashboardUIState> _$dashboardUIStateSerializer =
@@ -32,7 +19,7 @@ class _$DashboardStateSerializer
   final String wireName = 'DashboardState';
 
   @override
-  Iterable serialize(Serializers serializers, DashboardState object,
+  Iterable<Object> serialize(Serializers serializers, DashboardState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
     if (object.lastUpdated != null) {
@@ -47,12 +34,12 @@ class _$DashboardStateSerializer
         ..add(serializers.serialize(object.data,
             specifiedType: const FullType(DashboardEntity)));
     }
-
     return result;
   }
 
   @override
-  DashboardState deserialize(Serializers serializers, Iterable serialized,
+  DashboardState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DashboardStateBuilder();
 
@@ -86,7 +73,7 @@ class _$DashboardUIStateSerializer
   final String wireName = 'DashboardUIState';
 
   @override
-  Iterable serialize(Serializers serializers, DashboardUIState object,
+  Iterable<Object> serialize(Serializers serializers, DashboardUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'dateRange',
@@ -121,7 +108,8 @@ class _$DashboardUIStateSerializer
   }
 
   @override
-  DashboardUIState deserialize(Serializers serializers, Iterable serialized,
+  DashboardUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DashboardUIStateBuilder();
 
@@ -181,13 +169,13 @@ class _$DashboardState extends DashboardState {
   @override
   final DashboardEntity data;
 
-  factory _$DashboardState([void updates(DashboardStateBuilder b)]) =>
+  factory _$DashboardState([void Function(DashboardStateBuilder) updates]) =>
       (new DashboardStateBuilder()..update(updates)).build();
 
   _$DashboardState._({this.lastUpdated, this.data}) : super._();
 
   @override
-  DashboardState rebuild(void updates(DashboardStateBuilder b)) =>
+  DashboardState rebuild(void Function(DashboardStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -249,7 +237,7 @@ class DashboardStateBuilder
   }
 
   @override
-  void update(void updates(DashboardStateBuilder b)) {
+  void update(void Function(DashboardStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -296,7 +284,8 @@ class _$DashboardUIState extends DashboardUIState {
   @override
   final int currencyId;
 
-  factory _$DashboardUIState([void updates(DashboardUIStateBuilder b)]) =>
+  factory _$DashboardUIState(
+          [void Function(DashboardUIStateBuilder) updates]) =>
       (new DashboardUIStateBuilder()..update(updates)).build();
 
   _$DashboardUIState._(
@@ -344,7 +333,7 @@ class _$DashboardUIState extends DashboardUIState {
   }
 
   @override
-  DashboardUIState rebuild(void updates(DashboardUIStateBuilder b)) =>
+  DashboardUIState rebuild(void Function(DashboardUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -475,7 +464,7 @@ class DashboardUIStateBuilder
   }
 
   @override
-  void update(void updates(DashboardUIStateBuilder b)) {
+  void update(void Function(DashboardUIStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -496,3 +485,5 @@ class DashboardUIStateBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

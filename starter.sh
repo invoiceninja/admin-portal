@@ -253,14 +253,14 @@ else
         code="${code}),${lineBreak}"
         sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/edit/${module}_edit.dart"
 
-        comment="STARTER: widgets - do not remove comment"
-        if [ ${element} = ${fieldsArray[0]} ]; then
-            code="Text(${module}.${element}, style: Theme.of(context).textTheme.title),${lineBreak}"
-            code="${code}SizedBox(height: 12.0),${lineBreak}"
-        else
-            code="Text(${module}.${element}),"
-        fi
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/view/${module}_view.dart"
+        #comment="STARTER: widgets - do not remove comment"
+        #if [ ${element} = ${fieldsArray[0]} ]; then
+        #    code="Text(${module}.${element}, style: Theme.of(context).textTheme.title),${lineBreak}"
+        #    code="${code}SizedBox(height: 12.0),${lineBreak}"
+        #else
+        #    code="Text(${module}.${element}),"
+        #fi
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/view/${module}_view.dart"
 
         comment="STARTER: sort - do not remove comment"
         code="${Module}Fields.${element},${lineBreak}"
@@ -279,7 +279,7 @@ else
         if [ "$idx" -eq 1 ]; then
             comment="STARTER: subtitle - do not remove comment"
             code="subtitle: Text(${module}.${element}, maxLines: 4),${lineBreak}"
-            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/${module}_item.dart"
+            #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/${module}_item.dart"
         fi
     done
 
@@ -306,8 +306,9 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/data\/models\/${module}_model.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
+    #code="import 'package:${package}\/data\/models\/${module}_model.dart';${lineBreak}"
+    #code="${code}import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: serializers - do not remove comment"
@@ -339,10 +340,17 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/app_drawer.dart
 
     comment="STARTER: menu - do not remove comment"
-    code="ListTile(${lineBreak}"
-    code="${code}leading: Icon(Icons.widgets),${lineBreak}"
-    code="${code}title: Text('${Module}s'),${lineBreak}"
+    code="DrawerTile(${lineBreak}"
+    code="${code}company: company,${lineBreak}"
+    code="${code}entityType: EntityType.${module},${lineBreak}"
+    code="${code}icon: getEntityIcon(EntityType.${module}),${lineBreak}"
+    code="${code}title: localization.${module}s,${lineBreak}"
     code="${code}onTap: () => store.dispatch(View${Module}List(context)),${lineBreak}"
+    code="${code}onCreateTap: () {${lineBreak}"
+    code="${code}navigator.pop();${lineBreak}"
+    code="${code}store.dispatch(Edit${Module}(${lineBreak}"
+    code="${code}${module}: ${Module}Entity(), context: context));${lineBreak}"
+    code="${code}},${lineBreak}"
     code="${code}),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/app_drawer.dart
 

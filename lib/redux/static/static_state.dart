@@ -1,12 +1,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
 part 'static_state.g.dart';
 
 abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
-
   factory StaticState() {
     return _$StaticState._(
       currencyMap: BuiltMap<int, CurrencyEntity>(),
@@ -22,18 +22,43 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
       frequencyMap: BuiltMap<int, FrequencyEntity>(),
     );
   }
+
   StaticState._();
 
+  @nullable
+  int get updatedAt;
+
+  bool get isLoaded => updatedAt != null && updatedAt > 0;
+
+  bool get isStale {
+    if (!isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - updatedAt >
+        kMillisecondsToRefreshStaticData;
+  }
+
   BuiltMap<int, CurrencyEntity> get currencyMap;
+
   BuiltMap<int, SizeEntity> get sizeMap;
+
   BuiltMap<int, IndustryEntity> get industryMap;
+
   BuiltMap<int, TimezoneEntity> get timezoneMap;
+
   BuiltMap<int, DateFormatEntity> get dateFormatMap;
+
   BuiltMap<int, DatetimeFormatEntity> get datetimeFormatMap;
+
   BuiltMap<int, LanguageEntity> get languageMap;
+
   BuiltMap<int, PaymentTypeEntity> get paymentTypeMap;
+
   BuiltMap<int, CountryEntity> get countryMap;
+
   BuiltMap<int, InvoiceStatusEntity> get invoiceStatusMap;
+
   BuiltMap<int, FrequencyEntity> get frequencyMap;
 
   static Serializer<StaticState> get serializer => _$staticStateSerializer;

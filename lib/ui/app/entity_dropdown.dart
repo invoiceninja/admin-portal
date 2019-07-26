@@ -18,7 +18,7 @@ class EntityDropdown extends StatefulWidget {
     this.autoValidate = false,
     this.initialValue,
     this.onAddPressed,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final EntityType entityType;
   final BuiltMap<int, SelectableEntity> entityMap;

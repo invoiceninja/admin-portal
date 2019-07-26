@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -65,43 +64,11 @@ class ProductListVM {
       isLoaded: state.productState.isLoaded,
       filter: state.productUIState.listUIState.filter,
       onProductTap: (context, product) {
-        store.dispatch(EditProduct(product: product, context: context));
+        store.dispatch(ViewProduct(productId: product.id, context: context));
       },
-      onEntityAction: (context, product, action) {
-        final localization = AppLocalization.of(context);
-        switch (action) {
-          case EntityAction.newInvoice:
-            final item =
-                convertProductToInvoiceItem(context: context, product: product);
-            store.dispatch(EditInvoice(
-                context: context,
-                invoice: InvoiceEntity(company: state.selectedCompany)
-                    .rebuild((b) => b..invoiceItems.add(item))));
-            break;
-          case EntityAction.edit:
-            store.dispatch(EditProduct(context: context, product: product));
-            break;
-          case EntityAction.clone:
-            store.dispatch(
-                EditProduct(context: context, product: product.clone));
-            break;
-          case EntityAction.restore:
-            store.dispatch(RestoreProductRequest(
-                snackBarCompleter(context, localization.restoredProduct),
-                product.id));
-            break;
-          case EntityAction.archive:
-            store.dispatch(ArchiveProductRequest(
-                snackBarCompleter(context, localization.archivedProduct),
-                product.id));
-            break;
-          case EntityAction.delete:
-            store.dispatch(DeleteProductRequest(
-                snackBarCompleter(context, localization.deletedProduct),
-                product.id));
-            break;
-        }
-      },
+      onEntityAction:
+          (BuildContext context, BaseEntity product, EntityAction action) =>
+              handleProductAction(context, product, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }

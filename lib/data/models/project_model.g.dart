@@ -6,19 +6,6 @@ part of 'project_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_annotating_with_dynamic
-// ignore_for_file: avoid_catches_without_on_clauses
-// ignore_for_file: avoid_returning_this
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: prefer_expression_function_bodies
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: unnecessary_const
-// ignore_for_file: unnecessary_new
-// ignore_for_file: test_types_in_equals
-
 Serializer<ProjectListResponse> _$projectListResponseSerializer =
     new _$ProjectListResponseSerializer();
 Serializer<ProjectItemResponse> _$projectItemResponseSerializer =
@@ -37,7 +24,8 @@ class _$ProjectListResponseSerializer
   final String wireName = 'ProjectListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ProjectListResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, ProjectListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -50,7 +38,8 @@ class _$ProjectListResponseSerializer
   }
 
   @override
-  ProjectListResponse deserialize(Serializers serializers, Iterable serialized,
+  ProjectListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProjectListResponseBuilder();
 
@@ -64,7 +53,7 @@ class _$ProjectListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ProjectEntity)]))
-              as BuiltList);
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -84,7 +73,8 @@ class _$ProjectItemResponseSerializer
   final String wireName = 'ProjectItemResponse';
 
   @override
-  Iterable serialize(Serializers serializers, ProjectItemResponse object,
+  Iterable<Object> serialize(
+      Serializers serializers, ProjectItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
@@ -96,7 +86,8 @@ class _$ProjectItemResponseSerializer
   }
 
   @override
-  ProjectItemResponse deserialize(Serializers serializers, Iterable serialized,
+  ProjectItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProjectItemResponseBuilder();
 
@@ -124,7 +115,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
   final String wireName = 'ProjectEntity';
 
   @override
-  Iterable serialize(Serializers serializers, ProjectEntity object,
+  Iterable<Object> serialize(Serializers serializers, ProjectEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'name',
@@ -187,12 +178,12 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(int)));
     }
-
     return result;
   }
 
   @override
-  ProjectEntity deserialize(Serializers serializers, Iterable serialized,
+  ProjectEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProjectEntityBuilder();
 
@@ -269,7 +260,8 @@ class _$ProjectListResponse extends ProjectListResponse {
   @override
   final BuiltList<ProjectEntity> data;
 
-  factory _$ProjectListResponse([void updates(ProjectListResponseBuilder b)]) =>
+  factory _$ProjectListResponse(
+          [void Function(ProjectListResponseBuilder) updates]) =>
       (new ProjectListResponseBuilder()..update(updates)).build();
 
   _$ProjectListResponse._({this.data}) : super._() {
@@ -279,7 +271,8 @@ class _$ProjectListResponse extends ProjectListResponse {
   }
 
   @override
-  ProjectListResponse rebuild(void updates(ProjectListResponseBuilder b)) =>
+  ProjectListResponse rebuild(
+          void Function(ProjectListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -333,7 +326,7 @@ class ProjectListResponseBuilder
   }
 
   @override
-  void update(void updates(ProjectListResponseBuilder b)) {
+  void update(void Function(ProjectListResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -362,7 +355,8 @@ class _$ProjectItemResponse extends ProjectItemResponse {
   @override
   final ProjectEntity data;
 
-  factory _$ProjectItemResponse([void updates(ProjectItemResponseBuilder b)]) =>
+  factory _$ProjectItemResponse(
+          [void Function(ProjectItemResponseBuilder) updates]) =>
       (new ProjectItemResponseBuilder()..update(updates)).build();
 
   _$ProjectItemResponse._({this.data}) : super._() {
@@ -372,7 +366,8 @@ class _$ProjectItemResponse extends ProjectItemResponse {
   }
 
   @override
-  ProjectItemResponse rebuild(void updates(ProjectItemResponseBuilder b)) =>
+  ProjectItemResponse rebuild(
+          void Function(ProjectItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -425,7 +420,7 @@ class ProjectItemResponseBuilder
   }
 
   @override
-  void update(void updates(ProjectItemResponseBuilder b)) {
+  void update(void Function(ProjectItemResponseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -480,7 +475,7 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final int id;
 
-  factory _$ProjectEntity([void updates(ProjectEntityBuilder b)]) =>
+  factory _$ProjectEntity([void Function(ProjectEntityBuilder) updates]) =>
       (new ProjectEntityBuilder()..update(updates)).build();
 
   _$ProjectEntity._(
@@ -526,7 +521,7 @@ class _$ProjectEntity extends ProjectEntity {
   }
 
   @override
-  ProjectEntity rebuild(void updates(ProjectEntityBuilder b)) =>
+  ProjectEntity rebuild(void Function(ProjectEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -696,7 +691,7 @@ class ProjectEntityBuilder
   }
 
   @override
-  void update(void updates(ProjectEntityBuilder b)) {
+  void update(void Function(ProjectEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -722,3 +717,5 @@ class ProjectEntityBuilder
     return _$result;
   }
 }
+
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

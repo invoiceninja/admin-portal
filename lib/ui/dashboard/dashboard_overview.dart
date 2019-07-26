@@ -3,7 +3,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 
 class DashboardOverview extends StatelessWidget {
-
   const DashboardOverview({
     Key key,
     @required this.viewModel,

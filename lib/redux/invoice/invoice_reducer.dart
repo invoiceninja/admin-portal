@@ -70,12 +70,15 @@ InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
   final item = action.invoiceItem ?? InvoiceItemEntity();
   return invoice.rebuild((b) => b
     ..hasTasks = b.hasTasks || item.isTask
+    ..hasExpenses = b.hasExpenses || item.isExpense
     ..invoiceItems.add(item));
 }
 
 InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
   return invoice.rebuild((b) => b
     ..hasTasks = action.invoiceItems.where((item) => item.isTask).isNotEmpty
+    ..hasExpenses =
+        action.invoiceItems.where((item) => item.isExpense).isNotEmpty
     ..invoiceItems.addAll(action.invoiceItems));
 }
 
@@ -155,7 +158,11 @@ ListUIState _filterInvoicesByEntity(
 
 ListUIState _filterInvoices(
     ListUIState invoiceListState, FilterInvoices action) {
-  return invoiceListState.rebuild((b) => b..filter = action.filter);
+  return invoiceListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : invoiceListState.filterClearedAt);
 }
 
 ListUIState _sortInvoices(ListUIState invoiceListState, SortInvoices action) {
