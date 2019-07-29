@@ -44,7 +44,9 @@ class DocumentGrid extends StatelessWidget {
                     onPressed: () async {
                       final image = await ImagePicker.pickImage(
                           source: ImageSource.camera);
-                      onUploadDocument(image.path);
+                      if (image != null) {
+                        onUploadDocument(image.path);
+                      }
                     },
                   ),
                 ),
