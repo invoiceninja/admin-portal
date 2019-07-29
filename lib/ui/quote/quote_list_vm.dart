@@ -81,6 +81,7 @@ class QuoteListVM extends EntityListVM {
     final state = store.state;
 
     return QuoteListVM(
+      state: state,
       user: state.user,
       listState: state.quoteListState,
       invoiceList: memoizedFilteredQuoteList(state.quoteState.map,
