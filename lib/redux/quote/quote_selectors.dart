@@ -21,7 +21,8 @@ List<int> filteredQuotesSelector(
     ListUIState quoteListState) {
   final list = quoteList.where((quoteId) {
     final quote = quoteMap[quoteId];
-    final client = clientMap[quote.clientId];
+    final client =
+        clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
 
     if (quoteListState.filterEntityId != null) {
       if (!quoteListState.entityMatchesFilter(client)) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
@@ -46,8 +47,10 @@ class _PaymentViewState extends State<PaymentView> {
           formatDate(payment.paymentDate, context);
     }
     if (payment.paymentTypeId > 0) {
-      fields[PaymentFields.paymentTypeId] =
-          state.staticState.paymentTypeMap[payment.paymentTypeId].name;
+      final paymentType = state.staticState.paymentTypeMap[payment.paymentTypeId];
+      if (paymentType != null) {
+        fields[PaymentFields.paymentTypeId] = paymentType.name;
+      }
     }
     if (payment.transactionReference.isNotEmpty) {
       fields[PaymentFields.transactionReference] = payment.transactionReference;
