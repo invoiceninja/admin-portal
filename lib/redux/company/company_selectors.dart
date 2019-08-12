@@ -129,6 +129,14 @@ List<CompanyEntity> companiesSelector(AppState state) {
       .toList();
 }
 
-String localeSelector(AppState state) =>
-    state.staticState?.languageMap[state.selectedCompany?.languageId]?.locale ??
-    'en';
+String localeSelector(AppState state) {
+  final locale = state.staticState?.languageMap[state.selectedCompany?.languageId]?.locale ??
+      'en';
+
+  // https://github.com/flutter/flutter/issues/32090
+  if (locale == 'mk_MK') {
+    return 'en';
+  } else {
+    return locale;
+  }
+}
