@@ -87,10 +87,13 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print(error);
       var message = error.toString();
-      if (message.contains('No host specified in URI')) {
+      if (message.toLowerCase().contains('no host specified')) {
         message = 'Please check the URL is correct';
+      } else if (message.toLowerCase().contains('credentials')) {
+        message += ', please confirm your credentials in the web app';
+      } else if (message.contains('404')){
+        message += ', you may need to add /public to the URL';
       }
-      message += ', you may need to add /public';
       store.dispatch(UserLoginFailure(message));
     });
 
