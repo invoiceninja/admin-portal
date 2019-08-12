@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -425,6 +426,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'sq': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -838,6 +840,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Skaduar',
     },
     'bg': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -1253,6 +1256,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Изтекла',
     },
     'zh_TW': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -1663,6 +1667,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': '過期',
     },
     'hr': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -2077,6 +2082,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Isteklo',
     },
     'cs': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -2490,6 +2496,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expirované',
     },
     'da': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -2903,6 +2910,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'nl': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -3323,6 +3331,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Verlopen',
     },
     'en_AU': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -3736,6 +3745,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'en_GB': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -4149,6 +4159,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'fi': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -4562,6 +4573,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'fr': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -4976,6 +4988,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expiré',
     },
     'fr_CA': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -5392,6 +5405,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expiré',
     },
     'de': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -5810,6 +5824,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Abgelaufen',
     },
     'el': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -6231,6 +6246,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Ληγμένα',
     },
     'it': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -6645,6 +6661,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'ja': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -7058,6 +7075,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'lt': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -7471,6 +7489,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'mk_MK': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -7884,6 +7903,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Истечено',
     },
     'nb_NO': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -8297,6 +8317,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'pl': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -8711,6 +8732,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Wygasło',
     },
     'pt_BR': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -9125,6 +9147,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expirado',
     },
     'pt_PT': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -9538,6 +9561,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expirada',
     },
     'ro': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -9951,6 +9975,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'sr_RS': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -10365,6 +10390,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
     },
     'sl': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -10779,6 +10805,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Poteklo',
     },
     'es': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -11194,6 +11221,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Vencida',
     },
     'es_ES': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -11610,6 +11638,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expirada',
     },
     'sv': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -12023,6 +12052,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Utgått',
     },
     'th': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -12436,6 +12466,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'หมดอายุ',
     },
     'tr_TR': {
+      'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
@@ -13695,6 +13726,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get takePicture => _localizedValues[localeCode]['take_picture'];
 
   String get uploadFile => _localizedValues[localeCode]['upload_file'];
+
+  String get download => _localizedValues[localeCode]['download'];
 
   String get requiresAnEnterprisePlan =>
       _localizedValues[localeCode]['requires_an_enterprise_plan'];
