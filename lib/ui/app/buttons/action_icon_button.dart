@@ -42,10 +42,9 @@ class ActionIconButton extends StatelessWidget {
         style: TextStyle(
             color: isDirty
                 ? (state.uiState.enableDarkMode
-                ? Theme.of(context).accentColor
-                : Colors.yellowAccent)
-                : Colors.white
-        ),
+                    ? Theme.of(context).accentColor
+                    : Colors.yellowAccent)
+                : Colors.white),
       ),
       onPressed: onPressed,
     );
