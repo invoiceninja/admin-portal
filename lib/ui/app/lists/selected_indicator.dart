@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SelectedIndicator extends StatelessWidget {
   const SelectedIndicator({this.child, this.isSelected});
@@ -13,8 +14,9 @@ class SelectedIndicator extends StatelessWidget {
         Container(
           width: 1.5,
           height: 48,
-          color:
-              isSelected ? Theme.of(context).accentColor : Colors.transparent,
+          color: isSelected && !isMobile(context)
+              ? Theme.of(context).accentColor
+              : Colors.transparent,
         ),
         Expanded(
           child: child,
