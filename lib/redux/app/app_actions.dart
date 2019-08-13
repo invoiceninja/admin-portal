@@ -16,8 +16,12 @@ class RefreshClient {
 }
 
 
-class UpdateLayout {
+class UpdateSidebar {
+  UpdateSidebar(this.sidebar);
+  final AppSidebar sidebar;
+}
 
+class UpdateLayout {
   UpdateLayout(this.layout);
   final AppLayout layout;
 }

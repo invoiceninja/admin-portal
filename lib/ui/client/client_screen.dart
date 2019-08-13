@@ -1,4 +1,6 @@
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
@@ -11,6 +13,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientScreen extends StatelessWidget {
   static const String route = '/client';
@@ -30,6 +33,15 @@ class ClientScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
+          leading: !isMobile(context)
+              ? IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    print('here...');
+                    store.dispatch(UpdateSidebar(AppSidebar.menu));
+                  },
+                )
+              : null,
           title: ListFilter(
             key: ValueKey(state.clientListState.filterClearedAt),
             entityType: EntityType.client,
@@ -46,7 +58,7 @@ class ClientScreen extends StatelessWidget {
             ),
           ],
         ),
-        drawer: AppDrawerBuilder(),
+        drawer: isMobile(context) ? AppDrawerBuilder() : null,
         body: ClientListBuilder(),
         bottomNavigationBar: AppBottomBar(
           entityType: EntityType.client,

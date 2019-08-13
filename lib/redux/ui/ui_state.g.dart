@@ -29,8 +29,29 @@ final BuiltSet<AppLayout> _$values = new BuiltSet<AppLayout>(const <AppLayout>[
   _$desktop,
 ]);
 
+const AppSidebar _$menu = const AppSidebar._('menu');
+const AppSidebar _$history = const AppSidebar._('history');
+
+AppSidebar _$valueOfSidebar(String name) {
+  switch (name) {
+    case 'menu':
+      return _$menu;
+    case 'history':
+      return _$history;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<AppSidebar> _$valuesSidebar =
+    new BuiltSet<AppSidebar>(const <AppSidebar>[
+  _$menu,
+  _$history,
+]);
+
 Serializer<UIState> _$uIStateSerializer = new _$UIStateSerializer();
 Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
+Serializer<AppSidebar> _$appSidebarSerializer = new _$AppSidebarSerializer();
 
 class _$UIStateSerializer implements StructuredSerializer<UIState> {
   @override
@@ -45,6 +66,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'layout',
       serializers.serialize(object.layout,
           specifiedType: const FullType(AppLayout)),
+      'isMenuVisible',
+      serializers.serialize(object.isMenuVisible,
+          specifiedType: const FullType(bool)),
+      'isHistoryVisible',
+      serializers.serialize(object.isHistoryVisible,
+          specifiedType: const FullType(bool)),
       'selectedCompanyIndex',
       serializers.serialize(object.selectedCompanyIndex,
           specifiedType: const FullType(int)),
@@ -123,6 +150,14 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'layout':
           result.layout = serializers.deserialize(value,
               specifiedType: const FullType(AppLayout)) as AppLayout;
+          break;
+        case 'isMenuVisible':
+          result.isMenuVisible = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'isHistoryVisible':
+          result.isHistoryVisible = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'selectedCompanyIndex':
           result.selectedCompanyIndex = serializers.deserialize(value,
@@ -226,9 +261,30 @@ class _$AppLayoutSerializer implements PrimitiveSerializer<AppLayout> {
       AppLayout.valueOf(serialized as String);
 }
 
+class _$AppSidebarSerializer implements PrimitiveSerializer<AppSidebar> {
+  @override
+  final Iterable<Type> types = const <Type>[AppSidebar];
+  @override
+  final String wireName = 'AppSidebar';
+
+  @override
+  Object serialize(Serializers serializers, AppSidebar object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  AppSidebar deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      AppSidebar.valueOf(serialized as String);
+}
+
 class _$UIState extends UIState {
   @override
   final AppLayout layout;
+  @override
+  final bool isMenuVisible;
+  @override
+  final bool isHistoryVisible;
   @override
   final int selectedCompanyIndex;
   @override
@@ -273,6 +329,8 @@ class _$UIState extends UIState {
 
   _$UIState._(
       {this.layout,
+      this.isMenuVisible,
+      this.isHistoryVisible,
       this.selectedCompanyIndex,
       this.currentRoute,
       this.enableDarkMode,
@@ -295,6 +353,12 @@ class _$UIState extends UIState {
       : super._() {
     if (layout == null) {
       throw new BuiltValueNullFieldError('UIState', 'layout');
+    }
+    if (isMenuVisible == null) {
+      throw new BuiltValueNullFieldError('UIState', 'isMenuVisible');
+    }
+    if (isHistoryVisible == null) {
+      throw new BuiltValueNullFieldError('UIState', 'isHistoryVisible');
     }
     if (selectedCompanyIndex == null) {
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
@@ -364,6 +428,8 @@ class _$UIState extends UIState {
     if (identical(other, this)) return true;
     return other is UIState &&
         layout == other.layout &&
+        isMenuVisible == other.isMenuVisible &&
+        isHistoryVisible == other.isHistoryVisible &&
         selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         enableDarkMode == other.enableDarkMode &&
@@ -405,25 +471,14 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                $jc(
-                                                                                    0,
-                                                                                    layout
-                                                                                        .hashCode),
-                                                                                selectedCompanyIndex
-                                                                                    .hashCode),
-                                                                            currentRoute
-                                                                                .hashCode),
-                                                                        enableDarkMode
-                                                                            .hashCode),
-                                                                    requireAuthentication
-                                                                        .hashCode),
-                                                                emailPayment
-                                                                    .hashCode),
-                                                            autoStartTasks
-                                                                .hashCode),
-                                                        addDocumentsToInvoice
-                                                            .hashCode),
+                                                                            $jc($jc($jc($jc(0, layout.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode),
+                                                                                selectedCompanyIndex.hashCode),
+                                                                            currentRoute.hashCode),
+                                                                        enableDarkMode.hashCode),
+                                                                    requireAuthentication.hashCode),
+                                                                emailPayment.hashCode),
+                                                            autoStartTasks.hashCode),
+                                                        addDocumentsToInvoice.hashCode),
                                                     filter.hashCode),
                                                 dashboardUIState.hashCode),
                                             productUIState.hashCode),
@@ -442,6 +497,8 @@ class _$UIState extends UIState {
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
           ..add('layout', layout)
+          ..add('isMenuVisible', isMenuVisible)
+          ..add('isHistoryVisible', isHistoryVisible)
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('enableDarkMode', enableDarkMode)
@@ -471,6 +528,16 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   AppLayout _layout;
   AppLayout get layout => _$this._layout;
   set layout(AppLayout layout) => _$this._layout = layout;
+
+  bool _isMenuVisible;
+  bool get isMenuVisible => _$this._isMenuVisible;
+  set isMenuVisible(bool isMenuVisible) =>
+      _$this._isMenuVisible = isMenuVisible;
+
+  bool _isHistoryVisible;
+  bool get isHistoryVisible => _$this._isHistoryVisible;
+  set isHistoryVisible(bool isHistoryVisible) =>
+      _$this._isHistoryVisible = isHistoryVisible;
 
   int _selectedCompanyIndex;
   int get selectedCompanyIndex => _$this._selectedCompanyIndex;
@@ -580,6 +647,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   UIStateBuilder get _$this {
     if (_$v != null) {
       _layout = _$v.layout;
+      _isMenuVisible = _$v.isMenuVisible;
+      _isHistoryVisible = _$v.isHistoryVisible;
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
       _enableDarkMode = _$v.enableDarkMode;
@@ -624,6 +693,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$result = _$v ??
           new _$UIState._(
               layout: layout,
+              isMenuVisible: isMenuVisible,
+              isHistoryVisible: isHistoryVisible,
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
               enableDarkMode: enableDarkMode,

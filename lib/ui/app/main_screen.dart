@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:redux/redux.dart';
@@ -14,7 +15,10 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
+    return StoreBuilder(
+        onInit: (Store<AppState> store) =>
+            store.dispatch(LoadDashboard()),
+        builder: (BuildContext context, Store<AppState> store) {
       final route = store.state.uiState.currentRoute;
       final parts = route.split('/').where((part) => part.isNotEmpty).toList();
       final mainRoute = parts[0];

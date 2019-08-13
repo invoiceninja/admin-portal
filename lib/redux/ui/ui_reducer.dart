@@ -29,6 +29,8 @@ UIState uiReducer(UIState state, dynamic action) {
     ..selectedCompanyIndex =
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..layout = layoutReducer(state.layout, action)
+    ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
+    ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
@@ -50,6 +52,22 @@ UIState uiReducer(UIState state, dynamic action) {
     ..projectUIState.replace(projectUIReducer(state.projectUIState, action))
     ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
     ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action)));
+}
+
+Reducer<bool> menuVisibleReducer = combineReducers([
+  TypedReducer<bool, UpdateSidebar>(updateMenuVisible),
+]);
+
+bool updateMenuVisible(bool value, UpdateSidebar action) {
+  return action.sidebar == AppSidebar.menu ? !value : value;
+}
+
+Reducer<bool> historyVisibleReducer = combineReducers([
+  TypedReducer<bool, UpdateSidebar>(updateHistoryVisible),
+]);
+
+bool updateHistoryVisible(bool value, UpdateSidebar action) {
+  return action.sidebar == AppSidebar.history ? !value : value;
 }
 
 Reducer<String> filterReducer = combineReducers([

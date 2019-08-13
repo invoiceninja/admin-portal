@@ -30,7 +30,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       {bool enableDarkMode, bool requireAuthentication, AppLayout layout}) {
     return _$UIState._(
       selectedCompanyIndex: 0,
-      layout: layout ?? AppLayout.mobile,
+      //layout: layout ?? AppLayout.mobile,
+      layout: layout ?? AppLayout.tablet,
+      isMenuVisible: true,
+      isHistoryVisible: false,
       currentRoute: LoginScreen.route,
       enableDarkMode: enableDarkMode ?? false,
       requireAuthentication: requireAuthentication ?? false,
@@ -55,6 +58,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   UIState._();
 
   AppLayout get layout;
+
+  bool get isMenuVisible;
+
+  bool get isHistoryVisible;
 
   int get selectedCompanyIndex;
 
@@ -114,3 +121,16 @@ class AppLayout extends EnumClass {
 
   static AppLayout valueOf(String name) => _$valueOf(name);
 }
+
+class AppSidebar extends EnumClass {
+  const AppSidebar._(String name) : super(name);
+
+  static Serializer<AppSidebar> get serializer => _$appSidebarSerializer;
+  static const AppSidebar menu = _$menu;
+  static const AppSidebar history = _$history;
+
+  static BuiltSet<AppSidebar> get values => _$valuesSidebar;
+
+  static AppSidebar valueOf(String name) => _$valueOfSidebar(name);
+}
+
