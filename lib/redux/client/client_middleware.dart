@@ -62,7 +62,10 @@ Middleware<AppState> _viewClient() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
-    Navigator.of(action.context).pushNamed(ClientViewScreen.route);
+
+    if (action.context != null && isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(ClientViewScreen.route);
+    }
   };
 }
 
@@ -72,8 +75,10 @@ Middleware<AppState> _viewClientList() {
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        ClientScreen.route, (Route<dynamic> route) => false);
+    if (action.context != null && isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          ClientScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
