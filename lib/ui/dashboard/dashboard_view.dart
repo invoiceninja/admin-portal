@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -18,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({
@@ -55,8 +57,15 @@ class _DashboardViewState extends State<DashboardView>
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
-        drawer: AppDrawerBuilder(),
+        drawer: isMobile(context) ? AppDrawerBuilder() : null,
         appBar: AppBar(
+          leading: !isMobile(context)
+              ? IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () =>
+                      store.dispatch(UpdateSidebar(AppSidebar.menu)),
+                )
+              : null,
           title: ListFilter(
             title: AppLocalization.of(context).dashboard,
             onFilterChanged: (value) {

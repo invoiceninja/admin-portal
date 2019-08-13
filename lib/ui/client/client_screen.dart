@@ -36,10 +36,8 @@ class ClientScreen extends StatelessWidget {
           leading: !isMobile(context)
               ? IconButton(
                   icon: Icon(Icons.menu),
-                  onPressed: () {
-                    print('here...');
-                    store.dispatch(UpdateSidebar(AppSidebar.menu));
-                  },
+                  onPressed: () =>
+                      store.dispatch(UpdateSidebar(AppSidebar.menu)),
                 )
               : null,
           title: ListFilter(
