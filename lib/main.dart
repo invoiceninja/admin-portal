@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:sentry/sentry.dart';
@@ -98,6 +99,7 @@ void main() async {
       initialState: AppState(
         enableDarkMode: enableDarkMode,
         requireAuthentication: requireAuthentication,
+        layout: AppLayout.tablet,
       ),
       middleware: []
         ..addAll(createStoreAuthMiddleware())

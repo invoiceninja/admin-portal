@@ -16,52 +16,53 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(
-        onInit: (Store<AppState> store) =>
-            store.dispatch(LoadDashboard()),
+        onInit: (Store<AppState> store) => store.dispatch(LoadDashboard()),
         builder: (BuildContext context, Store<AppState> store) {
-      final route = store.state.uiState.currentRoute;
-      final parts = route.split('/').where((part) => part.isNotEmpty).toList();
-      final mainRoute = parts[0];
+          final uiState = store.state.uiState;
+          final route = uiState.currentRoute;
+          final parts =
+              route.split('/').where((part) => part.isNotEmpty).toList();
+          final mainRoute = parts[0];
 
-      int index = 0;
-      if (mainRoute == EntityType.client.name) {
-        index = 1;
-      }
+          int index = 0;
+          if (mainRoute == EntityType.client.name) {
+            index = 1;
+          }
 
-      return Row(
-        children: <Widget>[
-          AppDrawerBuilder(),
-          VerticalDivider(width: 1),
-          Expanded(
-            child: IndexedStack(
-              index: index,
-              key: ValueKey(index),
-              children: <Widget>[
-                DashboardScreen(),
-                Row(
+          return Row(
+            children: <Widget>[
+              if (uiState.isMenuVisible) AppDrawerBuilder(),
+              if (uiState.isMenuVisible) VerticalDivider(width: 1),
+              Expanded(
+                child: IndexedStack(
+                  index: index,
+                  key: ValueKey(index),
                   children: <Widget>[
-                    Expanded(
-                      child: ClientScreen(),
-                      flex: 2,
-                    ),
-                    VerticalDivider(width: 1),
-                    Expanded(
-                      flex: 3,
-                      child: IndexedStack(
-                        index: 0,
-                        children: <Widget>[
-                          ClientViewScreen(),
-                          ClientEditScreen(),
-                        ],
-                      ),
+                    DashboardScreen(),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: ClientScreen(),
+                          flex: 2,
+                        ),
+                        VerticalDivider(width: 1),
+                        Expanded(
+                          flex: 3,
+                          child: IndexedStack(
+                            index: 0,
+                            children: <Widget>[
+                              ClientViewScreen(),
+                              ClientEditScreen(),
+                            ],
+                          ),
+                        )
+                      ],
                     )
                   ],
-                )
-              ],
-            ),
-          ),
-        ],
-      );
-    });
+                ),
+              ),
+            ],
+          );
+        });
   }
 }
