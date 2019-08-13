@@ -55,22 +55,22 @@ class AppDrawer extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-                width: 30,
+                width: 32,
                 height: 30,
               )
             : company.logoUrl != null && company.logoUrl.isNotEmpty
                 ? CachedNetworkImage(
-                    width: 30,
+                    width: 32,
                     height: 30,
                     key: ValueKey(company.logoUrl),
                     imageUrl: company.logoUrl,
                     placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) => Image.asset(
                         'assets/images/logo.png',
-                        width: 30,
+                        width: 32,
                         height: 30),
                   )
-                : Image.asset('assets/images/logo.png', width: 30, height: 30),
+                : Image.asset('assets/images/logo.png', width: 32, height: 30),
         SizedBox(width: 28, height: 50),
         Expanded(
           child: Column(
@@ -104,7 +104,7 @@ class AppDrawer extends StatelessWidget {
                   children: <Widget>[
                     company.logoUrl != null && company.logoUrl.isNotEmpty
                         ? CachedNetworkImage(
-                            width: 30,
+                            width: 32,
                             height: 30,
                             key: ValueKey(company.logoUrl),
                             imageUrl: company.logoUrl,
@@ -112,11 +112,11 @@ class AppDrawer extends StatelessWidget {
                                 CircularProgressIndicator(),
                             errorWidget: (context, url, error) => Image.asset(
                                 'assets/images/logo.png',
-                                width: 30,
+                                width: 32,
                                 height: 30),
                           )
                         : Image.asset('assets/images/logo.png',
-                            width: 30, height: 30),
+                            width: 32, height: 30),
                     SizedBox(width: 28),
                     Expanded(
                       child: Column(
@@ -372,12 +372,17 @@ class DrawerTile extends StatelessWidget {
       return Container();
     }
 
+    final localization = AppLocalization.of(context);
+    final route = title == localization.dashboard
+        ? 'dashboard'
+        : title == localization.settings ? 'settings' : entityType.name;
+
     return Row(
       children: <Widget>[
         Container(
           width: 2,
           height: 48,
-          color: uiState.containsRoute(entityType?.name)
+          color: uiState.containsRoute(route)
               ? Theme.of(context).accentColor
               : Colors.transparent,
         ),
