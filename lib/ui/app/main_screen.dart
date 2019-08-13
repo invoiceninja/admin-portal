@@ -55,7 +55,7 @@ class MainScreen extends StatelessWidget {
                               ClientEditScreen(),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     )
                   ],

@@ -296,43 +296,45 @@ class AppDrawer extends StatelessWidget {
               navigator.pushNamed(SettingsScreen.route);
             },
           ),
-          AboutListTile(
-            icon: Icon(FontAwesomeIcons.info, size: 22.0),
-            applicationName: 'Invoice Ninja',
-            applicationIcon: Image.asset(
-              'assets/images/logo.png',
-              width: 40.0,
-              height: 40.0,
-            ),
-            applicationVersion:
-                'Version: $kAppVersion',
-            applicationLegalese: '© 2018 Invoice Ninja',
-            aboutBoxChildren: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 24.0),
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        style: aboutTextStyle,
-                        text: localization.thankYouForUsingOurApp +
-                            '\n\n' +
-                            localization.ifYouLikeIt,
-                      ),
-                      _LinkTextSpan(
-                        style: linkStyle,
-                        url: getAppURL(context),
-                        text: ' ' + localization.clickHere + ' ',
-                      ),
-                      TextSpan(
-                        style: aboutTextStyle,
-                        text: localization.toRateIt,
-                      ),
-                    ],
+          Padding(
+            padding: const EdgeInsets.only(left: 2),
+            child: AboutListTile(
+              icon: Icon(FontAwesomeIcons.info, size: 22.0),
+              applicationName: 'Invoice Ninja',
+              applicationIcon: Image.asset(
+                'assets/images/logo.png',
+                width: 40.0,
+                height: 40.0,
+              ),
+              applicationVersion: 'Version: $kAppVersion',
+              applicationLegalese: '© 2018 Invoice Ninja',
+              aboutBoxChildren: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          style: aboutTextStyle,
+                          text: localization.thankYouForUsingOurApp +
+                              '\n\n' +
+                              localization.ifYouLikeIt,
+                        ),
+                        _LinkTextSpan(
+                          style: linkStyle,
+                          url: getAppURL(context),
+                          text: ' ' + localization.clickHere + ' ',
+                        ),
+                        TextSpan(
+                          style: aboutTextStyle,
+                          text: localization.toRateIt,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -360,6 +362,8 @@ class DrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
     final user = company.user;
 
     if (entityType != null && !user.canViewOrCreate(entityType)) {
@@ -368,17 +372,30 @@ class DrawerTile extends StatelessWidget {
       return Container();
     }
 
-    return ListTile(
-      dense: true,
-      leading: Icon(icon, size: 22.0, key: ValueKey(title)),
-      title: Tooltip(message: title, child: Text(title)),
-      onTap: onTap,
-      trailing: onCreateTap == null || !user.canCreate(entityType)
-          ? null
-          : IconButton(
-              icon: Icon(Icons.add_circle_outline),
-              onPressed: onCreateTap,
-            ),
+    return Row(
+      children: <Widget>[
+        Container(
+          width: 2,
+          height: 48,
+          color: uiState.containsRoute(entityType?.name)
+              ? Theme.of(context).accentColor
+              : Colors.transparent,
+        ),
+        Expanded(
+          child: ListTile(
+            dense: true,
+            leading: Icon(icon, size: 22.0, key: ValueKey(title)),
+            title: Tooltip(message: title, child: Text(title)),
+            onTap: onTap,
+            trailing: onCreateTap == null || !user.canCreate(entityType)
+                ? null
+                : IconButton(
+                    icon: Icon(Icons.add_circle_outline),
+                    onPressed: onCreateTap,
+                  ),
+          ),
+        ),
+      ],
     );
   }
 }

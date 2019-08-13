@@ -105,7 +105,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 
-  bool containsRoute(String route) => currentRoute.contains(route);
+  bool containsRoute(String route) => currentRoute.contains(route ?? '');
 }
 
 class AppLayout extends EnumClass {

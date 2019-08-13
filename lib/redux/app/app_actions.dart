@@ -15,19 +15,21 @@ class RefreshClient {
   final int clientId;
 }
 
-
 class UpdateSidebar implements PersistUI {
   UpdateSidebar(this.sidebar);
+
   final AppSidebar sidebar;
 }
 
 class UpdateLayout implements PersistUI {
   UpdateLayout(this.layout);
+
   final AppLayout layout;
 }
 
 class ViewMainScreen {
   ViewMainScreen(this.context);
+
   BuildContext context;
 }
 
