@@ -16,12 +16,12 @@ class RefreshClient {
 }
 
 
-class UpdateSidebar {
+class UpdateSidebar implements PersistUI {
   UpdateSidebar(this.sidebar);
   final AppSidebar sidebar;
 }
 
-class UpdateLayout {
+class UpdateLayout implements PersistUI {
   UpdateLayout(this.layout);
   final AppLayout layout;
 }
