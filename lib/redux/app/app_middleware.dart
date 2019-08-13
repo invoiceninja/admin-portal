@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -110,6 +111,8 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       company4Repository,
       company5Repository);
 
+  final viewMainScreen = _createViewMainScreen();
+
   return [
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
@@ -118,6 +121,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, PersistData>(persistData),
     TypedMiddleware<AppState, PersistStatic>(persistStatic),
     TypedMiddleware<AppState, PersistUI>(persistUI),
+    TypedMiddleware<AppState, ViewMainScreen>(viewMainScreen),
   ];
 }
 
@@ -182,15 +186,21 @@ Middleware<AppState> _createLoadState(
       if (uiState.currentRoute != LoginScreen.route &&
           authState.url.isNotEmpty) {
         final NavigatorState navigator = Navigator.of(action.context);
-        bool isFirst = true;
-        _getRoutes(appState).forEach((route) {
-          if (isFirst) {
-            navigator.pushReplacementNamed(route);
-          } else {
-            navigator.pushNamed(route);
-          }
-          isFirst = false;
-        });
+        if (uiState.layout == AppLayout.mobile) {
+          bool isFirst = true;
+          _getRoutes(appState).forEach((route) {
+            if (isFirst) {
+              navigator.pushReplacementNamed(route);
+            } else {
+              navigator.pushNamed(route);
+            }
+            isFirst = false;
+          });
+        } else {
+          store.dispatch(ViewMainScreen(action.context));
+        }
+      } else {
+        throw 'Unknown page';
       }
     } catch (error) {
       print(error);
@@ -238,7 +248,8 @@ List<String> _getRoutes(AppState state) {
         route += '/view';
       }
     } else {
-      if (!['dashboard', 'settings'].contains(part) && entityType == null) {
+      if (!['main', 'dashboard', 'settings'].contains(part) &&
+          entityType == null) {
         entityType = EntityType.valueOf(part);
       }
 
@@ -379,6 +390,15 @@ Middleware<AppState> _createDeleteState(
     for (int i = 0; i < 5; i++) {
       prefs.setString(getCompanyTokenKey(i), '');
     }
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _createViewMainScreen() {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        MainScreen.route, (Route<dynamic> route) => false);
 
     next(action);
   };

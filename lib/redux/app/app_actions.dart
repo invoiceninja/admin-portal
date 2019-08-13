@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 
 class PersistUI {}
 
@@ -11,6 +13,18 @@ class RefreshClient {
   RefreshClient(this.clientId);
 
   final int clientId;
+}
+
+
+class UpdateLayout {
+
+  UpdateLayout(this.layout);
+  final AppLayout layout;
+}
+
+class ViewMainScreen {
+  ViewMainScreen(this.context);
+  BuildContext context;
 }
 
 class StartLoading {}

@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -48,7 +49,10 @@ Middleware<AppState> _viewProduct() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
-    Navigator.of(action.context).pushNamed(ProductViewScreen.route);
+
+    if (action.context != null && isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(ProductViewScreen.route);
+    }
   };
 }
 

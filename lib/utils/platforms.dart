@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 
 bool isAndroid(BuildContext context) =>
     Theme.of(context).platform == TargetPlatform.android;
@@ -17,3 +20,24 @@ String getPlatform(BuildContext context) =>
 
 String getAppURL(BuildContext context) =>
     isAndroid(context) ? kGoogleStoreUrl : kAppleStoreUrl;
+
+AppLayout calculateLayout(BuildContext context) {
+  final size = MediaQuery.of(context).size.shortestSide;
+  if (size < kMobileLayoutWidth) {
+    return AppLayout.mobile;
+  } else if (size > kTabletLayoutWidth) {
+    return AppLayout.desktop;
+  } else {
+    return AppLayout.tablet;
+  }
+}
+
+AppLayout getLayout(BuildContext context) =>
+    StoreProvider.of<AppState>(context).state.uiState.layout ??
+    AppLayout.mobile;
+
+bool isMobile(BuildContext context) => getLayout(context) == AppLayout.mobile;
+
+bool isTablet(BuildContext context) => getLayout(context) == AppLayout.tablet;
+
+bool isDesktop(BuildContext context) => getLayout(context) == AppLayout.desktop;

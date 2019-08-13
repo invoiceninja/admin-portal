@@ -6,7 +6,31 @@ part of 'ui_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const AppLayout _$mobile = const AppLayout._('mobile');
+const AppLayout _$tablet = const AppLayout._('tablet');
+const AppLayout _$desktop = const AppLayout._('desktop');
+
+AppLayout _$valueOf(String name) {
+  switch (name) {
+    case 'mobile':
+      return _$mobile;
+    case 'tablet':
+      return _$tablet;
+    case 'desktop':
+      return _$desktop;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<AppLayout> _$values = new BuiltSet<AppLayout>(const <AppLayout>[
+  _$mobile,
+  _$tablet,
+  _$desktop,
+]);
+
 Serializer<UIState> _$uIStateSerializer = new _$UIStateSerializer();
+Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
 
 class _$UIStateSerializer implements StructuredSerializer<UIState> {
   @override
@@ -18,6 +42,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   Iterable<Object> serialize(Serializers serializers, UIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'layout',
+      serializers.serialize(object.layout,
+          specifiedType: const FullType(AppLayout)),
       'selectedCompanyIndex',
       serializers.serialize(object.selectedCompanyIndex,
           specifiedType: const FullType(int)),
@@ -93,6 +120,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'layout':
+          result.layout = serializers.deserialize(value,
+              specifiedType: const FullType(AppLayout)) as AppLayout;
+          break;
         case 'selectedCompanyIndex':
           result.selectedCompanyIndex = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -178,7 +209,26 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   }
 }
 
+class _$AppLayoutSerializer implements PrimitiveSerializer<AppLayout> {
+  @override
+  final Iterable<Type> types = const <Type>[AppLayout];
+  @override
+  final String wireName = 'AppLayout';
+
+  @override
+  Object serialize(Serializers serializers, AppLayout object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  AppLayout deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      AppLayout.valueOf(serialized as String);
+}
+
 class _$UIState extends UIState {
+  @override
+  final AppLayout layout;
   @override
   final int selectedCompanyIndex;
   @override
@@ -222,7 +272,8 @@ class _$UIState extends UIState {
       (new UIStateBuilder()..update(updates)).build();
 
   _$UIState._(
-      {this.selectedCompanyIndex,
+      {this.layout,
+      this.selectedCompanyIndex,
       this.currentRoute,
       this.enableDarkMode,
       this.requireAuthentication,
@@ -242,6 +293,9 @@ class _$UIState extends UIState {
       this.paymentUIState,
       this.quoteUIState})
       : super._() {
+    if (layout == null) {
+      throw new BuiltValueNullFieldError('UIState', 'layout');
+    }
     if (selectedCompanyIndex == null) {
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
     }
@@ -309,6 +363,7 @@ class _$UIState extends UIState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UIState &&
+        layout == other.layout &&
         selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         enableDarkMode == other.enableDarkMode &&
@@ -351,7 +406,10 @@ class _$UIState extends UIState {
                                                                     $jc(
                                                                         $jc(
                                                                             $jc(
-                                                                                0,
+                                                                                $jc(
+                                                                                    0,
+                                                                                    layout
+                                                                                        .hashCode),
                                                                                 selectedCompanyIndex
                                                                                     .hashCode),
                                                                             currentRoute
@@ -383,6 +441,7 @@ class _$UIState extends UIState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
+          ..add('layout', layout)
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('enableDarkMode', enableDarkMode)
@@ -408,6 +467,10 @@ class _$UIState extends UIState {
 
 class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   _$UIState _$v;
+
+  AppLayout _layout;
+  AppLayout get layout => _$this._layout;
+  set layout(AppLayout layout) => _$this._layout = layout;
 
   int _selectedCompanyIndex;
   int get selectedCompanyIndex => _$this._selectedCompanyIndex;
@@ -516,6 +579,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   UIStateBuilder get _$this {
     if (_$v != null) {
+      _layout = _$v.layout;
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
       _enableDarkMode = _$v.enableDarkMode;
@@ -559,6 +623,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     try {
       _$result = _$v ??
           new _$UIState._(
+              layout: layout,
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
               enableDarkMode: enableDarkMode,

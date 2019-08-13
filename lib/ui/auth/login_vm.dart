@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -63,8 +64,14 @@ class LoginVM {
     );
 
     void _handleLogin(BuildContext context) {
+      store.dispatch(UpdateLayout(calculateLayout(context)));
       AppBuilder.of(context).rebuild();
-      store.dispatch(ViewDashboard(context));
+
+      if (isMobile(context)) {
+        store.dispatch(ViewDashboard(context));
+      } else {
+        store.dispatch(ViewMainScreen(context));
+      }
     }
 
     return LoginVM(

@@ -28,6 +28,7 @@ UIState uiReducer(UIState state, dynamic action) {
     ..filter = filterReducer(state.filter, action)
     ..selectedCompanyIndex =
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
+    ..layout = layoutReducer(state.layout, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
@@ -57,6 +58,14 @@ Reducer<String> filterReducer = combineReducers([
 
 String updateFilter(String filter, FilterCompany action) {
   return action.filter;
+}
+
+Reducer<AppLayout> layoutReducer = combineReducers([
+  TypedReducer<AppLayout, UpdateLayout>(updateLayout),
+]);
+
+AppLayout updateLayout(AppLayout layout, UpdateLayout action) {
+  return action.layout;
 }
 
 Reducer<bool> emailPaymentReducer = combineReducers([

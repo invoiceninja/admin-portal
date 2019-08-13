@@ -25,8 +25,12 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
-  factory AppState(
-      {String appVersion, bool enableDarkMode, bool requireAuthentication}) {
+  factory AppState({
+    String appVersion,
+    bool enableDarkMode,
+    bool requireAuthentication,
+    AppLayout layout,
+  }) {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
@@ -38,9 +42,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState3: CompanyState(),
       companyState4: CompanyState(),
       companyState5: CompanyState(),
-      uiState: UIState(CompanyEntity(),
-          enableDarkMode: enableDarkMode,
-          requireAuthentication: requireAuthentication),
+      uiState: UIState(
+        CompanyEntity(),
+        enableDarkMode: enableDarkMode,
+        requireAuthentication: requireAuthentication,
+        layout: layout ?? AppLayout.mobile,
+      ),
     );
   }
 
@@ -156,7 +163,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   DocumentState get documentState => selectedCompanyState.documentState;
+
   ListUIState get documentListState => uiState.documentUIState.listUIState;
+
   DocumentUIState get documentUIState => uiState.documentUIState;
 
   ExpenseState get expenseState => selectedCompanyState.expenseState;
@@ -219,6 +228,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
     //return 'Expense Categories: ${selectedCompany.expenseCategories}';
-    return 'Route: ${uiState.currentRoute}: Server Version: $serverVersion';
+    return 'Layout: ${uiState.layout}, Route: ${uiState.currentRoute}';
   }
 }

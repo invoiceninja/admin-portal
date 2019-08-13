@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -45,11 +46,13 @@ Middleware<AppState> _editClient() {
       store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
     }
 
-    final client =
-        await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+    if (action.context != null && isMobile(action.context)) {
+      final client =
+          await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
 
-    if (action.completer != null && client != null) {
-      action.completer.complete(client);
+      if (action.completer != null && client != null) {
+        action.completer.complete(client);
+      }
     }
   };
 }

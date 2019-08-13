@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:sentry/sentry.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
@@ -95,8 +96,9 @@ void main() async {
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(
-          enableDarkMode: enableDarkMode,
-          requireAuthentication: requireAuthentication),
+        enableDarkMode: enableDarkMode,
+        requireAuthentication: requireAuthentication,
+      ),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDocumentsMiddleware())
@@ -221,7 +223,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final state = widget.store.state;
         Intl.defaultLocale = localeSelector(state);
         final localization = AppLocalization(Locale(Intl.defaultLocale));
-
         return MaterialApp(
           supportedLocales: kLanguages
               .map((String locale) => AppLocalization.createLocale(locale))
@@ -286,6 +287,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             LoginScreen.route: (context) {
               return LoginScreen();
             },
+            MainScreen.route: (context) {
+              return MainScreen();
+            },
             DashboardScreen.route: (context) {
               if (widget.store.state.dashboardState.isStale) {
                 widget.store.dispatch(LoadDashboard());
@@ -348,7 +352,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             },
             ProjectViewScreen.route: (context) => ProjectViewScreen(),
             ProjectEditScreen.route: (context) => ProjectEditScreen(),
-
             PaymentScreen.route: (context) {
               if (widget.store.state.paymentState.isStale) {
                 widget.store.dispatch(LoadPayments());

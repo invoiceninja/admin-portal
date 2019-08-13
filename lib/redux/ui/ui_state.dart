@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -26,9 +27,10 @@ part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState(CompanyEntity company,
-      {bool enableDarkMode, bool requireAuthentication}) {
+      {bool enableDarkMode, bool requireAuthentication, AppLayout layout}) {
     return _$UIState._(
       selectedCompanyIndex: 0,
+      layout: layout ?? AppLayout.mobile,
       currentRoute: LoginScreen.route,
       enableDarkMode: enableDarkMode ?? false,
       requireAuthentication: requireAuthentication ?? false,
@@ -41,7 +43,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       documentUIState: DocumentUIState(),
-
       expenseUIState: ExpenseUIState(),
       vendorUIState: VendorUIState(),
       taskUIState: TaskUIState(),
@@ -52,6 +53,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   UIState._();
+
+  AppLayout get layout;
 
   int get selectedCompanyIndex;
 
@@ -96,4 +99,18 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 
   bool containsRoute(String route) => currentRoute.contains(route);
+}
+
+class AppLayout extends EnumClass {
+  const AppLayout._(String name) : super(name);
+
+  static Serializer<AppLayout> get serializer => _$appLayoutSerializer;
+
+  static const AppLayout mobile = _$mobile;
+  static const AppLayout tablet = _$tablet;
+  static const AppLayout desktop = _$desktop;
+
+  static BuiltSet<AppLayout> get values => _$values;
+
+  static AppLayout valueOf(String name) => _$valueOf(name);
 }
