@@ -27,6 +27,7 @@ class MainScreen extends StatelessWidget {
       return Row(
         children: <Widget>[
           AppDrawerBuilder(),
+          VerticalDivider(width: 1),
           Expanded(
             child: IndexedStack(
               index: index,
@@ -37,10 +38,11 @@ class MainScreen extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: ClientScreen(),
-                      flex: 3,
+                      flex: 2,
                     ),
+                    VerticalDivider(width: 1),
                     Expanded(
-                      flex: 5,
+                      flex: 3,
                       child: IndexedStack(
                         index: 0,
                         children: <Widget>[
