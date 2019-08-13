@@ -9,19 +9,22 @@ class SelectedIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          width: 1.5,
-          height: 48,
-          color: isSelected && !isMobile(context)
-              ? Theme.of(context).accentColor
-              : Colors.transparent,
-        ),
-        Expanded(
-          child: child,
-        ),
-      ],
+    return Container(
+      color: Theme.of(context).canvasColor,
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: 1.5,
+            height: 48,
+            color: isSelected && !isMobile(context)
+                ? Theme.of(context).accentColor
+                : Colors.transparent,
+          ),
+          Expanded(
+            child: child,
+          ),
+        ],
+      ),
     );
   }
 }
