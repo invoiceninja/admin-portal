@@ -179,7 +179,9 @@ class AppDrawer extends StatelessWidget {
             title: localization.clients,
             onTap: () => store.dispatch(ViewClientList(context)),
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(
                   EditClient(client: ClientEntity(), context: context));
             },
@@ -194,7 +196,9 @@ class AppDrawer extends StatelessWidget {
               store.dispatch(ViewProductList(context));
             },
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(
                   EditProduct(product: ProductEntity(), context: context));
             },
@@ -206,7 +210,9 @@ class AppDrawer extends StatelessWidget {
             title: localization.invoices,
             onTap: () => store.dispatch(ViewInvoiceList(context)),
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(EditInvoice(
                   invoice: InvoiceEntity(company: company), context: context));
             },
@@ -218,7 +224,9 @@ class AppDrawer extends StatelessWidget {
             title: localization.payments,
             onTap: () => store.dispatch(ViewPaymentList(context)),
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(EditPayment(
                   payment: PaymentEntity(company: company), context: context));
             },
@@ -230,7 +238,9 @@ class AppDrawer extends StatelessWidget {
             title: localization.quotes,
             onTap: () => store.dispatch(ViewQuoteList(context)),
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(EditQuote(
                   quote: InvoiceEntity(isQuote: true), context: context));
             },
@@ -242,7 +252,9 @@ class AppDrawer extends StatelessWidget {
             title: localization.projects,
             onTap: () => store.dispatch(ViewProjectList(context)),
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(
                   EditProject(project: ProjectEntity(), context: context));
             },
@@ -254,7 +266,9 @@ class AppDrawer extends StatelessWidget {
             title: localization.tasks,
             onTap: () => store.dispatch(ViewTaskList(context)),
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(EditTask(
                   task: TaskEntity(isRunning: state.uiState.autoStartTasks),
                   context: context));
@@ -267,7 +281,9 @@ class AppDrawer extends StatelessWidget {
             title: localization.vendors,
             onTap: () => store.dispatch(ViewVendorList(context)),
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(
                   EditVendor(vendor: VendorEntity(), context: context));
             },
@@ -279,7 +295,9 @@ class AppDrawer extends StatelessWidget {
             title: localization.expenses,
             onTap: () => store.dispatch(ViewExpenseList(context)),
             onCreateTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               store.dispatch(EditExpense(
                   expense:
                       ExpenseEntity(company: company, uiState: state.uiState),
@@ -293,7 +311,9 @@ class AppDrawer extends StatelessWidget {
             icon: FontAwesomeIcons.cog,
             title: localization.settings,
             onTap: () {
-              navigator.pop();
+              if (isMobile(context)) {
+                navigator.pop();
+              }
               navigator.pushNamed(SettingsScreen.route);
             },
           ),
