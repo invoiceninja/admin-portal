@@ -32,7 +32,7 @@ class MainScreen extends StatelessWidget {
           return Row(
             children: <Widget>[
               if (uiState.isMenuVisible) AppDrawerBuilder(),
-              if (uiState.isMenuVisible) VerticalDivider(width: 1),
+              if (uiState.isMenuVisible) VerticalDivider(width: .5),
               Expanded(
                 child: IndexedStack(
                   index: mainIndex,
@@ -71,7 +71,7 @@ class EntityScreens extends StatelessWidget {
           child: listWidget,
           flex: 2,
         ),
-        VerticalDivider(width: 1),
+        VerticalDivider(width: .5),
         Expanded(
           flex: 3,
           child: IndexedStack(

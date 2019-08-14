@@ -14,7 +14,7 @@ class SelectedIndicator extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Container(
-            width: 1.5,
+            width: 3,
             height: 48,
             color: isSelected && !isMobile(context)
                 ? Theme.of(context).accentColor
