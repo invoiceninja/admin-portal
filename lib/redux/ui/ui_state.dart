@@ -112,6 +112,18 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     return currentRoute.contains(route);
   }
 
+  String get mainRoute {
+    final parts =
+    currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+    return parts.isNotEmpty ? parts[0] : '';
+  }
+
+  String get subRoute {
+    final parts =
+    currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+    return parts.length > 1 ? parts[1] : '';
+  }
+
   bool get isEditing => currentRoute.contains('/edit');
 }
 
@@ -140,4 +152,3 @@ class AppSidebar extends EnumClass {
 
   static AppSidebar valueOf(String name) => _$valueOfSidebar(name);
 }
-

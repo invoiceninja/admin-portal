@@ -19,19 +19,11 @@ class MainScreen extends StatelessWidget {
         onInit: (Store<AppState> store) => store.dispatch(LoadDashboard()),
         builder: (BuildContext context, Store<AppState> store) {
           final uiState = store.state.uiState;
-          final route = uiState.currentRoute;
-          final parts =
-              route.split('/').where((part) => part.isNotEmpty).toList();
-          final mainRoute = parts[0];
-          final subRoute = parts.length > 1 ? parts[1] : '';
-
+          final mainRoute = uiState.mainRoute;
           int mainIndex = 0;
-          int subIndex = 0;
+
           if (mainRoute == EntityType.client.name) {
             mainIndex = 1;
-          }
-          if (subRoute == 'edit') {
-            subIndex = 1;
           }
 
           return Row(
@@ -43,30 +35,60 @@ class MainScreen extends StatelessWidget {
                   index: mainIndex,
                   children: <Widget>[
                     DashboardScreen(),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: ClientScreen(),
-                          flex: 2,
-                        ),
-                        VerticalDivider(width: 1),
-                        Expanded(
-                          flex: 3,
-                          child: IndexedStack(
-                            index: subIndex,
-                            children: <Widget>[
-                              ClientViewScreen(),
-                              ClientEditScreen(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
+                    EntityScreens(
+                        listWidget: ClientScreen(),
+                        viewWidget: ClientViewScreen(),
+                        editWidget: ClientEditScreen()),
                   ],
                 ),
               ),
             ],
           );
         });
+  }
+}
+
+class EntityScreens extends StatelessWidget {
+  const EntityScreens({this.listWidget, this.editWidget, this.viewWidget});
+
+  final Widget listWidget;
+  final Widget viewWidget;
+  final Widget editWidget;
+
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final subRoute = store.state.uiState.subRoute;
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: listWidget,
+          flex: 2,
+        ),
+        VerticalDivider(width: 1),
+        Expanded(
+          flex: 3,
+          child: IndexedStack(
+            index: subRoute == 'edit' ? 1 : 0,
+            children: <Widget>[
+              uiState.clientUIState.selectedId > 0 ? viewWidget : BlankScreen(),
+              editWidget,
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class BlankScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: SizedBox(),
+    );
   }
 }
