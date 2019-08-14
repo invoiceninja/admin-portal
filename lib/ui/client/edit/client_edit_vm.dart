@@ -89,7 +89,8 @@ class ClientEditVM {
               ..postalCode = client.shippingPostalCode
               ..countryId = client.shippingCountryId))),
         onCancelPressed: (BuildContext context) {
-          store.dispatch(EditClient(client: ClientEntity(), context: context));
+          store.dispatch(EditClient(
+              client: ClientEntity(), context: context, force: true));
           if (client.isNew) {
             store.dispatch(ViewClientList(context: context, force: true));
           } else {
