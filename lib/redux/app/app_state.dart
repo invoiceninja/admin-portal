@@ -14,13 +14,13 @@ import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
-
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 
 part 'app_state.g.dart';
 
@@ -205,8 +205,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   QuoteUIState get quoteUIState => uiState.quoteUIState;
 
   bool hasChanges() {
-    if (uiState.currentRoute.startsWith('/${EntityType.client.name}')) {
-      return clientUIState.editing.isNew;
+    switch (uiState.currentRoute) {
+      case ClientEditScreen.route:
+        return clientUIState.editing.isNew ||
+            clientState.map[clientUIState.editing.id] != clientUIState.editing;
+    }
+
+    if (uiState.currentRoute.endsWith('/edit')) {
+      throw 'AppState.hasChanges is not defined for ${uiState.currentRoute}';
     }
 
     return false;

@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'error_unsaved_changes': 'Please save or cancel your changes',
       'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
@@ -13731,6 +13732,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get requiresAnEnterprisePlan =>
       _localizedValues[localeCode]['requires_an_enterprise_plan'];
+
+  String get errorUnsavedChanges =>
+      _localizedValues[localeCode]['error_unsaved_changes'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

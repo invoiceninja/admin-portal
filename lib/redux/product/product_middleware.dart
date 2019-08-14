@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
@@ -62,19 +63,21 @@ Middleware<AppState> _viewProductList() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
-    if (store.state.hasChanges()) {
+    if (store.state.hasChanges() && !isMobile(action.context)) {
       showDialog<AlertDialog>(
           context: action.context,
           builder: (BuildContext context) {
-            return MessageDialog('test');
+            return MessageDialog(AppLocalization.of(context).errorUnsavedChanges);
           });
-
       return;
     }
 
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        ProductScreen.route, (Route<dynamic> route) => false);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          ProductScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 

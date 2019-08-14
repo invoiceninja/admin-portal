@@ -3,9 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -61,9 +63,18 @@ Middleware<AppState> _viewClient() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
+    if (store.state.hasChanges() && !isMobile(action.context)) {
+      showDialog<AlertDialog>(
+          context: action.context,
+          builder: (BuildContext context) {
+            return MessageDialog(AppLocalization.of(context).errorUnsavedChanges);
+          });
+      return;
+    }
+
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
 
-    if (action.context != null && isMobile(action.context)) {
+    if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamed(ClientViewScreen.route);
     }
   };
