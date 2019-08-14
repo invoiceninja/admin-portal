@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class MessageDialog extends StatelessWidget {
   const MessageDialog(this.message);
+
   final String message;
 
   @override
@@ -25,7 +26,10 @@ class MessageDialog extends StatelessWidget {
                       style: Theme.of(context).textTheme.title),
                       */
                   SizedBox(height: 20.0),
-                  Text(message),
+                  Text(
+                    message,
+                    style: Theme.of(context).textTheme.title,
+                  ),
                   SizedBox(height: 40.0),
                   ElevatedButton(
                     onPressed: () => Navigator.of(context).pop(),

@@ -215,7 +215,7 @@ Middleware<AppState> _createLoadState(
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
           if (uiState.layout == AppLayout.mobile) {
-            store.dispatch(ViewDashboard(action.context));
+            store.dispatch(ViewDashboard(context: action.context));
           } else {
             store.dispatch(ViewMainScreen(action.context));
           }
@@ -426,6 +426,14 @@ void _setLastLoadWasSuccesfull() async {
 */
 
 bool hasChanges(Store<AppState> store, dynamic action) {
+  if (action.context == null) {
+    print('WARNING: context is null in hasChanges');
+    return false;
+  } else if (action.force == null) {
+    print('WARNING: force is null in hasChanges');
+    return false;
+  }
+
   if (store.state.hasChanges() && !isMobile(action.context) && !action.force) {
     showDialog<MessageDialog>(
         context: action.context,

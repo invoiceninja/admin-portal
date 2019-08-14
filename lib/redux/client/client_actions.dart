@@ -36,12 +36,14 @@ class EditClient implements PersistUI {
       @required this.context,
       this.contact,
       this.completer,
+      this.force = false,
       this.trackRoute = true});
 
   final ClientEntity client;
   final ContactEntity contact;
   final BuildContext context;
   final Completer completer;
+  final bool force;
   final bool trackRoute;
 }
 

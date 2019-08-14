@@ -68,7 +68,7 @@ class LoginVM {
       AppBuilder.of(context).rebuild();
 
       if (isMobile(context)) {
-        store.dispatch(ViewDashboard(context));
+        store.dispatch(ViewDashboard(context: context));
       } else {
         store.dispatch(ViewMainScreen(context));
       }

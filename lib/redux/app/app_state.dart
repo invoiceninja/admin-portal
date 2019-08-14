@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 part 'app_state.g.dart';
 
@@ -209,6 +210,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case ClientEditScreen.route:
         return clientUIState.editing.isNew ||
             clientState.map[clientUIState.editing.id] != clientUIState.editing;
+      case ProductEditScreen.route:
+        return productUIState.editing.isNew ||
+            productState.map[productUIState.editing.id] !=
+                productUIState.editing;
     }
 
     if (uiState.currentRoute.endsWith('/edit')) {

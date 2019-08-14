@@ -24,7 +24,7 @@ class ProductScreen extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        store.dispatch(ViewDashboard(context));
+        store.dispatch(ViewDashboard(context: context));
         return false;
       },
       child: Scaffold(

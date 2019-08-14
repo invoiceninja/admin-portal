@@ -170,7 +170,7 @@ class AppDrawer extends StatelessWidget {
                   company: company,
                   icon: FontAwesomeIcons.tachometerAlt,
                   title: localization.dashboard,
-                  onTap: () => store.dispatch(ViewDashboard(context)),
+                  onTap: () => store.dispatch(ViewDashboard(context: context)),
                 ),
                 DrawerTile(
                   key: Key(ClientKeys.drawer),

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
@@ -22,10 +23,15 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 
 Middleware<AppState> _createViewDashboard() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
+
+    if (hasChanges(store, action)) {
+      return;
+    }
+
     store.dispatch(LoadDashboard());
     store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
 
-    if (action.context != null && isMobile(action.context)) {
+    if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           DashboardScreen.route, (Route<dynamic> route) => false);
     }
