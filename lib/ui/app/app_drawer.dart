@@ -414,6 +414,14 @@ class SidebarFooter extends StatelessWidget {
       child: Row(
         children: <Widget>[
           IconButton(
+            icon: Icon(Icons.mail),
+            onPressed: () => launch('https://www.invoiceninja.com/contact'),
+          ),
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () => launch('https://docs.invoiceninja.com'),
+          ),
+          IconButton(
             icon: Icon(Icons.info_outline),
             onPressed: () {
               showAboutDialog(
