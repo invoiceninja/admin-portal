@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_shipping_address
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientEdit extends StatefulWidget {
   const ClientEdit({
@@ -52,6 +53,7 @@ class _ClientEditState extends State<ClientEdit>
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(
               client.isNew ? localization.newClient : localization.editClient),
           actions: <Widget>[
