@@ -57,6 +57,11 @@ class _ClientEditState extends State<ClientEdit>
           title: Text(
               client.isNew ? localization.newClient : localization.editClient),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(localization.cancel),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,

@@ -48,6 +48,7 @@ class ClientEditVM {
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onBackPressed,
+    @required this.onCancelPressed,
     @required this.staticState,
     @required this.copyBillingAddress,
     @required this.copyShippingAddress,
@@ -87,6 +88,15 @@ class ClientEditVM {
               ..state = client.shippingState
               ..postalCode = client.shippingPostalCode
               ..countryId = client.shippingCountryId))),
+        onCancelPressed: (BuildContext context) {
+          store.dispatch(EditClient(client: ClientEntity(), context: context));
+          if (client.isNew) {
+            store.dispatch(ViewClientList(context: context, force: true));
+          } else {
+            store.dispatch(
+                ViewClient(context: context, clientId: client.id, force: true));
+          }
+        },
         onSavePressed: (BuildContext context) {
           if (!client.hasNameSet) {
             showDialog<ErrorDialog>(
@@ -138,6 +148,7 @@ class ClientEditVM {
   final Function(ClientEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
+  final Function(BuildContext) onCancelPressed;
   final StaticState staticState;
   final Function() copyShippingAddress;
   final Function() copyBillingAddress;

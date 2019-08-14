@@ -42,6 +42,8 @@ final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, AddContact>(_addContact),
   TypedReducer<ClientEntity, DeleteContact>(_removeContact),
   TypedReducer<ClientEntity, UpdateContact>(_updateContact),
+  TypedReducer<ClientEntity, ViewClient>(_clearEditing),
+  TypedReducer<ClientEntity, ViewClientList>(_clearEditing),
   TypedReducer<ClientEntity, SelectCompany>(_clearEditing),
 ]);
 

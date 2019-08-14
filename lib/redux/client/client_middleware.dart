@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -42,13 +41,17 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 
 Middleware<AppState> _editClient() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    if (hasChanges(store, action)) {
+      return;
+    }
+
     next(action);
 
     if (action.trackRoute) {
       store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
     }
 
-    if (action.context != null && isMobile(action.context)) {
+    if (isMobile(action.context)) {
       final client =
           await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
 
@@ -61,16 +64,11 @@ Middleware<AppState> _editClient() {
 
 Middleware<AppState> _viewClient() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
-    next(action);
-
-    if (store.state.hasChanges() && !isMobile(action.context)) {
-      showDialog<AlertDialog>(
-          context: action.context,
-          builder: (BuildContext context) {
-            return MessageDialog(AppLocalization.of(context).errorUnsavedChanges);
-          });
+    if (hasChanges(store, action)) {
       return;
     }
+
+    next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
 
@@ -82,15 +80,15 @@ Middleware<AppState> _viewClient() {
 
 Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    next(action);
-
-    if (store.state.hasChanges()) {
+    if (hasChanges(store, action)) {
       return;
     }
 
+    next(action);
+
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
-    if (action.context != null && isMobile(action.context)) {
+    if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           ClientScreen.route, (Route<dynamic> route) => false);
     }
