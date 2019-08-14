@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
@@ -318,7 +319,7 @@ class AppDrawer extends StatelessWidget {
                     if (isMobile(context)) {
                       navigator.pop();
                     }
-                    navigator.pushNamed(SettingsScreen.route);
+                    store.dispatch(ViewSettings(context: context));
                   },
                 ),
               ],

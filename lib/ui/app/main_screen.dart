@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -24,6 +25,8 @@ class MainScreen extends StatelessWidget {
 
           if (mainRoute == EntityType.client.name) {
             mainIndex = 1;
+          } else if (mainRoute == 'settings') {
+            mainIndex = 2;
           }
 
           return Row(
@@ -39,6 +42,7 @@ class MainScreen extends StatelessWidget {
                         listWidget: ClientScreen(),
                         viewWidget: ClientViewScreen(),
                         editWidget: ClientEditScreen()),
+                    SettingsScreen(),
                   ],
                 ),
               ),
