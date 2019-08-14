@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
@@ -59,6 +61,16 @@ Middleware<AppState> _viewProduct() {
 Middleware<AppState> _viewProductList() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
+
+    if (store.state.hasChanges()) {
+      showDialog<AlertDialog>(
+          context: action.context,
+          builder: (BuildContext context) {
+            return MessageDialog('test');
+          });
+
+      return;
+    }
 
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
     Navigator.of(action.context).pushNamedAndRemoveUntil(

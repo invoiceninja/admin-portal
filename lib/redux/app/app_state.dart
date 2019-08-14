@@ -204,6 +204,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   QuoteUIState get quoteUIState => uiState.quoteUIState;
 
+  bool hasChanges() {
+    if (uiState.currentRoute.startsWith('/${EntityType.client.name}')) {
+      return clientUIState.editing.isNew;
+    }
+
+    return false;
+  }
+
   bool supportsVersion(String version) {
     final parts = version.split('.');
     final int major = int.parse(parts[0]);

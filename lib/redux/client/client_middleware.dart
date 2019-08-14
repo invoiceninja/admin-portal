@@ -73,6 +73,10 @@ Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
     next(action);
 
+    if (store.state.hasChanges()) {
+      return;
+    }
+
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
     if (action.context != null && isMobile(action.context)) {

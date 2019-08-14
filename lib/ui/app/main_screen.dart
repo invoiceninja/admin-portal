@@ -34,7 +34,6 @@ class MainScreen extends StatelessWidget {
             subIndex = 1;
           }
 
-
           return Row(
             children: <Widget>[
               if (uiState.isMenuVisible) AppDrawerBuilder(),
