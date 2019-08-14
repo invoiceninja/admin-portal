@@ -158,7 +158,7 @@ class AppDrawer extends StatelessWidget {
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
                 color: enableDarkMode ? Colors.white10 : Colors.grey[200],
                 child: viewModel.companies.length > 1 && !viewModel.isLoading
                     ? _multipleCompanies
