@@ -23,11 +23,17 @@ class MainScreen extends StatelessWidget {
           final parts =
               route.split('/').where((part) => part.isNotEmpty).toList();
           final mainRoute = parts[0];
+          final subRoute = parts.length > 1 ? parts[1] : '';
 
-          int index = 0;
+          int mainIndex = 0;
+          int subIndex = 0;
           if (mainRoute == EntityType.client.name) {
-            index = 1;
+            mainIndex = 1;
           }
+          if (subRoute == 'edit') {
+            subIndex = 1;
+          }
+
 
           return Row(
             children: <Widget>[
@@ -35,8 +41,7 @@ class MainScreen extends StatelessWidget {
               if (uiState.isMenuVisible) VerticalDivider(width: 1),
               Expanded(
                 child: IndexedStack(
-                  index: index,
-                  key: ValueKey(index),
+                  index: mainIndex,
                   children: <Widget>[
                     DashboardScreen(),
                     Row(
@@ -49,7 +54,7 @@ class MainScreen extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: IndexedStack(
-                            index: 0,
+                            index: subIndex,
                             children: <Widget>[
                               ClientViewScreen(),
                               ClientEditScreen(),

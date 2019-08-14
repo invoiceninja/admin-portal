@@ -211,7 +211,11 @@ Middleware<AppState> _createLoadState(
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
-          store.dispatch(ViewDashboard(action.context));
+          if (uiState.layout == AppLayout.mobile) {
+            store.dispatch(ViewDashboard(action.context));
+          } else {
+            store.dispatch(ViewMainScreen(action.context));
+          }
         }).catchError((Object error) {
           store.dispatch(UserLogout());
           store.dispatch(LoadUserLogin(action.context));
