@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
@@ -111,6 +112,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     }
     return currentRoute.contains(route);
   }
+
+  bool get isEditing => currentRoute.contains('/edit');
 }
 
 class AppLayout extends EnumClass {

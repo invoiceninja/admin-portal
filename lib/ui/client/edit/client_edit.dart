@@ -97,23 +97,24 @@ class _ClientEditState extends State<ClientEdit>
         body: Form(
           key: _formKey,
           child: TabBarView(
+            key: ValueKey(viewModel.client.id),
             controller: _controller,
             children: <Widget>[
               ClientEditDetails(
-                viewModel: widget.viewModel,
+                viewModel: viewModel,
               ),
               ClientEditContactsScreen(),
               ClientEditNotes(
-                viewModel: widget.viewModel,
+                viewModel: viewModel,
               ),
               ClientEditSettings(
-                viewModel: widget.viewModel,
+                viewModel: viewModel,
               ),
               ClientEditBillingAddress(
-                viewModel: widget.viewModel,
+                viewModel: viewModel,
               ),
               ClientEditShippingAddress(
-                viewModel: widget.viewModel,
+                viewModel: viewModel,
               ),
             ],
           ),

@@ -34,7 +34,8 @@ class ClientListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     //var localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    final selectedClientId = store.state.uiState.clientUIState.selectedId;
+    final uiState = store.state.uiState;
+    final clientUIState = uiState.clientUIState;
     final filterMatch = filter != null && filter.isNotEmpty
         ? client.matchesFilterValue(filter)
         : null;
@@ -45,7 +46,10 @@ class ClientListItem extends StatelessWidget {
       entity: client,
       //entityKey: clientItemKey,
       child: SelectedIndicator(
-        isSelected: client.id == selectedClientId,
+        isSelected: client.id ==
+            (uiState.isEditing
+                ? clientUIState.editing.id
+                : clientUIState.selectedId),
         child: ListTile(
           onTap: onTap,
           onLongPress: onLongPress,
