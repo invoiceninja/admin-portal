@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,17 @@ class BlankScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SizedBox(),
+      body: Container(
+        child: Center(
+          child: Text(
+            AppLocalization.of(context).noSelection.toUpperCase(),
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

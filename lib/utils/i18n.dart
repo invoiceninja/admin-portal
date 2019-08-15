@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'no_selection': 'No Selection',
       'error_unsaved_changes': 'Please save or cancel your changes',
       'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
@@ -13729,6 +13730,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get uploadFile => _localizedValues[localeCode]['upload_file'];
 
   String get download => _localizedValues[localeCode]['download'];
+
+  String get noSelection => _localizedValues[localeCode]['no_selection'];
 
   String get requiresAnEnterprisePlan =>
       _localizedValues[localeCode]['requires_an_enterprise_plan'];
