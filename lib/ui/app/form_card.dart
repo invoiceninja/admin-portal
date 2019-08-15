@@ -20,7 +20,8 @@ class FormCard extends StatelessWidget {
           padding: const EdgeInsets.only(
               left: 16.0, top: 16.0, right: 16.0, bottom: 20.0),
           child: Container(
-            width: double.infinity,
+            //width: double.infinity,
+            constraints: BoxConstraints(minWidth: 10, maxWidth: 50),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
