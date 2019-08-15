@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
@@ -189,9 +190,10 @@ Middleware<AppState> _createLoadState(
       if (uiState.currentRoute != LoginScreen.route &&
           authState.url.isNotEmpty) {
         final NavigatorState navigator = Navigator.of(action.context);
+        final routes = _getRoutes(appState);
         if (uiState.layout == AppLayout.mobile) {
           bool isFirst = true;
-          _getRoutes(appState).forEach((route) {
+          routes.forEach((route) {
             if (isFirst) {
               navigator.pushReplacementNamed(route);
             } else {
@@ -200,6 +202,8 @@ Middleware<AppState> _createLoadState(
             isFirst = false;
           });
         } else {
+          store.dispatch(
+              UpdateCurrentRoute(routes.isEmpty ? '/dashboard' : routes.last));
           store.dispatch(ViewMainScreen(action.context));
         }
       } else {
