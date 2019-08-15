@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class FormCard extends StatelessWidget {
   const FormCard({
     Key key,
+    this.isResponsive = false,
     @required this.children,
     this.crossAxisAlignment,
   }) : super(key: key);
 
   final List<Widget> children;
   final CrossAxisAlignment crossAxisAlignment;
+  final bool isResponsive;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: calculateLayout(context) == AppLayout.mobile
-          ? const EdgeInsets.all(12)
-          : const EdgeInsets.only(top: 12, left: 250, right: 250),
+      padding: isResponsive
+          ? const EdgeInsets.only(top: 12, left: 250, right: 250)
+          : const EdgeInsets.all(12),
       child: Card(
         elevation: 4.0,
         child: Padding(

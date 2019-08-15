@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/progress_button.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
@@ -6,6 +7,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -127,6 +129,7 @@ class _LoginState extends State<LoginView> {
             Form(
               key: _formKey,
               child: FormCard(
+                isResponsive: calculateLayout(context) == AppLayout.mobile,
                 children: <Widget>[
                   isOneTimePassword
                       ? TextFormField(
