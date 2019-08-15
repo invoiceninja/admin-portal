@@ -94,7 +94,7 @@ class BlankScreen extends StatelessWidget {
       body: Container(
         child: Center(
           child: Text(
-            AppLocalization.of(context).noSelection.toUpperCase(),
+            AppLocalization.of(context).noneSelected.toUpperCase(),
             style: TextStyle(
               fontSize: 20,
               color: Colors.grey,

@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -408,10 +409,12 @@ Middleware<AppState> _createDeleteState(
 
 Middleware<AppState> _createViewMainScreen() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+
     Navigator.of(action.context).pushNamedAndRemoveUntil(
         MainScreen.route, (Route<dynamic> route) => false);
-
-    next(action);
   };
 }
 
