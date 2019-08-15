@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -28,7 +29,8 @@ class MainScreen extends StatelessWidget {
           return Row(
             children: <Widget>[
               if (uiState.isMenuVisible) AppDrawerBuilder(),
-              if (uiState.isMenuVisible) VerticalDivider(width: .5),
+              if (uiState.isMenuVisible)
+                VerticalDivider(width: isDarkMode(context) ? 1 : .5),
               Expanded(
                 child: IndexedStack(
                   index: mainIndex,
@@ -67,7 +69,7 @@ class EntityScreens extends StatelessWidget {
           child: listWidget,
           flex: 2,
         ),
-        VerticalDivider(width: .5),
+        VerticalDivider(width: isDarkMode(context) ? 1 : .5),
         Expanded(
           flex: 3,
           child: IndexedStack(
