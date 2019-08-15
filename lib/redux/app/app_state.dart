@@ -1,4 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
@@ -208,12 +210,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool hasChanges() {
     switch (uiState.currentRoute) {
       case ClientEditScreen.route:
-        return clientUIState.editing.isNew ||
-            clientState.map[clientUIState.editing.id] != clientUIState.editing;
+        return hasClientChanges(clientUIState.editing, clientState.map);
       case ProductEditScreen.route:
-        return productUIState.editing.isNew ||
-            productState.map[productUIState.editing.id] !=
-                productUIState.editing;
+        return hasProductChanges(productUIState.editing, productState.map);
     }
 
     if (uiState.currentRoute.endsWith('/edit')) {

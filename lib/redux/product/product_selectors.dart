@@ -69,3 +69,7 @@ List<int> filteredProductsSelector(BuiltMap<int, ProductEntity> productMap,
 
   return list;
 }
+
+bool hasProductChanges(
+        ProductEntity product, BuiltMap<int, ProductEntity> productMap) =>
+    product.isNew || product != productMap[product.id];
