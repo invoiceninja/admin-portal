@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class FormCard extends StatelessWidget {
   const FormCard({
@@ -13,18 +15,20 @@ class FormCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: calculateLayout(context) == AppLayout.mobile
+          ? const EdgeInsets.all(12)
+          : const EdgeInsets.only(top: 12, left: 250, right: 250),
       child: Card(
         elevation: 4.0,
         child: Padding(
           padding: const EdgeInsets.only(
               left: 16.0, top: 16.0, right: 16.0, bottom: 20.0),
           child: Container(
-            //width: double.infinity,
-            constraints: BoxConstraints(minWidth: 10, maxWidth: 50),
+            width: double.infinity,
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+              crossAxisAlignment:
+                  crossAxisAlignment ?? CrossAxisAlignment.center,
               children: children,
             ),
           ),
