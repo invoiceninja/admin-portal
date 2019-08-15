@@ -468,7 +468,7 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
     if (entity.isNew) {
       return canCreate(entity.entityType);
     } else {
-      return canEdit(entity.entityType) || entity.isOwner;
+      return canEdit(entity.entityType) || (entity.isOwner ?? false);
     }
   }
 

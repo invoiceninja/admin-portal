@@ -157,172 +157,184 @@ class AppDrawer extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-                color: enableDarkMode ? Colors.white10 : Colors.grey[200],
-                child: viewModel.companies.length > 1 && !viewModel.isLoading
-                    ? _multipleCompanies
-                    : _singleCompany),
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                DrawerTile(
-                  company: company,
-                  icon: FontAwesomeIcons.tachometerAlt,
-                  title: localization.dashboard,
-                  onTap: () => store.dispatch(ViewDashboard(context: context)),
-                ),
-                DrawerTile(
-                  key: Key(ClientKeys.drawer),
-                  company: company,
-                  entityType: EntityType.client,
-                  icon: getEntityIcon(EntityType.client),
-                  title: localization.clients,
-                  onTap: () => store.dispatch(ViewClientList(context: context)),
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(
-                        EditClient(client: ClientEntity(), context: context));
-                  },
-                ),
-                DrawerTile(
-                  key: Key(ProductKeys.drawer),
-                  company: company,
-                  entityType: EntityType.product,
-                  icon: getEntityIcon(EntityType.product),
-                  title: localization.products,
-                  onTap: () {
-                    store.dispatch(ViewProductList(context));
-                  },
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(EditProduct(
-                        product: ProductEntity(), context: context));
-                  },
-                ),
-                DrawerTile(
-                  company: company,
-                  entityType: EntityType.invoice,
-                  icon: getEntityIcon(EntityType.invoice),
-                  title: localization.invoices,
-                  onTap: () => store.dispatch(ViewInvoiceList(context)),
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(EditInvoice(
-                        invoice: InvoiceEntity(company: company),
-                        context: context));
-                  },
-                ),
-                DrawerTile(
-                  company: company,
-                  entityType: EntityType.payment,
-                  icon: getEntityIcon(EntityType.payment),
-                  title: localization.payments,
-                  onTap: () => store.dispatch(ViewPaymentList(context)),
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(EditPayment(
-                        payment: PaymentEntity(company: company),
-                        context: context));
-                  },
-                ),
-                DrawerTile(
-                  company: company,
-                  entityType: EntityType.quote,
-                  icon: getEntityIcon(EntityType.quote),
-                  title: localization.quotes,
-                  onTap: () => store.dispatch(ViewQuoteList(context)),
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(EditQuote(
-                        quote: InvoiceEntity(isQuote: true), context: context));
-                  },
-                ),
-                DrawerTile(
-                  company: company,
-                  entityType: EntityType.project,
-                  icon: getEntityIcon(EntityType.project),
-                  title: localization.projects,
-                  onTap: () => store.dispatch(ViewProjectList(context)),
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(EditProject(
-                        project: ProjectEntity(), context: context));
-                  },
-                ),
-                DrawerTile(
-                  company: company,
-                  entityType: EntityType.task,
-                  icon: getEntityIcon(EntityType.task),
-                  title: localization.tasks,
-                  onTap: () => store.dispatch(ViewTaskList(context)),
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(EditTask(
-                        task:
-                            TaskEntity(isRunning: state.uiState.autoStartTasks),
-                        context: context));
-                  },
-                ),
-                DrawerTile(
-                  company: company,
-                  entityType: EntityType.vendor,
-                  icon: getEntityIcon(EntityType.vendor),
-                  title: localization.vendors,
-                  onTap: () => store.dispatch(ViewVendorList(context)),
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(
-                        EditVendor(vendor: VendorEntity(), context: context));
-                  },
-                ),
-                DrawerTile(
-                  company: company,
-                  entityType: EntityType.expense,
-                  icon: getEntityIcon(EntityType.expense),
-                  title: localization.expenses,
-                  onTap: () => store.dispatch(ViewExpenseList(context)),
-                  onCreateTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(EditExpense(
-                        expense: ExpenseEntity(
-                            company: company, uiState: state.uiState),
-                        context: context));
-                  },
-                ),
-                // STARTER: menu - do not remove comment
-                DrawerTile(
-                  key: Key(SettingsKeys.drawer),
-                  company: company,
-                  icon: FontAwesomeIcons.cog,
-                  title: localization.settings,
-                  onTap: () {
-                    if (isMobile(context)) {
-                      navigator.pop();
-                    }
-                    store.dispatch(ViewSettings(context: context));
-                  },
-                ),
-              ],
-            ),
+            // Hide options while refreshing data
+            company.token.isEmpty
+                ? Container(
+                    padding: EdgeInsets.only(top: 40),
+                    child: CircularProgressIndicator(),
+                  )
+                : Container(
+                    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+                    color: enableDarkMode ? Colors.white10 : Colors.grey[200],
+                    child:
+                        viewModel.companies.length > 1 && !viewModel.isLoading
+                            ? _multipleCompanies
+                            : _singleCompany),
+            company.token.isEmpty
+                ? SizedBox()
+                : ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      DrawerTile(
+                        company: company,
+                        icon: FontAwesomeIcons.tachometerAlt,
+                        title: localization.dashboard,
+                        onTap: () =>
+                            store.dispatch(ViewDashboard(context: context)),
+                      ),
+                      DrawerTile(
+                        key: Key(ClientKeys.drawer),
+                        company: company,
+                        entityType: EntityType.client,
+                        icon: getEntityIcon(EntityType.client),
+                        title: localization.clients,
+                        onTap: () =>
+                            store.dispatch(ViewClientList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditClient(
+                              client: ClientEntity(), context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        key: Key(ProductKeys.drawer),
+                        company: company,
+                        entityType: EntityType.product,
+                        icon: getEntityIcon(EntityType.product),
+                        title: localization.products,
+                        onTap: () {
+                          store.dispatch(ViewProductList(context));
+                        },
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditProduct(
+                              product: ProductEntity(), context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.invoice,
+                        icon: getEntityIcon(EntityType.invoice),
+                        title: localization.invoices,
+                        onTap: () => store.dispatch(ViewInvoiceList(context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditInvoice(
+                              invoice: InvoiceEntity(company: company),
+                              context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.payment,
+                        icon: getEntityIcon(EntityType.payment),
+                        title: localization.payments,
+                        onTap: () => store.dispatch(ViewPaymentList(context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditPayment(
+                              payment: PaymentEntity(company: company),
+                              context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.quote,
+                        icon: getEntityIcon(EntityType.quote),
+                        title: localization.quotes,
+                        onTap: () => store.dispatch(ViewQuoteList(context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditQuote(
+                              quote: InvoiceEntity(isQuote: true),
+                              context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.project,
+                        icon: getEntityIcon(EntityType.project),
+                        title: localization.projects,
+                        onTap: () => store.dispatch(ViewProjectList(context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditProject(
+                              project: ProjectEntity(), context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.task,
+                        icon: getEntityIcon(EntityType.task),
+                        title: localization.tasks,
+                        onTap: () => store.dispatch(ViewTaskList(context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditTask(
+                              task: TaskEntity(
+                                  isRunning: state.uiState.autoStartTasks),
+                              context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.vendor,
+                        icon: getEntityIcon(EntityType.vendor),
+                        title: localization.vendors,
+                        onTap: () => store.dispatch(ViewVendorList(context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditVendor(
+                              vendor: VendorEntity(), context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.expense,
+                        icon: getEntityIcon(EntityType.expense),
+                        title: localization.expenses,
+                        onTap: () => store.dispatch(ViewExpenseList(context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditExpense(
+                              expense: ExpenseEntity(
+                                  company: company, uiState: state.uiState),
+                              context: context));
+                        },
+                      ),
+                      // STARTER: menu - do not remove comment
+                      DrawerTile(
+                        key: Key(SettingsKeys.drawer),
+                        company: company,
+                        icon: FontAwesomeIcons.cog,
+                        title: localization.settings,
+                        onTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(ViewSettings(context: context));
+                        },
+                      ),
+                    ],
+                  ),
             Expanded(
               child: Align(
                 child: SidebarFooter(),
