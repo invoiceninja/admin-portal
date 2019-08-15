@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 class FormCard extends StatelessWidget {
   const FormCard({
@@ -16,8 +17,11 @@ class FormCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: isResponsive
-          ? const EdgeInsets.only(top: 12, left: 250, right: 250)
-          : const EdgeInsets.all(12),
+          ? const EdgeInsets.symmetric(
+              vertical: kMobileDialogPadding,
+              horizontal: kTabletDialogPadding,
+            )
+          : const EdgeInsets.all(kMobileDialogPadding),
       child: Card(
         elevation: 4.0,
         child: Padding(

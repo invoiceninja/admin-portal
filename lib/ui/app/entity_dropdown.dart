@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -189,14 +190,16 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return ResponsivePadding(
       child: Material(
         elevation: 4.0,
-        child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-          _headerRow(),
-          Expanded(child: _createList()),
-        ]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            _headerRow(),
+            Expanded(child: _createList()),
+          ],
+        ),
       ),
     );
   }

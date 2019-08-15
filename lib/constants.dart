@@ -20,8 +20,11 @@ const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefRequireAuthentication = 'require_authentication';
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
 
-const int kMobileLayoutWidth = 600;
-const int kTabletLayoutWidth = 1000;
+const double kMobileLayoutWidth = 600;
+const double kMobileDialogPadding = 12;
+
+const double kTabletLayoutWidth = 1000;
+const double kTabletDialogPadding = 250;
 
 const String kPlanFree = '';
 const String kPlanPro = 'pro';
