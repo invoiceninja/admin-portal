@@ -129,7 +129,7 @@ class _LoginState extends State<LoginView> {
             Form(
               key: _formKey,
               child: FormCard(
-                isResponsive: calculateLayout(context) == AppLayout.mobile,
+                isResponsive: calculateLayout(context) != AppLayout.mobile,
                 children: <Widget>[
                   isOneTimePassword
                       ? TextFormField(
