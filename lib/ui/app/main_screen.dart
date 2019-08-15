@@ -23,8 +23,12 @@ class MainScreen extends StatelessWidget {
 
           if (mainRoute == EntityType.client.name) {
             mainIndex = 1;
-          } else if (mainRoute == 'settings') {
+          } else if (mainRoute == EntityType.product.name) {
             mainIndex = 2;
+          } else if (mainRoute == EntityType.invoice.name) {
+            mainIndex = 3;
+          } else if (mainRoute == 'settings') {
+            mainIndex = 4;
           }
 
           return Row(
@@ -41,6 +45,16 @@ class MainScreen extends StatelessWidget {
                         listWidget: ClientScreen(),
                         viewWidget: ClientViewScreen(),
                         editWidget: ClientEditScreen()),
+                    EntityScreens(
+                      listWidget: ProductScreen(),
+                      viewWidget: ProductViewScreen(),
+                      editWidget: ProductEditScreen(),
+                    ),
+                    EntityScreens(
+                      listWidget: InvoiceScreen(),
+                      viewWidget: InvoiceViewScreen(),
+                      editWidget: InvoiceEditScreen(),
+                    ),
                     SettingsScreen(),
                   ],
                 ),

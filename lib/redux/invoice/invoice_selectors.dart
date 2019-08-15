@@ -127,3 +127,7 @@ String invoiceStatsForClient(
 
   return str;
 }
+
+bool hasInvoiceChanges(
+        InvoiceEntity invoice, BuiltMap<int, InvoiceEntity> invoiceMap) =>
+    invoice.isNew || invoice != invoiceMap[invoice.id];

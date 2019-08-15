@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
@@ -22,6 +23,7 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
@@ -213,6 +215,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return hasClientChanges(clientUIState.editing, clientState.map);
       case ProductEditScreen.route:
         return hasProductChanges(productUIState.editing, productState.map);
+      case InvoiceEditScreen.route:
+        return hasInvoiceChanges(invoiceUIState.editing, invoiceState.map);
     }
 
     if (uiState.currentRoute.endsWith('/edit')) {
@@ -244,8 +248,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
-    //return 'Expense Categories: ${selectedCompany.expenseCategories}';
     return 'Route: ${uiState.currentRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }
