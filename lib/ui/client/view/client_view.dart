@@ -198,28 +198,6 @@ class CustomTabBarView extends StatefulWidget {
 
 class _CustomTabBarViewState extends State<CustomTabBarView> {
   @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_onTabChange);
-  }
-
-  @override
-  void dispose() {
-    widget.controller.removeListener(_onTabChange);
-    super.dispose();
-  }
-
-  void _onTabChange() {
-    final viewModel = widget.viewModel;
-
-    if (widget.controller.index == 2 &&
-        viewModel.client.activities.isEmpty &&
-        !viewModel.isLoading) {
-      viewModel.onRefreshed(context, true);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
 
@@ -236,7 +214,10 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
         ),
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context, true),
-          child: ClientViewActivity(client: viewModel.client),
+          child: ClientViewActivity(
+            viewModel: viewModel,
+            key: ValueKey(viewModel.client.id),
+          ),
         ),
       ],
     );
