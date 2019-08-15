@@ -205,7 +205,7 @@ class AppDrawer extends StatelessWidget {
                         icon: getEntityIcon(EntityType.product),
                         title: localization.products,
                         onTap: () {
-                          store.dispatch(ViewProductList(context));
+                          store.dispatch(ViewProductList(context: context));
                         },
                         onCreateTap: () {
                           if (isMobile(context)) {
@@ -220,7 +220,8 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.invoice,
                         icon: getEntityIcon(EntityType.invoice),
                         title: localization.invoices,
-                        onTap: () => store.dispatch(ViewInvoiceList(context)),
+                        onTap: () =>
+                            store.dispatch(ViewInvoiceList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();

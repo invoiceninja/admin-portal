@@ -14,25 +14,33 @@ import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewInvoiceList implements PersistUI {
-  ViewInvoiceList(this.context);
+  ViewInvoiceList({this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewInvoice implements PersistUI {
-  ViewInvoice({this.invoiceId, this.context});
+  ViewInvoice({this.invoiceId, this.context, this.force = false});
 
   final int invoiceId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditInvoice implements PersistUI {
-  EditInvoice({this.invoice, this.context, this.completer, this.invoiceItem});
+  EditInvoice(
+      {this.invoice,
+      this.context,
+      this.completer,
+      this.invoiceItem,
+      this.force = false});
 
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
   final BuildContext context;
   final Completer completer;
+  final bool force;
 }
 
 class ShowEmailInvoice {

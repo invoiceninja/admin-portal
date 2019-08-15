@@ -98,7 +98,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterInvoicesByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewInvoiceList(context));
+              store.dispatch(ViewInvoiceList(context: context));
             }
             break;
           case EntityType.quote:

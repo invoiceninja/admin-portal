@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
@@ -39,20 +38,31 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 
 Middleware<AppState> _editProduct() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    if (hasChanges(store, action)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
-    Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _viewProduct() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    if (hasChanges(store, action)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
 
-    if (action.context != null && isMobile(action.context)) {
+    if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamed(ProductViewScreen.route);
     }
   };
@@ -60,16 +70,11 @@ Middleware<AppState> _viewProduct() {
 
 Middleware<AppState> _viewProductList() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    next(action);
-
-    if (store.state.hasChanges() && !isMobile(action.context)) {
-      showDialog<AlertDialog>(
-          context: action.context,
-          builder: (BuildContext context) {
-            return MessageDialog(AppLocalization.of(context).errorUnsavedChanges);
-          });
+    if (hasChanges(store, action)) {
       return;
     }
+
+    next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
 
