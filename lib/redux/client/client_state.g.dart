@@ -264,6 +264,8 @@ class _$ClientUIState extends ClientUIState {
   @override
   final ContactEntity editingContact;
   @override
+  final Completer<SelectableEntity> saveCompleter;
+  @override
   final int selectedId;
   @override
   final ListUIState listUIState;
@@ -272,7 +274,11 @@ class _$ClientUIState extends ClientUIState {
       (new ClientUIStateBuilder()..update(updates)).build();
 
   _$ClientUIState._(
-      {this.editing, this.editingContact, this.selectedId, this.listUIState})
+      {this.editing,
+      this.editingContact,
+      this.saveCompleter,
+      this.selectedId,
+      this.listUIState})
       : super._() {
     if (selectedId == null) {
       throw new BuiltValueNullFieldError('ClientUIState', 'selectedId');
@@ -295,6 +301,7 @@ class _$ClientUIState extends ClientUIState {
     return other is ClientUIState &&
         editing == other.editing &&
         editingContact == other.editingContact &&
+        saveCompleter == other.saveCompleter &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
   }
@@ -302,7 +309,9 @@ class _$ClientUIState extends ClientUIState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, editing.hashCode), editingContact.hashCode),
+        $jc(
+            $jc($jc($jc(0, editing.hashCode), editingContact.hashCode),
+                saveCompleter.hashCode),
             selectedId.hashCode),
         listUIState.hashCode));
   }
@@ -312,6 +321,7 @@ class _$ClientUIState extends ClientUIState {
     return (newBuiltValueToStringHelper('ClientUIState')
           ..add('editing', editing)
           ..add('editingContact', editingContact)
+          ..add('saveCompleter', saveCompleter)
           ..add('selectedId', selectedId)
           ..add('listUIState', listUIState))
         .toString();
@@ -333,6 +343,11 @@ class ClientUIStateBuilder
   set editingContact(ContactEntityBuilder editingContact) =>
       _$this._editingContact = editingContact;
 
+  Completer<SelectableEntity> _saveCompleter;
+  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+      _$this._saveCompleter = saveCompleter;
+
   int _selectedId;
   int get selectedId => _$this._selectedId;
   set selectedId(int selectedId) => _$this._selectedId = selectedId;
@@ -349,6 +364,7 @@ class ClientUIStateBuilder
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
       _editingContact = _$v.editingContact?.toBuilder();
+      _saveCompleter = _$v.saveCompleter;
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
@@ -377,6 +393,7 @@ class ClientUIStateBuilder
           new _$ClientUIState._(
               editing: _editing?.build(),
               editingContact: _editingContact?.build(),
+              saveCompleter: saveCompleter,
               selectedId: selectedId,
               listUIState: listUIState.build());
     } catch (_) {

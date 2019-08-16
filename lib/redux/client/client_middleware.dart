@@ -51,12 +51,7 @@ Middleware<AppState> _editClient() {
     }
 
     if (isMobile(action.context)) {
-      final client =
-          await Navigator.of(action.context).pushNamed(ClientEditScreen.route);
-
-      if (action.completer != null && client != null) {
-        action.completer.complete(client);
-      }
+      Navigator.of(action.context).pushNamed(ClientEditScreen.route);
     }
   };
 }
@@ -171,6 +166,10 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
         .then((ClientEntity client) {
       if (action.client.isNew) {
         store.dispatch(AddClientSuccess(client));
+        final clientUIState = store.state.clientUIState;
+        if (clientUIState.saveCompleter != null) {
+          clientUIState.saveCompleter.complete(client);
+        }
       } else {
         store.dispatch(SaveClientSuccess(client));
       }

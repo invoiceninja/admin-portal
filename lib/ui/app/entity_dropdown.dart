@@ -60,7 +60,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
             onSelected: (entity) {
               _textController.text = entity.listDisplayName;
               widget.onSelected(entity);
-              Navigator.pop(context);
             },
             onAddPressed: widget.onAddPressed != null
                 ? (context, completer) => widget.onAddPressed(completer)
@@ -144,6 +143,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               ? IconButton(
                   icon: Icon(Icons.add_circle_outline),
                   onPressed: () {
+                    Navigator.pop(context);
                     final Completer<SelectableEntity> completer =
                         Completer<SelectableEntity>();
                     widget.onAddPressed(context, completer);
@@ -184,7 +184,10 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               ],
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
-            onTap: () => widget.onSelected(entity),
+            onTap: () {
+              widget.onSelected(entity);
+              Navigator.pop(context);
+            },
           );
         },
       );

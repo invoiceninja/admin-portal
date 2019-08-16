@@ -11,11 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -115,20 +110,9 @@ class ClientEditVM {
             if (state.uiState.currentRoute.contains(ClientScreen.route)) {
               store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
             }
-            if (client.isNew) {
-              // The client was created through the entity picker
-              if ([
-                InvoiceEditScreen.route,
-                QuoteEditScreen.route,
-                ProjectEditScreen.route,
-                TaskEditScreen.route,
-                ExpenseEditScreen.route,
-              ].contains(store.state.uiState.currentRoute)) {
-                Navigator.of(context).pop(savedClient);
-              } else {
-                Navigator.of(context)
-                    .pushReplacementNamed(ClientViewScreen.route);
-              }
+            if (client.isNew && state.clientUIState.saveCompleter == null) {
+              Navigator.of(context)
+                  .pushReplacementNamed(ClientViewScreen.route);
             } else {
               Navigator.of(context).pop(savedClient);
             }
