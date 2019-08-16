@@ -111,7 +111,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterQuotesByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewQuoteList(context));
+              store.dispatch(ViewQuoteList(context: context));
             }
             break;
           case EntityType.payment:

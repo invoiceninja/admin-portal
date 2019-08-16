@@ -251,7 +251,7 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.quote,
                         icon: getEntityIcon(EntityType.quote),
                         title: localization.quotes,
-                        onTap: () => store.dispatch(ViewQuoteList(context)),
+                        onTap: () => store.dispatch(ViewQuoteList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();

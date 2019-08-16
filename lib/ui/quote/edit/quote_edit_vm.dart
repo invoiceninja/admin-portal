@@ -44,6 +44,7 @@ class QuoteEditVM extends EntityEditVM {
     Function(List<InvoiceItemEntity>, int) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
+    Function(BuildContext) onCancelPressed,
   }) : super(
           state: state,
           company: company,
@@ -54,6 +55,7 @@ class QuoteEditVM extends EntityEditVM {
           onItemsAdded: onItemsAdded,
           onBackPressed: onBackPressed,
           isSaving: isSaving,
+          onCancelPressed: onCancelPressed,
         );
 
   factory QuoteEditVM.fromStore(Store<AppState> store) {
@@ -95,6 +97,16 @@ class QuoteEditVM extends EntityEditVM {
           store.dispatch(EditQuoteItem(items[0]));
         }
         store.dispatch(AddQuoteItems(items));
+      },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(
+            EditQuote(quote: InvoiceEntity(), context: context, force: true));
+        if (quote.isNew) {
+          store.dispatch(ViewQuoteList(context: context, force: true));
+        } else {
+          store.dispatch(
+              ViewQuote(context: context, quoteId: quote.id, force: true));
+        }
       },
     );
   }

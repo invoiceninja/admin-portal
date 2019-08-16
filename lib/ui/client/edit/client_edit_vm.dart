@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
@@ -110,11 +111,13 @@ class ClientEditVM {
             if (state.uiState.currentRoute.contains(ClientScreen.route)) {
               store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
             }
-            if (client.isNew && state.clientUIState.saveCompleter == null) {
-              Navigator.of(context)
-                  .pushReplacementNamed(ClientViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedClient);
+            if (isMobile(context)) {
+              if (client.isNew && state.clientUIState.saveCompleter == null) {
+                Navigator.of(context)
+                    .pushReplacementNamed(ClientViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedClient);
+              }
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

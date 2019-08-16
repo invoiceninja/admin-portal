@@ -46,9 +46,13 @@ Middleware<AppState> _editClient() {
 
     next(action);
 
+    store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
+
+    /*
     if (action.trackRoute) {
       store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
     }
+    */
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamed(ClientEditScreen.route);
@@ -166,14 +170,16 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
         .then((ClientEntity client) {
       if (action.client.isNew) {
         store.dispatch(AddClientSuccess(client));
-        final clientUIState = store.state.clientUIState;
-        if (clientUIState.saveCompleter != null) {
-          clientUIState.saveCompleter.complete(client);
-        }
       } else {
         store.dispatch(SaveClientSuccess(client));
       }
+
       action.completer.complete(client);
+
+      final clientUIState = store.state.clientUIState;
+      if (clientUIState.saveCompleter != null) {
+        clientUIState.saveCompleter.complete(client);
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveClientFailure(error));

@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceEdit extends StatefulWidget {
   const InvoiceEdit({
@@ -73,6 +74,14 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   ? localization.editQuote
                   : localization.editInvoice),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,
