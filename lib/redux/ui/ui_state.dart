@@ -35,6 +35,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       isMenuVisible: true,
       isHistoryVisible: false,
       currentRoute: LoginScreen.route,
+      previousRoute: '',
       enableDarkMode: enableDarkMode ?? false,
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
@@ -66,6 +67,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   int get selectedCompanyIndex;
 
   String get currentRoute;
+
+  String get previousRoute;
 
   bool get enableDarkMode;
 

@@ -31,6 +31,7 @@ UIState uiReducer(UIState state, dynamic action) {
     ..layout = layoutReducer(state.layout, action)
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
+    ..previousRoute = previousRouteReducer(state.currentRoute, action)
     ..currentRoute = currentRouteReducer(state.currentRoute, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
@@ -136,6 +137,15 @@ Reducer<String> currentRouteReducer = combineReducers([
 String updateCurrentRouteReducer(
     String currentRoute, UpdateCurrentRoute action) {
   return action.route;
+}
+
+Reducer<String> previousRouteReducer = combineReducers([
+  TypedReducer<String, UpdateCurrentRoute>(updatePreviousRouteReducer),
+]);
+
+String updatePreviousRouteReducer(
+    String currentRoute, UpdateCurrentRoute action) {
+  return currentRoute;
 }
 
 Reducer<int> selectedCompanyIndexReducer = combineReducers([

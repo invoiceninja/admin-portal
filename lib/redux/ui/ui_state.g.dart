@@ -78,6 +78,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'currentRoute',
       serializers.serialize(object.currentRoute,
           specifiedType: const FullType(String)),
+      'previousRoute',
+      serializers.serialize(object.previousRoute,
+          specifiedType: const FullType(String)),
       'enableDarkMode',
       serializers.serialize(object.enableDarkMode,
           specifiedType: const FullType(bool)),
@@ -165,6 +168,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           break;
         case 'currentRoute':
           result.currentRoute = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'previousRoute':
+          result.previousRoute = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'enableDarkMode':
@@ -290,6 +297,8 @@ class _$UIState extends UIState {
   @override
   final String currentRoute;
   @override
+  final String previousRoute;
+  @override
   final bool enableDarkMode;
   @override
   final bool requireAuthentication;
@@ -333,6 +342,7 @@ class _$UIState extends UIState {
       this.isHistoryVisible,
       this.selectedCompanyIndex,
       this.currentRoute,
+      this.previousRoute,
       this.enableDarkMode,
       this.requireAuthentication,
       this.emailPayment,
@@ -365,6 +375,9 @@ class _$UIState extends UIState {
     }
     if (currentRoute == null) {
       throw new BuiltValueNullFieldError('UIState', 'currentRoute');
+    }
+    if (previousRoute == null) {
+      throw new BuiltValueNullFieldError('UIState', 'previousRoute');
     }
     if (enableDarkMode == null) {
       throw new BuiltValueNullFieldError('UIState', 'enableDarkMode');
@@ -432,6 +445,7 @@ class _$UIState extends UIState {
         isHistoryVisible == other.isHistoryVisible &&
         selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
+        previousRoute == other.previousRoute &&
         enableDarkMode == other.enableDarkMode &&
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
@@ -471,9 +485,9 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, layout.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode),
-                                                                                selectedCompanyIndex.hashCode),
-                                                                            currentRoute.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, layout.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode),
+                                                                                currentRoute.hashCode),
+                                                                            previousRoute.hashCode),
                                                                         enableDarkMode.hashCode),
                                                                     requireAuthentication.hashCode),
                                                                 emailPayment.hashCode),
@@ -501,6 +515,7 @@ class _$UIState extends UIState {
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
+          ..add('previousRoute', previousRoute)
           ..add('enableDarkMode', enableDarkMode)
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
@@ -547,6 +562,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String _currentRoute;
   String get currentRoute => _$this._currentRoute;
   set currentRoute(String currentRoute) => _$this._currentRoute = currentRoute;
+
+  String _previousRoute;
+  String get previousRoute => _$this._previousRoute;
+  set previousRoute(String previousRoute) =>
+      _$this._previousRoute = previousRoute;
 
   bool _enableDarkMode;
   bool get enableDarkMode => _$this._enableDarkMode;
@@ -651,6 +671,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _isHistoryVisible = _$v.isHistoryVisible;
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
+      _previousRoute = _$v.previousRoute;
       _enableDarkMode = _$v.enableDarkMode;
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
@@ -697,6 +718,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               isHistoryVisible: isHistoryVisible,
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
+              previousRoute: previousRoute,
               enableDarkMode: enableDarkMode,
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
