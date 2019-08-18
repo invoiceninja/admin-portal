@@ -36,11 +36,11 @@ String filterClientDropdownReducer(
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewInvoice>(
-      (int selectedId, dynamic action) => action.invoiceId),
+      (selectedId, action) => action.invoiceId),
   TypedReducer<int, AddInvoiceSuccess>(
-      (int selectedId, dynamic action) => action.invoice.id),
+      (selectedId, action) => action.invoice.id),
   TypedReducer<int, ShowEmailInvoice>(
-      (int selectedId, dynamic action) => action.invoice.id),
+      (selectedId, action) => action.invoice.id),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([

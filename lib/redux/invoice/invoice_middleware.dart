@@ -50,7 +50,9 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
 }
 
 Middleware<AppState> _viewInvoiceList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewInvoiceList;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -67,7 +69,9 @@ Middleware<AppState> _viewInvoiceList() {
 }
 
 Middleware<AppState> _viewInvoice() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as ViewInvoice;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -83,7 +87,9 @@ Middleware<AppState> _viewInvoice() {
 }
 
 Middleware<AppState> _editInvoice() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as EditInvoice;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -104,7 +110,9 @@ Middleware<AppState> _editInvoice() {
 }
 
 Middleware<AppState> _showEmailInvoice() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as ShowEmailInvoice;
+
     next(action);
 
     final emailWasSent =
@@ -117,7 +125,8 @@ Middleware<AppState> _showEmailInvoice() {
 }
 
 Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -140,7 +149,8 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -164,7 +174,8 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -188,7 +199,8 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as MarkSentInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -212,7 +224,8 @@ Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as EmailInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .emailInvoice(store.state.selectedCompany, store.state.authState,
@@ -236,7 +249,8 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveInvoiceRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.invoice)
@@ -266,7 +280,8 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadInvoice;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -297,7 +312,8 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadInvoices;
     final AppState state = store.state;
 
     if (!state.invoiceState.isStale && !action.force) {

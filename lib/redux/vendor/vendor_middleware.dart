@@ -39,7 +39,10 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
 }
 
 Middleware<AppState> _editVendor() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditVendor;
+
     next(action);
 
     if (action.trackRoute) {
@@ -56,7 +59,10 @@ Middleware<AppState> _editVendor() {
 }
 
 Middleware<AppState> _viewVendor() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewVendor;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
@@ -65,7 +71,9 @@ Middleware<AppState> _viewVendor() {
 }
 
 Middleware<AppState> _viewVendorList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewVendorList;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
@@ -76,7 +84,8 @@ Middleware<AppState> _viewVendorList() {
 }
 
 Middleware<AppState> _archiveVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -99,7 +108,8 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _deleteVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -122,7 +132,8 @@ Middleware<AppState> _deleteVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _restoreVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -145,7 +156,8 @@ Middleware<AppState> _restoreVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _saveVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveVendorRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.vendor)
@@ -167,7 +179,8 @@ Middleware<AppState> _saveVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _loadVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadVendor;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -203,7 +216,8 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _loadVendors(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadVendors;
     final AppState state = store.state;
 
     if (!state.vendorState.isStale && !action.force) {

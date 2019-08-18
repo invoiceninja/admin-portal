@@ -26,17 +26,17 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   ];
 }
 
-void _saveAuthLocal(dynamic action) async {
+void _saveAuthLocal({String email, String url, String secret}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kSharedPrefEmail, action.email ?? '');
+  prefs.setString(kSharedPrefEmail, email ?? '');
 
-  if (formatApiUrlReadable(action.url) != kAppUrl) {
-    prefs.setString(kSharedPrefUrl, formatApiUrlMachine(action.url));
-    prefs.setString(kSharedPrefSecret, action.secret);
+  if (formatApiUrlReadable(url) != kAppUrl) {
+    prefs.setString(kSharedPrefUrl, formatApiUrlMachine(url));
+    prefs.setString(kSharedPrefSecret, secret);
   }
 }
 
-void _loadAuthLocal(Store<AppState> store, dynamic action) async {
+void _loadAuthLocal(Store<AppState> store) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String email = prefs.getString(kSharedPrefEmail) ?? '';
   final String url = formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? '');
@@ -55,8 +55,10 @@ void _loadAuthLocal(Store<AppState> store, dynamic action) async {
 }
 
 Middleware<AppState> _createLoginInit() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    _loadAuthLocal(store, action);
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadUserLogin;
+
+    _loadAuthLocal(store);
 
     Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
 
@@ -65,7 +67,9 @@ Middleware<AppState> _createLoginInit() {
 }
 
 Middleware<AppState> _createLoginRequest(AuthRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UserLoginRequest;
+
     repository
         .login(
             email: action.email,
@@ -75,7 +79,11 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
             platform: action.platform,
             oneTimePassword: action.oneTimePassword)
         .then((data) {
-      _saveAuthLocal(action);
+      _saveAuthLocal(
+        email: action.email,
+        secret: action.secret,
+        url: action.url,
+      );
 
       if (_isVersionSupported(data.version)) {
         store.dispatch(LoadAccountSuccess(
@@ -91,7 +99,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         message = 'Please check the URL is correct';
       } else if (message.toLowerCase().contains('credentials')) {
         message += ', please confirm your credentials in the web app';
-      } else if (message.contains('404')){
+      } else if (message.contains('404')) {
         message += ', you may need to add /public to the URL';
       }
       store.dispatch(UserLoginFailure(message));
@@ -102,7 +110,9 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
 }
 
 Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as OAuthLoginRequest;
+
     repository
         .oauthLogin(
             token: action.token,
@@ -110,7 +120,11 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
             secret: action.secret,
             platform: action.platform)
         .then((data) {
-      _saveAuthLocal(action);
+      _saveAuthLocal(
+        email: action.email,
+        secret: action.secret,
+        url: action.url,
+      );
 
       if (_isVersionSupported(data.version)) {
         store.dispatch(LoadAccountSuccess(
@@ -129,10 +143,13 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
 }
 
 Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as RefreshData;
+
     next(action);
 
-    _loadAuthLocal(store, action);
+    _loadAuthLocal(store);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String url =

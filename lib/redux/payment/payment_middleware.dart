@@ -41,7 +41,10 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
 }
 
 Middleware<AppState> _editPayment() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditPayment;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
@@ -56,7 +59,8 @@ Middleware<AppState> _editPayment() {
 }
 
 Middleware<AppState> _viewPayment() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic action,
+      NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
@@ -65,7 +69,9 @@ Middleware<AppState> _viewPayment() {
 }
 
 Middleware<AppState> _viewPaymentList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewPaymentList;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
@@ -76,7 +82,8 @@ Middleware<AppState> _viewPaymentList() {
 }
 
 Middleware<AppState> _archivePayment(PaymentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchivePaymentRequest;
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
         .saveData(
@@ -100,7 +107,8 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
 }
 
 Middleware<AppState> _deletePayment(PaymentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeletePaymentRequest;
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
         .saveData(
@@ -125,7 +133,8 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
 }
 
 Middleware<AppState> _restorePayment(PaymentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestorePaymentRequest;
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
         .saveData(
@@ -150,7 +159,8 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
 }
 
 Middleware<AppState> _savePayment(PaymentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SavePaymentRequest;
     final PaymentEntity payment = action.payment;
     final bool sendEmail =
         payment.isNew ? store.state.uiState.emailPayment : false;
@@ -177,7 +187,8 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
 }
 
 Middleware<AppState> _emailPayment(PaymentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as EmailPaymentRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.payment,
@@ -197,7 +208,7 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
 
 /*
 Middleware<AppState> _loadPayment(PaymentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -228,7 +239,8 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
 */
 
 Middleware<AppState> _loadPayments(PaymentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadPayments;
     final AppState state = store.state;
 
     if (!state.paymentState.isStale && !action.force) {

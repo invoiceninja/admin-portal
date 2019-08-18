@@ -39,7 +39,9 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 }
 
 Middleware<AppState> _editClient() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as EditClient;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -61,7 +63,9 @@ Middleware<AppState> _editClient() {
 }
 
 Middleware<AppState> _viewClient() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as ViewClient;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -77,7 +81,9 @@ Middleware<AppState> _viewClient() {
 }
 
 Middleware<AppState> _viewClientList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewClientList;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -94,7 +100,8 @@ Middleware<AppState> _viewClientList() {
 }
 
 Middleware<AppState> _archiveClient(ClientRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveClientRequest;
     final origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -117,7 +124,8 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _deleteClient(ClientRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteClientRequest;
     final origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -140,7 +148,8 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _restoreClient(ClientRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreClientRequest;
     final origClient = store.state.clientState.map[action.clientId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -163,7 +172,8 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _saveClient(ClientRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveClientRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.client)
@@ -191,7 +201,8 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _loadClient(ClientRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadClient;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -222,8 +233,9 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 }
 
 Middleware<AppState> _loadClients(ClientRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final AppState state = store.state;
+    final action = dynamicAction as LoadClients;
 
     if (!state.clientState.isStale && !action.force) {
       next(action);

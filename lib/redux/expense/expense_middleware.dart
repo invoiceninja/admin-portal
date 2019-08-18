@@ -39,7 +39,9 @@ List<Middleware<AppState>> createStoreExpensesMiddleware([
 }
 
 Middleware<AppState> _editExpense() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as EditExpense;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
@@ -53,7 +55,9 @@ Middleware<AppState> _editExpense() {
 }
 
 Middleware<AppState> _viewExpense() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as ViewExpense;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
@@ -62,7 +66,9 @@ Middleware<AppState> _viewExpense() {
 }
 
 Middleware<AppState> _viewExpenseList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewExpenseList;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
@@ -73,7 +79,8 @@ Middleware<AppState> _viewExpenseList() {
 }
 
 Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -96,7 +103,8 @@ Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -119,7 +127,8 @@ Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _restoreExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -142,7 +151,8 @@ Middleware<AppState> _restoreExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _saveExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveExpenseRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.expense)
@@ -164,7 +174,8 @@ Middleware<AppState> _saveExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _loadExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadExpense;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -194,7 +205,8 @@ Middleware<AppState> _loadExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadExpenses;
     final AppState state = store.state;
 
     if (!state.expenseState.isStale && !action.force) {

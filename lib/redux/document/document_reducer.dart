@@ -15,9 +15,9 @@ EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewDocument>(
-      (int selectedId, dynamic action) => action.documentId),
+      (selectedId, action) => action.documentId),
   TypedReducer<int, AddDocumentSuccess>(
-      (int selectedId, dynamic action) => action.document.id),
+      (selectedId, action) => action.document.id),
 ]);
 
 final editingReducer = combineReducers<DocumentEntity>([

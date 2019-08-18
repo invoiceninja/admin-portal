@@ -38,7 +38,9 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
 }
 
 Middleware<AppState> _editTask() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as EditTask;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
@@ -52,7 +54,9 @@ Middleware<AppState> _editTask() {
 }
 
 Middleware<AppState> _viewTask() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as ViewTask;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
@@ -61,7 +65,9 @@ Middleware<AppState> _viewTask() {
 }
 
 Middleware<AppState> _viewTaskList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewTaskList;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
@@ -72,7 +78,8 @@ Middleware<AppState> _viewTaskList() {
 }
 
 Middleware<AppState> _archiveTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origTask,
@@ -95,7 +102,8 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _deleteTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origTask,
@@ -118,7 +126,8 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _restoreTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origTask,
@@ -141,7 +150,8 @@ Middleware<AppState> _restoreTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _saveTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveTaskRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.task)
@@ -163,7 +173,8 @@ Middleware<AppState> _saveTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _loadTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadTask;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -193,7 +204,8 @@ Middleware<AppState> _loadTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _loadTasks(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadTasks;
     final AppState state = store.state;
 
     if (!state.taskState.isStale && !action.force) {

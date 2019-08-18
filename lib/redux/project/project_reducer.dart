@@ -15,9 +15,9 @@ EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewProject>(
-      (int selectedId, dynamic action) => action.projectId),
+      (selectedId, action) => action.projectId),
   TypedReducer<int, AddProjectSuccess>(
-      (int selectedId, dynamic action) => action.project.id),
+      (selectedId, action) => action.project.id),
 ]);
 
 final editingReducer = combineReducers<ProjectEntity>([
@@ -31,7 +31,7 @@ final editingReducer = combineReducers<ProjectEntity>([
   TypedReducer<ProjectEntity, SelectCompany>(_clearEditing),
 ]);
 
-ProjectEntity _clearEditing(ProjectEntity project, dynamic action) {
+ProjectEntity _clearEditing(ProjectEntity project, dynamic dynamicAction) {
   return ProjectEntity();
 }
 

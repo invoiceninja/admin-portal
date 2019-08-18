@@ -16,7 +16,9 @@ List<Middleware<AppState>> createStoreSettingsMiddleware() {
 }
 
 Middleware<AppState> _viewSettings() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewSettings;
+    
     if (hasChanges(store, action)) {
       return;
     }

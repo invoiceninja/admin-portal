@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
@@ -19,66 +18,71 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
 }
 
 final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
-  TypedReducer<Completer<SelectableEntity>, EditClient>(editClient),
+  TypedReducer<Completer<SelectableEntity>, EditClient>((completer, action) {
+    return action.completer;
+  }),
 ]);
-
-Completer<SelectableEntity> editClient(
-    Completer<SelectableEntity> completer, dynamic action) {
-  return action.completer;
-}
 
 final editingContactReducer = combineReducers<ContactEntity>([
-  TypedReducer<ContactEntity, EditClient>(editContact),
-  TypedReducer<ContactEntity, EditContact>(editContact),
+  TypedReducer<ContactEntity, EditClient>((contact, action) {
+    return action.contact ?? ContactEntity();
+  }),
+  TypedReducer<ContactEntity, EditContact>((contact, action) {
+    return action.contact ?? ContactEntity();
+  }),
 ]);
 
-ContactEntity editContact(ContactEntity contact, dynamic action) {
-  return action.contact ?? ContactEntity();
-}
-
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewClient>(
-      (int selectedId, dynamic action) => action.clientId),
-  TypedReducer<int, AddClientSuccess>(
-      (int selectedId, dynamic action) => action.client.id),
+final selectedIdReducer = combineReducers<int>([
+  TypedReducer<int, ViewClient>((selectedId, action) {
+    return action.clientId;
+  }),
+  TypedReducer<int, AddClientSuccess>((selectedId, action) {
+    return action.client.id;
+  }),
 ]);
 
 final editingReducer = combineReducers<ClientEntity>([
-  TypedReducer<ClientEntity, SaveClientSuccess>(_updateEditing),
-  TypedReducer<ClientEntity, AddClientSuccess>(_updateEditing),
-  TypedReducer<ClientEntity, RestoreClientSuccess>(_updateEditing),
-  TypedReducer<ClientEntity, ArchiveClientSuccess>(_updateEditing),
-  TypedReducer<ClientEntity, DeleteClientSuccess>(_updateEditing),
-  TypedReducer<ClientEntity, EditClient>(_updateEditing),
-  TypedReducer<ClientEntity, UpdateClient>(_updateEditing),
-  TypedReducer<ClientEntity, AddContact>(_addContact),
-  TypedReducer<ClientEntity, DeleteContact>(_removeContact),
-  TypedReducer<ClientEntity, UpdateContact>(_updateContact),
-  TypedReducer<ClientEntity, ViewClient>(_clearEditing),
-  TypedReducer<ClientEntity, ViewClientList>(_clearEditing),
-  TypedReducer<ClientEntity, SelectCompany>(_clearEditing),
+  TypedReducer<ClientEntity, SaveClientSuccess>((client, action) {
+    return action.client;
+  }),
+  TypedReducer<ClientEntity, AddClientSuccess>((client, action) {
+    return action.client;
+  }),
+  TypedReducer<ClientEntity, RestoreClientSuccess>((client, action) {
+    return action.client;
+  }),
+  TypedReducer<ClientEntity, ArchiveClientSuccess>((client, action) {
+    return action.client;
+  }),
+  TypedReducer<ClientEntity, DeleteClientSuccess>((client, action) {
+    return action.client;
+  }),
+  TypedReducer<ClientEntity, EditClient>((client, action) {
+    return action.client;
+  }),
+  TypedReducer<ClientEntity, UpdateClient>((client, action) {
+    return action.client;
+  }),
+  TypedReducer<ClientEntity, AddContact>((client, action) {
+    return client
+        .rebuild((b) => b..contacts.add(action.contact ?? ContactEntity()));
+  }),
+  TypedReducer<ClientEntity, DeleteContact>((client, action) {
+    return client.rebuild((b) => b..contacts.removeAt(action.index));
+  }),
+  TypedReducer<ClientEntity, UpdateContact>((client, action) {
+    return client.rebuild((b) => b..contacts[action.index] = action.contact);
+  }),
+  TypedReducer<ClientEntity, ViewClient>((client, action) {
+    return ClientEntity();
+  }),
+  TypedReducer<ClientEntity, ViewClientList>((client, action) {
+    return ClientEntity();
+  }),
+  TypedReducer<ClientEntity, SelectCompany>((client, action) {
+    return ClientEntity();
+  }),
 ]);
-
-ClientEntity _clearEditing(ClientEntity client, dynamic action) {
-  return ClientEntity();
-}
-
-ClientEntity _updateEditing(ClientEntity client, dynamic action) {
-  return action.client;
-}
-
-ClientEntity _addContact(ClientEntity client, AddContact action) {
-  return client
-      .rebuild((b) => b..contacts.add(action.contact ?? ContactEntity()));
-}
-
-ClientEntity _removeContact(ClientEntity client, DeleteContact action) {
-  return client.rebuild((b) => b..contacts.removeAt(action.index));
-}
-
-ClientEntity _updateContact(ClientEntity client, UpdateContact action) {
-  return client.rebuild((b) => b..contacts[action.index] = action.contact);
-}
 
 final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),

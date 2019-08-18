@@ -39,7 +39,9 @@ List<Middleware<AppState>> createStoreProjectsMiddleware([
 }
 
 Middleware<AppState> _editProject() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as EditProject;
+
     next(action);
 
     if (action.trackRoute) {
@@ -56,7 +58,9 @@ Middleware<AppState> _editProject() {
 }
 
 Middleware<AppState> _viewProject() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as ViewProject;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
@@ -65,7 +69,9 @@ Middleware<AppState> _viewProject() {
 }
 
 Middleware<AppState> _viewProjectList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewProjectList;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
@@ -76,7 +82,8 @@ Middleware<AppState> _viewProjectList() {
 }
 
 Middleware<AppState> _archiveProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -99,7 +106,8 @@ Middleware<AppState> _archiveProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _deleteProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -122,7 +130,8 @@ Middleware<AppState> _deleteProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _restoreProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -145,7 +154,8 @@ Middleware<AppState> _restoreProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _saveProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveProjectRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.project)
@@ -167,7 +177,8 @@ Middleware<AppState> _saveProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _loadProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadProject;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -200,7 +211,8 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _loadProjects(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadProjects;
     final AppState state = store.state;
 
     if (!state.projectState.isStale && !action.force) {

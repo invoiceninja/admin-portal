@@ -27,9 +27,9 @@ VendorContactEntity editVendorContact(
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewVendor>(
-      (int selectedId, dynamic action) => action.vendorId),
+      (selectedId, action) => action.vendorId),
   TypedReducer<int, AddVendorSuccess>(
-      (int selectedId, dynamic action) => action.vendor.id),
+      (selectedId, action) => action.vendor.id),
 ]);
 
 final editingReducer = combineReducers<VendorEntity>([

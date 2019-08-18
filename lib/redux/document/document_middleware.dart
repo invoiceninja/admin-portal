@@ -38,7 +38,9 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
 }
 
 Middleware<AppState> _editDocument() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as EditDocument;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentEditScreen.route));
@@ -52,7 +54,9 @@ Middleware<AppState> _editDocument() {
 }
 
 Middleware<AppState> _viewDocument() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as ViewDocument;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
@@ -61,7 +65,9 @@ Middleware<AppState> _viewDocument() {
 }
 
 Middleware<AppState> _viewDocumentList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewDocumentList;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
@@ -72,7 +78,8 @@ Middleware<AppState> _viewDocumentList() {
 }
 
 Middleware<AppState> _archiveDocument(DocumentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveDocumentRequest;
     final origDocument = store.state.documentState.map[action.documentId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -95,7 +102,8 @@ Middleware<AppState> _archiveDocument(DocumentRepository repository) {
 }
 
 Middleware<AppState> _deleteDocument(DocumentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteDocumentRequest;
     final origDocument = store.state.documentState.map[action.documentId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -118,7 +126,8 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
 }
 
 Middleware<AppState> _restoreDocument(DocumentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreDocumentRequest;
     final origDocument = store.state.documentState.map[action.documentId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -141,7 +150,8 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
 }
 
 Middleware<AppState> _saveDocument(DocumentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveDocumentRequest;
     if (store.state.selectedCompany.isEnterprisePlan) {
       repository
           .saveData(store.state.selectedCompany, store.state.authState,
@@ -169,7 +179,8 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
 }
 
 Middleware<AppState> _loadDocument(DocumentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadDocument;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -199,7 +210,8 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
 }
 
 Middleware<AppState> _loadDocuments(DocumentRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadDocuments;
     final AppState state = store.state;
 
     if (!state.documentState.isStale && !action.force) {

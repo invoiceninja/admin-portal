@@ -22,8 +22,9 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 }
 
 Middleware<AppState> _createViewDashboard() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewDashboard;
+    
     if (hasChanges(store, action)) {
       return;
     }
@@ -41,7 +42,8 @@ Middleware<AppState> _createViewDashboard() {
 }
 
 Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadDashboard;
     final state = store.state;
 
     if (!state.dashboardState.isStale && !action.force) {

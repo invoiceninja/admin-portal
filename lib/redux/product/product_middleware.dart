@@ -37,7 +37,9 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 }
 
 Middleware<AppState> _editProduct() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as EditProduct;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -53,7 +55,9 @@ Middleware<AppState> _editProduct() {
 }
 
 Middleware<AppState> _viewProduct() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as ViewProduct;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -69,7 +73,9 @@ Middleware<AppState> _viewProduct() {
 }
 
 Middleware<AppState> _viewProductList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewProductList;
+
     if (hasChanges(store, action)) {
       return;
     }
@@ -86,7 +92,8 @@ Middleware<AppState> _viewProductList() {
 }
 
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -109,7 +116,8 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _deleteProduct(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -132,7 +140,8 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _restoreProduct(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -155,7 +164,8 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _saveProduct(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveProductRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.product)
@@ -177,7 +187,8 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _loadProducts(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadProducts;
     final AppState state = store.state;
 
     if (!state.productState.isStale && !action.force) {

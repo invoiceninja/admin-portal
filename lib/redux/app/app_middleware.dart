@@ -149,7 +149,8 @@ Middleware<AppState> _createLoadState(
   CompanyState company4State;
   CompanyState company5State;
 
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as LoadStateRequest;
     try {
       final prefs = await SharedPreferences.getInstance();
       final appVersion = prefs.getString(kSharedPrefAppVersion);
@@ -284,11 +285,12 @@ Middleware<AppState> _createUserLoggedIn(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UserLoginSuccess;
+
     next(action);
 
     final state = store.state;
-
     authRepository.saveAuthState(state.authState);
     uiRepository.saveUIState(state.uiState);
     staticRepository.saveStaticState(state.staticState);
@@ -301,7 +303,9 @@ Middleware<AppState> _createUserLoggedIn(
 }
 
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistUI;
+
     next(action);
 
     uiRepository.saveUIState(store.state.uiState);
@@ -309,7 +313,8 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 }
 
 Middleware<AppState> _createAccountLoaded() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+    final action = dynamicAction as LoadAccountSuccess;
     final dynamic data = action.loginResponse;
     store.dispatch(LoadStaticSuccess(data: data.static, version: data.version));
 
@@ -336,7 +341,9 @@ Middleware<AppState> _createAccountLoaded() {
 
 Middleware<AppState> _createPersistStatic(
     PersistenceRepository staticRepository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistStatic;
+
     // first process the action so the data is in the state
     next(action);
 
@@ -351,8 +358,9 @@ Middleware<AppState> _createPersistData(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    // first process the action so the data is in the state
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistData;
+
     next(action);
 
     final AppState state = store.state;
@@ -387,7 +395,7 @@ Middleware<AppState> _createDeleteState(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();
@@ -397,6 +405,7 @@ Middleware<AppState> _createDeleteState(
     company4Repository.delete();
     company5Repository.delete();
 
+    final action = dynamicAction as UserLogout;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     for (int i = 0; i < 5; i++) {
@@ -408,7 +417,9 @@ Middleware<AppState> _createDeleteState(
 }
 
 Middleware<AppState> _createViewMainScreen() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewMainScreen;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DashboardScreen.route));

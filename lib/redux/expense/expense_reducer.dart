@@ -15,9 +15,9 @@ EntityUIState expenseUIReducer(ExpenseUIState state, dynamic action) {
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewExpense>(
-      (int selectedId, dynamic action) => action.expenseId),
+      (selectedId, action) => action.expenseId),
   TypedReducer<int, AddExpenseSuccess>(
-      (int selectedId, dynamic action) => action.expense.id),
+      (selectedId, action) => action.expense.id),
 ]);
 
 final editingReducer = combineReducers<ExpenseEntity>([

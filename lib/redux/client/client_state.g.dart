@@ -266,6 +266,8 @@ class _$ClientUIState extends ClientUIState {
   @override
   final Completer<SelectableEntity> saveCompleter;
   @override
+  final Completer<Null> cancelCompleter;
+  @override
   final int selectedId;
   @override
   final ListUIState listUIState;
@@ -277,6 +279,7 @@ class _$ClientUIState extends ClientUIState {
       {this.editing,
       this.editingContact,
       this.saveCompleter,
+      this.cancelCompleter,
       this.selectedId,
       this.listUIState})
       : super._() {
@@ -302,6 +305,7 @@ class _$ClientUIState extends ClientUIState {
         editing == other.editing &&
         editingContact == other.editingContact &&
         saveCompleter == other.saveCompleter &&
+        cancelCompleter == other.cancelCompleter &&
         selectedId == other.selectedId &&
         listUIState == other.listUIState;
   }
@@ -310,8 +314,10 @@ class _$ClientUIState extends ClientUIState {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, editing.hashCode), editingContact.hashCode),
-                saveCompleter.hashCode),
+            $jc(
+                $jc($jc($jc(0, editing.hashCode), editingContact.hashCode),
+                    saveCompleter.hashCode),
+                cancelCompleter.hashCode),
             selectedId.hashCode),
         listUIState.hashCode));
   }
@@ -322,6 +328,7 @@ class _$ClientUIState extends ClientUIState {
           ..add('editing', editing)
           ..add('editingContact', editingContact)
           ..add('saveCompleter', saveCompleter)
+          ..add('cancelCompleter', cancelCompleter)
           ..add('selectedId', selectedId)
           ..add('listUIState', listUIState))
         .toString();
@@ -348,6 +355,11 @@ class ClientUIStateBuilder
   set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
       _$this._saveCompleter = saveCompleter;
 
+  Completer<Null> _cancelCompleter;
+  Completer<Null> get cancelCompleter => _$this._cancelCompleter;
+  set cancelCompleter(Completer<Null> cancelCompleter) =>
+      _$this._cancelCompleter = cancelCompleter;
+
   int _selectedId;
   int get selectedId => _$this._selectedId;
   set selectedId(int selectedId) => _$this._selectedId = selectedId;
@@ -365,6 +377,7 @@ class ClientUIStateBuilder
       _editing = _$v.editing?.toBuilder();
       _editingContact = _$v.editingContact?.toBuilder();
       _saveCompleter = _$v.saveCompleter;
+      _cancelCompleter = _$v.cancelCompleter;
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
       _$v = null;
@@ -394,6 +407,7 @@ class ClientUIStateBuilder
               editing: _editing?.build(),
               editingContact: _editingContact?.build(),
               saveCompleter: saveCompleter,
+              cancelCompleter: cancelCompleter,
               selectedId: selectedId,
               listUIState: listUIState.build());
     } catch (_) {

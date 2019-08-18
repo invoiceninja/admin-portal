@@ -58,6 +58,7 @@ abstract class ClientUIState extends Object
       editingContact: ContactEntity(),
       selectedId: 0,
       saveCompleter: null,
+      cancelCompleter: null,
     );
   }
   ClientUIState._();
@@ -71,6 +72,10 @@ abstract class ClientUIState extends Object
   @nullable
   @BuiltValueField(serialize: false)
   Completer<SelectableEntity> get saveCompleter;
+
+  @nullable
+  @BuiltValueField(serialize: false)
+  Completer<Null> get cancelCompleter;
 
   @override
   bool get isCreatingNew => editing.isNew;
