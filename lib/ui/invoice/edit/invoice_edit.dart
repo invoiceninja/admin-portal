@@ -116,6 +116,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
         body: Form(
           key: _formKey,
           child: TabBarView(
+            key: ValueKey(viewModel.invoice.id),
             controller: _controller,
             children: invoice.isQuote
                 ? <Widget>[

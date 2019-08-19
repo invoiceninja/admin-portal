@@ -87,12 +87,7 @@ class ClientEditVM {
         onCancelPressed: (BuildContext context) {
           store.dispatch(EditClient(
               client: ClientEntity(), context: context, force: true));
-          if (client.isNew) {
-            store.dispatch(ViewClientList(context: context, force: true));
-          } else {
-            store.dispatch(
-                ViewClient(context: context, clientId: client.id, force: true));
-          }
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         },
         onSavePressed: (BuildContext context) {
           if (!client.hasNameSet) {
