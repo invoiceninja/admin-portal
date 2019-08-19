@@ -43,7 +43,7 @@ class ExpenseListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
-    final expenseUIState = uiState.clientUIState;
+    final expenseUIState = uiState.expenseUIState;
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? expense.matchesFilterValue(filter)

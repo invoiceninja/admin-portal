@@ -35,6 +35,7 @@ class InvoiceListItem extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
+    final quoteUIState = uiState.quoteUIState;
 
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
@@ -49,8 +50,12 @@ class InvoiceListItem extends StatelessWidget {
     return DismissibleEntity(
       isSelected: invoice.id ==
           (uiState.isEditing
-              ? invoiceUIState.editing.id
-              : invoiceUIState.selectedId),
+              ? (invoice.isQuote
+                  ? quoteUIState.editing.id
+                  : invoiceUIState.editing.id)
+              : (invoice.isQuote
+                  ? quoteUIState.selectedId
+                  : invoiceUIState.selectedId)),
       user: user,
       entity: invoice,
       onEntityAction: onEntityAction,

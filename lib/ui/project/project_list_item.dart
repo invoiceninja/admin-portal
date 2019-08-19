@@ -35,7 +35,7 @@ class ProjectListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
-    final projectUIState = uiState.productUIState;
+    final projectUIState = uiState.projectUIState;
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? project.matchesFilterValue(filter)
