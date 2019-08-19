@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskView extends StatefulWidget {
   const TaskView({
@@ -243,6 +244,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
+      automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(
         entity: task,
         title: AppLocalization.of(context).task,

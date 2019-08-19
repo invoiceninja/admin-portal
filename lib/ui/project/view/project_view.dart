@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectView extends StatefulWidget {
   const ProjectView({
@@ -180,6 +181,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
+      automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(entity: project),
       actions: project.isNew
           ? []
