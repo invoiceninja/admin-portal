@@ -21,23 +21,21 @@ class ProjectScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(store.state.projectListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(store.state.projectListState.filterClearedAt),
+        entityType: EntityType.project,
+        onFilterChanged: (value) {
+          store.dispatch(FilterProjects(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.project,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterProjects(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.project,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterProjects(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: ProjectListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.project,

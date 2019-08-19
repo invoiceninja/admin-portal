@@ -21,23 +21,21 @@ class InvoiceScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(store.state.invoiceListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(store.state.invoiceListState.filterClearedAt),
+        entityType: EntityType.invoice,
+        onFilterChanged: (value) {
+          store.dispatch(FilterInvoices(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.invoice,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterInvoices(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.invoice,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterInvoices(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: InvoiceListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.invoice,
@@ -66,32 +64,32 @@ class InvoiceScreen extends StatelessWidget {
             store.dispatch(FilterInvoicesByCustom2(value)),
         statuses: [
           InvoiceStatusEntity().rebuild(
-                (b) => b
+            (b) => b
               ..id = 1
               ..name = localization.draft,
           ),
           InvoiceStatusEntity().rebuild(
-                (b) => b
+            (b) => b
               ..id = 2
               ..name = localization.sent,
           ),
           InvoiceStatusEntity().rebuild(
-                (b) => b
+            (b) => b
               ..id = 3
               ..name = localization.viewed,
           ),
           InvoiceStatusEntity().rebuild(
-                (b) => b
+            (b) => b
               ..id = 5
               ..name = localization.partial,
           ),
           InvoiceStatusEntity().rebuild(
-                (b) => b
+            (b) => b
               ..id = 6
               ..name = localization.paid,
           ),
           InvoiceStatusEntity().rebuild(
-                (b) => b
+            (b) => b
               ..id = -1
               ..name = localization.pastDue,
           ),
@@ -99,17 +97,17 @@ class InvoiceScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.invoice)
           ? FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () {
-          store.dispatch(EditInvoice(
-              invoice: InvoiceEntity(company: company).rebuild((b) => b
-                ..clientId =
-                    store.state.invoiceListState.filterEntityId ?? 0),
-              context: context));
-        },
-        child: Icon(Icons.add, color: Colors.white),
-        tooltip: localization.newInvoice,
-      )
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                store.dispatch(EditInvoice(
+                    invoice: InvoiceEntity(company: company).rebuild((b) => b
+                      ..clientId =
+                          store.state.invoiceListState.filterEntityId ?? 0),
+                    context: context));
+              },
+              child: Icon(Icons.add, color: Colors.white),
+              tooltip: localization.newInvoice,
+            )
           : null,
     );
   }

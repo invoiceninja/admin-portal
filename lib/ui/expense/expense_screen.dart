@@ -22,23 +22,21 @@ class ExpenseScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(store.state.expenseListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(store.state.expenseListState.filterClearedAt),
+        entityType: EntityType.expense,
+        onFilterChanged: (value) {
+          store.dispatch(FilterExpenses(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.expense,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterExpenses(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.expense,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterExpenses(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: ExpenseListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.expense,

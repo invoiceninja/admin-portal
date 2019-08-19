@@ -22,23 +22,21 @@ class ProductScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(store.state.productListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(store.state.productListState.filterClearedAt),
+        entityType: EntityType.product,
+        onFilterChanged: (value) {
+          store.dispatch(FilterProducts(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.product,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterProducts(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.product,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterProducts(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,

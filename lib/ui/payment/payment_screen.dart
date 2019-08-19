@@ -19,23 +19,21 @@ class PaymentScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(store.state.paymentListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(store.state.paymentListState.filterClearedAt),
+        entityType: EntityType.payment,
+        onFilterChanged: (value) {
+          store.dispatch(FilterPayments(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.payment,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterPayments(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.payment,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterPayments(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: PaymentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.payment,

@@ -21,23 +21,21 @@ class VendorScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(store.state.vendorListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(store.state.vendorListState.filterClearedAt),
+        entityType: EntityType.vendor,
+        onFilterChanged: (value) {
+          store.dispatch(FilterVendors(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.vendor,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterVendors(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.vendor,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterVendors(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: VendorListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.vendor,

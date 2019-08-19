@@ -22,23 +22,21 @@ class TaskScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(store.state.taskListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(store.state.taskListState.filterClearedAt),
+        entityType: EntityType.task,
+        onFilterChanged: (value) {
+          store.dispatch(FilterTasks(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.task,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterTasks(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.task,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterTasks(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: TaskListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,

@@ -21,23 +21,21 @@ class QuoteScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(store.state.quoteListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(store.state.quoteListState.filterClearedAt),
+        entityType: EntityType.quote,
+        onFilterChanged: (value) {
+          store.dispatch(FilterQuotes(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.quote,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterQuotes(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.quote,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterQuotes(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: QuoteListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.quote,

@@ -1,5 +1,3 @@
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -12,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientScreen extends StatelessWidget {
   static const String route = '/client';
@@ -26,29 +23,21 @@ class ClientScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        leading: !isMobile(context)
-            ? IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () => store.dispatch(UpdateSidebar(AppSidebar.menu)),
-              )
-            : null,
-        title: ListFilter(
-          key: ValueKey(state.clientListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(state.clientListState.filterClearedAt),
+        entityType: EntityType.client,
+        onFilterChanged: (value) {
+          store.dispatch(FilterClients(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.client,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterClients(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.client,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterClients(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.client,

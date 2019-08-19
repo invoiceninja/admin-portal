@@ -24,15 +24,14 @@ class StubScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-                   appBar: AppBar(
-                     title: ListFilter(
+                     appBarTitle: ListFilter(
                        key: ValueKey(state.stubListState.filterClearedAt),
                        entityType: EntityType.stub,
                        onFilterChanged: (value) {
                          store.dispatch(FilterStubs(value));
                        },
                      ),
-                     actions: [
+                     appBarActions: [
                        ListFilterButton(
                          entityType: EntityType.stub,
                          onFilterPressed: (String value) {
@@ -40,7 +39,6 @@ class StubScreen extends StatelessWidget {
                          },
                        ),
                      ],
-                   ),
                    body: StubListBuilder(),
                    bottomNavigationBar: AppBottomBar(
                      entityType: EntityType.stub,

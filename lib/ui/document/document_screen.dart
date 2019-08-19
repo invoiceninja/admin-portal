@@ -22,23 +22,21 @@ class DocumentScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      appBar: AppBar(
-        title: ListFilter(
-          key: ValueKey(state.documentListState.filterClearedAt),
+      appBarTitle: ListFilter(
+        key: ValueKey(state.documentListState.filterClearedAt),
+        entityType: EntityType.document,
+        onFilterChanged: (value) {
+          store.dispatch(FilterDocuments(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
           entityType: EntityType.document,
-          onFilterChanged: (value) {
+          onFilterPressed: (String value) {
             store.dispatch(FilterDocuments(value));
           },
         ),
-        actions: [
-          ListFilterButton(
-            entityType: EntityType.document,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterDocuments(value));
-            },
-          ),
-        ],
-      ),
+      ],
       body: DocumentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.document,
