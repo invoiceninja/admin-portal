@@ -24,8 +24,9 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 Middleware<AppState> _createViewDashboard() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewDashboard;
-    
-    if (hasChanges(store, action)) {
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
       return;
     }
 

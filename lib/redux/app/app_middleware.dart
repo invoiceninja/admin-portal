@@ -149,7 +149,8 @@ Middleware<AppState> _createLoadState(
   CompanyState company4State;
   CompanyState company5State;
 
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as LoadStateRequest;
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -313,7 +314,8 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 }
 
 Middleware<AppState> _createAccountLoaded() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as LoadAccountSuccess;
     final dynamic data = action.loginResponse;
     store.dispatch(LoadStaticSuccess(data: data.static, version: data.version));
@@ -395,7 +397,8 @@ Middleware<AppState> _createDeleteState(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();
@@ -443,18 +446,18 @@ void _setLastLoadWasSuccesfull() async {
 }
 */
 
-bool hasChanges(Store<AppState> store, dynamic action) {
-  if (action.context == null) {
+bool hasChanges({Store<AppState> store, BuildContext context, bool force}) {
+  if (context == null) {
     print('WARNING: context is null in hasChanges');
     return false;
-  } else if (action.force == null) {
+  } else if (force == null) {
     print('WARNING: force is null in hasChanges');
     return false;
   }
 
-  if (store.state.hasChanges() && !isMobile(action.context) && !action.force) {
+  if (store.state.hasChanges() && !isMobile(context) && !force) {
     showDialog<MessageDialog>(
-        context: action.context,
+        context: context,
         builder: (BuildContext context) {
           return MessageDialog(AppLocalization.of(context).errorUnsavedChanges);
         });

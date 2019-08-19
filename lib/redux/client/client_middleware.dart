@@ -39,10 +39,12 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 }
 
 Middleware<AppState> _editClient() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditClient;
 
-    if (hasChanges(store, action)) {
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
       return;
     }
 
@@ -63,10 +65,12 @@ Middleware<AppState> _editClient() {
 }
 
 Middleware<AppState> _viewClient() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ViewClient;
 
-    if (hasChanges(store, action)) {
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
       return;
     }
 
@@ -84,7 +88,8 @@ Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewClientList;
 
-    if (hasChanges(store, action)) {
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
       return;
     }
 

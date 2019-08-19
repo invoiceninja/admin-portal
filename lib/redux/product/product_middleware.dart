@@ -40,7 +40,8 @@ Middleware<AppState> _editProduct() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
     final action = dynamicAction as EditProduct;
 
-    if (hasChanges(store, action)) {
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
       return;
     }
 
@@ -58,7 +59,8 @@ Middleware<AppState> _viewProduct() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
     final action = dynamicAction as ViewProduct;
 
-    if (hasChanges(store, action)) {
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
       return;
     }
 
@@ -76,7 +78,8 @@ Middleware<AppState> _viewProductList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewProductList;
 
-    if (hasChanges(store, action)) {
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
       return;
     }
 

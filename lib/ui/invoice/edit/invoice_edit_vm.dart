@@ -137,12 +137,7 @@ class InvoiceEditVM extends EntityEditVM {
       onCancelPressed: (BuildContext context) {
         store.dispatch(EditInvoice(
             invoice: InvoiceEntity(), context: context, force: true));
-        if (invoice.isNew) {
-          store.dispatch(ViewInvoiceList(context: context, force: true));
-        } else {
-          store.dispatch(ViewInvoice(
-              context: context, invoiceId: invoice.id, force: true));
-        }
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
     );
   }

@@ -101,12 +101,7 @@ class QuoteEditVM extends EntityEditVM {
       onCancelPressed: (BuildContext context) {
         store.dispatch(
             EditQuote(quote: InvoiceEntity(), context: context, force: true));
-        if (quote.isNew) {
-          store.dispatch(ViewQuoteList(context: context, force: true));
-        } else {
-          store.dispatch(
-              ViewQuote(context: context, quoteId: quote.id, force: true));
-        }
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
     );
   }
