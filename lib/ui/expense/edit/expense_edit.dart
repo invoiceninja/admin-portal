@@ -96,6 +96,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
         body: Form(
           key: _formKey,
           child: TabBarView(
+            key: ValueKey(viewModel.expense.id),
             controller: _controller,
             children: <Widget>[
               ExpenseEditDetails(

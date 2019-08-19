@@ -111,6 +111,7 @@ class _TaskEditState extends State<TaskEdit>
         body: Form(
           key: _formKey,
           child: TabBarView(
+            key: ValueKey(viewModel.task.id),
             controller: _controller,
             children: <Widget>[
               TaskEditDetailsScreen(),

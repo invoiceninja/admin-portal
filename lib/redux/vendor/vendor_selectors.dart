@@ -78,3 +78,8 @@ double calculateVendorBalance(int vendorId, int currencyId,
 
   return total;
 }
+
+
+bool hasVendorChanges(
+    VendorEntity vendor, BuiltMap<int, VendorEntity> vendorMap) =>
+    vendor.isNew || vendor != vendorMap[vendor.id];

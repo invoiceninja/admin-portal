@@ -220,3 +220,8 @@ String taskStatsForProject(int projectId, BuiltMap<int, TaskEntity> taskMap,
 
   return str;
 }
+
+
+bool hasTaskChanges(
+    TaskEntity task, BuiltMap<int, TaskEntity> taskMap) =>
+    task.isNew || task != taskMap[task.id];

@@ -99,6 +99,7 @@ class _VendorEditState extends State<VendorEdit>
         body: Form(
           key: _formKey,
           child: TabBarView(
+            key: ValueKey(viewModel.vendor.id),
             controller: _controller,
             children: <Widget>[
               VendorEditDetails(
