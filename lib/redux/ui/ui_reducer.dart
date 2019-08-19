@@ -24,6 +24,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
+  final currentRoute = currentRouteReducer(state.currentRoute, action);
   return state.rebuild((b) => b
     ..filter = filterReducer(state.filter, action)
     ..selectedCompanyIndex =
@@ -31,8 +32,10 @@ UIState uiReducer(UIState state, dynamic action) {
     ..layout = layoutReducer(state.layout, action)
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
-    ..previousRoute = previousRouteReducer(state.currentRoute, action)
-    ..currentRoute = currentRouteReducer(state.currentRoute, action)
+    ..previousRoute = state.currentRoute == currentRoute
+        ? state.previousRoute
+        : state.currentRoute
+    ..currentRoute = currentRoute
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
     ..requireAuthentication =
