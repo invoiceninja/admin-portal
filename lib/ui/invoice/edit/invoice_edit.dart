@@ -66,6 +66,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(invoice.isNew
               ? invoice.isQuote
                   ? localization.newQuote

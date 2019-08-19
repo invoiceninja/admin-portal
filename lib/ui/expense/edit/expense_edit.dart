@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_settings.dart'
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEdit extends StatefulWidget {
   const ExpenseEdit({
@@ -49,6 +50,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(expense.isNew
               ? localization.newExpense
               : localization.editExpense),

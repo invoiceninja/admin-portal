@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorEdit extends StatefulWidget {
   const VendorEdit({
@@ -50,6 +51,7 @@ class _VendorEditState extends State<VendorEdit>
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(
               vendor.isNew ? localization.newVendor : localization.editVendor),
           actions: <Widget>[

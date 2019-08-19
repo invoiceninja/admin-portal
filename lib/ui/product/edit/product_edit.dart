@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductEdit extends StatefulWidget {
   const ProductEdit({
@@ -100,6 +101,7 @@ class _ProductEditState extends State<ProductEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(viewModel.product.isNew
               ? localization.newProduct
               : localization.editProduct),

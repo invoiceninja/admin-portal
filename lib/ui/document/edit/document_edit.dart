@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentEdit extends StatefulWidget {
   const DocumentEdit({
@@ -72,6 +73,7 @@ class _DocumentEditState extends State<DocumentEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(viewModel.document.isNew
               ? localization.newDocument
               : localization.editDocument),

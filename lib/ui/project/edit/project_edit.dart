@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectEdit extends StatefulWidget {
   const ProjectEdit({
@@ -107,6 +108,7 @@ class _ProjectEditState extends State<ProjectEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(viewModel.project.isNew
               ? localization.newProject
               : localization.editProject),
