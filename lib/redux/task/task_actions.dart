@@ -38,7 +38,6 @@ class EditTask implements PersistUI {
       this.taskTime,
       this.context,
       this.completer,
-      this.trackRoute = true,
       this.force = false,
       this.taskTimeIndex});
 
@@ -47,7 +46,6 @@ class EditTask implements PersistUI {
   final TaskTime taskTime;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
   final bool force;
 }
 

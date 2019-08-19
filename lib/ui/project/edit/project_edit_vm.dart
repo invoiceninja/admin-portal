@@ -81,10 +81,7 @@ class ProjectEditVM {
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
-            client: ClientEntity(),
-            context: context,
-            completer: completer,
-            trackRoute: false));
+            client: ClientEntity(), context: context, completer: completer));
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

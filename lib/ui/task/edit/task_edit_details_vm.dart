@@ -63,10 +63,7 @@ class TaskEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
-            client: ClientEntity(),
-            context: context,
-            completer: completer,
-            trackRoute: false));
+            client: ClientEntity(), context: context, completer: completer));
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
@@ -79,8 +76,7 @@ class TaskEditDetailsVM {
             project: ProjectEntity()
                 .rebuild((b) => b..clientId = task.clientId ?? 0),
             context: context,
-            completer: completer,
-            trackRoute: false));
+            completer: completer));
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

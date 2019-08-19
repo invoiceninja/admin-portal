@@ -149,6 +149,7 @@ class _ProjectEditState extends State<ProjectEdit> {
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
             return ListView(
+              key: ValueKey(viewModel.project.id),
               children: <Widget>[
                 FormCard(
                   children: <Widget>[

@@ -23,12 +23,11 @@ class ViewDocument implements PersistUI {
 
 class EditDocument implements PersistUI {
   EditDocument(
-      {this.document, this.context, this.completer, this.trackRoute = true});
+      {this.document, this.context, this.completer,});
 
   final DocumentEntity document;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
 }
 
 class UpdateDocument implements PersistUI {

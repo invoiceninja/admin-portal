@@ -36,13 +36,11 @@ class EditProject implements PersistUI {
       {@required this.project,
       @required this.context,
       this.completer,
-      this.force = false,
-      this.trackRoute = true});
+      this.force = false});
 
   final ProjectEntity project;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
   final bool force;
 }
 

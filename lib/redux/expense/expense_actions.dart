@@ -35,13 +35,11 @@ class EditExpense implements PersistUI {
       {@required this.expense,
       @required this.context,
       this.completer,
-      this.force = false,
-      this.trackRoute = true});
+      this.force = false});
 
   final ExpenseEntity expense;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
   final bool force;
 }
 

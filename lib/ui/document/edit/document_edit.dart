@@ -107,6 +107,7 @@ class _DocumentEditState extends State<DocumentEdit> {
             key: _formKey,
             child: Builder(builder: (BuildContext context) {
               return ListView(
+                key: ValueKey(viewModel.document.id),
                 children: <Widget>[
                   FormCard(
                     children: <Widget>[

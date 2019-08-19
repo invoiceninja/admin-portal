@@ -84,8 +84,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
             client: ClientEntity(),
             context: context,
             completer: completer,
-            force: true,
-            trackRoute: false));
+            force: true));
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

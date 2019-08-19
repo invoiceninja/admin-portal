@@ -32,13 +32,11 @@ class EditPayment implements PersistUI {
       {@required this.payment,
       @required this.context,
       this.completer,
-      this.force = false,
-      this.trackRoute = true});
+      this.force = false});
 
   final PaymentEntity payment;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
   final bool force;
 }
 

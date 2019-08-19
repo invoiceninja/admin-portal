@@ -132,6 +132,7 @@ class _PaymentEditState extends State<PaymentEdit> {
           body: Form(
             key: _formKey,
             child: ListView(
+              key: ValueKey(viewModel.payment.id),
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
