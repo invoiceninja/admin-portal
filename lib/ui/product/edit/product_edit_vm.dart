@@ -26,6 +26,7 @@ class ProductEditScreen extends StatelessWidget {
       builder: (context, vm) {
         return ProductEdit(
           viewModel: vm,
+          key: ValueKey(vm.product.id),
         );
       },
     );
