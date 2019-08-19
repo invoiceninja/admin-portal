@@ -39,6 +39,9 @@ class TaskListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
+    final uiState = state.uiState;
+    final taskUIState = uiState.taskUIState;
+
     final CompanyEntity company = state.selectedCompany;
     final taskStatus = company.taskStatusMap[task.taskStatusId];
 
@@ -59,6 +62,10 @@ class TaskListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
+      isSelected: task.id ==
+          (uiState.isEditing
+              ? taskUIState.editing.id
+              : taskUIState.selectedId),
       user: user,
       entity: task,
       onEntityAction: onEntityAction,

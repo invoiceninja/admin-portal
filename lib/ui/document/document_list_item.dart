@@ -1,3 +1,5 @@
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -20,6 +22,7 @@ class DocumentListItem extends StatelessWidget {
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
+
   //final ValueChanged<bool> onCheckboxChanged;
   final DocumentEntity document;
   final String filter;
@@ -28,12 +31,19 @@ class DocumentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final documentUIState = uiState.documentUIState;
     final filterMatch = filter != null && filter.isNotEmpty
         ? document.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
     return DismissibleEntity(
+      isSelected: document.id ==
+          (uiState.isEditing
+              ? documentUIState.editing.id
+              : documentUIState.selectedId),
       user: user,
       entity: document,
       onEntityAction: onEntityAction,

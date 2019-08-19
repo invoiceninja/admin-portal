@@ -1,7 +1,6 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
-import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,46 +40,44 @@ class ClientListItem extends StatelessWidget {
         : null;
 
     return DismissibleEntity(
+      isSelected: client.id ==
+          (uiState.isEditing
+              ? clientUIState.editing.id
+              : clientUIState.selectedId),
       user: user,
       onEntityAction: onEntityAction,
       entity: client,
       //entityKey: clientItemKey,
-      child: SelectedIndicator(
-        isSelected: client.id ==
-            (uiState.isEditing
-                ? clientUIState.editing.id
-                : clientUIState.selectedId),
-        child: ListTile(
-          onTap: onTap,
-          onLongPress: onLongPress,
-          title: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  client.displayName,
-                  style: Theme.of(context).textTheme.title,
-                ),
+      child: ListTile(
+        onTap: onTap,
+        onLongPress: onLongPress,
+        title: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                client.displayName,
+                style: Theme.of(context).textTheme.title,
               ),
-              Text(formatNumber(client.balance, context, clientId: client.id),
-                  style: Theme.of(context).textTheme.title)
-            ],
-          ),
-          subtitle: (filterMatch == null && client.isActive)
-              ? null
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    filterMatch != null
-                        ? Text(
-                            filterMatch,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : SizedBox(),
-                    EntityStateLabel(client),
-                  ],
-                ),
+            ),
+            Text(formatNumber(client.balance, context, clientId: client.id),
+                style: Theme.of(context).textTheme.title)
+          ],
         ),
+        subtitle: (filterMatch == null && client.isActive)
+            ? null
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  filterMatch != null
+                      ? Text(
+                          filterMatch,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : SizedBox(),
+                  EntityStateLabel(client),
+                ],
+              ),
       ),
     );
   }
