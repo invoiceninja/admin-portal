@@ -13,26 +13,37 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 
 class ViewProjectList implements PersistUI {
-  ViewProjectList(this.context);
+  ViewProjectList({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewProject implements PersistUI {
-  ViewProject({this.projectId, this.context});
+  ViewProject({
+    @required this.projectId,
+    @required this.context,
+    this.force = false,
+  });
 
   final int projectId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditProject implements PersistUI {
   EditProject(
-      {this.project, this.context, this.completer, this.trackRoute = true});
+      {@required this.project,
+        @required this.context,
+        this.completer,
+        this.force = false,
+        this.trackRoute = true});
 
   final ProjectEntity project;
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
+  final bool force;
 }
 
 class UpdateProject implements PersistUI {

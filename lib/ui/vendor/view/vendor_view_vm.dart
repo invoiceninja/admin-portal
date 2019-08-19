@@ -99,7 +99,7 @@ class VendorViewVM {
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: vendor.id, entityType: EntityType.vendor));
-              store.dispatch(ViewExpenseList(context));
+              store.dispatch(ViewExpenseList(context: context));
             }
             break;
         }

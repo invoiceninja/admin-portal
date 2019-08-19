@@ -185,7 +185,7 @@ class InvoiceViewVM extends EntityViewVM {
       onPaymentsPressed: (BuildContext context) {
         store.dispatch(FilterPaymentsByEntity(
             entityId: invoice.id, entityType: EntityType.invoice));
-        store.dispatch(ViewPaymentList(context));
+        store.dispatch(ViewPaymentList(context: context));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleInvoiceAction(context, invoice, action),

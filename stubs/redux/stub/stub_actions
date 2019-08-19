@@ -9,25 +9,37 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class ViewStubList implements PersistUI {
-  ViewStubList(this.context);
+  ViewStubList({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewStub implements PersistUI {
-  ViewStub({this.stubId, this.context});
+  ViewStub({
+              @required this.stubId,
+              @required this.context,
+              this.force = false,
+            });
 
   final int stubId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditStub implements PersistUI {
-  EditStub({this.stub, this.context, this.completer, this.trackRoute = true});
+  EditStub(
+                {@required this.stub,
+                @required this.context,
+                this.completer,
+                this.force = false,
+                this.trackRoute = true});
 
   final StubEntity stub;
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
+  final bool force;
 }
 
 class UpdateStub implements PersistUI {

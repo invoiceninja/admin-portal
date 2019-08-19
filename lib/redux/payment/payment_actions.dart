@@ -9,26 +9,37 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewPaymentList implements PersistUI {
-  ViewPaymentList(this.context);
+  ViewPaymentList({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewPayment implements PersistUI {
-  ViewPayment({this.paymentId, this.context});
+  ViewPayment({
+    @required this.paymentId,
+    @required this.context,
+    this.force = false,
+  });
 
   final int paymentId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditPayment implements PersistUI {
   EditPayment(
-      {this.payment, this.context, this.completer, this.trackRoute = true});
+      {@required this.payment,
+        @required this.context,
+        this.completer,
+        this.force = false,
+        this.trackRoute = true});
 
   final PaymentEntity payment;
   final BuildContext context;
   final Completer completer;
   final bool trackRoute;
+  final bool force;
 }
 
 class UpdatePayment implements PersistUI {

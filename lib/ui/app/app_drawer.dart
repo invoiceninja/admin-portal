@@ -236,7 +236,7 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.payment,
                         icon: getEntityIcon(EntityType.payment),
                         title: localization.payments,
-                        onTap: () => store.dispatch(ViewPaymentList(context)),
+                        onTap: () => store.dispatch(ViewPaymentList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();
@@ -266,7 +266,7 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.project,
                         icon: getEntityIcon(EntityType.project),
                         title: localization.projects,
-                        onTap: () => store.dispatch(ViewProjectList(context)),
+                        onTap: () => store.dispatch(ViewProjectList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();
@@ -296,7 +296,7 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.vendor,
                         icon: getEntityIcon(EntityType.vendor),
                         title: localization.vendors,
-                        onTap: () => store.dispatch(ViewVendorList(context)),
+                        onTap: () => store.dispatch(ViewVendorList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();
@@ -310,7 +310,7 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.expense,
                         icon: getEntityIcon(EntityType.expense),
                         title: localization.expenses,
-                        onTap: () => store.dispatch(ViewExpenseList(context)),
+                        onTap: () => store.dispatch(ViewExpenseList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();

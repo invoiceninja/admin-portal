@@ -123,7 +123,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterPaymentsByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewPaymentList(context));
+              store.dispatch(ViewPaymentList(context: context));
             }
             break;
           case EntityType.project:
@@ -135,7 +135,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterProjectsByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewProjectList(context));
+              store.dispatch(ViewProjectList(context: context));
             }
             break;
           case EntityType.task:
@@ -161,7 +161,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewExpenseList(context));
+              store.dispatch(ViewExpenseList(context: context));
             }
             break;
         }
