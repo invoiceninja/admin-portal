@@ -10,7 +10,7 @@ class SelectedIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).canvasColor,
+      color: null,
       child: Row(
         children: <Widget>[
           Container(
@@ -18,7 +18,7 @@ class SelectedIndicator extends StatelessWidget {
             height: 48,
             color: isSelected && !isMobile(context)
                 ? Theme.of(context).accentColor
-                : Colors.transparent,
+                : null,
           ),
           Expanded(
             child: child,
