@@ -69,10 +69,18 @@ Middleware<AppState> _viewTask() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewTask;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
-    Navigator.of(action.context).pushNamed(TaskViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(TaskViewScreen.route);
+    }
   };
 }
 
@@ -80,12 +88,19 @@ Middleware<AppState> _viewTaskList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewTaskList;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        TaskScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          TaskScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 

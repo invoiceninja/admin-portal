@@ -70,10 +70,18 @@ Middleware<AppState> _viewVendor() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewVendor;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
-    Navigator.of(action.context).pushNamed(VendorViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(VendorViewScreen.route);
+    }
   };
 }
 
@@ -81,12 +89,19 @@ Middleware<AppState> _viewVendorList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewVendorList;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        VendorScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          VendorScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
