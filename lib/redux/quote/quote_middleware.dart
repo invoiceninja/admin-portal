@@ -60,7 +60,10 @@ Middleware<AppState> _viewQuote() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
-    await Navigator.of(action.context).pushNamed(QuoteViewScreen.route);
+
+    if (isMobile(action.context)) {
+      await Navigator.of(action.context).pushNamed(QuoteViewScreen.route);
+    }
   };
 }
 
@@ -87,11 +90,14 @@ Middleware<AppState> _editQuote() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
-    final quote =
-        await Navigator.of(action.context).pushNamed(QuoteEditScreen.route);
 
-    if (action.completer != null && quote != null) {
-      action.completer.complete(quote);
+    if (isMobile(action.context)) {
+      final quote =
+      await Navigator.of(action.context).pushNamed(QuoteEditScreen.route);
+
+      if (action.completer != null && quote != null) {
+        action.completer.complete(quote);
+      }
     }
   };
 }
