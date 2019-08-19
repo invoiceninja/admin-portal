@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
@@ -102,11 +103,13 @@ class PaymentEditVM {
         final Completer<Null> completer = errorCompleter(context)
           ..future.then((_) {
             store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
-            if (payment.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(PaymentViewScreen.route);
-            } else {
-              Navigator.of(context).pop();
+            if (isMobile(context)) {
+              if (payment.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(PaymentViewScreen.route);
+              } else {
+                Navigator.of(context).pop();
+              }
             }
           });
         store.dispatch(
