@@ -16,10 +16,12 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class InvoiceEdit extends StatefulWidget {
   const InvoiceEdit({
     Key key,
+    @required this.formKey,
     @required this.viewModel,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
+  final GlobalKey<FormState> formKey;
 
   @override
   _InvoiceEditState createState() => _InvoiceEditState();
@@ -28,7 +30,6 @@ class InvoiceEdit extends StatefulWidget {
 class _InvoiceEditState extends State<InvoiceEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 1;
@@ -90,7 +91,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
               isSaving: widget.viewModel.isSaving,
               isDirty: invoice.isNew || invoice != viewModel.origInvoice,
               onPressed: () {
-                if (!_formKey.currentState.validate()) {
+                if (!widget.formKey.currentState.validate()) {
                   return;
                 }
 
@@ -115,7 +116,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
           ),
         ),
         body: Form(
-          key: _formKey,
+          key: widget.formKey,
           child: TabBarView(
             key: ValueKey(viewModel.invoice.id),
             controller: _controller,

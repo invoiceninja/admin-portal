@@ -29,8 +29,18 @@ class MainScreen extends StatelessWidget {
             mainIndex = 3;
           } else if (mainRoute == EntityType.payment.name) {
             mainIndex = 4;
-          } else if (mainRoute == 'settings') {
+          } else if (mainRoute == EntityType.quote.name) {
             mainIndex = 5;
+          } else if (mainRoute == EntityType.project.name) {
+            mainIndex = 6;
+          } else if (mainRoute == EntityType.task.name) {
+            mainIndex = 7;
+          } else if (mainRoute == EntityType.vendor.name) {
+            mainIndex = 8;
+          } else if (mainRoute == EntityType.expense.name) {
+            mainIndex = 9;
+          } else if (mainRoute == 'settings') {
+            mainIndex = 10;
           }
 
           return Row(
@@ -61,6 +71,31 @@ class MainScreen extends StatelessWidget {
                       listWidget: PaymentScreen(),
                       viewWidget: PaymentViewScreen(),
                       editWidget: PaymentEditScreen(),
+                    ),
+                    EntityScreens(
+                      listWidget: QuoteScreen(),
+                      viewWidget: QuoteViewScreen(),
+                      editWidget: QuoteEditScreen(),
+                    ),
+                    EntityScreens(
+                      listWidget: ProjectScreen(),
+                      viewWidget: ProjectViewScreen(),
+                      editWidget: ProjectEditScreen(),
+                    ),
+                    EntityScreens(
+                      listWidget: TaskScreen(),
+                      viewWidget: TaskViewScreen(),
+                      editWidget: TaskEditScreen(),
+                    ),
+                    EntityScreens(
+                      listWidget: VendorScreen(),
+                      viewWidget: VendorViewScreen(),
+                      editWidget: VendorEditScreen(),
+                    ),
+                    EntityScreens(
+                      listWidget: ExpenseScreen(),
+                      viewWidget: ExpenseViewScreen(),
+                      editWidget: ExpenseEditScreen(),
                     ),
                     SettingsScreen(),
                   ],

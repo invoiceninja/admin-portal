@@ -18,6 +18,8 @@ class InvoiceEditScreen extends StatelessWidget {
 
   static const String route = '/invoice/edit';
 
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceEditVM>(
@@ -27,6 +29,7 @@ class InvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceEdit(
           viewModel: viewModel,
+          formKey: _formKey,
         );
       },
     );

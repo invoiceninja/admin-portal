@@ -80,7 +80,7 @@ class ExpenseListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: client.id ==
+      isSelected: expense.id ==
           (uiState.isEditing
               ? expenseUIState.editing.id
               : expenseUIState.selectedId),
