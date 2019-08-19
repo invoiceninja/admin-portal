@@ -31,11 +31,11 @@ class ViewVendor implements PersistUI {
 class EditVendor implements PersistUI {
   EditVendor(
       {@required this.vendor,
-        @required this.context,
-        this.contact,
-        this.completer,
-        this.force = false,
-        this.trackRoute = true});
+      @required this.context,
+      this.contact,
+      this.completer,
+      this.force = false,
+      this.trackRoute = true});
 
   final VendorEntity vendor;
   final VendorContactEntity contact;

@@ -41,7 +41,8 @@ List<Middleware<AppState>> createStoreExpensesMiddleware([
 }
 
 Middleware<AppState> _editExpense() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditExpense;
 
     if (hasChanges(
@@ -55,19 +56,18 @@ Middleware<AppState> _editExpense() {
 
     if (isMobile(action.context)) {
       final expense =
-      await Navigator.of(action.context).pushNamed(ExpenseEditScreen.route);
+          await Navigator.of(action.context).pushNamed(ExpenseEditScreen.route);
 
       if (action.completer != null && expense != null) {
         action.completer.complete(expense);
       }
-
     }
-
   };
 }
 
 Middleware<AppState> _viewExpense() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ViewExpense;
 
     next(action);

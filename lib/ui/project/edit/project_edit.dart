@@ -113,6 +113,14 @@ class _ProjectEditState extends State<ProjectEdit> {
               ? localization.newProject
               : localization.editProject),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             Builder(builder: (BuildContext context) {
               return ActionIconButton(
                 icon: Icons.cloud_upload,

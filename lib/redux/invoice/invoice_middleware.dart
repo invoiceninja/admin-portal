@@ -70,7 +70,8 @@ Middleware<AppState> _viewInvoiceList() {
 }
 
 Middleware<AppState> _viewInvoice() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ViewInvoice;
 
     if (hasChanges(
@@ -89,7 +90,8 @@ Middleware<AppState> _viewInvoice() {
 }
 
 Middleware<AppState> _editInvoice() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditInvoice;
 
     if (hasChanges(
@@ -113,7 +115,8 @@ Middleware<AppState> _editInvoice() {
 }
 
 Middleware<AppState> _showEmailInvoice() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ShowEmailInvoice;
 
     next(action);

@@ -33,10 +33,10 @@ class ViewExpense implements PersistUI {
 class EditExpense implements PersistUI {
   EditExpense(
       {@required this.expense,
-        @required this.context,
-        this.completer,
-        this.force = false,
-        this.trackRoute = true});
+      @required this.context,
+      this.completer,
+      this.force = false,
+      this.trackRoute = true});
 
   final ExpenseEntity expense;
   final BuildContext context;

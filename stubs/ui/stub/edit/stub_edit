@@ -78,6 +78,14 @@ class _StubEditState extends State<StubEdit> {
               ? localization.newStub
               : localization.editStub),
           actions: <Widget>[
+                if (!isMobile(context))
+                  FlatButton(
+                    child: Text(
+                      localization.cancel,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () => viewModel.onCancelPressed(context),
+                  ),
                 ActionIconButton(
                   icon: Icons.cloud_upload,
                   tooltip: localization.save,

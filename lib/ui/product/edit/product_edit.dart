@@ -106,6 +106,14 @@ class _ProductEditState extends State<ProductEdit> {
               ? localization.newProduct
               : localization.editProduct),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             Builder(builder: (BuildContext context) {
               if (!user.canEditEntity(product)) {
                 return Container();

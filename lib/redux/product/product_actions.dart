@@ -27,7 +27,11 @@ class ViewProduct implements PersistUI {
 }
 
 class EditProduct implements PersistUI {
-  EditProduct({@required this.product, @required this.context, this.completer, this.force = false});
+  EditProduct(
+      {@required this.product,
+      @required this.context,
+      this.completer,
+      this.force = false});
 
   final ProductEntity product;
   final BuildContext context;

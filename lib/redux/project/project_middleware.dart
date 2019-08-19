@@ -41,7 +41,8 @@ List<Middleware<AppState>> createStoreProjectsMiddleware([
 }
 
 Middleware<AppState> _editProject() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditProject;
 
     if (hasChanges(
@@ -55,18 +56,18 @@ Middleware<AppState> _editProject() {
 
     if (isMobile(action.context)) {
       final project =
-      await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
+          await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
 
       if (action.completer != null && project != null) {
         action.completer.complete(project);
       }
     }
-
   };
 }
 
 Middleware<AppState> _viewProject() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ViewProject;
 
     next(action);

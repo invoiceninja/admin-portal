@@ -28,7 +28,12 @@ class ViewQuote implements PersistUI {
 }
 
 class EditQuote implements PersistUI {
-  EditQuote({this.quote, this.context, this.completer, this.quoteItem, this.force = false});
+  EditQuote(
+      {this.quote,
+      this.context,
+      this.completer,
+      this.quoteItem,
+      this.force = false});
 
   final InvoiceEntity quote;
   final InvoiceItemEntity quoteItem;

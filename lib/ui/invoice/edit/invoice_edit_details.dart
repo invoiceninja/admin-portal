@@ -158,7 +158,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                       viewModel.onAddClientPressed(context, completer);
                       completer.future.then((client) {
                         final store = StoreProvider.of<AppState>(context);
-                        store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
+                        store.dispatch(
+                            UpdateCurrentRoute(InvoiceEditScreen.route));
                       });
                     },
                   )

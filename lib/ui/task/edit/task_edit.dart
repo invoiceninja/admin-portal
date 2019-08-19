@@ -72,6 +72,14 @@ class _TaskEditState extends State<TaskEdit>
           title:
               Text(task.isNew ? localization.newTask : localization.editTask),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,

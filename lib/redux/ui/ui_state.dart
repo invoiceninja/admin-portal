@@ -117,13 +117,13 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   String get mainRoute {
     final parts =
-    currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
     return parts.isNotEmpty ? parts[0] : '';
   }
 
   String get subRoute {
     final parts =
-    currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
     return parts.length > 1 ? parts[1] : '';
   }
 

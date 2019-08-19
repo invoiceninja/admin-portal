@@ -30,10 +30,10 @@ class ViewPayment implements PersistUI {
 class EditPayment implements PersistUI {
   EditPayment(
       {@required this.payment,
-        @required this.context,
-        this.completer,
-        this.force = false,
-        this.trackRoute = true});
+      @required this.context,
+      this.completer,
+      this.force = false,
+      this.trackRoute = true});
 
   final PaymentEntity payment;
   final BuildContext context;

@@ -38,7 +38,8 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
 }
 
 Middleware<AppState> _editDocument() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditDocument;
 
     next(action);
@@ -54,7 +55,8 @@ Middleware<AppState> _editDocument() {
 }
 
 Middleware<AppState> _viewDocument() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ViewDocument;
 
     next(action);

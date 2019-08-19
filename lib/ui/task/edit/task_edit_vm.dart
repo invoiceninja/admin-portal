@@ -66,8 +66,8 @@ class TaskEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditTask(
-            task: TaskEntity(), context: context, force: true));
+        store.dispatch(
+            EditTask(task: TaskEntity(), context: context, force: true));
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onFabPressed: () {

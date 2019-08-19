@@ -37,7 +37,8 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 }
 
 Middleware<AppState> _editProduct() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditProduct;
 
     if (hasChanges(
@@ -56,7 +57,8 @@ Middleware<AppState> _editProduct() {
 }
 
 Middleware<AppState> _viewProduct() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ViewProduct;
 
     if (hasChanges(

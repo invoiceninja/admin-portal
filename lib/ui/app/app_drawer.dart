@@ -236,7 +236,8 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.payment,
                         icon: getEntityIcon(EntityType.payment),
                         title: localization.payments,
-                        onTap: () => store.dispatch(ViewPaymentList(context: context)),
+                        onTap: () =>
+                            store.dispatch(ViewPaymentList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();
@@ -251,7 +252,8 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.quote,
                         icon: getEntityIcon(EntityType.quote),
                         title: localization.quotes,
-                        onTap: () => store.dispatch(ViewQuoteList(context: context)),
+                        onTap: () =>
+                            store.dispatch(ViewQuoteList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();
@@ -266,7 +268,8 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.project,
                         icon: getEntityIcon(EntityType.project),
                         title: localization.projects,
-                        onTap: () => store.dispatch(ViewProjectList(context: context)),
+                        onTap: () =>
+                            store.dispatch(ViewProjectList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();
@@ -280,7 +283,8 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.task,
                         icon: getEntityIcon(EntityType.task),
                         title: localization.tasks,
-                        onTap: () => store.dispatch(ViewTaskList(context: context)),
+                        onTap: () =>
+                            store.dispatch(ViewTaskList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();
@@ -296,7 +300,8 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.vendor,
                         icon: getEntityIcon(EntityType.vendor),
                         title: localization.vendors,
-                        onTap: () => store.dispatch(ViewVendorList(context: context)),
+                        onTap: () =>
+                            store.dispatch(ViewVendorList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();
@@ -310,7 +315,8 @@ class AppDrawer extends StatelessWidget {
                         entityType: EntityType.expense,
                         icon: getEntityIcon(EntityType.expense),
                         title: localization.expenses,
-                        onTap: () => store.dispatch(ViewExpenseList(context: context)),
+                        onTap: () =>
+                            store.dispatch(ViewExpenseList(context: context)),
                         onCreateTap: () {
                           if (isMobile(context)) {
                             navigator.pop();

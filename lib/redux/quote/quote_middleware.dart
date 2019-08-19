@@ -48,7 +48,8 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
 }
 
 Middleware<AppState> _viewQuote() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ViewQuote;
 
     if (hasChanges(
@@ -74,14 +75,13 @@ Middleware<AppState> _viewQuoteList() {
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           QuoteScreen.route, (Route<dynamic> route) => false);
-
     }
-
   };
 }
 
 Middleware<AppState> _editQuote() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditQuote;
 
     next(action);
@@ -97,7 +97,8 @@ Middleware<AppState> _editQuote() {
 }
 
 Middleware<AppState> _showEmailQuote() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ShowEmailQuote;
 
     next(action);

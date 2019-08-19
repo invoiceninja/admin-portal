@@ -55,6 +55,14 @@ class _ExpenseEditState extends State<ExpenseEdit>
               ? localization.newExpense
               : localization.editExpense),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,

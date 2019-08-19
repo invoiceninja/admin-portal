@@ -59,8 +59,7 @@ Middleware<AppState> _editPayment() {
 }
 
 Middleware<AppState> _viewPayment() {
-  return (Store<AppState> store, dynamic action,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));

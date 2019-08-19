@@ -97,6 +97,14 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ? localization.enterPayment
                 : localization.editPayment),
             actions: <Widget>[
+              if (!isMobile(context))
+                FlatButton(
+                  child: Text(
+                    localization.cancel,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () => viewModel.onCancelPressed(context),
+                ),
               Builder(builder: (BuildContext context) {
                 return ActionIconButton(
                   icon: Icons.cloud_upload,

@@ -68,8 +68,8 @@ class VendorEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditVendor(
-            vendor: VendorEntity(), context: context, force: true));
+        store.dispatch(
+            EditVendor(vendor: VendorEntity(), context: context, force: true));
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {

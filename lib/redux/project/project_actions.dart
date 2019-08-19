@@ -34,10 +34,10 @@ class ViewProject implements PersistUI {
 class EditProject implements PersistUI {
   EditProject(
       {@required this.project,
-        @required this.context,
-        this.completer,
-        this.force = false,
-        this.trackRoute = true});
+      @required this.context,
+      this.completer,
+      this.force = false,
+      this.trackRoute = true});
 
   final ProjectEntity project;
   final BuildContext context;

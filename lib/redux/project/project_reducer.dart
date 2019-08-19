@@ -14,8 +14,7 @@ EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
 }
 
 Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewProject>(
-      (selectedId, action) => action.projectId),
+  TypedReducer<int, ViewProject>((selectedId, action) => action.projectId),
   TypedReducer<int, AddProjectSuccess>(
       (selectedId, action) => action.project.id),
 ]);
