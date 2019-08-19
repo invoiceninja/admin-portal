@@ -24,8 +24,8 @@ Note: the mobile app requires the latest version of the web app.
 - [x] Payments
 - [x] Projects
 - [x] Tasks
-- [ ] Vendors
-- [ ] Expenses
+- [x] Vendors
+- [x] Expenses
 - [ ] Tablet support
 - [ ] Desktop support
 - [ ] Web support
