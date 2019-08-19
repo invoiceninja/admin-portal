@@ -70,10 +70,18 @@ Middleware<AppState> _viewProject() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewProject;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
-    Navigator.of(action.context).pushNamed(ProjectViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(ProjectViewScreen.route);
+    }
   };
 }
 
@@ -81,12 +89,19 @@ Middleware<AppState> _viewProjectList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewProjectList;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        ProjectScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          ProjectScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 

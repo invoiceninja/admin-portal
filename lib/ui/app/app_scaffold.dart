@@ -34,7 +34,7 @@ class AppScaffold extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-          drawer: AppDrawerBuilder(),
+          drawer: isMobile(context) ? AppDrawerBuilder() : null,
           appBar: AppBar(
             leading: !isMobile(context)
                 ? IconButton(

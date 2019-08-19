@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -45,25 +47,40 @@ Middleware<AppState> _editPayment() {
       NextDispatcher next) async {
     final action = dynamicAction as EditPayment;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
 
-    final payment =
-        await Navigator.of(action.context).pushNamed(PaymentEditScreen.route);
+    if (isMobile(action.context)) {
+      final payment =
+          await Navigator.of(action.context).pushNamed(PaymentEditScreen.route);
 
-    if (action.completer != null && payment != null) {
-      action.completer.complete(null);
+      if (action.completer != null && payment != null) {
+        action.completer.complete(null);
+      }
     }
   };
 }
 
 Middleware<AppState> _viewPayment() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
-    Navigator.of(action.context).pushNamed(PaymentViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(PaymentViewScreen.route);
+    }
   };
 }
 
@@ -71,12 +88,19 @@ Middleware<AppState> _viewPaymentList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewPaymentList;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        PaymentScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          PaymentScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
