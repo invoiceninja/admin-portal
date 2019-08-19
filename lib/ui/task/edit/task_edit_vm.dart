@@ -43,6 +43,7 @@ class TaskEditVM {
     @required this.isSaving,
     @required this.origTask,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
   });
@@ -63,6 +64,11 @@ class TaskEditVM {
         if (state.uiState.currentRoute.contains(TaskScreen.route)) {
           store.dispatch(UpdateCurrentRoute(TaskScreen.route));
         }
+      },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditTask(
+            task: TaskEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onFabPressed: () {
         if (task.isRunning) {
@@ -107,6 +113,7 @@ class TaskEditVM {
   final TaskTime taskTime;
   final CompanyEntity company;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function onFabPressed;
   final Function onBackPressed;
   final bool isLoading;

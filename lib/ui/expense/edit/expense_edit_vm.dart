@@ -48,6 +48,7 @@ class ExpenseEditVM {
     @required this.isSaving,
     @required this.origExpense,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
     @required this.onAddClientPressed,
@@ -74,6 +75,11 @@ class ExpenseEditVM {
           store.dispatch(UpdateCurrentRoute(
               expense.isNew ? ExpenseScreen.route : ExpenseViewScreen.route));
         }
+      },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditExpense(
+            expense: ExpenseEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
@@ -139,6 +145,7 @@ class ExpenseEditVM {
   final CompanyEntity company;
   final Function(ExpenseEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;

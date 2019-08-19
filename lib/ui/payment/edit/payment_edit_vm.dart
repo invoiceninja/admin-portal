@@ -55,6 +55,7 @@ class PaymentEditVM {
     @required this.clientList,
     @required this.staticState,
     @required this.onBackPressed,
+    @required this.onCancelPressed,
     @required this.isSaving,
     @required this.isDirty,
   });
@@ -85,6 +86,11 @@ class PaymentEditVM {
         prefs.setBool(kSharedPrefEmailPayment, value);
         store.dispatch(UserSettingsChanged(emailPayment: value));
       },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditPayment(
+            payment: PaymentEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(PaymentScreen.route)) {
           store.dispatch(UpdateCurrentRoute(
@@ -112,6 +118,7 @@ class PaymentEditVM {
   final PaymentEntity origPayment;
   final Function(PaymentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function(bool) onEmailChanged;
   final BuiltMap<int, InvoiceEntity> invoiceMap;
   final UIState uiState;

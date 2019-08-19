@@ -42,6 +42,7 @@ class VendorEditVM {
     @required this.isSaving,
     @required this.origVendor,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
   });
@@ -65,6 +66,11 @@ class VendorEditVM {
           store.dispatch(UpdateCurrentRoute(
               vendor.isNew ? VendorScreen.route : VendorViewScreen.route));
         }
+      },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditVendor(
+            vendor: VendorEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();
@@ -100,6 +106,7 @@ class VendorEditVM {
   final CompanyEntity company;
   final Function(VendorEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;

@@ -49,6 +49,7 @@ class ProjectEditVM {
     @required this.isSaving,
     @required this.origProject,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
   });
@@ -72,6 +73,11 @@ class ProjectEditVM {
           store.dispatch(UpdateCurrentRoute(
               project.isNew ? ProjectScreen.route : ProjectViewScreen.route));
         }
+      },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditProject(
+            project: ProjectEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
@@ -122,6 +128,7 @@ class ProjectEditVM {
   final CompanyEntity company;
   final Function(ProjectEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final bool isSaving;
   final ProjectEntity origProject;
   final Function onBackPressed;

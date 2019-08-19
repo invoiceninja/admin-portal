@@ -10,11 +10,12 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'app_drawer_vm.dart';
 
 class AppScaffold extends StatelessWidget {
-  const AppScaffold({@required this.appBarTitle,
-    @required this.appBarActions,
-    @required this.body,
-    @required this.bottomNavigationBar,
-    @required this.floatingActionButton});
+  const AppScaffold(
+      {@required this.appBarTitle,
+      @required this.appBarActions,
+      @required this.body,
+      @required this.bottomNavigationBar,
+      @required this.floatingActionButton});
 
   final Widget body;
   final AppBottomBar bottomNavigationBar;
@@ -37,10 +38,10 @@ class AppScaffold extends StatelessWidget {
           appBar: AppBar(
             leading: !isMobile(context)
                 ? IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () =>
-                  store.dispatch(UpdateSidebar(AppSidebar.menu)),
-            )
+                    icon: Icon(Icons.menu),
+                    onPressed: () =>
+                        store.dispatch(UpdateSidebar(AppSidebar.menu)),
+                  )
                 : null,
             title: appBarTitle,
             actions: appBarActions,

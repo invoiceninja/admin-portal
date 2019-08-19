@@ -39,6 +39,7 @@ class ProductEditVM {
     @required this.origProduct,
     @required this.onChanged,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.onEntityAction,
     @required this.isSaving,
@@ -62,6 +63,11 @@ class ProductEditVM {
         if (state.uiState.currentRoute.contains(ProductScreen.route)) {
           store.dispatch(UpdateCurrentRoute(ProductScreen.route));
         }
+      },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditProduct(
+            product: ProductEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
         final Completer<ProductEntity> completer =
@@ -106,6 +112,7 @@ class ProductEditVM {
   final ProductEntity origProduct;
   final Function(ProductEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function onBackPressed;
   final bool isSaving;
