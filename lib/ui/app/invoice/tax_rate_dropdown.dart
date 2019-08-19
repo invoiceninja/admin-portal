@@ -29,8 +29,6 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
 
   @override
   void didChangeDependencies() {
-    print('TAX didChangeDependencies...');
-
     final taxRates = widget.taxRates;
 
     _selectedTaxRate = taxRates.firstWhere(

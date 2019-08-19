@@ -145,9 +145,9 @@ class _ProductEditState extends State<ProductEdit> {
         body: Form(
           key: _formKey,
           child: ListView(
+            key: ValueKey(widget.viewModel.product.id),
             children: <Widget>[
               FormCard(
-                key: ValueKey(widget.viewModel.product.id),
                 children: <Widget>[
                   TextFormField(
                     key: Key(ProductKeys.productKey),
