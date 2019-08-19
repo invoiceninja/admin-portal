@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -42,15 +44,25 @@ Middleware<AppState> _editExpense() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
     final action = dynamicAction as EditExpense;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-    final expense =
-        await Navigator.of(action.context).pushNamed(ExpenseEditScreen.route);
 
-    if (action.completer != null && expense != null) {
-      action.completer.complete(expense);
+    if (isMobile(action.context)) {
+      final expense =
+      await Navigator.of(action.context).pushNamed(ExpenseEditScreen.route);
+
+      if (action.completer != null && expense != null) {
+        action.completer.complete(expense);
+      }
+
     }
+
   };
 }
 

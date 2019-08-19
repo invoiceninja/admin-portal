@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -7,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/quote_repository.dart';
@@ -49,6 +51,11 @@ Middleware<AppState> _viewQuote() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
     final action = dynamicAction as ViewQuote;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
@@ -63,8 +70,13 @@ Middleware<AppState> _viewQuoteList() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        QuoteScreen.route, (Route<dynamic> route) => false);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          QuoteScreen.route, (Route<dynamic> route) => false);
+
+    }
+
   };
 }
 

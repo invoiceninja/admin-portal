@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -43,17 +45,22 @@ Middleware<AppState> _editVendor() {
       NextDispatcher next) async {
     final action = dynamicAction as EditVendor;
 
-    next(action);
-
-    if (action.trackRoute) {
-      store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
     }
 
-    final vendor =
-        await Navigator.of(action.context).pushNamed(VendorEditScreen.route);
+    next(action);
 
-    if (action.completer != null && vendor != null) {
-      action.completer.complete(vendor);
+    store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
+
+    if (isMobile(action.context)) {
+      final vendor =
+          await Navigator.of(action.context).pushNamed(VendorEditScreen.route);
+
+      if (action.completer != null && vendor != null) {
+        action.completer.complete(vendor);
+      }
     }
   };
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -42,18 +44,24 @@ Middleware<AppState> _editProject() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
     final action = dynamicAction as EditProject;
 
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
-    if (action.trackRoute) {
-      store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+    store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+
+    if (isMobile(action.context)) {
+      final project =
+      await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
+
+      if (action.completer != null && project != null) {
+        action.completer.complete(project);
+      }
     }
 
-    final project =
-        await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
-
-    if (action.completer != null && project != null) {
-      action.completer.complete(project);
-    }
   };
 }
 

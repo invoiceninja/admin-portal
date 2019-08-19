@@ -102,7 +102,7 @@ class ProjectViewVM {
         } else {
           store.dispatch(FilterTasksByEntity(
               entityId: project.id, entityType: EntityType.project));
-          store.dispatch(ViewTaskList(context));
+          store.dispatch(ViewTaskList(context: context));
         }
       },
       onAddTaskPressed: (context) => store.dispatch(EditTask(

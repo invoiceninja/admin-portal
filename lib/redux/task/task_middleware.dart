@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -38,23 +40,33 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
 }
 
 Middleware<AppState> _editTask() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditTask;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
-    final task =
-        await Navigator.of(action.context).pushNamed(TaskEditScreen.route);
 
-    if (action.completer != null && task != null) {
-      action.completer.complete(task);
+    if (isMobile(action.context)) {
+      final task =
+          await Navigator.of(action.context).pushNamed(TaskEditScreen.route);
+
+      if (action.completer != null && task != null) {
+        action.completer.complete(task);
+      }
     }
   };
 }
 
 Middleware<AppState> _viewTask() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as ViewTask;
 
     next(action);

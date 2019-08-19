@@ -52,12 +52,6 @@ Middleware<AppState> _editClient() {
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
 
-    /*
-    if (action.trackRoute) {
-      store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
-    }
-    */
-
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamed(ClientEditScreen.route);
     }

@@ -147,7 +147,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterTasksByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewTaskList(context));
+              store.dispatch(ViewTaskList(context: context));
             }
             break;
           case EntityType.expense:
