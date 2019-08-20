@@ -1,12 +1,8 @@
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -156,11 +152,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     },
                     onAddPressed: (completer) {
                       viewModel.onAddClientPressed(context, completer);
-                      completer.future.then((client) {
-                        final store = StoreProvider.of<AppState>(context);
-                        store.dispatch(
-                            UpdateCurrentRoute(InvoiceEditScreen.route));
-                      });
                     },
                   )
                 : TextFormField(

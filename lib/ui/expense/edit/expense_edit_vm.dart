@@ -90,6 +90,7 @@ class ExpenseEditVM {
           force: true,
         ));
         completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
             message: AppLocalization.of(context).createdClient,
@@ -104,6 +105,7 @@ class ExpenseEditVM {
           force: true,
         ));
         completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
             message: AppLocalization.of(context).createdClient,

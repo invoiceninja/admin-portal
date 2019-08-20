@@ -76,7 +76,7 @@ class VendorEditVM {
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();
         store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
         return completer.future.then((savedVendor) {
-          if (state.uiState.currentRoute.contains(VendorScreen.route)) {
+          if (state.vendorUIState.saveCompleter == null) {
             store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
           }
           if (isMobile(context)) {

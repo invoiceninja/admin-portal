@@ -88,6 +88,7 @@ class ProjectEditVM {
           force: true,
         ));
         completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
             message: AppLocalization.of(context).createdClient,
@@ -100,7 +101,7 @@ class ProjectEditVM {
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((savedProject) {
-          if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
+          if (state.projectUIState.saveCompleter == null) {
             store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
           }
           if (isMobile(context)) {

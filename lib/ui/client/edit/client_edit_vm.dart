@@ -103,7 +103,7 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
-            if (state.uiState.currentRoute.contains(ClientScreen.route)) {
+            if (state.clientUIState.saveCompleter == null) {
               store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
             }
             if (isMobile(context)) {
