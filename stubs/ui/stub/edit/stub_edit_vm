@@ -76,10 +76,12 @@ class StubEditVM {
         return completer.future.then((_) {
             return completer.future.then((savedStub) {
               store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
-              if (stub.isNew) {
-                Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedStub);
+              if (isMobile(context)) {
+                  if (stub.isNew) {
+                    Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
+                  } else {
+                    Navigator.of(context).pop(savedStub);
+                  }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

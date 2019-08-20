@@ -106,11 +106,13 @@ class ProjectViewVM {
         }
       },
       onAddTaskPressed: (context) => store.dispatch(EditTask(
-          context: context,
-          task: TaskEntity(isRunning: state.uiState.autoStartTasks)
-              .rebuild((b) => b
-                ..projectId = project.id
-                ..clientId = project.clientId))),
+        context: context,
+        task:
+            TaskEntity(isRunning: state.uiState.autoStartTasks).rebuild((b) => b
+              ..projectId = project.id
+              ..clientId = project.clientId),
+        force: true,
+      )),
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
           store.dispatch(UpdateCurrentRoute(ProjectScreen.route));

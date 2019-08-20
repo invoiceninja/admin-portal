@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
@@ -58,7 +57,6 @@ abstract class ClientUIState extends Object
       editingContact: ContactEntity(),
       selectedId: 0,
       saveCompleter: null,
-      cancelCompleter: null,
     );
   }
   ClientUIState._();
@@ -68,14 +66,6 @@ abstract class ClientUIState extends Object
 
   @nullable
   ContactEntity get editingContact;
-
-  @nullable
-  @BuiltValueField(serialize: false)
-  Completer<SelectableEntity> get saveCompleter;
-
-  @nullable
-  @BuiltValueField(serialize: false)
-  Completer<Null> get cancelCompleter;
 
   @override
   bool get isCreatingNew => editing.isNew;

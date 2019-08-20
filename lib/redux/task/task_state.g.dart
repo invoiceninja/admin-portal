@@ -265,12 +265,18 @@ class _$TaskUIState extends TaskUIState {
   final int selectedId;
   @override
   final ListUIState listUIState;
+  @override
+  final Completer<SelectableEntity> saveCompleter;
 
   factory _$TaskUIState([void Function(TaskUIStateBuilder) updates]) =>
       (new TaskUIStateBuilder()..update(updates)).build();
 
   _$TaskUIState._(
-      {this.editing, this.editingTime, this.selectedId, this.listUIState})
+      {this.editing,
+      this.editingTime,
+      this.selectedId,
+      this.listUIState,
+      this.saveCompleter})
       : super._() {
     if (selectedId == null) {
       throw new BuiltValueNullFieldError('TaskUIState', 'selectedId');
@@ -294,15 +300,18 @@ class _$TaskUIState extends TaskUIState {
         editing == other.editing &&
         editingTime == other.editingTime &&
         selectedId == other.selectedId &&
-        listUIState == other.listUIState;
+        listUIState == other.listUIState &&
+        saveCompleter == other.saveCompleter;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, editing.hashCode), editingTime.hashCode),
-            selectedId.hashCode),
-        listUIState.hashCode));
+        $jc(
+            $jc($jc($jc(0, editing.hashCode), editingTime.hashCode),
+                selectedId.hashCode),
+            listUIState.hashCode),
+        saveCompleter.hashCode));
   }
 
   @override
@@ -311,7 +320,8 @@ class _$TaskUIState extends TaskUIState {
           ..add('editing', editing)
           ..add('editingTime', editingTime)
           ..add('selectedId', selectedId)
-          ..add('listUIState', listUIState))
+          ..add('listUIState', listUIState)
+          ..add('saveCompleter', saveCompleter))
         .toString();
   }
 }
@@ -339,6 +349,11 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
+  Completer<SelectableEntity> _saveCompleter;
+  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+      _$this._saveCompleter = saveCompleter;
+
   TaskUIStateBuilder();
 
   TaskUIStateBuilder get _$this {
@@ -347,6 +362,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
       _editingTime = _$v.editingTime?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
+      _saveCompleter = _$v.saveCompleter;
       _$v = null;
     }
     return this;
@@ -374,7 +390,8 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
               editing: _editing?.build(),
               editingTime: _editingTime?.build(),
               selectedId: selectedId,
-              listUIState: listUIState.build());
+              listUIState: listUIState.build(),
+              saveCompleter: saveCompleter);
     } catch (_) {
       String _$failedField;
       try {

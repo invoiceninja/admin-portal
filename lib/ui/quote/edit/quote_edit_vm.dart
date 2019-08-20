@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -82,10 +83,12 @@ class QuoteEditVM extends EntityEditVM {
         store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
         return completer.future.then((savedQuote) {
           store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
-          if (quote.isNew) {
-            Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);
-          } else {
-            Navigator.of(context).pop(savedQuote);
+          if (isMobile(context)) {
+            if (quote.isNew) {
+              Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedQuote);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

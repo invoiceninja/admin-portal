@@ -258,11 +258,14 @@ class _$PaymentUIState extends PaymentUIState {
   final int selectedId;
   @override
   final ListUIState listUIState;
+  @override
+  final Completer<SelectableEntity> saveCompleter;
 
   factory _$PaymentUIState([void Function(PaymentUIStateBuilder) updates]) =>
       (new PaymentUIStateBuilder()..update(updates)).build();
 
-  _$PaymentUIState._({this.editing, this.selectedId, this.listUIState})
+  _$PaymentUIState._(
+      {this.editing, this.selectedId, this.listUIState, this.saveCompleter})
       : super._() {
     if (selectedId == null) {
       throw new BuiltValueNullFieldError('PaymentUIState', 'selectedId');
@@ -286,13 +289,16 @@ class _$PaymentUIState extends PaymentUIState {
     return other is PaymentUIState &&
         editing == other.editing &&
         selectedId == other.selectedId &&
-        listUIState == other.listUIState;
+        listUIState == other.listUIState &&
+        saveCompleter == other.saveCompleter;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
-        listUIState.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+            listUIState.hashCode),
+        saveCompleter.hashCode));
   }
 
   @override
@@ -300,7 +306,8 @@ class _$PaymentUIState extends PaymentUIState {
     return (newBuiltValueToStringHelper('PaymentUIState')
           ..add('editing', editing)
           ..add('selectedId', selectedId)
-          ..add('listUIState', listUIState))
+          ..add('listUIState', listUIState)
+          ..add('saveCompleter', saveCompleter))
         .toString();
   }
 }
@@ -324,6 +331,11 @@ class PaymentUIStateBuilder
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
+  Completer<SelectableEntity> _saveCompleter;
+  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+      _$this._saveCompleter = saveCompleter;
+
   PaymentUIStateBuilder();
 
   PaymentUIStateBuilder get _$this {
@@ -331,6 +343,7 @@ class PaymentUIStateBuilder
       _editing = _$v.editing?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
+      _saveCompleter = _$v.saveCompleter;
       _$v = null;
     }
     return this;
@@ -357,7 +370,8 @@ class PaymentUIStateBuilder
           new _$PaymentUIState._(
               editing: _editing?.build(),
               selectedId: selectedId,
-              listUIState: listUIState.build());
+              listUIState: listUIState.build(),
+              saveCompleter: saveCompleter);
     } catch (_) {
       String _$failedField;
       try {

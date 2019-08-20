@@ -63,7 +63,11 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
       clientList: state.clientState.list,
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
-            client: ClientEntity(), context: context, completer: completer));
+          client: ClientEntity(),
+          context: context,
+          completer: completer,
+          force: true,
+        ));
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

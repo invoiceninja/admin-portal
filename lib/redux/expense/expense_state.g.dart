@@ -258,11 +258,14 @@ class _$ExpenseUIState extends ExpenseUIState {
   final int selectedId;
   @override
   final ListUIState listUIState;
+  @override
+  final Completer<SelectableEntity> saveCompleter;
 
   factory _$ExpenseUIState([void Function(ExpenseUIStateBuilder) updates]) =>
       (new ExpenseUIStateBuilder()..update(updates)).build();
 
-  _$ExpenseUIState._({this.editing, this.selectedId, this.listUIState})
+  _$ExpenseUIState._(
+      {this.editing, this.selectedId, this.listUIState, this.saveCompleter})
       : super._() {
     if (selectedId == null) {
       throw new BuiltValueNullFieldError('ExpenseUIState', 'selectedId');
@@ -286,13 +289,16 @@ class _$ExpenseUIState extends ExpenseUIState {
     return other is ExpenseUIState &&
         editing == other.editing &&
         selectedId == other.selectedId &&
-        listUIState == other.listUIState;
+        listUIState == other.listUIState &&
+        saveCompleter == other.saveCompleter;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
-        listUIState.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+            listUIState.hashCode),
+        saveCompleter.hashCode));
   }
 
   @override
@@ -300,7 +306,8 @@ class _$ExpenseUIState extends ExpenseUIState {
     return (newBuiltValueToStringHelper('ExpenseUIState')
           ..add('editing', editing)
           ..add('selectedId', selectedId)
-          ..add('listUIState', listUIState))
+          ..add('listUIState', listUIState)
+          ..add('saveCompleter', saveCompleter))
         .toString();
   }
 }
@@ -324,6 +331,11 @@ class ExpenseUIStateBuilder
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
+  Completer<SelectableEntity> _saveCompleter;
+  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+      _$this._saveCompleter = saveCompleter;
+
   ExpenseUIStateBuilder();
 
   ExpenseUIStateBuilder get _$this {
@@ -331,6 +343,7 @@ class ExpenseUIStateBuilder
       _editing = _$v.editing?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
+      _saveCompleter = _$v.saveCompleter;
       _$v = null;
     }
     return this;
@@ -357,7 +370,8 @@ class ExpenseUIStateBuilder
           new _$ExpenseUIState._(
               editing: _editing?.build(),
               selectedId: selectedId,
-              listUIState: listUIState.build());
+              listUIState: listUIState.build(),
+              saveCompleter: saveCompleter);
     } catch (_) {
       String _$failedField;
       try {

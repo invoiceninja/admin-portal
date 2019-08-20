@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -93,10 +94,12 @@ class TaskEditVM {
         store.dispatch(SaveTaskRequest(completer: completer, task: task));
         return completer.future.then((savedTask) {
           store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
-          if (task.isNew) {
-            Navigator.of(context).pushReplacementNamed(TaskViewScreen.route);
-          } else {
-            Navigator.of(context).pop(savedTask);
+          if (isMobile(context)) {
+            if (task.isNew) {
+              Navigator.of(context).pushReplacementNamed(TaskViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedTask);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

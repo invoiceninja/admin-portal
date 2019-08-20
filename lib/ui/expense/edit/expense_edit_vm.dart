@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -83,7 +84,11 @@ class ExpenseEditVM {
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
-            client: ClientEntity(), context: context, completer: completer));
+          client: ClientEntity(),
+          context: context,
+          completer: completer,
+          force: true,
+        ));
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
@@ -96,6 +101,7 @@ class ExpenseEditVM {
           vendor: VendorEntity(),
           context: context,
           completer: completer,
+          force: true,
         ));
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -112,11 +118,13 @@ class ExpenseEditVM {
         return completer.future.then((_) {
           return completer.future.then((savedExpense) {
             store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
-            if (expense.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(ExpenseViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedExpense);
+            if (isMobile(context)) {
+              if (expense.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(ExpenseViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedExpense);
+              }
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

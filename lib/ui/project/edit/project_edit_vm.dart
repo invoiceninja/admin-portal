@@ -11,8 +11,8 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
@@ -82,7 +82,11 @@ class ProjectEditVM {
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
-            client: ClientEntity(), context: context, completer: completer));
+          client: ClientEntity(),
+          context: context,
+          completer: completer,
+          force: true,
+        ));
         completer.future.then((SelectableEntity client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
@@ -99,14 +103,12 @@ class ProjectEditVM {
           if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
             store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
           }
-          if (project.isNew) {
-            if ([
-              TaskEditScreen.route,
-            ].contains(store.state.uiState.currentRoute)) {
-              Navigator.of(context).pop(savedProject);
-            } else {
+          if (isMobile(context)) {
+            if (project.isNew && state.projectUIState.saveCompleter == null) {
               Navigator.of(context)
                   .pushReplacementNamed(ProjectViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedProject);
             }
           } else {
             Navigator.of(context).pop(savedProject);
