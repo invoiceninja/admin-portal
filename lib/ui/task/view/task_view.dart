@@ -195,16 +195,20 @@ class _TaskViewState extends State<TaskView> {
                 ]);
               });
 
+              widgets.add(
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+              );
+
               return widgets;
             }
 
             return RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
-              child: Container(
-                color: Theme.of(context).backgroundColor,
-                child: ListView(
-                  children: _buildView(),
-                ),
+              child: ListView(
+                children: _buildView(),
               ),
             );
           },

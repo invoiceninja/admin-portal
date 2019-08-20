@@ -120,6 +120,10 @@ class _ProjectViewState extends State<ProjectView> {
                       localization.active,
                       localization.archived),
                 ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
               ];
 
               if (project.privateNotes != null &&
@@ -142,11 +146,8 @@ class _ProjectViewState extends State<ProjectView> {
 
             return RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
-              child: Container(
-                color: Theme.of(context).backgroundColor,
-                child: ListView(
-                  children: _buildView(),
-                ),
+              child: ListView(
+                children: _buildView(),
               ),
             );
           },
