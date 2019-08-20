@@ -17,6 +17,7 @@ Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewPayment>((selectedId, action) => action.paymentId),
   TypedReducer<int, AddPaymentSuccess>(
       (selectedId, action) => action.payment.id),
+  TypedReducer<int, FilterPaymentsByEntity>((selectedId, action) => 0)
 ]);
 
 final editingReducer = combineReducers<PaymentEntity>([
