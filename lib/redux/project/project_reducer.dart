@@ -14,12 +14,18 @@ EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-  );
+    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
 
 final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
   TypedReducer<Completer<SelectableEntity>, EditProject>((completer, action) {
     return action.completer;
+  }),
+]);
+
+final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditProject>((completer, action) {
+    return action.cancelCompleter;
   }),
 ]);
 

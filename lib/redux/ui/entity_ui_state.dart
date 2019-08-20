@@ -12,4 +12,8 @@ abstract class EntityUIState {
   @nullable
   @BuiltValueField(serialize: false)
   Completer<SelectableEntity> get saveCompleter;
+
+  @nullable
+  @BuiltValueField(serialize: false)
+  Completer<Null> get cancelCompleter;
 }

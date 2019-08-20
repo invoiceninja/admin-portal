@@ -70,7 +70,11 @@ class VendorEditVM {
       onCancelPressed: (BuildContext context) {
         store.dispatch(
             EditVendor(vendor: VendorEntity(), context: context, force: true));
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        if (state.vendorUIState.cancelCompleter != null) {
+          state.vendorUIState.cancelCompleter.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
       onSavePressed: (BuildContext context) {
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();

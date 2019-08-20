@@ -34,7 +34,9 @@ UIState uiReducer(UIState state, dynamic action) {
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
     ..previousRoute = state.currentRoute == currentRoute
         ? state.previousRoute
-        : state.currentRoute
+        : state.currentRoute.contains('/edit')
+            ? state.previousRoute
+            : state.currentRoute
     ..currentRoute = currentRoute
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)

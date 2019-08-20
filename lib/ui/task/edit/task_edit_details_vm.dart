@@ -68,6 +68,10 @@ class TaskEditDetailsVM {
           client: ClientEntity(),
           context: context,
           completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
+            }),
           force: true,
         ));
         completer.future.then((SelectableEntity client) {
@@ -84,6 +88,10 @@ class TaskEditDetailsVM {
               ProjectEntity().rebuild((b) => b..clientId = task.clientId ?? 0),
           context: context,
           completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
+            }),
           force: true,
         ));
         completer.future.then((SelectableEntity client) {

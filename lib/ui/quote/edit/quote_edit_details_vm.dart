@@ -68,6 +68,10 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
           client: ClientEntity(),
           context: context,
           completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
+            }),
           force: true,
         ));
         completer.future.then((SelectableEntity client) {

@@ -34,12 +34,14 @@ class EditVendor implements PersistUI {
       @required this.context,
       this.contact,
       this.completer,
+        this.cancelCompleter,
       this.force = false});
 
   final VendorEntity vendor;
   final VendorContactEntity contact;
   final BuildContext context;
   final Completer completer;
+  final Completer cancelCompleter;
   final bool force;
 }
 

@@ -78,13 +78,21 @@ class ProjectEditVM {
       onCancelPressed: (BuildContext context) {
         store.dispatch(EditProject(
             project: ProjectEntity(), context: context, force: true));
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        if (state.projectUIState.cancelCompleter != null) {
+          state.projectUIState.cancelCompleter.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
           client: ClientEntity(),
           context: context,
           completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+            }),
           force: true,
         ));
         completer.future.then((SelectableEntity client) {

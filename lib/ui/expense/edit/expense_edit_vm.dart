@@ -87,6 +87,10 @@ class ExpenseEditVM {
           client: ClientEntity(),
           context: context,
           completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
+            }),
           force: true,
         ));
         completer.future.then((SelectableEntity client) {
@@ -102,6 +106,10 @@ class ExpenseEditVM {
           vendor: VendorEntity(),
           context: context,
           completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
+            }),
           force: true,
         ));
         completer.future.then((SelectableEntity client) {

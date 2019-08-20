@@ -16,12 +16,18 @@ EntityUIState vendorUIReducer(VendorUIState state, dynamic action) {
         .replace(editingVendorContactReducer(state.editingContact, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-  );
+    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
 
 final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
   TypedReducer<Completer<SelectableEntity>, EditVendor>((completer, action) {
     return action.completer;
+  }),
+]);
+
+final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditVendor>((completer, action) {
+    return action.cancelCompleter;
   }),
 ]);
 
