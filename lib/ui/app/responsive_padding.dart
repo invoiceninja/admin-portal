@@ -11,10 +11,18 @@ class ResponsivePadding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: isMobile(context)
-          ? const EdgeInsets.all(kMobileDialogPadding)
-          : const EdgeInsets.symmetric(
-              vertical: kMobileDialogPadding * 2,
-              horizontal: kTabletDialogPadding,
+          ? EdgeInsets.only(
+              left: kMobileDialogPadding,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding,
+              bottom: kMobileDialogPadding +
+                  MediaQuery.of(context).viewInsets.bottom)
+          : EdgeInsets.only(
+              top: kMobileDialogPadding * 2,
+              bottom: (kMobileDialogPadding * 2) +
+                  MediaQuery.of(context).viewInsets.bottom,
+              left: kTabletDialogPadding,
+              right: kTabletDialogPadding,
             ),
       child: child,
     );

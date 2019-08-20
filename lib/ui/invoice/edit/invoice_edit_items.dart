@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -186,12 +187,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final invoiceItem = widget.invoiceItem;
     final company = viewModel.company;
 
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context)
-            .viewInsets
-            .bottom, // stay clear of the keyboard
-      ),
+    return ResponsivePadding(
       child: SingleChildScrollView(
         child: FormCard(
           children: <Widget>[
