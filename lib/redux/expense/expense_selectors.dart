@@ -204,7 +204,6 @@ List<int> clientExpenseList(
   return list;
 }
 
-
 bool hasExpenseChanges(
-    ExpenseEntity expense, BuiltMap<int, ExpenseEntity> expenseMap) =>
+        ExpenseEntity expense, BuiltMap<int, ExpenseEntity> expenseMap) =>
     expense.isNew || expense != expenseMap[expense.id];

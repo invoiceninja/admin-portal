@@ -40,7 +40,8 @@ Reducer<int> selectedIdReducer = combineReducers([
       (selectedId, action) => action.invoice.id),
   TypedReducer<int, ShowEmailInvoice>(
       (selectedId, action) => action.invoice.id),
-  TypedReducer<int, FilterInvoicesByEntity>((selectedId, action) => 0)
+  TypedReducer<int, FilterInvoicesByEntity>(
+      (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([

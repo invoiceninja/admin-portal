@@ -13731,7 +13731,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get download => _localizedValues[localeCode]['download'];
 
-  String get noRecordSelected => _localizedValues[localeCode]['no_record_selected'];
+  String get noRecordSelected =>
+      _localizedValues[localeCode]['no_record_selected'];
 
   String get requiresAnEnterprisePlan =>
       _localizedValues[localeCode]['requires_an_enterprise_plan'];

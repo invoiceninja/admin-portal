@@ -140,5 +140,5 @@ String invoiceStatsForClient(
 }
 
 bool hasPaymentChanges(
-    PaymentEntity payment, BuiltMap<int, PaymentEntity> paymentMap) =>
+        PaymentEntity payment, BuiltMap<int, PaymentEntity> paymentMap) =>
     payment.isNew || payment != paymentMap[payment.id];

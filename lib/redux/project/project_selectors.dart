@@ -166,7 +166,6 @@ String projectStatsForClient(
   return str;
 }
 
-
 bool hasProjectChanges(
-    ProjectEntity project, BuiltMap<int, ProjectEntity> projectMap) =>
+        ProjectEntity project, BuiltMap<int, ProjectEntity> projectMap) =>
     project.isNew || project != projectMap[project.id];

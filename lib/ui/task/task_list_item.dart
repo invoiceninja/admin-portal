@@ -63,9 +63,7 @@ class TaskListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isSelected: task.id ==
-          (uiState.isEditing
-              ? taskUIState.editing.id
-              : taskUIState.selectedId),
+          (uiState.isEditing ? taskUIState.editing.id : taskUIState.selectedId),
       user: user,
       entity: task,
       onEntityAction: onEntityAction,

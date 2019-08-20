@@ -22,8 +22,11 @@ class ViewDocument implements PersistUI {
 }
 
 class EditDocument implements PersistUI {
-  EditDocument(
-      {this.document, this.context, this.completer,});
+  EditDocument({
+    this.document,
+    this.context,
+    this.completer,
+  });
 
   final DocumentEntity document;
   final BuildContext context;

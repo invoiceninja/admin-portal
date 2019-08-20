@@ -138,7 +138,6 @@ class EntityScreens extends StatelessWidget {
     final subRoute = uiState.subRoute;
     final entityUIState = state.getUIState(entityType);
 
-
     return Row(
       children: <Widget>[
         Expanded(

@@ -93,7 +93,7 @@ Middleware<AppState> _editQuote() {
 
     if (isMobile(action.context)) {
       final quote =
-      await Navigator.of(action.context).pushNamed(QuoteEditScreen.route);
+          await Navigator.of(action.context).pushNamed(QuoteEditScreen.route);
 
       if (action.completer != null && quote != null) {
         action.completer.complete(quote);
