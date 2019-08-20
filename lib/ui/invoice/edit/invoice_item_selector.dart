@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -311,8 +312,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       tabViews.add(_expenseList());
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return ResponsivePadding(
       child: Material(
         elevation: 4.0,
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[

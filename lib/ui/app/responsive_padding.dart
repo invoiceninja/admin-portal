@@ -13,7 +13,7 @@ class ResponsivePadding extends StatelessWidget {
       padding: isMobile(context)
           ? const EdgeInsets.all(kMobileDialogPadding)
           : const EdgeInsets.symmetric(
-              vertical: kMobileDialogPadding,
+              vertical: kMobileDialogPadding * 2,
               horizontal: kTabletDialogPadding,
             ),
       child: child,

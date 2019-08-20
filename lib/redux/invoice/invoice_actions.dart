@@ -5,12 +5,15 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewInvoiceList implements PersistUI {
@@ -345,10 +348,18 @@ void handleInvoiceAction(
           invoice.id));
       break;
     case EntityAction.sendEmail:
-      store.dispatch(ShowEmailInvoice(
-          completer: snackBarCompleter(context, localization.emailedInvoice),
-          invoice: invoice,
-          context: context));
+      if (isMobile(context)) {
+        store.dispatch(ShowEmailInvoice(
+            completer: snackBarCompleter(context, localization.emailedInvoice),
+            invoice: invoice,
+            context: context));
+      } else {
+        showDialog<ResponsivePadding>(
+            context: context,
+            builder: (BuildContext context) {
+              return ResponsivePadding(child: InvoiceEmailScreen());
+            });
+      }
       break;
     case EntityAction.cloneToInvoice:
       store.dispatch(
