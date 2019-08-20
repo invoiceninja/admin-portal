@@ -33,53 +33,53 @@ class DismissibleEntity extends StatelessWidget {
 
     final localization = AppLocalization.of(context);
 
-    return SelectedIndicator(
-      isSelected: isSelected,
-      child: Slidable(
+    return Slidable(
+      delegate: SlidableDrawerDelegate(),
+      key: Key(entity.entityKey + Random().nextInt(100000).toString()),
+      actions: <Widget>[
+        entity.isActive
+            ? IconSlideAction(
+                caption: localization.archive,
+                color: Colors.orange,
+                foregroundColor: Colors.white,
+                icon: Icons.archive,
+                onTap: () => onEntityAction(EntityAction.archive),
+              )
+            : IconSlideAction(
+                caption: localization.restore,
+                color: Colors.blue,
+                foregroundColor: Colors.white,
+                icon: Icons.restore,
+                onTap: () => onEntityAction(EntityAction.restore),
+              ),
+        IconSlideAction(
+          caption: localization.more,
+          color: Colors.black45,
+          foregroundColor: Colors.white,
+          icon: Icons.more_vert,
+          onTap: () => onEntityAction(EntityAction.more),
+        ),
+      ],
+      secondaryActions: <Widget>[
+        entity.isDeleted ?? false
+            ? IconSlideAction(
+                caption: localization.restore,
+                color: Colors.blue,
+                foregroundColor: Colors.white,
+                icon: Icons.restore,
+                onTap: () => onEntityAction(EntityAction.restore),
+              )
+            : IconSlideAction(
+                caption: localization.delete,
+                color: Colors.red,
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                onTap: () => onEntityAction(EntityAction.delete),
+              ),
+      ],
+      child: SelectedIndicator(
+        isSelected: isSelected,
         child: child,
-        delegate: SlidableDrawerDelegate(),
-        key: Key(entity.entityKey + Random().nextInt(100000).toString()),
-        actions: <Widget>[
-          entity.isActive
-              ? IconSlideAction(
-                  caption: localization.archive,
-                  color: Colors.orange,
-                  foregroundColor: Colors.white,
-                  icon: Icons.archive,
-                  onTap: () => onEntityAction(EntityAction.archive),
-                )
-              : IconSlideAction(
-                  caption: localization.restore,
-                  color: Colors.blue,
-                  foregroundColor: Colors.white,
-                  icon: Icons.restore,
-                  onTap: () => onEntityAction(EntityAction.restore),
-                ),
-          IconSlideAction(
-            caption: localization.more,
-            color: Colors.black45,
-            foregroundColor: Colors.white,
-            icon: Icons.more_horiz,
-            onTap: () => onEntityAction(EntityAction.more),
-          ),
-        ],
-        secondaryActions: <Widget>[
-          entity.isDeleted ?? false
-              ? IconSlideAction(
-                  caption: localization.restore,
-                  color: Colors.blue,
-                  foregroundColor: Colors.white,
-                  icon: Icons.restore,
-                  onTap: () => onEntityAction(EntityAction.restore),
-                )
-              : IconSlideAction(
-                  caption: localization.delete,
-                  color: Colors.red,
-                  foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                  onTap: () => onEntityAction(EntityAction.delete),
-                ),
-        ],
       ),
     );
   }
