@@ -55,45 +55,54 @@ class MainScreen extends StatelessWidget {
                   children: <Widget>[
                     DashboardScreen(),
                     EntityScreens(
+                        entityType: EntityType.client,
                         listWidget: ClientScreen(),
                         viewWidget: ClientViewScreen(),
                         editWidget: ClientEditScreen()),
                     EntityScreens(
+                      entityType: EntityType.product,
                       listWidget: ProductScreen(),
                       viewWidget: ProductViewScreen(),
                       editWidget: ProductEditScreen(),
                     ),
                     EntityScreens(
+                      entityType: EntityType.invoice,
                       listWidget: InvoiceScreen(),
                       viewWidget: InvoiceViewScreen(),
                       editWidget: InvoiceEditScreen(),
                     ),
                     EntityScreens(
+                      entityType: EntityType.payment,
                       listWidget: PaymentScreen(),
                       viewWidget: PaymentViewScreen(),
                       editWidget: PaymentEditScreen(),
                     ),
                     EntityScreens(
+                      entityType: EntityType.quote,
                       listWidget: QuoteScreen(),
                       viewWidget: QuoteViewScreen(),
                       editWidget: QuoteEditScreen(),
                     ),
                     EntityScreens(
+                      entityType: EntityType.project,
                       listWidget: ProjectScreen(),
                       viewWidget: ProjectViewScreen(),
                       editWidget: ProjectEditScreen(),
                     ),
                     EntityScreens(
+                      entityType: EntityType.task,
                       listWidget: TaskScreen(),
                       viewWidget: TaskViewScreen(),
                       editWidget: TaskEditScreen(),
                     ),
                     EntityScreens(
+                      entityType: EntityType.vendor,
                       listWidget: VendorScreen(),
                       viewWidget: VendorViewScreen(),
                       editWidget: VendorEditScreen(),
                     ),
                     EntityScreens(
+                      entityType: EntityType.expense,
                       listWidget: ExpenseScreen(),
                       viewWidget: ExpenseViewScreen(),
                       editWidget: ExpenseEditScreen(),
@@ -109,17 +118,26 @@ class MainScreen extends StatelessWidget {
 }
 
 class EntityScreens extends StatelessWidget {
-  const EntityScreens({this.listWidget, this.editWidget, this.viewWidget});
+  const EntityScreens({
+    @required this.listWidget,
+    @required this.editWidget,
+    @required this.viewWidget,
+    @required this.entityType,
+  });
 
   final Widget listWidget;
   final Widget viewWidget;
   final Widget editWidget;
+  final EntityType entityType;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
-    final subRoute = store.state.uiState.subRoute;
+    final state = store.state;
+    final uiState = state.uiState;
+    final subRoute = uiState.subRoute;
+    final entityUIState = state.getUIState(entityType);
+
 
     return Row(
       children: <Widget>[
@@ -133,7 +151,7 @@ class EntityScreens extends StatelessWidget {
           child: IndexedStack(
             index: subRoute == 'edit' ? 1 : 0,
             children: <Widget>[
-              uiState.clientUIState.selectedId > 0 ? viewWidget : BlankScreen(),
+              entityUIState.selectedId > 0 ? viewWidget : BlankScreen(),
               editWidget,
             ],
           ),

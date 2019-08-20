@@ -131,7 +131,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.document:
         return documentUIState;
-
       case EntityType.expense:
         return expenseUIState;
       case EntityType.vendor:
@@ -144,7 +143,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return paymentUIState;
       case EntityType.quote:
         return quoteUIState;
-
       default:
         return null;
     }
