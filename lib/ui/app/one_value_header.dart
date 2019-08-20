@@ -7,7 +7,7 @@ class OneValueHeader extends StatelessWidget {
     this.value,
   });
 
-  final Color backgroundColor;
+  final MaterialColor backgroundColor;
   final String label;
   final String value;
 
@@ -38,7 +38,19 @@ class OneValueHeader extends StatelessWidget {
     }
 
     return Container(
-      color: backgroundColor ?? Theme.of(context).backgroundColor,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0.1, 0.3, 0.5, 0.9],
+          colors: [
+            (backgroundColor ?? Colors.grey)[300],
+            (backgroundColor ?? Colors.grey)[400],
+            (backgroundColor ?? Colors.grey)[500],
+            (backgroundColor ?? Colors.grey)[600],
+          ],
+        ),
+      ),
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: Card(
