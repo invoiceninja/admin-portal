@@ -189,7 +189,13 @@ Middleware<AppState> _saveVendor(VendorRepository repository) {
       } else {
         store.dispatch(SaveVendorSuccess(vendor));
       }
+
       action.completer.complete(vendor);
+
+      final vendorUIState = store.state.vendorUIState;
+      if (vendorUIState.saveCompleter != null) {
+        vendorUIState.saveCompleter.complete(vendor);
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveVendorFailure(error));

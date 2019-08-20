@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -10,8 +12,16 @@ EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(projectListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+  );
 }
+
+final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditProject>((completer, action) {
+    return action.completer;
+  }),
+]);
 
 Reducer<int> selectedIdReducer = combineReducers([
   TypedReducer<int, ViewProject>((selectedId, action) => action.projectId),

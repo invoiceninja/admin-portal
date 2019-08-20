@@ -189,7 +189,13 @@ Middleware<AppState> _saveProject(ProjectRepository repository) {
       } else {
         store.dispatch(SaveProjectSuccess(project));
       }
+
       action.completer.complete(project);
+
+      final projectUIState = store.state.projectUIState;
+      if (projectUIState.saveCompleter != null) {
+        projectUIState.saveCompleter.complete(project);
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveProjectFailure(error));
