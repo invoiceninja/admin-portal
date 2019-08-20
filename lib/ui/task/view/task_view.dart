@@ -182,25 +182,27 @@ class _TaskViewState extends State<TaskView> {
               }
 
               final items = task.taskTimes;
-              items.reversed.forEach((taskTime) {
-                widgets.addAll([
-                  TaskTimeListTile(
-                    task: task,
-                    taskTime: taskTime,
-                    onTap: (BuildContext context) =>
-                        company.user.canEditEntity(task)
-                            ? viewModel.onEditPressed(context, taskTime)
-                            : null,
-                  )
-                ]);
-              });
+              if (items.isNotEmpty) {
+                items.reversed.forEach((taskTime) {
+                  widgets.addAll([
+                    TaskTimeListTile(
+                      task: task,
+                      taskTime: taskTime,
+                      onTap: (BuildContext context) =>
+                          company.user.canEditEntity(task)
+                              ? viewModel.onEditPressed(context, taskTime)
+                              : null,
+                    )
+                  ]);
+                });
 
-              widgets.add(
-                Container(
-                  color: Theme.of(context).backgroundColor,
-                  height: 12.0,
-                ),
-              );
+                widgets.add(
+                  Container(
+                    color: Theme.of(context).backgroundColor,
+                    height: 12.0,
+                  ),
+                );
+              }
 
               return widgets;
             }
