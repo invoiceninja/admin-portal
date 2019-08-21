@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductEdit extends StatefulWidget {
@@ -150,7 +149,7 @@ class _ProductEditState extends State<ProductEdit> {
               FormCard(
                 children: <Widget>[
                   TextFormField(
-                    key: Key(ProductKeys.productKey),
+                    key: Key(localization.productKey),
                     controller: _productKeyController,
                     autocorrect: false,
                     decoration: InputDecoration(
@@ -162,7 +161,7 @@ class _ProductEditState extends State<ProductEdit> {
                     autovalidate: autoValidate,
                   ),
                   TextFormField(
-                    key: Key(ProductKeys.notes),
+                    key: Key(localization.notes),
                     controller: _notesController,
                     maxLines: 4,
                     decoration: InputDecoration(
@@ -184,7 +183,7 @@ class _ProductEditState extends State<ProductEdit> {
                         company.getCustomFieldValues(CustomFieldType.product2),
                   ),
                   TextFormField(
-                    key: Key(ProductKeys.cost),
+                    key: Key(localization.cost),
                     controller: _costController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),

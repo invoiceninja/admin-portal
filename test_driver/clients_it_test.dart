@@ -31,7 +31,7 @@ void main() {
     test('Try to add an empty client', () async {
       await driver.tap(find.byValueKey(ClientKeys.fab));
 
-      await driver.tap(find.byTooltip(localization.save));
+      await driver.tap(find.text(localization.save));
 
       await driver.waitFor(find.text(localization.pleaseEnterAClientOrContactName));
 

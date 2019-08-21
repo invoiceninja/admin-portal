@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:redux/redux.dart';
@@ -260,6 +259,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
+      final localization = AppLocalization.of(context);
+
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
         child: Row(
@@ -270,7 +271,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               onPressed: _showSortSheet,
             ),
             IconButton(
-              key: Key(ProductKeys.filter),
+              key: Key(localization.filter),
               tooltip: AppLocalization.of(context).filter,
               icon: Icon(Icons.filter_list),
               onPressed: _showFilterStateSheet,

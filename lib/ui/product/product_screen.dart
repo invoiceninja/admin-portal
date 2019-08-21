@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 
 class ProductScreen extends StatelessWidget {
   static const String route = '/product';
@@ -60,7 +59,6 @@ class ProductScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.product)
           ? FloatingActionButton(
-              key: Key(ProductKeys.fab),
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 store.dispatch(
