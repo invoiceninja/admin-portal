@@ -1,21 +1,10 @@
 class AppKeys {
   static const String openAppDrawer = 'Open navigation menu';
-  static const String dashboardScreen = 'DashboardScreen';
 }
 
 class AppTooltips {
   static const String save = 'Save';
   static const String back = 'Back';
-}
-
-class LoginKeys {
-  static const String email = 'loginEmail';
-  static const String password = 'loginPassword';
-  static const String url = 'loginUrl';
-  static const String loginSelfHost = 'loginSelfHost';
-  static const String secret = 'loginSecret';
-  static const String oneTimePassword = 'loginOneTimePassword';
-  static const String loginButton = 'login';
 }
 
 class ProductKeys {
@@ -32,8 +21,4 @@ class ClientKeys {
   static const String screen = 'ClientScreen';
   static const String fab = 'clientFab';
   static const String drawer = 'clientDrawer';
-}
-
-class SettingsKeys {
-  static const String drawer = 'settingsDrawer';
 }

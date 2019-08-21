@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class LoginView extends StatefulWidget {
@@ -31,12 +30,6 @@ class _LoginState extends State<LoginView> {
   final _oneTimePasswordController = TextEditingController();
 
   static const String OTP_ERROR = 'OTP_REQUIRED';
-
-  static final ValueKey _emailKey = Key(LoginKeys.email);
-  static final ValueKey _passwordKey = Key(LoginKeys.password);
-  static final ValueKey _urlKey = Key(LoginKeys.url);
-  static final ValueKey _secretKey = Key(LoginKeys.secret);
-  static final ValueKey _oneTimePasswordKey = Key(LoginKeys.oneTimePassword);
 
   final FocusNode _focusNode1 = new FocusNode();
 
@@ -134,7 +127,7 @@ class _LoginState extends State<LoginView> {
                   isOneTimePassword
                       ? TextFormField(
                           controller: _oneTimePasswordController,
-                          key: _oneTimePasswordKey,
+                          key: ValueKey(localization.oneTimePassword),
                           autocorrect: false,
                           decoration: InputDecoration(
                               labelText: localization.oneTimePassword),
@@ -143,7 +136,7 @@ class _LoginState extends State<LoginView> {
                           children: <Widget>[
                             TextFormField(
                               controller: _emailController,
-                              key: _emailKey,
+                              key: ValueKey(localization.email),
                               autocorrect: false,
                               textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
@@ -160,7 +153,7 @@ class _LoginState extends State<LoginView> {
                             ),
                             TextFormField(
                               controller: _passwordController,
-                              key: _passwordKey,
+                              key: ValueKey(localization.password),
                               autocorrect: false,
                               autovalidate: _autoValidate,
                               decoration: InputDecoration(
@@ -176,7 +169,7 @@ class _LoginState extends State<LoginView> {
                             _isSelfHosted
                                 ? TextFormField(
                                     controller: _urlController,
-                                    key: _urlKey,
+                                    key: ValueKey(localization.url),
                                     autocorrect: false,
                                     autovalidate: _autoValidate,
                                     decoration: InputDecoration(
@@ -191,7 +184,7 @@ class _LoginState extends State<LoginView> {
                             _isSelfHosted
                                 ? TextFormField(
                                     controller: _secretController,
-                                    key: _secretKey,
+                                    key: ValueKey(localization.secret),
                                     autocorrect: false,
                                     decoration: InputDecoration(
                                         labelText: localization.secret),
@@ -232,7 +225,7 @@ class _LoginState extends State<LoginView> {
                                         setState(() => _isSelfHosted = false),
                                     child: Text(localization.hostedLogin))
                                 : FlatButton(
-                                    key: Key(LoginKeys.loginSelfHost),
+                                    key: ValueKey(localization.selfhostLogin),
                                     onPressed: () =>
                                         setState(() => _isSelfHosted = true),
                                     child: Text(localization.selfhostLogin)),

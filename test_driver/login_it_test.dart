@@ -8,7 +8,6 @@ import 'utils/localizations.dart';
 
 void main() {
   group('LOGIN TEST', () {
-
     TestLocalization localization;
     FlutterDriver driver;
 
@@ -26,10 +25,8 @@ void main() {
 
     group('SELF-HOSTED', () {
       test('No input provided by user', () async {
-        await login(driver, loginEmail: '',
-          loginPassword: '',
-          loginUrl: '',
-          loginSecret: '');
+        await login(driver,
+            loginEmail: '', loginPassword: '', loginUrl: '', loginSecret: '');
 
         await driver.waitFor(find.text(localization.pleaseEnterYourEmail));
         await driver.waitFor(find.text(localization.pleaseEnterYourPassword));
@@ -40,7 +37,7 @@ void main() {
         await login(driver, retype: true);
 
         await driver.waitFor(
-          find.byType(AppKeys.dashboardScreen),
+          find.byTooltip(AppKeys.openAppDrawer),
           timeout: new Duration(seconds: 60),
         );
       });

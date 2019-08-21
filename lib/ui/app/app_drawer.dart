@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -170,7 +169,6 @@ class AppDrawer extends StatelessWidget {
                             store.dispatch(ViewDashboard(context: context)),
                       ),
                       DrawerTile(
-                        key: Key(ClientKeys.drawer),
                         company: company,
                         entityType: EntityType.client,
                         icon: getEntityIcon(EntityType.client),
@@ -186,7 +184,6 @@ class AppDrawer extends StatelessWidget {
                         },
                       ),
                       DrawerTile(
-                        key: Key(ProductKeys.drawer),
                         company: company,
                         entityType: EntityType.product,
                         icon: getEntityIcon(EntityType.product),
@@ -316,7 +313,6 @@ class AppDrawer extends StatelessWidget {
                       ),
                       // STARTER: menu - do not remove comment
                       DrawerTile(
-                        key: Key(SettingsKeys.drawer),
                         company: company,
                         icon: FontAwesomeIcons.cog,
                         title: localization.settings,
@@ -344,14 +340,13 @@ class AppDrawer extends StatelessWidget {
 
 class DrawerTile extends StatelessWidget {
   const DrawerTile({
-    Key key,
     @required this.company,
     @required this.icon,
     @required this.title,
     @required this.onTap,
     this.onCreateTap,
     this.entityType,
-  }) : super(key: key);
+  });
 
   final CompanyEntity company;
   final EntityType entityType;
@@ -381,7 +376,7 @@ class DrawerTile extends StatelessWidget {
       isSelected: uiState.containsRoute(route),
       child: ListTile(
         dense: true,
-        leading: Icon(icon, size: 22.0, key: ValueKey(title)),
+        leading: Icon(icon, size: 22.0),
         title: Tooltip(message: title, child: Text(title)),
         onTap: onTap,
         trailing: onCreateTap == null || !user.canCreate(entityType)
