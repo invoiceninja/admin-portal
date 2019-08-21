@@ -9,7 +9,9 @@ void main() {
     TestLocalization localization;
     FlutterDriver driver;
 
-    final productKey = faker.food.cuisine();
+    final productKey = faker.food.cuisine() +
+        ' ' +
+        faker.randomGenerator.decimal(min: 1).toInt().toString();
     final notes = faker.food.dish();
     final cost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
 
@@ -40,7 +42,6 @@ void main() {
 
     // Create an empty product
     test('Try to add an empty product', () async {
-
       print('Tap new product');
       await driver.tap(find.byTooltip(localization.newProduct));
 
@@ -56,7 +57,6 @@ void main() {
 
     // Create a new product
     test('Add a new product', () async {
-
       print('Tap new product');
       await driver.tap(find.byTooltip(localization.newProduct));
 
@@ -80,7 +80,6 @@ void main() {
       await driver.tap(find.text(productKey));
       */
 
-
       print('Check for new value: $productKey');
       await driver.waitFor(find.text(productKey));
       await driver.waitFor(find.text(notes));
@@ -93,13 +92,11 @@ void main() {
 
     // Edit the newly created product
     test('Edit an existing product', () async {
-      /*
-      await driver.scrollUntilVisible(
-          find.byType('ListView'), find.text(productKey));
-      */
-
       print('Select product: $productKey');
-      await driver.tap(find.text(productKey), timeout: Duration(seconds: 3));
+      await driver.scrollUntilVisible(
+          find.byType('ListView'), find.text(productKey),
+          dyScroll: -300);
+      await driver.tap(find.text(productKey));
 
       print('Tap edit');
       await driver.tap(find.text(localization.edit));
@@ -128,7 +125,7 @@ void main() {
       await driver.waitFor(find.byTooltip(localization.newProduct));
     });
 
-
+    /*
     // Archive the edited product
     test('Archieve a product test', () async {
       print('here 1');
@@ -182,7 +179,7 @@ void main() {
       // go back
       await driver.tap(find.pageBack());
     });
-    /*
+
     // Delete the edited product
     test('Deleteing a product test', () async {
       await driver.tap(find.text(updatedProductKey));
