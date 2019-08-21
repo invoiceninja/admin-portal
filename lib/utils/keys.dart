@@ -1,7 +1,6 @@
 class AppKeys {
   static const String openAppDrawer = 'Open navigation menu';
   static const String dashboardScreen = 'DashboardScreen';
-  static const String successfullyCreated = 'Successfully created';
 }
 
 class AppTooltips {

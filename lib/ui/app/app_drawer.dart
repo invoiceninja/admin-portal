@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -17,7 +18,6 @@ import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -60,16 +60,10 @@ class AppDrawer extends StatelessWidget {
                 height: 30,
               )
             : company.logoUrl != null && company.logoUrl.isNotEmpty
-                ? CachedNetworkImage(
+                ? CachedImage(
                     width: 32,
                     height: 30,
-                    key: ValueKey(company.logoUrl),
-                    imageUrl: company.logoUrl,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Image.asset(
-                        'assets/images/logo.png',
-                        width: 32,
-                        height: 30),
+                    url: company.logoUrl,
                   )
                 : Image.asset('assets/images/logo.png', width: 32, height: 30),
         SizedBox(width: 28, height: 50),
@@ -104,17 +98,10 @@ class AppDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     company.logoUrl != null && company.logoUrl.isNotEmpty
-                        ? CachedNetworkImage(
+                        ? CachedImage(
                             width: 32,
                             height: 30,
-                            key: ValueKey(company.logoUrl),
-                            imageUrl: company.logoUrl,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Image.asset(
-                                'assets/images/logo.png',
-                                width: 32,
-                                height: 30),
+                            url: company.logoUrl,
                           )
                         : Image.asset('assets/images/logo.png',
                             width: 32, height: 30),

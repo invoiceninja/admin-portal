@@ -26,12 +26,18 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
-  factory UIState(CompanyEntity company,
-      {bool enableDarkMode, bool requireAuthentication, AppLayout layout}) {
+  factory UIState(
+    CompanyEntity company, {
+    bool enableDarkMode,
+    bool requireAuthentication,
+    AppLayout layout,
+    bool isTesting,
+  }) {
     return _$UIState._(
       selectedCompanyIndex: 0,
       //layout: layout ?? AppLayout.mobile,
       layout: layout ?? AppLayout.tablet,
+      isTesting: isTesting ?? false,
       isMenuVisible: true,
       isHistoryVisible: false,
       currentRoute: LoginScreen.route,
@@ -59,6 +65,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   UIState._();
 
   AppLayout get layout;
+
+  bool get isTesting;
 
   bool get isMenuVisible;
 

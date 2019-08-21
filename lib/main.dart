@@ -48,7 +48,8 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 // STARTER: import - do not remove comment
 
-void main() async {
+void main({bool isTesting = false}) async {
+
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
@@ -68,6 +69,7 @@ void main() async {
         enableDarkMode: enableDarkMode,
         requireAuthentication: requireAuthentication,
         layout: AppLayout.tablet,
+        isTesting: isTesting,
       ),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
@@ -86,7 +88,9 @@ void main() async {
         ..addAll(createStoreSettingsMiddleware())
         // STARTER: middleware - do not remove comment
         ..addAll([
-          LoggingMiddleware<dynamic>.printer(),
+          LoggingMiddleware<dynamic>.printer(
+            formatter: LoggingMiddleware.multiLineFormatter,
+          ),
         ]));
 
   Future<void> _reportError(dynamic error, dynamic stackTrace) async {

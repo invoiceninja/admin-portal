@@ -109,7 +109,7 @@ class WebClient {
           .timeout(const Duration(seconds: 30));
     }
 
-    print('response: ${response.body}');
+    //print('response: ${response.body}');
 
     if (response.statusCode >= 300) {
       print('==== FAILED ====');
@@ -170,7 +170,7 @@ class WebClient {
       },
     );
 
-    print('response: ${response.body}');
+    //print('response: ${response.body}');
 
     if (response.statusCode >= 300) {
       print('==== FAILED ====');

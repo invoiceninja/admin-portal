@@ -31,7 +31,7 @@ Future<void> login(FlutterDriver driver,
 Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
   // Go to Settings Screen
   await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
-  await driver.scrollUntilVisible(find.byType('Drawer'), find.byValueKey(SettingsKeys.drawer));
+  //await driver.scrollUntilVisible(find.byType('Drawer'), find.byValueKey(SettingsKeys.drawer));
   await driver.tap(find.byValueKey(SettingsKeys.drawer));
 
   // Tap on Log Out

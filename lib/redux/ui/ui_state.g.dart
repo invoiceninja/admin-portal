@@ -66,6 +66,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'layout',
       serializers.serialize(object.layout,
           specifiedType: const FullType(AppLayout)),
+      'isTesting',
+      serializers.serialize(object.isTesting,
+          specifiedType: const FullType(bool)),
       'isMenuVisible',
       serializers.serialize(object.isMenuVisible,
           specifiedType: const FullType(bool)),
@@ -153,6 +156,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'layout':
           result.layout = serializers.deserialize(value,
               specifiedType: const FullType(AppLayout)) as AppLayout;
+          break;
+        case 'isTesting':
+          result.isTesting = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'isMenuVisible':
           result.isMenuVisible = serializers.deserialize(value,
@@ -289,6 +296,8 @@ class _$UIState extends UIState {
   @override
   final AppLayout layout;
   @override
+  final bool isTesting;
+  @override
   final bool isMenuVisible;
   @override
   final bool isHistoryVisible;
@@ -338,6 +347,7 @@ class _$UIState extends UIState {
 
   _$UIState._(
       {this.layout,
+      this.isTesting,
       this.isMenuVisible,
       this.isHistoryVisible,
       this.selectedCompanyIndex,
@@ -363,6 +373,9 @@ class _$UIState extends UIState {
       : super._() {
     if (layout == null) {
       throw new BuiltValueNullFieldError('UIState', 'layout');
+    }
+    if (isTesting == null) {
+      throw new BuiltValueNullFieldError('UIState', 'isTesting');
     }
     if (isMenuVisible == null) {
       throw new BuiltValueNullFieldError('UIState', 'isMenuVisible');
@@ -441,6 +454,7 @@ class _$UIState extends UIState {
     if (identical(other, this)) return true;
     return other is UIState &&
         layout == other.layout &&
+        isTesting == other.isTesting &&
         isMenuVisible == other.isMenuVisible &&
         isHistoryVisible == other.isHistoryVisible &&
         selectedCompanyIndex == other.selectedCompanyIndex &&
@@ -485,7 +499,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, layout.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode),
                                                                                 currentRoute.hashCode),
                                                                             previousRoute.hashCode),
                                                                         enableDarkMode.hashCode),
@@ -511,6 +525,7 @@ class _$UIState extends UIState {
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
           ..add('layout', layout)
+          ..add('isTesting', isTesting)
           ..add('isMenuVisible', isMenuVisible)
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('selectedCompanyIndex', selectedCompanyIndex)
@@ -543,6 +558,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   AppLayout _layout;
   AppLayout get layout => _$this._layout;
   set layout(AppLayout layout) => _$this._layout = layout;
+
+  bool _isTesting;
+  bool get isTesting => _$this._isTesting;
+  set isTesting(bool isTesting) => _$this._isTesting = isTesting;
 
   bool _isMenuVisible;
   bool get isMenuVisible => _$this._isMenuVisible;
@@ -667,6 +686,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   UIStateBuilder get _$this {
     if (_$v != null) {
       _layout = _$v.layout;
+      _isTesting = _$v.isTesting;
       _isMenuVisible = _$v.isMenuVisible;
       _isHistoryVisible = _$v.isHistoryVisible;
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
@@ -714,6 +734,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$result = _$v ??
           new _$UIState._(
               layout: layout,
+              isTesting: isTesting,
               isMenuVisible: isMenuVisible,
               isHistoryVisible: isHistoryVisible,
               selectedCompanyIndex: selectedCompanyIndex,

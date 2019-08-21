@@ -41,6 +41,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     bool enableDarkMode,
     bool requireAuthentication,
     AppLayout layout,
+    bool isTesting,
   }) {
     return _$AppState._(
       isLoading: false,
@@ -58,6 +59,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         enableDarkMode: enableDarkMode,
         requireAuthentication: requireAuthentication,
         layout: layout ?? AppLayout.mobile,
+        isTesting: isTesting,
       ),
     );
   }
@@ -264,6 +266,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
+    return 'Is Testing: ${uiState.isTesting}';
+    //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }
