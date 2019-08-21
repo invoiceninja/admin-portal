@@ -260,11 +260,6 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            viewModel.onBackPressed();
-          }),
       actions: client.isNew
           ? []
           : [
