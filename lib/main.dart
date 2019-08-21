@@ -49,7 +49,6 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 // STARTER: import - do not remove comment
 
 void main({bool isTesting = false}) async {
-
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
@@ -87,11 +86,13 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreQuotesMiddleware())
         ..addAll(createStoreSettingsMiddleware())
         // STARTER: middleware - do not remove comment
-        ..addAll([
-          LoggingMiddleware<dynamic>.printer(
-            formatter: LoggingMiddleware.multiLineFormatter,
-          ),
-        ]));
+        ..addAll(isTesting
+            ? []
+            : [
+                LoggingMiddleware<dynamic>.printer(
+                  formatter: LoggingMiddleware.multiLineFormatter,
+                ),
+              ]));
 
   Future<void> _reportError(dynamic error, dynamic stackTrace) async {
     print('Caught error: $error');

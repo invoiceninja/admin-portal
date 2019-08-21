@@ -4,6 +4,10 @@ import 'package:invoiceninja_flutter/utils/keys.dart';
 
 import 'localizations.dart';
 
+class Keys {
+  static const String openAppDrawer = 'Open navigation menu';
+}
+
 Future<void> login(FlutterDriver driver,
     {bool selfHosted = true,
     bool retype = false,
@@ -11,7 +15,6 @@ Future<void> login(FlutterDriver driver,
     String loginPassword = Config.TEST_PASSWORD,
     String loginUrl = Config.TEST_URL,
     String loginSecret = Config.TEST_SECRET}) async {
-
   final localization = TestLocalization('en');
 
   await fillTextFields(driver, <String, dynamic>{
@@ -27,11 +30,16 @@ Future<void> login(FlutterDriver driver,
   }
 
   await driver.tap(find.text(localization.login.toUpperCase()));
+
+  await driver.waitFor(
+    find.byTooltip(Keys.openAppDrawer),
+    timeout: new Duration(seconds: 60),
+  );
 }
 
 Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
   // Go to Settings Screen
-  await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
+  await driver.tap(find.byTooltip(Keys.openAppDrawer));
   //await driver.scrollUntilVisible(find.byType('Drawer'), find.byValueKey(SettingsKeys.drawer));
   //await driver.tap(find.byValueKey(SettingsKeys.drawer));
   await driver.tap(find.byTooltip(localization.settings));
@@ -47,18 +55,10 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
   await driver.waitFor(find.text(localization.login.toUpperCase()));
 }
 
-Future<void> loginAndOpenProducts(FlutterDriver driver) async {
-  login(driver);
-  await driver.waitFor(find.byTooltip(AppKeys.openAppDrawer));
-  await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
-  await driver.tap(find.byValueKey(ProductKeys.drawer));
-  await driver.waitFor(find.byType(ProductKeys.screen));
-}
-
 Future<void> loginAndOpenClients(FlutterDriver driver) async {
   login(driver);
-  await driver.waitFor(find.byTooltip(AppKeys.openAppDrawer));
-  await driver.tap(find.byTooltip(AppKeys.openAppDrawer));
+  await driver.waitFor(find.byTooltip(Keys.openAppDrawer));
+  await driver.tap(find.byTooltip(Keys.openAppDrawer));
   await driver.tap(find.byValueKey(ClientKeys.drawer));
   await driver.waitFor(find.byType(ClientKeys.screen));
 }

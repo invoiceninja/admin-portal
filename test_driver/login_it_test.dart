@@ -1,7 +1,6 @@
 // Import Flutter Driver API
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 
 import 'utils/common_actions.dart';
 import 'utils/localizations.dart';
@@ -35,11 +34,6 @@ void main() {
 
       test('Details filled by user and login', () async {
         await login(driver, retype: true);
-
-        await driver.waitFor(
-          find.byTooltip(AppKeys.openAppDrawer),
-          timeout: new Duration(seconds: 60),
-        );
       });
 
       test('Logout from a logged in user', () async {

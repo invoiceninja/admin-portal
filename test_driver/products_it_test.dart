@@ -8,7 +8,6 @@ import 'utils/localizations.dart';
 
 void main() {
   group('PRODUCTS TEST', () {
-
     TestLocalization localization;
     FlutterDriver driver;
 
@@ -18,14 +17,16 @@ void main() {
 
     final updatedProductKey = faker.food.cuisine();
     final updatedNotes = faker.food.dish();
-    final updatedCost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
+    final updatedCost =
+        faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
 
     setUpAll(() async {
       localization = TestLocalization('en');
-
       driver = await FlutterDriver.connect();
 
-      await loginAndOpenProducts(driver);
+      await login(driver);
+      await driver.tap(find.byTooltip(Keys.openAppDrawer));
+      await driver.tap(find.byTooltip(localization.products));
     });
 
     tearDownAll(() async {
@@ -63,7 +64,8 @@ void main() {
 
       await driver.tap(find.pageBack());
 
-      await driver.scrollUntilVisible(find.byType('ListView'), find.text(productKey));
+      await driver.scrollUntilVisible(
+          find.byType('ListView'), find.text(productKey));
       await driver.tap(find.text(productKey));
       await driver.waitFor(find.text(productKey));
       await driver.waitFor(find.text(notes));
@@ -72,10 +74,10 @@ void main() {
       await driver.tap(find.pageBack());
     });
 
-
     // Edit the newly created product
     test('Edit an existing product', () async {
-      await driver.scrollUntilVisible(find.byType('ListView'), find.text(productKey));
+      await driver.scrollUntilVisible(
+          find.byType('ListView'), find.text(productKey));
       await driver.tap(find.text(productKey), timeout: Duration(seconds: 3));
 
       await fillTextFields(driver, <String, dynamic>{
@@ -91,7 +93,7 @@ void main() {
 
       await driver.tap(find.pageBack());
 
-      // verify updated values while editing existing product 
+      // verify updated values while editing existing product
       await driver.tap(find.text(updatedProductKey));
       await driver.waitFor(find.text(updatedProductKey));
       await driver.waitFor(find.text(updatedNotes));
@@ -154,7 +156,6 @@ void main() {
 
     // Delete the edited product
     test('Deleteing a product test', () async {
-
       await driver.tap(find.text(updatedProductKey));
 
       await driver.tap(find.byType('ActionMenuButton'));
@@ -163,6 +164,5 @@ void main() {
       // verify not in list
       await driver.waitForAbsent(find.text(updatedProductKey));
     });
-
   });
 }

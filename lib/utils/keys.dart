@@ -1,12 +1,3 @@
-class AppKeys {
-  static const String openAppDrawer = 'Open navigation menu';
-}
-
-class AppTooltips {
-  static const String save = 'Save';
-  static const String back = 'Back';
-}
-
 class ProductKeys {
   static const String screen = 'ProductScreen';
   static const String drawer = 'productDrawer';
