@@ -1,3 +1,4 @@
+import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/utils/keys.dart';
@@ -70,3 +71,6 @@ Future<void> fillTextFields(
     await driver.enterText(entry.value);
   }
 }
+
+String makeUnique(String value) =>
+    '$value ${faker.randomGenerator.integer(999999, min: 100000)}';

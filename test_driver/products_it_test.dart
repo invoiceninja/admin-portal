@@ -5,17 +5,15 @@ import 'utils/common_actions.dart';
 import 'utils/localizations.dart';
 
 void main() {
-  group('PRODUCTS TEST', () {
+  group('Product Tests', () {
     TestLocalization localization;
     FlutterDriver driver;
 
-    final productKey = faker.food.cuisine() +
-        ' ' +
-        faker.randomGenerator.decimal(min: 1).toStringAsFixed(0);
+    final productKey = makeUnique(faker.food.cuisine());
     final notes = faker.food.dish();
     final cost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
 
-    final updatedProductKey = faker.food.cuisine();
+    final updatedProductKey = makeUnique(faker.food.cuisine());
     final updatedNotes = faker.food.dish();
     final updatedCost =
         faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
