@@ -65,7 +65,7 @@ void main({bool isTesting = false}) async {
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(
-        enableDarkMode: enableDarkMode,
+        enableDarkMode: enableDarkMode || isTesting,
         requireAuthentication: requireAuthentication,
         layout: AppLayout.tablet,
         isTesting: isTesting,

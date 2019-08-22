@@ -9,10 +9,8 @@ void main() {
   group('LOGIN TEST', () {
     TestLocalization localization;
     FlutterDriver driver;
-
     setUpAll(() async {
       localization = TestLocalization('en');
-
       driver = await FlutterDriver.connect();
     });
 

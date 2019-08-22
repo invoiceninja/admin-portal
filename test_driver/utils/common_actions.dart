@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -6,6 +8,18 @@ import 'localizations.dart';
 
 class Keys {
   static const String openAppDrawer = 'Open navigation menu';
+}
+
+Future<bool> isTablet(FlutterDriver driver) async {
+  final info =
+      await driver.getRenderObjectDiagnostics(find.byType('MaterialApp'));
+  final regExp = new RegExp(r'Size\(([\d\.]*), ([\d\.]*)');
+
+  final match = regExp.firstMatch(info.toString());
+  final width = double.parse(match.group(1));
+  final height = double.parse(match.group(2));
+
+  return min(width, height) > 600;
 }
 
 Future<void> login(FlutterDriver driver,
