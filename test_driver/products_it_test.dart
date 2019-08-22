@@ -123,27 +123,29 @@ void main() {
 
     // Archive the edited product
     test('Archieve a product test', () async {
-
       print('Archive product');
       await driver.tap(find.byType('ActionMenuButton'));
       await driver.tap(find.text(localization.archive));
       await driver.waitFor(find.text(localization.archivedProduct));
+      await driver.waitFor(find.text(localization.archived));
 
       print('Restore product');
       await driver.tap(find.byType('ActionMenuButton'));
       await driver.tap(find.text(localization.restore));
       await driver.waitFor(find.text(localization.restoredProduct));
+      await driver.waitForAbsent(find.text(localization.archived));
 
       print('Delete product');
       await driver.tap(find.byType('ActionMenuButton'));
       await driver.tap(find.text(localization.delete));
       await driver.waitFor(find.text(localization.deletedProduct));
-
+      await driver.waitFor(find.text(localization.deleted));
 
       print('Restore product');
       await driver.tap(find.byType('ActionMenuButton'));
       await driver.tap(find.text(localization.restore));
       await driver.waitFor(find.text(localization.restoredProduct));
+      await driver.waitForAbsent(find.text(localization.deleted));
 
       await driver.tap(find.pageBack());
     });
