@@ -11,7 +11,7 @@ void main() {
 
     final productKey = faker.food.cuisine() +
         ' ' +
-        faker.randomGenerator.decimal(min: 1).toInt().toString();
+        faker.randomGenerator.decimal(min: 1).toStringAsFixed(0);
     final notes = faker.food.dish();
     final cost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
 
@@ -119,78 +119,33 @@ void main() {
       await driver.waitFor(find.text(updatedProductKey));
       await driver.waitFor(find.text(updatedNotes));
       //await driver.waitFor(find.text(updatedCost));
-
-      print('Tap back');
-      await driver.tap(find.pageBack());
-      await driver.waitFor(find.byTooltip(localization.newProduct));
     });
 
-    /*
     // Archive the edited product
     test('Archieve a product test', () async {
-      print('here 1');
-      await driver.tap(find.text(updatedProductKey));
-      print('here 2');
-      await driver.tap(find.byType('ActionMenuButton'));
-      print('here 3');
-      await driver.tap(find.text(localization.archive));
-      print('here 4');
-      // verify the product goes away from active product list when archived is not selected
-      await driver.waitForAbsent(find.text(updatedProductKey));
-      print('here 5');
-      // Verify product in archived list
-      // Show archived products
-      await driver.tap(find.byValueKey(localization.filter));
-      // tick the checkbox archived to show archived products
-      // ** Here we assume that only active box is ticked, rest are not
-      // ** Currently there is no way to determite if a checkbox is ticked or not
-      // ** We also use the state value as the key because
-      // ** Currently there is no way to check a checkbox without using a key
-      print('here 6');
-      await driver.tap(find.text(localization.archived));
-      print('here 7');
-      // verify product in archived product list
-      await driver.waitFor(find.text(updatedProductKey));
-      print('here 8');
-      //open and check product details
-      await driver.tap(find.text(updatedProductKey));
-      await driver.waitFor(find.text(updatedProductKey));
-      await driver.waitFor(find.text(updatedNotes));
-      await driver.waitFor(find.text(updatedCost));
 
-      // restore the product
+      print('Archive product');
+      await driver.tap(find.byType('ActionMenuButton'));
+      await driver.tap(find.text(localization.archive));
+      await driver.waitFor(find.text(localization.archivedProduct));
+
+      print('Restore product');
       await driver.tap(find.byType('ActionMenuButton'));
       await driver.tap(find.text(localization.restore));
+      await driver.waitFor(find.text(localization.restoredProduct));
 
+      print('Delete product');
+      await driver.tap(find.byType('ActionMenuButton'));
+      await driver.tap(find.text(localization.delete));
+      await driver.waitFor(find.text(localization.deletedProduct));
+
+
+      print('Restore product');
+      await driver.tap(find.byType('ActionMenuButton'));
+      await driver.tap(find.text(localization.restore));
       await driver.waitFor(find.text(localization.restoredProduct));
 
       await driver.tap(find.pageBack());
-
-      // uncheck archive and close filters
-      await driver.tap(find.text(localization.archived));
-      await driver.tap(find.byValueKey(localization.filter));
-
-      // veify product is in active products
-      await driver.tap(find.text(updatedProductKey));
-      await driver.waitFor(find.text(updatedProductKey));
-      await driver.waitFor(find.text(updatedNotes));
-      await driver.waitFor(find.text(updatedCost));
-
-      // go back
-      await driver.tap(find.pageBack());
     });
-
-    // Delete the edited product
-    test('Deleteing a product test', () async {
-      await driver.tap(find.text(updatedProductKey));
-
-      await driver.tap(find.byType('ActionMenuButton'));
-      await driver.tap(find.text(localization.delete));
-
-      // verify not in list
-      await driver.waitForAbsent(find.text(updatedProductKey));
-    });
-
-    */
   });
 }
