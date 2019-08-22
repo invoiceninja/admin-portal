@@ -1,7 +1,6 @@
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:invoiceninja_flutter/.env.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 
 import 'localizations.dart';
 
@@ -39,10 +38,8 @@ Future<void> login(FlutterDriver driver,
 }
 
 Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
-  // Go to Settings Screen
   await driver.tap(find.byTooltip(Keys.openAppDrawer));
   //await driver.scrollUntilVisible(find.byType('Drawer'), find.byValueKey(SettingsKeys.drawer));
-  //await driver.tap(find.byValueKey(SettingsKeys.drawer));
   await driver.tap(find.byTooltip(localization.settings));
 
   // Tap on Log Out
@@ -56,19 +53,21 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
   await driver.waitFor(find.text(localization.login.toUpperCase()));
 }
 
-Future<void> loginAndOpenClients(FlutterDriver driver) async {
-  login(driver);
-  await driver.waitFor(find.byTooltip(Keys.openAppDrawer));
+Future<void> viewSection({FlutterDriver driver, String name}) async {
   await driver.tap(find.byTooltip(Keys.openAppDrawer));
-  await driver.tap(find.byValueKey(ClientKeys.drawer));
-  await driver.waitFor(find.byType(ClientKeys.screen));
+  await driver.tap(find.byTooltip(name));
+}
+
+Future<void> fillTextField(
+    {FlutterDriver driver, String field, String value}) async {
+  await driver.tap(find.byValueKey(field));
+  await driver.enterText(value);
 }
 
 Future<void> fillTextFields(
     FlutterDriver driver, Map<String, dynamic> values) async {
   for (var entry in values.entries) {
-    await driver.tap(find.byValueKey(entry.key));
-    await driver.enterText(entry.value);
+    await fillTextField(driver: driver, field: entry.key, value: entry.value);
   }
 }
 

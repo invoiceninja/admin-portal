@@ -16,7 +16,7 @@ void main() {
 
       driver = await FlutterDriver.connect();
 
-      await loginAndOpenClients(driver);
+      //await loginAndOpenClients(driver);
     });
 
     tearDownAll(() async {

@@ -26,8 +26,7 @@ void main() {
       await login(driver);
 
       print('View products');
-      await driver.tap(find.byTooltip(Keys.openAppDrawer));
-      await driver.tap(find.byTooltip(localization.products));
+      viewSection(driver: driver, name: localization.products);
     });
 
     tearDownAll(() async {
@@ -67,16 +66,8 @@ void main() {
 
       print('Tap save');
       await driver.tap(find.text(localization.save));
-
       //await driver.waitFor(find.text(localization.createdProduct));
-      //await driver.waitFor(find.text(productKey));
-
-      /*
-      await driver.tap(find.pageBack());
-      await driver.scrollUntilVisible(
-          find.byType('ListView'), find.text(productKey));
-      await driver.tap(find.text(productKey));
-      */
+      await driver.waitFor(find.text(productKey));
 
       print('Check for new value: $productKey');
       await driver.waitFor(find.text(productKey));
