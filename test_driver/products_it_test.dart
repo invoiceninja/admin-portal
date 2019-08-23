@@ -48,8 +48,11 @@ void main() {
       print('Check for error');
       await driver.waitFor(find.text(localization.pleaseEnterAProductKey));
 
-      print('Click back');
-      await driver.tap(find.pageBack());
+      if (await isMobile(driver)) {
+        print('Click back');
+        await driver.tap(find.pageBack());
+        await driver.waitFor(find.byTooltip(localization.newProduct));
+      }
     });
 
     // Create a new product
@@ -74,9 +77,11 @@ void main() {
       await driver.waitFor(find.text(notes));
       //await driver.waitFor(find.text(cost));
 
-      print('Click back');
-      await driver.tap(find.pageBack());
-      await driver.waitFor(find.byTooltip(localization.newProduct));
+      if (await isMobile(driver)) {
+        print('Click back');
+        await driver.tap(find.pageBack());
+        await driver.waitFor(find.byTooltip(localization.newProduct));
+      }
     });
 
     // Edit the newly created product
@@ -136,7 +141,9 @@ void main() {
       await driver.waitFor(find.text(localization.restoredProduct));
       await driver.waitForAbsent(find.text(localization.deleted));
 
-      await driver.tap(find.pageBack());
+      if (await isMobile(driver)) {
+        await driver.tap(find.pageBack());
+      }
     });
   });
 }
