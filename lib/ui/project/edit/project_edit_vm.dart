@@ -109,9 +109,7 @@ class ProjectEditVM {
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((savedProject) {
-          if (state.projectUIState.saveCompleter == null) {
-            store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
-          }
+          store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
           if (isMobile(context)) {
             if (project.isNew && state.projectUIState.saveCompleter == null) {
               Navigator.of(context)
