@@ -87,6 +87,9 @@ void main() {
         await driver.tap(find.text(productKey));
       }
 
+      print('Tap edit');
+      await driver.tap(find.text(localization.edit));
+
       await fillAndSaveForm(driver, <String, dynamic>{
         localization.productKey: updatedProductKey,
         localization.notes: updatedNotes,
@@ -96,7 +99,7 @@ void main() {
 
     // Archive the edited product
     test('Archieve/delete product test', () async {
-      testArchiveAndDelete(
+      await testArchiveAndDelete(
           driver: driver,
           archivedMessage: localization.archivedProduct,
           deletedMessage: localization.deletedProduct,

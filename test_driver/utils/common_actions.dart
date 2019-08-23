@@ -103,9 +103,8 @@ Future<void> checkTextFields(
 
 Future<void> fillAndSaveForm(
     FlutterDriver driver, Map<String, dynamic> values) async {
-  print('Tap edit');
+
   final localization = TestLocalization('en');
-  await driver.tap(find.text(localization.edit));
 
   print('Fill in form');
   await fillTextFields(driver, values);
