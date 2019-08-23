@@ -23,6 +23,8 @@ Future<bool> isTablet(FlutterDriver driver) async {
   return min(width, height) > 600;
 }
 
+Future<bool> isMobile(FlutterDriver driver) async => !await isTablet(driver);
+
 Future<void> login(FlutterDriver driver,
     {bool selfHosted = true,
     bool retype = false,
@@ -46,14 +48,17 @@ Future<void> login(FlutterDriver driver,
 
   await driver.tap(find.text(localization.login.toUpperCase()));
 
-  await driver.waitFor(
-    find.byTooltip(Keys.openAppDrawer),
-    timeout: new Duration(seconds: 60),
-  );
+  if (loginEmail.isNotEmpty) {
+    await driver.waitFor(find.byTooltip(localization.dashboard),
+        timeout: new Duration(seconds: 60));
+  }
 }
 
 Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
-  await driver.tap(find.byTooltip(Keys.openAppDrawer));
+  if (await isMobile(driver)) {
+    await driver.tap(find.byTooltip(Keys.openAppDrawer));
+  }
+
   //await driver.scrollUntilVisible(find.byType('Drawer'), find.byValueKey(SettingsKeys.drawer));
   await driver.tap(find.byTooltip(localization.settings));
 
@@ -69,7 +74,10 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
 }
 
 Future<void> viewSection({FlutterDriver driver, String name}) async {
-  await driver.tap(find.byTooltip(Keys.openAppDrawer));
+  if (await isMobile(driver)) {
+    await driver.tap(find.byTooltip(Keys.openAppDrawer));
+  }
+
   await driver.tap(find.byTooltip(name));
 }
 
