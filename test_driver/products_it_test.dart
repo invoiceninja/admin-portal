@@ -52,6 +52,9 @@ void main() {
         print('Click back');
         await driver.tap(find.pageBack());
         await driver.waitFor(find.byTooltip(localization.newProduct));
+      } else {
+        print('Click cancel');
+        await driver.tap(find.text(localization.cancel));
       }
     });
 
