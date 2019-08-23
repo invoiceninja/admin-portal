@@ -51,5 +51,7 @@
     <string>Face ID is used to access the app</string>
 	<key>io.flutter.embedded_views_preview</key>
     <true/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>The photo library is used to upload documents</string>
 </dict>
 </plist>

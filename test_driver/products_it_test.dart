@@ -5,7 +5,6 @@ import 'utils/common_actions.dart';
 import 'utils/localizations.dart';
 
 void main() {
-  /*
   group('Product Tests', () {
     TestLocalization localization;
     FlutterDriver driver;
@@ -111,5 +110,4 @@ void main() {
       }
     });
   });
-  */
 }
