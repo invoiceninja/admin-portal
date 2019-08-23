@@ -30,7 +30,7 @@ dependencies:
   local_auth: ^0.3.0
   sentry: ^2.2.0
   image_picker: ^0.6.0+17
-  flutter_pdfview: ^1.0.0+7
+  flutter_pdfview: ^1.0.0+8
   #quick_actions: ^0.2.1
 
 dev_dependencies:
