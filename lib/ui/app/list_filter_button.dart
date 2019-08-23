@@ -24,8 +24,10 @@ class ListFilterButton extends StatelessWidget {
           : store.state.uiState.filter,
       builder: (BuildContext context, filter) {
         return FlatButton(
-          child:
-              Text(filter == null ? localization.search : localization.close),
+          child: Text(
+            filter == null ? localization.search : localization.close,
+            style: TextStyle(color: Colors.white),
+          ),
           onPressed: () => onFilterPressed(filter == null ? '' : null),
         );
       },
