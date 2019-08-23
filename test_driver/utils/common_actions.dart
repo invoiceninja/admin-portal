@@ -13,9 +13,10 @@ class Keys {
 Future<bool> isTablet(FlutterDriver driver) async {
   final info =
       await driver.getRenderObjectDiagnostics(find.byType('MaterialApp'));
-  final regExp = new RegExp(r'Size\(([\d\.]*), ([\d\.]*)');
 
+  final regExp = new RegExp(r'Size\(([\d\.]*), ([\d\.]*)');
   final match = regExp.firstMatch(info.toString());
+
   final width = double.parse(match.group(1));
   final height = double.parse(match.group(2));
 
