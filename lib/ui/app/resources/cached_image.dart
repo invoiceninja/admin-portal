@@ -4,8 +4,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CachedImage extends StatelessWidget {
+  const CachedImage(
+      {this.url, this.width, this.height, this.showNinjaOnError = true});
 
-  const CachedImage({this.url, this.width, this.height, this.showNinjaOnError = true});
   final String url;
   final bool showNinjaOnError;
   final double width;
@@ -17,7 +18,7 @@ class CachedImage extends StatelessWidget {
     final uiState = store.state.uiState;
 
     // TODO remove this workaround
-    if (uiState.isTesting) {
+    if (uiState.isTesting || (url ?? '').isEmpty) {
       return SizedBox(
         width: width,
         height: height,
@@ -25,15 +26,13 @@ class CachedImage extends StatelessWidget {
     }
 
     return CachedNetworkImage(
-      width: 32,
-      height: 30,
+      width: width,
+      height: height,
       key: ValueKey(url),
       imageUrl: url,
       placeholder: (context, url) => CircularProgressIndicator(),
-      errorWidget: (context, url, error) => Image.asset(
-          'assets/images/logo.png',
-          width: 32,
-          height: 30),
+      errorWidget: (context, url, error) =>
+          Image.asset('assets/images/logo.png', width: 32, height: 30),
     );
   }
 }
