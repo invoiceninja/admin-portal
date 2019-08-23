@@ -41,10 +41,10 @@ class _LoginState extends State<LoginView> {
     final state = widget.viewModel.authState;
     _emailController.text = state.email;
     _passwordController.text = state.password;
-    _urlController.text = formatApiUrlReadable(state.url);
+    _urlController.text = cleanApiUrl(state.url);
     _secretController.text = state.secret;
 
-    if (state.url.isNotEmpty) {
+    if (cleanApiUrl(state.url).isNotEmpty) {
       _isSelfHosted = true;
     }
 

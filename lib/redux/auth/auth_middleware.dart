@@ -30,8 +30,8 @@ void _saveAuthLocal({String email, String url, String secret}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(kSharedPrefEmail, email ?? '');
 
-  if (formatApiUrlReadable(url) != kAppUrl) {
-    prefs.setString(kSharedPrefUrl, formatApiUrlMachine(url));
+  if (cleanApiUrl(url).isNotEmpty && cleanApiUrl(url) != kAppUrl) {
+    prefs.setString(kSharedPrefUrl, formatApiUrl(url));
     prefs.setString(kSharedPrefSecret, secret);
   }
 }
@@ -39,7 +39,7 @@ void _saveAuthLocal({String email, String url, String secret}) async {
 void _loadAuthLocal(Store<AppState> store) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String email = prefs.getString(kSharedPrefEmail) ?? '';
-  final String url = formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? '');
+  final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
   final String secret = prefs.getString(kSharedPrefSecret) ?? '';
   store.dispatch(UserLoginLoaded(email, url, secret));
 
@@ -153,7 +153,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String url =
-        formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
+        formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
     final String token = prefs.getString(getCompanyTokenKey());
 
     repository

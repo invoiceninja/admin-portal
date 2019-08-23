@@ -29,7 +29,7 @@ class AuthRepository {
       'one_time_password': oneTimePassword,
     };
 
-    url = formatApiUrlMachine(url) + '/login';
+    url = formatApiUrl(url) + '/login';
 
     return sendRequest(url: url, data: credentials);
   }
@@ -42,7 +42,7 @@ class AuthRepository {
       'token': token,
       'provider': 'google',
     };
-    url = formatApiUrlMachine(url) + '/oauth_login';
+    url = formatApiUrl(url) + '/oauth_login';
 
     return sendRequest(url: url, data: credentials);
   }
@@ -53,7 +53,7 @@ class AuthRepository {
       'token_name': 'invoice-ninja-$platform-app',
     };
 
-    url = formatApiUrlMachine(url) + '/refresh';
+    url = formatApiUrl(url) + '/refresh';
 
     return sendRequest(url: url, data: credentials, token: token);
   }
