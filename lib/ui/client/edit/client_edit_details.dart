@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -95,44 +96,29 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
+              label: localization.name,
               controller: _nameController,
-              decoration: InputDecoration(
-                labelText: localization.name,
-              ),
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
+              label: localization.idNumber,
               controller: _idNumberController,
-              decoration: InputDecoration(
-                labelText: localization.idNumber,
-              ),
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
+              label: localization.vatNumber,
               controller: _vatNumberController,
-              decoration: InputDecoration(
-                labelText: localization.vatNumber,
-              ),
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
+              label: localization.website,
               controller: _websiteController,
-              decoration: InputDecoration(
-                labelText: localization.website,
-              ),
               keyboardType: TextInputType.url,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
+              label: localization.phone,
               controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: localization.phone,
-              ),
               keyboardType: TextInputType.phone,
             ),
             CustomField(

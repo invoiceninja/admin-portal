@@ -1,7 +1,6 @@
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +62,6 @@ class ClientScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.client)
           ? FloatingActionButton(
-              key: Key(ClientKeys.fab),
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () => store.dispatch(
                   EditClient(client: ClientEntity(), context: context)),
