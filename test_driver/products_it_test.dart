@@ -89,11 +89,13 @@ void main() {
 
     // Edit the newly created product
     test('Edit an existing product', () async {
-      print('Select product: $productKey');
-      await driver.scrollUntilVisible(
-          find.byType('ListView'), find.text(productKey),
-          dyScroll: -300);
-      await driver.tap(find.text(productKey));
+      if (await isMobile(driver)) {
+        print('Select product: $productKey');
+        await driver.scrollUntilVisible(
+            find.byType('ListView'), find.text(productKey),
+            dyScroll: -300);
+        await driver.tap(find.text(productKey));
+      }
 
       print('Tap edit');
       await driver.tap(find.text(localization.edit));
