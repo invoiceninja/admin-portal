@@ -94,5 +94,64 @@ Future<void> fillTextFields(
   }
 }
 
+Future<void> checkTextFields(
+    FlutterDriver driver, Map<String, dynamic> values) async {
+  for (var entry in values.entries) {
+    await driver.waitFor(find.text(entry.value));
+  }
+}
+
+Future<void> fillAndSaveForm(
+    FlutterDriver driver, Map<String, dynamic> values) async {
+  print('Tap edit');
+  final localization = TestLocalization('en');
+  await driver.tap(find.text(localization.edit));
+
+  print('Fill in form');
+  await fillTextFields(driver, values);
+
+  print('Tap save');
+  await driver.tap(find.text(localization.save));
+
+  // verify snackbar
+  //await driver.waitFor(find.text(localization.updatedProduct));
+  //await driver.tap(find.pageBack());
+
+  print('Check for updated values');
+  await checkTextFields(driver, values);
+}
+
+Future<void> testArchiveAndDelete(
+    {FlutterDriver driver,
+    String archivedMessage,
+    String deletedMessage,
+    String restoredMessage}) async {
+  final localization = TestLocalization('en');
+
+  print('Archive record');
+  await driver.tap(find.byType('ActionMenuButton'));
+  await driver.tap(find.text(localization.archive));
+  await driver.waitFor(find.text(archivedMessage));
+  await driver.waitFor(find.text(localization.archived));
+
+  print('Restore record');
+  await driver.tap(find.byType('ActionMenuButton'));
+  await driver.tap(find.text(localization.restore));
+  await driver.waitFor(find.text(restoredMessage));
+  await driver.waitForAbsent(find.text(localization.archived));
+
+  print('Delete record');
+  await driver.tap(find.byType('ActionMenuButton'));
+  await driver.tap(find.text(localization.delete));
+  await driver.waitFor(find.text(deletedMessage));
+  await driver.waitFor(find.text(localization.deleted));
+
+  print('Restore record');
+  await driver.tap(find.byType('ActionMenuButton'));
+  await driver.tap(find.text(localization.restore));
+  await driver.waitFor(find.text(restoredMessage));
+  await driver.waitForAbsent(find.text(localization.deleted));
+}
+
 String makeUnique(String value) =>
     '$value ${faker.randomGenerator.integer(999999, min: 100000)}';

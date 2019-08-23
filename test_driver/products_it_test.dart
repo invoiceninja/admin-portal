@@ -64,21 +64,11 @@ void main() {
       await driver.tap(find.byTooltip(localization.newProduct));
 
       print('Fill form: $productKey');
-      await fillTextFields(driver, <String, dynamic>{
+      await fillAndSaveForm(driver, <String, dynamic>{
         localization.productKey: productKey,
         localization.notes: notes,
         localization.cost: cost,
       });
-
-      print('Tap save');
-      await driver.tap(find.text(localization.save));
-      //await driver.waitFor(find.text(localization.createdProduct));
-      await driver.waitFor(find.text(productKey));
-
-      print('Check for new value: $productKey');
-      await driver.waitFor(find.text(productKey));
-      await driver.waitFor(find.text(notes));
-      //await driver.waitFor(find.text(cost));
 
       if (await isMobile(driver)) {
         print('Click back');
@@ -97,54 +87,20 @@ void main() {
         await driver.tap(find.text(productKey));
       }
 
-      print('Tap edit');
-      await driver.tap(find.text(localization.edit));
-
-      print('Fill in form: $updatedProductKey');
-      await fillTextFields(driver, <String, dynamic>{
+      await fillAndSaveForm(driver, <String, dynamic>{
         localization.productKey: updatedProductKey,
         localization.notes: updatedNotes,
         localization.cost: updatedCost,
       });
-
-      print('Tap save');
-      await driver.tap(find.text(localization.save));
-
-      // verify snackbar
-      //await driver.waitFor(find.text(localization.updatedProduct));
-      //await driver.tap(find.pageBack());
-
-      print('Check for updated values');
-      await driver.waitFor(find.text(updatedProductKey));
-      await driver.waitFor(find.text(updatedNotes));
-      //await driver.waitFor(find.text(updatedCost));
     });
 
     // Archive the edited product
-    test('Archieve a product test', () async {
-      print('Archive product');
-      await driver.tap(find.byType('ActionMenuButton'));
-      await driver.tap(find.text(localization.archive));
-      await driver.waitFor(find.text(localization.archivedProduct));
-      await driver.waitFor(find.text(localization.archived));
-
-      print('Restore product');
-      await driver.tap(find.byType('ActionMenuButton'));
-      await driver.tap(find.text(localization.restore));
-      await driver.waitFor(find.text(localization.restoredProduct));
-      await driver.waitForAbsent(find.text(localization.archived));
-
-      print('Delete product');
-      await driver.tap(find.byType('ActionMenuButton'));
-      await driver.tap(find.text(localization.delete));
-      await driver.waitFor(find.text(localization.deletedProduct));
-      await driver.waitFor(find.text(localization.deleted));
-
-      print('Restore product');
-      await driver.tap(find.byType('ActionMenuButton'));
-      await driver.tap(find.text(localization.restore));
-      await driver.waitFor(find.text(localization.restoredProduct));
-      await driver.waitForAbsent(find.text(localization.deleted));
+    test('Archieve/delete product test', () async {
+      testArchiveAndDelete(
+          driver: driver,
+          archivedMessage: localization.archivedProduct,
+          deletedMessage: localization.deletedProduct,
+          restoredMessage: localization.restoredProduct);
 
       if (await isMobile(driver)) {
         await driver.tap(find.pageBack());
