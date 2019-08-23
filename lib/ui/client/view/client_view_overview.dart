@@ -37,12 +37,12 @@ class ClientOverview extends StatelessWidget {
 
     if (client.languageId > 0 && client.languageId != company.languageId) {
       fields[ClientFields.language] =
-          statics.languageMap[client.languageId].name;
+          statics.languageMap[client.languageId]?.name;
     }
 
     if (client.currencyId > 0 && client.currencyId != company.currencyId) {
       fields[ClientFields.currency] =
-          statics.currencyMap[client.currencyId].name;
+          statics.currencyMap[client.currencyId]?.name;
     }
 
     if (client.customValue1.isNotEmpty) {
