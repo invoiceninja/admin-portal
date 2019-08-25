@@ -60,7 +60,7 @@ void main() {
 
       print('Fill form: $clientName');
       await driver.tap(find.byValueKey(localization.client));
-      await driver.tap(find.text(localization.createNew));
+      await driver.tap(find.byTooltip(localization.createNew));
 
       await driver.tap(find.byValueKey(localization.name));
       await driver.enterText(clientName);
