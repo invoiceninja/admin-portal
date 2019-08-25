@@ -74,11 +74,6 @@ void main() {
         localization.poNumber: poNumber,
       });
 
-      await fillTextField(
-          driver: driver, field: localization.poNumber, value: poNumber);
-
-      await driver.tap(find.text(localization.save));
-
       if (await isMobile(driver)) {
         print('Click back');
         await driver.tap(find.pageBack());
