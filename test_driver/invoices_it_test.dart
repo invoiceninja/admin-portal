@@ -88,9 +88,11 @@ void main() {
       print('Tap edit');
       await driver.tap(find.text(localization.edit));
 
+      /*
       await fillAndSaveForm(driver, <String, dynamic>{
         localization.name: updatedClientName,
       });
+      */
     });
 
     // Archive the edited invoice
