@@ -83,7 +83,7 @@ void main() {
       print('Tap edit');
       await driver.tap(find.text(localization.edit));
 
-      await fillAndSaveForm(driver, <String, dynamic>{
+      await fillAndSaveForm(driver, <String, String>{
         localization.name: updatedName,
       });
     });

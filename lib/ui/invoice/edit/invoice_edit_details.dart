@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -154,14 +155,11 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                       viewModel.onAddClientPressed(context, completer);
                     },
                   )
-                : TextFormField(
-                    autocorrect: false,
+                : DecoratedFormField(
                     controller: _invoiceNumberController,
-                    decoration: InputDecoration(
-                      labelText: widget.isQuote
-                          ? localization.quoteNumber
-                          : localization.invoiceNumber,
-                    ),
+                    label: widget.isQuote
+                        ? localization.quoteNumber
+                        : localization.invoiceNumber,
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
@@ -188,11 +186,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 viewModel.onChanged(invoice.rebuild((b) => b..dueDate = date));
               },
             ),
-            TextFormField(
+            DecoratedFormField(
+              label: localization.partialDeposit,
               controller: _partialController,
-              decoration: InputDecoration(
-                labelText: localization.partialDeposit,
-              ),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
             invoice.partial != null && invoice.partial > 0
@@ -205,22 +201,17 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     },
                   )
                 : Container(),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
+              label: localization.poNumber,
               controller: _poNumberController,
-              decoration: InputDecoration(
-                labelText: localization.poNumber,
-              ),
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Expanded(
-                  child: TextFormField(
+                  child: DecoratedFormField(
+                    label: localization.discount,
                     controller: _discountController,
-                    decoration: InputDecoration(
-                      labelText: localization.discount,
-                    ),
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -269,23 +260,19 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               options: company.getCustomFieldValues(CustomFieldType.invoice2),
             ),
             company.getCustomFieldLabel(CustomFieldType.surcharge1).isNotEmpty
-                ? TextFormField(
+                ? DecoratedFormField(
+                    label:
+                        company.getCustomFieldLabel(CustomFieldType.surcharge1),
                     controller: _surcharge1Controller,
-                    decoration: InputDecoration(
-                      labelText: company
-                          .getCustomFieldLabel(CustomFieldType.surcharge1),
-                    ),
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
             company.getCustomFieldLabel(CustomFieldType.surcharge2).isNotEmpty
-                ? TextFormField(
+                ? DecoratedFormField(
                     controller: _surcharge2Controller,
-                    decoration: InputDecoration(
-                      labelText: company
-                          .getCustomFieldLabel(CustomFieldType.surcharge2),
-                    ),
+                    label:
+                        company.getCustomFieldLabel(CustomFieldType.surcharge2),
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   )

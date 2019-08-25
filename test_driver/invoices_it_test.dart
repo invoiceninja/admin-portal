@@ -10,7 +10,11 @@ void main() {
     FlutterDriver driver;
 
     final clientName = makeUnique(faker.company.name());
-    final updatedClientName = makeUnique(faker.company.name());
+    final poNumber =
+        faker.randomGenerator.integer(999999, min: 100000).toString();
+
+    final updatedPoNumber =
+        faker.randomGenerator.integer(999999, min: 100000).toString();
 
     setUpAll(() async {
       localization = TestLocalization('en');
@@ -40,8 +44,7 @@ void main() {
       await driver.tap(find.text(localization.save));
 
       print('Check for error');
-      await driver
-          .waitFor(find.text(localization.pleaseSelectAClient));
+      await driver.waitFor(find.text(localization.pleaseSelectAClient));
 
       if (await isMobile(driver)) {
         print('Click back');
@@ -62,10 +65,18 @@ void main() {
       await driver.tap(find.byValueKey(localization.client));
       await driver.tap(find.byTooltip(localization.createNew));
 
-      await driver.tap(find.byValueKey(localization.name));
-      await driver.enterText(clientName);
+      await fillTextField(
+          driver: driver, field: localization.name, value: clientName);
 
       await driver.tap(find.text(localization.save));
+
+      await fillAndSaveForm(driver, <String, String>{
+        localization.poNumber: poNumber,
+      });
+
+      await fillTextField(
+          driver: driver, field: localization.poNumber, value: poNumber);
+
       await driver.tap(find.text(localization.save));
 
       if (await isMobile(driver)) {
@@ -88,11 +99,9 @@ void main() {
       print('Tap edit');
       await driver.tap(find.text(localization.edit));
 
-      /*
-      await fillAndSaveForm(driver, <String, dynamic>{
-        localization.name: updatedClientName,
+      await fillAndSaveForm(driver, <String, String>{
+        localization.poNumber: updatedPoNumber,
       });
-      */
     });
 
     // Archive the edited invoice
