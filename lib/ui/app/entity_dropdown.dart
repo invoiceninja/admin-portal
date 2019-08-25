@@ -141,6 +141,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
           widget.onAddPressed != null
               ? IconButton(
                   icon: Icon(Icons.add_circle_outline),
+                  tooltip: localization.createNew,
                   onPressed: () {
                     Navigator.pop(context);
                     final Completer<SelectableEntity> completer =
