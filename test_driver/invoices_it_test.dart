@@ -59,7 +59,7 @@ void main() {
       await driver.tap(find.byTooltip(localization.newInvoice));
 
       print('Fill form: $clientName');
-      await driver.tap(find.text(localization.client));
+      await driver.tap(find.byValueKey(localization.client));
       await driver.tap(find.text(localization.createNew));
 
       await driver.tap(find.byValueKey(localization.name));

@@ -70,6 +70,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      key: ValueKey(widget.labelText),
       onTap: () => _showOptions(),
       child: IgnorePointer(
         child: TextFormField(
