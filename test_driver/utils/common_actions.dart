@@ -40,6 +40,7 @@ Future<void> login(FlutterDriver driver,
   });
 
   if (selfHosted) {
+    await driver.tap(find.byValueKey(localization.selfhostLogin));
     await fillTextFields(driver, <String, dynamic>{
       localization.url: loginUrl,
       localization.secret: loginSecret,
