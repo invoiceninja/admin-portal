@@ -130,28 +130,29 @@ Future<void> testArchiveAndDelete(
   final localization = TestLocalization('en');
 
   print('Archive record');
-  await driver.tap(find.byType('ActionMenuButton'));
-  await driver.tap(find.text(localization.archive));
+  selectAction(driver, localization.archive);
   await driver.waitFor(find.text(archivedMessage));
   await driver.waitFor(find.text(localization.archived));
 
   print('Restore record');
-  await driver.tap(find.byType('ActionMenuButton'));
-  await driver.tap(find.text(localization.restore));
+  selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.text(localization.archived));
 
   print('Delete record');
-  await driver.tap(find.byType('ActionMenuButton'));
-  await driver.tap(find.text(localization.delete));
+  selectAction(driver, localization.delete);
   await driver.waitFor(find.text(deletedMessage));
   await driver.waitFor(find.text(localization.deleted));
 
   print('Restore record');
-  await driver.tap(find.byType('ActionMenuButton'));
-  await driver.tap(find.text(localization.restore));
+  selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.text(localization.deleted));
+}
+
+Future<void> selectAction(FlutterDriver driver, String action) async {
+  await driver.tap(find.byType('ActionMenuButton'));
+  await driver.tap(find.text(action));
 }
 
 String makeUnique(String value) =>

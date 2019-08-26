@@ -123,10 +123,19 @@ void main() {
           archivedMessage: localization.archivedInvoice,
           deletedMessage: localization.deletedInvoice,
           restoredMessage: localization.restoredInvoice);
+    });
+
+    // Mark the invoice as paid
+    test('Mark invoice as paid', () async {
+
+      await selectAction(driver, localization.enterPayment);
+      await driver.tap(find.text(localization.save));
+      await driver.waitFor(find.text(localization.paymentStatus));
 
       if (await isMobile(driver)) {
         await driver.tap(find.pageBack());
       }
     });
+
   });
 }
