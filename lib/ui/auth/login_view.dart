@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -210,61 +211,84 @@ class _LoginState extends State<LoginView> {
                     ),
                   Padding(
                     padding: EdgeInsets.only(top: 35, bottom: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: ProgressButton(
+                    child: _createAccount
+                        ? ProgressButton(
                             isLoading: viewModel.isLoading,
-                            label: localization.emailLogin.toUpperCase(),
+                            label: localization.signUp.toUpperCase(),
                             onPressed: () => _submitForm(),
+                          )
+                        : Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: ProgressButton(
+                                  isLoading: viewModel.isLoading,
+                                  label: localization.emailLogin.toUpperCase(),
+                                  onPressed: () => _submitForm(),
+                                ),
+                              ),
+                              SizedBox(width: 20),
+                              Expanded(
+                                child: ElevatedButton(
+                                  label: localization.googleLogin.toUpperCase(),
+                                  onPressed: () =>
+                                      viewModel.onGoogleLoginPressed(
+                                          context,
+                                          _urlController.text,
+                                          _secretController.text),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(width: 20),
-                        Expanded(
-                          child: ElevatedButton(
-                            label: localization.googleLogin.toUpperCase(),
-                            onPressed: () => viewModel.onGoogleLoginPressed(
-                                context,
-                                _urlController.text,
-                                _secretController.text),
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                   if (!isOneTimePassword)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        _createAccount
-                            ? FlatButton(
-                                onPressed: () =>
-                                    setState(() => _createAccount = false),
-                                child: Text(localization.login))
-                            : FlatButton(
-                                key: ValueKey(localization.selfhostLogin),
-                                onPressed: () =>
-                                    setState(() => _createAccount = true),
-                                child: Text(localization.createAccount)),
-                        _isSelfHosted
-                            ? FlatButton(
-                                onPressed: () =>
-                                    setState(() => _isSelfHosted = false),
-                                child: Text(localization.hostedLogin))
-                            : FlatButton(
-                                key: ValueKey(localization.selfhostLogin),
-                                onPressed: () =>
-                                    setState(() => _isSelfHosted = true),
-                                child: Text(localization.selfhostLogin)),
-                        FlatButton(
-                          child: Text(localization.viewWebsite),
-                          onPressed: () async {
-                            if (await canLaunch(kSiteUrl)) {
-                              await launch(kSiteUrl,
-                                  forceSafariVC: false, forceWebView: false);
-                            }
-                          },
+                        Row(
+                          children: <Widget>[
+                            Icon(FontAwesomeIcons.user, size: 16),
+                            _createAccount
+                                ? FlatButton(
+                                    onPressed: () =>
+                                        setState(() => _createAccount = false),
+                                    child: Text(localization.accountLogin))
+                                : FlatButton(
+                                    key: ValueKey(localization.selfhostLogin),
+                                    onPressed: () => setState(() {
+                                          _createAccount = true;
+                                          _isSelfHosted = false;
+                                        }),
+                                    child: Text(localization.createAccount)),
+                          ],
                         ),
+                        Row(children: <Widget>[
+                          Icon(FontAwesomeIcons.userCog, size: 16),
+                          _isSelfHosted
+                              ? FlatButton(
+                                  onPressed: () =>
+                                      setState(() => _isSelfHosted = false),
+                                  child: Text(localization.hostedLogin))
+                              : FlatButton(
+                                  key: ValueKey(localization.selfhostLogin),
+                                  onPressed: () =>
+                                      setState(() {
+                                        _isSelfHosted = true;
+                                        _createAccount = false;
+                                      }),
+                                  child: Text(localization.selfhostLogin)),
+                        ]),
+                        Row(children: <Widget>[
+                          Icon(FontAwesomeIcons.externalLinkAlt, size: 16),
+                          FlatButton(
+                            child: Text(localization.viewWebsite),
+                            onPressed: () async {
+                              if (await canLaunch(kSiteUrl)) {
+                                await launch(kSiteUrl,
+                                    forceSafariVC: false, forceWebView: false);
+                              }
+                            },
+                          ),
+                        ]),
                       ],
                     ),
                   if (isOneTimePassword && !viewModel.isLoading)
