@@ -203,18 +203,20 @@ class _LoginState extends State<LoginView> {
                             label: localization.firstName,
                             controller: _firstNameController,
                             autovalidate: _autoValidate,
-                            validator: (val) => val.isEmpty || val.trim().isEmpty
-                                ? localization.pleaseEnterAFirstName
-                                : null,
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterAFirstName
+                                    : null,
                           ),
                         if (_createAccount)
                           DecoratedFormField(
                             label: localization.lastName,
                             controller: _lastNameController,
                             autovalidate: _autoValidate,
-                            validator: (val) => val.isEmpty || val.trim().isEmpty
-                                ? localization.pleaseEnterALastName
-                                : null,
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterALastName
+                                    : null,
                           ),
                         TextFormField(
                           controller: _emailController,
@@ -370,6 +372,7 @@ class _LoginState extends State<LoginView> {
                             ],
                           ),
                   ),
+                  SizedBox(height: 6),
                   if (!isOneTimePassword)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -406,18 +409,20 @@ class _LoginState extends State<LoginView> {
                                       }),
                                   child: Text(localization.selfhostLogin)),
                         ]),
-                        Row(children: <Widget>[
-                          Icon(FontAwesomeIcons.externalLinkAlt, size: 16),
-                          FlatButton(
-                            child: Text(localization.viewWebsite),
-                            onPressed: () async {
-                              if (await canLaunch(kSiteUrl)) {
-                                await launch(kSiteUrl,
-                                    forceSafariVC: false, forceWebView: false);
-                              }
-                            },
-                          ),
-                        ]),
+                        if (isTablet(context))
+                          Row(children: <Widget>[
+                            Icon(FontAwesomeIcons.externalLinkAlt, size: 16),
+                            FlatButton(
+                              child: Text(localization.viewWebsite),
+                              onPressed: () async {
+                                if (await canLaunch(kSiteUrl)) {
+                                  await launch(kSiteUrl,
+                                      forceSafariVC: false,
+                                      forceWebView: false);
+                                }
+                              },
+                            ),
+                          ]),
                       ],
                     ),
                   if (isOneTimePassword && !viewModel.isLoading)

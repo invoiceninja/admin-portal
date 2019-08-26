@@ -12,6 +12,7 @@ abstract class CompanyEntity
     implements Built<CompanyEntity, CompanyEntityBuilder> {
   factory CompanyEntity() {
     return _$CompanyEntity._(
+      companyKey: '',
       name: '',
       token: '',
       plan: '',
@@ -87,6 +88,9 @@ abstract class CompanyEntity
   String get token;
 
   String get plan;
+
+  @BuiltValueField(wireName: 'account_key')
+  String get companyKey;
 
   @BuiltValueField(wireName: 'logo_url')
   String get logoUrl;

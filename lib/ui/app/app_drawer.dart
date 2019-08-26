@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
@@ -162,13 +164,17 @@ class AppDrawer extends StatelessWidget {
                     shrinkWrap: true,
                     children: <Widget>[
                       //if (isHosted(context) && !isProAccount(context))
-                      if (false)
+                      if (true)
                         Material(
                           color: Colors.green,
                           child: ListTile(
                             leading: Icon(FontAwesomeIcons.superpowers),
                             title: Text(localization.upgrade),
-                            onTap: () => null,
+                            onTap: () => showDialog<UpgradeDialog>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return UpgradeDialog();
+                                }),
                           ),
                         ),
                       DrawerTile(
@@ -476,6 +482,89 @@ class SidebarFooter extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class UpgradeDialog extends StatefulWidget {
+  @override
+  _UpgradeDialogState createState() => _UpgradeDialogState();
+}
+
+class _UpgradeDialogState extends State<UpgradeDialog> {
+  StreamSubscription<List<PurchaseDetails>> _subscription;
+  List<ProductDetails> products;
+
+  @override
+  void initState() {
+    print('initState...');
+    final Stream purchaseUpdates =
+        InAppPurchaseConnection.instance.purchaseUpdatedStream;
+
+    _subscription = purchaseUpdates.listen((dynamic purchases) {
+      print('purchaseUpdates.listen: $purchases');
+    });
+
+    initStore();
+
+    super.initState();
+  }
+
+  void initStore() async {
+    final bool available = await InAppPurchaseConnection.instance.isAvailable();
+
+    if (!available) {
+      print('store not availble');
+      return;
+    }
+
+    final productIds = Set<String>.from(kProductPlans);
+    final ProductDetailsResponse response =
+        await InAppPurchaseConnection.instance.queryProductDetails(productIds);
+
+    setState(() {
+      products = response.productDetails;
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+
+  void upgrade(BuildContext context, ProductDetails productDetails) {
+    final store = StoreProvider.of<AppState>(context);
+    final company = store.state.selectedCompany;
+
+    InAppPurchaseConnection.instance.buyNonConsumable(
+        purchaseParam: PurchaseParam(
+      productDetails: productDetails,
+      applicationUserName: company.companyKey,
+      sandboxTesting: false,
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    if (products == null) {
+      return CircularProgressIndicator();
+    }
+
+    return SimpleDialog(
+      title: Text(localization.oneYearUpgrade),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+      children: products
+          .map((productDetails) => ListTile(
+                title: Text(productDetails.title),
+                subtitle: Text(productDetails.description),
+                trailing:
+                    Text(productDetails.price, style: TextStyle(fontSize: 18)),
+                onTap: () => upgrade(context, productDetails),
+              ))
+          .toList(),
     );
   }
 }

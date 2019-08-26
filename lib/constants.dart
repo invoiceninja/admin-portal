@@ -23,6 +23,20 @@ const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefRequireAuthentication = 'require_authentication';
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
 
+const String kProductPlanPro = 'v1_pro_yearly';
+const String kProductPlanEnterprise2 = 'v1_enterprise_2_yearly';
+const String kProductPlanEnterprise5 = 'v1_enterprise_5_yearly';
+const String kProductPlanEnterprise10 = 'v1_enterprise_10_yearly';
+const String kProductPlanEnterprise20 = 'v1_enterprise_20_yearly';
+
+const kProductPlans = [
+  kProductPlanPro,
+  kProductPlanEnterprise2,
+  kProductPlanEnterprise5,
+  kProductPlanEnterprise10,
+  kProductPlanEnterprise20,
+];
+
 const double kMobileLayoutWidth = 600;
 const double kMobileDialogPadding = 12;
 
