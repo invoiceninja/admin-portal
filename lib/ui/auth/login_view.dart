@@ -108,7 +108,8 @@ class _LoginState extends State<LoginView> {
         password: _passwordController.text,
         url: _isSelfHosted ? _urlController.text : '',
         secret: _isSelfHosted ? _secretController.text : '',
-        oneTimePassword: _oneTimePasswordController.text);
+        oneTimePassword: _oneTimePasswordController.text,
+        createAccount: _createAccount);
   }
 
   @override
@@ -200,7 +201,8 @@ class _LoginState extends State<LoginView> {
                                       : null,
                               obscureText: true,
                               focusNode: _focusNode1,
-                              onFieldSubmitted: (value) => _submitLoginForm(),
+                              onFieldSubmitted: (value) =>
+                                  _createAccount ? null : _submitLoginForm(),
                             ),
                             if (_isSelfHosted)
                               TextFormField(

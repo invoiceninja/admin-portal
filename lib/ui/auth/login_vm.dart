@@ -47,12 +47,12 @@ class LoginVM {
   AuthState authState;
   final Function() onCancel2FAPressed;
   final Function(BuildContext,
-      {String email,
-      String password,
-      String url,
-      String secret,
-      String oneTimePassword,
-      bool createAccount}) onLoginPressed;
+      {@required String email,
+      @required String password,
+      @required String url,
+      @required String secret,
+      @required String oneTimePassword,
+      @required bool createAccount}) onLoginPressed;
   final Function(BuildContext, String, String) onGoogleLoginPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
@@ -102,12 +102,12 @@ class LoginVM {
           }
         },
         onLoginPressed: (BuildContext context,
-            {String email,
-            String password,
-            String url,
-            String secret,
-            String oneTimePassword,
-            bool createAccount}) async {
+            {@required String email,
+            @required String password,
+            @required String url,
+            @required String secret,
+            @required String oneTimePassword,
+            @required bool createAccount}) async {
           if (store.state.isLoading) {
             return;
           }
