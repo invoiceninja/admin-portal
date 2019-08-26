@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/progress_button.dart';
@@ -7,6 +8,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -33,6 +35,7 @@ class _LoginState extends State<LoginView> {
 
   final FocusNode _focusNode1 = new FocusNode();
 
+  bool _createAccount = false;
   bool _isSelfHosted = false;
   bool _autoValidate = false;
 
@@ -166,92 +169,118 @@ class _LoginState extends State<LoginView> {
                               focusNode: _focusNode1,
                               onFieldSubmitted: (value) => _submitForm(),
                             ),
-                            _isSelfHosted
-                                ? TextFormField(
-                                    controller: _urlController,
-                                    key: ValueKey(localization.url),
-                                    autocorrect: false,
-                                    autovalidate: _autoValidate,
-                                    decoration: InputDecoration(
-                                        labelText: localization.url),
-                                    validator: (val) =>
-                                        val.isEmpty || val.trim().isEmpty
-                                            ? localization.pleaseEnterYourUrl
-                                            : null,
-                                    keyboardType: TextInputType.url,
-                                  )
-                                : Container(),
-                            _isSelfHosted
-                                ? TextFormField(
-                                    controller: _secretController,
-                                    key: ValueKey(localization.secret),
-                                    autocorrect: false,
-                                    decoration: InputDecoration(
-                                        labelText: localization.secret),
-                                    obscureText: true,
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                  viewModel.authState.error == null || error.contains(OTP_ERROR)
-                      ? Container()
-                      : Container(
-                          padding: EdgeInsets.only(top: 26.0),
-                          child: Center(
-                            child: Text(
-                              viewModel.authState.error,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
+                            if (_isSelfHosted)
+                              TextFormField(
+                                controller: _urlController,
+                                key: ValueKey(localization.url),
+                                autocorrect: false,
+                                autovalidate: _autoValidate,
+                                decoration: InputDecoration(
+                                    labelText: localization.url),
+                                validator: (val) =>
+                                    val.isEmpty || val.trim().isEmpty
+                                        ? localization.pleaseEnterYourUrl
+                                        : null,
+                                keyboardType: TextInputType.url,
                               ),
-                            ),
-                          ),
-                        ),
-                  SizedBox(height: 24.0),
-                  ProgressButton(
-                    padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                    isLoading: viewModel.isLoading,
-                    label: localization.login.toUpperCase(),
-                    onPressed: () => _submitForm(),
-                  ),
-                  isOneTimePassword
-                      ? Container()
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            _isSelfHosted
-                                ? FlatButton(
-                                    onPressed: () =>
-                                        setState(() => _isSelfHosted = false),
-                                    child: Text(localization.hostedLogin))
-                                : FlatButton(
-                                    key: ValueKey(localization.selfhostLogin),
-                                    onPressed: () =>
-                                        setState(() => _isSelfHosted = true),
-                                    child: Text(localization.selfhostLogin)),
-                            FlatButton(
-                                onPressed: () => viewModel.onGoogleLoginPressed(
-                                    context,
-                                    _urlController.text,
-                                    _secretController.text),
-                                child: Text(localization.googleLogin)),
+                            if (_isSelfHosted)
+                              TextFormField(
+                                controller: _secretController,
+                                key: ValueKey(localization.secret),
+                                autocorrect: false,
+                                decoration: InputDecoration(
+                                    labelText: localization.secret),
+                                obscureText: true,
+                              ),
                           ],
                         ),
-                  isOneTimePassword && !viewModel.isLoading
-                      ? Padding(
-                          padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                          child: ElevatedButton(
-                            label: localization.cancel.toUpperCase(),
-                            color: Colors.grey,
-                            onPressed: () {
-                              setState(() {
-                                _oneTimePasswordController.text = '';
-                              });
-                              viewModel.onCancel2FAPressed();
-                            },
+                  if (viewModel.authState.error != null &&
+                      !error.contains(OTP_ERROR))
+                    Container(
+                      padding: EdgeInsets.only(top: 26.0),
+                      child: Center(
+                        child: Text(
+                          viewModel.authState.error,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
                           ),
-                        )
-                      : Container(),
+                        ),
+                      ),
+                    ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 35, bottom: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: ProgressButton(
+                            isLoading: viewModel.isLoading,
+                            label: localization.emailLogin.toUpperCase(),
+                            onPressed: () => _submitForm(),
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: ElevatedButton(
+                            label: localization.googleLogin.toUpperCase(),
+                            onPressed: () => viewModel.onGoogleLoginPressed(
+                                context,
+                                _urlController.text,
+                                _secretController.text),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (!isOneTimePassword)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        _createAccount
+                            ? FlatButton(
+                                onPressed: () =>
+                                    setState(() => _createAccount = false),
+                                child: Text(localization.login))
+                            : FlatButton(
+                                key: ValueKey(localization.selfhostLogin),
+                                onPressed: () =>
+                                    setState(() => _createAccount = true),
+                                child: Text(localization.createAccount)),
+                        _isSelfHosted
+                            ? FlatButton(
+                                onPressed: () =>
+                                    setState(() => _isSelfHosted = false),
+                                child: Text(localization.hostedLogin))
+                            : FlatButton(
+                                key: ValueKey(localization.selfhostLogin),
+                                onPressed: () =>
+                                    setState(() => _isSelfHosted = true),
+                                child: Text(localization.selfhostLogin)),
+                        FlatButton(
+                          child: Text(localization.viewWebsite),
+                          onPressed: () async {
+                            if (await canLaunch(kSiteUrl)) {
+                              await launch(kSiteUrl,
+                                  forceSafariVC: false, forceWebView: false);
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  if (isOneTimePassword && !viewModel.isLoading)
+                    Padding(
+                      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                      child: ElevatedButton(
+                        label: localization.cancel.toUpperCase(),
+                        color: Colors.grey,
+                        onPressed: () {
+                          setState(() {
+                            _oneTimePasswordController.text = '';
+                          });
+                          viewModel.onCancel2FAPressed();
+                        },
+                      ),
+                    ),
                 ],
               ),
             ),

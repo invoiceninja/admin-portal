@@ -17,21 +17,18 @@ class ProgressButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ?? EdgeInsets.only(left: 16.0, right: 16.0, top: 2.0),
-      child: isLoading
-          ? Center(
-              child: SizedBox(
-                height: 48,
-                width: 48,
-                child: CircularProgressIndicator(),
-              ),
-            )
-          : ElevatedButton(
-              width: double.infinity,
-              label: label,
-              onPressed: () => this.onPressed(),
+    return isLoading
+        ? Center(
+            child: SizedBox(
+              height: 48,
+              width: 48,
+              child: CircularProgressIndicator(),
             ),
-    );
+          )
+        : ElevatedButton(
+            width: double.infinity,
+            label: label,
+            onPressed: () => this.onPressed(),
+          );
   }
 }
