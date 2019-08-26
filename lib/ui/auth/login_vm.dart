@@ -51,7 +51,8 @@ class LoginVM {
       String password,
       String url,
       String secret,
-      String oneTimePassword}) onLoginPressed;
+      String oneTimePassword,
+      bool createAccount}) onLoginPressed;
   final Function(BuildContext, String, String) onGoogleLoginPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
@@ -105,7 +106,8 @@ class LoginVM {
             String password,
             String url,
             String secret,
-            String oneTimePassword}) async {
+            String oneTimePassword,
+            bool createAccount}) async {
           if (store.state.isLoading) {
             return;
           }
@@ -115,15 +117,19 @@ class LoginVM {
           }
 
           final Completer<Null> completer = Completer<Null>();
-          store.dispatch(UserLoginRequest(
-            completer: completer,
-            email: email.trim(),
-            password: password.trim(),
-            url: url.trim(),
-            secret: secret.trim(),
-            platform: getPlatform(context),
-            oneTimePassword: oneTimePassword.trim(),
-          ));
+          if (createAccount) {
+            // TODO
+          } else {
+            store.dispatch(UserLoginRequest(
+              completer: completer,
+              email: email.trim(),
+              password: password.trim(),
+              url: url.trim(),
+              secret: secret.trim(),
+              platform: getPlatform(context),
+              oneTimePassword: oneTimePassword.trim(),
+            ));
+          }
           completer.future.then((_) => _handleLogin(context));
         });
   }

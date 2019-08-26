@@ -41,6 +41,7 @@ class _LoginState extends State<LoginView> {
   bool _isSelfHosted = false;
   bool _autoValidate = false;
   bool _termsChecked = false;
+  bool _privacyChecked = false;
 
   @override
   void didChangeDependencies() {
@@ -67,14 +68,38 @@ class _LoginState extends State<LoginView> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitLoginForm() {
     final bool isValid = _formKey.currentState.validate();
+    final localization = AppLocalization.of(context);
 
     setState(() {
       _autoValidate = !isValid;
     });
 
     if (!isValid) {
+      return;
+    }
+
+    if (_createAccount && (!_termsChecked || !_privacyChecked)) {
+      showDialog<AlertDialog>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(!_termsChecked
+                  ? localization.termsOfService
+                  : localization.privacyPolicy),
+              content: Text(localization.pleaseAgreeToTermsAndPrivacy),
+              actions: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: FlatButton(
+                    child: Text(AppLocalization.of(context).close),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                )
+              ],
+            );
+          });
       return;
     }
 
@@ -97,7 +122,7 @@ class _LoginState extends State<LoginView> {
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
     final TextStyle linkStyle =
-    themeData.textTheme.body2.copyWith(color: themeData.accentColor);
+        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -175,7 +200,7 @@ class _LoginState extends State<LoginView> {
                                       : null,
                               obscureText: true,
                               focusNode: _focusNode1,
-                              onFieldSubmitted: (value) => _submitForm(),
+                              onFieldSubmitted: (value) => _submitLoginForm(),
                             ),
                             if (_isSelfHosted)
                               TextFormField(
@@ -202,34 +227,62 @@ class _LoginState extends State<LoginView> {
                               ),
                             if (_createAccount)
                               Padding(
-                                padding: EdgeInsets.only(top: 20, bottom: 8),
-                                child: CheckboxListTile(
-                                  onChanged: (value) =>
-                                      setState(() => _termsChecked = value),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  activeColor: Theme.of(context).accentColor,
-                                  value: _termsChecked,
-                                  title: RichText(
-                                    text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          style: aboutTextStyle,
-                                          text: localization.iAgreeToThe + ' ',
+                                padding: EdgeInsets.only(top: 22),
+                                child: Column(
+                                  children: <Widget>[
+                                    CheckboxListTile(
+                                      onChanged: (value) =>
+                                          setState(() => _termsChecked = value),
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      activeColor:
+                                          Theme.of(context).accentColor,
+                                      value: _termsChecked,
+                                      title: RichText(
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              style: aboutTextStyle,
+                                              text: localization.iAgreeToThe +
+                                                  ' ',
+                                            ),
+                                            LinkTextSpan(
+                                              style: linkStyle,
+                                              url: kTermsOfServiceURL,
+                                              text: localization
+                                                  .termsOfServiceLink,
+                                            ),
+                                          ],
                                         ),
-                                        LinkTextSpan(
-                                          style: linkStyle,
-                                          url: kTermsOfServiceURL,
-                                          text: localization.termsOfServiceLink,
-                                        ),
-                                        LinkTextSpan(
-                                          style: linkStyle,
-                                          url: kPrivacyPolicyURL,
-                                          text: localization.privacyPolicyLink,
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                    CheckboxListTile(
+                                      onChanged: (value) => setState(
+                                          () => _privacyChecked = value),
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      activeColor:
+                                          Theme.of(context).accentColor,
+                                      value: _privacyChecked,
+                                      title: RichText(
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              style: aboutTextStyle,
+                                              text: localization.iAgreeToThe +
+                                                  ' ',
+                                            ),
+                                            LinkTextSpan(
+                                              style: linkStyle,
+                                              url: kTermsOfServiceURL,
+                                              text: localization
+                                                  .privacyPolicyLink,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                           ],
@@ -237,7 +290,7 @@ class _LoginState extends State<LoginView> {
                   if (viewModel.authState.error != null &&
                       !error.contains(OTP_ERROR))
                     Container(
-                      padding: EdgeInsets.only(top: 26.0),
+                      padding: EdgeInsets.only(top: 20),
                       child: Center(
                         child: Text(
                           viewModel.authState.error,
@@ -249,12 +302,12 @@ class _LoginState extends State<LoginView> {
                       ),
                     ),
                   Padding(
-                    padding: EdgeInsets.only(top: 35, bottom: 10),
+                    padding: EdgeInsets.only(top: 30, bottom: 10),
                     child: _createAccount
                         ? ProgressButton(
                             isLoading: viewModel.isLoading,
                             label: localization.signUp.toUpperCase(),
-                            onPressed: () => _submitForm(),
+                            onPressed: () => _submitLoginForm(),
                           )
                         : Row(
                             children: <Widget>[
@@ -262,7 +315,7 @@ class _LoginState extends State<LoginView> {
                                 child: ProgressButton(
                                   isLoading: viewModel.isLoading,
                                   label: localization.emailLogin.toUpperCase(),
-                                  onPressed: () => _submitForm(),
+                                  onPressed: () => _submitLoginForm(),
                                 ),
                               ),
                               SizedBox(width: 20),
