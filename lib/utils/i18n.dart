@@ -14,6 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'please_enter_a_first_name': 'Please enter a first name',
+      'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy' :
           'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
@@ -13147,6 +13149,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get pleaseEnterAProductKey =>
       _localizedValues[localeCode]['please_enter_a_product_key'];
+
+  String get pleaseEnterAFirstName =>
+      _localizedValues[localeCode]['please_enter_a_last_name'];
+
+  String get pleaseEnterALastName =>
+      _localizedValues[localeCode]['please_enter_a_first_name'];
 
   String get ascending => _localizedValues[localeCode]['ascending'];
 

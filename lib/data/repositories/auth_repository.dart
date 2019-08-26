@@ -15,11 +15,16 @@ class AuthRepository {
 
   final WebClient webClient;
 
-  Future<LoginResponseData> signUp(
-      {String email,
-        String password,
-        String platform,}) async {
+  Future<LoginResponseData> signUp({
+    String firstName,
+    String lastName,
+    String email,
+    String password,
+    String platform,
+  }) async {
     final credentials = {
+      'first_name': firstName,
+      'last_name': lastName,
       'token_name': 'invoice-ninja-$platform-app',
       'api_secret': Config.API_SECRET,
       'email': email,

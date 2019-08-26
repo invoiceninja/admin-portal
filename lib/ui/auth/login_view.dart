@@ -202,11 +202,19 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.firstName,
                             controller: _firstNameController,
+                            autovalidate: _autoValidate,
+                            validator: (val) => val.isEmpty || val.trim().isEmpty
+                                ? localization.pleaseEnterAFirstName
+                                : null,
                           ),
                         if (_createAccount)
                           DecoratedFormField(
                             label: localization.lastName,
                             controller: _lastNameController,
+                            autovalidate: _autoValidate,
+                            validator: (val) => val.isEmpty || val.trim().isEmpty
+                                ? localization.pleaseEnterALastName
+                                : null,
                           ),
                         TextFormField(
                           controller: _emailController,
