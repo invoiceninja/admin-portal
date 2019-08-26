@@ -15,18 +15,21 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 ]) {
   final loginInit = _createLoginInit();
   final loginRequest = _createLoginRequest(repository);
+  final signUpRequest = _createSignUpRequest(repository);
   final oauthRequest = _createOAuthRequest(repository);
   final refreshRequest = _createRefreshRequest(repository);
 
   return [
     TypedMiddleware<AppState, LoadUserLogin>(loginInit),
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
+    TypedMiddleware<AppState, UserSignUpRequest>(signUpRequest),
     TypedMiddleware<AppState, OAuthLoginRequest>(oauthRequest),
     TypedMiddleware<AppState, RefreshData>(refreshRequest),
   ];
 }
 
-void _saveAuthLocal({String email, String url, String secret}) async {
+void _saveAuthLocal(
+    {String email = '', String url = '', String secret = ''}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(kSharedPrefEmail, email ?? '');
 
@@ -103,6 +106,32 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         message += ', you may need to add /public to the URL';
       }
       store.dispatch(UserLoginFailure(message));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UserSignUpRequest;
+
+    repository
+        .signUp(
+      email: action.email,
+      password: action.password,
+      platform: action.platform,
+    )
+        .then((data) {
+      _saveAuthLocal(
+        email: action.email,
+      );
+
+      store.dispatch(
+          LoadAccountSuccess(completer: action.completer, loginResponse: data));
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(UserLoginFailure(error));
     });
 
     next(action);

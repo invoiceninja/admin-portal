@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -13,6 +14,22 @@ class AuthRepository {
   });
 
   final WebClient webClient;
+
+  Future<LoginResponseData> signUp(
+      {String email,
+        String password,
+        String platform,}) async {
+    final credentials = {
+      'token_name': 'invoice-ninja-$platform-app',
+      'api_secret': Config.API_SECRET,
+      'email': email,
+      'password': password,
+    };
+
+    final url = formatApiUrl(kAppUrl) + '/register';
+
+    return sendRequest(url: url, data: credentials);
+  }
 
   Future<LoginResponseData> login(
       {String email,

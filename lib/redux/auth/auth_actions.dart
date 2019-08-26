@@ -75,4 +75,18 @@ class UserLoginFailure implements StopLoading {
 
 class UserLogout implements PersistData, PersistUI {}
 
+class UserSignUpRequest implements StartLoading {
+  UserSignUpRequest({
+    this.completer,
+    this.email,
+    this.password,
+    this.platform,
+  });
+
+  final Completer completer;
+  final String email;
+  final String password;
+  final String platform;
+}
+
 class ClearAuthError {}

@@ -46,6 +46,7 @@ class LoginVM {
   bool isLoading;
   AuthState authState;
   final Function() onCancel2FAPressed;
+
   final Function(BuildContext,
       {@required String email,
       @required String password,
@@ -53,6 +54,7 @@ class LoginVM {
       @required String secret,
       @required String oneTimePassword,
       @required bool createAccount}) onLoginPressed;
+
   final Function(BuildContext, String, String) onGoogleLoginPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
@@ -118,7 +120,12 @@ class LoginVM {
 
           final Completer<Null> completer = Completer<Null>();
           if (createAccount) {
-            // TODO
+            store.dispatch(UserSignUpRequest(
+              completer: completer,
+              email: email.trim(),
+              password: password.trim(),
+              platform: getPlatform(context),
+            ));
           } else {
             store.dispatch(UserLoginRequest(
               completer: completer,
