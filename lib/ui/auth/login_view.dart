@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/progress_button.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -39,6 +40,7 @@ class _LoginState extends State<LoginView> {
   bool _createAccount = false;
   bool _isSelfHosted = false;
   bool _autoValidate = false;
+  bool _termsChecked = false;
 
   @override
   void didChangeDependencies() {
@@ -91,6 +93,11 @@ class _LoginState extends State<LoginView> {
     final error = viewModel.authState.error ?? '';
     final isOneTimePassword =
         error.contains(OTP_ERROR) || _oneTimePasswordController.text.isNotEmpty;
+
+    final ThemeData themeData = Theme.of(context);
+    final TextStyle aboutTextStyle = themeData.textTheme.body2;
+    final TextStyle linkStyle =
+    themeData.textTheme.body2.copyWith(color: themeData.accentColor);
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -193,6 +200,38 @@ class _LoginState extends State<LoginView> {
                                     labelText: localization.secret),
                                 obscureText: true,
                               ),
+                            if (_createAccount)
+                              Padding(
+                                padding: EdgeInsets.only(top: 20, bottom: 8),
+                                child: CheckboxListTile(
+                                  onChanged: (value) =>
+                                      setState(() => _termsChecked = value),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: Theme.of(context).accentColor,
+                                  value: _termsChecked,
+                                  title: RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          style: aboutTextStyle,
+                                          text: localization.iAgreeToThe + ' ',
+                                        ),
+                                        LinkTextSpan(
+                                          style: linkStyle,
+                                          url: kTermsOfServiceURL,
+                                          text: localization.termsOfServiceLink,
+                                        ),
+                                        LinkTextSpan(
+                                          style: linkStyle,
+                                          url: kPrivacyPolicyURL,
+                                          text: localization.privacyPolicyLink,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                   if (viewModel.authState.error != null &&
@@ -270,8 +309,7 @@ class _LoginState extends State<LoginView> {
                                   child: Text(localization.hostedLogin))
                               : FlatButton(
                                   key: ValueKey(localization.selfhostLogin),
-                                  onPressed: () =>
-                                      setState(() {
+                                  onPressed: () => setState(() {
                                         _isSelfHosted = true;
                                         _createAccount = false;
                                       }),

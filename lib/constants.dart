@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 const String kAppVersion = '0.1.47';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://app.invoiceninja.com';
+const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
+const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 
 const String kAppleStoreUrl =
     'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';

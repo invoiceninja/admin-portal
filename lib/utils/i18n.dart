@@ -14,6 +14,13 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'please_agree_to_terms':
+          'Please agree to the terms of service to create an account.',
+      'please_agree_to_privacy':
+          'Please agree to the privacy policy to create an account.',
+      'i_agree_to_the': 'I agree to the',
+      'terms_of_service_link': 'terms of service',
+      'privacy_policy_link': 'privacy policy',
       'sign_up': 'Sign Up',
       'account_login': 'Account Login',
       'view_website': 'View Website',
@@ -13817,6 +13824,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get accountLogin => _localizedValues[localeCode]['account_login'];
 
   String get signUp => _localizedValues[localeCode]['sign_up'];
+
+  String get pleaseAgreeToTerms =>
+      _localizedValues[localeCode]['please_agree_to_terms'];
+
+  String get pleaseAgreeToPrivacy =>
+      _localizedValues[localeCode]['please_agree_to_privacy'];
+
+  String get iAgreeToThe => _localizedValues[localeCode]['i_agree_to_the'];
+
+  String get termsOfServiceLink =>
+      _localizedValues[localeCode]['terms_of_service_link'];
+
+  String get privacyPolicyLink =>
+      _localizedValues[localeCode]['privacy_policy_link'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
