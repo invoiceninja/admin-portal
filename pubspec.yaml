@@ -13,6 +13,7 @@ dependencies:
   flutter_redux: ^0.5.2
   redux_logging: ^0.3.0
   http: ^0.11.3+17
+  in_app_purchase: ^0.2.1
   path_provider: ^0.5.0
   shared_preferences: ^0.4.2
   font_awesome_flutter: ^8.0.1

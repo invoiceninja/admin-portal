@@ -161,6 +161,16 @@ class AppDrawer extends StatelessWidget {
                 : ListView(
                     shrinkWrap: true,
                     children: <Widget>[
+                      //if (isHosted(context) && !isProAccount(context))
+                      if (false)
+                        Material(
+                          color: Colors.green,
+                          child: ListTile(
+                            leading: Icon(FontAwesomeIcons.superpowers),
+                            title: Text(localization.upgrade),
+                            onTap: () => null,
+                          ),
+                        ),
                       DrawerTile(
                         company: company,
                         icon: FontAwesomeIcons.tachometerAlt,

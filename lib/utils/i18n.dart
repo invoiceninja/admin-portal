@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'upgrade': 'Upgrade',
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy' :
@@ -13849,6 +13850,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get privacyPolicy =>
       _localizedValues[localeCode]['privacy_policy'];
+
+  String get upgrade =>
+      _localizedValues[localeCode]['upgrade'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
