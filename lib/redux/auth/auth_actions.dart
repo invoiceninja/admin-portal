@@ -77,13 +77,18 @@ class UserLogout implements PersistData, PersistUI {}
 
 class UserSignUpRequest implements StartLoading {
   UserSignUpRequest({
+
     this.completer,
+    this.firstName,
+    this.lastName,
     this.email,
     this.password,
     this.platform,
   });
 
   final Completer completer;
+  final String firstName;
+  final String lastName;
   final String email;
   final String password;
   final String platform;

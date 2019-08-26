@@ -39,6 +39,7 @@ class LoginVM {
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginPressed,
+    @required this.onSignUpPressed,
     @required this.onCancel2FAPressed,
     @required this.onGoogleLoginPressed,
   });
@@ -47,13 +48,22 @@ class LoginVM {
   AuthState authState;
   final Function() onCancel2FAPressed;
 
-  final Function(BuildContext,
-      {@required String email,
-      @required String password,
-      @required String url,
-      @required String secret,
-      @required String oneTimePassword,
-      @required bool createAccount}) onLoginPressed;
+  final Function(
+    BuildContext, {
+    @required String email,
+    @required String password,
+    @required String url,
+    @required String secret,
+    @required String oneTimePassword,
+  }) onLoginPressed;
+
+  final Function(
+    BuildContext, {
+    @required String firstName,
+    @required String lastName,
+    @required String email,
+    @required String password,
+  }) onSignUpPressed;
 
   final Function(BuildContext, String, String) onGoogleLoginPressed;
 
@@ -103,13 +113,36 @@ class LoginVM {
             print(error);
           }
         },
-        onLoginPressed: (BuildContext context,
-            {@required String email,
-            @required String password,
-            @required String url,
-            @required String secret,
-            @required String oneTimePassword,
-            @required bool createAccount}) async {
+        onSignUpPressed: (
+          BuildContext context, {
+          @required String firstName,
+          @required String lastName,
+          @required String email,
+          @required String password,
+        }) async {
+          if (store.state.isLoading) {
+            return;
+          }
+
+          final Completer<Null> completer = Completer<Null>();
+          store.dispatch(UserSignUpRequest(
+            completer: completer,
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
+            email: email.trim(),
+            password: password.trim(),
+            platform: getPlatform(context),
+          ));
+          completer.future.then((_) => _handleLogin(context));
+        },
+        onLoginPressed: (
+          BuildContext context, {
+          @required String email,
+          @required String password,
+          @required String url,
+          @required String secret,
+          @required String oneTimePassword,
+        }) async {
           if (store.state.isLoading) {
             return;
           }
@@ -119,24 +152,15 @@ class LoginVM {
           }
 
           final Completer<Null> completer = Completer<Null>();
-          if (createAccount) {
-            store.dispatch(UserSignUpRequest(
-              completer: completer,
-              email: email.trim(),
-              password: password.trim(),
-              platform: getPlatform(context),
-            ));
-          } else {
-            store.dispatch(UserLoginRequest(
-              completer: completer,
-              email: email.trim(),
-              password: password.trim(),
-              url: url.trim(),
-              secret: secret.trim(),
-              platform: getPlatform(context),
-              oneTimePassword: oneTimePassword.trim(),
-            ));
-          }
+          store.dispatch(UserLoginRequest(
+            completer: completer,
+            email: email.trim(),
+            password: password.trim(),
+            url: url.trim(),
+            secret: secret.trim(),
+            platform: getPlatform(context),
+            oneTimePassword: oneTimePassword.trim(),
+          ));
           completer.future.then((_) => _handleLogin(context));
         });
   }
