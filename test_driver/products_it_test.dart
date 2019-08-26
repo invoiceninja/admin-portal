@@ -10,11 +10,11 @@ void main() {
     FlutterDriver driver;
 
     final productKey = makeUnique(faker.food.cuisine());
-    final notes = faker.food.dish();
+    final description = faker.food.dish();
     final cost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
 
     final updatedProductKey = makeUnique(faker.food.cuisine());
-    final updatedNotes = faker.food.dish();
+    final updatedDescription = faker.food.dish();
     final updatedCost =
         faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
 
@@ -65,8 +65,8 @@ void main() {
 
       print('Fill form: $productKey');
       await fillAndSaveForm(driver, <String, dynamic>{
-        localization.productKey: productKey,
-        localization.notes: notes,
+        localization.product: productKey,
+        localization.description: description,
         localization.cost: cost,
       });
 
@@ -91,8 +91,8 @@ void main() {
       await driver.tap(find.text(localization.edit));
 
       await fillAndSaveForm(driver, <String, dynamic>{
-        localization.productKey: updatedProductKey,
-        localization.notes: updatedNotes,
+        localization.product: updatedProductKey,
+        localization.description: updatedDescription,
         localization.cost: updatedCost,
       });
     });

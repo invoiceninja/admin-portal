@@ -12,6 +12,9 @@ void main() {
     final clientName = makeUnique(faker.company.name());
     final poNumber =
         faker.randomGenerator.integer(999999, min: 100000).toString();
+    final productKey = makeUnique(faker.food.cuisine());
+    final description = faker.lorem.sentences(5).toString();
+    final cost = faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
 
     final updatedPoNumber =
         faker.randomGenerator.integer(999999, min: 100000).toString();
@@ -61,14 +64,28 @@ void main() {
       print('Tap new invoice');
       await driver.tap(find.byTooltip(localization.newInvoice));
 
-      print('Fill form: $clientName');
+      print('Create new client: $clientName');
       await driver.tap(find.byValueKey(localization.client));
       await driver.tap(find.byTooltip(localization.createNew));
 
+      print('Fill the client form');
       await fillTextField(
           driver: driver, field: localization.name, value: clientName);
-
       await driver.tap(find.text(localization.save));
+
+      print('Fill the invoice form');
+      await driver.tap(find.byTooltip(localization.addItem));
+      await driver.tap(find.byTooltip(localization.createNew));
+
+      await fillTextFields(driver, <String, String>{
+        localization.product: productKey,
+        localization.description: description,
+        localization.unitCost: cost,
+        localization.quantity: '1',
+      });
+
+      await driver.tap(find.text(localization.done));
+      await driver.tap(find.text(localization.details));
 
       await fillAndSaveForm(driver, <String, String>{
         localization.poNumber: poNumber,

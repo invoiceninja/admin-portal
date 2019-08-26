@@ -172,6 +172,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                     )
                   : IconButton(
                       icon: Icon(Icons.add_circle_outline),
+                      tooltip: localization.createNew,
                       onPressed: () => _addBlankItem(),
                     ),
             ],

@@ -34,13 +34,15 @@ Future<void> login(FlutterDriver driver,
     String loginSecret = Config.TEST_SECRET}) async {
   final localization = TestLocalization('en');
 
+  if (selfHosted) {
+    await driver.tap(find.byValueKey(localization.selfhostLogin));
+  }
   await fillTextFields(driver, <String, dynamic>{
     localization.email: loginEmail,
     localization.password: loginPassword,
   });
 
   if (selfHosted) {
-    await driver.tap(find.byValueKey(localization.selfhostLogin));
     await fillTextFields(driver, <String, dynamic>{
       localization.url: loginUrl,
       localization.secret: loginSecret,
@@ -104,7 +106,6 @@ Future<void> checkTextFields(
 
 Future<void> fillAndSaveForm(
     FlutterDriver driver, Map<String, dynamic> values) async {
-
   final localization = TestLocalization('en');
 
   print('Fill in form');
