@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -160,16 +161,13 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                     convertTimestampToDateString(
                         (int.parse(purchase.transactionDate) / 1000).floor()),
                     context)),
-                trailing: FlatButton(
-                    onPressed: () => redeemPurchase(purchase),
-                    child: Text(localization.redeem)),
+                onTap: () => redeemPurchase(purchase),
               )),
         if (_purchases != null)
-          FlatButton(
-            child: Text(_showPastPurchases
+          ElevatedButton(
+            label: _showPastPurchases
                 ? localization.back
-                : localization.pastPurchases),
-            color: Colors.green,
+                : localization.pastPurchases,
             onPressed: () {
               setState(() => _showPastPurchases = !_showPastPurchases);
             },
@@ -179,11 +177,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
               .map((productDetails) => ListTile(
                     title: Text(productDetails.title),
                     subtitle: Text(productDetails.description),
-                    trailing: FlatButton(
-                        color: Colors.green,
-                        onPressed: () => upgrade(context, productDetails),
-                        child: Text(productDetails.price,
-                            style: TextStyle(fontSize: 18))),
+                    trailing: Text(productDetails.price,
+                        style: TextStyle(fontSize: 18)),
+                    onTap: () => upgrade(context, productDetails),
                   ))
               .toList()
       ],
