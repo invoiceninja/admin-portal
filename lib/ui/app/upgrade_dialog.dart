@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -21,7 +22,9 @@ class UpgradeDialog extends StatefulWidget {
 
 class _UpgradeDialogState extends State<UpgradeDialog> {
   StreamSubscription<List<PurchaseDetails>> _subscription;
-  List<ProductDetails> products;
+  List<ProductDetails> _products;
+  List<PurchaseDetails> _purchases;
+  bool _showPastPurchases = false;
 
   Future<void> redeemPurchase(PurchaseDetails purchase) async {
     print('redeemPurchase: ${purchase.purchaseID}');
@@ -37,21 +40,31 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       'product_id': purchase.productID,
       'timestamp': purchase.transactionDate,
     };
-    
-    final String response =
-        await webClient.post('/api/v1/upgrade', company.token, json.encode(data));
 
-    print('response: $response');
+    try {
+      final String response = await webClient.post(
+          '/api/v1/upgrade', company.token, json.encode(data));
 
-    if (response == 'success') {
-      showDialog<MessageDialog>(
+      if (response == 'success') {
+        showDialog<MessageDialog>(
+            context: context,
+            builder: (BuildContext context) {
+              return MessageDialog(response, onDismiss: () {
+                store.dispatch(RefreshData(
+                  platform: getPlatform(context),
+                ));
+              });
+            });
+
+        if (Platform.isIOS) {
+          InAppPurchaseConnection.instance.completePurchase(purchase);
+        }
+      }
+    } catch (error) {
+      showDialog<ErrorDialog>(
           context: context,
           builder: (BuildContext context) {
-            return MessageDialog(response, onDismiss: () {
-              store.dispatch(RefreshData(
-                platform: getPlatform(context),
-              ));
-            });
+            return ErrorDialog(error);
           });
     }
   }
@@ -64,12 +77,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     InAppPurchaseConnection.instance
         .queryPastPurchases()
         .then((response) async {
-      for (PurchaseDetails purchase in response.pastPurchases) {
-        await redeemPurchase(purchase);
-        if (Platform.isIOS) {
-          InAppPurchaseConnection.instance.completePurchase(purchase);
-        }
-      }
+      setState(() {
+        _purchases = response.pastPurchases;
+      });
     });
 
     _subscription = purchaseUpdates.listen((dynamic purchases) {
@@ -109,7 +119,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         await InAppPurchaseConnection.instance.queryProductDetails(productIds);
 
     setState(() {
-      products = response.productDetails;
+      _products = response.productDetails;
     });
   }
 
@@ -135,22 +145,48 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    if (products == null) {
+    if (_products == null) {
       return LoadingIndicator(height: 50);
     }
 
     return SimpleDialog(
       title: Text(localization.annualSubscription),
       contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-      children: products.reversed
-          .map((productDetails) => ListTile(
-                title: Text(productDetails.title),
-                subtitle: Text(productDetails.description),
-                trailing:
-                    Text(productDetails.price, style: TextStyle(fontSize: 18)),
-                onTap: () => upgrade(context, productDetails),
-              ))
-          .toList(),
+      children: [
+        if (_showPastPurchases)
+          ..._purchases.map((purchase) => ListTile(
+                title: Text(purchase.purchaseID),
+                subtitle: Text(formatDate(
+                    convertTimestampToDateString(
+                        (int.parse(purchase.transactionDate) / 1000).floor()),
+                    context)),
+                trailing: FlatButton(
+                    onPressed: () => redeemPurchase(purchase),
+                    child: Text(localization.redeem)),
+              )),
+        if (_purchases != null)
+          FlatButton(
+            child: Text(_showPastPurchases
+                ? localization.back
+                : localization.pastPurchases),
+            color: Colors.green,
+            onPressed: () {
+              setState(() => _showPastPurchases = !_showPastPurchases);
+            },
+          ),
+        if (!_showPastPurchases)
+          ..._products.reversed
+              .map((productDetails) => ListTile(
+                    title: Text(productDetails.title),
+                    subtitle: Text(productDetails.description),
+                    trailing: FlatButton(
+                        color: Colors.green,
+                        onPressed: () => upgrade(context, productDetails),
+                        child: Text(productDetails.price,
+                            style: TextStyle(fontSize: 18))),
+                  ))
+              .toList()
+      ],
     );
   }
 }
