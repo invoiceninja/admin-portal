@@ -28,11 +28,13 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   bool _showPastPurchases = false;
 
   Future<void> redeemPurchase(PurchaseDetails purchase) async {
-    print('redeemPurchase: ${purchase.purchaseID}');
     if (purchase.error != null) {
       return null;
     }
 
+    Navigator.pop(context);
+
+    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.selectedCompany;
     final webClient = WebClient();
@@ -43,14 +45,16 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     };
 
     try {
-      final String response = await webClient.post(
+      final dynamic response = await webClient.post(
           '/api/v1/upgrade', company.token, json.encode(data));
+      final String message = response['message'];
 
-      if (response == 'success') {
+      if (message == 'success') {
         showDialog<MessageDialog>(
             context: context,
             builder: (BuildContext context) {
-              return MessageDialog(response, onDismiss: () {
+              return MessageDialog(localization.thankYouForYourPurchase,
+                  onDismiss: () {
                 store.dispatch(RefreshData(
                   platform: getPlatform(context),
                 ));
@@ -60,6 +64,12 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         if (Platform.isIOS) {
           InAppPurchaseConnection.instance.completePurchase(purchase);
         }
+      } else {
+        showDialog<ErrorDialog>(
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorDialog(message);
+            });
       }
     } catch (error) {
       showDialog<ErrorDialog>(

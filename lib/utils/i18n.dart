@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'thank_you_for_your_purchase': 'Thank you for your purchase!',
       'redeem': 'Redeem',
       'back': 'Back',
       'past_purchases': 'Past Purchases',
@@ -13881,6 +13882,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get redeem =>
       _localizedValues[localeCode]['redeem'];
+
+  String get thankYouForYourPurchase =>
+      _localizedValues[localeCode]['thank_you_for_your_purchase'];
+
 
 
   String lookup(String key) {
