@@ -325,7 +325,9 @@ abstract class ClientEntity extends Object
       return true;
     } else if (city.toLowerCase().contains(filter)) {
       return true;
-    } else if (contacts.where((contact) => contact.matchesFilter(filter)).isNotEmpty) {
+    } else if (contacts
+        .where((contact) => contact.matchesFilter(filter))
+        .isNotEmpty) {
       return true;
     }
 
@@ -340,7 +342,7 @@ abstract class ClientEntity extends Object
 
     filter = filter.toLowerCase();
     final contact = contacts.firstWhere(
-            (contact) => contact.matchesFilter(filter),
+        (contact) => contact.matchesFilter(filter),
         orElse: () => null);
 
     if (vatNumber.toLowerCase().contains(filter)) {

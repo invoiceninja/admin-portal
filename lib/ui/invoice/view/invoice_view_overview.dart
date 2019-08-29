@@ -162,28 +162,30 @@ class InvoiceOverview extends StatelessWidget {
       ]);
     }
 
-    invoice.invoiceItems.forEach((invoiceItem) {
+    if (invoice.invoiceItems.isNotEmpty) {
+      invoice.invoiceItems.forEach((invoiceItem) {
+        widgets.addAll([
+          Builder(
+            builder: (BuildContext context) {
+              return InvoiceItemListTile(
+                invoice: invoice,
+                invoiceItem: invoiceItem,
+                onTap: () => user.canEditEntity(invoice)
+                    ? viewModel.onEditPressed(context, invoiceItem)
+                    : null,
+              );
+            },
+          ),
+        ]);
+      });
+
       widgets.addAll([
-        Builder(
-          builder: (BuildContext context) {
-            return InvoiceItemListTile(
-              invoice: invoice,
-              invoiceItem: invoiceItem,
-              onTap: () => user.canEditEntity(invoice)
-                  ? viewModel.onEditPressed(context, invoiceItem)
-                  : null,
-            );
-          },
+        Container(
+          color: Theme.of(context).backgroundColor,
+          height: 12.0,
         ),
       ]);
-    });
-
-    widgets.addAll([
-      Container(
-        color: Theme.of(context).backgroundColor,
-        height: 12.0,
-      ),
-    ]);
+    }
 
     Widget surchargeRow(String label, double amount) {
       return Container(

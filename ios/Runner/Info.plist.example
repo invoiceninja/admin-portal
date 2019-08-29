@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.46</string>
+	<string>0.1.49</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>46</string>
+	<string>49</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -49,5 +49,9 @@
 	<false/>
 	<key>NSFaceIDUsageDescription</key>
     <string>Face ID is used to access the app</string>
+	<key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>The photo library is used to upload documents</string>
 </dict>
 </plist>

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -35,35 +37,68 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 }
 
 Middleware<AppState> _editProduct() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditProduct;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
-    Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _viewProduct() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewProduct;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
-    Navigator.of(action.context).pushNamed(ProductViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(ProductViewScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _viewProductList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewProductList;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        ProductScreen.route, (Route<dynamic> route) => false);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          ProductScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -86,7 +121,8 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _deleteProduct(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -109,7 +145,8 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _restoreProduct(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -132,7 +169,8 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _saveProduct(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveProductRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.product)
@@ -154,7 +192,8 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 }
 
 Middleware<AppState> _loadProducts(ProductRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadProducts;
     final AppState state = store.state;
 
     if (!state.productState.isStale && !action.force) {

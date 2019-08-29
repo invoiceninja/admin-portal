@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -20,11 +22,18 @@ List<Middleware<AppState>> createStoreDashboardMiddleware([
 }
 
 Middleware<AppState> _createViewDashboard() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewDashboard;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     store.dispatch(LoadDashboard());
     store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
 
-    if (action.context != null) {
+    if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           DashboardScreen.route, (Route<dynamic> route) => false);
     }
@@ -34,7 +43,8 @@ Middleware<AppState> _createViewDashboard() {
 }
 
 Middleware<AppState> _createLoadDashboard(DashboardRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadDashboard;
     final state = store.state;
 
     if (!state.dashboardState.isStale && !action.force) {

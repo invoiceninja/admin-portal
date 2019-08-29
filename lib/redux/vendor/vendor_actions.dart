@@ -10,31 +10,39 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class ViewVendorList implements PersistUI {
-  ViewVendorList(this.context);
+  ViewVendorList({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewVendor implements PersistUI {
-  ViewVendor({this.vendorId, this.context});
+  ViewVendor({
+    @required this.vendorId,
+    @required this.context,
+    this.force = false,
+  });
 
   final int vendorId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditVendor implements PersistUI {
   EditVendor(
-      {this.vendor,
+      {@required this.vendor,
+      @required this.context,
       this.contact,
-      this.context,
       this.completer,
-      this.trackRoute = true});
+      this.cancelCompleter,
+      this.force = false});
 
   final VendorEntity vendor;
   final VendorContactEntity contact;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
+  final Completer cancelCompleter;
+  final bool force;
 }
 
 class UpdateVendor implements PersistUI {

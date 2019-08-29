@@ -41,6 +41,7 @@ class StubEditVM {
     @required this.isSaving,
     @required this.origStub,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
   });
@@ -64,16 +65,23 @@ class StubEditVM {
           store.dispatch(UpdateCurrentRoute(stub.isNew ? StubScreen.route : StubViewScreen.route));
         }
       },
+    onCancelPressed: (BuildContext context) {
+      store.dispatch(EditStub(
+          stub: StubEntity(), context: context, force: true));
+      store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+    },
       onSavePressed: (BuildContext context) {
         final Completer<StubEntity> completer = new Completer<StubEntity>();
         store.dispatch(SaveStubRequest(completer: completer, stub: stub));
         return completer.future.then((_) {
             return completer.future.then((savedStub) {
               store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
-              if (stub.isNew) {
-                Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedStub);
+              if (isMobile(context)) {
+                  if (stub.isNew) {
+                    Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
+                  } else {
+                    Navigator.of(context).pop(savedStub);
+                  }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
@@ -91,6 +99,7 @@ class StubEditVM {
   final CompanyEntity company;
   final Function(StubEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;

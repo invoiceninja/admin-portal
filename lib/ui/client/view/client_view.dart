@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientView extends StatefulWidget {
   const ClientView({
@@ -197,28 +198,6 @@ class CustomTabBarView extends StatefulWidget {
 
 class _CustomTabBarViewState extends State<CustomTabBarView> {
   @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_onTabChange);
-  }
-
-  @override
-  void dispose() {
-    widget.controller.removeListener(_onTabChange);
-    super.dispose();
-  }
-
-  void _onTabChange() {
-    final viewModel = widget.viewModel;
-
-    if (widget.controller.index == 2 &&
-        viewModel.client.activities.isEmpty &&
-        !viewModel.isLoading) {
-      viewModel.onRefreshed(context, true);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
 
@@ -235,7 +214,10 @@ class _CustomTabBarViewState extends State<CustomTabBarView> {
         ),
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context, true),
-          child: ClientViewActivity(client: viewModel.client),
+          child: ClientViewActivity(
+            viewModel: viewModel,
+            key: ValueKey(viewModel.client.id),
+          ),
         ),
       ],
     );
@@ -261,6 +243,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
+      automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(entity: client),
       bottom: TabBar(
         controller: controller,

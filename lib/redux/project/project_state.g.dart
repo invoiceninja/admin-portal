@@ -258,11 +258,20 @@ class _$ProjectUIState extends ProjectUIState {
   final int selectedId;
   @override
   final ListUIState listUIState;
+  @override
+  final Completer<SelectableEntity> saveCompleter;
+  @override
+  final Completer<Null> cancelCompleter;
 
   factory _$ProjectUIState([void Function(ProjectUIStateBuilder) updates]) =>
       (new ProjectUIStateBuilder()..update(updates)).build();
 
-  _$ProjectUIState._({this.editing, this.selectedId, this.listUIState})
+  _$ProjectUIState._(
+      {this.editing,
+      this.selectedId,
+      this.listUIState,
+      this.saveCompleter,
+      this.cancelCompleter})
       : super._() {
     if (selectedId == null) {
       throw new BuiltValueNullFieldError('ProjectUIState', 'selectedId');
@@ -286,13 +295,19 @@ class _$ProjectUIState extends ProjectUIState {
     return other is ProjectUIState &&
         editing == other.editing &&
         selectedId == other.selectedId &&
-        listUIState == other.listUIState;
+        listUIState == other.listUIState &&
+        saveCompleter == other.saveCompleter &&
+        cancelCompleter == other.cancelCompleter;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
-        listUIState.hashCode));
+    return $jf($jc(
+        $jc(
+            $jc($jc($jc(0, editing.hashCode), selectedId.hashCode),
+                listUIState.hashCode),
+            saveCompleter.hashCode),
+        cancelCompleter.hashCode));
   }
 
   @override
@@ -300,7 +315,9 @@ class _$ProjectUIState extends ProjectUIState {
     return (newBuiltValueToStringHelper('ProjectUIState')
           ..add('editing', editing)
           ..add('selectedId', selectedId)
-          ..add('listUIState', listUIState))
+          ..add('listUIState', listUIState)
+          ..add('saveCompleter', saveCompleter)
+          ..add('cancelCompleter', cancelCompleter))
         .toString();
   }
 }
@@ -324,6 +341,16 @@ class ProjectUIStateBuilder
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
+  Completer<SelectableEntity> _saveCompleter;
+  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+      _$this._saveCompleter = saveCompleter;
+
+  Completer<Null> _cancelCompleter;
+  Completer<Null> get cancelCompleter => _$this._cancelCompleter;
+  set cancelCompleter(Completer<Null> cancelCompleter) =>
+      _$this._cancelCompleter = cancelCompleter;
+
   ProjectUIStateBuilder();
 
   ProjectUIStateBuilder get _$this {
@@ -331,6 +358,8 @@ class ProjectUIStateBuilder
       _editing = _$v.editing?.toBuilder();
       _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
+      _saveCompleter = _$v.saveCompleter;
+      _cancelCompleter = _$v.cancelCompleter;
       _$v = null;
     }
     return this;
@@ -357,7 +386,9 @@ class ProjectUIStateBuilder
           new _$ProjectUIState._(
               editing: _editing?.build(),
               selectedId: selectedId,
-              listUIState: listUIState.build());
+              listUIState: listUIState.build(),
+              saveCompleter: saveCompleter,
+              cancelCompleter: cancelCompleter);
     } catch (_) {
       String _$failedField;
       try {

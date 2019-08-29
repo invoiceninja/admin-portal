@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -25,11 +26,22 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
-  factory UIState(CompanyEntity company,
-      {bool enableDarkMode, bool requireAuthentication}) {
+  factory UIState(
+    CompanyEntity company, {
+    bool enableDarkMode,
+    bool requireAuthentication,
+    AppLayout layout,
+    bool isTesting,
+  }) {
     return _$UIState._(
       selectedCompanyIndex: 0,
+      //layout: layout ?? AppLayout.mobile,
+      layout: layout ?? AppLayout.tablet,
+      isTesting: isTesting ?? false,
+      isMenuVisible: true,
+      isHistoryVisible: false,
       currentRoute: LoginScreen.route,
+      previousRoute: '',
       enableDarkMode: enableDarkMode ?? false,
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
@@ -41,7 +53,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       documentUIState: DocumentUIState(),
-
       expenseUIState: ExpenseUIState(),
       vendorUIState: VendorUIState(),
       taskUIState: TaskUIState(),
@@ -53,9 +64,19 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   UIState._();
 
+  AppLayout get layout;
+
+  bool get isTesting;
+
+  bool get isMenuVisible;
+
+  bool get isHistoryVisible;
+
   int get selectedCompanyIndex;
 
   String get currentRoute;
+
+  String get previousRoute;
 
   bool get enableDarkMode;
 
@@ -95,5 +116,50 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 
-  bool containsRoute(String route) => currentRoute.contains(route);
+  bool containsRoute(String route) {
+    if (route == null || route.isEmpty) {
+      return false;
+    }
+    return currentRoute.contains(route);
+  }
+
+  String get mainRoute {
+    final parts =
+        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+    return parts.isNotEmpty ? parts[0] : '';
+  }
+
+  String get subRoute {
+    final parts =
+        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+    return parts.length > 1 ? parts[1] : '';
+  }
+
+  bool get isEditing => currentRoute.contains('/edit');
+}
+
+class AppLayout extends EnumClass {
+  const AppLayout._(String name) : super(name);
+
+  static Serializer<AppLayout> get serializer => _$appLayoutSerializer;
+
+  static const AppLayout mobile = _$mobile;
+  static const AppLayout tablet = _$tablet;
+  static const AppLayout desktop = _$desktop;
+
+  static BuiltSet<AppLayout> get values => _$values;
+
+  static AppLayout valueOf(String name) => _$valueOf(name);
+}
+
+class AppSidebar extends EnumClass {
+  const AppSidebar._(String name) : super(name);
+
+  static Serializer<AppSidebar> get serializer => _$appSidebarSerializer;
+  static const AppSidebar menu = _$menu;
+  static const AppSidebar history = _$history;
+
+  static BuiltSet<AppSidebar> get values => _$valuesSidebar;
+
+  static AppSidebar valueOf(String name) => _$valueOfSidebar(name);
 }

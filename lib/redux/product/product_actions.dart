@@ -11,24 +11,32 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewProductList implements PersistUI {
-  ViewProductList(this.context);
+  ViewProductList({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewProduct implements PersistUI {
-  ViewProduct({this.productId, this.context});
+  ViewProduct(
+      {@required this.productId, @required this.context, this.force = false});
 
   final int productId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditProduct implements PersistUI {
-  EditProduct({this.product, this.context, this.completer});
+  EditProduct(
+      {@required this.product,
+      @required this.context,
+      this.completer,
+      this.force = false});
 
   final ProductEntity product;
   final BuildContext context;
   final Completer completer;
+  final bool force;
 }
 
 class UpdateProduct implements PersistUI {

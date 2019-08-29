@@ -12,26 +12,35 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 
 class ViewExpenseList implements PersistUI {
-  ViewExpenseList(this.context);
+  ViewExpenseList({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewExpense implements PersistUI {
-  ViewExpense({this.expenseId, this.context});
+  ViewExpense({
+    @required this.expenseId,
+    @required this.context,
+    this.force = false,
+  });
 
   final int expenseId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditExpense implements PersistUI {
   EditExpense(
-      {this.expense, this.context, this.completer, this.trackRoute = true});
+      {@required this.expense,
+      @required this.context,
+      this.completer,
+      this.force = false});
 
   final ExpenseEntity expense;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
+  final bool force;
 }
 
 class UpdateExpense implements PersistUI {

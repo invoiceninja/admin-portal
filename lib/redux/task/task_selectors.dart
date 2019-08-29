@@ -14,7 +14,9 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   final client = state.clientState.map[task.clientId];
 
   var notes = task.description + '\n';
-  task.taskTimes.forEach((time) {
+  task.taskTimes
+      .where((time) => time.startDate != null && time.endDate != null)
+      .forEach((time) {
     final start =
         formatDate(time.startDate.toIso8601String(), context, showTime: true);
     final end = formatDate(time.endDate.toIso8601String(), context,
@@ -220,3 +222,6 @@ String taskStatsForProject(int projectId, BuiltMap<int, TaskEntity> taskMap,
 
   return str;
 }
+
+bool hasTaskChanges(TaskEntity task, BuiltMap<int, TaskEntity> taskMap) =>
+    task.isNew || task != taskMap[task.id];

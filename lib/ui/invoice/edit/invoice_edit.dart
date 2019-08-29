@@ -11,14 +11,17 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceEdit extends StatefulWidget {
   const InvoiceEdit({
     Key key,
+    @required this.formKey,
     @required this.viewModel,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
+  final GlobalKey<FormState> formKey;
 
   @override
   _InvoiceEditState createState() => _InvoiceEditState();
@@ -27,7 +30,6 @@ class InvoiceEdit extends StatefulWidget {
 class _InvoiceEditState extends State<InvoiceEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 1;
@@ -65,6 +67,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(invoice.isNew
               ? invoice.isQuote
                   ? localization.newQuote
@@ -73,6 +76,14 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   ? localization.editQuote
                   : localization.editInvoice),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,
@@ -80,7 +91,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
               isSaving: widget.viewModel.isSaving,
               isDirty: invoice.isNew || invoice != viewModel.origInvoice,
               onPressed: () {
-                if (!_formKey.currentState.validate()) {
+                if (!widget.formKey.currentState.validate()) {
                   return;
                 }
 
@@ -105,8 +116,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
           ),
         ),
         body: Form(
-          key: _formKey,
+          key: widget.formKey,
           child: TabBarView(
+            key: ValueKey(viewModel.invoice.id),
             controller: _controller,
             children: invoice.isQuote
                 ? <Widget>[

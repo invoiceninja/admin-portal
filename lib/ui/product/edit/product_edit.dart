@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -9,7 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductEdit extends StatefulWidget {
   const ProductEdit({
@@ -100,10 +101,19 @@ class _ProductEditState extends State<ProductEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(viewModel.product.isNew
               ? localization.newProduct
               : localization.editProduct),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             Builder(builder: (BuildContext context) {
               if (!user.canEditEntity(product)) {
                 return Container();
@@ -135,28 +145,22 @@ class _ProductEditState extends State<ProductEdit> {
         body: Form(
           key: _formKey,
           child: ListView(
+            key: ValueKey(widget.viewModel.product.id),
             children: <Widget>[
               FormCard(
                 children: <Widget>[
-                  TextFormField(
-                    key: Key(ProductKeys.productKey),
+                  DecoratedFormField(
+                    label: localization.product,
                     controller: _productKeyController,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: localization.product,
-                    ),
                     validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? localization.pleaseEnterAProductKey
                         : null,
                     autovalidate: autoValidate,
                   ),
-                  TextFormField(
-                    key: Key(ProductKeys.notes),
+                  DecoratedFormField(
+                    label: localization.description,
                     controller: _notesController,
                     maxLines: 4,
-                    decoration: InputDecoration(
-                      labelText: localization.notes,
-                    ),
                   ),
                   CustomField(
                     controller: _custom1Controller,
@@ -172,14 +176,11 @@ class _ProductEditState extends State<ProductEdit> {
                     options:
                         company.getCustomFieldValues(CustomFieldType.product2),
                   ),
-                  TextFormField(
-                    key: Key(ProductKeys.cost),
+                  DecoratedFormField(
+                    label: localization.cost,
                     controller: _costController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
-                    decoration: InputDecoration(
-                      labelText: localization.cost,
-                    ),
                   ),
                   company.enableInvoiceItemTaxes
                       ? TaxRateDropdown(

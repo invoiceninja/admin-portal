@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -39,41 +41,73 @@ List<Middleware<AppState>> createStoreExpensesMiddleware([
 }
 
 Middleware<AppState> _editExpense() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditExpense;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-    final expense =
-        await Navigator.of(action.context).pushNamed(ExpenseEditScreen.route);
 
-    if (action.completer != null && expense != null) {
-      action.completer.complete(expense);
+    if (isMobile(action.context)) {
+      final expense =
+          await Navigator.of(action.context).pushNamed(ExpenseEditScreen.route);
+
+      if (action.completer != null && expense != null) {
+        action.completer.complete(expense);
+      }
     }
   };
 }
 
 Middleware<AppState> _viewExpense() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewExpense;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
-    Navigator.of(action.context).pushNamed(ExpenseViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(ExpenseViewScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _viewExpenseList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewExpenseList;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        ExpenseScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          ExpenseScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
 Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -96,7 +130,8 @@ Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -119,7 +154,8 @@ Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _restoreExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -142,7 +178,8 @@ Middleware<AppState> _restoreExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _saveExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveExpenseRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.expense)
@@ -164,7 +201,8 @@ Middleware<AppState> _saveExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _loadExpense(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadExpense;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -194,7 +232,8 @@ Middleware<AppState> _loadExpense(ExpenseRepository repository) {
 }
 
 Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadExpenses;
     final AppState state = store.state;
 
     if (!state.expenseState.isStale && !action.force) {

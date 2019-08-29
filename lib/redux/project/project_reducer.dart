@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -10,14 +12,29 @@ EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(projectListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
 
+final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditProject>((completer, action) {
+    return action.completer;
+  }),
+]);
+
+final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditProject>((completer, action) {
+    return action.cancelCompleter;
+  }),
+]);
+
 Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewProject>(
-      (int selectedId, dynamic action) => action.projectId),
+  TypedReducer<int, ViewProject>((selectedId, action) => action.projectId),
   TypedReducer<int, AddProjectSuccess>(
-      (int selectedId, dynamic action) => action.project.id),
+      (selectedId, action) => action.project.id),
+  TypedReducer<int, FilterProjectsByEntity>(
+      (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 
 final editingReducer = combineReducers<ProjectEntity>([
@@ -31,7 +48,7 @@ final editingReducer = combineReducers<ProjectEntity>([
   TypedReducer<ProjectEntity, SelectCompany>(_clearEditing),
 ]);
 
-ProjectEntity _clearEditing(ProjectEntity project, dynamic action) {
+ProjectEntity _clearEditing(ProjectEntity project, dynamic dynamicAction) {
   return ProjectEntity();
 }
 

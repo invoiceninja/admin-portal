@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentEdit extends StatefulWidget {
   const DocumentEdit({
@@ -72,10 +73,21 @@ class _DocumentEditState extends State<DocumentEdit> {
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(viewModel.document.isNew
               ? localization.newDocument
               : localization.editDocument),
           actions: <Widget>[
+            /*
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
+              */
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,
@@ -95,6 +107,7 @@ class _DocumentEditState extends State<DocumentEdit> {
             key: _formKey,
             child: Builder(builder: (BuildContext context) {
               return ListView(
+                key: ValueKey(viewModel.document.id),
                 children: <Widget>[
                   FormCard(
                     children: <Widget>[

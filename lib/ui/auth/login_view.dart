@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/progress_button.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -22,6 +29,8 @@ class LoginView extends StatefulWidget {
 class _LoginState extends State<LoginView> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _urlController = TextEditingController();
@@ -30,26 +39,23 @@ class _LoginState extends State<LoginView> {
 
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
-  static final ValueKey _emailKey = Key(LoginKeys.email);
-  static final ValueKey _passwordKey = Key(LoginKeys.password);
-  static final ValueKey _urlKey = Key(LoginKeys.url);
-  static final ValueKey _secretKey = Key(LoginKeys.secret);
-  static final ValueKey _oneTimePasswordKey = Key(LoginKeys.oneTimePassword);
-
   final FocusNode _focusNode1 = new FocusNode();
 
+  bool _createAccount = false;
   bool _isSelfHosted = false;
   bool _autoValidate = false;
+  bool _termsChecked = false;
+  bool _privacyChecked = false;
 
   @override
   void didChangeDependencies() {
     final state = widget.viewModel.authState;
     _emailController.text = state.email;
     _passwordController.text = state.password;
-    _urlController.text = formatApiUrlReadable(state.url);
+    _urlController.text = cleanApiUrl(state.url);
     _secretController.text = state.secret;
 
-    if (state.url.isNotEmpty) {
+    if (cleanApiUrl(state.url).isNotEmpty) {
       _isSelfHosted = true;
     }
 
@@ -58,6 +64,8 @@ class _LoginState extends State<LoginView> {
 
   @override
   void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _urlController.dispose();
@@ -66,7 +74,51 @@ class _LoginState extends State<LoginView> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitSignUpForm() {
+    final bool isValid = _formKey.currentState.validate();
+    final localization = AppLocalization.of(context);
+
+    setState(() {
+      _autoValidate = !isValid;
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    if (_createAccount && (!_termsChecked || !_privacyChecked)) {
+      showDialog<AlertDialog>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(!_termsChecked
+                  ? localization.termsOfService
+                  : localization.privacyPolicy),
+              content: Text(localization.pleaseAgreeToTermsAndPrivacy),
+              actions: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: FlatButton(
+                    child: Text(AppLocalization.of(context).close),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                )
+              ],
+            );
+          });
+      return;
+    }
+
+    widget.viewModel.onSignUpPressed(
+      context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+    );
+  }
+
+  void _submitLoginForm() {
     final bool isValid = _formKey.currentState.validate();
 
     setState(() {
@@ -77,12 +129,14 @@ class _LoginState extends State<LoginView> {
       return;
     }
 
-    widget.viewModel.onLoginPressed(context,
-        email: _emailController.text,
-        password: _passwordController.text,
-        url: _isSelfHosted ? _urlController.text : '',
-        secret: _isSelfHosted ? _secretController.text : '',
-        oneTimePassword: _oneTimePasswordController.text);
+    widget.viewModel.onLoginPressed(
+      context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      url: _isSelfHosted ? _urlController.text : '',
+      secret: _isSelfHosted ? _secretController.text : '',
+      oneTimePassword: _oneTimePasswordController.text,
+    );
   }
 
   @override
@@ -92,6 +146,11 @@ class _LoginState extends State<LoginView> {
     final error = viewModel.authState.error ?? '';
     final isOneTimePassword =
         error.contains(OTP_ERROR) || _oneTimePasswordController.text.isNotEmpty;
+
+    final ThemeData themeData = Theme.of(context);
+    final TextStyle aboutTextStyle = themeData.textTheme.body2;
+    final TextStyle linkStyle =
+        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -127,135 +186,262 @@ class _LoginState extends State<LoginView> {
             Form(
               key: _formKey,
               child: FormCard(
+                isResponsive: calculateLayout(context) != AppLayout.mobile,
                 children: <Widget>[
-                  isOneTimePassword
-                      ? TextFormField(
-                          controller: _oneTimePasswordController,
-                          key: _oneTimePasswordKey,
+                  if (isOneTimePassword)
+                    TextFormField(
+                      controller: _oneTimePasswordController,
+                      key: ValueKey(localization.oneTimePassword),
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                          labelText: localization.oneTimePassword),
+                    )
+                  else
+                    Column(
+                      children: <Widget>[
+                        if (_createAccount)
+                          DecoratedFormField(
+                            label: localization.firstName,
+                            controller: _firstNameController,
+                            autovalidate: _autoValidate,
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterAFirstName
+                                    : null,
+                          ),
+                        if (_createAccount)
+                          DecoratedFormField(
+                            label: localization.lastName,
+                            controller: _lastNameController,
+                            autovalidate: _autoValidate,
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterALastName
+                                    : null,
+                          ),
+                        TextFormField(
+                          controller: _emailController,
+                          key: ValueKey(localization.email),
                           autocorrect: false,
-                          decoration: InputDecoration(
-                              labelText: localization.oneTimePassword),
-                        )
-                      : Column(
-                          children: <Widget>[
-                            TextFormField(
-                              controller: _emailController,
-                              key: _emailKey,
-                              autocorrect: false,
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                  labelText: localization.email),
-                              keyboardType: TextInputType.emailAddress,
-                              autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourEmail
-                                      : null,
-                              onFieldSubmitted: (String value) =>
-                                  FocusScope.of(context)
-                                      .requestFocus(_focusNode1),
-                            ),
-                            TextFormField(
-                              controller: _passwordController,
-                              key: _passwordKey,
-                              autocorrect: false,
-                              autovalidate: _autoValidate,
-                              decoration: InputDecoration(
-                                  labelText: localization.password),
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourPassword
-                                      : null,
-                              obscureText: true,
-                              focusNode: _focusNode1,
-                              onFieldSubmitted: (value) => _submitForm(),
-                            ),
-                            _isSelfHosted
-                                ? TextFormField(
-                                    controller: _urlController,
-                                    key: _urlKey,
-                                    autocorrect: false,
-                                    autovalidate: _autoValidate,
-                                    decoration: InputDecoration(
-                                        labelText: localization.url),
-                                    validator: (val) =>
-                                        val.isEmpty || val.trim().isEmpty
-                                            ? localization.pleaseEnterYourUrl
-                                            : null,
-                                    keyboardType: TextInputType.url,
-                                  )
-                                : Container(),
-                            _isSelfHosted
-                                ? TextFormField(
-                                    controller: _secretController,
-                                    key: _secretKey,
-                                    autocorrect: false,
-                                    decoration: InputDecoration(
-                                        labelText: localization.secret),
-                                    obscureText: true,
-                                  )
-                                : Container(),
-                          ],
+                          textInputAction: TextInputAction.next,
+                          decoration:
+                              InputDecoration(labelText: localization.email),
+                          keyboardType: TextInputType.emailAddress,
+                          autovalidate: _autoValidate,
+                          validator: (val) => val.isEmpty || val.trim().isEmpty
+                              ? localization.pleaseEnterYourEmail
+                              : null,
+                          onFieldSubmitted: (String value) =>
+                              FocusScope.of(context).requestFocus(_focusNode1),
                         ),
-                  viewModel.authState.error == null || error.contains(OTP_ERROR)
-                      ? Container()
-                      : Container(
-                          padding: EdgeInsets.only(top: 26.0),
-                          child: Center(
-                            child: Text(
-                              viewModel.authState.error,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        TextFormField(
+                          controller: _passwordController,
+                          key: ValueKey(localization.password),
+                          autocorrect: false,
+                          autovalidate: _autoValidate,
+                          decoration:
+                              InputDecoration(labelText: localization.password),
+                          validator: (val) => val.isEmpty || val.trim().isEmpty
+                              ? localization.pleaseEnterYourPassword
+                              : null,
+                          obscureText: true,
+                          focusNode: _focusNode1,
+                          onFieldSubmitted: (value) =>
+                              _createAccount ? null : _submitLoginForm(),
+                        ),
+                        if (_isSelfHosted)
+                          TextFormField(
+                            controller: _urlController,
+                            key: ValueKey(localization.url),
+                            autocorrect: false,
+                            autovalidate: _autoValidate,
+                            decoration:
+                                InputDecoration(labelText: localization.url),
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterYourUrl
+                                    : null,
+                            keyboardType: TextInputType.url,
+                          ),
+                        if (_isSelfHosted)
+                          TextFormField(
+                            controller: _secretController,
+                            key: ValueKey(localization.secret),
+                            autocorrect: false,
+                            decoration:
+                                InputDecoration(labelText: localization.secret),
+                            obscureText: true,
+                          ),
+                        if (_createAccount)
+                          Padding(
+                            padding: EdgeInsets.only(top: 22),
+                            child: Column(
+                              children: <Widget>[
+                                CheckboxListTile(
+                                  onChanged: (value) =>
+                                      setState(() => _termsChecked = value),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: Theme.of(context).accentColor,
+                                  value: _termsChecked,
+                                  title: RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          style: aboutTextStyle,
+                                          text: localization.iAgreeToThe + ' ',
+                                        ),
+                                        LinkTextSpan(
+                                          style: linkStyle,
+                                          url: kTermsOfServiceURL,
+                                          text: localization.termsOfServiceLink,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                CheckboxListTile(
+                                  onChanged: (value) =>
+                                      setState(() => _privacyChecked = value),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: Theme.of(context).accentColor,
+                                  value: _privacyChecked,
+                                  title: RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          style: aboutTextStyle,
+                                          text: localization.iAgreeToThe + ' ',
+                                        ),
+                                        LinkTextSpan(
+                                          style: linkStyle,
+                                          url: kTermsOfServiceURL,
+                                          text: localization.privacyPolicyLink,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+                      ],
+                    ),
+                  if (viewModel.authState.error != null &&
+                      !error.contains(OTP_ERROR))
+                    Container(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Center(
+                        child: Text(
+                          viewModel.authState.error,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                  SizedBox(height: 24.0),
-                  ProgressButton(
-                    padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                    isLoading: viewModel.isLoading,
-                    label: localization.login.toUpperCase(),
-                    onPressed: () => _submitForm(),
+                      ),
+                    ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 30, bottom: 10),
+                    child: viewModel.isLoading
+                        ? LoadingIndicator(height: 50)
+                        : _createAccount
+                            ? ElevatedButton(
+                                label: localization.signUp.toUpperCase(),
+                                onPressed: () => _submitSignUpForm(),
+                              )
+                            : Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      label:
+                                          localization.emailLogin.toUpperCase(),
+                                      onPressed: () => _submitLoginForm(),
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      label: localization.googleLogin
+                                          .toUpperCase(),
+                                      onPressed: () =>
+                                          viewModel.onGoogleLoginPressed(
+                                              context,
+                                              _urlController.text,
+                                              _secretController.text),
+                                    ),
+                                  ),
+                                ],
+                              ),
                   ),
-                  isOneTimePassword
-                      ? Container()
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  SizedBox(height: 6),
+                  if (!isOneTimePassword)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            _isSelfHosted
+                            Icon(FontAwesomeIcons.user, size: 16),
+                            _createAccount
                                 ? FlatButton(
                                     onPressed: () =>
-                                        setState(() => _isSelfHosted = false),
-                                    child: Text(localization.hostedLogin))
+                                        setState(() => _createAccount = false),
+                                    child: Text(localization.accountLogin))
                                 : FlatButton(
-                                    key: Key(LoginKeys.loginSelfHost),
-                                    onPressed: () =>
-                                        setState(() => _isSelfHosted = true),
-                                    child: Text(localization.selfhostLogin)),
-                            FlatButton(
-                                onPressed: () => viewModel.onGoogleLoginPressed(
-                                    context,
-                                    _urlController.text,
-                                    _secretController.text),
-                                child: Text(localization.googleLogin)),
+                                    key: ValueKey(localization.selfhostLogin),
+                                    onPressed: () => setState(() {
+                                          _createAccount = true;
+                                          _isSelfHosted = false;
+                                        }),
+                                    child: Text(localization.createAccount)),
                           ],
                         ),
-                  isOneTimePassword && !viewModel.isLoading
-                      ? Padding(
-                          padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                          child: ElevatedButton(
-                            label: localization.cancel.toUpperCase(),
-                            color: Colors.grey,
-                            onPressed: () {
-                              setState(() {
-                                _oneTimePasswordController.text = '';
-                              });
-                              viewModel.onCancel2FAPressed();
-                            },
-                          ),
-                        )
-                      : Container(),
+                        Row(children: <Widget>[
+                          Icon(FontAwesomeIcons.userCog, size: 16),
+                          _isSelfHosted
+                              ? FlatButton(
+                                  onPressed: () =>
+                                      setState(() => _isSelfHosted = false),
+                                  child: Text(localization.hostedLogin))
+                              : FlatButton(
+                                  key: ValueKey(localization.selfhostLogin),
+                                  onPressed: () => setState(() {
+                                        _isSelfHosted = true;
+                                        _createAccount = false;
+                                      }),
+                                  child: Text(localization.selfhostLogin)),
+                        ]),
+                        if (isTablet(context))
+                          Row(children: <Widget>[
+                            Icon(FontAwesomeIcons.externalLinkAlt, size: 16),
+                            FlatButton(
+                              child: Text(localization.viewWebsite),
+                              onPressed: () async {
+                                if (await canLaunch(kSiteUrl)) {
+                                  await launch(kSiteUrl,
+                                      forceSafariVC: false,
+                                      forceWebView: false);
+                                }
+                              },
+                            ),
+                          ]),
+                      ],
+                    ),
+                  if (isOneTimePassword && !viewModel.isLoading)
+                    Padding(
+                      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                      child: ElevatedButton(
+                        label: localization.cancel.toUpperCase(),
+                        color: Colors.grey,
+                        onPressed: () {
+                          setState(() {
+                            _oneTimePasswordController.text = '';
+                          });
+                          viewModel.onCancel2FAPressed();
+                        },
+                      ),
+                    ),
                 ],
               ),
             ),

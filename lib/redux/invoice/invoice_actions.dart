@@ -5,34 +5,45 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewInvoiceList implements PersistUI {
-  ViewInvoiceList(this.context);
+  ViewInvoiceList({this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewInvoice implements PersistUI {
-  ViewInvoice({this.invoiceId, this.context});
+  ViewInvoice({this.invoiceId, this.context, this.force = false});
 
   final int invoiceId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditInvoice implements PersistUI {
-  EditInvoice({this.invoice, this.context, this.completer, this.invoiceItem});
+  EditInvoice(
+      {this.invoice,
+      this.context,
+      this.completer,
+      this.invoiceItem,
+      this.force = false});
 
   final InvoiceEntity invoice;
   final InvoiceItemEntity invoiceItem;
   final BuildContext context;
   final Completer completer;
+  final bool force;
 }
 
 class ShowEmailInvoice {
@@ -337,10 +348,18 @@ void handleInvoiceAction(
           invoice.id));
       break;
     case EntityAction.sendEmail:
-      store.dispatch(ShowEmailInvoice(
-          completer: snackBarCompleter(context, localization.emailedInvoice),
-          invoice: invoice,
-          context: context));
+      if (isMobile(context)) {
+        store.dispatch(ShowEmailInvoice(
+            completer: snackBarCompleter(context, localization.emailedInvoice),
+            invoice: invoice,
+            context: context));
+      } else {
+        showDialog<ResponsivePadding>(
+            context: context,
+            builder: (BuildContext context) {
+              return ResponsivePadding(child: InvoiceEmailScreen());
+            });
+      }
       break;
     case EntityAction.cloneToInvoice:
       store.dispatch(

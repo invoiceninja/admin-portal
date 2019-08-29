@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -26,6 +27,7 @@ class ProductEditScreen extends StatelessWidget {
       builder: (context, vm) {
         return ProductEdit(
           viewModel: vm,
+          key: ValueKey(vm.product.id),
         );
       },
     );
@@ -39,6 +41,7 @@ class ProductEditVM {
     @required this.origProduct,
     @required this.onChanged,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.onEntityAction,
     @required this.isSaving,
@@ -63,6 +66,11 @@ class ProductEditVM {
           store.dispatch(UpdateCurrentRoute(ProductScreen.route));
         }
       },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditProduct(
+            product: ProductEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onSavePressed: (BuildContext context) {
         final Completer<ProductEntity> completer =
             new Completer<ProductEntity>();
@@ -71,11 +79,13 @@ class ProductEditVM {
         return completer.future.then((_) {
           return completer.future.then((savedProduct) {
             store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
-            if (product.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(ProductViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedProduct);
+            if (isMobile(context)) {
+              if (product.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(ProductViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedProduct);
+              }
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
@@ -106,6 +116,7 @@ class ProductEditVM {
   final ProductEntity origProduct;
   final Function(ProductEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function onBackPressed;
   final bool isSaving;

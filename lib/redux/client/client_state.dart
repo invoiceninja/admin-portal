@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
@@ -55,6 +56,7 @@ abstract class ClientUIState extends Object
       editing: ClientEntity(),
       editingContact: ContactEntity(),
       selectedId: 0,
+      saveCompleter: null,
     );
   }
   ClientUIState._();

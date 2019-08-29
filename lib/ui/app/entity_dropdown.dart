@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -59,7 +59,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
             onSelected: (entity) {
               _textController.text = entity.listDisplayName;
               widget.onSelected(entity);
-              Navigator.pop(context);
             },
             onAddPressed: widget.onAddPressed != null
                 ? (context, completer) => widget.onAddPressed(completer)
@@ -71,6 +70,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      key: ValueKey(widget.labelText),
       onTap: () => _showOptions(),
       child: IgnorePointer(
         child: TextFormField(
@@ -142,7 +142,9 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
           widget.onAddPressed != null
               ? IconButton(
                   icon: Icon(Icons.add_circle_outline),
+                  tooltip: localization.createNew,
                   onPressed: () {
+                    Navigator.pop(context);
                     final Completer<SelectableEntity> completer =
                         Completer<SelectableEntity>();
                     widget.onAddPressed(context, completer);
@@ -183,20 +185,25 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               ],
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
-            onTap: () => widget.onSelected(entity),
+            onTap: () {
+              widget.onSelected(entity);
+              Navigator.pop(context);
+            },
           );
         },
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return ResponsivePadding(
       child: Material(
         elevation: 4.0,
-        child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-          _headerRow(),
-          Expanded(child: _createList()),
-        ]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            _headerRow(),
+            Expanded(child: _createList()),
+          ],
+        ),
       ),
     );
   }

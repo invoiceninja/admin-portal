@@ -28,7 +28,7 @@ AuthState userLoginRequestReducer(
     AuthState authState, UserLoginRequest action) {
   return authState.rebuild((b) => b
     ..error = null
-    ..url = formatApiUrlMachine(action.url)
+    ..url = formatApiUrl(action.url)
     ..secret = action.secret
     ..email = action.email
     ..password = action.password);
@@ -38,7 +38,7 @@ AuthState oauthLoginRequestReducer(
     AuthState authState, OAuthLoginRequest action) {
   return authState.rebuild((b) => b
     ..error = null
-    ..url = formatApiUrlMachine(action.url)
+    ..url = formatApiUrl(action.url)
     ..secret = action.secret);
 }
 

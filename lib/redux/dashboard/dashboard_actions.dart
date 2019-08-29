@@ -6,9 +6,10 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewDashboard implements PersistUI {
-  ViewDashboard([this.context]);
+  ViewDashboard({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class UpdateDashboardSettings implements PersistUI {

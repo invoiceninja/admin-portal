@@ -52,3 +52,7 @@ List<int> filteredClientsSelector(BuiltMap<int, ClientEntity> clientMap,
 
   return list;
 }
+
+bool hasClientChanges(
+        ClientEntity client, BuiltMap<int, ClientEntity> clientMap) =>
+    client.isNew || client != clientMap[client.id];

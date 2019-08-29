@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
-import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -42,6 +42,7 @@ class VendorEditVM {
     @required this.isSaving,
     @required this.origVendor,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
   });
@@ -66,24 +67,27 @@ class VendorEditVM {
               vendor.isNew ? VendorScreen.route : VendorViewScreen.route));
         }
       },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(
+            EditVendor(vendor: VendorEntity(), context: context, force: true));
+        if (state.vendorUIState.cancelCompleter != null) {
+          state.vendorUIState.cancelCompleter.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
+      },
       onSavePressed: (BuildContext context) {
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();
         store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
         return completer.future.then((savedVendor) {
-          if (state.uiState.currentRoute.contains(VendorScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
-          }
-          if (vendor.isNew) {
-            if ([
-              ExpenseEditScreen.route,
-            ].contains(store.state.uiState.currentRoute)) {
-              Navigator.of(context).pop(savedVendor);
-            } else {
+          store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
+          if (isMobile(context)) {
+            if (vendor.isNew && state.vendorUIState.saveCompleter == null) {
               Navigator.of(context)
                   .pushReplacementNamed(VendorViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedVendor);
             }
-          } else {
-            Navigator.of(context).pop(savedVendor);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
@@ -100,6 +104,7 @@ class VendorEditVM {
   final CompanyEntity company;
   final Function(VendorEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;

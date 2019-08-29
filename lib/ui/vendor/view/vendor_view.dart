@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_details.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorView extends StatefulWidget {
   const VendorView({
@@ -122,6 +123,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
+      automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(entity: vendor),
       bottom: TabBar(
         controller: controller,

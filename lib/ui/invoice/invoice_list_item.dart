@@ -1,4 +1,6 @@
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -30,6 +32,11 @@ class InvoiceListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final invoiceUIState = uiState.invoiceUIState;
+    final quoteUIState = uiState.quoteUIState;
+
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (invoice.matchesFilterValue(filter) ??
@@ -41,6 +48,14 @@ class InvoiceListItem extends StatelessWidget {
         : invoice.invoiceStatusId;
 
     return DismissibleEntity(
+      isSelected: invoice.id ==
+          (uiState.isEditing
+              ? (invoice.isQuote
+                  ? quoteUIState.editing.id
+                  : invoiceUIState.editing.id)
+              : (invoice.isQuote
+                  ? quoteUIState.selectedId
+                  : invoiceUIState.selectedId)),
       user: user,
       entity: invoice,
       onEntityAction: onEntityAction,
@@ -74,13 +89,14 @@ class InvoiceListItem extends StatelessWidget {
                 Expanded(
                   child: filterMatch == null
                       ? Text((invoice.invoiceNumber +
-                          ' • ' +
-                          formatDate(
-                              invoice.dueDate.isNotEmpty
-                                  ? invoice.dueDate
-                                  : invoice.invoiceDate,
-                              context) +
-                          (hasDocuments ? '  📎' : '')).trim())
+                              ' • ' +
+                              formatDate(
+                                  invoice.dueDate.isNotEmpty
+                                      ? invoice.dueDate
+                                      : invoice.invoiceDate,
+                                  context) +
+                              (hasDocuments ? '  📎' : ''))
+                          .trim())
                       : Text(
                           filterMatch,
                           maxLines: 3,

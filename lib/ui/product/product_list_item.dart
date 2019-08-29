@@ -1,3 +1,5 @@
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -19,12 +21,19 @@ class ProductListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final productUIState = uiState.productUIState;
     final filterMatch = filter != null && filter.isNotEmpty
         ? product.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch ?? product.notes;
 
     return DismissibleEntity(
+      isSelected: product.id ==
+          (uiState.isEditing
+              ? productUIState.editing.id
+              : productUIState.selectedId),
       user: user,
       entity: product,
       onEntityAction: onEntityAction,

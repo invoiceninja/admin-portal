@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
@@ -67,17 +68,7 @@ class InvoiceList extends StatelessWidget {
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
                   child: viewModel.invoiceList.isEmpty
-                      ? Opacity(
-                          opacity: 0.5,
-                          child: Center(
-                            child: Text(
-                              AppLocalization.of(context).noRecordsFound,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ),
-                        )
+                      ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : ListView.separated(
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => ListDivider(),

@@ -1,35 +1,29 @@
 import 'dart:async';
+import 'package:sentry/sentry.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:invoiceninja_flutter/.env.dart';
-import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
-import 'package:sentry/sentry.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:redux/redux.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
-import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
-import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
-import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
-import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_middleware.dart';
@@ -38,47 +32,23 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
-import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
-import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
-import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
-import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
-import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
-import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
-import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
-import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
-import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
-import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
-import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
-import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 // STARTER: import - do not remove comment
 
-void main() async {
+void main({bool isTesting = false}) async {
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
@@ -95,8 +65,11 @@ void main() async {
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(
-          enableDarkMode: enableDarkMode,
-          requireAuthentication: requireAuthentication),
+        enableDarkMode: enableDarkMode || isTesting,
+        requireAuthentication: requireAuthentication,
+        layout: AppLayout.tablet,
+        isTesting: isTesting,
+      ),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDocumentsMiddleware())
@@ -111,10 +84,15 @@ void main() async {
         ..addAll(createStoreProjectsMiddleware())
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
+        ..addAll(createStoreSettingsMiddleware())
         // STARTER: middleware - do not remove comment
-        ..addAll([
-          LoggingMiddleware<dynamic>.printer(),
-        ]));
+        ..addAll(isTesting
+            ? []
+            : [
+                LoggingMiddleware<dynamic>.printer(
+                  formatter: LoggingMiddleware.multiLineFormatter,
+                ),
+              ]));
 
   Future<void> _reportError(dynamic error, dynamic stackTrace) async {
     print('Caught error: $error');
@@ -135,12 +113,14 @@ void main() async {
     runZoned<Future<void>>(() async {
       runApp(InvoiceNinjaApp(store: store));
     }, onError: (dynamic error, dynamic stackTrace) {
-      _reportError(error, stackTrace);
+      if (store.state.reportErrors) {
+        _reportError(error, stackTrace);
+      }
     });
   }
 
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode) {
+    if (isInDebugMode || !store.state.reportErrors) {
       FlutterError.dumpErrorToConsole(details);
     } else {
       Zone.current.handleUncaughtError(details.exception, details.stack);
@@ -221,7 +201,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final state = widget.store.state;
         Intl.defaultLocale = localeSelector(state);
         final localization = AppLocalization(Locale(Intl.defaultLocale));
-
         return MaterialApp(
           supportedLocales: kLanguages
               .map((String locale) => AppLocalization.createLocale(locale))
@@ -286,6 +265,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             LoginScreen.route: (context) {
               return LoginScreen();
             },
+            MainScreen.route: (context) {
+              return MainScreen();
+            },
             DashboardScreen.route: (context) {
               if (widget.store.state.dashboardState.isStale) {
                 widget.store.dispatch(LoadDashboard());
@@ -348,7 +330,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             },
             ProjectViewScreen.route: (context) => ProjectViewScreen(),
             ProjectEditScreen.route: (context) => ProjectEditScreen(),
-
             PaymentScreen.route: (context) {
               if (widget.store.state.paymentState.isStale) {
                 widget.store.dispatch(LoadPayments());

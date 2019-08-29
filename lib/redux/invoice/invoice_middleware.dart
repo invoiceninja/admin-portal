@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -10,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -47,45 +49,80 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   ];
 }
 
-Middleware<AppState> _viewInvoice() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
-    next(action);
-
-    store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-    await Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
-  };
-}
-
 Middleware<AppState> _viewInvoiceList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewInvoiceList;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        InvoiceScreen.route, (Route<dynamic> route) => false);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          InvoiceScreen.route, (Route<dynamic> route) => false);
+    }
+  };
+}
+
+Middleware<AppState> _viewInvoice() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewInvoice;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+
+    if (isMobile(action.context)) {
+      await Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _editInvoice() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditInvoice;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
-    final invoice =
-    await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
 
-    if (action.completer != null && invoice != null) {
-      action.completer.complete(invoice);
+    if (isMobile(action.context)) {
+      final invoice =
+          await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
+
+      if (action.completer != null && invoice != null) {
+        action.completer.complete(invoice);
+      }
     }
   };
 }
 
 Middleware<AppState> _showEmailInvoice() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ShowEmailInvoice;
+
     next(action);
 
     final emailWasSent =
-    await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
+        await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
 
     if (action.completer != null && emailWasSent != null && emailWasSent) {
       action.completer.complete(null);
@@ -94,11 +131,12 @@ Middleware<AppState> _showEmailInvoice() {
 }
 
 Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origInvoice, EntityAction.archive)
+            origInvoice, EntityAction.archive)
         .then((InvoiceEntity invoice) {
       store.dispatch(ArchiveInvoiceSuccess(invoice));
       if (action.completer != null) {
@@ -117,11 +155,12 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origInvoice, EntityAction.delete)
+            origInvoice, EntityAction.delete)
         .then((InvoiceEntity invoice) {
       store.dispatch(DeleteInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -141,11 +180,12 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origInvoice, EntityAction.restore)
+            origInvoice, EntityAction.restore)
         .then((InvoiceEntity invoice) {
       store.dispatch(RestoreInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -165,11 +205,12 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as MarkSentInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
-        origInvoice, EntityAction.markSent)
+            origInvoice, EntityAction.markSent)
         .then((InvoiceEntity invoice) {
       store.dispatch(MarkSentInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -189,11 +230,12 @@ Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as EmailInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
         .emailInvoice(store.state.selectedCompany, store.state.authState,
-        origInvoice, action.template, action.subject, action.body)
+            origInvoice, action.template, action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailInvoiceSuccess());
       store.dispatch(LoadClient(clientId: origInvoice.clientId));
@@ -213,10 +255,11 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveInvoiceRequest;
     repository
         .saveData(
-        store.state.selectedCompany, store.state.authState, action.invoice)
+            store.state.selectedCompany, store.state.authState, action.invoice)
         .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));
@@ -243,7 +286,8 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadInvoice;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -274,7 +318,8 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
 }
 
 Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadInvoices;
     final AppState state = store.state;
 
     if (!state.invoiceState.isStale && !action.force) {

@@ -1,3 +1,5 @@
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -30,11 +32,18 @@ class ClientListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //var localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final clientUIState = uiState.clientUIState;
     final filterMatch = filter != null && filter.isNotEmpty
         ? client.matchesFilterValue(filter)
         : null;
 
     return DismissibleEntity(
+      isSelected: client.id ==
+          (uiState.isEditing
+              ? clientUIState.editing.id
+              : clientUIState.selectedId),
       user: user,
       onEntityAction: onEntityAction,
       entity: client,

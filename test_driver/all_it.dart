@@ -3,5 +3,5 @@ import 'package:invoiceninja_flutter/main.dart' as app;
 
 void main() {
   enableFlutterDriverExtension();
-  app.main();
+  app.main(isTesting: true);
 }

@@ -12,31 +12,39 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewClientList implements PersistUI {
-  ViewClientList(this.context);
+  ViewClientList({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewClient implements PersistUI {
-  ViewClient({this.clientId, this.context});
+  ViewClient({
+    @required this.clientId,
+    @required this.context,
+    this.force = false,
+  });
 
   final int clientId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditClient implements PersistUI {
   EditClient(
-      {this.client,
+      {@required this.client,
+      @required this.context,
       this.contact,
-      this.context,
       this.completer,
-      this.trackRoute = true});
+      this.cancelCompleter,
+      this.force = false});
 
   final ClientEntity client;
   final ContactEntity contact;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
+  final Completer cancelCompleter;
+  final bool force;
 }
 
 class EditContact implements PersistUI {

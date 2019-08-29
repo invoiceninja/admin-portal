@@ -1,7 +1,15 @@
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -14,19 +22,27 @@ import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
-
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
-  factory AppState(
-      {String appVersion, bool enableDarkMode, bool requireAuthentication}) {
+  factory AppState({
+    String appVersion,
+    bool enableDarkMode,
+    bool requireAuthentication,
+    AppLayout layout,
+    bool isTesting,
+  }) {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
@@ -38,9 +54,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState3: CompanyState(),
       companyState4: CompanyState(),
       companyState5: CompanyState(),
-      uiState: UIState(CompanyEntity(),
-          enableDarkMode: enableDarkMode,
-          requireAuthentication: requireAuthentication),
+      uiState: UIState(
+        CompanyEntity(),
+        enableDarkMode: enableDarkMode,
+        requireAuthentication: requireAuthentication,
+        layout: layout ?? AppLayout.mobile,
+        isTesting: isTesting,
+      ),
     );
   }
 
@@ -113,7 +133,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.document:
         return documentUIState;
-
       case EntityType.expense:
         return expenseUIState;
       case EntityType.vendor:
@@ -126,7 +145,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return paymentUIState;
       case EntityType.quote:
         return quoteUIState;
-
       default:
         return null;
     }
@@ -156,7 +174,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   DocumentState get documentState => selectedCompanyState.documentState;
+
   ListUIState get documentListState => uiState.documentUIState.listUIState;
+
   DocumentUIState get documentUIState => uiState.documentUIState;
 
   ExpenseState get expenseState => selectedCompanyState.expenseState;
@@ -195,6 +215,35 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   QuoteUIState get quoteUIState => uiState.quoteUIState;
 
+  bool hasChanges() {
+    switch (uiState.currentRoute) {
+      case ClientEditScreen.route:
+        return hasClientChanges(clientUIState.editing, clientState.map);
+      case ProductEditScreen.route:
+        return hasProductChanges(productUIState.editing, productState.map);
+      case InvoiceEditScreen.route:
+        return hasInvoiceChanges(invoiceUIState.editing, invoiceState.map);
+      case PaymentEditScreen.route:
+        return hasPaymentChanges(paymentUIState.editing, paymentState.map);
+      case QuoteEditScreen.route:
+        return hasQuoteChanges(quoteUIState.editing, quoteState.map);
+      case ProjectEditScreen.route:
+        return hasProjectChanges(projectUIState.editing, projectState.map);
+      case TaskEditScreen.route:
+        return hasTaskChanges(taskUIState.editing, taskState.map);
+      case VendorEditScreen.route:
+        return hasVendorChanges(vendorUIState.editing, vendorState.map);
+      case ExpenseEditScreen.route:
+        return hasExpenseChanges(expenseUIState.editing, expenseState.map);
+    }
+
+    if (uiState.currentRoute.endsWith('/edit')) {
+      throw 'AppState.hasChanges is not defined for ${uiState.currentRoute}';
+    }
+
+    return false;
+  }
+
   bool supportsVersion(String version) {
     final parts = version.split('.');
     final int major = int.parse(parts[0]);
@@ -215,10 +264,16 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
+  bool get reportErrors => isHosted && authState.isAuthenticated;
+
+  bool get isHosted => authState.isHosted ?? false;
+
+  bool get isSelfHosted => authState.isSelfHost ?? false;
+
   @override
   String toString() {
-    //return 'Is Loading: ${this.isLoading}, Invoice: ${this.invoiceUIState.selected}';
-    //return 'Expense Categories: ${selectedCompany.expenseCategories}';
-    return 'Route: ${uiState.currentRoute}: Server Version: $serverVersion';
+    return 'URL: ${authState.url}, ${selectedCompany.plan}';
+    //return 'Is Testing: ${uiState.isTesting}';
+    //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }

@@ -408,7 +408,7 @@ abstract class ActivityEntity
     }
 
     ContactEntity contact;
-    if (contactId != null && contactId > 0) {
+    if (client != null && contactId != null && contactId > 0) {
       contact = client.contacts
           .firstWhere((contact) => contact.id == contactId, orElse: () => null);
     }

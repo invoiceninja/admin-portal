@@ -37,17 +37,7 @@ class StubList extends StatelessWidget {
                     : RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: viewModel.stubList.isEmpty
-                            ? Opacity(
-                                opacity: 0.5,
-                                child: Center(
-                                  child: Text(
-                                    AppLocalization.of(context).noRecordsFound,
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ),
-                              )
+                            ? HelpText(AppLocalization.of(context).noRecordsFound)
                             : ListView.separated(
                                 shrinkWrap: true,
                                 separatorBuilder: (context, index) => ListDivider(),
@@ -124,17 +114,7 @@ class StubList extends StatelessWidget {
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
                   child: viewModel.stubList.isEmpty
-                      ? Opacity(
-                          opacity: 0.5,
-                          child: Center(
-                            child: Text(
-                              AppLocalization.of(context).noRecordsFound,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ),
-                        )
+                      ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : ListView.separated(
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => ListDivider(),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -12,8 +14,22 @@ EntityUIState vendorUIReducer(VendorUIState state, dynamic action) {
     ..editing.replace(editingReducer(state.editing, action))
     ..editingContact
         .replace(editingVendorContactReducer(state.editingContact, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
+
+final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditVendor>((completer, action) {
+    return action.completer;
+  }),
+]);
+
+final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditVendor>((completer, action) {
+    return action.cancelCompleter;
+  }),
+]);
 
 final editingVendorContactReducer = combineReducers<VendorContactEntity>([
   TypedReducer<VendorContactEntity, EditVendor>(editVendorContact),
@@ -26,10 +42,10 @@ VendorContactEntity editVendorContact(
 }
 
 Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewVendor>(
-      (int selectedId, dynamic action) => action.vendorId),
-  TypedReducer<int, AddVendorSuccess>(
-      (int selectedId, dynamic action) => action.vendor.id),
+  TypedReducer<int, ViewVendor>((selectedId, action) => action.vendorId),
+  TypedReducer<int, AddVendorSuccess>((selectedId, action) => action.vendor.id),
+  TypedReducer<int, FilterVendorsByEntity>(
+      (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 
 final editingReducer = combineReducers<VendorEntity>([

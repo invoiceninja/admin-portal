@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectView extends StatefulWidget {
   const ProjectView({
@@ -119,6 +120,10 @@ class _ProjectViewState extends State<ProjectView> {
                       localization.active,
                       localization.archived),
                 ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
               ];
 
               if (project.privateNotes != null &&
@@ -141,11 +146,8 @@ class _ProjectViewState extends State<ProjectView> {
 
             return RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
-              child: Container(
-                color: Theme.of(context).backgroundColor,
-                child: ListView(
-                  children: _buildView(),
-                ),
+              child: ListView(
+                children: _buildView(),
               ),
             );
           },
@@ -180,6 +182,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = viewModel.company.user;
 
     return AppBar(
+      automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(entity: project),
       actions: project.isNew
           ? []

@@ -120,7 +120,7 @@ abstract class DocumentEntity extends Object
       : '${round(size / 1000, 0).toInt()} KB';
 
   String previewUrl(String baseUrl) =>
-      formatApiUrlMachine(
+      formatApiUrl(
           baseUrl != null && baseUrl.startsWith('http') ? baseUrl : kAppUrl) +
       '/documents/$id';
 

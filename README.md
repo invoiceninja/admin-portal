@@ -26,9 +26,8 @@ Note: the mobile app requires the latest version of the web app.
 - [x] Tasks
 - [x] Vendors
 - [x] Expenses
-- [ ] Tablet support
-- [ ] Desktop support
-- [ ] Web support
+- [x] Tablet support
+- [ ] Web/Version 2
 
 ## Application Architecture
 
@@ -55,7 +54,7 @@ The architecture is based off these two projects:
 - Run `flutter packages pub run build_runner build --delete-conflicting-outputs` to regenerate the model files. It will also remove the old generated files so conflicts are avoided..
 
 ### Tests
-- Run `flutter drive --target=test_driver/products_it.dart` to run the tests
+- Run `flutter drive --target=test_driver/all_it.dart` to run the tests
     
 ### Code Signing
 - Run `cp android/app/build.gradle.prod android/app/build.gradle` to support running the code signed

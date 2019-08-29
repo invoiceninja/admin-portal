@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentEdit extends StatefulWidget {
   const PaymentEdit({
@@ -91,10 +92,19 @@ class _PaymentEditState extends State<PaymentEdit> {
         },
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: isMobile(context),
             title: Text(viewModel.payment.isNew
                 ? localization.enterPayment
                 : localization.editPayment),
             actions: <Widget>[
+              if (!isMobile(context))
+                FlatButton(
+                  child: Text(
+                    localization.cancel,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () => viewModel.onCancelPressed(context),
+                ),
               Builder(builder: (BuildContext context) {
                 return ActionIconButton(
                   icon: Icons.cloud_upload,
@@ -122,6 +132,7 @@ class _PaymentEditState extends State<PaymentEdit> {
           body: Form(
             key: _formKey,
             child: ListView(
+              key: ValueKey(viewModel.payment.id),
               children: <Widget>[
                 FormCard(
                   children: <Widget>[

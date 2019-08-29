@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
@@ -35,6 +36,7 @@ class PaymentEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return PaymentEdit(
           viewModel: viewModel,
+          key: ValueKey(viewModel.payment.id),
         );
       },
     );
@@ -55,6 +57,7 @@ class PaymentEditVM {
     @required this.clientList,
     @required this.staticState,
     @required this.onBackPressed,
+    @required this.onCancelPressed,
     @required this.isSaving,
     @required this.isDirty,
   });
@@ -85,6 +88,11 @@ class PaymentEditVM {
         prefs.setBool(kSharedPrefEmailPayment, value);
         store.dispatch(UserSettingsChanged(emailPayment: value));
       },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditPayment(
+            payment: PaymentEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(PaymentScreen.route)) {
           store.dispatch(UpdateCurrentRoute(
@@ -95,11 +103,13 @@ class PaymentEditVM {
         final Completer<Null> completer = errorCompleter(context)
           ..future.then((_) {
             store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
-            if (payment.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(PaymentViewScreen.route);
-            } else {
-              Navigator.of(context).pop();
+            if (isMobile(context)) {
+              if (payment.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(PaymentViewScreen.route);
+              } else {
+                Navigator.of(context).pop();
+              }
             }
           });
         store.dispatch(
@@ -112,6 +122,7 @@ class PaymentEditVM {
   final PaymentEntity origPayment;
   final Function(PaymentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function(bool) onEmailChanged;
   final BuiltMap<int, InvoiceEntity> invoiceMap;
   final UIState uiState;

@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -17,6 +18,8 @@ class InvoiceEditScreen extends StatelessWidget {
 
   static const String route = '/invoice/edit';
 
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceEditVM>(
@@ -26,6 +29,7 @@ class InvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceEdit(
           viewModel: viewModel,
+          formKey: _formKey,
         );
       },
     );
@@ -43,6 +47,7 @@ class EntityEditVM {
     @required this.onItemsAdded,
     @required this.onBackPressed,
     @required this.isSaving,
+    @required this.onCancelPressed,
   });
 
   final AppState state;
@@ -54,6 +59,7 @@ class EntityEditVM {
   final Function(List<InvoiceItemEntity>, int) onItemsAdded;
   final Function onBackPressed;
   final bool isSaving;
+  final Function(BuildContext) onCancelPressed;
 }
 
 class InvoiceEditVM extends EntityEditVM {
@@ -67,6 +73,7 @@ class InvoiceEditVM extends EntityEditVM {
     Function(List<InvoiceItemEntity>, int) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
+    Function(BuildContext) onCancelPressed,
   }) : super(
           state: state,
           company: company,
@@ -77,6 +84,7 @@ class InvoiceEditVM extends EntityEditVM {
           onItemsAdded: onItemsAdded,
           onBackPressed: onBackPressed,
           isSaving: isSaving,
+          onCancelPressed: onCancelPressed,
         );
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
@@ -102,10 +110,13 @@ class InvoiceEditVM extends EntityEditVM {
             SaveInvoiceRequest(completer: completer, invoice: invoice));
         return completer.future.then((savedInvoice) {
           store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-          if (invoice.isNew) {
-            Navigator.of(context).pushReplacementNamed(InvoiceViewScreen.route);
-          } else {
-            Navigator.of(context).pop(savedInvoice);
+          if (isMobile(context)) {
+            if (invoice.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(InvoiceViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedInvoice);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
@@ -125,6 +136,11 @@ class InvoiceEditVM extends EntityEditVM {
         if (items.length == 1) {
           store.dispatch(EditInvoiceItem(items[0]));
         }
+      },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditInvoice(
+            invoice: InvoiceEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
     );
   }

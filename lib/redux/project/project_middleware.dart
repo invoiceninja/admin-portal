@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -39,44 +41,73 @@ List<Middleware<AppState>> createStoreProjectsMiddleware([
 }
 
 Middleware<AppState> _editProject() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
-    next(action);
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditProject;
 
-    if (action.trackRoute) {
-      store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
     }
 
-    final project =
-        await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
+    next(action);
 
-    if (action.completer != null && project != null) {
-      action.completer.complete(project);
+    store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+
+    if (isMobile(action.context)) {
+      final project =
+          await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
+
+      if (action.completer != null && project != null) {
+        action.completer.complete(project);
+      }
     }
   };
 }
 
 Middleware<AppState> _viewProject() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewProject;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
-    Navigator.of(action.context).pushNamed(ProjectViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(ProjectViewScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _viewProjectList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewProjectList;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        ProjectScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          ProjectScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
 Middleware<AppState> _archiveProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -99,7 +130,8 @@ Middleware<AppState> _archiveProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _deleteProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -122,7 +154,8 @@ Middleware<AppState> _deleteProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _restoreProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -145,7 +178,8 @@ Middleware<AppState> _restoreProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _saveProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveProjectRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.project)
@@ -155,7 +189,13 @@ Middleware<AppState> _saveProject(ProjectRepository repository) {
       } else {
         store.dispatch(SaveProjectSuccess(project));
       }
+
       action.completer.complete(project);
+
+      final projectUIState = store.state.projectUIState;
+      if (projectUIState.saveCompleter != null) {
+        projectUIState.saveCompleter.complete(project);
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveProjectFailure(error));
@@ -167,7 +207,8 @@ Middleware<AppState> _saveProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _loadProject(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadProject;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -200,7 +241,8 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
 }
 
 Middleware<AppState> _loadProjects(ProjectRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadProjects;
     final AppState state = store.state;
 
     if (!state.projectState.isStale && !action.force) {

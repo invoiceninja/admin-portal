@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '0.1.46';
+const String kAppVersion = '0.1.49';
+const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://app.invoiceninja.com';
+const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
+const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 
 const String kAppleStoreUrl =
     'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
@@ -19,6 +22,26 @@ const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefRequireAuthentication = 'require_authentication';
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
+
+const String kProductPlanPro = 'v1_pro_yearly';
+const String kProductPlanEnterprise2 = 'v1_enterprise_2_yearly';
+const String kProductPlanEnterprise5 = 'v1_enterprise_5_yearly';
+const String kProductPlanEnterprise10 = 'v1_enterprise_10_yearly';
+const String kProductPlanEnterprise20 = 'v1_enterprise_20_yearly';
+
+const kProductPlans = [
+  kProductPlanPro,
+  kProductPlanEnterprise2,
+  kProductPlanEnterprise5,
+  kProductPlanEnterprise10,
+  kProductPlanEnterprise20,
+];
+
+const double kMobileLayoutWidth = 600;
+const double kMobileDialogPadding = 12;
+
+const double kTabletLayoutWidth = 1000;
+const double kTabletDialogPadding = 250;
 
 const String kPlanFree = '';
 const String kPlanPro = 'pro';

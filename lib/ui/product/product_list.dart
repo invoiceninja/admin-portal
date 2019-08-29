@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -21,17 +22,7 @@ class ProductList extends StatelessWidget {
     if (!viewModel.isLoaded) {
       return LoadingIndicator();
     } else if (viewModel.productList.isEmpty) {
-      return Opacity(
-        opacity: 0.5,
-        child: Center(
-          child: Text(
-            AppLocalization.of(context).noRecordsFound,
-            style: TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-        ),
-      );
+      return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
     return _buildListView(context);
