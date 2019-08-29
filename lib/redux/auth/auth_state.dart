@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'auth_state.g.dart';
 
@@ -34,7 +35,8 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   String get error;
 
   bool get isHosted =>
-      isAuthenticated && (url == null || url.isEmpty || url == kAppUrl);
+      isAuthenticated &&
+      (cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppUrl);
 
   bool get isSelfHost => isAuthenticated && !isHosted;
 

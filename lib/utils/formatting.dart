@@ -279,7 +279,7 @@ String formatDate(String value, BuildContext context,
 
 String formatApiUrl(String url) => cleanApiUrl(url) + '/api/v1';
 
-String cleanApiUrl(String url) => url
+String cleanApiUrl(String url) => (url ?? '')
     .trim()
     .replaceFirst(RegExp(r'/api/v1'), '')
     .replaceFirst(RegExp(r'/$'), '');

@@ -26,6 +26,7 @@ class LoadingIndicator extends StatelessWidget {
 
     return Container(
       height: height,
+      width: height,
       child: Center(
         child: CircularProgressIndicator(),
       ),

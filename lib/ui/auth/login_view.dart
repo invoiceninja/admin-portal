@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/progress_button.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -343,34 +344,36 @@ class _LoginState extends State<LoginView> {
                     ),
                   Padding(
                     padding: EdgeInsets.only(top: 30, bottom: 10),
-                    child: _createAccount
-                        ? ProgressButton(
-                            isLoading: viewModel.isLoading,
-                            label: localization.signUp.toUpperCase(),
-                            onPressed: () => _submitSignUpForm(),
-                          )
-                        : Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: ProgressButton(
-                                  isLoading: viewModel.isLoading,
-                                  label: localization.emailLogin.toUpperCase(),
-                                  onPressed: () => _submitLoginForm(),
-                                ),
+                    child: viewModel.isLoading
+                        ? LoadingIndicator(height: 50)
+                        : _createAccount
+                            ? ElevatedButton(
+                                label: localization.signUp.toUpperCase(),
+                                onPressed: () => _submitSignUpForm(),
+                              )
+                            : Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      label:
+                                          localization.emailLogin.toUpperCase(),
+                                      onPressed: () => _submitLoginForm(),
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      label: localization.googleLogin
+                                          .toUpperCase(),
+                                      onPressed: () =>
+                                          viewModel.onGoogleLoginPressed(
+                                              context,
+                                              _urlController.text,
+                                              _secretController.text),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 20),
-                              Expanded(
-                                child: ElevatedButton(
-                                  label: localization.googleLogin.toUpperCase(),
-                                  onPressed: () =>
-                                      viewModel.onGoogleLoginPressed(
-                                          context,
-                                          _urlController.text,
-                                          _secretController.text),
-                                ),
-                              ),
-                            ],
-                          ),
                   ),
                   SizedBox(height: 6),
                   if (!isOneTimePassword)
