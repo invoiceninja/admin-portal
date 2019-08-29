@@ -135,7 +135,7 @@ String localeSelector(AppState state) {
       'en';
 
   // https://github.com/flutter/flutter/issues/32090
-  if (locale == 'mk_MK') {
+  if (locale == 'mk_MK' || locale == 'sq') {
     return 'en';
   } else {
     return locale;

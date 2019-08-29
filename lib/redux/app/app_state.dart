@@ -264,6 +264,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
+  bool get isHosted => authState.isHosted ?? false;
+
+  bool get isSelfHosted => !isHosted;
+
   @override
   String toString() {
     return 'URL: ${authState.url}';
