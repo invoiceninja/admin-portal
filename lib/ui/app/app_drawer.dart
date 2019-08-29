@@ -482,7 +482,7 @@ class SidebarFooter extends StatelessWidget {
             icon: Icon(Icons.info_outline),
             onPressed: () => showAbout(),
           ),
-          if (isHosted(context) && !isProAccount(context)) ...[
+          if (isHosted(context) && !isPaidAccount(context)) ...[
             Spacer(),
             FlatButton(
               child: Text(localization.upgrade),

@@ -27,6 +27,18 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   List<PurchaseDetails> _purchases;
   bool _showPastPurchases = false;
 
+  Future<void> loadPurchases() async {
+    InAppPurchaseConnection.instance
+        .queryPastPurchases()
+        .then((response) async {
+      if (response.pastPurchases != null && response.pastPurchases.isNotEmpty) {
+        setState(() {
+          _purchases = response.pastPurchases;
+        });
+      }
+    });
+  }
+
   Future<void> redeemPurchase(PurchaseDetails purchase) async {
     if (purchase.error != null) {
       return null;
@@ -85,14 +97,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final Stream purchaseUpdates =
         InAppPurchaseConnection.instance.purchaseUpdatedStream;
 
-    InAppPurchaseConnection.instance
-        .queryPastPurchases()
-        .then((response) async {
-      setState(() {
-        _purchases = response.pastPurchases;
-      });
-    });
-
     _subscription = purchaseUpdates.listen((dynamic purchases) {
       (purchases as List<PurchaseDetails>).forEach((purchase) async {
         await redeemPurchase(purchase);
@@ -129,6 +133,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final ProductDetailsResponse response =
         await InAppPurchaseConnection.instance.queryProductDetails(productIds);
 
+    await loadPurchases();
+
     setState(() {
       _products = response.productDetails;
     });
@@ -160,6 +166,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       return LoadingIndicator(height: 50);
     }
 
+    _products.sort((product1, product2) =>
+        parseDouble(product1.price) > parseDouble(product2.price) ? 1 : -1);
+
     return SimpleDialog(
       title: Text(localization.annualSubscription),
       contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
@@ -179,11 +188,17 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                 ? localization.back
                 : localization.pastPurchases,
             onPressed: () {
-              setState(() => _showPastPurchases = !_showPastPurchases);
+              setState(() {
+                _showPastPurchases = !_showPastPurchases;
+
+                if (_showPastPurchases) {
+                  loadPurchases();
+                }
+              });
             },
           ),
         if (!_showPastPurchases)
-          ..._products.reversed
+          ..._products
               .map((productDetails) => ListTile(
                     title: Text(productDetails.title),
                     subtitle: Text(productDetails.description),

@@ -5,7 +5,7 @@ import 'products_it_test.dart' as products;
 
 void main() {
   login.main();
-  products.main();
-  clients.main();
-  invoices.main();
+  products.runTestSuite(batchMode: true);
+  clients.runTestSuite(batchMode: true);
+  invoices.runTestSuite(batchMode: true);
 }

@@ -197,15 +197,18 @@ abstract class CompanyEntity
   @nullable
   @BuiltValueField(wireName: 'task_statuses')
   BuiltList<TaskStatusEntity> get taskStatuses;
+
   BuiltMap<int, TaskStatusEntity> get taskStatusMap;
 
   @nullable
   @BuiltValueField(wireName: 'expense_categories')
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
+
   BuiltMap<int, ExpenseCategoryEntity> get expenseCategoryMap;
 
   @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
+
   BuiltMap<int, UserEntity> get userMap;
 
   UserEntity get user;
@@ -316,9 +319,13 @@ abstract class CompanyEntity
     }
   }
 
-  bool get isSelfHost => appUrl != kAppUrl;
+  bool get isSelfHost =>
+      appUrl != null && appUrl.isNotEmpty && appUrl != kAppUrl;
 
-  bool get isProPlan => isSelfHost || plan == kPlanPro;
+  bool get isHosted => !isSelfHost;
+
+  bool get isProPlan =>
+      isSelfHost || plan == kPlanPro;
 
   bool get isEnterprisePlan => isProPlan || plan == kPlanEnterprise;
 
