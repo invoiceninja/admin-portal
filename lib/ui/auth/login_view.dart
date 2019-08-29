@@ -386,7 +386,7 @@ class _LoginState extends State<LoginView> {
                                         setState(() => _createAccount = false),
                                     child: Text(localization.accountLogin))
                                 : FlatButton(
-                                    key: ValueKey(localization.selfhostLogin),
+                                    key: ValueKey(localization.createAccount),
                                     onPressed: () => setState(() {
                                           _createAccount = true;
                                           _isSelfHosted = false;
