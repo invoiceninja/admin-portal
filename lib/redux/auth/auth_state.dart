@@ -34,11 +34,9 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   @nullable
   String get error;
 
-  bool get isHosted =>
-      isAuthenticated &&
-      (cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppUrl);
+  bool get isHosted => cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppUrl;
 
-  bool get isSelfHost => isAuthenticated && !isHosted;
+  bool get isSelfHost => !isHosted;
 
   //factory AuthState([void updates(AuthStateBuilder b)]) = _$AuthState;
   static Serializer<AuthState> get serializer => _$authStateSerializer;

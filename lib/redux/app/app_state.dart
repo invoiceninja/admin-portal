@@ -264,9 +264,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
+  bool get reportErrors => isHosted && authState.isAuthenticated;
+
   bool get isHosted => authState.isHosted ?? false;
 
-  bool get isSelfHosted => !isHosted;
+  bool get isSelfHosted => authState.isSelfHost ?? false;
 
   @override
   String toString() {

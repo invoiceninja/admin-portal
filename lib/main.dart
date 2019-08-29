@@ -113,14 +113,14 @@ void main({bool isTesting = false}) async {
     runZoned<Future<void>>(() async {
       runApp(InvoiceNinjaApp(store: store));
     }, onError: (dynamic error, dynamic stackTrace) {
-      if (store.state.isHosted) {
+      if (store.state.reportErrors) {
         _reportError(error, stackTrace);
       }
     });
   }
 
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode || store.state.isSelfHosted) {
+    if (isInDebugMode || !store.state.reportErrors) {
       FlutterError.dumpErrorToConsole(details);
     } else {
       Zone.current.handleUncaughtError(details.exception, details.stack);
