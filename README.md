@@ -78,3 +78,4 @@ The architecture is based off these two projects:
 ## Contributions
 
 We gladly accept contributions! If you'd like to get involved with development please join our [Slack group](http://slack.invoiceninja.com/).
+
