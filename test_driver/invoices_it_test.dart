@@ -1,10 +1,15 @@
+import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
-import 'package:faker/faker.dart';
+
 import 'utils/common_actions.dart';
 import 'utils/localizations.dart';
 
 void main() {
+  runTestSuite();
+}
+
+void runTestSuite({bool batchMode = false}) {
   group('Invoice Tests', () {
     TestLocalization localization;
     FlutterDriver driver;
@@ -14,7 +19,8 @@ void main() {
         faker.randomGenerator.integer(999999, min: 100000).toString();
     final productKey = makeUnique(faker.food.cuisine());
     final description = faker.lorem.sentences(5).toString();
-    final cost = faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
+    final cost =
+        faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
 
     final updatedPoNumber =
         faker.randomGenerator.integer(999999, min: 100000).toString();
@@ -24,7 +30,7 @@ void main() {
       driver = await FlutterDriver.connect();
 
       print('Login to app');
-      await login(driver);
+      await login(driver, retype: batchMode);
 
       print('View invoices');
       viewSection(driver: driver, name: localization.invoices);
@@ -127,15 +133,14 @@ void main() {
 
     // Mark the invoice as paid
     test('Mark invoice as paid', () async {
-
       await selectAction(driver, localization.enterPayment);
       await driver.tap(find.text(localization.save));
       await driver.waitFor(find.text(localization.paymentStatus));
 
       if (await isMobile(driver)) {
         await driver.tap(find.pageBack());
+        await driver.tap(find.pageBack());
       }
     });
-
   });
 }
