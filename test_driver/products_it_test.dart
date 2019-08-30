@@ -73,7 +73,9 @@ void runTestSuite({bool batchMode = false}) {
         localization.product: productKey,
         localization.description: description,
         localization.cost: cost,
-      });
+      }, skipCheckFor: [
+        localization.cost
+      ]);
 
       if (await isMobile(driver)) {
         print('Click back');
@@ -99,7 +101,9 @@ void runTestSuite({bool batchMode = false}) {
         localization.product: updatedProductKey,
         localization.description: updatedDescription,
         localization.cost: updatedCost,
-      });
+      }, skipCheckFor: [
+        localization.cost
+      ]);
     });
 
     // Archive the edited product
