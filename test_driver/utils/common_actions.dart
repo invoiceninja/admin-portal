@@ -97,15 +97,19 @@ Future<void> fillTextFields(
   }
 }
 
-Future<void> checkTextFields(
-    FlutterDriver driver, Map<String, dynamic> values) async {
+Future<void> checkTextFields(FlutterDriver driver, Map<String, dynamic> values,
+    {List<String> except = const []}) async {
   for (var entry in values.entries) {
+    if (except.contains(entry.key)) {
+      continue;
+    }
+    print('Checking for $entry');
     await driver.waitFor(find.text(entry.value));
   }
 }
 
-Future<void> fillAndSaveForm(
-    FlutterDriver driver, Map<String, dynamic> values) async {
+Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
+    {List<String> skipCheckFor = const []}) async {
   final localization = TestLocalization('en');
 
   print('Fill in form');
@@ -119,7 +123,7 @@ Future<void> fillAndSaveForm(
   //await driver.tap(find.pageBack());
 
   print('Check for updated values');
-//  await checkTextFields(driver, values);
+  await checkTextFields(driver, values, except: skipCheckFor);
 }
 
 Future<void> testArchiveAndDelete(
