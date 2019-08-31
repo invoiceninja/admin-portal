@@ -94,6 +94,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
   @override
   void initState() {
+    super.initState();
+
     final Stream purchaseUpdates =
         InAppPurchaseConnection.instance.purchaseUpdatedStream;
 
@@ -113,8 +115,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     });
 
     initStore();
-
-    super.initState();
   }
 
   void initStore() async {
