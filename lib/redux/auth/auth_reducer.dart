@@ -19,7 +19,9 @@ AuthState clearAuthErrorReducer(AuthState authState, ClearAuthError action) {
 
 AuthState userSignUpRequestReducer(
     AuthState authState, UserSignUpRequest action) {
-  return authState.rebuild((b) => b..url = null);
+  return authState.rebuild((b) => b
+    ..url = ''
+    ..secret = '');
 }
 
 AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {

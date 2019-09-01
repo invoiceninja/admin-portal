@@ -32,11 +32,8 @@ void _saveAuthLocal(
     {String email = '', String url = '', String secret = ''}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(kSharedPrefEmail, email ?? '');
-
-  if (cleanApiUrl(url).isNotEmpty && cleanApiUrl(url) != kAppUrl) {
-    prefs.setString(kSharedPrefUrl, formatApiUrl(url));
-    prefs.setString(kSharedPrefSecret, secret);
-  }
+  prefs.setString(kSharedPrefUrl, formatApiUrl(url));
+  prefs.setString(kSharedPrefSecret, secret);
 }
 
 void _loadAuthLocal(Store<AppState> store) async {
@@ -125,9 +122,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
       lastName: action.lastName,
     )
         .then((data) {
-      _saveAuthLocal(
-        email: action.email,
-      );
+      _saveAuthLocal(email: action.email, secret: '', url: '');
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
