@@ -10,7 +10,7 @@ void main() {
 }
 
 void runTestSuite({bool batchMode = false}) {
-  group('Invoice Tests', () {
+  group('Quote Tests', () {
     TestLocalization localization;
     FlutterDriver driver;
 
@@ -32,8 +32,8 @@ void runTestSuite({bool batchMode = false}) {
       print('Login to app');
       await login(driver, retype: batchMode);
 
-      print('View invoices');
-      viewSection(driver: driver, name: localization.invoices);
+      print('View quotes');
+      viewSection(driver: driver, name: localization.quotes);
     });
 
     tearDownAll(() async {
@@ -44,10 +44,10 @@ void runTestSuite({bool batchMode = false}) {
       }
     });
 
-    // Create an empty invoice
-    test('Try to add an empty invoice', () async {
-      print('Tap new invoice');
-      await driver.tap(find.byTooltip(localization.newInvoice));
+    // Create an empty quote
+    test('Try to add an empty quote', () async {
+      print('Tap new quote');
+      await driver.tap(find.byTooltip(localization.newQuote));
 
       print('Tap save');
       await driver.tap(find.text(localization.save));
@@ -58,17 +58,17 @@ void runTestSuite({bool batchMode = false}) {
       if (await isMobile(driver)) {
         print('Click back');
         await driver.tap(find.pageBack());
-        await driver.waitFor(find.byTooltip(localization.newInvoice));
+        await driver.waitFor(find.byTooltip(localization.newQuote));
       } else {
         print('Click cancel');
         await driver.tap(find.text(localization.cancel));
       }
     });
 
-    // Create a new invoice
-    test('Add a new invoice', () async {
-      print('Tap new invoice');
-      await driver.tap(find.byTooltip(localization.newInvoice));
+    // Create a new quote
+    test('Add a new quote', () async {
+      print('Tap new quote');
+      await driver.tap(find.byTooltip(localization.newQuote));
 
       print('Create new client: $clientName');
       await driver.tap(find.byValueKey(localization.client));
@@ -79,7 +79,7 @@ void runTestSuite({bool batchMode = false}) {
           driver: driver, field: localization.name, value: clientName);
       await driver.tap(find.text(localization.save));
 
-      print('Fill the invoice form');
+      print('Fill the quote form');
       await driver.tap(find.byTooltip(localization.addItem));
       await driver.tap(find.byTooltip(localization.createNew));
 
@@ -100,14 +100,14 @@ void runTestSuite({bool batchMode = false}) {
       if (await isMobile(driver)) {
         print('Click back');
         await driver.tap(find.pageBack());
-        await driver.waitFor(find.byTooltip(localization.newInvoice));
+        await driver.waitFor(find.byTooltip(localization.newQuote));
       }
     });
 
-    // Edit the newly created invoice
-    test('Edit an existing invoice', () async {
+    // Edit the newly created quote
+    test('Edit an existing quote', () async {
       if (await isMobile(driver)) {
-        print('Select invoice: $clientName');
+        print('Select quote: $clientName');
         await driver.scrollUntilVisible(
             find.byType('ListView'), find.text(clientName),
             dyScroll: -300);
@@ -122,20 +122,19 @@ void runTestSuite({bool batchMode = false}) {
       });
     });
 
-    // Archive the edited invoice
-    test('Archive/delete invoice test', () async {
+    // Archive the edited quote
+    test('Archive/delete quote test', () async {
       await testArchiveAndDelete(
           driver: driver,
-          archivedMessage: localization.archivedInvoice,
-          deletedMessage: localization.deletedInvoice,
-          restoredMessage: localization.restoredInvoice);
+          archivedMessage: localization.archivedQuote,
+          deletedMessage: localization.deletedQuote,
+          restoredMessage: localization.restoredQuote);
     });
 
-    // Mark the invoice as paid
-    test('Mark invoice as paid', () async {
-      await selectAction(driver, localization.enterPayment);
-      await driver.tap(find.text(localization.save));
-      await driver.waitFor(find.text(localization.paymentStatus));
+    // Convert to invoice
+    test('Convert to invoice', () async {
+      await selectAction(driver, localization.convert);
+      await driver.waitFor(find.byType('InvoiceView'));
 
       if (await isMobile(driver)) {
         await driver.tap(find.pageBack());
