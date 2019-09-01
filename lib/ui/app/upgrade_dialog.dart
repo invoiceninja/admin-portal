@@ -40,11 +40,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   }
 
   Future<void> redeemPurchase(PurchaseDetails purchase) async {
-    if (purchase.error != null) {
+    if (purchase.error != null || purchase.purchaseID == null) {
       return null;
     }
 
-    Navigator.pop(context);
+    //Navigator.pop(context);
 
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
@@ -53,7 +53,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final data = {
       'order_id': purchase.purchaseID,
       'product_id': purchase.productID,
-      'timestamp': purchase.transactionDate,
+      'timestamp': (int.parse(purchase.transactionDate) / 1000).floor(),
     };
 
     try {
