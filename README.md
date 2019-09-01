@@ -74,6 +74,7 @@ The architecture is based off these two projects:
 
 **Special thanks to:**
 * [Efthymios Sarmpanis](https://github.com/esarbanis)
+* [Gianfranco Gasbarri](https://github.com/gincos)
 
 ## Contributions
 

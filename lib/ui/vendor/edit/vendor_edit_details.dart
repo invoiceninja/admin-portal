@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class VendorEditDetails extends StatefulWidget {
   const VendorEditDetails({
@@ -95,44 +96,29 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _nameController,
-              decoration: InputDecoration(
-                labelText: localization.name,
-              ),
+              label: localization.name,
               validator: (String val) => val == null || val.isEmpty
                   ? AppLocalization.of(context).pleaseEnterAName
                   : null,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _idNumberController,
-              decoration: InputDecoration(
-                labelText: localization.idNumber,
-              ),
+              label: localization.idNumber,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _vatNumberController,
-              decoration: InputDecoration(
-                labelText: localization.vatNumber,
-              ),
+              label: localization.vatNumber,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _websiteController,
-              decoration: InputDecoration(
-                labelText: localization.website,
-              ),
+              label: localization.website,
               keyboardType: TextInputType.url,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: localization.phone,
-              ),
+              label: localization.phone,
               keyboardType: TextInputType.phone,
             ),
             CustomField(
