@@ -1,18 +1,20 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
+import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
-import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class VendorEditScreen extends StatelessWidget {
   const VendorEditScreen({Key key}) : super(key: key);
@@ -77,6 +79,15 @@ class VendorEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
+        if (!vendor.hasNameSet) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(
+                    AppLocalization.of(context).pleaseEnterAName);
+              });
+          return null;
+        }
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();
         store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
         return completer.future.then((savedVendor) {

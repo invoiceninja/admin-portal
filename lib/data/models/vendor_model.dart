@@ -265,6 +265,13 @@ abstract class VendorEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
+
+  bool get hasNameSet {
+    final contact = contacts.first;
+    return name.isNotEmpty ||
+        contact.fullName.isNotEmpty ||
+        contact.email.isNotEmpty;
+  }
 }
 
 abstract class VendorContactEntity extends Object
