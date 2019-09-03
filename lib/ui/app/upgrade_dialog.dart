@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UpgradeDialog extends StatefulWidget {
   @override
@@ -176,15 +177,25 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         children: <Widget>[
           Text(localization.annualSubscription),
           if (Platform.isIOS)
-            Text('Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.'),
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 4),
+              child: Text(
+                'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               FlatButton(
-                child: Text(localization.termsOfService),
+                child: Text(localization.termsOfService,
+                    style: TextStyle(fontSize: 12)),
+                onPressed: () => launch(kTermsOfServiceURL),
               ),
               FlatButton(
-                child: Text(localization.privacyPolicy),
+                child: Text(localization.privacyPolicy,
+                    style: TextStyle(fontSize: 12)),
+                onPressed: () => launch(kPrivacyPolicyURL),
               ),
             ],
           )
