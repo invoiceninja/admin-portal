@@ -161,6 +161,24 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     ));
   }
 
+  String convertPlanToString(String plan) {
+    switch (plan){
+      case kProductPlanPro:
+        return 'Pro - 1 User';
+      case kProductPlanEnterprise2:
+        return 'Enterprise - 2 Users';
+      case kProductPlanEnterprise5:
+        return 'Enterprise - 5 Users';
+      case kProductPlanEnterprise10:
+        return 'Enterprise - 10 Users';
+      case kProductPlanEnterprise20:
+        return 'Enterprise - 20 Users';
+      default:
+        return '';
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -188,12 +206,12 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               FlatButton(
-                child: Text(localization.termsOfService,
+                child: Text('Terms',
                     style: TextStyle(fontSize: 12)),
                 onPressed: () => launch(kTermsOfServiceURL),
               ),
               FlatButton(
-                child: Text(localization.privacyPolicy,
+                child: Text('Privacy',
                     style: TextStyle(fontSize: 12)),
                 onPressed: () => launch(kPrivacyPolicyURL),
               ),
@@ -230,9 +248,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         if (!_showPastPurchases)
           ..._products
               .map((productDetails) => ListTile(
-                    title: Text(productDetails.title),
-                    subtitle: Text(productDetails.description),
-                    trailing: Text(productDetails.price,
+                    title: Text(productDetails.title ?? convertPlanToString(productDetails.id)),
+                    subtitle: Text(productDetails.description ?? ''),
+                    trailing: Text(productDetails.price ?? '',
                         style: TextStyle(fontSize: 18)),
                     onTap: () => upgrade(context, productDetails),
                   ))
