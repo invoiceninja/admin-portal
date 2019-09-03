@@ -162,13 +162,12 @@ class AppDrawer extends StatelessWidget {
                 : ListView(
                     shrinkWrap: true,
                     children: <Widget>[
-                      /*
-                      if (isHosted(context) && !isProAccount(context))
+                      if (isHosted(context) && !isPaidAccount(context))
                         Material(
                           color: Colors.green,
                           child: ListTile(
-                            leading: Icon(FontAwesomeIcons.superpowers),
-                            title: Text(localization.upgrade),
+                            leading: Icon(FontAwesomeIcons.superpowers, color: Colors.white,),
+                            title: Text(localization.upgrade, style: TextStyle(color: Colors.white)),
                             onTap: () => showDialog<UpgradeDialog>(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -176,7 +175,6 @@ class AppDrawer extends StatelessWidget {
                                 }),
                           ),
                         ),
-                        */
                       DrawerTile(
                         company: company,
                         icon: FontAwesomeIcons.tachometerAlt,
@@ -482,6 +480,7 @@ class SidebarFooter extends StatelessWidget {
             icon: Icon(Icons.info_outline),
             onPressed: () => showAbout(),
           ),
+          /*
           if (isHosted(context) && !isPaidAccount(context)) ...[
             Spacer(),
             FlatButton(
@@ -495,6 +494,7 @@ class SidebarFooter extends StatelessWidget {
             ),
             SizedBox(width: 14)
           ],
+          */
         ],
       ),
     );
