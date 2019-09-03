@@ -161,7 +161,8 @@ class AppDrawer extends StatelessWidget {
                             : _singleCompany),
             company.token.isEmpty
                 ? SizedBox()
-                : ListView(
+                : Expanded(
+                    child: ListView(
                     shrinkWrap: true,
                     children: <Widget>[
                       if (Platform.isIOS &&
@@ -346,12 +347,10 @@ class AppDrawer extends StatelessWidget {
                         },
                       ),
                     ],
-                  ),
-            Expanded(
-              child: Align(
-                child: SidebarFooter(),
-                alignment: Alignment(0, 1),
-              ),
+                  )),
+            Align(
+              child: SidebarFooter(),
+              alignment: Alignment(0, 1),
             ),
           ],
         ),
