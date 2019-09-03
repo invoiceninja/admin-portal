@@ -172,7 +172,24 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         parseDouble(product1.price) > parseDouble(product2.price) ? 1 : -1);
 
     return SimpleDialog(
-      title: Text(localization.annualSubscription),
+      title: Column(
+        children: <Widget>[
+          Text(localization.annualSubscription),
+          if (Platform.isIOS)
+            Text('Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              FlatButton(
+                child: Text(localization.termsOfService),
+              ),
+              FlatButton(
+                child: Text(localization.privacyPolicy),
+              ),
+            ],
+          )
+        ],
+      ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
       children: [
         if (_showPastPurchases)
