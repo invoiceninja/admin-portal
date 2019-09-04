@@ -1,18 +1,19 @@
 import 'dart:math';
 
 import 'package:charts_common/common.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_range_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
@@ -37,6 +38,13 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final company = state.selectedCompany;
     final clientMap = state.clientState.map;
+
+    // Add "All" if more than one currency
+    final currencies = memoizedGetCurrencyIds(company, clientMap);
+    if (currencies.length > 1 && !currencies.contains(kCurrencyAll)) {
+      currencies.insert(0, kCurrencyAll);
+    }
+    final localization = AppLocalization.of(context);
 
     return Material(
       color: Theme.of(context).backgroundColor,
@@ -88,7 +96,8 @@ class DashboardPanels extends StatelessWidget {
                         items: memoizedGetCurrencyIds(company, clientMap)
                             .map((currencyId) => DropdownMenuItem<int>(
                                   child: Text(
-                                      viewModel.currencyMap[currencyId].code),
+                                      viewModel.currencyMap[currencyId]?.code ??
+                                          localization.all),
                                   value: currencyId,
                                 ))
                             .toList(),

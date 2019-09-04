@@ -61,6 +61,7 @@ const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
 const int kUpdatedAtBufferSeconds = 600;
 
+const int kCurrencyAll = -1;
 const int kCurrencyUSDollar = 1;
 const int kCurrencyEuro = 3;
 
