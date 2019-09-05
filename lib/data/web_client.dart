@@ -12,6 +12,10 @@ class WebClient {
 
   String _checkUrl(String url) {
     if (!url.startsWith('http')) {
+      if (!url.contains('/api/v1')) {
+        url = '/api/v1' + url;
+      }
+
       url = kAppUrl + url;
     }
 

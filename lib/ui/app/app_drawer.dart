@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
@@ -159,16 +161,22 @@ class AppDrawer extends StatelessWidget {
                             : _singleCompany),
             company.token.isEmpty
                 ? SizedBox()
-                : ListView(
+                : Expanded(
+                    child: ListView(
                     shrinkWrap: true,
                     children: <Widget>[
-                      /*
-                      if (isHosted(context) && !isProAccount(context))
+                      if (Platform.isIOS &&
+                          isHosted(context) &&
+                          !isPaidAccount(context))
                         Material(
                           color: Colors.green,
                           child: ListTile(
-                            leading: Icon(FontAwesomeIcons.superpowers),
-                            title: Text(localization.upgrade),
+                            leading: Icon(
+                              FontAwesomeIcons.superpowers,
+                              color: Colors.white,
+                            ),
+                            title: Text(localization.upgrade,
+                                style: TextStyle(color: Colors.white)),
                             onTap: () => showDialog<UpgradeDialog>(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -176,7 +184,6 @@ class AppDrawer extends StatelessWidget {
                                 }),
                           ),
                         ),
-                        */
                       DrawerTile(
                         company: company,
                         icon: FontAwesomeIcons.tachometerAlt,
@@ -340,12 +347,10 @@ class AppDrawer extends StatelessWidget {
                         },
                       ),
                     ],
-                  ),
-            Expanded(
-              child: Align(
-                child: SidebarFooter(),
-                alignment: Alignment(0, 1),
-              ),
+                  )),
+            Align(
+              child: SidebarFooter(),
+              alignment: Alignment(0, 1),
             ),
           ],
         ),
@@ -482,7 +487,9 @@ class SidebarFooter extends StatelessWidget {
             icon: Icon(Icons.info_outline),
             onPressed: () => showAbout(),
           ),
-          if (isHosted(context) && !isPaidAccount(context)) ...[
+          if (!Platform.isIOS &&
+              isHosted(context) &&
+              !isPaidAccount(context)) ...[
             Spacer(),
             FlatButton(
               child: Text(localization.upgrade),

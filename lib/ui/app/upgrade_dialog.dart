@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UpgradeDialog extends StatefulWidget {
   @override
@@ -40,11 +41,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   }
 
   Future<void> redeemPurchase(PurchaseDetails purchase) async {
-    if (purchase.error != null) {
+    if (purchase.error != null || purchase.purchaseID == null) {
       return null;
     }
 
-    Navigator.pop(context);
+    //Navigator.pop(context);
 
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
@@ -53,7 +54,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final data = {
       'order_id': purchase.purchaseID,
       'product_id': purchase.productID,
-      'timestamp': purchase.transactionDate,
+      'timestamp': Platform.isIOS
+          ? (int.parse(purchase.transactionDate) / 1000).floor()
+          : purchase.transactionDate,
     };
 
     try {
@@ -158,6 +161,24 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     ));
   }
 
+  String convertPlanToString(String plan) {
+    switch (plan){
+      case kProductPlanPro:
+        return 'Pro - 1 User';
+      case kProductPlanEnterprise2:
+        return 'Enterprise - 2 Users';
+      case kProductPlanEnterprise5:
+        return 'Enterprise - 5 Users';
+      case kProductPlanEnterprise10:
+        return 'Enterprise - 10 Users';
+      case kProductPlanEnterprise20:
+        return 'Enterprise - 20 Users';
+      default:
+        return '';
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -170,7 +191,34 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         parseDouble(product1.price) > parseDouble(product2.price) ? 1 : -1);
 
     return SimpleDialog(
-      title: Text(localization.annualSubscription),
+      title: Column(
+        children: <Widget>[
+          Text(localization.annualSubscription),
+          if (Platform.isIOS)
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 4),
+              child: Text(
+                'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              FlatButton(
+                child: Text('Terms',
+                    style: TextStyle(fontSize: 12)),
+                onPressed: () => launch(kTermsOfServiceURL),
+              ),
+              FlatButton(
+                child: Text('Privacy',
+                    style: TextStyle(fontSize: 12)),
+                onPressed: () => launch(kPrivacyPolicyURL),
+              ),
+            ],
+          )
+        ],
+      ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
       children: [
         if (_showPastPurchases)
@@ -200,9 +248,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         if (!_showPastPurchases)
           ..._products
               .map((productDetails) => ListTile(
-                    title: Text(productDetails.title),
-                    subtitle: Text(productDetails.description),
-                    trailing: Text(productDetails.price,
+                    title: Text(productDetails.title ?? convertPlanToString(productDetails.id)),
+                    subtitle: Text(productDetails.description ?? ''),
+                    trailing: Text(productDetails.price ?? '',
                         style: TextStyle(fontSize: 18)),
                     onTap: () => upgrade(context, productDetails),
                   ))
