@@ -95,9 +95,10 @@ class DashboardPanels extends StatelessWidget {
                       child: DropdownButton<int>(
                         items: memoizedGetCurrencyIds(company, clientMap)
                             .map((currencyId) => DropdownMenuItem<int>(
-                                  child: Text(
-                                      viewModel.currencyMap[currencyId]?.code ??
-                                          localization.all),
+                                  child: Text(currencyId == kCurrencyAll
+                                      ? localization.all
+                                      : viewModel
+                                          .currencyMap[currencyId]?.code),
                                   value: currencyId,
                                 ))
                             .toList(),
@@ -184,12 +185,13 @@ class DashboardPanels extends StatelessWidget {
     final isLoaded = viewModel.state.invoiceState.isLoaded;
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
-    final currentData = memoizedChartInvoices(state.selectedCompany, settings,
-        state.invoiceState.map, state.clientState.map);
+    final currentData = memoizedChartInvoices(context, state.selectedCompany,
+        settings, state.invoiceState.map, state.clientState.map);
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartInvoices(
+          context,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
@@ -209,6 +211,7 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final currentData = memoizedChartPayments(
+        context,
         state.selectedCompany,
         settings,
         state.invoiceState.map,
@@ -218,6 +221,7 @@ class DashboardPanels extends StatelessWidget {
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartPayments(
+          context,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
@@ -237,12 +241,13 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.quoteState.isLoaded;
-    final currentData = memoizedChartQuotes(state.selectedCompany, settings,
-        state.quoteState.map, state.clientState.map);
+    final currentData = memoizedChartQuotes(context, state.selectedCompany,
+        settings, state.quoteState.map, state.clientState.map);
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartQuotes(
+          context,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.quoteState.map,
@@ -263,6 +268,7 @@ class DashboardPanels extends StatelessWidget {
     final isLoaded = state.taskState.isLoaded;
 
     final currentData = memoizedChartTasks(
+        context,
         state.selectedCompany,
         settings,
         state.taskState.map,
@@ -273,6 +279,7 @@ class DashboardPanels extends StatelessWidget {
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartTasks(
+          context,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.taskState.map,
@@ -293,12 +300,13 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.expenseState.isLoaded;
-    final currentData = memoizedChartExpenses(state.selectedCompany, settings,
-        state.invoiceState.map, state.expenseState.map);
+    final currentData = memoizedChartExpenses(context, state.selectedCompany,
+        settings, state.invoiceState.map, state.expenseState.map);
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartExpenses(
+          context,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
