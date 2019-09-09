@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -34,7 +33,7 @@ class DismissibleEntity extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return Slidable(
-      delegate: SlidableDrawerDelegate(),
+      actionPane: SlidableDrawerActionPane(),
       key: Key(entity.entityKey + Random().nextInt(100000).toString()),
       actions: <Widget>[
         entity.isActive
