@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:async/async.dart';
@@ -67,7 +68,7 @@ class WebClient {
       },
     );
 
-    if (response.statusCode >= 400) {
+    if (response.statusCode >= 500) {
       print('==== FAILED ====');
       print('body: ${response.body}');
 
@@ -89,6 +90,7 @@ class WebClient {
     http.Response response;
 
     final Map<String, String> headers = {
+      'X-API-SECRET': Config.API_SECRET,
       'X-Ninja-Token': token,
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
@@ -113,9 +115,9 @@ class WebClient {
           .timeout(const Duration(seconds: 30));
     }
 
-    //print('response: ${response.body}');
+    print('response: ${response.statusCode} ${response.body}');
 
-    if (response.statusCode >= 300) {
+    if (response.statusCode >= 500) {
       print('==== FAILED ====');
 
       throw _parseError(response.statusCode, response.body);
@@ -147,7 +149,7 @@ class WebClient {
 
     //print('response: ${response.body}');
 
-    if (response.statusCode >= 300) {
+    if (response.statusCode >= 500) {
       print('==== FAILED ====');
       throw _parseError(response.statusCode, response.body);
     }
@@ -176,7 +178,7 @@ class WebClient {
 
     //print('response: ${response.body}');
 
-    if (response.statusCode >= 300) {
+    if (response.statusCode >= 500) {
       print('==== FAILED ====');
       throw _parseError(response.statusCode, response.body);
     }

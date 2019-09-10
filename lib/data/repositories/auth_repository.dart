@@ -23,15 +23,14 @@ class AuthRepository {
     String platform,
   }) async {
     final credentials = {
-      'first_name': firstName,
-      'last_name': lastName,
-      'token_name': 'invoice-ninja-$platform-app',
-      'api_secret': Config.API_SECRET,
       'email': email,
       'password': password,
+      'first_name': firstName,
+      'last_name': lastName,
+      //'token_name': 'invoice-ninja-$platform-app',
     };
 
-    final url = formatApiUrl(kAppUrl) + '/register';
+    final url = formatApiUrl(kAppUrl) + '/signup';
 
     return sendRequest(url: url, data: credentials);
   }
