@@ -36,12 +36,15 @@ class WebClient {
 
     try {
       final dynamic jsonResponse = json.decode(response);
-      message = jsonResponse['error'] ?? jsonResponse;
-      message = message['message'] ?? message;
+      message = jsonResponse['message'] ?? jsonResponse;
       try {
-        jsonResponse['errors'].forEach((String field, List<String> errors) =>
-            errors.forEach((error) => message += '\n$field: $error'));
+        jsonResponse['errors'].forEach((String field, dynamic errors) {
+          (errors as List<dynamic>)
+              .forEach((dynamic error) => message += '\n • $error');
+        });
       } catch (error) {
+        print('parse error');
+        print(error);
         // do nothing
       }
     } catch (error) {
@@ -68,7 +71,7 @@ class WebClient {
       },
     );
 
-    if (response.statusCode >= 500) {
+    if (response.statusCode >= 400) {
       print('==== FAILED ====');
       print('body: ${response.body}');
 
@@ -117,7 +120,7 @@ class WebClient {
 
     print('response: ${response.statusCode} ${response.body}');
 
-    if (response.statusCode >= 500) {
+    if (response.statusCode >= 400) {
       print('==== FAILED ====');
 
       throw _parseError(response.statusCode, response.body);
@@ -125,6 +128,7 @@ class WebClient {
 
     try {
       final dynamic jsonResponse = json.decode(response.body);
+
       return jsonResponse;
     } catch (exception) {
       print(response.body);
@@ -149,7 +153,7 @@ class WebClient {
 
     //print('response: ${response.body}');
 
-    if (response.statusCode >= 500) {
+    if (response.statusCode >= 400) {
       print('==== FAILED ====');
       throw _parseError(response.statusCode, response.body);
     }
@@ -178,7 +182,7 @@ class WebClient {
 
     //print('response: ${response.body}');
 
-    if (response.statusCode >= 500) {
+    if (response.statusCode >= 400) {
       print('==== FAILED ====');
       throw _parseError(response.statusCode, response.body);
     }
