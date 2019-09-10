@@ -59,7 +59,7 @@ void main({bool isTesting = false}) async {
           ));
 
   final prefs = await SharedPreferences.getInstance();
-  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
+  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
   final requireAuthentication =
       prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
 

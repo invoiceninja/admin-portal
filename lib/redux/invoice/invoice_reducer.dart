@@ -241,6 +241,10 @@ InvoiceState _deleteInvoiceSuccess(
 
 InvoiceState _deleteInvoiceFailure(
     InvoiceState invoiceState, DeleteInvoiceFailure action) {
+  if (!invoiceState.map.containsKey(action.invoice.id)) {
+    return invoiceState;
+  }
+
   return invoiceState
       .rebuild((b) => b..map[action.invoice.id] = action.invoice);
 }
