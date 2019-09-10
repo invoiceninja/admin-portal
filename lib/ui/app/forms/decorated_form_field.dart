@@ -28,7 +28,7 @@ class DecoratedFormField extends StatelessWidget {
       ),
       validator: validator,
       keyboardType: null,
-      maxLines: maxLines,
+      maxLines: maxLines ?? 1,
       autovalidate: autovalidate,
     );
   }
