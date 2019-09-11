@@ -72,14 +72,7 @@ class WebClient {
 
     _checkResponse(response);
 
-    try {
-      final dynamic jsonResponse = json.decode(response.body);
-
-      return jsonResponse;
-    } catch (exception) {
-      print(response.body);
-      throw 'An error occurred';
-    }
+    return json.decode(response.body);
   }
 
   Future<dynamic> put(String url, String token, dynamic data) async {
@@ -99,13 +92,7 @@ class WebClient {
 
     _checkResponse(response);
 
-    try {
-      final dynamic jsonResponse = json.decode(response.body);
-      return jsonResponse;
-    } catch (exception) {
-      print(response.body);
-      throw 'An error occurred';
-    }
+    return json.decode(response.body);
   }
 
   Future<dynamic> delete(String url, String token) async {
@@ -123,13 +110,7 @@ class WebClient {
 
     _checkResponse(response);
 
-    try {
-      final dynamic jsonResponse = json.decode(response.body);
-      return jsonResponse;
-    } catch (exception) {
-      print(response.body);
-      throw 'An error occurred';
-    }
+    return json.decode(response.body);
   }
 }
 
