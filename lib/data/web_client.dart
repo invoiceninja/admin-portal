@@ -11,49 +11,6 @@ import 'package:path/path.dart';
 class WebClient {
   const WebClient();
 
-  String _checkUrl(String url) {
-    if (!url.startsWith('http')) {
-      if (!url.contains('/api/v1')) {
-        url = '/api/v1' + url;
-      }
-
-      url = kAppUrl + url;
-    }
-
-    if (!url.contains('?')) {
-      url += '?';
-    }
-
-    return url;
-  }
-
-  String _parseError(int code, String response) {
-    dynamic message = response;
-
-    if (response.contains('DOCTYPE html')) {
-      return '$code: An error occurred';
-    }
-
-    try {
-      final dynamic jsonResponse = json.decode(response);
-      message = jsonResponse['message'] ?? jsonResponse;
-      try {
-        jsonResponse['errors'].forEach((String field, dynamic errors) {
-          (errors as List<dynamic>)
-              .forEach((dynamic error) => message += '\n • $error');
-        });
-      } catch (error) {
-        print('parse error');
-        print(error);
-        // do nothing
-      }
-    } catch (error) {
-      // do nothing
-    }
-
-    return '$code: $message';
-  }
-
   Future<dynamic> get(String url, String token) async {
     url = _checkUrl(url);
     print('GET: $url');
@@ -71,12 +28,7 @@ class WebClient {
       },
     );
 
-    if (response.statusCode >= 400) {
-      print('==== FAILED ====');
-      print('body: ${response.body}');
-
-      throw _parseError(response.statusCode, response.body);
-    }
+    _checkResponse(response);
 
     final dynamic jsonResponse = json.decode(response.body);
 
@@ -118,13 +70,7 @@ class WebClient {
           .timeout(const Duration(seconds: 30));
     }
 
-    print('response: ${response.statusCode} ${response.body}');
-
-    if (response.statusCode >= 400) {
-      print('==== FAILED ====');
-
-      throw _parseError(response.statusCode, response.body);
-    }
+    _checkResponse(response);
 
     try {
       final dynamic jsonResponse = json.decode(response.body);
@@ -151,12 +97,7 @@ class WebClient {
       },
     );
 
-    //print('response: ${response.body}');
-
-    if (response.statusCode >= 400) {
-      print('==== FAILED ====');
-      throw _parseError(response.statusCode, response.body);
-    }
+    _checkResponse(response);
 
     try {
       final dynamic jsonResponse = json.decode(response.body);
@@ -180,12 +121,7 @@ class WebClient {
       },
     );
 
-    //print('response: ${response.body}');
-
-    if (response.statusCode >= 400) {
-      print('==== FAILED ====');
-      throw _parseError(response.statusCode, response.body);
-    }
+    _checkResponse(response);
 
     try {
       final dynamic jsonResponse = json.decode(response.body);
@@ -195,4 +131,78 @@ class WebClient {
       throw 'An error occurred';
     }
   }
+}
+
+String _checkUrl(String url) {
+  if (!url.startsWith('http')) {
+    if (!url.contains('/api/v1')) {
+      url = '/api/v1' + url;
+    }
+
+    url = kAppUrl + url;
+  }
+
+  if (!url.contains('?')) {
+    url += '?';
+  }
+
+  return url;
+}
+
+void _checkResponse(http.Response response) {
+  print('response: ${response.statusCode} ${response.body}');
+  print('headers: ${response.headers}');
+
+  final version = response.headers['x-app-version'];
+
+  // TODO enable this check
+  if (false && !_isVersionSupported(version)) {
+    throw 'The minimum web app version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion';
+  } else if (response.statusCode >= 400) {
+    print('==== FAILED ====');
+    throw _parseError(response.statusCode, response.body);
+  }
+}
+
+String _parseError(int code, String response) {
+  dynamic message = response;
+
+  if (response.contains('DOCTYPE html')) {
+    return '$code: An error occurred';
+  }
+
+  try {
+    final dynamic jsonResponse = json.decode(response);
+    message = jsonResponse['message'] ?? jsonResponse;
+    try {
+      jsonResponse['errors'].forEach((String field, dynamic errors) {
+        (errors as List<dynamic>)
+            .forEach((dynamic error) => message += '\n • $error');
+      });
+    } catch (error) {
+      print('parse error');
+      print(error);
+      // do nothing
+    }
+  } catch (error) {
+    // do nothing
+  }
+
+  return '$code: $message';
+}
+
+bool _isVersionSupported(String version) {
+  if (version == null || version.isEmpty) {
+    return false;
+  }
+
+  final parts = version.split('.');
+
+  final int major = int.parse(parts[0]);
+  final int minor = int.parse(parts[1]);
+  final int patch = int.parse(parts[2]);
+
+  return major >= kMinMajorAppVersion &&
+      minor >= kMinMinorAppVersion &&
+      patch >= kMinPatchAppVersion;
 }

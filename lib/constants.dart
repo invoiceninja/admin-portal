@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 const String kAppVersion = '0.1.50';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://admin.invoiceninja.com';
-const String kAppPlansURL = 'https://www.invoiceninja.com/invoicing-pricing-plans/';
+const String kAppPlansURL =
+    'https://www.invoiceninja.com/invoicing-pricing-plans/';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 
@@ -51,9 +52,9 @@ const String kPlanEnterprise = 'enterprise';
 String getCompanyTokenKey([int companyIndex = 0]) =>
     '${kSharedPrefToken}_$companyIndex';
 
-const int kMinMajorAppVersion = 4;
-const int kMinMinorAppVersion = 5;
-const int kMinPatchAppVersion = 4;
+const int kMinMajorAppVersion = 0;
+const int kMinMinorAppVersion = 0;
+const int kMinPatchAppVersion = 0;
 
 const int kMaxRecordsPerApiPage = 5000;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes

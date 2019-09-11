@@ -84,14 +84,8 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         secret: action.secret,
         url: action.url,
       );
-
-      if (_isVersionSupported(data.version)) {
-        store.dispatch(LoadAccountSuccess(
-            completer: action.completer, loginResponse: data));
-      } else {
-        store.dispatch(UserLoginFailure(
-            'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
-      }
+      store.dispatch(
+          LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print(error);
       var message = error.toString();
@@ -152,13 +146,8 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
         url: action.url,
       );
 
-      if (_isVersionSupported(data.version)) {
-        store.dispatch(LoadAccountSuccess(
-            completer: action.completer, loginResponse: data));
-      } else {
-        store.dispatch(UserLoginFailure(
-            'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
-      }
+      store.dispatch(
+          LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print(error);
       store.dispatch(UserLoginFailure(error.toString()));
@@ -197,16 +186,4 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       }
     });
   };
-}
-
-bool _isVersionSupported(String version) {
-  final parts = version.split('.');
-
-  final int major = int.parse(parts[0]);
-  final int minor = int.parse(parts[1]);
-  final int patch = int.parse(parts[2]);
-
-  return major >= kMinMajorAppVersion &&
-      minor >= kMinMinorAppVersion &&
-      patch >= kMinPatchAppVersion;
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -15,7 +16,7 @@ class AuthRepository {
 
   final WebClient webClient;
 
-  Future<LoginResponseData> signUp({
+  Future<UserEntity> signUp({
     String firstName,
     String lastName,
     String email,
@@ -27,6 +28,8 @@ class AuthRepository {
       'password': password,
       'first_name': firstName,
       'last_name': lastName,
+      'terms_of_service': true,
+      'privacy_policy': true
       //'token_name': 'invoice-ninja-$platform-app',
     };
 
@@ -35,7 +38,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<LoginResponseData> login(
+  Future<UserEntity> login(
       {String email,
       String password,
       String url,
@@ -55,7 +58,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<LoginResponseData> oauthLogin(
+  Future<UserEntity> oauthLogin(
       {String token, String url, String secret, String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
@@ -68,7 +71,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<LoginResponseData> refresh(
+  Future<UserEntity> refresh(
       {String url, String token, String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
@@ -79,10 +82,12 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, token: token);
   }
 
-  Future<LoginResponseData> sendRequest(
+  Future<UserEntity> sendRequest(
       {String url, dynamic data, String token}) async {
+    /*
     url +=
         '?include=tax_rates,users,custom_payment_terms,task_statuses,expense_categories&include_static=true';
+    */
 
     final dynamic response =
         await webClient.post(url, token ?? '', json.encode(data));
@@ -90,10 +95,6 @@ class AuthRepository {
     final LoginResponse loginResponse =
         serializers.deserializeWith(LoginResponse.serializer, response);
 
-    if (loginResponse.error != null) {
-      throw loginResponse.error.message;
-    }
-
-    return loginResponse.data;
+    return loginResponse.user;
   }
 }
