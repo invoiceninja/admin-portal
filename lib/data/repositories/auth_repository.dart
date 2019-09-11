@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -16,7 +15,7 @@ class AuthRepository {
 
   final WebClient webClient;
 
-  Future<UserEntity> signUp({
+  Future<LoginResponseData> signUp({
     String firstName,
     String lastName,
     String email,
@@ -38,7 +37,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<UserEntity> login(
+  Future<LoginResponseData> login(
       {String email,
       String password,
       String url,
@@ -58,7 +57,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<UserEntity> oauthLogin(
+  Future<LoginResponseData> oauthLogin(
       {String token, String url, String secret, String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
@@ -71,7 +70,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<UserEntity> refresh(
+  Future<LoginResponseData> refresh(
       {String url, String token, String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
@@ -82,7 +81,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, token: token);
   }
 
-  Future<UserEntity> sendRequest(
+  Future<LoginResponseData> sendRequest(
       {String url, dynamic data, String token}) async {
     /*
     url +=
@@ -97,6 +96,6 @@ class AuthRepository {
     final LoginResponse loginResponse =
         serializers.deserializeWith(LoginResponse.serializer, response);
 
-    return loginResponse.user;
+    return loginResponse.data;
   }
 }

@@ -46,6 +46,7 @@ UserCompanyEntity loadCompanySuccessReducer(
     UserCompanyEntity company, LoadCompanySuccess action) {
   var company = action.company;
 
+  /*
   if (company.taskStatuses != null) {
     company = company.rebuild((b) => b
       ..taskStatusMap.addAll(Map.fromIterable(
@@ -70,4 +71,8 @@ UserCompanyEntity loadCompanySuccessReducer(
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));
+
+   */
+
+  return company;
 }

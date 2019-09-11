@@ -7,7 +7,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
-import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
 class AppDrawerBuilder extends StatelessWidget {
@@ -52,7 +51,9 @@ class AppDrawerVM {
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged:
           (BuildContext context, String companyIndex, CompanyEntity company) {
-        store.dispatch(SelectCompany(int.parse(companyIndex), company));
+        // TODO re-enable
+        //store.dispatch(SelectCompany(int.parse(companyIndex), company));
+
         store.dispatch(LoadDashboard());
         AppBuilder.of(context).rebuild();
       },

@@ -317,21 +317,21 @@ Middleware<AppState> _createAccountLoaded() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as LoadAccountSuccess;
-    final dynamic data = action.loginResponse;
-    store.dispatch(LoadStaticSuccess(data: data.static, version: data.version));
+    final data = action.loginResponse;
+    store.dispatch(LoadStaticSuccess(data: data.static));
 
     if (action.loadCompanies) {
-      for (int i = 0; i < data.accounts.length; i++) {
-        final CompanyEntity company = data.accounts[i];
+      for (int i = 0; i < data.companies.length; i++) {
+        final UserCompanyEntity userCompany = data.companies[i];
 
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(getCompanyTokenKey(i), company.token);
+        prefs.setString(getCompanyTokenKey(i), userCompany.company.token);
 
-        store.dispatch(SelectCompany(i + 1, company));
-        store.dispatch(LoadCompanySuccess(company));
+        store.dispatch(SelectCompany(i + 1, userCompany));
+        store.dispatch(LoadCompanySuccess(userCompany));
       }
 
-      store.dispatch(SelectCompany(1, data.accounts[0]));
+      store.dispatch(SelectCompany(1, data.companies[0]));
       store.dispatch(UserLoginSuccess());
     }
 

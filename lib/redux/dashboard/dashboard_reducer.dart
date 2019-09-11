@@ -33,7 +33,9 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
       return state.rebuild((b) => b..currencyId = action.currencyId);
     }
   } else if (action is SelectCompany) {
-    return state.rebuild((b) => b..currencyId = action.company.currencyId);
+    //return state.rebuild((b) => b..currencyId = action.company.jcurrencyId);
+    // TODO re-enable
+    return state;
   }
 
   return state;

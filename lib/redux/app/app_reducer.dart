@@ -1,5 +1,4 @@
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_reducer.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -46,9 +45,6 @@ AppState appReducer(AppState state, dynamic action) {
 }
 
 final serverVersionReducer = combineReducers<String>([
-  TypedReducer<String, LoadStaticSuccess>(_loadStaticSuccess),
+  // TODO re-enable this
+  //TypedReducer<String, LoadStaticSuccess>(_loadStaticSuccess),
 ]);
-
-String _loadStaticSuccess(String state, LoadStaticSuccess action) {
-  return action.version;
-}

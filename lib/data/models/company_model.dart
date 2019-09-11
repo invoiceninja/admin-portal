@@ -490,6 +490,7 @@ abstract class UserCompanyEntity
   factory UserCompanyEntity() {
     return _$UserCompanyEntity._(
       isAdmin: false,
+      company: CompanyEntity(),
     );
   }
 

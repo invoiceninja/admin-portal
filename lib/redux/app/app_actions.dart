@@ -42,9 +42,8 @@ class StartSaving {}
 class StopSaving {}
 
 class LoadStaticSuccess implements PersistStatic {
-  LoadStaticSuccess({this.data, this.version});
+  LoadStaticSuccess({this.data});
 
-  final String version;
   final StaticData data;
 }
 
@@ -68,7 +67,7 @@ class LoadAccountSuccess {
       {this.loginResponse, this.completer, this.loadCompanies = true});
 
   final Completer completer;
-  final dynamic loginResponse;
+  final LoginResponseData loginResponse;
   final bool loadCompanies;
 }
 
